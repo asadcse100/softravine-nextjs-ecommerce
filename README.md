@@ -1,14 +1,14 @@
 # [Softravine | Shop & eCommerce Nextjs Template]
 
-Welcome to Ciseco - your ultimate solution for creating a stunning and responsive eCommerce website! Powered by the latest React 18, TypeScript, and Tailwind CSS, Ciseco brings a modern and fresh design to your online store.
+Welcome to Softravine - your ultimate solution for creating a stunning and responsive eCommerce website! Powered by the latest React 20, TypeScript, and Tailwind CSS, Softravine brings a modern and fresh design to your online store.
 
 ## Features
 
-- **Modern Design**: Ciseco boasts a contemporary design crafted to captivate your audience and enhance user experience.
-- **Responsive**: Whether your customers are browsing on desktop, tablet, or mobile, Ciseco ensures a seamless experience across all devices.
+- **Modern Design**: Softravine boasts a contemporary design crafted to captivate your audience and enhance user experience.
+- **Responsive**: Whether your customers are browsing on desktop, tablet, or mobile, Softravine ensures a seamless experience across all devices.
 - **Smart Search Filter**: Empower your customers with a smart search filter to quickly find what they're looking for.
-- **Multi-Vendor Support**: Ciseco is suited for multi-vendor marketplaces, enabling you to expand your business and collaborate with various sellers.
-- **Versatile Use**: From electronics to clothing, furniture to cosmetics, Ciseco is adaptable to various niches including:
+- **Multi-Vendor Support**: Softravine is suited for multi-vendor marketplaces, enabling you to expand your business and collaborate with various sellers.
+- **Versatile Use**: From electronics to clothing, furniture to cosmetics, Softravine is adaptable to various niches including:
   - Electronics Store
   - Furniture Store
   - Clothing Store
