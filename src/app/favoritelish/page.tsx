@@ -5,10 +5,10 @@ import ButtonSecondary from "@/shared/Button/ButtonSecondary";
 const AccountSavelists = () => {
   const renderSection1 = () => {
     return (
-      <div className="space-y-10 sm:space-y-12">
+      <div className="space-y-10 sm:space-y-12 bg-gray-300 dark:bg-gray-700 p-5 rounded-xl">
         <div>
           <h2 className="text-2xl sm:text-3xl font-semibold">
-            List of saved products
+            List of Favorite products
           </h2>
         </div>
 

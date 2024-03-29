@@ -6,7 +6,7 @@ export interface PricesProps {
   contentClass?: string;
 }
 
-const Prices: FC<PricesProps> = ({
+const PricesDiscount: FC<PricesProps> = ({
   className = "",
   price = 33,
   contentClass = "py-1 px-2 md:py-1.5 md:px-2.5 text-sm font-medium",
@@ -14,10 +14,11 @@ const Prices: FC<PricesProps> = ({
   return (
     <div className={`${className}`}>
       <div className={`flex items-center ${contentClass}`}>
-        <span className="text-green-500 text-3xl !leading-none">${String(price)}</span>
+        <span className="text-gray-300 text-sm !leading-none">${String(price)}</span>
+        <span className="px-2">-20%</span>
       </div>
     </div>
   );
 };
 
-export default Prices;
+export default PricesDiscount;

@@ -6,6 +6,7 @@ import "rc-slider/assets/index.css";
 import Footer from "@/shared/Footer/Footer";
 import SiteHeader from "@/app/SiteHeader";
 import CommonClient from "./CommonClient";
+import Chat from "@/components/Chat/Chat";
 
 const poppins = Poppins({
   subsets: ["latin"],
@@ -26,6 +27,7 @@ export default function RootLayout({
         <SiteHeader />
         {children}
         <CommonClient />
+        <Chat />
         <Footer />
       </body>
     </html>

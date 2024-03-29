@@ -10,7 +10,7 @@ import Image from "next/image";
 const AccountPage = () => {
   return (
     <div className={`nc-AccountPage `}>
-      <div className="space-y-10 sm:space-y-12">
+      <div className="space-y-5 sm:space-y-5 bg-gray-300 dark:bg-gray-700 p-5 rounded-xl">
         {/* HEADING */}
         <h2 className="text-2xl sm:text-3xl font-semibold">
           Account infomation
@@ -73,42 +73,17 @@ const AccountPage = () => {
               </div>
             </div>
 
-            {/* ---- */}
-            <div className="max-w-lg">
-              <Label>Date of birth</Label>
-              <div className="mt-1.5 flex">
-                <span className="inline-flex items-center px-2.5 rounded-l-2xl border border-r-0 border-neutral-200 dark:border-neutral-700 bg-neutral-50 dark:bg-neutral-800 text-neutral-500 dark:text-neutral-400 text-sm">
-                  <i className="text-2xl las la-calendar"></i>
-                </span>
-                <Input
-                  className="!rounded-l-none"
-                  type="date"
-                  defaultValue="1990-07-22"
-                />
-              </div>
-            </div>
-            {/* ---- */}
             <div>
-              <Label>Addess</Label>
+              <Label>Full Addess</Label>
               <div className="mt-1.5 flex">
                 <span className="inline-flex items-center px-2.5 rounded-l-2xl border border-r-0 border-neutral-200 dark:border-neutral-700 bg-neutral-50 dark:bg-neutral-800 text-neutral-500 dark:text-neutral-400 text-sm">
                   <i className="text-2xl las la-map-signs"></i>
                 </span>
-                <Input
+                <Textarea
                   className="!rounded-l-none"
                   defaultValue="New york, USA"
                 />
               </div>
-            </div>
-
-            {/* ---- */}
-            <div>
-              <Label>Gender</Label>
-              <Select className="mt-1.5">
-                <option value="Male">Male</option>
-                <option value="Female">Female</option>
-                <option value="Other">Other</option>
-              </Select>
             </div>
 
             {/* ---- */}

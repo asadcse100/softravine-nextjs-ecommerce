@@ -15,28 +15,20 @@ const pages: {
   link: Route;
 }[] = [
   {
-    name: "Account info",
-    link: "/account",
+    name: "All order",
+    link: "/order",
   },
   {
-    name: "Personal info",
-    link: "/account-personal",
+    name: "Pending order",
+    link: "/pending-order",
   },
   {
-    name: "Full Address",
-    link: "/address",
+    name: "Delivered order",
+    link: "/delivered-order",
   },
   {
-    name: "KCY",
-    link: "/kcy",
-  },
-  {
-    name: "Nominee",
-    link: "/nominee",
-  },
-  {
-    name: "Additional info",
-    link: "/additional-info",
+    name: "Cancel order",
+    link: "/cancel-order",
   },
 ];
 
@@ -48,11 +40,11 @@ const CommonLayout: FC<CommonLayoutProps> = ({ children }) => {
       <div className="mt-5 sm:mt-5">
         <div className="max-w-4xl mx-auto">
           <div className="max-w-2xl">
-            <h2 className="text-3xl xl:text-4xl font-semibold">Account</h2>
+            <h2 className="text-3xl xl:text-4xl font-semibold">Order History</h2>
           </div>
           <hr className="mt-5 border-slate-300 dark:border-slate-700"></hr>
 
-          <div className="flex space-x-4 md:space-x-14 overflow-x-auto hiddenScrollbar">
+          <div className="flex space-x-4 md:space-x-8 overflow-x-auto hiddenScrollbar">
             {pages.map((item, index) => {
               return (
                 <Link

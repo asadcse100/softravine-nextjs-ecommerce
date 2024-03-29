@@ -260,10 +260,10 @@ const ProductCard: FC<ProductCardProps> = ({
 
   return (
     <>
-      <div className={`nc-ProductCard relative flex flex-col bg-transparent ${className}`}>
+      <div className={`nc-ProductCard relative flex flex-col bg-white dark:bg-slate-700 shadow-md rounded-xl ${className}`}>
         <Link href={"/product-detail"} className="absolute inset-0"></Link>
 
-        <div className="relative flex-shrink-0 bg-white dark:bg-slate-400 shadow-md rounded-3xl overflow-hidden z-1 group">
+        <div className="relative flex-shrink-0 overflow-hidden z-1 group">
           <Link href={"/product-detail"} className="block">
             <NcImage
               containerClassName="flex aspect-w-11 aspect-h-12 w-full h-0"
@@ -280,21 +280,17 @@ const ProductCard: FC<ProductCardProps> = ({
         </div>
 
         <div className="space-y-4 px-2.5 pt-5 pb-2.5">
-          {renderVariants()}
           <div>
             <h2 className="nc-ProductCard__title text-base font-semibold transition-colors">
               {name}
             </h2>
-            <p className={`text-sm text-slate-500 dark:text-slate-400 mt-1 `}>
-              {description}
-            </p>
           </div>
 
           <div className="flex justify-between items-end ">
             <Prices price={price} />
             <div className="flex items-center mb-0.5">
               <StarIcon className="w-5 h-5 pb-[1px] text-amber-400" />
-              <span className="text-sm ms-1 text-slate-500 dark:text-slate-400">
+              <span className="text-sm ms-1 text-slate-500 dark:text-slate-100">
                 {rating || ""} ({numberOfReviews || 0} reviews)
               </span>
             </div>

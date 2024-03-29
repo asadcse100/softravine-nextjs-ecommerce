@@ -16,17 +16,26 @@ import ButtonSecondary from "@/shared/Button/ButtonSecondary";
 import { PRODUCTS, SPORT_PRODUCTS } from "@/data/data";
 import SectionGridFeatureItems from "@/components/SectionGridFeatureItems";
 import SectionMagazine5 from "@/app/blog/SectionMagazine5";
+import OurServices from "@/components/OurServices/OurServices";
 
 function PageHome() {
   return (
     <div className="nc-PageHome relative overflow-hidden">
       <SectionHero2 />
 
-      <div className="mt-24 lg:mt-32">
+      <div className="py-10 lg:py-20 border-t border-b border-slate-200 dark:border-slate-700">
+          <OurServices />
+        </div>
+
+      <div className="py-10 lg:py-20 border-t border-b border-slate-200 dark:border-slate-700">
+          <SectionHowItWork />
+        </div>
+        
+      <div className="mt-10 lg:mt-10">
         <DiscoverMoreSlider />
       </div>
 
-      <div className="container relative space-y-24 my-24 lg:space-y-32 lg:my-32">
+      <div className="container relative space-y-10 my-10 lg:space-y-15 lg:my-15">
         <SectionSliderProductCard
           data={[
             PRODUCTS[4],
@@ -37,12 +46,7 @@ function PageHome() {
           ]}
         />
 
-        <div className="py-24 lg:py-32 border-t border-b border-slate-200 dark:border-slate-700">
-          <SectionHowItWork />
-        </div>
-        <SectionPromo1 />
-
-        <div className="relative py-24 lg:py-32">
+        <div className="relative py-10 lg:py-10">
           <BackgroundSection />
           <SectionGridMoreExplore />
         </div>
@@ -58,10 +62,6 @@ function PageHome() {
 
         <SectionSliderCategories />
 
-        <SectionPromo3 />
-
-        <SectionGridFeatureItems />
-
         <div className="relative py-24 lg:py-32">
           <BackgroundSection />
           <div>
@@ -75,6 +75,7 @@ function PageHome() {
           </div>
         </div>
         <SectionClientSay />
+        <SectionPromo3 />
       </div>
     </div>
   );

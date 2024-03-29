@@ -10,7 +10,7 @@ import TabFilters from "@/components/TabFilters";
 const PageCollection = ({}) => {
   return (
     <div className={`nc-PageCollection`}>
-      <div className="container py-8 lg:pb-10 lg:pt-10 space-y-8 sm:space-y-10 lg:space-y-7">
+      <div className="container py-8 lg:pb-10 lg:pt-5 space-y-8 sm:space-y-10 lg:space-y-7">
         <div className="space-y-5 lg:space-y-5">
           {/* HEADING */}
           <div className="max-w-screen-sm">

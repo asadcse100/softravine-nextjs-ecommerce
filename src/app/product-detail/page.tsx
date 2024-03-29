@@ -14,6 +14,7 @@ import {
 } from "@heroicons/react/24/outline";
 import IconDiscount from "@/components/IconDiscount";
 import Prices from "@/components/Prices";
+import PricesDiscount from "@/components/PricesDiscount";
 import toast from "react-hot-toast";
 import SectionSliderProductCard from "@/components/SectionSliderProductCard";
 import detail1JPG from "@/images/products/detail1.jpg";
@@ -65,7 +66,7 @@ const ProductDetailPage = () => {
         <label htmlFor="">
           <span className="text-sm font-medium">
             Color:
-            <span className="ml-1 font-semibold">
+            <span className="m-1 font-semibold">
               {variants[variantActive].name}
             </span>
           </span>
@@ -81,8 +82,7 @@ const ProductDetailPage = () => {
                   : "border-transparent"
               }`}
             >
-              <div
-                className="absolute inset-0.5 rounded-full overflow-hidden z-0 object-cover bg-cover"
+              <div className="absolute inset-0.5 rounded-full overflow-hidden z-0 object-cover bg-cover"
                 style={{
                   backgroundImage: `url(${
                     // @ts-ignore
@@ -200,7 +200,7 @@ const ProductDetailPage = () => {
 
   const renderSectionContent = () => {
     return (
-      <div className="space-y-7 2xl:space-y-8">
+      <div className="space-y-7 2xl:space-y-8 bg-gray-50 dark:bg-gray-700 p-4 rounded-2xl ">
         {/* ---------- 1 HEADING ----------  */}
         <div>
           <h2 className="text-2xl sm:text-3xl font-semibold">
@@ -209,12 +209,7 @@ const ProductDetailPage = () => {
 
           <div className="flex items-center mt-5 space-x-4 sm:space-x-5">
             {/* <div className="flex text-xl font-semibold">$112.00</div> */}
-            <Prices
-              contentClass="py-1 px-2 md:py-1.5 md:px-3 text-lg font-semibold"
-              price={112}
-            />
-
-            <div className="h-7 border-l border-slate-300 dark:border-slate-700"></div>
+            
 
             <div className="flex items-center">
               <a
@@ -235,9 +230,23 @@ const ProductDetailPage = () => {
                 <SparklesIcon className="w-3.5 h-3.5" />
                 <span className="ml-1 leading-none">{status}</span>
               </div>
+
+              <div className="hidden sm:flex items-center text-sm px-5">
+                <SparklesIcon className="w-3.5 h-3.5" />
+                <span className="ml-1 leading-none">{status}</span>
+              </div>
+
             </div>
           </div>
         </div>
+        <Prices
+              contentClass="text-2xl"
+              price={112}
+            />
+        <PricesDiscount
+              contentClass="text-xs"
+              price={110}
+            />
 
         {/* ---------- 3 VARIANTS AND SIZE LIST ----------  */}
         <div className="">{renderVariants()}</div>
@@ -385,7 +394,7 @@ const ProductDetailPage = () => {
                 return (
                   <div
                     key={index}
-                    className="aspect-w-11 xl:aspect-w-10 2xl:aspect-w-11 aspect-h-16 relative"
+                    className="aspect-w-11 xl:aspect-w-10 2xl:aspect-w-11 aspect-h-5 relative"
                   >
                     <Image
                       sizes="(max-width: 640px) 100vw, 33vw"
