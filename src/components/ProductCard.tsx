@@ -192,7 +192,8 @@ const ProductCard: FC<ProductCardProps> = ({
             }`}
             title={variant.name}
           >
-            <div className="absolute inset-0.5 rounded-full overflow-hidden z-0 bg-cover"
+            <div
+              className="absolute inset-0.5 rounded-full overflow-hidden z-0 bg-cover"
               style={{
                 backgroundImage: `url(${
                   // @ts-ignore
@@ -260,7 +261,9 @@ const ProductCard: FC<ProductCardProps> = ({
 
   return (
     <>
-      <div className={`nc-ProductCard relative flex flex-col bg-white dark:bg-slate-700 shadow-md rounded-xl ${className}`}>
+      <div
+        className={`nc-ProductCard relative flex flex-col bg-white dark:bg-slate-700 shadow-md rounded-xl ${className}`}
+      >
         <Link href={"/product-detail"} className="absolute inset-0"></Link>
 
         <div className="relative flex-shrink-0 overflow-hidden z-1 group">
@@ -278,14 +281,7 @@ const ProductCard: FC<ProductCardProps> = ({
           <LikeButton liked={isLiked} className="absolute top-3 end-3 z-10" />
           {sizes ? renderSizeList() : renderGroupButtons()}
         </div>
-
         <div className="space-y-4 px-2.5 pt-5 pb-2.5">
-          <div>
-            <h2 className="nc-ProductCard__title text-base font-semibold transition-colors">
-              {name}
-            </h2>
-          </div>
-
           <div className="flex justify-between items-end ">
             <Prices price={price} />
             <div className="flex items-center mb-0.5">
@@ -294,6 +290,11 @@ const ProductCard: FC<ProductCardProps> = ({
                 {rating || ""} ({numberOfReviews || 0} reviews)
               </span>
             </div>
+          </div>
+          <div>
+            <h2 className="nc-ProductCard__title text-base font-semibold transition-colors">
+              {name}
+            </h2>
           </div>
         </div>
       </div>

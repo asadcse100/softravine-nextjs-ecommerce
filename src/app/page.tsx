@@ -23,14 +23,14 @@ function PageHome() {
     <div className="nc-PageHome relative overflow-hidden">
       <SectionHero2 />
 
-      <div className="py-10 lg:py-20 border-t border-b border-slate-200 dark:border-slate-700">
-          <OurServices />
-        </div>
+      <div className="py-10 lg:py-20 border-t border-b dark:border-slate-700">
+        <OurServices />
+      </div>
 
-      <div className="py-10 lg:py-20 border-t border-b border-slate-200 dark:border-slate-700">
-          <SectionHowItWork />
-        </div>
-        
+      <div className="py-10 lg:py-20 border-t border-b border-slate-400 dark:border-slate-700">
+        <SectionHowItWork />
+      </div>
+
       <div className="mt-10 lg:mt-10">
         <DiscoverMoreSlider />
       </div>

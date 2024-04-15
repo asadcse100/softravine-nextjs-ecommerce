@@ -15,7 +15,7 @@ export interface SectionPromo3Props {
 const SectionPromo3: FC<SectionPromo3Props> = ({ className = "lg:pt-10" }) => {
   return (
     <div className={`nc-SectionPromo3 ${className}`}>
-      <div className="relative flex flex-col lg:flex-row bg-slate-50 dark:bg-slate-800 rounded-2xl sm:rounded-[40px] p-4 pb-0 sm:p-5 sm:pb-0 lg:p-24">
+      <div className="relative flex flex-col lg:flex-row bg-gray-100 dark:bg-slate-800 rounded-2xl sm:rounded-[40px] p-4 pb-0 sm:p-5 sm:pb-0 lg:p-24">
         <div className="absolute inset-0">
           <Image
             fill

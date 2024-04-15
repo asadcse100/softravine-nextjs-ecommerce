@@ -50,7 +50,7 @@ const SectionHowItWork: FC<SectionHowItWorkProps> = ({
 }) => {
   return (
     <div className={`nc-SectionHowItWork ${className}`}>
-      <div className="relative grid sm:grid-cols-2 lg:grid-cols-4 gap-10 sm:gap-16 xl:gap-20">
+      <div className="relative grid sm:grid-cols-2 lg:grid-cols-4 gap-5 sm:gap-5 xl:gap-5">
         <Image
           className="hidden md:block absolute inset-x-0 top-5"
           src={VectorImg}
@@ -63,7 +63,7 @@ const SectionHowItWork: FC<SectionHowItWorkProps> = ({
           >
             <NcImage
               containerClassName="mb-4 sm:mb-10 max-w-[140px] mx-auto"
-              className="rounded-3xl"
+              className="rounded-full"
               src={item.img}
               sizes="150px"
               alt="HIW"
