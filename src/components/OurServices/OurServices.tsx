@@ -18,7 +18,7 @@ import { Route } from "@/routers/types";
 import { usePathname } from "next/navigation";
 import { CustomLink } from "@/data/types";
 
-export interface SectionHowItWorkProps {
+export interface SectionOurServiceProps {
   className?: string;
   data?: (typeof DEMO_DATA)[0][];
 }
@@ -102,7 +102,7 @@ const DEMO_DATA: {
   },
 ];
 
-const SectionHowItWork: FC<SectionHowItWorkProps> = ({
+const SectionOurService: FC<SectionOurServiceProps> = ({
   className = "",
   data = DEMO_DATA,
 }) => {
@@ -130,4 +130,4 @@ const SectionHowItWork: FC<SectionHowItWorkProps> = ({
   );
 };
 
-export default SectionHowItWork;
+export default SectionOurService;

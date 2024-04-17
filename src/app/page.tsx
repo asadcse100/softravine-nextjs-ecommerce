@@ -17,18 +17,23 @@ import { PRODUCTS, SPORT_PRODUCTS } from "@/data/data";
 import SectionGridFeatureItems from "@/components/SectionGridFeatureItems";
 import SectionMagazine5 from "@/app/blog/SectionMagazine5";
 import OurServices from "@/components/OurServices/OurServices";
+import SectionProfessional from "@/components/Professional/Professional";
 
 function PageHome() {
   return (
     <div className="nc-PageHome relative overflow-hidden">
       <SectionHero2 />
 
+      <div className="py-10 lg:py-20 border-t border-b border-slate-400 dark:border-slate-700">
+        <SectionHowItWork />
+      </div>
+
       <div className="py-10 lg:py-20 border-t border-b dark:border-slate-700">
         <OurServices />
       </div>
 
-      <div className="py-10 lg:py-20 border-t border-b border-slate-400 dark:border-slate-700">
-        <SectionHowItWork />
+      <div className="py-10 lg:py-20 border-t border-b dark:border-slate-700">
+        <SectionProfessional />
       </div>
 
       <div className="mt-10 lg:mt-10">
