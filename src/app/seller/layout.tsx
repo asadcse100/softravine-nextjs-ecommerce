@@ -1,9 +1,10 @@
 'use client';
 import { Poppins } from "next/font/google";
-import Chat from "@/app/seller/components/Chat/Chat";
-import SideBar from "@/app/seller/components/Seller/Sidebar";
-import Header from "@/app/seller/components/Seller/Header";
-import PageWrapper from "@/app/seller/components/Seller/PageWrapper";
+import "./globals.css";
+import Chat from "@/shared/Chat/Chat";
+import SideBar from "@/app/seller/components/Sidebar";
+import Header from "@/app/seller/components/Header";
+import PageWrapper from "@/app/seller/components/PageWrapper";
 import { ThemeProvider } from "next-themes";
 
 const poppins = Poppins({

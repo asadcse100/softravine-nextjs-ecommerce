@@ -18,7 +18,7 @@ export default function ThemeSwitcher() {
         >
             <Palette className="w-6 h-6"></Palette>
         </Button>
-        <DropdownMenuContent align="end" className="z-[99998]">
+        {/* <DropdownMenuContent align="end" className="z-[99998]">
             <DropdownMenuItem onClick={() => setTheme('light')}>
             <span>Light</span>
           {theme === "light" && <CheckIcon className="ml-2 h-4 w-4" />}
@@ -27,7 +27,7 @@ export default function ThemeSwitcher() {
             <span>Dark</span>
           {theme === "dark" && <CheckIcon className="ml-2 h-4 w-4" />}
             </DropdownMenuItem>
-        </DropdownMenuContent>
+        </DropdownMenuContent> */}
       </DropdownMenuTrigger>
     </DropdownMenu>
   );

@@ -6,7 +6,7 @@ import "rc-slider/assets/index.css";
 import Footer from "@/shared/Footer/Footer";
 import SiteHeader from "@/app/frontend/SiteHeader";
 import CommonClient from "../CommonClient";
-import Chat from "@/app/frontend/components/Chat/Chat";
+import Chat from "@/shared/Chat/Chat";
 
 const poppins = Poppins({
   subsets: ["latin"],
