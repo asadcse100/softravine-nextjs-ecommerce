@@ -4,12 +4,15 @@ import ButtonSecondary from "@/shared/Button/ButtonSecondary";
 
 function PageHome() {
   return (
-    <div className="mx-auto max-w-screen-2xl p-4 md:p-6 2xl:p-10">
+    <div className="mx-auto max-w-screen-2xl p-4 md:p-6 2xl:p-10 bg-slate-100 dark:bg-slate-900">
+             <h2 className="py-4 font-bold text-black dark:text-white">
+              Form Elements
+            </h2>
       <div className="grid grid-cols-1 gap-4 md:grid-cols-2 md:gap-6 xl:grid-cols-4 2xl:gap-7.5">
         <div className="rounded-sm border border-stroke bg-white px-7.5 py-6 shadow-default dark:border-strokedark dark:bg-boxdark">
           <div className="flex h-11.5 w-11.5 items-center justify-center rounded-full bg-meta-2 dark:bg-meta-4">
             <svg
-              className="fill-primary dark:fill-white"
+              className="dark:fill-white"
               width="22"
               height="16"
               viewBox="0 0 22 16"

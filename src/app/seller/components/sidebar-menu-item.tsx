@@ -48,7 +48,7 @@ export const SideBarMenuItem = ({ item, toggleCollapse }: { item: SideNavItem, t
       </div>) 
       : (<Link href={item.path} className={`${linkStyle} ${item.path === pathName ? activeLinkStyle:''}`}>
         {item.icon}
-        {!toggleCollapse && <span className="ml-3 leading-6 font-semibold">{item.title}</span>}
+        {!toggleCollapse && <span className="ml-4 leading-6 font-semibold">{item.title}</span>}
         </Link>)
       }
     </>
