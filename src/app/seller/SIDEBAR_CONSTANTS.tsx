@@ -4,7 +4,7 @@ import { SideNavItem } from "@/../types/types";
 export const SIDENAV_ITEMS:SideNavItem[] = [
     {
         title:"Dashboard",
-        path:"/",
+        path:"/seller",
         icon: <BsHouseDoor size={20}/>
     },
     {
@@ -14,20 +14,21 @@ export const SIDENAV_ITEMS:SideNavItem[] = [
     },
     {
         title: 'Products',
-        path: '/',
+        path: '/products',
         icon: <BsKanban size={20} />,
         submenu: true,
         subMenuItems: [
-            {title: 'All', path: '/seller/pages/product/products'},
-            {title: 'Category Wise Discount', path: '/products/new'},
-            {title: 'Bulk Upload', path: '/products/new'},
-            {title: 'Digital Products', path: '/products/new'},
-            {title: 'Product Reviews', path: '/products/new'},
+            {title: 'All Products', path: '/seller/pages/product/products'},
+            {title: 'Add New', path: '/seller/pages/product/addnew'},
+            {title: 'Category Wise Discount', path: '/seller/pages/product/category_wise_discount'},
+            {title: 'Bulk Upload', path: '/seller/pages/product/bulk_upload'},
+            {title: 'Digital Products', path: '/seller/pages/product/digital_product'},
+            {title: 'Product Reviews', path: '/seller/pages/product/product_review'},
         ],
     },
     {
         title: 'Uploaded Files',
-        path: '/u',
+        path: '/seller/pages/uploads',
         icon: <BsListUl size={20} />
     },
     {
@@ -36,78 +37,84 @@ export const SIDENAV_ITEMS:SideNavItem[] = [
         icon: <BsKanban size={20} />,
         submenu: true,
         subMenuItems: [
-            {title: 'All', path: '/package'},
-            {title: 'Purchase', path: '/products/new'},
+            {title: 'All Package', path: '/seller/pages/package'},
+            {title: 'Purchase', path: '/seller/pages/package/purchase'},
         ],
     },
     {
         title: 'Coupon',
-        path: '/coupon',
+        path: '/seller/pages/coupons',
         icon: <BsListUl size={20} />
     },
     {
         title: 'Wholesale Products',
-        path: '/coupon',
-        icon: <BsListUl size={20} />
-    },
-    {
-        title: 'Auction Products',
-        path: '/coupon',
+        path: '/wolesale',
         icon: <BsKanban size={20} />,
         submenu: true,
         subMenuItems: [
-            {title: 'All', path: '/package'},
-            {title: 'Orders', path: '/products/new'},
+            {title: 'All Wolesale', path: '/seller/pages/wolesale/products'},
+            {title: 'Add New', path: '/seller/pages/wolesale/addnew'},
+        ]
+    },
+    {
+        title: 'Auction Products',
+        path: '/auction',
+        icon: <BsKanban size={20} />,
+        submenu: true,
+        subMenuItems: [
+            {title: 'All Auction', path: '/seller/pages/auction'},
+            {title: 'Add New', path: '/seller/pages/auction/addnew'},
+            {title: 'Orders', path: '/seller/pages/auction/order'},
         ]
     },
     {
         title: 'Orders',
-        path: '/orders',
+        path: '/seller/pages/orders',
         icon: <BsListUl size={20} />
     },
     {
         title: 'Received Refund',
-        path: '/orders',
+        path: '/seller/pages/received_refund',
         icon: <BsListUl size={20} />
     },
     {
         title: 'Shop Setting',
-        path: '/orders',
+        path: '/seller/pages/shop_setting',
         icon: <BsListUl size={20} />
     },
     {
         title: 'Payment History',
-        path: '/orders',
+        path: '/seller/pages/payment_history',
         icon: <BsListUl size={20} />
     },
     {
         title: 'Money Withdraw',
-        path: '/orders',
+        path: '/seller/pages/money_withdraw',
         icon: <BsListUl size={20} />
     },
     {
         title: 'Commission History',
-        path: '/orders',
+        path: '/seller/pages/commission_history',
         icon: <BsListUl size={20} />
     },
     {
         title: 'Conversions',
-        path: '/orders',
+        path: '/seller/pages/conversions',
         icon: <BsListUl size={20} />
     },
     {
         title: 'Product Queries',
-        path: '/orders',
+        path: '/seller/pages/product_queries',
         icon: <BsListUl size={20} />
     },
     {
         title: 'Support Ticket',
-        path: '/orders',
+        path: '/seller/pages/support_ticket',
         icon: <BsListUl size={20} />
     },
     {
         title: 'Account',
-        path: '/account',
+        path: '/seller/pages/account',
         icon: <BsGear size={20} />
     }
 ]
