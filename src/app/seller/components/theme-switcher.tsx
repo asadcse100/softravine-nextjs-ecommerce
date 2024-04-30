@@ -1,34 +1,23 @@
-import Button from "@/shared/Button/Button";
-import { CheckIcon, Palette } from "lucide-react";
-import {
-  DropdownMenu,
-  DropdownMenuTrigger,
-  DropdownMenuContent,
-  DropdownMenuItem
-} from "@radix-ui/react-dropdown-menu";
-import { useTheme } from "next-themes";
+"use client"
 
-export default function ThemeSwitcher() {
-  const { theme, setTheme } = useTheme();
+import * as React from "react"
+import { Moon, Sun } from "lucide-react"
+import { useTheme } from "next-themes"
+
+import { Button } from "@/app/seller/components/ui/button"
+
+export default function ThemeToggle() {
+  const { setTheme, theme } = useTheme()
+
   return (
-    <DropdownMenu>
-      <DropdownMenuTrigger asChild>
-        <Button
-          className="rounded-full p-0 bg-foreground hover:bg-muted text-background hover:text-muted-foreground border-0 outline-none"
-        >
-            <Palette className="w-6 h-6"></Palette>
-        </Button>
-        {/* <DropdownMenuContent align="end" className="z-[99998]">
-            <DropdownMenuItem onClick={() => setTheme('light')}>
-            <span>Light</span>
-          {theme === "light" && <CheckIcon className="ml-2 h-4 w-4" />}
-            </DropdownMenuItem>
-            <DropdownMenuItem onClick={() => setTheme('dark')}>
-            <span>Dark</span>
-          {theme === "dark" && <CheckIcon className="ml-2 h-4 w-4" />}
-            </DropdownMenuItem>
-        </DropdownMenuContent> */}
-      </DropdownMenuTrigger>
-    </DropdownMenu>
-  );
+    <Button
+      variant="ghost"
+      size="icon"
+      onClick={() => setTheme(theme === "light" ? "dark" : "light")}
+    >
+      <Sun className="h-[1.5rem] w-[1.3rem] dark:hidden" />
+      <Moon className="hidden h-5 w-5 dark:block" />
+      <span className="sr-only">Toggle theme</span>
+    </Button>
+  )
 }

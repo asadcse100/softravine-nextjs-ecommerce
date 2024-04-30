@@ -47,12 +47,12 @@ export default function addnew() {
     "w-full rounded-lg border-[1.5px] border-primary bg-transparent px-5 py-3 font-normal text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:bg-form-input dark:text-white";
 
   return (
-    <div className="min-h-screen mx-auto py-4 bg-slate-100 dark:bg-slate-900">
+    <div className="min-h-screen mx-auto max-w-screen-2xl mt-4 p-4 py-4 md:p-6 2xl:p-10 bg-slate-100 dark:bg-slate-900">
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
-          <div className="mx-auto max-w-screen-2xl p-6 md:p-6 2xl:p-10">
-            <div className="grid grid-cols-1 gap-9 sm:grid-cols-2">
-              <div className="flex flex-col gap-9">
+          <div className="mx-auto max-w-screen-2xl">
+            <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
+              <div className="flex flex-col gap-4">
                 <div className="px-6 rounded-sm border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark">
                   <div className="border-b border-stroke px-6.5 py-4 dark:border-strokedark">
                     <h3 className="font-medium text-black dark:text-white">

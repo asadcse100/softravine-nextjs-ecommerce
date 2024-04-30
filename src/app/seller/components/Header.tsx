@@ -12,8 +12,8 @@ export default function Header() {
   const headerStyle = classNames(
     "fixed dark:border-strokedark dark:bg-boxdark w-full z-0 px-4 shadow-sm shadow-slate-500/40 pl-[20rem]",
     {
-      ["sm:pl-[18rem]"]: !toggleCollapse,
-      ["sm:pl-[4rem]"]: toggleCollapse,
+      ["sm:pl-[20rem]"]: !toggleCollapse,
+      ["sm:pl-[5.4rem]"]: toggleCollapse,
     }
   );
 
