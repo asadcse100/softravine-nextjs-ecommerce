@@ -23,6 +23,7 @@ export const SIDENAV_ITEMS:SideNavItem[] = [
             {title: 'Category Wise Discount', path: '/seller/pages/product/category_wise_discount'},
             {title: 'Bulk Upload', path: '/seller/pages/product/bulk_upload'},
             {title: 'Digital Products', path: '/seller/pages/product/digital_product'},
+            {title: 'Digital Products Add', path: '/seller/pages/product/digital_product/addnew'},
             {title: 'Product Reviews', path: '/seller/pages/product/product_review'},
         ],
     },
@@ -43,8 +44,13 @@ export const SIDENAV_ITEMS:SideNavItem[] = [
     },
     {
         title: 'Coupon',
-        path: '/seller/pages/coupons',
-        icon: <BsListUl size={20} />
+        path: '/coupon',
+        icon: <BsKanban size={20} />,
+        submenu: true,
+        subMenuItems: [
+            {title: 'Coupons', path: '/seller/pages/coupons'},
+            {title: 'Add New', path: '/seller/pages/coupons/addnew'},
+        ]
     },
     {
         title: 'Wholesale Products',
@@ -98,8 +104,8 @@ export const SIDENAV_ITEMS:SideNavItem[] = [
         icon: <BsListUl size={20} />
     },
     {
-        title: 'Conversions',
-        path: '/seller/pages/conversions',
+        title: 'Conversations',
+        path: '/seller/pages/conversations',
         icon: <BsListUl size={20} />
     },
     {
