@@ -18,16 +18,16 @@ export default function Sidebar() {
   return (
     <aside className={asideStyle}>
       <div className="sidebar-top placeholder:flex relative items-center py-5 px-2">
-        <image
+        <Image
           className="w-10 min-h-fit"
-          src="/public/next.svg"
-          alt=""
+          src="/public/logo.png"
+          alt="logo"
           width={15}
           height={15}
-        ></image>
+        />
         {!toggleCollapse && (
           <h3 className="pl-2 font-bold text-2xl text-[#e6e9ee] min-w-max">
-            Dashboard
+            My-Bis
           </h3>
         )}
       </div>

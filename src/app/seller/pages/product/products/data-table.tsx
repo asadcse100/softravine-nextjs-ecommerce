@@ -84,7 +84,7 @@ export function DataTable<TData, TValue>({
               Columns
             </Button>
           </DropdownMenuTrigger>
-          <DropdownMenuContent align="end">
+          <DropdownMenuContent className="dark:bg-slate-700 bg-slate-100" align="end">
             {table
               .getAllColumns()
               .filter(
@@ -107,7 +107,7 @@ export function DataTable<TData, TValue>({
           </DropdownMenuContent>
         </DropdownMenu>
       </div>
-      <div className="rounded-md border">
+      <div className="rounded-md">
         <Table>
           <TableHeader>
             {table.getHeaderGroups().map((headerGroup) => (
