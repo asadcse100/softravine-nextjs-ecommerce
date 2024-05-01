@@ -32,7 +32,7 @@ export default function RootLayout({
           <SideBar></SideBar>
           <Header></Header>
           <PageWrapper children = {children}></PageWrapper>
-          <Chat />
+          {/* <Chat /> */}
         </div>
         </ThemeProvider>
       </body>

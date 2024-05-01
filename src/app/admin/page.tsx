@@ -1,29 +1,14 @@
 import React from "react";
-import ButtonPrimary from "@/shared/Button/ButtonPrimary";
+import Sidebar from "@/app/seller/components/Sidebar";
+import ButtonSecondary from "@/shared/Button/ButtonSecondary";
 
-const AccountBilling = () => {
+function PageHome() {
   return (
-    <div className="space-y-10 sm:space-y-12 bg-white dark:bg-gray-700 p-5 rounded-xl">
-      {/* HEADING */}
-      <h2 className="text-2xl sm:text-3xl font-semibold">Payments & payouts</h2>
-      <div className="max-w-2xl prose prose-slate dark:prose-invert">
-        <span className="">
-          {`When you receive a payment for a order, we call that payment to you a
-          "payout." Our secure payment system supports several payout methods,
-          which can be set up below. Go to FAQ.`}
-          <br />
-          <br />
-          To get paid, you need to set up a payout method releases payouts about
-          24 hours after a guest’s scheduled time. The time it takes for the
-          funds to appear in your account depends on your payout method.{` `}
-          <a href="##">Learn more</a>
-        </span>
-        <div className="pt-10">
-          <ButtonPrimary>Add payout mothod</ButtonPrimary>
-        </div>
-      </div>
+    <div className="min-h-screen mx-auto max-w-screen-2xl p-4 md:p-6 2xl:p-10 bg-slate-100 dark:bg-slate-900">
+
     </div>
   );
-};
+}
 
-export default AccountBilling;
+export default PageHome;
+

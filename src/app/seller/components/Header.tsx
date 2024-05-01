@@ -2,6 +2,11 @@ import { BsList } from "react-icons/bs";
 import classNames from "classNames";
 import { useSideBarToggle } from "@/hooks/use-sidebar-toggle";
 import  ThemeSwitcher from "./theme-switcher";
+import Link from "next/link";
+import DropdownMessage from "@/app/seller/components/Header/DropdownMessage";
+import DropdownNotification from "@/app/seller/components/Header/DropdownNotification";
+import DropdownUser from "@/app/seller/components/Header//DropdownUser";
+import Image from "next/image";
 
 export default function Header() {
   const { toggleCollapse, invokeToggleCollapse } = useSideBarToggle();
@@ -22,16 +27,37 @@ export default function Header() {
       <div className="flex items-center justify-between h-20">
         <button
           onClick={sideBarToggle}
-          className="order-2 sm:order-1 bg-[#3a3f48] text-[#6e768e] hover:bg-white ml-3 rounded-md h-[30px] shadow-md shadow-black/10 transition duration-300 ease-in-out flex items-center justify-center"
+          className="order-2 sm:order-1 bg-[#3a3f48] text-[#6e768e] hover:bg-white ml-3 rounded-md h-[30px] w-[30px] shadow-md shadow-black/10 transition duration-300 ease-in-out flex items-center justify-center"
         >
           <BsList/>
         </button>
-        <div className="flex items-center justify-between">
+        {/* <div className="flex items-center justify-between">
           <ThemeSwitcher/>
-        </div>
-        <div className="order-1 sm:order-2 h-10 w-10 rounded-full bg-[#3a3f48] flex items-center justify-center text-center">
+        </div> */}
+        {/* <div className="order-1 sm:order-2 h-10 w-10 rounded-full bg-[#3a3f48] flex items-center justify-center text-center">
           <span className="font-semibold text-sm">AR</span>
+        </div> */}
+
+        <div className="gap-3 2xsm:gap-7 order-2 sm:order-1  text-[#6e768e] ml-3 rounded-md h-[30px]  transition duration-300 ease-in-out flex items-center justify-center">
+          <ul className="flex items-center gap-2 2xsm:gap-4">
+            {/* <!-- Dark Mode Toggler --> */}
+            <ThemeSwitcher/>
+            {/* <!-- Dark Mode Toggler --> */}
+
+            {/* <!-- Notification Menu Area --> */}
+            <DropdownNotification />
+            {/* <!-- Notification Menu Area --> */}
+
+            {/* <!-- Chat Notification Area --> */}
+            <DropdownMessage />
+            {/* <!-- Chat Notification Area --> */}
+          </ul>
+
+          {/* <!-- User Area --> */}
+          <DropdownUser />
+          {/* <!-- User Area --> */}
         </div>
+
       </div>
     </header>
   );
