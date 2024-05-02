@@ -157,25 +157,6 @@ export default function addnew() {
                     <div className="mt-3 flex flex-col gap-5.5 p-6.5">
                       <FormField
                         control={form.control}
-                        name="weight"
-                        render={({ field }) => (
-                          <FormItem>
-                            <FormLabel>Weight</FormLabel>
-                            <FormControl>
-                              <Input
-                                className={inputClass}
-                                placeholder="weight"
-                                {...field}
-                              />
-                            </FormControl>
-                            <FormMessage />
-                          </FormItem>
-                        )}
-                      />
-                    </div>
-                    <div className="mt-3 flex flex-col gap-5.5 p-6.5">
-                      <FormField
-                        control={form.control}
                         name="minimum_purchase_qty"
                         render={({ field }) => (
                           <FormItem>
@@ -286,7 +267,6 @@ export default function addnew() {
               </div>
             </div>
 
-
             <div className="grid grid-cols-1 gap-4 md:grid-cols-1 sm:grid-cols-2">
               <div className="flex flex-col gap-4">
                 <div className="px-6 rounded-sm border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark">
@@ -344,58 +324,6 @@ export default function addnew() {
                 <div className="px-6 rounded-sm border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark">
                   <div className="border-b border-stroke px-6.5 py-4 dark:border-strokedark">
                     <h3 className="font-medium text-black dark:text-white">
-                    Product Variation
-                    </h3>
-                  </div>
-                  <div className="py-6">
-                    <div className="flex flex-col gap-5.5 p-6.5">
-                      <FormField
-                        control={form.control}
-                        name="color"
-                        render={({ field }) => (
-                          <FormItem>
-                            <FormLabel>Colors</FormLabel>
-                            <FormControl>
-                              <Input
-                                className={inputClass}
-                                placeholder="Select Color"
-                                {...field}
-                              />
-                            </FormControl>
-                            <FormMessage />
-                          </FormItem>
-                        )}
-                      />
-                    </div>
-                    <div className="mt-3 flex flex-col gap-5.5 p-6.5">
-                      <FormField
-                        control={form.control}
-                        name="attribute"
-                        render={({ field }) => (
-                          <FormItem>
-                            <FormLabel>Attributes</FormLabel>
-                            <FormControl>
-                              <Input
-                                className={inputClass}
-                                placeholder="Attributes"
-                                {...field}
-                              />
-                            </FormControl>
-                            <FormMessage />
-                          </FormItem>
-                        )}
-                      />
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            <div className="grid grid-cols-1 gap-4 md:grid-cols-1 sm:grid-cols-2">
-              <div className="flex flex-col gap-4">
-                <div className="px-6 rounded-sm border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark">
-                  <div className="border-b border-stroke px-6.5 py-4 dark:border-strokedark">
-                    <h3 className="font-medium text-black dark:text-white">
                     Product price
                     </h3>
                   </div>
@@ -419,17 +347,17 @@ export default function addnew() {
                         )}
                       />
                     </div>
-                    <div className="mt-3 flex flex-col gap-5.5 p-6.5">
+                    <div className="flex flex-col gap-5.5 p-6.5">
                       <FormField
                         control={form.control}
-                        name="discount_date_range"
+                        name="unit_price"
                         render={({ field }) => (
                           <FormItem>
-                            <FormLabel>Discount Date Range</FormLabel>
+                            <FormLabel>Wholesale Price</FormLabel>
                             <FormControl>
                               <Input
                                 className={inputClass}
-                                placeholder="Discount Date Range"
+                                placeholder="Min Qty"
                                 {...field}
                               />
                             </FormControl>
@@ -437,18 +365,15 @@ export default function addnew() {
                           </FormItem>
                         )}
                       />
-                    </div>
-                    <div className="mt-3 flex flex-col gap-5.5 p-6.5">
                       <FormField
                         control={form.control}
-                        name="discount"
+                        name="unit_price"
                         render={({ field }) => (
                           <FormItem>
-                            <FormLabel>Discount</FormLabel>
                             <FormControl>
                               <Input
                                 className={inputClass}
-                                placeholder="Discount"
+                                placeholder="Max Qty"
                                 {...field}
                               />
                             </FormControl>
@@ -456,17 +381,15 @@ export default function addnew() {
                           </FormItem>
                         )}
                       />
-                    </div>
-                    <div className="mt-3 flex flex-col gap-5.5 p-6.5">
                       <FormField
                         control={form.control}
-                        name="flat_percent"
+                        name="unit_price"
                         render={({ field }) => (
                           <FormItem>
                             <FormControl>
                               <Input
                                 className={inputClass}
-                                placeholder="flat_percent"
+                                placeholder="Price Per Unit"
                                 {...field}
                               />
                             </FormControl>
@@ -485,7 +408,7 @@ export default function addnew() {
                 <div className="px-6 rounded-sm border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark">
                   <div className="border-b border-stroke px-6.5 py-4 dark:border-strokedark">
                     <h3 className="font-medium text-black dark:text-white">
-                    Reseller Product price
+                    Reseller Product Price
                     </h3>
                   </div>
                   <div className="py-6">
@@ -508,18 +431,17 @@ export default function addnew() {
                         )}
                       />
                     </div>
- 
-                    <div className="mt-3 flex flex-col gap-5.5 p-6.5">
+                    <div className="flex flex-col gap-5.5 p-6.5">
                       <FormField
                         control={form.control}
-                        name="discount_date_range"
+                        name="unit_price"
                         render={({ field }) => (
                           <FormItem>
-                            <FormLabel>Discount Date Range</FormLabel>
+                            <FormLabel>Reseller Wholesale Price</FormLabel>
                             <FormControl>
                               <Input
                                 className={inputClass}
-                                placeholder="Discount Date Range"
+                                placeholder="Min Qty"
                                 {...field}
                               />
                             </FormControl>
@@ -527,18 +449,15 @@ export default function addnew() {
                           </FormItem>
                         )}
                       />
-                    </div>
-                    <div className="mt-3 flex flex-col gap-5.5 p-6.5">
                       <FormField
                         control={form.control}
-                        name="discount"
+                        name="unit_price"
                         render={({ field }) => (
                           <FormItem>
-                            <FormLabel>Discount</FormLabel>
                             <FormControl>
                               <Input
                                 className={inputClass}
-                                placeholder="Discount"
+                                placeholder="Max Qty"
                                 {...field}
                               />
                             </FormControl>
@@ -546,17 +465,15 @@ export default function addnew() {
                           </FormItem>
                         )}
                       />
-                    </div>
-                    <div className="mt-3 flex flex-col gap-5.5 p-6.5">
                       <FormField
                         control={form.control}
-                        name="flat_percent"
+                        name="unit_price"
                         render={({ field }) => (
                           <FormItem>
                             <FormControl>
                               <Input
                                 className={inputClass}
-                                placeholder="flat_percent"
+                                placeholder="Price Per Unit"
                                 {...field}
                               />
                             </FormControl>
@@ -569,6 +486,7 @@ export default function addnew() {
                 </div>
               </div>
             </div>
+
 
             <div className="grid grid-cols-1 gap-4 md:grid-cols-1 sm:grid-cols-2">
               <div className="flex flex-col gap-4">
@@ -617,45 +535,6 @@ export default function addnew() {
                         )}
                       />
                     </div>
-                    <div className="mt-3 flex flex-col gap-5.5 p-6.5">
-                      <FormField
-                        control={form.control}
-                        name="external_link"
-                        render={({ field }) => (
-                          <FormItem>
-                            <FormLabel>External Link</FormLabel>
-                            <FormControl>
-                              <Input
-                                className={inputClass}
-                                placeholder="External Link"
-                                {...field}
-                              />
-                            </FormControl>
-                            <FormMessage />
-                          </FormItem>
-                        )}
-                      />
-                    </div>
-                    <div className="mt-3 flex flex-col gap-5.5 p-6.5">
-                      <FormField
-                        control={form.control}
-                        name="external_link_button"
-                        render={({ field }) => (
-                          <FormItem>
-                            <FormLabel>External Link Button</FormLabel>
-                            <FormControl>
-                              <Input
-                                className={inputClass}
-                                placeholder="External Link Button"
-                                {...field}
-                              />
-                            </FormControl>
-                            <FormMessage />
-                          </FormItem>
-                        )}
-                      />
-                    </div>
-
                   </div>
                 </div>
               </div>

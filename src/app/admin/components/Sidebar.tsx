@@ -3,6 +3,7 @@ import { SIDENAV_ITEMS } from "@/app/admin/SIDEBAR_CONSTANTS";
 import { SideBarMenuItem } from "./sidebar-menu-item";
 import classNames from "classNames";
 import { useSideBarToggle } from "@/hooks/use-sidebar-toggle";
+import React from "react";
 
 export default function Sidebar() {
   const { toggleCollapse } = useSideBarToggle();

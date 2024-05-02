@@ -13,14 +13,14 @@ import {
   getFilteredRowModel,
 } from "@tanstack/react-table";
 
-import { Button } from "@/app/seller/components/ui/button";
+import { Button } from "@/app/admin/components/ui/button";
 import Input from "@/shared/Input/Input";
 import {
   DropdownMenu,
   DropdownMenuCheckboxItem,
   DropdownMenuContent,
   DropdownMenuTrigger,
-} from "@/app/seller/components/ui/dropdown-menu";
+} from "@/app/admin/components/ui/dropdown-menu";
 
 import {
   Table,
@@ -29,7 +29,7 @@ import {
   TableHead,
   TableHeader,
   TableRow,
-} from "@/app/seller/components/ui/table";
+} from "@/app/admin/components/ui/table";
 
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
