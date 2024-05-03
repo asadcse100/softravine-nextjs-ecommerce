@@ -60,7 +60,7 @@ export const columns: ColumnDef<Products>[] = [
               <MoreHorizontal className="h-6 w-6" />
             </Button>
           </DropdownMenuTrigger>
-          <DropdownMenuContent className="dark:bg-slate-700 bg-slate-100" align="start">
+          <DropdownMenuContent className="dark:bg-slate-700 dark:text-slate-200 bg-slate-100" align="start">
             <DropdownMenuLabel>Actions</DropdownMenuLabel>
             <DropdownMenuItem
               onClick={() => navigator.clipboard.writeText(payment.id)}

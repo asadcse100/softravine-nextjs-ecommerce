@@ -93,6 +93,7 @@ export const SIDENAV_ITEMS:SideNavItem[] = [
         submenu: true,
         subMenuItems: [
             {title: 'All Delivery Boy', path: '/admin/pages/deliveryboy'},
+            {title: 'Add Delivery Boy', path: '/admin/pages/deliveryboy/addnew'},
             {title: 'Payment Histories', path: '/admin/pages/deliveryboy/payment_history'},
             {title: 'Collected Histories', path: '/admin/pages/deliveryboy/collected_history'},
             {title: 'Cancel Request', path: '/admin/pages/deliveryboy/cancel_request'},
@@ -162,9 +163,8 @@ export const SIDENAV_ITEMS:SideNavItem[] = [
         submenu: true,
         subMenuItems: [
             {title: 'All Blogs', path: '/admin/pages/blog_system/all_blog'},
-            {title: 'Add New', path: '/admin/pages/blog_system/addnew'},
+            {title: 'Add New', path: '/admin/pages/blog_system/all_blog/addnew'},
             {title: 'Categories', path: '/admin/pages/blog_system/category'},
-            {title: 'Add Category', path: '/admin/pages/blog_system/category/addnew'},
         ],
     },
     {
@@ -175,7 +175,8 @@ export const SIDENAV_ITEMS:SideNavItem[] = [
         subMenuItems: [
             {title: 'Flash Deals', path: '/admin/pages/marketing/flash_deals'},
             {title: 'Add Flash Deals', path: '/admin/pages/marketing/flash_deals/addnew'},
-            {title: 'Dynamic Pop-up', path: '/admin/pages/marketing/pop_up'},
+            {title: 'Pop-ups', path: '/admin/pages/marketing/pop_up'},
+            {title: 'Add Pop-up', path: '/admin/pages/marketing/pop_up/addnew'},
             {title: 'Custom Alert', path: '/admin/pages/marketing/custom_alert'},
             {title: 'Newsletters', path: '/admin/pages/marketing/newsletter'},
             {title: 'Bulk SMS', path: '/admin/pages/marketing/bulk_sms'},

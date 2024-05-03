@@ -68,8 +68,8 @@ export function DataTable<TData, TValue>({
   });
 
   return (
-    <div className="rounded-sm border border-stroke bg-white px-5 pb-2.5 pt-6 shadow-default dark:border-strokedark dark:bg-boxdark sm:px-7.5 xl:pb-1">
-      <div className="flex items-center py-4 max-w-full overflow-x-auto">
+    <div className="rounded-sm border border-stroke bg-white px-5 pb-2.5 pt-6 shadow-default dark:border-strokedark dark:bg-boxdark sm:px-7.5 xl:pb-1 ">
+      <div className="flex items-center py-4 max-w-full overflow-x-auto ">
         <Input
           placeholder="Filter emails..."
           value={(table.getColumn("email")?.getFilterValue() as string) ?? ""}
@@ -80,11 +80,11 @@ export function DataTable<TData, TValue>({
         />
          <DropdownMenu>
           <DropdownMenuTrigger asChild>
-            <Button variant="outline" className="ml-auto dark:text-white">
+            <Button variant="outline" className="ml-auto dark:text-slate-300">
               Columns
             </Button>
           </DropdownMenuTrigger>
-          <DropdownMenuContent className="dark:bg-slate-700 bg-slate-100" align="end">
+          <DropdownMenuContent className="dark:bg-slate-700 dark:text-slate-200 bg-slate-100" align="end">
             {table
               .getAllColumns()
               .filter(
@@ -109,7 +109,7 @@ export function DataTable<TData, TValue>({
       </div>
       <div className="rounded-md">
         <Table>
-          <TableHeader>
+          <TableHeader className="bg-slate-200 border-b dark:bg-slate-900 dark:border-slate-700">
             {table.getHeaderGroups().map((headerGroup) => (
               <TableRow key={headerGroup.id}>
                 {headerGroup.headers.map((header) => {
@@ -130,12 +130,12 @@ export function DataTable<TData, TValue>({
           <TableBody>
             {table.getRowModel().rows?.length ? (
               table.getRowModel().rows.map((row) => (
-                <TableRow
+                <TableRow className="bg-slate-50 border-b dark:bg-slate-800 dark:border-slate-700 hover:bg-slate-300 dark:hover:bg-slate-600"
                   key={row.id}
                   data-state={row.getIsSelected() && "selected"}
                 >
                   {row.getVisibleCells().map((cell) => (
-                    <TableCell key={cell.id}>
+                    <TableCell key={cell.id} className="text-slate-700 dark:text-slate-400">
                       {flexRender(
                         cell.column.columnDef.cell,
                         cell.getContext()

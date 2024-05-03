@@ -5,7 +5,7 @@ import Input from "@/shared/Input/Input";
 
 const AccountPass = () => {
   return (
-    <div className="space-y-10 sm:space-y-12 bg-white dark:bg-gray-700 p-5 rounded-xl">
+    <div className="space-y-10 sm:space-y-12 bg-white dark:bg-slate-800 p-5 rounded-xl">
       {/* HEADING */}
       {/* <h2 className="text-2xl sm:text-3xl font-semibold">
         Update your password

@@ -2,8 +2,8 @@
 
 import { ColumnDef } from "@tanstack/react-table";
 import { ArrowUpDown, MoreHorizontal } from "lucide-react";
-import { Button } from "@/app/seller/components/ui/button";
-import { Checkbox } from "@/app/seller/components/ui/checkbox";
+import { Button } from "@/app/admin/components/ui/button";
+import { Checkbox } from "@/app/admin/components/ui/checkbox";
 
 import {
   DropdownMenu,
@@ -12,7 +12,7 @@ import {
   DropdownMenuLabel,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
-} from "@/app/seller/components/ui/dropdown-menu";
+} from "@/app/admin/components/ui/dropdown-menu";
 
 // This type is used to define the shape of our data.
 // You can use a Zod schema here if you want.
@@ -60,7 +60,7 @@ export const columns: ColumnDef<Products>[] = [
               <MoreHorizontal className="h-6 w-6" />
             </Button>
           </DropdownMenuTrigger>
-          <DropdownMenuContent className="dark:bg-slate-700 bg-slate-100" align="start">
+          <DropdownMenuContent className="dark:bg-slate-700 dark:text-slate-200 bg-slate-100" align="start">
             <DropdownMenuLabel>Actions</DropdownMenuLabel>
             <DropdownMenuItem
               onClick={() => navigator.clipboard.writeText(payment.id)}
