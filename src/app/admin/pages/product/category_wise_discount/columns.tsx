@@ -76,27 +76,27 @@ export const columns: ColumnDef<Products>[] = [
     },
   },
   {
-    accessorKey: "date",
-    header: "Date",
+    accessorKey: "icon",
+    header: "Icon",
   },
   {
-    accessorKey: "seller",
-    header: "Seller",
+    accessorKey: "name",
+    header: "Product Name",
   },
   {
-    accessorKey: "total_amount_to_pay",
-    header: "Total Amount To Pay",
+    accessorKey: "parent_category",
+    header: "Parent Category",
   },
   {
-    accessorKey: "request_amount",
-    header: "Request Amount",
+    accessorKey: "discount",
+    header: "discount",
   },
   {
-    accessorKey: "message",
-    header: "Message",
+    accessorKey: "discount_date_range",
+    header: "Discount Date Range",
   },
   {
-    accessorKey: "status",
-    header: "Status",
+    accessorKey: "seller_product",
+    header: "Seller Product",
   },
 ];

@@ -84,19 +84,15 @@ export const columns: ColumnDef<Products>[] = [
     header: "Seller",
   },
   {
-    accessorKey: "total_amount_to_pay",
-    header: "Total Amount To Pay",
+    accessorKey: "seller_phone",
+    header: "Seller Phone",
   },
   {
-    accessorKey: "request_amount",
-    header: "Request Amount",
+    accessorKey: "amount",
+    header: "Amount",
   },
   {
-    accessorKey: "message",
-    header: "Message",
-  },
-  {
-    accessorKey: "status",
-    header: "Status",
+    accessorKey: "payment_detail",
+    header: "Payment Detail",
   },
 ];

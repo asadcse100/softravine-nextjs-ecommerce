@@ -76,34 +76,39 @@ export const columns: ColumnDef<Products>[] = [
     },
   },
   {
-    accessorKey: "status",
-    header: "Status",
+    accessorKey: "name",
+    header: "Product Name",
   },
   {
-    accessorKey: "email",
-    header: ({ column }) => {
-      return (
-        <Button
-          variant="ghost"
-          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-        >
-          Email
-          <ArrowUpDown className="ml-2 h-4 w-4" />
-        </Button>
-      );
-    },
+    accessorKey: "parent_category",
+    header: "Parent Category",
   },
   {
-    accessorKey: "amount",
-    header: () => <div className="text-right">Amount</div>,
-    cell: ({ row }) => {
-      const amount = parseFloat(row.getValue("amount"));
-      const formatted = new Intl.NumberFormat("en-US", {
-        style: "currency",
-        currency: "USD",
-      }).format(amount);
-
-      return <div className="text-right font-medium">{formatted}</div>;
-    },
+    accessorKey: "order_level",
+    header: "Order Level",
+  },
+  {
+    accessorKey: "level",
+    header: "Level",
+  },
+  {
+    accessorKey: "banner",
+    header: "Banner",
+  },
+  {
+    accessorKey: "icon",
+    header: "Icon",
+  },
+  {
+    accessorKey: "cover_image",
+    header: "Cover Image",
+  },
+  {
+    accessorKey: "featured",
+    header: "Reatured",
+  },
+  {
+    accessorKey: "commission",
+    header: "Commission",
   },
 ];

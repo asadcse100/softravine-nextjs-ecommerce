@@ -38,7 +38,7 @@ export const SIDENAV_ITEMS:SideNavItem[] = [
             {title: 'Seller Physical Products', path: '/admin/pages/product/seller/physical'},
             {title: 'Seller Digital Products', path: '/admin/pages/product/seller/digital'},
             {title: 'Category', path: '/admin/pages/product/category'},
-            {title: 'Category Wise Discount', path: '/admin/pages/product/category/discount'},
+            {title: 'Category Wise Discount', path: '/admin/pages/product/category_wise_discount'},
             {title: 'Brands', path: '/admin/pages/product/brand'},
             {title: 'Attribute', path: '/admin/pages/product/attribute'},
             {title: 'Color', path: '/admin/pages/product/color'},

@@ -6,82 +6,34 @@ async function getData(): Promise<Products[]> {
   return [
     {
       id: "728ed52f",
-      amount: 100,
-      status: "pending",
-      email: "m@example.com",
+      image: "No Image",
+      product_name: "Acer Nitro 50 N50-620-UA91 Gaming Desktop",
+      price: 5445,
+      today_deal: "ok",
+      published: "ok",
+      featured: "ok",
     },
+ 
     {
       id: "728ed52f",
-      amount: 100,
-      status: "pending",
-      email: "m@example.com",
+      image: "No Image",
+      product_name: "Acer Nitro 50 N50-620-UA91 Gaming Desktop",
+      price: 5445,
+      today_deal: "ok",
+      published: "ok",
+      featured: "ok",
     },
+ 
     {
       id: "728ed52f",
-      amount: 100,
-      status: "pending",
-      email: "m@example.com",
+      image: "No Image",
+      product_name: "Acer Nitro 50 N50-620-UA91 Gaming Desktop",
+      price: 445,
+      today_deal: "ok",
+      published: "ok",
+      featured: "ok",
     },
-    {
-      id: "728ed52f",
-      amount: 100,
-      status: "pending",
-      email: "m@example.com",
-    },
-    {
-      id: "728ed52f",
-      amount: 100,
-      status: "pending",
-      email: "m@example.com",
-    },
-    {
-      id: "728ed52f",
-      amount: 100,
-      status: "pending",
-      email: "m@example.com",
-    },
-    {
-      id: "728ed52f",
-      amount: 100,
-      status: "pending",
-      email: "m@example.com",
-    },
-    {
-      id: "728ed52f",
-      amount: 100,
-      status: "pending",
-      email: "m@example.com",
-    },
-    {
-      id: "728ed52f",
-      amount: 100,
-      status: "pending",
-      email: "m@example.com",
-    },
-    {
-      id: "728ed52f",
-      amount: 100,
-      status: "pending",
-      email: "m@example.com",
-    },
-    {
-      id: "728ed52f",
-      amount: 100,
-      status: "pending",
-      email: "m@example.com",
-    },
-    {
-      id: "728ed52f",
-      amount: 100,
-      status: "pending",
-      email: "m@example.com",
-    },
-    {
-      id: "728ed52f",
-      amount: 100,
-      status: "pending",
-      email: "m@example.com",
-    },
+ 
     // ...
   ]
 }

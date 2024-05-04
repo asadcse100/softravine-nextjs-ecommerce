@@ -76,34 +76,38 @@ export const columns: ColumnDef<Products>[] = [
     },
   },
   {
-    accessorKey: "status",
-    header: "Status",
+    accessorKey: "order_code",
+    header: "Order Code",
   },
+  
   {
-    accessorKey: "email",
-    header: ({ column }) => {
-      return (
-        <Button
-          variant="ghost"
-          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-        >
-          Email
-          <ArrowUpDown className="ml-2 h-4 w-4" />
-        </Button>
-      );
-    },
+    accessorKey: "customer",
+    header: "Customer",
   },
+  
   {
     accessorKey: "amount",
-    header: () => <div className="text-right">Amount</div>,
-    cell: ({ row }) => {
-      const amount = parseFloat(row.getValue("amount"));
-      const formatted = new Intl.NumberFormat("en-US", {
-        style: "currency",
-        currency: "USD",
-      }).format(amount);
-
-      return <div className="text-right font-medium">{formatted}</div>;
-    },
+    header: "Amount",
   },
+  
+  {
+    accessorKey: "delivery_status",
+    header: "Delivery Status",
+  },
+  
+  {
+    accessorKey: "payment_method",
+    header: "Payment Method",
+  },
+  
+  {
+    accessorKey: "payment_status",
+    header: "Payment Status",
+  },
+  
+  {
+    accessorKey: "refund",
+    header: "Refund",
+  },
+  
 ];
