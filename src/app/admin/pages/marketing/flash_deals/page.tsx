@@ -10,6 +10,9 @@ async function getData(): Promise<Products[]> {
       banner: "No Image",
       start_date: "2024-04-05",
       end_date: "2024-04-05",
+      status: "yes",
+      featured: "no",
+      page_link: "Link",
     },
     {
       id: "728ed52f",
@@ -17,6 +20,9 @@ async function getData(): Promise<Products[]> {
       banner: "No Image",
       start_date: "2024-04-05",
       end_date: "2024-04-05",
+      status: "yes",
+      featured: "no",
+      page_link: "Link",
     },
     {
       id: "728ed52f",
@@ -24,6 +30,9 @@ async function getData(): Promise<Products[]> {
       banner: "No Image",
       start_date: "2024-04-05",
       end_date: "2024-04-05",
+      status: "yes",
+      featured: "no",
+      page_link: "Link",
     },
     {
       id: "728ed52f",
@@ -31,6 +40,9 @@ async function getData(): Promise<Products[]> {
       banner: "No Image",
       start_date: "2024-04-05",
       end_date: "2024-04-05",
+      status: "yes",
+      featured: "no",
+      page_link: "Link",
     },
     {
       id: "728ed52f",
@@ -38,6 +50,9 @@ async function getData(): Promise<Products[]> {
       banner: "No Image",
       start_date: "2024-04-05",
       end_date: "2024-04-05",
+      status: "yes",
+      featured: "no",
+      page_link: "Link",
     },
     {
       id: "728ed52f",
@@ -45,6 +60,9 @@ async function getData(): Promise<Products[]> {
       banner: "No Image",
       start_date: "2024-04-05",
       end_date: "2024-04-05",
+      status: "yes",
+      featured: "no",
+      page_link: "Link",
     },
     {
       id: "728ed52f",
@@ -52,6 +70,9 @@ async function getData(): Promise<Products[]> {
       banner: "No Image",
       start_date: "2024-04-05",
       end_date: "2024-04-05",
+      status: "yes",
+      featured: "no",
+      page_link: "Link",
     },
     {
       id: "728ed52f",
@@ -59,6 +80,9 @@ async function getData(): Promise<Products[]> {
       banner: "No Image",
       start_date: "2024-04-05",
       end_date: "2024-04-05",
+      status: "yes",
+      featured: "no",
+      page_link: "Link",
     },
     {
       id: "728ed52f",
@@ -66,6 +90,9 @@ async function getData(): Promise<Products[]> {
       banner: "No Image",
       start_date: "2024-04-05",
       end_date: "2024-04-05",
+      status: "yes",
+      featured: "no",
+      page_link: "Link",
     },
     {
       id: "728ed52f",
@@ -73,6 +100,9 @@ async function getData(): Promise<Products[]> {
       banner: "No Image",
       start_date: "2024-04-05",
       end_date: "2024-04-05",
+      status: "yes",
+      featured: "no",
+      page_link: "Link",
     },
     {
       id: "728ed52f",
@@ -80,6 +110,9 @@ async function getData(): Promise<Products[]> {
       banner: "No Image",
       start_date: "2024-04-05",
       end_date: "2024-04-05",
+      status: "yes",
+      featured: "no",
+      page_link: "Link",
     },
     {
       id: "728ed52f",
@@ -87,6 +120,9 @@ async function getData(): Promise<Products[]> {
       banner: "No Image",
       start_date: "2024-04-05",
       end_date: "2024-04-05",
+      status: "yes",
+      featured: "no",
+      page_link: "Link",
     },
     {
       id: "728ed52f",
@@ -94,6 +130,9 @@ async function getData(): Promise<Products[]> {
       banner: "No Image",
       start_date: "2024-04-05",
       end_date: "2024-04-05",
+      status: "yes",
+      featured: "no",
+      page_link: "Link",
     },
     // ...
   ]

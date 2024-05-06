@@ -177,7 +177,6 @@ export const SIDENAV_ITEMS:SideNavItem[] = [
             {title: 'Add Flash Deals', path: '/admin/pages/marketing/flash_deals/addnew'},
             {title: 'Pop-ups', path: '/admin/pages/marketing/pop_up'},
             {title: 'Add Pop-up', path: '/admin/pages/marketing/pop_up/addnew'},
-            {title: 'Custom Alert', path: '/admin/pages/marketing/custom_alert'},
             {title: 'Newsletters', path: '/admin/pages/marketing/newsletter'},
             {title: 'Bulk SMS', path: '/admin/pages/marketing/bulk_sms'},
             {title: 'Subscribers', path: '/admin/pages/marketing/subscriber'},

@@ -1,29 +1,123 @@
-import React from "react";
-import ButtonPrimary from "@/shared/Button/ButtonPrimary";
+import { Products, columns } from "./columns"
+import { DataTable } from "./data-table"
 
-const AccountBilling = () => {
+async function getData(): Promise<Products[]> {
+  // Fetch data from your API here.
+  return [
+    {
+      id: "728ed52f",
+      name: "Euro",
+      symbol: "E",
+      code: "EUR",
+      exchange_rate: "132",
+      status: "yes",
+    },
+    {
+      id: "728ed52f",
+      name: "Euro",
+      symbol: "E",
+      code: "EUR",
+      exchange_rate: "132",
+      status: "yes",
+    },
+    {
+      id: "728ed52f",
+      name: "Euro",
+      symbol: "E",
+      code: "EUR",
+      exchange_rate: "132",
+      status: "yes",
+    },
+    {
+      id: "728ed52f",
+      name: "Euro",
+      symbol: "E",
+      code: "EUR",
+      exchange_rate: "132",
+      status: "yes",
+    },
+    {
+      id: "728ed52f",
+      name: "Euro",
+      symbol: "E",
+      code: "EUR",
+      exchange_rate: "132",
+      status: "yes",
+    },
+    {
+      id: "728ed52f",
+      name: "Euro",
+      symbol: "E",
+      code: "EUR",
+      exchange_rate: "132",
+      status: "yes",
+    },
+    {
+      id: "728ed52f",
+      name: "Euro",
+      symbol: "E",
+      code: "EUR",
+      exchange_rate: "132",
+      status: "yes",
+    },
+    {
+      id: "728ed52f",
+      name: "Euro",
+      symbol: "E",
+      code: "EUR",
+      exchange_rate: "132",
+      status: "yes",
+    },
+    {
+      id: "728ed52f",
+      name: "Euro",
+      symbol: "E",
+      code: "EUR",
+      exchange_rate: "132",
+      status: "yes",
+    },
+    {
+      id: "728ed52f",
+      name: "Euro",
+      symbol: "E",
+      code: "EUR",
+      exchange_rate: "132",
+      status: "yes",
+    },
+    {
+      id: "728ed52f",
+      name: "Euro",
+      symbol: "E",
+      code: "EUR",
+      exchange_rate: "132",
+      status: "yes",
+    },
+    {
+      id: "728ed52f",
+      name: "Euro",
+      symbol: "E",
+      code: "EUR",
+      exchange_rate: "132",
+      status: "yes",
+    },
+    {
+      id: "728ed52f",
+      name: "Euro",
+      symbol: "E",
+      code: "EUR",
+      exchange_rate: "132",
+      status: "yes",
+    },
+    // ...
+  ]
+}
+
+export default async function DemoPage() {
+  const data = await getData()
+
   return (
-    <div className="space-y-10 sm:space-y-12 bg-white dark:bg-gray-700 p-5 rounded-xl">
-      {/* HEADING */}
-      <h2 className="text-2xl sm:text-3xl font-semibold">Payments & payouts</h2>
-      <div className="max-w-2xl prose prose-slate dark:prose-invert">
-        <span className="">
-          {`When you receive a payment for a order, we call that payment to you a
-          "payout." Our secure payment system supports several payout methods,
-          which can be set up below. Go to FAQ.`}
-          <br />
-          <br />
-          To get paid, you need to set up a payout method releases payouts about
-          24 hours after a guest’s scheduled time. The time it takes for the
-          funds to appear in your account depends on your payout method.{` `}
-          <a href="##">Learn more</a>
-        </span>
-        <div className="pt-10">
-          <ButtonPrimary>Add payout mothod</ButtonPrimary>
-        </div>
-      </div>
+    <div classname="mEuroreen mx-asymbolmaxE-screen-2codel:pEUR0 bg-slatexchange_rate00 132rk:bg-slate-900">
+      <DataTable columns={columns} data={data} />
     </div>
-  );
-};
-
-export default AccountBilling;
+  )
+}

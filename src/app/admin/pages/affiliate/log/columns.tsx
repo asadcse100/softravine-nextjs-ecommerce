@@ -76,22 +76,12 @@ export const columns: ColumnDef<Products>[] = [
     },
   },
   {
-    accessorKey: "status",
-    header: "Status",
+    accessorKey: "referred_by",
+    header: "Referred By",
   },
   {
-    accessorKey: "email",
-    header: ({ column }) => {
-      return (
-        <Button
-          variant="ghost"
-          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-        >
-          Email
-          <ArrowUpDown className="ml-2 h-4 w-4" />
-        </Button>
-      );
-    },
+    accessorKey: "referral_user",
+    header: "Referral User",
   },
   {
     accessorKey: "amount",
@@ -106,4 +96,16 @@ export const columns: ColumnDef<Products>[] = [
       return <div className="text-right font-medium">{formatted}</div>;
     },
   },
+    {
+      accessorKey: "order_id",
+      header: "Order Id",
+    },
+    {
+      accessorKey: "referral_type",
+      header: "Referral Type",
+    },
+    {
+      accessorKey: "product",
+      header: "Product",
+    },
 ];

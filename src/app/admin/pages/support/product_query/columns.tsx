@@ -76,34 +76,23 @@ export const columns: ColumnDef<Products>[] = [
     },
   },
   {
+    accessorKey: "user_name",
+    header: "User Name",
+  },
+  {
+    accessorKey: "product_name",
+    header: "Product Name",
+  },
+  {
+    accessorKey: "question",
+    header: "Question",
+  },
+  {
+    accessorKey: "reply",
+    header: "Reply",
+  },
+  {
     accessorKey: "status",
     header: "Status",
-  },
-  {
-    accessorKey: "email",
-    header: ({ column }) => {
-      return (
-        <Button
-          variant="ghost"
-          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-        >
-          Email
-          <ArrowUpDown className="ml-2 h-4 w-4" />
-        </Button>
-      );
-    },
-  },
-  {
-    accessorKey: "amount",
-    header: () => <div className="text-right">Amount</div>,
-    cell: ({ row }) => {
-      const amount = parseFloat(row.getValue("amount"));
-      const formatted = new Intl.NumberFormat("en-US", {
-        style: "currency",
-        currency: "USD",
-      }).format(amount);
-
-      return <div className="text-right font-medium">{formatted}</div>;
-    },
   },
 ];

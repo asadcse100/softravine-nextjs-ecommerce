@@ -18,7 +18,7 @@ import {
 // You can use a Zod schema here if you want.
 export type Products = {
   id: string;
-  amount: number;
+  bid_starting_amount: number;
   status: "pending" | "processing" | "success" | "failed";
   email: string;
 };
@@ -76,34 +76,32 @@ export const columns: ColumnDef<Products>[] = [
     },
   },
   {
-    accessorKey: "status",
-    header: "Status",
+    accessorKey: "name",
+    header: "Name",
   },
   {
-    accessorKey: "email",
-    header: ({ column }) => {
-      return (
-        <Button
-          variant="ghost"
-          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-        >
-          Email
-          <ArrowUpDown className="ml-2 h-4 w-4" />
-        </Button>
-      );
-    },
-  },
-  {
-    accessorKey: "amount",
-    header: () => <div className="text-right">Amount</div>,
+    accessorKey: "bid_starting_amount",
+    header: () => <div className="text-right">Bid Starting Amount</div>,
     cell: ({ row }) => {
-      const amount = parseFloat(row.getValue("amount"));
+      const bid_starting_amount = parseFloat(row.getValue("bid_starting_amount"));
       const formatted = new Intl.NumberFormat("en-US", {
         style: "currency",
         currency: "USD",
-      }).format(amount);
+      }).format(bid_starting_amount);
 
       return <div className="text-right font-medium">{formatted}</div>;
     },
+  },
+  {
+    accessorKey: "auction_start_date",
+    header: "Auction Start Date",
+  },
+  {
+    accessorKey: "auction_end_date",
+    header: "Auction End Date",
+  },
+  {
+    accessorKey: "total_bid",
+    header: "Total Bid",
   },
 ];

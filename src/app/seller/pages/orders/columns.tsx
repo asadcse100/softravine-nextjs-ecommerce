@@ -76,22 +76,16 @@ export const columns: ColumnDef<Products>[] = [
     },
   },
   {
-    accessorKey: "status",
-    header: "Status",
+    accessorKey: "order_code",
+    header: "Order Code",
   },
   {
-    accessorKey: "email",
-    header: ({ column }) => {
-      return (
-        <Button
-          variant="ghost"
-          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-        >
-          Email
-          <ArrowUpDown className="ml-2 h-4 w-4" />
-        </Button>
-      );
-    },
+    accessorKey: "num_of_product",
+    header: "Num Of Product",
+  },
+  {
+    accessorKey: "customer",
+    header: "Cutomer",
   },
   {
     accessorKey: "amount",
@@ -105,5 +99,13 @@ export const columns: ColumnDef<Products>[] = [
 
       return <div className="text-right font-medium">{formatted}</div>;
     },
+  },
+  {
+    accessorKey: "delivery_status",
+    header: "Delivery Status",
+  },
+  {
+    accessorKey: "payment_status",
+    header: "Payment Status",
   },
 ];
