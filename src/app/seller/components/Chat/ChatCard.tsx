@@ -55,8 +55,8 @@ const chatData: Chat[] = [
 
 const ChatCard = () => {
   return (
-    <div className="col-span-12 rounded-sm border border-stroke bg-white py-6 shadow-default dark:border-strokedark dark:bg-boxdark xl:col-span-4">
-      <h4 className="mb-6 px-7.5 text-xl font-semibold text-black dark:text-white">
+    <div className="p-5 col-span-12 rounded-sm border border-stroke bg-slate-300 py-6 shadow-default dark:border-strokedark dark:bg-boxdark xl:col-span-4">
+      <h4 className="mb-6 px-7.5 text-xl font-semibold text-black dark:text-slate-300">
         Chats
       </h4>
 
@@ -67,7 +67,7 @@ const ChatCard = () => {
             className="flex items-center gap-5 px-7.5 py-3 hover:bg-gray-3 dark:hover:bg-meta-4"
             key={key}
           >
-            <div className="relative h-14 w-14 rounded-full">
+            <div className="relative h-14 w-14 rounded-full dark:text-slate-400">
               <Image
                 width={56}
                 height={56}
@@ -79,7 +79,7 @@ const ChatCard = () => {
                 }}
               />
               <span
-                className={`absolute bottom-0 right-0 h-3.5 w-3.5 rounded-full border-2 border-white ${
+                className={`absolute bottom-0 right-0 h-3.5 w-3.5 rounded-full border-2 border-slate-300 ${
                   chat.dot === 6 ? "bg-meta-6" : `bg-meta-${chat.dot}`
                 } `}
               ></span>
@@ -87,11 +87,11 @@ const ChatCard = () => {
 
             <div className="flex flex-1 items-center justify-between">
               <div>
-                <h5 className="font-medium text-black dark:text-white">
+                <h5 className="font-medium text-black dark:text-slate-300">
                   {chat.name}
                 </h5>
-                <p>
-                  <span className="text-sm text-black dark:text-white">
+                <p className="dark:text-slate-500">
+                  <span className="text-sm text-black dark:text-slate-400">
                     {chat.text}
                   </span>
                   <span className="text-xs"> . {chat.time} min</span>
@@ -99,7 +99,7 @@ const ChatCard = () => {
               </div>
               {chat.textCount !== 0 && (
                 <div className="flex h-6 w-6 items-center justify-center rounded-full bg-primary">
-                  <span className="text-sm font-medium text-white">
+                  <span className="text-sm font-medium text-slate-300">
                     {" "}
                     {chat.textCount}
                   </span>

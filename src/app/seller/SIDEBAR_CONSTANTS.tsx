@@ -9,8 +9,8 @@ export const SIDENAV_ITEMS:SideNavItem[] = [
     },
     {
         title:"POS",
-        path:"/pos",
-        icon: <BsHouseDoor size={20}/>
+        path:"/seller/pages/pos",
+        icon: <BsKanban size={20}/>
     },
     {
         title: 'Products',
@@ -21,7 +21,7 @@ export const SIDENAV_ITEMS:SideNavItem[] = [
             {title: 'All Products', path: '/seller/pages/product/products'},
             {title: 'Add New', path: '/seller/pages/product/addnew'},
             {title: 'Category Wise Discount', path: '/seller/pages/product/category_wise_discount'},
-            {title: 'Bulk Upload', path: '/seller/pages/product/bulk_upload'},
+            {title: 'Bulk Upload', path: '/seller/pages/product/product_bulk_upload'},
             {title: 'Digital Products', path: '/seller/pages/product/digital_product'},
             {title: 'Digital Products Add', path: '/seller/pages/product/digital_product/addnew'},
             {title: 'Product Reviews', path: '/seller/pages/product/product_review'},

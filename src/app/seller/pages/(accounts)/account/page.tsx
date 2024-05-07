@@ -10,9 +10,9 @@ import Image from "next/image";
 const AccountPage = () => {
   return (
     <div className={`nc-AccountPage `}>
-      <div className="space-y-5 sm:space-y-5 bg-gray-300 dark:bg-gray-700 p-5 rounded-xl">
+      <div className="space-y-5 sm:space-y-5 bg-slate-300 dark:bg-slate-700 p-5 rounded-md">
         {/* HEADING */}
-        <h2 className="text-2xl sm:text-3xl font-semibold">
+        <h2 className="text-2xl sm:text-3xl font-semibold dark:text-slate-300">
           Account infomation
         </h2>
         <div className="flex flex-col md:flex-row">
@@ -26,7 +26,7 @@ const AccountPage = () => {
                 height={128}
                 className="w-32 h-32 rounded-full object-cover z-0"
               />
-              <div className="absolute inset-0 bg-black bg-opacity-60 flex flex-col items-center justify-center text-neutral-50 cursor-pointer">
+              <div className="absolute inset-0 bg-black bg-opacity-60 flex flex-col items-center justify-center text-neutral-50 cursor-pointer dark:text-slate-300">
                 <svg
                   width="30"
                   height="30"
@@ -43,7 +43,7 @@ const AccountPage = () => {
                   />
                 </svg>
 
-                <span className="mt-1 text-xs">Change Image</span>
+                <span className="mt-1 text-xs ">Change Image</span>
               </div>
               <input
                 type="file"
@@ -53,15 +53,15 @@ const AccountPage = () => {
           </div>
           <div className="flex-grow mt-10 md:mt-0 md:pl-16 max-w-3xl space-y-6">
             <div>
-              <Label>Full name</Label>
-              <Input className="mt-1.5" defaultValue="Enrico Cole" />
+              <Label className="dark:text-slate-400">Full name</Label>
+              <Input className="mt-1.5" placeholder="Enrico Cole" />
             </div>
 
             {/* ---- */}
 
             {/* ---- */}
             <div>
-              <Label>Email</Label>
+              <Label className="dark:text-slate-400">Email</Label>
               <div className="mt-1.5 flex">
                 <span className="inline-flex items-center px-2.5 rounded-l-2xl border border-r-0 border-neutral-200 dark:border-neutral-700 bg-neutral-50 dark:bg-neutral-800 text-neutral-500 dark:text-neutral-400 text-sm">
                   <i className="text-2xl las la-envelope"></i>
@@ -74,32 +74,32 @@ const AccountPage = () => {
             </div>
 
             <div>
-              <Label>Full Addess</Label>
+              <Label className="dark:text-slate-400">Full Addess</Label>
               <div className="mt-1.5 flex">
                 <span className="inline-flex items-center px-2.5 rounded-l-2xl border border-r-0 border-neutral-200 dark:border-neutral-700 bg-neutral-50 dark:bg-neutral-800 text-neutral-500 dark:text-neutral-400 text-sm">
                   <i className="text-2xl las la-map-signs"></i>
                 </span>
                 <Textarea
                   className="!rounded-l-none"
-                  defaultValue="New york, USA"
+                  placeholder="New york, USA"
                 />
               </div>
             </div>
 
             {/* ---- */}
             <div>
-              <Label>Phone number</Label>
+              <Label className="dark:text-slate-400">Phone number</Label>
               <div className="mt-1.5 flex">
                 <span className="inline-flex items-center px-2.5 rounded-l-2xl border border-r-0 border-neutral-200 dark:border-neutral-700 bg-neutral-50 dark:bg-neutral-800 text-neutral-500 dark:text-neutral-400 text-sm">
                   <i className="text-2xl las la-phone-volume"></i>
                 </span>
-                <Input className="!rounded-l-none" defaultValue="003 888 232" />
+                <Input className="!rounded-l-none" placeholder="003 888 232" />
               </div>
             </div>
             {/* ---- */}
             <div>
-              <Label>About you</Label>
-              <Textarea className="mt-1.5" defaultValue="..." />
+              <Label className="dark:text-slate-400">About you</Label>
+              <Textarea className="mt-1.5" placeholder="..." />
             </div>
             <div className="pt-2">
               <ButtonPrimary>Update account</ButtonPrimary>

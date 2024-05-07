@@ -6,31 +6,31 @@ async function getData(): Promise<Products[]> {
   return [
     {
       id: "728ed52f",
-      name: "Product",
+      name: "Manager",
     },
     {
       id: "728ed52f",
-      name: "Product",
+      name: "Manager",
     },
     {
       id: "728ed52f",
-      name: "Product",
+      name: "Manager",
     },
     {
       id: "728ed52f",
-      name: "Product",
+      name: "Manager",
     },
     {
       id: "728ed52f",
-      name: "Product",
+      name: "Manager",
     },
     {
       id: "728ed52f",
-      name: "Product",
+      name: "Manager",
     },
     {
       id: "728ed52f",
-      name: "Product",
+      name: "Manager",
     },
     {
       id: "728ed52f",

@@ -16,27 +16,27 @@ const pages: {
 }[] = [
   {
     name: "Account info",
-    link: "/account",
+    link: "/seller/pages/account",
   },
   {
     name: "Personal info",
-    link: "/account-personal",
+    link: "/seller/pages/account-personal",
   },
   {
     name: "Full Address",
-    link: "/address",
+    link: "/seller/pages/address",
   },
   {
     name: "KCY",
-    link: "/kcy",
+    link: "/seller/pages/kcy",
   },
   {
     name: "Nominee",
-    link: "/nominee",
+    link: "/seller/pages/nominee",
   },
   {
     name: "Additional info",
-    link: "/additional-info",
+    link: "/seller/pages/additional-info",
   },
 ];
 
@@ -44,11 +44,11 @@ const CommonLayout: FC<CommonLayoutProps> = ({ children }) => {
   const pathname = usePathname();
 
   return (
-    <div className="nc-AccountCommonLayout container">
-      <div className="mt-5 sm:mt-5">
+    <div className="min-h-screen bg-slate-100 dark:bg-slate-900 container">
+      <div className="mt-4 sm:mt-4">
         <div className="max-w-4xl mx-auto">
           <div className="max-w-2xl">
-            <h2 className="text-3xl xl:text-4xl font-semibold">Account</h2>
+            <h2 className="text-3xl xl:text-4xl font-semibold dark:text-slate-300">Account</h2>
           </div>
           <hr className="mt-5 border-slate-300 dark:border-slate-700"></hr>
 

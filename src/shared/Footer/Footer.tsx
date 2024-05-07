@@ -8,6 +8,8 @@ export interface WidgetFooterMenu {
   title: string;
   menus: CustomLink[];
 }
+const date = new Date();
+const year = date.getFullYear();
 
 const widgetMenus: WidgetFooterMenu[] = [
   {
@@ -37,17 +39,18 @@ const widgetMenus: WidgetFooterMenu[] = [
       { href: "/", label: "Best practices" },
       { href: "/", label: "Support" },
       { href: "/", label: "Developers" },
-      { href: "/", label: "Learn design" },
+      { href: "/", label: "API Reference" },
     ],
   },
   {
     id: "4",
-    title: "Community",
+    title: "Company",
     menus: [
       { href: "/", label: "Discussion Forums" },
       { href: "/", label: "Code of Conduct" },
       { href: "/", label: "Contributing" },
-      { href: "/", label: "API Reference" },
+      { href: "/seller", label: "Seller Login" },
+      { href: "/admin", label: "Admin Login" },
     ],
   },
 ];
@@ -93,7 +96,7 @@ const Footer: React.FC = () => {
 
       </div>
       <div className="bg-gray-950 y-5 pt-5 p-4">
-        <p className="text-slate-200">Copyright © 2018 - 2022 | All Rights Reserved by mybis-shopping.com</p>
+        <p className="text-slate-200">Copyright © {year} | All Rights Reserved by mybis-shopping.com </p>
       </div>
     </div>
   );

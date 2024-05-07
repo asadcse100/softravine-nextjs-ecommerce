@@ -30,7 +30,16 @@ export const columns: ColumnDef<Products>[] = [
   },
   {
     accessorKey: "package_price",
-    header: "Package Price",
+    header: () => <div className="text-center">Package Price</div>,
+    cell: ({ row }) => {
+      const package_price = parseFloat(row.getValue("package_price"));
+      const formatted = new Intl.NumberFormat("en-US", {
+        style: "currency",
+        currency: "USD",
+      }).format(package_price);
+
+      return <div className="text-center font-medium">{formatted}</div>;
+    },
   },
   {
     accessorKey: "payment_type",

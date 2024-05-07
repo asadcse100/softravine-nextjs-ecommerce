@@ -6,7 +6,7 @@ async function getData(): Promise<Products[]> {
   return [
     {
       id: "728ed52f",
-      tiket_id: 3242100,
+      ticket_id: 3242100,
       sending_date: "02-02-2025",
       subject: "Account Problem",
       status: "Solved",
@@ -14,7 +14,7 @@ async function getData(): Promise<Products[]> {
     },
     {
       id: "728ed52f",
-      tiket_id: 3242100,
+      ticket_id: 3242100,
       sending_date: "02-02-2025",
       subject: "Account Problem",
       status: "Solved",
@@ -22,7 +22,7 @@ async function getData(): Promise<Products[]> {
     },
     {
       id: "728ed52f",
-      tiket_id: 3242100,
+      ticket_id: 3242100,
       sending_date: "02-02-2025",
       subject: "Account Problem",
       status: "Solved",
@@ -30,7 +30,7 @@ async function getData(): Promise<Products[]> {
     },
     {
       id: "728ed52f",
-      tiket_id: 3242100,
+      ticket_id: 3242100,
       sending_date: "02-02-2025",
       subject: "Account Problem",
       status: "Solved",
@@ -38,7 +38,7 @@ async function getData(): Promise<Products[]> {
     },
     {
       id: "728ed52f",
-      tiket_id: 3242100,
+      ticket_id: 3242100,
       sending_date: "02-02-2025",
       subject: "Account Problem",
       status: "Solved",
@@ -46,7 +46,7 @@ async function getData(): Promise<Products[]> {
     },
     {
       id: "728ed52f",
-      tiket_id: 3242100,
+      ticket_id: 3242100,
       sending_date: "02-02-2025",
       subject: "Account Problem",
       status: "Solved",
@@ -54,7 +54,7 @@ async function getData(): Promise<Products[]> {
     },
     {
       id: "728ed52f",
-      tiket_id: 3242100,
+      ticket_id: 3242100,
       sending_date: "02-02-2025",
       subject: "Account Problem",
       status: "Solved",
@@ -62,7 +62,7 @@ async function getData(): Promise<Products[]> {
     },
     {
       id: "728ed52f",
-      tiket_id: 3242100,
+      ticket_id: 3242100,
       sending_date: "02-02-2025",
       subject: "Account Problem",
       status: "Solved",
@@ -70,7 +70,7 @@ async function getData(): Promise<Products[]> {
     },
     {
       id: "728ed52f",
-      tiket_id: 3242100,
+      ticket_id: 3242100,
       sending_date: "02-02-2025",
       subject: "Account Problem",
       status: "Solved",
@@ -78,7 +78,7 @@ async function getData(): Promise<Products[]> {
     },
     {
       id: "728ed52f",
-      tiket_id: 3242100,
+      ticket_id: 3242100,
       sending_date: "02-02-2025",
       subject: "Account Problem",
       status: "Solved",
@@ -86,7 +86,7 @@ async function getData(): Promise<Products[]> {
     },
     {
       id: "728ed52f",
-      tiket_id: 3242100,
+      ticket_id: 3242100,
       sending_date: "02-02-2025",
       subject: "Account Problem",
       status: "Solved",
@@ -94,7 +94,7 @@ async function getData(): Promise<Products[]> {
     },
     {
       id: "728ed52f",
-      tiket_id: 3242100,
+      ticket_id: 3242100,
       sending_date: "02-02-2025",
       subject: "Account Problem",
       status: "Solved",
@@ -102,7 +102,7 @@ async function getData(): Promise<Products[]> {
     },
     {
       id: "728ed52f",
-      tiket_id: 3242100,
+      ticket_id: 3242100,
       sending_date: "02-02-2025",
       subject: "Account Problem",
       status: "Solved",

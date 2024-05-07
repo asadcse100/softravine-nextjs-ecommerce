@@ -31,12 +31,6 @@ export default function Header() {
         >
           <BsList/>
         </button>
-        {/* <div className="flex items-center justify-between">
-          <ThemeSwitcher/>
-        </div> */}
-        {/* <div className="order-1 sm:order-2 h-10 w-10 rounded-full bg-[#3a3f48] flex items-center justify-center text-center">
-          <span className="font-semibold text-sm">AR</span>
-        </div> */}
 
         <div className="gap-3 2xsm:gap-7 order-2 sm:order-1  text-[#6e768e] ml-3 rounded-md h-[30px]  transition duration-300 ease-in-out flex items-center justify-center">
           <ul className="flex items-center gap-2 2xsm:gap-4">

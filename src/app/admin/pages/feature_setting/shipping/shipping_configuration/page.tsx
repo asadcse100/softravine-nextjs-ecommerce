@@ -1,0 +1,374 @@
+"use client";
+
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useForm } from "react-hook-form";
+import { z } from "zod";
+
+import { Button } from "@/app/admin/components/ui/button";
+import {
+  Form,
+  FormControl,
+  FormDescription,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+} from "@/app/admin/components/ui/form";
+import Input from "@/shared/Input/Input";
+
+const formSchema = z.object({
+  product_name: z.string().min(10, {
+    message: "Product Name must be at least 10 characters.",
+  }),
+  brand: z.string().min(3, {
+    message: "Brand must be at least 3 characters.",
+  }),
+  unit: z.string().min(3, {
+    message: "Unit must be at least 3 characters.",
+  }),
+  weight: z.string().min(3, {
+    message: "Weight must be at least 3 characters.",
+  }),
+  minimum_purchase_qty: z.string().min(3, {
+    message: "Minimum Purchase Qty must be at least 3 characters.",
+  }),
+  tag: z.string().min(3, {
+    message: "Tag Purchase Qty must be at least 3 characters.",
+  }),
+  barcode: z.string().min(3, {
+    message: "Barcode Purchase Qty must be at least 3 characters.",
+  }),
+  thumbnail_image: z.string().min(3, {
+    message: "thumbnail_image Purchase Qty must be at least 3 characters.",
+  }),
+  gallery_images: z.string().min(3, {
+    message: "gallery_images Purchase Qty must be at least 3 characters.",
+  }),
+  video_provider: z.string().min(3, {
+    message: "Video Provider Purchase Qty must be at least 3 characters.",
+  }),
+  video_link: z.string().min(3, {
+    message: "Video Link Purchase Qty must be at least 3 characters.",
+  }),
+});
+
+export default function addnew() {
+  // ...
+  // 1. Define your form.
+  const form = useForm<z.infer<typeof formSchema>>({
+    resolver: zodResolver(formSchema),
+    defaultValues: {
+      product_name: "",
+      brand: "",
+      unit: "",
+      weight: "",
+      minimum_purchase_qty: "",
+      tag: "",
+      barcode: "",
+      thumbnail_image: "",
+      gallery_images: "",
+      video_provider: "",
+      video_link: "",
+    },
+  });
+
+  // 2. Define a submit handler.
+  function onSubmit(values: z.infer<typeof formSchema>) {
+    // Do something with the form values.
+    // ✅ This will be type-safe and validated.
+    console.log(values);
+  }
+
+  const inputClass =
+    "w-full rounded-lg border-[1px] border-primary bg-transparent px-5 py-3 font-normal text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-slate-300r dark:bg-form-input dark:text-slate-300";
+
+  return (
+    <div className="min-h-screen mx-auto max-w-screen-2xl mt-4 p-4 py-4 md:p-6 2xl:p-10 bg-slate-100 dark:bg-slate-900">
+      <Form {...form}>
+        <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
+          <div className="mx-auto max-w-screen-2xl">
+            <div className="grid gap-4 md:grid-cols-1 lg:grid-cols-2 sm:grid-cols-1">
+              <div className="flex flex-col gap-4">
+                <div className="px-6 rounded-sm border border-stroke bg-slate-300 shadow-default dark:border-strokedark dark:bg-boxdark">
+                  <div className="border-b border-stroke px-6.5 py-4 dark:border-strokedark">
+                    <h3 className="font-medium text-black dark:text-slate-300">
+                      Select Shipping Method
+                    </h3>
+                  </div>
+                  <div className="py-6">
+                    <div className="flex flex-col gap-5.5 p-6.5">
+                      <FormField
+                        control={form.control}
+                        name="product_name"
+                        render={({ field }) => (
+                          <FormItem>
+                            <FormLabel> Product Wise Shipping Cost</FormLabel>
+                            <FormControl>
+                              {/* <Input
+                                className={inputClass}
+                                placeholder="Facebook Chat"
+                                {...field}
+                              /> */}
+                            </FormControl>
+                            <FormMessage />
+                          </FormItem>
+                        )}
+                      />
+                    </div>
+                    <div className="flex flex-col gap-5.5 p-6.5">
+                      <FormField
+                        control={form.control}
+                        name="product_name"
+                        render={({ field }) => (
+                          <FormItem>
+                            <FormLabel> Flat Rate Shipping Cost</FormLabel>
+                            <FormControl>
+                              {/* <Input
+                                className={inputClass}
+                                placeholder="Facebook Chat"
+                                {...field}
+                              /> */}
+                            </FormControl>
+                            <FormMessage />
+                          </FormItem>
+                        )}
+                      />
+                    </div>
+                    <div className="flex flex-col gap-5.5 p-6.5">
+                      <FormField
+                        control={form.control}
+                        name="product_name"
+                        render={({ field }) => (
+                          <FormItem>
+                            <FormLabel>
+                              {" "}
+                              Seller Wise Flat Shipping Cost
+                            </FormLabel>
+                            <FormControl>
+                              {/* <Input
+                                className={inputClass}
+                                placeholder="Facebook Chat"
+                                {...field}
+                              /> */}
+                            </FormControl>
+                            <FormMessage />
+                          </FormItem>
+                        )}
+                      />
+                    </div>
+                    <div className="flex flex-col gap-5.5 p-6.5">
+                      <FormField
+                        control={form.control}
+                        name="product_name"
+                        render={({ field }) => (
+                          <FormItem>
+                            <FormLabel> Area Wise Flat Shipping Cost</FormLabel>
+                            <FormControl>
+                              {/* <Input
+                                className={inputClass}
+                                placeholder="Facebook Chat"
+                                {...field}
+                              /> */}
+                            </FormControl>
+                            <FormMessage />
+                          </FormItem>
+                        )}
+                      />
+                    </div>
+                    <div className="flex flex-col gap-5.5 p-6.5">
+                      <FormField
+                        control={form.control}
+                        name="product_name"
+                        render={({ field }) => (
+                          <FormItem>
+                            <FormLabel> Carrier Wise Shipping Cost</FormLabel>
+                            <FormControl>
+                              {/* <Input
+                                className={inputClass}
+                                placeholder="Facebook Chat"
+                                {...field}
+                              /> */}
+                            </FormControl>
+                            <FormMessage />
+                          </FormItem>
+                        )}
+                      />
+                    </div>
+                    <div className="grid mt-3 justify-items-end">
+                      <Button
+                        className="dark:text-slate-200"
+                        variant="outline"
+                        type="submit"
+                      >
+                        Save
+                      </Button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div className="flex flex-col gap-4">
+                <div className="px-6 rounded-sm border border-stroke bg-slate-300 shadow-default dark:border-strokedark dark:bg-boxdark">
+                  <div className="border-b border-stroke px-6.5 py-4 dark:border-strokedark">
+                    <h3 className="font-medium text-black dark:text-slate-300">
+                      Note
+                    </h3>
+                  </div>
+                  <div className="py-6">
+                    <div className="dark:text-slate-300">
+                      <div className="border dark:border-slate-500 dark:text-slate-400 mt-2 p-3">
+                        1. Product Wise Shipping Cost calculation: Shipping cost
+                        is calculate by addition of each product shipping cost.
+                      </div>
+                      <div className="border dark:border-slate-500 dark:text-slate-400 p-3">
+                        2. Flat Rate Shipping Cost calculation: How many
+                        products a customer purchase, doesn't matter. Shipping
+                        cost is fixed.
+                      </div>
+                      <div className="border dark:border-slate-500 dark:text-slate-400 p-3">
+                        3. Seller Wise Flat Shipping Cost calculation: Fixed
+                        rate for each seller. If customers purchase 2 product
+                        from two seller shipping cost is calculated by addition
+                        of each seller flat shipping cost.
+                      </div>
+                      <div className="border dark:border-slate-500 dark:text-slate-400 p-3">
+                        4. Area Wise Flat Shipping Cost calculation: Fixed rate
+                        for each area. If customers purchase multiple products
+                        from one seller shipping cost is calculated by the
+                        customer shipping area. To configure area wise shipping
+                        cost go to Shipping Cities.
+                      </div>
+                      <div className="border dark:border-slate-500 dark:text-slate-400 p-3">
+                        5. Carrier Based Shipping Cost calculation: Shipping
+                        cost calculate in addition with carrier. In each carrier
+                        you can set free shipping cost or can set weight range
+                        or price range shipping cost. To configure carrier based
+                        shipping cost go to Shipping Carriers.
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div className="flex flex-col gap-4">
+                <div className="px-6 rounded-sm border border-stroke bg-slate-300 shadow-default dark:border-strokedark dark:bg-boxdark">
+                  <div className="border-b border-stroke px-6.5 py-4 dark:border-strokedark">
+                    <h3 className="font-medium text-black dark:text-slate-300">
+                      Flat Rate Cost
+                    </h3>
+                  </div>
+                  <div className="py-6">
+                    <div className="flex flex-col gap-5.5 p-6.5">
+                      <FormField
+                        control={form.control}
+                        name="product_name"
+                        render={({ field }) => (
+                          <FormItem>
+                            <FormLabel> Cost</FormLabel>
+                            <FormControl>
+                              <Input
+                                className={inputClass}
+                                placeholder="120"
+                                {...field}
+                              />
+                            </FormControl>
+                            <FormMessage />
+                          </FormItem>
+                        )}
+                      />
+                    </div>
+                    <div className="grid mt-3 justify-items-end">
+                      <Button
+                        className="dark:text-slate-200"
+                        variant="outline"
+                        type="submit"
+                      >
+                        Save
+                      </Button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div className="flex flex-col gap-4">
+                <div className="px-6 rounded-sm border border-stroke bg-slate-300 shadow-default dark:border-strokedark dark:bg-boxdark">
+                  <div className="border-b border-stroke px-6.5 py-4 dark:border-strokedark">
+                    <h3 className="font-medium text-black dark:text-slate-300">
+                      Note
+                    </h3>
+                  </div>
+                  <div className="py-6">
+                    <div className="dark:text-slate-300">
+                      <div className="border dark:border-slate-500 dark:text-slate-400 mt-2 p-3">
+                        1. Flat rate shipping cost is applicable if Flat rate
+                        shipping is enabled.
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div className="flex flex-col gap-4">
+                <div className="px-6 rounded-sm border border-stroke bg-slate-300 shadow-default dark:border-strokedark dark:bg-boxdark">
+                  <div className="border-b border-stroke px-6.5 py-4 dark:border-strokedark">
+                    <h3 className="font-medium text-black dark:text-slate-300">
+                      Shipping Cost for Admin Products
+                    </h3>
+                  </div>
+                  <div className="py-6">
+                    <div className="flex flex-col gap-5.5 p-6.5">
+                      <FormField
+                        control={form.control}
+                        name="product_name"
+                        render={({ field }) => (
+                          <FormItem>
+                            <FormLabel> Cost</FormLabel>
+                            <FormControl>
+                              <Input
+                                className={inputClass}
+                                placeholder="120"
+                                {...field}
+                              />
+                            </FormControl>
+                            <FormMessage />
+                          </FormItem>
+                        )}
+                      />
+                    </div>
+                    <div className="grid mt-3 justify-items-end">
+                      <Button
+                        className="dark:text-slate-200"
+                        variant="outline"
+                        type="submit"
+                      >
+                        Save
+                      </Button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div className="flex flex-col gap-4">
+                <div className="px-6 rounded-sm border border-stroke bg-slate-300 shadow-default dark:border-strokedark dark:bg-boxdark">
+                  <div className="border-b border-stroke px-6.5 py-4 dark:border-strokedark">
+                    <h3 className="font-medium text-black dark:text-slate-300">
+                      Note
+                    </h3>
+                  </div>
+                  <div className="py-6">
+                    <div className="dark:text-slate-300">
+                      <div className="border dark:border-slate-500 dark:text-slate-400 mt-2 p-3">
+                        1. Shipping cost for admin is applicable if Seller wise
+                        shipping cost is enabled.
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </form>
+      </Form>
+    </div>
+  );
+}
