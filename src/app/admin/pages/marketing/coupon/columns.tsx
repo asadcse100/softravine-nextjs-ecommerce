@@ -92,8 +92,8 @@ export const columns: ColumnDef<Products>[] = [
     header: "End Date",
   },
   {
-    accessorKey: "validation",
-    header: "Validation",
+    accessorKey: "validation_day",
+    header: "Validation Day",
   },
   {
     accessorKey: "status",

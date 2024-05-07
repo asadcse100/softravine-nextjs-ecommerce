@@ -88,7 +88,7 @@ export const columns: ColumnDef<Products>[] = [
     header: "Sender",
   },
   {
-    accessorKey: "recever",
-    header: "Recever",
+    accessorKey: "receiver",
+    header: "Receiver",
   },
 ];

@@ -15,7 +15,6 @@ import {
   FormMessage,
 } from "@/app/seller/components/ui/form";
 import Input from "@/shared/Input/Input";
-import Select from "@/shared/Select/Select";
 
 const formSchema = z.object({
   product_name: z.string().min(10, {
@@ -93,7 +92,91 @@ export default function addnew() {
                 <div className="px-6 rounded-sm border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark">
                   <div className="border-b border-stroke px-6.5 py-4 dark:border-strokedark">
                     <h3 className="font-medium text-black dark:text-white">
-                    Coupon Information Adding
+                      Set Point for Product Within a Range
+                    </h3>
+                  </div>
+                  <p className="dark:text-slate-400">
+                    Set any specific point for those products what are between
+                    Min-price and Max-price. Min-price should be less than
+                    Max-price
+                  </p>
+                  <div className="py-6">
+                    <div className="flex flex-col gap-5.5 p-6.5">
+                      <FormField
+                        control={form.control}
+                        name="product_name"
+                        render={({ field }) => (
+                          <FormItem>
+                            <FormLabel>
+                              Set Point for multiple products
+                            </FormLabel>
+                            <FormControl>
+                              <Input
+                                className={inputClass}
+                                placeholder="120"
+                                {...field}
+                              />
+                            </FormControl>
+                            <FormMessage />
+                          </FormItem>
+                        )}
+                      />
+                    </div>
+                    <div className="mt-3 flex flex-col gap-5.5 p-6.5">
+                      <FormField
+                        control={form.control}
+                        name="brand"
+                        render={({ field }) => (
+                          <FormItem>
+                            <FormLabel>Min Price</FormLabel>
+                            <FormControl>
+                              <Input
+                                className={inputClass}
+                                placeholder="5"
+                                {...field}
+                              />
+                            </FormControl>
+                            <FormMessage />
+                          </FormItem>
+                        )}
+                      />
+                    </div>
+                    <div className="mt-3 flex flex-col gap-5.5 p-6.5">
+                      <FormField
+                        control={form.control}
+                        name="unit"
+                        render={({ field }) => (
+                          <FormItem>
+                            <FormLabel>Max Price</FormLabel>
+                            <FormControl>
+                              <Input
+                                className={inputClass}
+                                placeholder="25000"
+                                {...field}
+                              />
+                            </FormControl>
+                            <FormMessage />
+                          </FormItem>
+                        )}
+                      />
+                    </div>
+                    <div className="grid mt-4 justify-items-end">
+                      <Button
+                        className="dark:text-slate-200"
+                        variant="outline"
+                        type="submit"
+                      >
+                        Save
+                      </Button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div className="flex flex-col gap-4">
+                <div className="px-6 rounded-sm border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark">
+                  <div className="border-b border-stroke px-6.5 py-4 dark:border-strokedark">
+                    <h3 className="font-medium text-black dark:text-white">
+                      Set Point for all Products
                     </h3>
                   </div>
                   <div className="py-6">
@@ -103,25 +186,19 @@ export default function addnew() {
                         name="product_name"
                         render={({ field }) => (
                           <FormItem>
-                            <FormLabel>Coupon Type</FormLabel>
+                            <FormLabel>Set Point For $1.000</FormLabel>
                             <FormControl>
-                              <Select>
-                                <option value="">For Product</option>
-                                <option value="">For Total Orders</option>
-                                <option value="">Welcome Coupon</option>
-                              </Select>
-                              {/* <Input
+                              <Input
                                 className={inputClass}
-                                placeholder="Coupon Type"
+                                placeholder="1"
                                 {...field}
-                              /> */}
+                              />
                             </FormControl>
                             <FormMessage />
                           </FormItem>
                         )}
                       />
                     </div>
-
                     <div className="grid mt-4 justify-items-end">
                       <Button
                         className="dark:text-slate-200"

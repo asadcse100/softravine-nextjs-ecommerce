@@ -11,6 +11,7 @@ async function getData(): Promise<Products[]> {
       point: 34,
       convert_status: "Pending",
       earned_at: "03-03-2025",
+      view: "view",
     },
     {
       id: "728ed52f",
@@ -19,6 +20,7 @@ async function getData(): Promise<Products[]> {
       point: 34,
       convert_status: "Pending",
       earned_at: "03-03-2025",
+      view: "view",
     },
     {
       id: "728ed52f",
@@ -27,6 +29,7 @@ async function getData(): Promise<Products[]> {
       point: 34,
       convert_status: "Pending",
       earned_at: "03-03-2025",
+      view: "view",
     },
     {
       id: "728ed52f",
@@ -35,6 +38,7 @@ async function getData(): Promise<Products[]> {
       point: 34,
       convert_status: "Pending",
       earned_at: "03-03-2025",
+      view: "view",
     },
     {
       id: "728ed52f",
@@ -43,6 +47,7 @@ async function getData(): Promise<Products[]> {
       point: 34,
       convert_status: "Pending",
       earned_at: "03-03-2025",
+      view: "view",
     },
     {
       id: "728ed52f",
@@ -51,6 +56,7 @@ async function getData(): Promise<Products[]> {
       point: 34,
       convert_status: "Pending",
       earned_at: "03-03-2025",
+      view: "view",
     },
     {
       id: "728ed52f",
@@ -59,6 +65,7 @@ async function getData(): Promise<Products[]> {
       point: 34,
       convert_status: "Pending",
       earned_at: "03-03-2025",
+      view: "view",
     },
     {
       id: "728ed52f",
@@ -67,6 +74,7 @@ async function getData(): Promise<Products[]> {
       point: 34,
       convert_status: "Pending",
       earned_at: "03-03-2025",
+      view: "view",
     },
     {
       id: "728ed52f",
@@ -75,6 +83,7 @@ async function getData(): Promise<Products[]> {
       point: 34,
       convert_status: "Pending",
       earned_at: "03-03-2025",
+      view: "view",
     },
     {
       id: "728ed52f",
@@ -83,6 +92,7 @@ async function getData(): Promise<Products[]> {
       point: 34,
       convert_status: "Pending",
       earned_at: "03-03-2025",
+      view: "view",
     },
     {
       id: "728ed52f",
@@ -91,6 +101,7 @@ async function getData(): Promise<Products[]> {
       point: 34,
       convert_status: "Pending",
       earned_at: "03-03-2025",
+      view: "view",
     },
     {
       id: "728ed52f",
@@ -99,6 +110,7 @@ async function getData(): Promise<Products[]> {
       point: 34,
       convert_status: "Pending",
       earned_at: "03-03-2025",
+      view: "view",
     },
     {
       id: "728ed52f",
@@ -107,6 +119,7 @@ async function getData(): Promise<Products[]> {
       point: 34,
       convert_status: "Pending",
       earned_at: "03-03-2025",
+      view: "view",
     },
     // ...
   ]

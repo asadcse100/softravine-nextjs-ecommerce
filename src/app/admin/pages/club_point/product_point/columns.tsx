@@ -53,4 +53,8 @@ export const columns: ColumnDef<Products>[] = [
     accessorKey: "point",
     header: "Point",
   },
+  {
+    accessorKey: "edit",
+    header: "Edit",
+  },
 ];

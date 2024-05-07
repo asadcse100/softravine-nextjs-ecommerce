@@ -15,7 +15,6 @@ import {
   FormMessage,
 } from "@/app/seller/components/ui/form";
 import Input from "@/shared/Input/Input";
-import Select from "@/shared/Select/Select";
 
 const formSchema = z.object({
   product_name: z.string().min(10, {
@@ -93,7 +92,7 @@ export default function addnew() {
                 <div className="px-6 rounded-sm border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark">
                   <div className="border-b border-stroke px-6.5 py-4 dark:border-strokedark">
                     <h3 className="font-medium text-black dark:text-white">
-                    Coupon Information Adding
+                    Blog Category Information
                     </h3>
                   </div>
                   <div className="py-6">
@@ -103,25 +102,19 @@ export default function addnew() {
                         name="product_name"
                         render={({ field }) => (
                           <FormItem>
-                            <FormLabel>Coupon Type</FormLabel>
+                            <FormLabel>Name</FormLabel>
                             <FormControl>
-                              <Select>
-                                <option value="">For Product</option>
-                                <option value="">For Total Orders</option>
-                                <option value="">Welcome Coupon</option>
-                              </Select>
-                              {/* <Input
+                              <Input
                                 className={inputClass}
-                                placeholder="Coupon Type"
+                                placeholder="Name"
                                 {...field}
-                              /> */}
+                              />
                             </FormControl>
                             <FormMessage />
                           </FormItem>
                         )}
                       />
                     </div>
-
                     <div className="grid mt-4 justify-items-end">
                       <Button
                         className="dark:text-slate-200"

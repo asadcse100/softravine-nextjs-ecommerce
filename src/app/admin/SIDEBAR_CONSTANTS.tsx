@@ -167,6 +167,7 @@ export const SIDENAV_ITEMS:SideNavItem[] = [
             {title: 'All Blogs', path: '/admin/pages/blog_system/all_blog'},
             {title: 'Add New', path: '/admin/pages/blog_system/all_blog/addnew'},
             {title: 'Categories', path: '/admin/pages/blog_system/category'},
+            {title: 'Add Category', path: '/admin/pages/blog_system/category/addnew'},
         ],
     },
     {
@@ -180,6 +181,7 @@ export const SIDENAV_ITEMS:SideNavItem[] = [
             {title: 'Pop-ups', path: '/admin/pages/marketing/pop_up'},
             {title: 'Add Pop-up', path: '/admin/pages/marketing/pop_up/addnew'},
             {title: 'Newsletters', path: '/admin/pages/marketing/newsletter'},
+            {title: 'Send Newsletters', path: '/admin/pages/marketing/newsletter/addnew'},
             {title: 'Bulk SMS', path: '/admin/pages/marketing/bulk_sms'},
             {title: 'Subscribers', path: '/admin/pages/marketing/subscriber'},
             {title: 'Coupons', path: '/admin/pages/marketing/coupon'},
@@ -231,6 +233,7 @@ export const SIDENAV_ITEMS:SideNavItem[] = [
         subMenuItems: [
             {title: 'Configurations', path: '/admin/pages/club_point/configuration'},
             {title: 'Product Point', path: '/admin/pages/club_point/product_point'},
+            {title: 'Add Product Point', path: '/admin/pages/club_point/product_point/addnew'},
             {title: 'User Point', path: '/admin/pages/club_point/user_point'},
         ],
     },
