@@ -10,7 +10,7 @@ async function getData(): Promise<Products[]> {
       sending_date: "03-03-2024",
       subject: "Payment Problem",
       user: "Mr. Kamal",
-      status: "yes",
+      status: "Open",
       last_reply: "04-03-2024",
     },
     {
@@ -19,7 +19,7 @@ async function getData(): Promise<Products[]> {
       sending_date: "03-03-2024",
       subject: "Payment Problem",
       user: "Mr. Kamal",
-      status: "yes",
+      status: "Open",
       last_reply: "04-03-2024",
     },
     {
@@ -28,7 +28,7 @@ async function getData(): Promise<Products[]> {
       sending_date: "03-03-2024",
       subject: "Payment Problem",
       user: "Mr. Kamal",
-      status: "yes",
+      status: "Open",
       last_reply: "04-03-2024",
     },
     {
@@ -37,7 +37,7 @@ async function getData(): Promise<Products[]> {
       sending_date: "03-03-2024",
       subject: "Payment Problem",
       user: "Mr. Kamal",
-      status: "yes",
+      status: "Open",
       last_reply: "04-03-2024",
     },
     {
@@ -46,7 +46,7 @@ async function getData(): Promise<Products[]> {
       sending_date: "03-03-2024",
       subject: "Payment Problem",
       user: "Mr. Kamal",
-      status: "yes",
+      status: "Open",
       last_reply: "04-03-2024",
     },
     {
@@ -55,7 +55,7 @@ async function getData(): Promise<Products[]> {
       sending_date: "03-03-2024",
       subject: "Payment Problem",
       user: "Mr. Kamal",
-      status: "yes",
+      status: "Open",
       last_reply: "04-03-2024",
     },
     {
@@ -64,7 +64,7 @@ async function getData(): Promise<Products[]> {
       sending_date: "03-03-2024",
       subject: "Payment Problem",
       user: "Mr. Kamal",
-      status: "yes",
+      status: "Open",
       last_reply: "04-03-2024",
     },
     {
@@ -73,7 +73,7 @@ async function getData(): Promise<Products[]> {
       sending_date: "03-03-2024",
       subject: "Payment Problem",
       user: "Mr. Kamal",
-      status: "yes",
+      status: "Open",
       last_reply: "04-03-2024",
     },
     {
@@ -82,7 +82,7 @@ async function getData(): Promise<Products[]> {
       sending_date: "03-03-2024",
       subject: "Payment Problem",
       user: "Mr. Kamal",
-      status: "yes",
+      status: "Open",
       last_reply: "04-03-2024",
     },
     {
@@ -91,7 +91,7 @@ async function getData(): Promise<Products[]> {
       sending_date: "03-03-2024",
       subject: "Payment Problem",
       user: "Mr. Kamal",
-      status: "yes",
+      status: "Open",
       last_reply: "04-03-2024",
     },
     {
@@ -100,7 +100,7 @@ async function getData(): Promise<Products[]> {
       sending_date: "03-03-2024",
       subject: "Payment Problem",
       user: "Mr. Kamal",
-      status: "yes",
+      status: "Open",
       last_reply: "04-03-2024",
     },
     {
@@ -109,7 +109,7 @@ async function getData(): Promise<Products[]> {
       sending_date: "03-03-2024",
       subject: "Payment Problem",
       user: "Mr. Kamal",
-      status: "yes",
+      status: "Open",
       last_reply: "04-03-2024",
     },
     {
@@ -118,7 +118,7 @@ async function getData(): Promise<Products[]> {
       sending_date: "03-03-2024",
       subject: "Payment Problem",
       user: "Mr. Kamal",
-      status: "yes",
+      status: "Open",
       last_reply: "04-03-2024",
     },
     // ...

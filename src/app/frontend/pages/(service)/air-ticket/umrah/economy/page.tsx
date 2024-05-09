@@ -6,15 +6,15 @@ import Input from "@/shared/Input/Input";
 const AccountPass = () => {
   return (
     <div className="space-y-10 sm:space-y-12 bg-white dark:bg-gray-700 p-5 rounded-xl">
-      The standard Lorem Ipsum passage, used since the 1500s "Lorem ipsum dolor
+      The standard Lorem Ipsum passage, used since the 1500s Lorem ipsum dolor
       sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut
       labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud
       exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis
       aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu
       fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident,
-      sunt in culpa qui officia deserunt mollit anim id est laborum." Section
-      1.10.32 of "de Finibus Bonorum et Malorum", written by Cicero in 45 BC
-      "Sed ut perspiciatis unde omnis iste natus error sit voluptatem
+      sunt in culpa qui officia deserunt mollit anim id est laborum. Section
+      1.10.32 of de Finibus Bonorum et Malorum, written by Cicero in 45 BC
+      Sed ut perspiciatis unde omnis iste natus error sit voluptatem
       accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab
       illo inventore veritatis et quasi architecto beatae vitae dicta sunt
       explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut
@@ -26,7 +26,7 @@ const AccountPass = () => {
       corporis suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur?
       Quis autem vel eum iure reprehenderit qui in ea voluptate velit esse quam
       nihil molestiae consequatur, vel illum qui dolorem eum fugiat quo voluptas
-      nulla pariatur?"
+      nulla pariatur?
       <div className="pt-0 mt-5">
         <ButtonPrimary>Aks Ticket Price</ButtonPrimary>
       </div>

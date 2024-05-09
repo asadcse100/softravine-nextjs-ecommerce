@@ -4,7 +4,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 
-import { Button } from "@/app/seller/components/ui/button";
+import { Button } from "@/app/admin/components/ui/button";
 import {
   Form,
   FormControl,
@@ -13,10 +13,11 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-} from "@/app/seller/components/ui/form";
+} from "@/app/admin/components/ui/form";
 import Input from "@/shared/Input/Input";
 import Select from "@/shared/Select/Select";
 import Textarea from "@/shared/Textarea/Textarea";
+import { Switch } from "@/app/admin/components/ui/switch";
 
 const formSchema = z.object({
   product_name: z.string().min(10, {
@@ -54,7 +55,7 @@ const formSchema = z.object({
   }),
 });
 
-export default function addnew() {
+export default function Addnew() {
   // ...
   // 1. Define your form.
   const form = useForm<z.infer<typeof formSchema>>({
@@ -533,14 +534,12 @@ export default function addnew() {
                           name="attribute"
                           render={({ field }) => (
                             <FormItem>
-                              <FormLabel>Show Cookies Agreement?</FormLabel>
-                              <FormControl>
-                                {/* <Input
-                                className={inputClass}
-                                placeholder="Attributes"
-                                {...field}
-                              /> */}
-                              </FormControl>
+                              <div className="flex items-center space-x-12">
+                                <FormLabel className="mt-2">
+                                  Show Cookies Agreement?
+                                </FormLabel>
+                                <Switch />
+                              </div>
                               <FormMessage />
                             </FormItem>
                           )}
@@ -575,14 +574,12 @@ export default function addnew() {
                           name="unit_price"
                           render={({ field }) => (
                             <FormItem>
-                              <FormLabel>Show website popup?</FormLabel>
-                              <FormControl>
-                                {/* <Input
-                                className={inputClass}
-                                placeholder="Unit Price"
-                                {...field}
-                              /> */}
-                              </FormControl>
+                              <div className="flex items-center space-x-12">
+                                <FormLabel className="mt-2">
+                                  Show website popup?
+                                </FormLabel>
+                                <Switch />
+                              </div>
                               <FormMessage />
                             </FormItem>
                           )}
@@ -597,11 +594,6 @@ export default function addnew() {
                               <FormLabel>Popup content</FormLabel>
                               <FormControl>
                                 <Textarea></Textarea>
-                                {/* <Input
-                                className={inputClass}
-                                placeholder="Discount Date Range"
-                                {...field}
-                              /> */}
                               </FormControl>
                               <FormMessage />
                             </FormItem>
@@ -614,14 +606,12 @@ export default function addnew() {
                           name="discount"
                           render={({ field }) => (
                             <FormItem>
-                              <FormLabel>Show Subscriber form?</FormLabel>
-                              <FormControl>
-                                {/* <Input
-                                className={inputClass}
-                                placeholder="Show Subscriber form?"
-                                {...field}
-                              /> */}
-                              </FormControl>
+                              <div className="flex items-center space-x-12">
+                                <FormLabel className="mt-2">
+                                  Show Subscriber form?
+                                </FormLabel>
+                                <Switch />
+                              </div>
                               <FormMessage />
                             </FormItem>
                           )}
@@ -659,11 +649,6 @@ export default function addnew() {
                               <FormLabel>Header custom script</FormLabel>
                               <FormControl>
                                 <Textarea></Textarea>
-                                {/* <Input
-                                className={inputClass}
-                                placeholder="Unit Price"
-                                {...field}
-                              /> */}
                               </FormControl>
                               <FormMessage />
                             </FormItem>
@@ -680,11 +665,6 @@ export default function addnew() {
                               <FormLabel>Footer custom script</FormLabel>
                               <FormControl>
                                 <Textarea></Textarea>
-                                {/* <Input
-                                className={inputClass}
-                                placeholder="Discount Date Range"
-                                {...field}
-                              /> */}
                               </FormControl>
                               <FormMessage />
                             </FormItem>

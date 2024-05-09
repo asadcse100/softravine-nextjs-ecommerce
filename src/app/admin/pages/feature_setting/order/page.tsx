@@ -4,7 +4,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 
-import { Button } from "@/app/seller/components/ui/button";
+import { Button } from "@/app/admin/components/ui/button";
 import {
   Form,
   FormControl,
@@ -13,9 +13,10 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-} from "@/app/seller/components/ui/form";
+} from "@/app/admin/components/ui/form";
 import Input from "@/shared/Input/Input";
 import Select from "@/shared/Select/Select";
+import { Switch } from "@/app/admin/components/ui/switch";
 
 const formSchema = z.object({
   product_name: z.string().min(10, {
@@ -53,7 +54,7 @@ const formSchema = z.object({
   }),
 });
 
-export default function addnew() {
+export default function Addnew() {
   // ...
   // 1. Define your form.
   const form = useForm<z.infer<typeof formSchema>>({
@@ -93,7 +94,7 @@ export default function addnew() {
                 <div className="px-6 rounded-sm border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark">
                   <div className="border-b border-stroke px-6.5 py-4 dark:border-strokedark">
                     <h3 className="font-medium text-black dark:text-white">
-                    Minimum Order Amount Settings
+                      Minimum Order Amount Settings
                     </h3>
                   </div>
                   <div className="py-6">
@@ -103,14 +104,12 @@ export default function addnew() {
                         name="product_name"
                         render={({ field }) => (
                           <FormItem>
-                            <FormLabel>Minimum Order Amount Check</FormLabel>
-                            <FormControl>
-                              {/* <Input
-                                className={inputClass}
-                                placeholder="Employe Name"
-                                {...field}
-                              /> */}
-                            </FormControl>
+                            <div className="flex items-center space-x-12">
+                              <FormLabel className="mt-2">
+                                Minimum Order Amount Check
+                              </FormLabel>
+                              <Switch />
+                            </div>
                             <FormMessage />
                           </FormItem>
                         )}

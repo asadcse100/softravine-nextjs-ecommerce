@@ -4,7 +4,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 
-import { Button } from "@/app/seller/components/ui/button";
+import { Button } from "@/app/admin/components/ui/button";
 import {
   Form,
   FormControl,
@@ -13,8 +13,9 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-} from "@/app/seller/components/ui/form";
+} from "@/app/admin/components/ui/form";
 import Input from "@/shared/Input/Input";
+import { Switch } from "@/app/admin/components/ui/switch";
 
 const formSchema = z.object({
   product_name: z.string().min(10, {
@@ -52,7 +53,7 @@ const formSchema = z.object({
   }),
 });
 
-export default function addnew() {
+export default function Addnew() {
   // ...
   // 1. Define your form.
   const form = useForm<z.infer<typeof formSchema>>({
@@ -102,13 +103,9 @@ export default function addnew() {
                         name="product_name"
                         render={({ field }) => (
                           <FormItem>
-                            <FormControl>
-                              <Input
-                                className={inputClass}
-                                placeholder="On/Off"
-                                {...field}
-                              />
-                            </FormControl>
+                            <div className="flex items-center space-x-12">
+                              <Switch />
+                            </div>
                             <FormMessage />
                           </FormItem>
                         )}
@@ -129,13 +126,9 @@ export default function addnew() {
                         name="product_name"
                         render={({ field }) => (
                           <FormItem>
-                            <FormControl>
-                              <Input
-                                className={inputClass}
-                                placeholder="On/Off"
-                                {...field}
-                              />
-                            </FormControl>
+                            <div className="flex items-center space-x-12">
+                              <Switch />
+                            </div>
                             <FormMessage />
                           </FormItem>
                         )}

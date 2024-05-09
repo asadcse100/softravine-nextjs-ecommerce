@@ -15,6 +15,7 @@ import {
   FormMessage,
 } from "@/app/admin/components/ui/form";
 import Input from "@/shared/Input/Input";
+import { Switch } from "@/app/admin/components/ui/switch";
 
 const formSchema = z.object({
   product_name: z.string().min(10, {
@@ -52,7 +53,7 @@ const formSchema = z.object({
   }),
 });
 
-export default function addnew() {
+export default function Addnew() {
   // ...
   // 1. Define your form.
   const form = useForm<z.infer<typeof formSchema>>({
@@ -102,14 +103,12 @@ export default function addnew() {
                         name="product_name"
                         render={({ field }) => (
                           <FormItem>
-                            <FormLabel>Facebook Pixel</FormLabel>
-                            <FormControl>
-                              {/* <Input
-                                className={inputClass}
-                                placeholder="Facebook Chat"
-                                {...field}
-                              /> */}
-                            </FormControl>
+                            <div className="flex items-center space-x-12">
+                              <FormLabel className="mt-2">
+                                Facebook Pixel
+                              </FormLabel>
+                              <Switch />
+                            </div>
                             <FormMessage />
                           </FormItem>
                         )}
@@ -160,14 +159,12 @@ export default function addnew() {
                         name="product_name"
                         render={({ field }) => (
                           <FormItem>
-                            <FormLabel>Google Analytics</FormLabel>
-                            <FormControl>
-                              {/* <Input
-                                className={inputClass}
-                                placeholder="Facebook Chat"
-                                {...field}
-                              /> */}
-                            </FormControl>
+                            <div className="flex items-center space-x-12">
+                              <FormLabel className="mt-2">
+                                Google Analytics
+                              </FormLabel>
+                              <Switch />
+                            </div>
                             <FormMessage />
                           </FormItem>
                         )}

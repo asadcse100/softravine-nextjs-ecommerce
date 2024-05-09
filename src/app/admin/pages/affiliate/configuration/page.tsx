@@ -13,9 +13,10 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-} from "@/app/seller/components/ui/form";
+} from "@/app/admin/components/ui/form";
 import Input from "@/shared/Input/Input";
 import Select from "@/shared/Select/Select";
+import { Switch } from "@/app/admin/components/ui/switch";
 
 const formSchema = z.object({
   product_name: z.string().min(10, {
@@ -53,7 +54,7 @@ const formSchema = z.object({
   }),
 });
 
-export default function addnew() {
+export default function Addnew() {
   // ...
   // 1. Define your form.
   const form = useForm<z.infer<typeof formSchema>>({
@@ -204,13 +205,11 @@ export default function addnew() {
                         name="product_name"
                         render={({ field }) => (
                           <FormItem>
-                            <FormLabel>Status</FormLabel>
                             <FormControl>
-                              {/* <Input
-                                className={inputClass}
-                                placeholder="100"
-                                {...field}
-                              /> */}
+                              <div className="flex mt-4 items-center space-x-12">
+                              <FormLabel className="mt-2">Status</FormLabel>
+                                <Switch />
+                              </div>
                             </FormControl>
                             <FormMessage />
                           </FormItem>
@@ -289,14 +288,10 @@ export default function addnew() {
                         name="product_name"
                         render={({ field }) => (
                           <FormItem>
-                            <FormLabel>Status</FormLabel>
-                            <FormControl>
-                              {/* <Input
-                                className={inputClass}
-                                placeholder="100"
-                                {...field}
-                              /> */}
-                            </FormControl>
+                            <div className="flex mt-4 items-center space-x-12">
+                              <FormLabel className="mt-2">Status</FormLabel>
+                                <Switch />
+                              </div>
                             <FormMessage />
                           </FormItem>
                         )}
@@ -330,14 +325,10 @@ export default function addnew() {
                           name="gallery_images"
                           render={({ field }) => (
                             <FormItem>
-                              <FormLabel>Status</FormLabel>
-                              <FormControl>
-                                {/* <Input
-                                  className={inputClass}
-                                  placeholder="Gallery Images"
-                                  {...field}
-                                /> */}
-                              </FormControl>
+                              <div className="flex items-center space-x-12">
+                            <FormLabel className="mt-2">Status</FormLabel>
+                              <Switch />
+                            </div>
                               <FormMessage />
                             </FormItem>
                           )}

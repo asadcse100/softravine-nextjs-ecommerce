@@ -31,7 +31,7 @@ export default function RootLayout({
         <div className="flex min-h-screen">
           <SideBar></SideBar>
           <Header></Header>
-          <PageWrapper children = {children}></PageWrapper>
+          <PageWrapper>{children}</PageWrapper>
           {/* <Chat /> */}
         </div>
         </ThemeProvider>

@@ -52,7 +52,7 @@ const formSchema = z.object({
   }),
 });
 
-export default function addnew() {
+export default function Addnew() {
   // ...
   // 1. Define your form.
   const form = useForm<z.infer<typeof formSchema>>({
@@ -222,7 +222,7 @@ export default function addnew() {
                       </div>
                       <div className="border dark:border-slate-500 dark:text-slate-400 p-3">
                         2. Flat Rate Shipping Cost calculation: How many
-                        products a customer purchase, doesn't matter. Shipping
+                        products a customer purchase, doesnt matter. Shipping
                         cost is fixed.
                       </div>
                       <div className="border dark:border-slate-500 dark:text-slate-400 p-3">

@@ -20,9 +20,14 @@ export const SIDENAV_ITEMS:SideNavItem[] = [
         ],
     },
     {
-        title:"POS",
-        path:"/admin/pages/pos",
-        icon: <BsPostage size={20}/>
+        title: 'POS',
+        path: '/staffs',
+        icon: <BsKanban size={20} />,
+        submenu: true,
+        subMenuItems: [
+            {title: 'POS Manager', path: '/admin/pages/pos'},
+            {title: 'POS Configuration', path: '/admin/pages/pos/configuration'},
+        ],
     },
     {
         title: 'Products',
@@ -78,7 +83,7 @@ export const SIDENAV_ITEMS:SideNavItem[] = [
     },
     {
         title: 'Order',
-        path: '/order',
+        path: '#',
         icon: <BsListUl size={20} />,
         submenu: true,
         subMenuItems: [
@@ -121,8 +126,8 @@ export const SIDENAV_ITEMS:SideNavItem[] = [
         submenu: true,
         subMenuItems: [
             {title: 'All Customer', path: '/admin/pages/customer'},
-            {title: 'Classified Products', path: '/admin/pages/classified_product'},
-            {title: 'Classified Packages', path: '/admin/pages/classified_package'},
+            {title: 'Classified Products', path: '/admin/pages/customer/classified_product'},
+            {title: 'Classified Packages', path: '/admin/pages/customer/classified_package'},
         ],
     },
     {

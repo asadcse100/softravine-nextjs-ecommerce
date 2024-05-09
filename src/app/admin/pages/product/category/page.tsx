@@ -14,7 +14,7 @@ async function getData(): Promise<Products[]> {
       icon: "No Image",
       cover_image: "No Image",
       featured: "yes",
-      Commission: 0,
+      commission: 0,
     },
     {
       id: "728ed52f",
@@ -26,7 +26,7 @@ async function getData(): Promise<Products[]> {
       icon: "No Image",
       cover_image: "No Image",
       featured: "yes",
-      Commission: 0,
+      commission: 0,
     },
     {
       id: "728ed52f",
@@ -38,7 +38,7 @@ async function getData(): Promise<Products[]> {
       icon: "No Image",
       cover_image: "No Image",
       featured: "yes",
-      Commission: 0,
+      commission: 0,
     },
     {
       id: "728ed52f",
@@ -50,7 +50,7 @@ async function getData(): Promise<Products[]> {
       icon: "No Image",
       cover_image: "No Image",
       featured: "yes",
-      Commission: 0,
+      commission: 0,
     },
     // ...
   ]

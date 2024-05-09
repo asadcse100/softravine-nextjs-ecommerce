@@ -4,7 +4,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 
-import { Button } from "@/app/seller/components/ui/button";
+import { Button } from "@/app/admin/components/ui/button";
 import {
   Form,
   FormControl,
@@ -13,9 +13,10 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-} from "@/app/seller/components/ui/form";
+} from "@/app/admin/components/ui/form";
 import Input from "@/shared/Input/Input";
 import Select from "@/shared/Select/Select";
+import { Switch } from "@/app/admin/components/ui/switch";
 
 const formSchema = z.object({
   product_name: z.string().min(10, {
@@ -53,7 +54,7 @@ const formSchema = z.object({
   }),
 });
 
-export default function addnew() {
+export default function Addnew() {
   // ...
   // 1. Define your form.
   const form = useForm<z.infer<typeof formSchema>>({
@@ -105,11 +106,6 @@ export default function addnew() {
                           <FormItem>
                             <FormLabel>Paypal Client Id</FormLabel>
                             <FormControl>
-                              {/* <Select>
-                                <option>SMTP</option>
-                                <option>Send Mail</option>
-                                <option>Mail Gun</option>
-                              </Select> */}
                               <Input
                                 className={inputClass}
                                 placeholder="Paypal Client Id"
@@ -147,13 +143,12 @@ export default function addnew() {
                         render={({ field }) => (
                           <FormItem>
                             <FormLabel>Paypal Sandbox Mode</FormLabel>
-                            <FormControl>
-                              {/* <Input
-                                className={inputClass}
-                                placeholder="587"
-                                {...field}
-                              /> */}
-                            </FormControl>
+                            <div className="flex items-center space-x-12">
+                              <FormLabel className="mt-2">
+                                Paypal Sandbox Mode
+                              </FormLabel>
+                              <Switch />
+                            </div>
                             <FormMessage />
                           </FormItem>
                         )}
@@ -175,7 +170,7 @@ export default function addnew() {
                 <div className="px-6 rounded-sm border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark">
                   <div className="border-b border-stroke px-6.5 py-4 dark:border-strokedark">
                     <h3 className="font-medium text-black dark:text-white">
-                    Stripe Credential
+                      Stripe Credential
                     </h3>
                   </div>
                   <div className="py-6">
@@ -238,7 +233,7 @@ export default function addnew() {
                 <div className="px-6 rounded-sm border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark">
                   <div className="border-b border-stroke px-6.5 py-4 dark:border-strokedark">
                     <h3 className="font-medium text-black dark:text-white">
-                    Bkash Credential
+                      Bkash Credential
                     </h3>
                   </div>
                   <div className="py-6">
@@ -329,14 +324,12 @@ export default function addnew() {
                         name="brand"
                         render={({ field }) => (
                           <FormItem>
-                            <FormLabel>Bkash Sandbox Mode</FormLabel>
-                            <FormControl>
-                              {/* <Input
-                                className={inputClass}
-                                placeholder="BKASH CHECKOUT PASSWORD"
-                                {...field}
-                              /> */}
-                            </FormControl>
+                            <div className="flex items-center space-x-12">
+                              <FormLabel className="mt-2">
+                                Bkash Sandbox Mode
+                              </FormLabel>
+                              <Switch />
+                            </div>
                             <FormMessage />
                           </FormItem>
                         )}
@@ -358,7 +351,7 @@ export default function addnew() {
                 <div className="px-6 rounded-sm border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark">
                   <div className="border-b border-stroke px-6.5 py-4 dark:border-strokedark">
                     <h3 className="font-medium text-black dark:text-white">
-                    Nagad Credential
+                      Nagad Credential
                     </h3>
                   </div>
                   <div className="py-6">
@@ -370,11 +363,6 @@ export default function addnew() {
                           <FormItem>
                             <FormLabel>NAGAD MODE</FormLabel>
                             <FormControl>
-                              {/* <Select>
-                                <option>SMTP</option>
-                                <option>Send Mail</option>
-                                <option>Mail Gun</option>
-                              </Select> */}
                               <Input
                                 className={inputClass}
                                 placeholder="NAGAD MODE"
@@ -478,7 +466,7 @@ export default function addnew() {
                 <div className="px-6 rounded-sm border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark">
                   <div className="border-b border-stroke px-6.5 py-4 dark:border-strokedark">
                     <h3 className="font-medium text-black dark:text-white">
-                    Sslcommerz Credential
+                      Sslcommerz Credential
                     </h3>
                   </div>
                   <div className="py-6">
@@ -490,11 +478,6 @@ export default function addnew() {
                           <FormItem>
                             <FormLabel>Sslcz Store Id</FormLabel>
                             <FormControl>
-                              {/* <Select>
-                                <option>SMTP</option>
-                                <option>Send Mail</option>
-                                <option>Mail Gun</option>
-                              </Select> */}
                               <Input
                                 className={inputClass}
                                 placeholder="Sslcz Store Id"
@@ -531,14 +514,12 @@ export default function addnew() {
                         name="brand"
                         render={({ field }) => (
                           <FormItem>
-                            <FormLabel>Sslcommerz Sandbox Mode</FormLabel>
-                            <FormControl>
-                              {/* <Input
-                                className={inputClass}
-                                placeholder="Sslcommerz Sandbox Mode"
-                                {...field}
-                              /> */}
-                            </FormControl>
+                            <div className="flex items-center space-x-12">
+                              <FormLabel className="mt-2">
+                                Sslcommerz Sandbox Mode
+                              </FormLabel>
+                              <Switch />
+                            </div>
                             <FormMessage />
                           </FormItem>
                         )}
@@ -560,7 +541,7 @@ export default function addnew() {
                 <div className="px-6 rounded-sm border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark">
                   <div className="border-b border-stroke px-6.5 py-4 dark:border-strokedark">
                     <h3 className="font-medium text-black dark:text-white">
-                    Aamarpay Credential
+                      Aamarpay Credential
                     </h3>
                   </div>
                   <div className="py-6">
@@ -572,11 +553,6 @@ export default function addnew() {
                           <FormItem>
                             <FormLabel>Aamarpay Store Id</FormLabel>
                             <FormControl>
-                              {/* <Select>
-                                <option>SMTP</option>
-                                <option>Send Mail</option>
-                                <option>Mail Gun</option>
-                              </Select> */}
                               <Input
                                 className={inputClass}
                                 placeholder="Aamarpay Store Id"
@@ -613,14 +589,12 @@ export default function addnew() {
                         name="brand"
                         render={({ field }) => (
                           <FormItem>
-                            <FormLabel>Aamarpay Sandbox Mode</FormLabel>
-                            <FormControl>
-                              {/* <Input
-                                className={inputClass}
-                                placeholder="Aamarpay Sandbox Mode"
-                                {...field}
-                              /> */}
-                            </FormControl>
+                            <div className="flex items-center space-x-12">
+                              <FormLabel className="mt-2">
+                                Aamarpay Sandbox Mode
+                              </FormLabel>
+                              <Switch />
+                            </div>
                             <FormMessage />
                           </FormItem>
                         )}
@@ -638,89 +612,6 @@ export default function addnew() {
                   </div>
                 </div>
               </div>
-              <div className="flex flex-col gap-4">
-                <div className="px-6 rounded-sm border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark">
-                  <div className="border-b border-stroke px-6.5 py-4 dark:border-strokedark">
-                    <h3 className="font-medium text-black dark:text-white">
-                    Aamarpay Credential
-                    </h3>
-                  </div>
-                  <div className="py-6">
-                    <div className="flex flex-col gap-5.5 p-6.5">
-                      <FormField
-                        control={form.control}
-                        name="product_name"
-                        render={({ field }) => (
-                          <FormItem>
-                            <FormLabel>Aamarpay Store Id</FormLabel>
-                            <FormControl>
-                              {/* <Select>
-                                <option>SMTP</option>
-                                <option>Send Mail</option>
-                                <option>Mail Gun</option>
-                              </Select> */}
-                              <Input
-                                className={inputClass}
-                                placeholder="Aamarpay Store Id"
-                                {...field}
-                              />
-                            </FormControl>
-                            <FormMessage />
-                          </FormItem>
-                        )}
-                      />
-                    </div>
-                    <div className="mt-3 flex flex-col gap-5.5 p-6.5">
-                      <FormField
-                        control={form.control}
-                        name="brand"
-                        render={({ field }) => (
-                          <FormItem>
-                            <FormLabel>Aamarpay signature key</FormLabel>
-                            <FormControl>
-                              <Input
-                                className={inputClass}
-                                placeholder="Aamarpay signature key"
-                                {...field}
-                              />
-                            </FormControl>
-                            <FormMessage />
-                          </FormItem>
-                        )}
-                      />
-                    </div>
-                    <div className="mt-3 flex flex-col gap-5.5 p-6.5">
-                      <FormField
-                        control={form.control}
-                        name="brand"
-                        render={({ field }) => (
-                          <FormItem>
-                            <FormLabel>Aamarpay Sandbox Mode</FormLabel>
-                            <FormControl>
-                              {/* <Input
-                                className={inputClass}
-                                placeholder="Aamarpay Sandbox Mode"
-                                {...field}
-                              /> */}
-                            </FormControl>
-                            <FormMessage />
-                          </FormItem>
-                        )}
-                      />
-                    </div>
-                    <div className="grid mt-4 justify-items-end">
-                      <Button
-                        className="dark:text-slate-200"
-                        variant="outline"
-                        type="submit"
-                      >
-                        Save
-                      </Button>
-                    </div>
-                  </div>
-                </div>
-              </div>
-
             </div>
           </div>
         </form>

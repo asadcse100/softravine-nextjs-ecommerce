@@ -10,7 +10,7 @@ async function getData(): Promise<Products[]> {
       product_name: "Apple imac",
       question: "what is the version?",
       reply: "iMac 24",
-      status: "yes",
+      status: "Replied",
     },
     {
       id: "728ed52f",
@@ -18,7 +18,7 @@ async function getData(): Promise<Products[]> {
       product_name: "Apple imac",
       question: "what is the version?",
       reply: "iMac 24",
-      status: "yes",
+      status: "Replied",
     },
     {
       id: "728ed52f",
@@ -26,7 +26,7 @@ async function getData(): Promise<Products[]> {
       product_name: "Apple imac",
       question: "what is the version?",
       reply: "iMac 24",
-      status: "yes",
+      status: "Replied",
     },
     {
       id: "728ed52f",
@@ -34,7 +34,7 @@ async function getData(): Promise<Products[]> {
       product_name: "Apple imac",
       question: "what is the version?",
       reply: "iMac 24",
-      status: "yes",
+      status: "Replied",
     },
     {
       id: "728ed52f",
@@ -42,7 +42,7 @@ async function getData(): Promise<Products[]> {
       product_name: "Apple imac",
       question: "what is the version?",
       reply: "iMac 24",
-      status: "yes",
+      status: "Replied",
     },
     {
       id: "728ed52f",
@@ -50,7 +50,7 @@ async function getData(): Promise<Products[]> {
       product_name: "Apple imac",
       question: "what is the version?",
       reply: "iMac 24",
-      status: "yes",
+      status: "Replied",
     },
     {
       id: "728ed52f",
@@ -58,7 +58,7 @@ async function getData(): Promise<Products[]> {
       product_name: "Apple imac",
       question: "what is the version?",
       reply: "iMac 24",
-      status: "yes",
+      status: "Replied",
     },
     {
       id: "728ed52f",
@@ -66,7 +66,7 @@ async function getData(): Promise<Products[]> {
       product_name: "Apple imac",
       question: "what is the version?",
       reply: "iMac 24",
-      status: "yes",
+      status: "Replied",
     },
     {
       id: "728ed52f",
@@ -74,7 +74,7 @@ async function getData(): Promise<Products[]> {
       product_name: "Apple imac",
       question: "what is the version?",
       reply: "iMac 24",
-      status: "yes",
+      status: "Replied",
     },
     {
       id: "728ed52f",
@@ -82,7 +82,7 @@ async function getData(): Promise<Products[]> {
       product_name: "Apple imac",
       question: "what is the version?",
       reply: "iMac 24",
-      status: "yes",
+      status: "Replied",
     },
     {
       id: "728ed52f",
@@ -90,7 +90,7 @@ async function getData(): Promise<Products[]> {
       product_name: "Apple imac",
       question: "what is the version?",
       reply: "iMac 24",
-      status: "yes",
+      status: "Replied",
     },
     {
       id: "728ed52f",
@@ -98,7 +98,7 @@ async function getData(): Promise<Products[]> {
       product_name: "Apple imac",
       question: "what is the version?",
       reply: "iMac 24",
-      status: "yes",
+      status: "Replied",
     },
     {
       id: "728ed52f",
@@ -106,7 +106,7 @@ async function getData(): Promise<Products[]> {
       product_name: "Apple imac",
       question: "what is the version?",
       reply: "iMac 24",
-      status: "yes",
+      status: "Replied",
     },
     // ...
   ]

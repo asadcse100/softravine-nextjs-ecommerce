@@ -13,9 +13,10 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-} from "@/app/seller/components/ui/form";
+} from "@/app/admin/components/ui/form";
 import Input from "@/shared/Input/Input";
 import Select from "@/shared/Select/Select";
+import { Switch } from "@/app/admin/components/ui/switch";
 
 const formSchema = z.object({
   product_name: z.string().min(10, {
@@ -53,7 +54,7 @@ const formSchema = z.object({
   }),
 });
 
-export default function addnew() {
+export default function Addnew() {
   // ...
   // 1. Define your form.
   const form = useForm<z.infer<typeof formSchema>>({
@@ -103,14 +104,10 @@ export default function addnew() {
                         name="product_name"
                         render={({ field }) => (
                           <FormItem>
-                            <FormLabel>Monthly Salary</FormLabel>
-                            <FormControl>
-                              {/* <Input
-                                className={inputClass}
-                                placeholder="Delivery Boy Name"
-                                {...field}
-                              /> */}
-                            </FormControl>
+                            <div className="flex items-center space-x-12">
+                            <FormLabel className="mt-2">Monthly Salary</FormLabel>
+                              <Switch />
+                            </div>
                             <FormMessage />
                           </FormItem>
                         )}
@@ -122,14 +119,10 @@ export default function addnew() {
                         name="brand"
                         render={({ field }) => (
                           <FormItem>
-                            <FormLabel>Per Order Commission</FormLabel>
-                            <FormControl>
-                              {/* <Input
-                                className={inputClass}
-                                placeholder="Delivery Boy Email"
-                                {...field}
-                              /> */}
-                            </FormControl>
+                            <div className="flex items-center space-x-12">
+                            <FormLabel className="mt-2">Per Order Commission</FormLabel>
+                              <Switch />
+                            </div>
                             <FormMessage />
                           </FormItem>
                         )}
@@ -178,14 +171,10 @@ export default function addnew() {
                         name="product_name"
                         render={({ field }) => (
                           <FormItem>
-                            <FormLabel>Send Mail</FormLabel>
-                            <FormControl>
-                              {/* <Input
-                                className={inputClass}
-                                placeholder="Delivery Boy Name"
-                                {...field}
-                              /> */}
-                            </FormControl>
+                            <div className="flex items-center space-x-12">
+                            <FormLabel className="mt-2">Send Mail</FormLabel>
+                              <Switch />
+                            </div>
                             <FormMessage />
                           </FormItem>
                         )}
@@ -197,14 +186,10 @@ export default function addnew() {
                         name="brand"
                         render={({ field }) => (
                           <FormItem>
-                            <FormLabel>Send OTP</FormLabel>
-                            <FormControl>
-                              {/* <Input
-                                className={inputClass}
-                                placeholder="Delivery Boy Email"
-                                {...field}
-                              /> */}
-                            </FormControl>
+                            <div className="flex items-center space-x-12">
+                            <FormLabel className="mt-2">Send OTP</FormLabel>
+                              <Switch />
+                            </div>
                             <FormMessage />
                           </FormItem>
                         )}

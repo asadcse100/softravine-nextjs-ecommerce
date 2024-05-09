@@ -15,6 +15,7 @@ import {
   FormMessage,
 } from "@/app/admin/components/ui/form";
 import Input from "@/shared/Input/Input";
+import { Switch } from "@/app/admin/components/ui/switch";
 
 const formSchema = z.object({
   product_name: z.string().min(10, {
@@ -52,7 +53,7 @@ const formSchema = z.object({
   }),
 });
 
-export default function addnew() {
+export default function Addnew() {
   // ...
   // 1. Define your form.
   const form = useForm<z.infer<typeof formSchema>>({
@@ -92,7 +93,7 @@ export default function addnew() {
                 <div className="px-6 rounded-sm border border-stroke bg-slate-300 shadow-default dark:border-strokedark dark:bg-boxdark">
                   <div className="border-b border-stroke px-6.5 py-4 dark:border-strokedark">
                     <h3 className="font-medium text-black dark:text-slate-300">
-                    Google Map Setting
+                      Google Map Setting
                     </h3>
                   </div>
                   <div className="py-6">
@@ -102,14 +103,10 @@ export default function addnew() {
                         name="product_name"
                         render={({ field }) => (
                           <FormItem>
-                            <FormLabel>Google Map</FormLabel>
-                            <FormControl>
-                              {/* <Input
-                                className={inputClass}
-                                placeholder="Facebook Chat"
-                                {...field}
-                              /> */}
-                            </FormControl>
+                            <div className="flex items-center space-x-12">
+                              <FormLabel className="mt-2">Google Map</FormLabel>
+                              <Switch />
+                            </div>
                             <FormMessage />
                           </FormItem>
                         )}
@@ -151,19 +148,20 @@ export default function addnew() {
                 <div className="px-6 rounded-sm border border-stroke bg-slate-300 shadow-default dark:border-strokedark dark:bg-boxdark">
                   <div className="border-b border-stroke px-6.5 py-4 dark:border-strokedark">
                     <h3 className="font-medium text-black dark:text-slate-300">
-                    Google Map Configuration Notes
+                      Google Map Configuration Notes
                     </h3>
                   </div>
                   <div className="py-6">
                     <div className="dark:text-slate-300">
                       <div className="border dark:border-slate-500 dark:text-slate-400 mt-2 p-3">
-                      1. Enable Google map
+                        1. Enable Google map
                       </div>
                       <div className="border dark:border-slate-500 dark:text-slate-400 p-3">
-                      2. Set the google map API key.
+                        2. Set the google map API key.
                       </div>
                       <div className="border dark:border-slate-500 dark:text-slate-400 p-3">
-                      2. After then you will find the google map option to set default location.
+                        2. After then you will find the google map option to set
+                        default location.
                       </div>
                     </div>
                   </div>

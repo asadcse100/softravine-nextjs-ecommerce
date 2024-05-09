@@ -98,7 +98,7 @@ const DropdownMessage = () => {
           <li>
             <Link
               className="flex gap-4.5 border-t border-stroke px-4.5 py-3 hover:bg-gray-2 dark:border-strokedark dark:hover:bg-meta-4"
-              href="/messages"
+              href="/admin"
             >
               <div className="h-12.5 w-12.5 rounded-full">
                 <Image
@@ -125,7 +125,7 @@ const DropdownMessage = () => {
           <li>
             <Link
               className="flex gap-4.5 border-t border-stroke px-4.5 py-3 hover:bg-gray-2 dark:border-strokedark dark:hover:bg-meta-4"
-              href="/messages"
+              href="/admin"
             >
               <div className="h-12.5 w-12.5 rounded-full">
                 <Image
@@ -152,7 +152,7 @@ const DropdownMessage = () => {
           <li>
             <Link
               className="flex gap-4.5 border-t border-stroke px-4.5 py-3 hover:bg-gray-2 dark:border-strokedark dark:hover:bg-meta-4"
-              href="/messages"
+              href="/admin"
             >
               <div className="h-12.5 w-12.5 rounded-full">
                 <Image
@@ -179,7 +179,7 @@ const DropdownMessage = () => {
           <li>
             <Link
               className="flex gap-4.5 border-t border-stroke px-4.5 py-3 hover:bg-gray-2 dark:border-strokedark dark:hover:bg-meta-4"
-              href="/messages"
+              href="/admin"
             >
               <div className="h-12.5 w-12.5 rounded-full">
                 <Image
@@ -206,7 +206,7 @@ const DropdownMessage = () => {
           <li>
             <Link
               className="flex gap-4.5 border-t border-stroke px-4.5 py-3 hover:bg-gray-2 dark:border-strokedark dark:hover:bg-meta-4"
-              href="/messages"
+              href="/admin"
             >
               <div className="h-12.5 w-12.5 rounded-full">
                 <Image

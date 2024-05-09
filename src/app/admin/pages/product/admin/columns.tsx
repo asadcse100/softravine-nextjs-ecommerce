@@ -4,6 +4,7 @@ import { ColumnDef } from "@tanstack/react-table";
 import { ArrowUpDown, MoreHorizontal } from "lucide-react";
 import { Button } from "@/app/admin/components/ui/button";
 import { Checkbox } from "@/app/admin/components/ui/checkbox";
+import { Switch } from "@/app/admin/components/ui/switch";
 
 import {
   DropdownMenu,
@@ -60,7 +61,10 @@ export const columns: ColumnDef<Products>[] = [
               <MoreHorizontal className="h-6 w-6" />
             </Button>
           </DropdownMenuTrigger>
-          <DropdownMenuContent className="dark:bg-slate-700 dark:text-slate-200 bg-slate-100" align="start">
+          <DropdownMenuContent
+            className="dark:bg-slate-700 dark:text-slate-200 bg-slate-100"
+            align="start"
+          >
             <DropdownMenuLabel>Actions</DropdownMenuLabel>
             <DropdownMenuItem
               onClick={() => navigator.clipboard.writeText(payment.id)}
@@ -86,7 +90,6 @@ export const columns: ColumnDef<Products>[] = [
   {
     accessorKey: "num_of_sale",
     header: "Num Of Sale",
-
   },
   {
     accessorKey: "price",
@@ -100,6 +103,10 @@ export const columns: ColumnDef<Products>[] = [
 
       return <div className="text-right font-medium">{formatted}</div>;
     },
+  },
+  {
+    accessorKey: "rating",
+    header: "Rating",
   },
   {
     accessorKey: "total_stock",
@@ -116,18 +123,30 @@ export const columns: ColumnDef<Products>[] = [
     },
   },
   {
-    accessorKey: "today_deal",
     header: "Today Deal",
-
+    id: "today_deal",
+    cell: ({ row }) => (
+      <div className="flex items-center space-x-12">
+        <Switch />
+      </div>
+    ),
   },
   {
     accessorKey: "published",
     header: "Published",
-
+    cell: ({ row }) => (
+      <div className="flex items-center space-x-12">
+        <Switch />
+      </div>
+    ),
   },
   {
     accessorKey: "featured",
     header: "Featured",
-
+    cell: ({ row }) => (
+      <div className="flex items-center space-x-12">
+        <Switch />
+      </div>
+    ),
   },
 ];

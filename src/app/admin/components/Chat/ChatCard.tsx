@@ -1,6 +1,6 @@
 import Link from "next/link";
 import Image from "next/image";
-import { Chat } from "@/types/chat";
+import { Chat } from "@/app/admin/types/chat";
 
 const chatData: Chat[] = [
   {
@@ -63,7 +63,7 @@ const ChatCard = () => {
       <div>
         {chatData.map((chat, key) => (
           <Link
-            href="/"
+            href="/frontend"
             className="flex items-center gap-5 px-7.5 py-3 hover:bg-gray-3 dark:hover:bg-meta-4"
             key={key}
           >
