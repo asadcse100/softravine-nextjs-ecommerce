@@ -108,4 +108,8 @@ export const columns: ColumnDef<Products>[] = [
       accessorKey: "product",
       header: "Product",
     },
+    {
+      accessorKey: "date",
+      header: "Date",
+    },
 ];

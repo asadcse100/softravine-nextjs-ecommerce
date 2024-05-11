@@ -27,7 +27,7 @@ export default function Header() {
       <div className="flex items-center justify-between h-20">
         <button
           onClick={sideBarToggle}
-          className="order-2 sm:order-1 bg-[#3a3f48] text-[#6e768e] hover:bg-white ml-3 rounded-md h-[30px] w-[30px] shadow-md shadow-black/10 transition duration-300 ease-in-out flex items-center justify-center"
+          className="order-2 sm:order-1 bg-slate-200 dark:bg-slate-700 text-[#6e768e] hover:bg-white ml-3 rounded-md h-[30px] w-[30px] shadow-md shadow-black/10 transition duration-300 ease-in-out flex items-center justify-center"
         >
           <BsList/>
         </button>

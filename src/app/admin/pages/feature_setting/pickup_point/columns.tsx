@@ -29,7 +29,6 @@ export const columns: ColumnDef<Products>[] = [
     id: "actions",
     cell: ({ row }) => {
       const payment = row.original;
-
       return (
         <DropdownMenu>
           <DropdownMenuTrigger asChild>

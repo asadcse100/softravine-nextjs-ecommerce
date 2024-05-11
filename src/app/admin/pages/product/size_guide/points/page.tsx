@@ -6,41 +6,17 @@ async function getData(): Promise<Products[]> {
   return [
     {
       id: "728ed52f",
-      product_name: "Acer Nitro 50 N50-620-UA91 Gaming Desktop",
-      added_by: "Alamin",
-      num_of_sale: 254,
-      price: 5445,
-      rating: 445,
-      total_stock: 4250,
-      today_deal: "ok",
-      published: "ok",
-      featured: "ok",
+      name: "XL",
     },
  
     {
       id: "728ed52f",
-      product_name: "Acer Nitro 50 N50-620-UA91 Gaming Desktop",
-      added_by: "Alamin",
-      num_of_sale: 254,
-      price: 5445,
-      rating: 445,
-      total_stock: 4250,
-      today_deal: "ok",
-      published: "ok",
-      featured: "ok",
+      name: "XL",
     },
  
     {
       id: "728ed52f",
-      product_name: "Acer Nitro 50 N50-620-UA91 Gaming Desktop",
-      added_by: "Alamin",
-      num_of_sale: 29,
-      price: 445,
-      rating: 445,
-      total_stock: 450,
-      today_deal: "ok",
-      published: "ok",
-      featured: "ok",
+      name: "XL",
     },
  
     // ...

@@ -13,6 +13,7 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/app/seller/components/ui/dropdown-menu";
+import { Switch } from "@/app/seller/components/ui/switch";
 
 // This type is used to define the shape of our data.
 // You can use a Zod schema here if you want.
@@ -103,10 +104,20 @@ export const columns: ColumnDef<Products>[] = [
   {
     accessorKey: "published",
     header: "Published",
+    cell: ({ row }) => (
+      <div className="flex items-center space-x-12">
+        <Switch />
+      </div>
+    ),
   },
   {
     accessorKey: "featured",
     header: "Featured",
+    cell: ({ row }) => (
+      <div className="flex items-center space-x-12">
+        <Switch />
+      </div>
+    ),
   },
   
 ];

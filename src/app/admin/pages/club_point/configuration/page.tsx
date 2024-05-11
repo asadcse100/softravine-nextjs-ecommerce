@@ -102,11 +102,11 @@ export default function Addnew() {
                         name="product_name"
                         render={({ field }) => (
                           <FormItem>
-                            <FormLabel>Set Point For 1.000</FormLabel>
+                            <FormLabel>Set Point For $1.000</FormLabel>
                             <FormControl>
                               <Input
                                 className={inputClass}
-                                placeholder="5"
+                                placeholder="5 Points"
                                 {...field}
                               />
                             </FormControl>

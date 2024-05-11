@@ -6,6 +6,7 @@ async function getData(): Promise<Products[]> {
   return [
     {
       id: "728ed52f",
+      edit: "Edit",
       name: "Euro",
       symbol: "E",
       code: "EUR",
@@ -14,6 +15,7 @@ async function getData(): Promise<Products[]> {
     },
     {
       id: "728ed52f",
+      edit: "Edit",
       name: "Euro",
       symbol: "E",
       code: "EUR",
@@ -22,6 +24,7 @@ async function getData(): Promise<Products[]> {
     },
     {
       id: "728ed52f",
+      edit: "Edit",
       name: "Euro",
       symbol: "E",
       code: "EUR",
@@ -30,6 +33,7 @@ async function getData(): Promise<Products[]> {
     },
     {
       id: "728ed52f",
+      edit: "Edit",
       name: "Euro",
       symbol: "E",
       code: "EUR",
@@ -38,6 +42,7 @@ async function getData(): Promise<Products[]> {
     },
     {
       id: "728ed52f",
+      edit: "Edit",
       name: "Euro",
       symbol: "E",
       code: "EUR",
@@ -46,6 +51,7 @@ async function getData(): Promise<Products[]> {
     },
     {
       id: "728ed52f",
+      edit: "Edit",
       name: "Euro",
       symbol: "E",
       code: "EUR",
@@ -54,6 +60,7 @@ async function getData(): Promise<Products[]> {
     },
     {
       id: "728ed52f",
+      edit: "Edit",
       name: "Euro",
       symbol: "E",
       code: "EUR",
@@ -62,6 +69,7 @@ async function getData(): Promise<Products[]> {
     },
     {
       id: "728ed52f",
+      edit: "Edit",
       name: "Euro",
       symbol: "E",
       code: "EUR",
@@ -70,6 +78,7 @@ async function getData(): Promise<Products[]> {
     },
     {
       id: "728ed52f",
+      edit: "Edit",
       name: "Euro",
       symbol: "E",
       code: "EUR",
@@ -78,6 +87,7 @@ async function getData(): Promise<Products[]> {
     },
     {
       id: "728ed52f",
+      edit: "Edit",
       name: "Euro",
       symbol: "E",
       code: "EUR",
@@ -86,6 +96,7 @@ async function getData(): Promise<Products[]> {
     },
     {
       id: "728ed52f",
+      edit: "Edit",
       name: "Euro",
       symbol: "E",
       code: "EUR",
@@ -94,6 +105,7 @@ async function getData(): Promise<Products[]> {
     },
     {
       id: "728ed52f",
+      edit: "Edit",
       name: "Euro",
       symbol: "E",
       code: "EUR",
@@ -102,6 +114,7 @@ async function getData(): Promise<Products[]> {
     },
     {
       id: "728ed52f",
+      edit: "Edit",
       name: "Euro",
       symbol: "E",
       code: "EUR",

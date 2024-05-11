@@ -8,7 +8,7 @@ import React from "react";
 export default function Sidebar() {
   const { toggleCollapse } = useSideBarToggle();
   const asideStyle = classNames(
-    "fixed sidebar overflow-y-auto border-stroke bg-white px-7.5 dark:border-strokedark dark:bg-boxdark text-gray-500 z-50 h-full shadow-lg shadow-gray-900/20 transition duration-300 ease-in-out w-[16rem]",
+    "fixed sidebar overflow-y-auto border-stroke bg-white px-7.5 dark:border-strokedark dark:bg-boxdark text-slate-500 z-50 h-full shadow-lg shadow-slate-900/20 transition duration-300 ease-in-out w-[16rem]",
     {
       ["w-[20rem]"]: !toggleCollapse,
       ["sm:w-[6rem] sm:left-0 left-[-100%]"]: toggleCollapse,
@@ -26,7 +26,7 @@ export default function Sidebar() {
           height={15}
         />
         {!toggleCollapse && (
-          <h3 className="pl-2 font-bold text-2xl text-[#e6e9ee] min-w-max">
+          <h3 className="pl-2 font-bold text-2xl text-slate-500 min-w-max">
             My-Bis
           </h3>
         )}

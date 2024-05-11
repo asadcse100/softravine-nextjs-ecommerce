@@ -81,7 +81,7 @@ export const columns: ColumnDef<Products>[] = [
   },
   {
     accessorKey: "sending_date",
-    header: "Eending Date",
+    header: "Sending Date",
   },
   {
     accessorKey: "subject",

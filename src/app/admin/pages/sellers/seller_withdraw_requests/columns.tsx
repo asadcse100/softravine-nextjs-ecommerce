@@ -85,11 +85,29 @@ export const columns: ColumnDef<Products>[] = [
   },
   {
     accessorKey: "total_amount_to_pay",
-    header: "Total Amount To Pay",
+    header: () => <div className="text-right">Total Amount To Pay</div>,
+    cell: ({ row }) => {
+      const total_amount_to_pay = parseFloat(row.getValue("total_amount_to_pay"));
+      const formatted = new Intl.NumberFormat("en-US", {
+        style: "currency",
+        currency: "USD",
+      }).format(total_amount_to_pay);
+
+      return <div className="text-right font-medium">{formatted}</div>;
+    },
   },
   {
     accessorKey: "request_amount",
-    header: "Request Amount",
+    header: () => <div className="text-right">Request Amount</div>,
+    cell: ({ row }) => {
+      const request_amount = parseFloat(row.getValue("request_amount"));
+      const formatted = new Intl.NumberFormat("en-US", {
+        style: "currency",
+        currency: "USD",
+      }).format(request_amount);
+
+      return <div className="text-right font-medium">{formatted}</div>;
+    },
   },
   {
     accessorKey: "message",

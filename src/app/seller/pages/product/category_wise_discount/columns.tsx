@@ -2,8 +2,9 @@
 
 import { ColumnDef } from "@tanstack/react-table";
 import { ArrowUpDown, MoreHorizontal } from "lucide-react";
-import { Button } from "@/app/seller/components/ui/button";
-import { Checkbox } from "@/app/seller/components/ui/checkbox";
+import { Button } from "@/app/admin/components/ui/button";
+import { Checkbox } from "@/app/admin/components/ui/checkbox";
+import  { DatePickerWithRange }  from "@/app/admin/components/ui/daterange";
 
 import {
   DropdownMenu,
@@ -12,16 +13,33 @@ import {
   DropdownMenuLabel,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
-} from "@/app/seller/components/ui/dropdown-menu";
+} from "@/app/admin/components/ui/dropdown-menu";
 
-// This type is used to define the shape of our data.
-// You can use a Zod schema here if you want.
+import { z } from "zod";
+import Input from "@/shared/Input/Input";
+
+
+const formSchema = z.object({
+  product_name: z.string().min(10, {
+    message: "Product Name must be at least 10 characters.",
+  }),
+});
+
 export type Products = {
   id: string;
-  price: number;
+  amount: number;
   status: "pending" | "processing" | "success" | "failed";
   email: string;
 };
+
+function onSubmit(values: z.infer<typeof formSchema>) {
+  // Do something with the form values.
+  // ✅ This will be type-safe and validated.
+  console.log(values);
+}
+
+const inputClass =
+  "w-full rounded-lg border-[1px] border-primary bg-transparent px-5 py-3 font-normal text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:bg-form-input dark:text-white";
 
 export const columns: ColumnDef<Products>[] = [
   {
@@ -30,7 +48,7 @@ export const columns: ColumnDef<Products>[] = [
   },
   {
     accessorKey: "name",
-    header: "Name",
+    header: "Product Name",
   },
   {
     accessorKey: "parent_category",
@@ -39,10 +57,18 @@ export const columns: ColumnDef<Products>[] = [
   {
     accessorKey: "discount",
     header: "Discount",
+    cell: ({ row }) => (
+      <div className="flex items-center space-x-12">
+        <Input className={inputClass} placeholder="0%" />
+      </div>
+    ),
   },
   {
     accessorKey: "discount_date_range",
     header: "Discount Date Range",
+    cell: ({ row }) => (
+      <DatePickerWithRange />
+    ),
   },
   {
     accessorKey: "action",

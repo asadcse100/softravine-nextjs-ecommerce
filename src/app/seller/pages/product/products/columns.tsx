@@ -4,6 +4,7 @@ import { ColumnDef } from "@tanstack/react-table";
 import { ArrowUpDown, MoreHorizontal } from "lucide-react";
 import { Button } from "@/app/seller/components/ui/button";
 import { Checkbox } from "@/app/seller/components/ui/checkbox";
+import { Switch } from "@/app/seller/components/ui/switch";
 
 import {
   DropdownMenu,
@@ -103,9 +104,19 @@ export const columns: ColumnDef<Products>[] = [
   {
     accessorKey: "published",
     header: "Published",
+    cell: ({ row }) => (
+      <div className="flex items-center space-x-12">
+        <Switch />
+      </div>
+    ),
   },
   {
     accessorKey: "featured",
     header: "Featured",
+    cell: ({ row }) => (
+      <div className="flex items-center space-x-12">
+        <Switch />
+      </div>
+    ),
   },
 ];

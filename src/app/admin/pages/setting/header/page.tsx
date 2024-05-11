@@ -15,40 +15,11 @@ import {
   FormMessage,
 } from "@/app/admin/components/ui/form";
 import Input from "@/shared/Input/Input";
+import { Switch } from "@/app/admin/components/ui/switch";
 
 const formSchema = z.object({
   product_name: z.string().min(10, {
     message: "Product Name must be at least 10 characters.",
-  }),
-  brand: z.string().min(3, {
-    message: "Brand must be at least 3 characters.",
-  }),
-  unit: z.string().min(3, {
-    message: "Unit must be at least 3 characters.",
-  }),
-  weight: z.string().min(3, {
-    message: "Weight must be at least 3 characters.",
-  }),
-  minimum_purchase_qty: z.string().min(3, {
-    message: "Minimum Purchase Qty must be at least 3 characters.",
-  }),
-  tag: z.string().min(3, {
-    message: "Tag Purchase Qty must be at least 3 characters.",
-  }),
-  barcode: z.string().min(3, {
-    message: "Barcode Purchase Qty must be at least 3 characters.",
-  }),
-  thumbnail_image: z.string().min(3, {
-    message: "thumbnail_image Purchase Qty must be at least 3 characters.",
-  }),
-  gallery_images: z.string().min(3, {
-    message: "gallery_images Purchase Qty must be at least 3 characters.",
-  }),
-  video_provider: z.string().min(3, {
-    message: "Video Provider Purchase Qty must be at least 3 characters.",
-  }),
-  video_link: z.string().min(3, {
-    message: "Video Link Purchase Qty must be at least 3 characters.",
   }),
 });
 
@@ -59,16 +30,6 @@ export default function Addnew() {
     resolver: zodResolver(formSchema),
     defaultValues: {
       product_name: "",
-      brand: "",
-      unit: "",
-      weight: "",
-      minimum_purchase_qty: "",
-      tag: "",
-      barcode: "",
-      thumbnail_image: "",
-      gallery_images: "",
-      video_provider: "",
-      video_link: "",
     },
   });
 
@@ -122,14 +83,12 @@ export default function Addnew() {
                         name="brand"
                         render={({ field }) => (
                           <FormItem>
-                            <FormLabel>Show Language Switcher?</FormLabel>
-                            <FormControl>
-                              {/* <Input
-                                className={inputClass}
-                                placeholder="Brand"
-                                {...field}
-                              /> */}
-                            </FormControl>
+                            <div className="flex items-center space-x-12">
+                                <FormLabel className="mt-2">
+                                Show Language Switcher?
+                                </FormLabel>
+                                <Switch />
+                              </div>
                             <FormMessage />
                           </FormItem>
                         )}
@@ -141,14 +100,12 @@ export default function Addnew() {
                         name="unit"
                         render={({ field }) => (
                           <FormItem>
-                            <FormLabel>Show Currency Switcher?</FormLabel>
-                            <FormControl>
-                              {/* <Input
-                                className={inputClass}
-                                placeholder="Unit"
-                                {...field}
-                              /> */}
-                            </FormControl>
+                            <div className="flex items-center space-x-12">
+                                <FormLabel className="mt-2">
+                                Show Currency Switcher?
+                                </FormLabel>
+                                <Switch />
+                              </div>
                             <FormMessage />
                           </FormItem>
                         )}
@@ -160,14 +117,12 @@ export default function Addnew() {
                         name="weight"
                         render={({ field }) => (
                           <FormItem>
-                            <FormLabel>Enable stikcy header?</FormLabel>
-                            <FormControl>
-                              {/* <Input
-                                className={inputClass}
-                                placeholder="weight"
-                                {...field}
-                              /> */}
-                            </FormControl>
+                            <div className="flex items-center space-x-12">
+                                <FormLabel className="mt-2">
+                                Enable stikcy header?
+                                </FormLabel>
+                                <Switch />
+                              </div>
                             <FormMessage />
                           </FormItem>
                         )}

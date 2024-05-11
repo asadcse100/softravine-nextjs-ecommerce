@@ -6,6 +6,7 @@ async function getData(): Promise<Products[]> {
   return [
     {
       id: "728ed52f",
+      name: "Mr. Asif",
       phone: "021321334",
       email: "m@example.com",
       earning: 546,
@@ -13,6 +14,7 @@ async function getData(): Promise<Products[]> {
     },
     {
       id: "728ed52f",
+      name: "Mr. Asif",
       phone: "021321334",
       email: "m@example.com",
       earning: 546,
@@ -20,6 +22,7 @@ async function getData(): Promise<Products[]> {
     },
     {
       id: "728ed52f",
+      name: "Mr. Asif",
       phone: "021321334",
       email: "m@example.com",
       earning: 546,
@@ -27,6 +30,7 @@ async function getData(): Promise<Products[]> {
     },
     {
       id: "728ed52f",
+      name: "Mr. Asif",
       phone: "021321334",
       email: "m@example.com",
       earning: 546,
@@ -34,6 +38,7 @@ async function getData(): Promise<Products[]> {
     },
     {
       id: "728ed52f",
+      name: "Mr. Asif",
       phone: "021321334",
       email: "m@example.com",
       earning: 546,
@@ -41,6 +46,7 @@ async function getData(): Promise<Products[]> {
     },
     {
       id: "728ed52f",
+      name: "Mr. Asif",
       phone: "021321334",
       email: "m@example.com",
       earning: 546,
@@ -48,6 +54,7 @@ async function getData(): Promise<Products[]> {
     },
     {
       id: "728ed52f",
+      name: "Mr. Asif",
       phone: "021321334",
       email: "m@example.com",
       earning: 546,
@@ -55,6 +62,7 @@ async function getData(): Promise<Products[]> {
     },
     {
       id: "728ed52f",
+      name: "Mr. Asif",
       phone: "021321334",
       email: "m@example.com",
       earning: 546,
@@ -62,6 +70,7 @@ async function getData(): Promise<Products[]> {
     },
     {
       id: "728ed52f",
+      name: "Mr. Asif",
       phone: "021321334",
       email: "m@example.com",
       earning: 546,
@@ -69,6 +78,7 @@ async function getData(): Promise<Products[]> {
     },
     {
       id: "728ed52f",
+      name: "Mr. Asif",
       phone: "021321334",
       email: "m@example.com",
       earning: 546,
@@ -76,6 +86,7 @@ async function getData(): Promise<Products[]> {
     },
     {
       id: "728ed52f",
+      name: "Mr. Asif",
       phone: "021321334",
       email: "m@example.com",
       earning: 546,
@@ -83,6 +94,7 @@ async function getData(): Promise<Products[]> {
     },
     {
       id: "728ed52f",
+      name: "Mr. Asif",
       phone: "021321334",
       email: "m@example.com",
       earning: 546,
@@ -90,6 +102,7 @@ async function getData(): Promise<Products[]> {
     },
     {
       id: "728ed52f",
+      name: "Mr. Asif",
       phone: "021321334",
       email: "m@example.com",
       earning: 546,

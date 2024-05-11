@@ -15,40 +15,11 @@ import {
   FormMessage,
 } from "@/app/seller/components/ui/form";
 import Input from "@/shared/Input/Input";
+import { Switch } from "@/app/admin/components/ui/switch";
 
 const formSchema = z.object({
   product_name: z.string().min(10, {
     message: "Product Name must be at least 10 characters.",
-  }),
-  brand: z.string().min(3, {
-    message: "Brand must be at least 3 characters.",
-  }),
-  unit: z.string().min(3, {
-    message: "Unit must be at least 3 characters.",
-  }),
-  weight: z.string().min(3, {
-    message: "Weight must be at least 3 characters.",
-  }),
-  minimum_purchase_qty: z.string().min(3, {
-    message: "Minimum Purchase Qty must be at least 3 characters.",
-  }),
-  tag: z.string().min(3, {
-    message: "Tag Purchase Qty must be at least 3 characters.",
-  }),
-  barcode: z.string().min(3, {
-    message: "Barcode Purchase Qty must be at least 3 characters.",
-  }),
-  thumbnail_image: z.string().min(3, {
-    message: "thumbnail_image Purchase Qty must be at least 3 characters.",
-  }),
-  gallery_images: z.string().min(3, {
-    message: "gallery_images Purchase Qty must be at least 3 characters.",
-  }),
-  video_provider: z.string().min(3, {
-    message: "Video Provider Purchase Qty must be at least 3 characters.",
-  }),
-  video_link: z.string().min(3, {
-    message: "Video Link Purchase Qty must be at least 3 characters.",
   }),
 });
 
@@ -59,16 +30,6 @@ export default function Addnew() {
     resolver: zodResolver(formSchema),
     defaultValues: {
       product_name: "",
-      brand: "",
-      unit: "",
-      weight: "",
-      minimum_purchase_qty: "",
-      tag: "",
-      barcode: "",
-      thumbnail_image: "",
-      gallery_images: "",
-      video_provider: "",
-      video_link: "",
     },
   });
 
@@ -860,13 +821,13 @@ export default function Addnew() {
                         name="free_shippling"
                         render={({ field }) => (
                           <FormItem>
-                            <FormLabel>Free Shipping</FormLabel>
                             <FormControl>
-                              {/* <Input
-                                className={inputClass}
-                                placeholder=""
-                                {...field}
-                              /> */}
+                            <div className="flex items-center space-x-12">
+                                <FormLabel className="mt-2">
+                                Free Shipping
+                                </FormLabel>
+                                <Switch />
+                              </div>
                             </FormControl>
                             <FormMessage />
                           </FormItem>
@@ -879,13 +840,13 @@ export default function Addnew() {
                         name="flat_rate"
                         render={({ field }) => (
                           <FormItem>
-                            <FormLabel>Flat Rate</FormLabel>
                             <FormControl>
-                              {/* <Input
-                                className={inputClass}
-                                placeholder=""
-                                {...field}
-                              /> */}
+                            <div className="flex items-center space-x-12">
+                                <FormLabel className="mt-2">
+                                Flat Rate
+                                </FormLabel>
+                                <Switch />
+                              </div>
                             </FormControl>
                             <FormMessage />
                           </FormItem>
@@ -898,13 +859,13 @@ export default function Addnew() {
                         name="qty_multi"
                         render={({ field }) => (
                           <FormItem>
-                            <FormLabel>Is Product Quantity Multiply</FormLabel>
                             <FormControl>
-                              {/* <Input
-                                className={inputClass}
-                                placeholder="meta_image"
-                                {...field}
-                              /> */}
+                            <div className="flex items-center space-x-12">
+                                <FormLabel className="mt-2">
+                                Is Product Quantity Multiply
+                                </FormLabel>
+                                <Switch />
+                              </div>
                             </FormControl>
                             <FormMessage />
                           </FormItem>
@@ -930,13 +891,13 @@ export default function Addnew() {
                         name="show_stock_quantity"
                         render={({ field }) => (
                           <FormItem>
-                            <FormLabel>Show Stock quantity</FormLabel>
                             <FormControl>
-                              {/* <Input
-                                className={inputClass}
-                                placeholder=""
-                                {...field}
-                              /> */}
+                            <div className="flex items-center space-x-12">
+                                <FormLabel className="mt-2">
+                                Show Stock quantity
+                                </FormLabel>
+                                <Switch />
+                              </div>
                             </FormControl>
                             <FormMessage />
                           </FormItem>
@@ -949,13 +910,13 @@ export default function Addnew() {
                         name=""
                         render={({ field }) => (
                           <FormItem>
-                            <FormLabel>Show Stock With Text Only</FormLabel>
                             <FormControl>
-                              {/* <Input
-                                className={inputClass}
-                                placeholder=""
-                                {...field}
-                              /> */}
+                            <div className="flex items-center space-x-12">
+                                <FormLabel className="mt-2">
+                                Show Stock With Text Only
+                                </FormLabel>
+                                <Switch />
+                              </div>
                             </FormControl>
                             <FormMessage />
                           </FormItem>
@@ -968,13 +929,13 @@ export default function Addnew() {
                         name=""
                         render={({ field }) => (
                           <FormItem>
-                            <FormLabel>Hide Stock</FormLabel>
                             <FormControl>
-                              {/* <Input
-                                className={inputClass}
-                                placeholder="meta_image"
-                                {...field}
-                              /> */}
+                            <div className="flex items-center space-x-12">
+                                <FormLabel className="mt-2">
+                                Hide Stock
+                                </FormLabel>
+                                <Switch />
+                              </div>
                             </FormControl>
                             <FormMessage />
                           </FormItem>
@@ -1000,13 +961,13 @@ export default function Addnew() {
                         name="show_stock_quantity"
                         render={({ field }) => (
                           <FormItem>
-                            <FormLabel>Status</FormLabel>
                             <FormControl>
-                              {/* <Input
-                                className={inputClass}
-                                placeholder=""
-                                {...field}
-                              /> */}
+                              <div className="flex items-center space-x-12">
+                                <FormLabel className="mt-2">
+                                Status
+                                </FormLabel>
+                                <Switch />
+                              </div>
                             </FormControl>
                             <FormMessage />
                           </FormItem>

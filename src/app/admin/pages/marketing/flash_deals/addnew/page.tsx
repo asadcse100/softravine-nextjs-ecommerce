@@ -123,7 +123,7 @@ export default function Addnew() {
                           <FormItem>
                             <FormLabel>Banner</FormLabel>
                             <FormControl>
-                              <Input
+                              <Input type="file"
                                 className={inputClass}
                                 placeholder="Banner"
                                 {...field}

@@ -16,6 +16,7 @@ import {
 } from "@/app/admin/components/ui/form";
 import Input from "@/shared/Input/Input";
 import Select from "@/shared/Select/Select";
+import Textarea from "@/shared/Textarea/Textarea";
 
 const formSchema = z.object({
   product_name: z.string().min(10, {
@@ -270,11 +271,7 @@ export default function Addnew() {
                           <FormItem>
                             <FormLabel>Address</FormLabel>
                             <FormControl>
-                              <Input type="text"
-                                className={inputClass}
-                                placeholder=""
-                                {...field}
-                              />
+                              <Textarea></Textarea>
                             </FormControl>
                             <FormMessage />
                           </FormItem>

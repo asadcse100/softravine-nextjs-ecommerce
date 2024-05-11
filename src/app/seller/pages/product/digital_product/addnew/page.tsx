@@ -15,6 +15,7 @@ import {
   FormMessage,
 } from "@/app/seller/components/ui/form";
 import Input from "@/shared/Input/Input";
+import { Switch } from "@/app/seller/components/ui/switch";
 
 const formSchema = z.object({
   product_name: z.string().min(10, {
@@ -116,7 +117,7 @@ export default function Addnew() {
                         )}
                       />
                     </div>
-                    <div className="mt-3 flex flex-col gap-5.5 p-6.5">
+                    <div className="flex flex-col gap-5.5 p-6.5">
                       <FormField
                         control={form.control}
                         name="product_file"
@@ -135,7 +136,7 @@ export default function Addnew() {
                         )}
                       />
                     </div>
-                    <div className="mt-3 flex flex-col gap-5.5 p-6.5">
+                    <div className="flex flex-col gap-5.5 p-6.5">
                       <FormField
                         control={form.control}
                         name="tag"
@@ -186,7 +187,7 @@ export default function Addnew() {
                         )}
                       />
                     </div>
-                    <div className="mt-3 flex flex-col gap-5.5 p-6.5">
+                    <div className="flex flex-col gap-5.5 p-6.5">
                       <FormField
                         control={form.control}
                         name="thumbnail_image"
@@ -239,7 +240,7 @@ export default function Addnew() {
                         )}
                       />
                     </div>
-                    <div className="mt-3 flex flex-col gap-5.5 p-6.5">
+                    <div className="flex flex-col gap-5.5 p-6.5">
                       <FormField
                         control={form.control}
                         name="video_link"
@@ -291,7 +292,7 @@ export default function Addnew() {
                         )}
                       />
                     </div>
-                    <div className="mt-3 flex flex-col gap-5.5 p-6.5">
+                    <div className="flex flex-col gap-5.5 p-6.5">
                       <FormField
                         control={form.control}
                         name="discount_date_range"
@@ -310,7 +311,7 @@ export default function Addnew() {
                         )}
                       />
                     </div>
-                    <div className="mt-3 flex flex-col gap-5.5 p-6.5">
+                    <div className="flex flex-col gap-5.5 p-6.5">
                       <FormField
                         control={form.control}
                         name="discount"
@@ -329,7 +330,7 @@ export default function Addnew() {
                         )}
                       />
                     </div>
-                    <div className="mt-3 flex flex-col gap-5.5 p-6.5">
+                    <div className="flex flex-col gap-5.5 p-6.5">
                       <FormField
                         control={form.control}
                         name="flat_percent"
@@ -381,7 +382,7 @@ export default function Addnew() {
                       />
                     </div>
  
-                    <div className="mt-3 flex flex-col gap-5.5 p-6.5">
+                    <div className="flex flex-col gap-5.5 p-6.5">
                       <FormField
                         control={form.control}
                         name="discount_date_range"
@@ -400,7 +401,7 @@ export default function Addnew() {
                         )}
                       />
                     </div>
-                    <div className="mt-3 flex flex-col gap-5.5 p-6.5">
+                    <div className="flex flex-col gap-5.5 p-6.5">
                       <FormField
                         control={form.control}
                         name="discount"
@@ -419,7 +420,7 @@ export default function Addnew() {
                         )}
                       />
                     </div>
-                    <div className="mt-3 flex flex-col gap-5.5 p-6.5">
+                    <div className="flex flex-col gap-5.5 p-6.5">
                       <FormField
                         control={form.control}
                         name="flat_percent"
@@ -451,7 +452,7 @@ export default function Addnew() {
                     </h3>
                   </div>
                   <div className="py-6">
-                    <div className="mt-3 flex flex-col gap-5.5 p-6.5">
+                    <div className="flex flex-col gap-5.5 p-6.5">
                       <FormField
                         control={form.control}
                         name="product_description"
@@ -483,7 +484,7 @@ export default function Addnew() {
                     </h3>
                   </div>
                   <div className="py-6">
-                    <div className="mt-3 flex flex-col gap-5.5 p-6.5">
+                    <div className="flex flex-col gap-5.5 p-6.5">
                       <FormField
                         control={form.control}
                         name="pdf_specification"
@@ -515,7 +516,7 @@ export default function Addnew() {
                     </h3>
                   </div>
                   <div className="py-6">
-                    <div className="mt-3 flex flex-col gap-5.5 p-6.5">
+                    <div className="flex flex-col gap-5.5 p-6.5">
                       <FormField
                         control={form.control}
                         name="meta_title"
@@ -534,7 +535,7 @@ export default function Addnew() {
                         )}
                       />
                     </div>
-                    <div className="mt-3 flex flex-col gap-5.5 p-6.5">
+                    <div className="flex flex-col gap-5.5 p-6.5">
                       <FormField
                         control={form.control}
                         name="meta_description"
@@ -553,7 +554,7 @@ export default function Addnew() {
                         )}
                       />
                     </div>
-                    <div className="mt-3 flex flex-col gap-5.5 p-6.5">
+                    <div className="flex flex-col gap-5.5 p-6.5">
                       <FormField
                         control={form.control}
                         name="meta_image"
@@ -585,7 +586,7 @@ export default function Addnew() {
                     </h3>
                   </div>
                   <div className="py-6">
-                    <div className="mt-3 flex flex-col gap-5.5 p-6.5">
+                    <div className="flex flex-col gap-5.5 p-6.5">
                       <FormField
                         control={form.control}
                         name="main_category"
@@ -604,7 +605,7 @@ export default function Addnew() {
                         )}
                       />
                     </div>
-                    <div className="mt-3 flex flex-col gap-5.5 p-6.5">
+                    <div className="flex flex-col gap-5.5 p-6.5">
                       <FormField
                         control={form.control}
                         name="sub_category"
@@ -637,7 +638,7 @@ export default function Addnew() {
                     </h3>
                   </div>
                   <div className="py-6">
-                    <div className="mt-3 flex flex-col gap-5.5 p-6.5">
+                    <div className="flex flex-col gap-5.5 p-6.5">
                       <FormField
                         control={form.control}
                         name="show_stock_quantity"
@@ -645,11 +646,7 @@ export default function Addnew() {
                           <FormItem>
                             <FormLabel>Status</FormLabel>
                             <FormControl>
-                              {/* <Input
-                                className={inputClass}
-                                placeholder=""
-                                {...field}
-                              /> */}
+                              <Switch />
                             </FormControl>
                             <FormMessage />
                           </FormItem>
@@ -670,7 +667,7 @@ export default function Addnew() {
                     </h3>
                   </div>
                   <div className="py-6">
-                    <div className="mt-3 flex flex-col gap-5.5 p-6.5">
+                    <div className="flex flex-col gap-5.5 p-6.5">
                       <FormField
                         control={form.control}
                         name="tax"

@@ -163,7 +163,7 @@ export default function Addnew() {
                           <FormItem>
                             <FormLabel>Blog Banner</FormLabel>
                             <FormControl>
-                              <Input
+                              <Input type="file"
                                 className={inputClass}
                                 placeholder="Banner"
                                 {...field}
@@ -254,7 +254,7 @@ export default function Addnew() {
                             <FormItem>
                               <FormLabel>Meta Image</FormLabel>
                               <FormControl>
-                                <Input
+                                <Input type="file"
                                   className={inputClass}
                                   placeholder="Meta Image"
                                   {...field}
@@ -273,18 +273,14 @@ export default function Addnew() {
                             <FormItem>
                               <FormLabel>Meta Description</FormLabel>
                               <FormControl>
-                                <Input
-                                  className={inputClass}
-                                  placeholder="Meta Description"
-                                  {...field}
-                                />
+                                <Textarea></Textarea>
                               </FormControl>
                               <FormMessage />
                             </FormItem>
                           )}
                         />
                       </div>
-                      <div className="mt-3 flex flex-col gap-5.5 p-6.5">
+                      {/* <div className="mt-3 flex flex-col gap-5.5 p-6.5">
                         <FormField
                           control={form.control}
                           name="thumbnail_image"
@@ -302,7 +298,7 @@ export default function Addnew() {
                             </FormItem>
                           )}
                         />
-                      </div>
+                      </div> */}
                       <div className="grid mt-4 justify-items-end">
                         <Button
                           className="dark:text-slate-200"

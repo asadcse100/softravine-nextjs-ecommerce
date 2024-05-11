@@ -4,10 +4,7 @@ import { ColumnDef } from "@tanstack/react-table";
 import { ArrowUpDown, MoreHorizontal } from "lucide-react";
 import { Button } from "@/app/admin/components/ui/button";
 import { Checkbox } from "@/app/admin/components/ui/checkbox";
-import { addDays, format } from "date-fns";
-import { Calendar as CalendarIcon } from "lucide-react";
-import { DateRange } from "react-day-picker";
-import { Calendar } from "@/app/admin/components/ui/calendar";
+import  { DatePickerWithRange }  from "@/app/admin/components/ui/daterange";
 
 import {
   DropdownMenu,
@@ -18,20 +15,9 @@ import {
   DropdownMenuTrigger,
 } from "@/app/admin/components/ui/dropdown-menu";
 
-import { zodResolver } from "@hookform/resolvers/zod";
-import { useForm } from "react-hook-form";
 import { z } from "zod";
-
-import {
-  Form,
-  FormControl,
-  FormDescription,
-  FormField,
-  FormItem,
-  FormLabel,
-  FormMessage,
-} from "@/app/admin/components/ui/form";
 import Input from "@/shared/Input/Input";
+
 
 const formSchema = z.object({
   product_name: z.string().min(10, {
@@ -135,9 +121,7 @@ export const columns: ColumnDef<Products>[] = [
     accessorKey: "discount_date_range",
     header: "Discount Date Range",
     cell: ({ row }) => (
-      <div className="flex items-center space-x-12">
-        <Input type="date" className={inputClass} placeholder="0%" />
-      </div>
+      <DatePickerWithRange />
     ),
   },
   {

@@ -143,4 +143,13 @@ export const columns: ColumnDef<Products>[] = [
       </div>
     ),
   },
+  {
+    accessorKey: "approved",
+    header: "Approved",
+    cell: ({ row }) => (
+      <div className="flex items-center space-x-12">
+        <Switch />
+      </div>
+    ),
+  },
 ];

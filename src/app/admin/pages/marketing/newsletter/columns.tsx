@@ -51,7 +51,6 @@ export const columns: ColumnDef<Products>[] = [
     id: "actions",
     cell: ({ row }) => {
       const payment = row.original;
-
       return (
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
@@ -76,8 +75,20 @@ export const columns: ColumnDef<Products>[] = [
     },
   },
   {
-    accessorKey: "email",
-    header: "Email",
+    accessorKey: "email_user",
+    header: "Email(Users)",
+  },
+  {
+    accessorKey: "subscriber_email",
+    header: "Email(Subscriber)",
+  },
+  {
+    accessorKey: "newsletter_subject",
+    header: "Newsletter Subject",
+  },
+  {
+    accessorKey: "newsletter_content",
+    header: "Newsletter Content",
   },
   {
     accessorKey: "date",

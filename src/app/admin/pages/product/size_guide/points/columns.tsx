@@ -25,28 +25,6 @@ export type Products = {
 
 export const columns: ColumnDef<Products>[] = [
   {
-    id: "select",
-    header: ({ table }) => (
-      <Checkbox
-        checked={
-          table.getIsAllPageRowsSelected() ||
-          (table.getIsSomePageRowsSelected() && "indeterminate")
-        }
-        onCheckedChange={(value) => table.toggleAllPageRowsSelected(!!value)}
-        aria-label="Select all"
-      />
-    ),
-    cell: ({ row }) => (
-      <Checkbox
-        checked={row.getIsSelected()}
-        onCheckedChange={(value) => row.toggleSelected(!!value)}
-        aria-label="Select row"
-      />
-    ),
-    enableSorting: false,
-    enableHiding: false,
-  },
-  {
     header: "Action",
     id: "actions",
     cell: ({ row }) => {
@@ -76,58 +54,8 @@ export const columns: ColumnDef<Products>[] = [
     },
   },
   {
-    accessorKey: "product_name",
-    header: "Product Name",
+    accessorKey: "name",
+    header: "Name",
   },
-  {
-    accessorKey: "added_by",
-    header: "Added By",
-  },
-  {
-    accessorKey: "num_of_sale",
-    header: "Num Of Sale",
-
-  },
-  {
-    accessorKey: "price",
-    header: () => <div className="text-right">Price</div>,
-    cell: ({ row }) => {
-      const price = parseFloat(row.getValue("price"));
-      const formatted = new Intl.NumberFormat("en-US", {
-        style: "currency",
-        currency: "USD",
-      }).format(price);
-
-      return <div className="text-right font-medium">{formatted}</div>;
-    },
-  },
-  {
-    accessorKey: "total_stock",
-    header: ({ column }) => {
-      return (
-        <Button
-          variant="ghost"
-          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-        >
-          Total Stock
-          <ArrowUpDown className="ml-2 h-4 w-4" />
-        </Button>
-      );
-    },
-  },
-  {
-    accessorKey: "today_deal",
-    header: "Today Deal",
-
-  },
-  {
-    accessorKey: "published",
-    header: "Published",
-
-  },
-  {
-    accessorKey: "featured",
-    header: "Featured",
-
-  },
+  
 ];

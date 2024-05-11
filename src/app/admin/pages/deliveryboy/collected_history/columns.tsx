@@ -80,8 +80,8 @@ export const columns: ColumnDef<Products>[] = [
     header: "Delivery Boy",
   },
   {
-    accessorKey: "payment_amount",
-    header: "Payment Amount",
+    accessorKey: "collected_amount",
+    header: "Collected Amount",
   },
   {
     accessorKey: "create_at",

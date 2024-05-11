@@ -76,58 +76,16 @@ export const columns: ColumnDef<Products>[] = [
     },
   },
   {
-    accessorKey: "product_name",
-    header: "Product Name",
+    accessorKey: "size_chart",
+    header: "Size Chart",
   },
   {
-    accessorKey: "added_by",
-    header: "Added By",
+    accessorKey: "category",
+    header: "Category",
   },
   {
-    accessorKey: "num_of_sale",
-    header: "Num Of Sale",
-
-  },
-  {
-    accessorKey: "price",
-    header: () => <div className="text-right">Price</div>,
-    cell: ({ row }) => {
-      const price = parseFloat(row.getValue("price"));
-      const formatted = new Intl.NumberFormat("en-US", {
-        style: "currency",
-        currency: "USD",
-      }).format(price);
-
-      return <div className="text-right font-medium">{formatted}</div>;
-    },
-  },
-  {
-    accessorKey: "total_stock",
-    header: ({ column }) => {
-      return (
-        <Button
-          variant="ghost"
-          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-        >
-          Total Stock
-          <ArrowUpDown className="ml-2 h-4 w-4" />
-        </Button>
-      );
-    },
-  },
-  {
-    accessorKey: "today_deal",
-    header: "Today Deal",
-
-  },
-  {
-    accessorKey: "published",
-    header: "Published",
-
-  },
-  {
-    accessorKey: "featured",
-    header: "Featured",
+    accessorKey: "detail",
+    header: "Details",
 
   },
 ];
