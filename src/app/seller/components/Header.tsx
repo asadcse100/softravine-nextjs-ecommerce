@@ -1,5 +1,5 @@
 import { BsList } from "react-icons/bs";
-import classNames from "classNames";
+import classNames from "classnames";
 import { useSideBarToggle } from "@/hooks/use-sidebar-toggle";
 import  ThemeSwitcher from "./theme-switcher";
 import Link from "next/link";

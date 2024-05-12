@@ -1,14 +1,14 @@
 import Image from "next/image";
 import { SIDENAV_ITEMS } from "@/app/seller/SIDEBAR_CONSTANTS";
 import { SideBarMenuItem } from "./sidebar-menu-item";
-import classNames from "classNames";
+import classNames from "classnames";
 import { useSideBarToggle } from "@/hooks/use-sidebar-toggle";
 import React from "react";
 
 export default function Sidebar() {
   const { toggleCollapse } = useSideBarToggle();
   const asideStyle = classNames(
-    "fixed sidebar overflow-y-auto border-stroke bg-white px-7.5 dark:border-strokedark dark:bg-boxdark text-slate-500 z-50 h-full shadow-lg shadow-gray-900/20 transition duration-300 ease-in-out w-[16rem]",
+    "fixed sidebar overflow-y-auto border-stroke bg-white px-7.5 dark:border-strokedark dark:bg-boxdark text-slate-500 z-50 h-full shadow-lg shadow-gray-900/20 transition duration-300 ease-in-out w-[16rem] z-[99999]",
     {
       ["w-[20rem]"]: !toggleCollapse,
       ["sm:w-[5.4rem] sm:left-0 left-[-100%]"]: toggleCollapse,
@@ -33,14 +33,8 @@ export default function Sidebar() {
       </div>
       <nav className="flex flex-col gap-2 transition duration-300">
         <div className="flex flex-col gap-2 px-4">
-          {SIDENAV_ITEMS.map((item, index) => {
-            return (
-              <SideBarMenuItem
-                item={item}
-                key={index}
-                toggleCollapse={toggleCollapse}
-              ></SideBarMenuItem>
-            );
+          {SIDENAV_ITEMS.map((item, idx) => {
+            return <SideBarMenuItem key={idx} item={item} />;
           })}
         </div>
       </nav>

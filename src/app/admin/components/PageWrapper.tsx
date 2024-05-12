@@ -1,5 +1,5 @@
 import { ReactNode } from "react";
-import classNames from "classNames";
+import classNames from "classnames";
 import { useSideBarToggle } from "@/hooks/use-sidebar-toggle";
 
 export default function PageWrapper({ children }: { children: ReactNode})

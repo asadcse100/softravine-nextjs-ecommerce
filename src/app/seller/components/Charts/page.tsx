@@ -1,9 +1,19 @@
 "use client";
 import Breadcrumb from "@/app/seller/components/Breadcrumbs/Breadcrumb";
-import ChartOne from "@/app/seller/components/Charts/ChartOne";
-import ChartTwo from "@/app/seller/components/Charts/ChartTwo";
-import ChartThree from "@/app/seller/components/Charts/ChartThree";
+import dynamic from "next/dynamic";
 import React from "react";
+
+const ChartOne = dynamic(() => import("@/app/seller/components/Charts/ChartOne"), {
+  ssr: false // Do not render during server-side rendering
+});
+
+const ChartTwo = dynamic(() => import("@/app/seller/components/Charts/ChartTwo"), {
+  ssr: false // Do not render during server-side rendering
+});
+
+const ChartThree = dynamic(() => import("@/app/seller/components/Charts/ChartThree"), {
+  ssr: false // Do not render during server-side rendering
+});
 
 const Chart: React.FC = () => {
   return (
