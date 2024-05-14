@@ -8,6 +8,7 @@ import { PRODUCTS } from "@/data/data";
 import TabFilters from "@/app/frontend/components/TabFilters";
 
 const PageCollection = ({}) => {
+
   return (
     <div className={`nc-PageCollection`}>
       <div className="container py-8 lg:pb-10 lg:pt-5 space-y-8 sm:space-y-10 lg:space-y-7">
