@@ -6,7 +6,7 @@ async function getData(): Promise<Products[]> {
   return [
     {
       id: "728ed52f",
-      order_code: "2314231432",
+      order_code: 2334342,
       customer: "Mr. Kamal",
       amount: 123,
       delivery_status: "Delivered",
@@ -16,7 +16,7 @@ async function getData(): Promise<Products[]> {
     },
     {
       id: "728ed52f",
-      order_code: "2314231432",
+      order_code: 2334342,
       customer: "Mr. Kamal",
       amount: 123,
       delivery_status: "Delivered",
@@ -26,7 +26,7 @@ async function getData(): Promise<Products[]> {
     },
     {
       id: "728ed52f",
-      order_code: "2314231432",
+      order_code: 2334342,
       customer: "Mr. Kamal",
       amount: 123,
       delivery_status: "Delivered",
@@ -36,7 +36,7 @@ async function getData(): Promise<Products[]> {
     },
     {
       id: "728ed52f",
-      order_code: "2314231432",
+      order_code: 2334342,
       customer: "Mr. Kamal",
       amount: 123,
       delivery_status: "Delivered",
@@ -46,7 +46,7 @@ async function getData(): Promise<Products[]> {
     },
     {
       id: "728ed52f",
-      order_code: "2314231432",
+      order_code: 2334342,
       customer: "Mr. Kamal",
       amount: 123,
       delivery_status: "Delivered",
@@ -56,7 +56,7 @@ async function getData(): Promise<Products[]> {
     },
     {
       id: "728ed52f",
-      order_code: "2314231432",
+      order_code: 2334342,
       customer: "Mr. Kamal",
       amount: 123,
       delivery_status: "Delivered",
@@ -66,7 +66,7 @@ async function getData(): Promise<Products[]> {
     },
     {
       id: "728ed52f",
-      order_code: "2314231432",
+      order_code: 2334342,
       customer: "Mr. Kamal",
       amount: 123,
       delivery_status: "Delivered",
@@ -76,7 +76,7 @@ async function getData(): Promise<Products[]> {
     },
     {
       id: "728ed52f",
-      order_code: "2314231432",
+      order_code: 2334342,
       customer: "Mr. Kamal",
       amount: 123,
       delivery_status: "Delivered",
@@ -86,7 +86,7 @@ async function getData(): Promise<Products[]> {
     },
     {
       id: "728ed52f",
-      order_code: "2314231432",
+      order_code: 2334342,
       customer: "Mr. Kamal",
       amount: 123,
       delivery_status: "Delivered",
@@ -96,7 +96,7 @@ async function getData(): Promise<Products[]> {
     },
     {
       id: "728ed52f",
-      order_code: "2314231432",
+      order_code: 2334342,
       customer: "Mr. Kamal",
       amount: 123,
       delivery_status: "Delivered",
@@ -106,7 +106,7 @@ async function getData(): Promise<Products[]> {
     },
     {
       id: "728ed52f",
-      order_code: "2314231432",
+      order_code: 2334342,
       customer: "Mr. Kamal",
       amount: 123,
       delivery_status: "Delivered",
@@ -116,7 +116,7 @@ async function getData(): Promise<Products[]> {
     },
     {
       id: "728ed52f",
-      order_code: "2314231432",
+      order_code: 2334342,
       customer: "Mr. Kamal",
       amount: 123,
       delivery_status: "Delivered",
@@ -126,7 +126,7 @@ async function getData(): Promise<Products[]> {
     },
     {
       id: "728ed52f",
-      order_code: "2314231432",
+      order_code: 2334342,
       customer: "Mr. Kamal",
       amount: 123,
       delivery_status: "Delivered",

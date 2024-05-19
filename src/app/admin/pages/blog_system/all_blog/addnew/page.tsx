@@ -19,38 +19,32 @@ import Select from "@/shared/Select/Select";
 import Textarea from "@/shared/Textarea/Textarea";
 
 const formSchema = z.object({
-  product_name: z.string().min(10, {
+  title: z.string().min(10, {
+    message: "Title must be at least 10 characters.",
+  }),
+  category_id: z.string().min(10, {
     message: "Product Name must be at least 10 characters.",
   }),
-  brand: z.string().min(3, {
-    message: "Brand must be at least 3 characters.",
+  slug: z.string().min(5, {
+    message: "Product Name must be at least 10 characters.",
   }),
-  unit: z.string().min(3, {
-    message: "Unit must be at least 3 characters.",
+  banner: z.string().min(5, {
+    message: "Product Name must be at least 10 characters.",
   }),
-  weight: z.string().min(3, {
-    message: "Weight must be at least 3 characters.",
+  short_description: z.string().min(5, {
+    message: "Product Name must be at least 10 characters.",
   }),
-  minimum_purchase_qty: z.string().min(3, {
-    message: "Minimum Purchase Qty must be at least 3 characters.",
+  description: z.string().min(5, {
+    message: "Product Name must be at least 10 characters.",
   }),
-  tag: z.string().min(3, {
-    message: "Tag Purchase Qty must be at least 3 characters.",
+  meta_title: z.string().min(5, {
+    message: "Product Name must be at least 10 characters.",
   }),
-  barcode: z.string().min(3, {
-    message: "Barcode Purchase Qty must be at least 3 characters.",
+  meta_img: z.string().min(5, {
+    message: "Product Name must be at least 10 characters.",
   }),
-  thumbnail_image: z.string().min(3, {
-    message: "thumbnail_image Purchase Qty must be at least 3 characters.",
-  }),
-  gallery_images: z.string().min(3, {
-    message: "gallery_images Purchase Qty must be at least 3 characters.",
-  }),
-  video_provider: z.string().min(3, {
-    message: "Video Provider Purchase Qty must be at least 3 characters.",
-  }),
-  video_link: z.string().min(3, {
-    message: "Video Link Purchase Qty must be at least 3 characters.",
+  meta_description: z.string().min(5, {
+    message: "Product Name must be at least 10 characters.",
   }),
 });
 
@@ -60,17 +54,15 @@ export default function Addnew() {
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      product_name: "",
-      brand: "",
-      unit: "",
-      weight: "",
-      minimum_purchase_qty: "",
-      tag: "",
-      barcode: "",
-      thumbnail_image: "",
-      gallery_images: "",
-      video_provider: "",
-      video_link: "",
+      title: "",
+      category_id: "",
+      slug: "",
+      banner: "",
+      short_description: "",
+      description: "",
+      meta_title: "",
+      meta_img: "",
+      meta_description: "",
     },
   });
 
@@ -101,7 +93,7 @@ export default function Addnew() {
                     <div className="flex flex-col gap-5.5 p-6.5">
                       <FormField
                         control={form.control}
-                        name="product_name"
+                        name="title"
                         render={({ field }) => (
                           <FormItem>
                             <FormLabel>Title</FormLabel>
@@ -120,7 +112,7 @@ export default function Addnew() {
                     <div className="mt-3 flex flex-col gap-5.5 p-6.5">
                       <FormField
                         control={form.control}
-                        name="brand"
+                        name="category_id"
                         render={({ field }) => (
                           <FormItem>
                             <FormLabel>Category</FormLabel>
@@ -139,7 +131,7 @@ export default function Addnew() {
                     <div className="mt-3 flex flex-col gap-5.5 p-6.5">
                       <FormField
                         control={form.control}
-                        name="unit"
+                        name="slug"
                         render={({ field }) => (
                           <FormItem>
                             <FormLabel>Slug</FormLabel>
@@ -158,7 +150,7 @@ export default function Addnew() {
                     <div className="mt-3 flex flex-col gap-5.5 p-6.5">
                       <FormField
                         control={form.control}
-                        name="weight"
+                        name="banner"
                         render={({ field }) => (
                           <FormItem>
                             <FormLabel>Blog Banner</FormLabel>
@@ -177,7 +169,7 @@ export default function Addnew() {
                     <div className="mt-3 flex flex-col gap-5.5 p-6.5">
                       <FormField
                         control={form.control}
-                        name="minimum_purchase_qty"
+                        name="short_description"
                         render={({ field }) => (
                           <FormItem>
                             <FormLabel>Short Description</FormLabel>
@@ -197,7 +189,7 @@ export default function Addnew() {
                     <div className="mt-3 flex flex-col gap-5.5 p-6.5">
                       <FormField
                         control={form.control}
-                        name="tag"
+                        name="description"
                         render={({ field }) => (
                           <FormItem>
                             <FormLabel>Description</FormLabel>
@@ -230,7 +222,7 @@ export default function Addnew() {
                       <div className="flex flex-col gap-5.5 p-6.5">
                         <FormField
                           control={form.control}
-                          name="gallery_images"
+                          name="meta_title"
                           render={({ field }) => (
                             <FormItem>
                               <FormLabel>Meta Title</FormLabel>
@@ -249,7 +241,7 @@ export default function Addnew() {
                       <div className="mt-3 flex flex-col gap-5.5 p-6.5">
                         <FormField
                           control={form.control}
-                          name="thumbnail_image"
+                          name="meta_img"
                           render={({ field }) => (
                             <FormItem>
                               <FormLabel>Meta Image</FormLabel>
@@ -268,7 +260,7 @@ export default function Addnew() {
                       <div className="mt-3 flex flex-col gap-5.5 p-6.5">
                         <FormField
                           control={form.control}
-                          name="thumbnail_image"
+                          name="meta_description"
                           render={({ field }) => (
                             <FormItem>
                               <FormLabel>Meta Description</FormLabel>

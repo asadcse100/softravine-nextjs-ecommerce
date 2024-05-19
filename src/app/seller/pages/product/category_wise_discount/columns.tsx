@@ -1,19 +1,7 @@
 "use client";
 
 import { ColumnDef } from "@tanstack/react-table";
-import { ArrowUpDown, MoreHorizontal } from "lucide-react";
-import { Button } from "@/app/admin/components/ui/button";
-import { Checkbox } from "@/app/admin/components/ui/checkbox";
 import  { DatePickerWithRange }  from "@/app/admin/components/ui/daterange";
-
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuLabel,
-  DropdownMenuSeparator,
-  DropdownMenuTrigger,
-} from "@/app/admin/components/ui/dropdown-menu";
 
 import { z } from "zod";
 import Input from "@/shared/Input/Input";
@@ -27,9 +15,12 @@ const formSchema = z.object({
 
 export type Products = {
   id: string;
-  amount: number;
-  status: "pending" | "processing" | "success" | "failed";
-  email: string;
+  icon: string;
+  name: string;
+  parent_category: string;
+  discount: number;
+  discount_date_range: string;
+  action: string;
 };
 
 function onSubmit(values: z.infer<typeof formSchema>) {

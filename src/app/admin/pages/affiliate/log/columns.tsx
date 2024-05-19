@@ -18,9 +18,13 @@ import {
 // You can use a Zod schema here if you want.
 export type Products = {
   id: string;
+  referred_by: string;
+  referral_user: string;
   amount: number;
-  status: "pending" | "processing" | "success" | "failed";
-  email: string;
+  order_id: string;
+  referral_type: string;
+  product: string;
+  date: string;
 };
 
 export const columns: ColumnDef<Products>[] = [

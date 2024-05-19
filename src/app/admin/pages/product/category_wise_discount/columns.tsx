@@ -27,9 +27,12 @@ const formSchema = z.object({
 
 export type Products = {
   id: string;
-  amount: number;
-  status: "pending" | "processing" | "success" | "failed";
-  email: string;
+  icon: string;
+  name: string;
+  parent_category: string;
+  discount: number;
+  discount_date_range: number;
+  seller_product: number;
 };
 
 function onSubmit(values: z.infer<typeof formSchema>) {

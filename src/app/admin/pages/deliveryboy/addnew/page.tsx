@@ -19,38 +19,32 @@ import Select from "@/shared/Select/Select";
 import Textarea from "@/shared/Textarea/Textarea";
 
 const formSchema = z.object({
-  product_name: z.string().min(10, {
+  name: z.string().min(10, {
     message: "Product Name must be at least 10 characters.",
   }),
-  brand: z.string().min(3, {
-    message: "Brand must be at least 3 characters.",
+  email: z.string().min(10, {
+    message: "Product Name must be at least 10 characters.",
   }),
-  unit: z.string().min(3, {
-    message: "Unit must be at least 3 characters.",
+  phone: z.string().min(10, {
+    message: "Product Name must be at least 10 characters.",
   }),
-  weight: z.string().min(3, {
-    message: "Weight must be at least 3 characters.",
+  password: z.string().min(10, {
+    message: "Product Name must be at least 10 characters.",
   }),
-  minimum_purchase_qty: z.string().min(3, {
-    message: "Minimum Purchase Qty must be at least 3 characters.",
+  country_id: z.string().min(10, {
+    message: "Product Name must be at least 10 characters.",
   }),
-  tag: z.string().min(3, {
-    message: "Tag Purchase Qty must be at least 3 characters.",
+  state_id: z.string().min(10, {
+    message: "Product Name must be at least 10 characters.",
   }),
-  barcode: z.string().min(3, {
-    message: "Barcode Purchase Qty must be at least 3 characters.",
+  city_id: z.string().min(10, {
+    message: "Product Name must be at least 10 characters.",
   }),
-  thumbnail_image: z.string().min(3, {
-    message: "thumbnail_image Purchase Qty must be at least 3 characters.",
+  avatar_original: z.string().min(10, {
+    message: "Product Name must be at least 10 characters.",
   }),
-  gallery_images: z.string().min(3, {
-    message: "gallery_images Purchase Qty must be at least 3 characters.",
-  }),
-  video_provider: z.string().min(3, {
-    message: "Video Provider Purchase Qty must be at least 3 characters.",
-  }),
-  video_link: z.string().min(3, {
-    message: "Video Link Purchase Qty must be at least 3 characters.",
+  address: z.string().min(10, {
+    message: "Product Name must be at least 10 characters.",
   }),
 });
 
@@ -60,17 +54,15 @@ export default function Addnew() {
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      product_name: "",
-      brand: "",
-      unit: "",
-      weight: "",
-      minimum_purchase_qty: "",
-      tag: "",
-      barcode: "",
-      thumbnail_image: "",
-      gallery_images: "",
-      video_provider: "",
-      video_link: "",
+      name: "",
+      email: "",
+      phone: "",
+      password: "",
+      country_id: "",
+      state_id: "",
+      city_id: "",
+      avatar_original: "",
+      address: "",
     },
   });
 
@@ -101,7 +93,7 @@ export default function Addnew() {
                     <div className="flex flex-col gap-5.5 p-6.5">
                       <FormField
                         control={form.control}
-                        name="product_name"
+                        name="name"
                         render={({ field }) => (
                           <FormItem>
                             <FormLabel>Name</FormLabel>
@@ -120,7 +112,7 @@ export default function Addnew() {
                     <div className="mt-3 flex flex-col gap-5.5 p-6.5">
                       <FormField
                         control={form.control}
-                        name="brand"
+                        name="email"
                         render={({ field }) => (
                           <FormItem>
                             <FormLabel>Email</FormLabel>
@@ -139,7 +131,7 @@ export default function Addnew() {
                     <div className="mt-3 flex flex-col gap-5.5 p-6.5">
                       <FormField
                         control={form.control}
-                        name="unit"
+                        name="phone"
                         render={({ field }) => (
                           <FormItem>
                             <FormLabel>Phone</FormLabel>
@@ -158,7 +150,7 @@ export default function Addnew() {
                     <div className="mt-3 flex flex-col gap-5.5 p-6.5">
                       <FormField
                         control={form.control}
-                        name="weight"
+                        name="password"
                         render={({ field }) => (
                           <FormItem>
                             <FormLabel>Password</FormLabel>
@@ -177,7 +169,7 @@ export default function Addnew() {
                     <div className="mt-3 flex flex-col gap-5.5 p-6.5">
                       <FormField
                         control={form.control}
-                        name="tag"
+                        name="country_id"
                         render={({ field }) => (
                           <FormItem>
                             <FormLabel>Country</FormLabel>
@@ -201,7 +193,7 @@ export default function Addnew() {
                     <div className="mt-3 flex flex-col gap-5.5 p-6.5">
                       <FormField
                         control={form.control}
-                        name="tag"
+                        name="state_id"
                         render={({ field }) => (
                           <FormItem>
                             <FormLabel>State</FormLabel>
@@ -224,7 +216,7 @@ export default function Addnew() {
                     <div className="mt-3 flex flex-col gap-5.5 p-6.5">
                       <FormField
                         control={form.control}
-                        name="tag"
+                        name="city_id"
                         render={({ field }) => (
                           <FormItem>
                             <FormLabel>City</FormLabel>
@@ -247,7 +239,7 @@ export default function Addnew() {
                     <div className="mt-3 flex flex-col gap-5.5 p-6.5">
                       <FormField
                         control={form.control}
-                        name="tag"
+                        name="avatar_original"
                         render={({ field }) => (
                           <FormItem>
                             <FormLabel>Image</FormLabel>
@@ -266,7 +258,7 @@ export default function Addnew() {
                     <div className="mt-3 flex flex-col gap-5.5 p-6.5">
                       <FormField
                         control={form.control}
-                        name="tag"
+                        name="address"
                         render={({ field }) => (
                           <FormItem>
                             <FormLabel>Address</FormLabel>

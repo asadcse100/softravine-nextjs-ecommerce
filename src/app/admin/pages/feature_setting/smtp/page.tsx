@@ -18,38 +18,32 @@ import Input from "@/shared/Input/Input";
 import Select from "@/shared/Select/Select";
 
 const formSchema = z.object({
-  product_name: z.string().min(10, {
+  MAIL_DRIVER: z.string().min(10, {
     message: "Product Name must be at least 10 characters.",
   }),
-  brand: z.string().min(3, {
-    message: "Brand must be at least 3 characters.",
+  MAIL_HOST: z.string().min(10, {
+    message: "Product Name must be at least 10 characters.",
   }),
-  unit: z.string().min(3, {
-    message: "Unit must be at least 3 characters.",
+  MAIL_PORT: z.string().min(10, {
+    message: "Product Name must be at least 10 characters.",
   }),
-  weight: z.string().min(3, {
-    message: "Weight must be at least 3 characters.",
+  MAIL_USERNAME: z.string().min(10, {
+    message: "Product Name must be at least 10 characters.",
   }),
-  minimum_purchase_qty: z.string().min(3, {
-    message: "Minimum Purchase Qty must be at least 3 characters.",
+  MAIL_PASSWORD: z.string().min(10, {
+    message: "Product Name must be at least 10 characters.",
   }),
-  tag: z.string().min(3, {
-    message: "Tag Purchase Qty must be at least 3 characters.",
+  MAIL_ENCRYPTION: z.string().min(10, {
+    message: "Product Name must be at least 10 characters.",
   }),
-  barcode: z.string().min(3, {
-    message: "Barcode Purchase Qty must be at least 3 characters.",
+  MAIL_FROM_ADDRESS: z.string().min(10, {
+    message: "Product Name must be at least 10 characters.",
   }),
-  thumbnail_image: z.string().min(3, {
-    message: "thumbnail_image Purchase Qty must be at least 3 characters.",
+  MAIL_FROM_NAME: z.string().min(10, {
+    message: "Product Name must be at least 10 characters.",
   }),
-  gallery_images: z.string().min(3, {
-    message: "gallery_images Purchase Qty must be at least 3 characters.",
-  }),
-  video_provider: z.string().min(3, {
-    message: "Video Provider Purchase Qty must be at least 3 characters.",
-  }),
-  video_link: z.string().min(3, {
-    message: "Video Link Purchase Qty must be at least 3 characters.",
+  email: z.string().min(10, {
+    message: "Product Name must be at least 10 characters.",
   }),
 });
 
@@ -59,17 +53,15 @@ export default function Addnew() {
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      product_name: "",
-      brand: "",
-      unit: "",
-      weight: "",
-      minimum_purchase_qty: "",
-      tag: "",
-      barcode: "",
-      thumbnail_image: "",
-      gallery_images: "",
-      video_provider: "",
-      video_link: "",
+      MAIL_DRIVER: "",
+      MAIL_HOST: "",
+      MAIL_PORT: "",
+      MAIL_USERNAME: "",
+      MAIL_PASSWORD: "",
+      MAIL_ENCRYPTION: "",
+      MAIL_FROM_ADDRESS: "",
+      MAIL_FROM_NAME: "",
+      email: "",
     },
   });
 
@@ -100,7 +92,7 @@ export default function Addnew() {
                     <div className="flex flex-col gap-5.5 p-6.5">
                       <FormField
                         control={form.control}
-                        name="product_name"
+                        name="MAIL_DRIVER"
                         render={({ field }) => (
                           <FormItem>
                             <FormLabel>Type</FormLabel>
@@ -124,7 +116,7 @@ export default function Addnew() {
                     <div className="mt-3 flex flex-col gap-5.5 p-6.5">
                       <FormField
                         control={form.control}
-                        name="brand"
+                        name="MAIL_HOST"
                         render={({ field }) => (
                           <FormItem>
                             <FormLabel>Mail Host</FormLabel>
@@ -143,7 +135,7 @@ export default function Addnew() {
                     <div className="mt-3 flex flex-col gap-5.5 p-6.5">
                       <FormField
                         control={form.control}
-                        name="unit"
+                        name="MAIL_PORT"
                         render={({ field }) => (
                           <FormItem>
                             <FormLabel>Mail Port</FormLabel>
@@ -162,7 +154,7 @@ export default function Addnew() {
                     <div className="mt-3 flex flex-col gap-5.5 p-6.5">
                       <FormField
                         control={form.control}
-                        name="weight"
+                        name="MAIL_USERNAME"
                         render={({ field }) => (
                           <FormItem>
                             <FormLabel>Mail Username</FormLabel>
@@ -181,7 +173,7 @@ export default function Addnew() {
                     <div className="mt-3 flex flex-col gap-5.5 p-6.5">
                       <FormField
                         control={form.control}
-                        name="minimum_purchase_qty"
+                        name="MAIL_PASSWORD"
                         render={({ field }) => (
                           <FormItem>
                             <FormLabel>Mail Password</FormLabel>
@@ -200,7 +192,7 @@ export default function Addnew() {
                     <div className="mt-3 flex flex-col gap-5.5 p-6.5">
                       <FormField
                         control={form.control}
-                        name="minimum_purchase_qty"
+                        name="MAIL_ENCRYPTION"
                         render={({ field }) => (
                           <FormItem>
                             <FormLabel>Mail Encription</FormLabel>
@@ -219,7 +211,7 @@ export default function Addnew() {
                     <div className="mt-3 flex flex-col gap-5.5 p-6.5">
                       <FormField
                         control={form.control}
-                        name="minimum_purchase_qty"
+                        name="MAIL_FROM_ADDRESS"
                         render={({ field }) => (
                           <FormItem>
                             <FormLabel>Mail From Address</FormLabel>
@@ -238,7 +230,7 @@ export default function Addnew() {
                     <div className="mt-3 flex flex-col gap-5.5 p-6.5">
                       <FormField
                         control={form.control}
-                        name="minimum_purchase_qty"
+                        name="MAIL_FROM_NAME"
                         render={({ field }) => (
                           <FormItem>
                             <FormLabel>Mail From Name</FormLabel>
@@ -278,7 +270,7 @@ export default function Addnew() {
                       <div className="flex flex-col gap-5.5 p-6.5">
                         <FormField
                           control={form.control}
-                          name="color"
+                          name="email"
                           render={({ field }) => (
                             <FormItem>
                               <FormLabel>For Test SMTP Mail</FormLabel>

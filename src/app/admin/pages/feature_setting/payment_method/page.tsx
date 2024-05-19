@@ -19,38 +19,68 @@ import Select from "@/shared/Select/Select";
 import { Switch } from "@/app/admin/components/ui/switch";
 
 const formSchema = z.object({
-  product_name: z.string().min(10, {
+  PAYPAL_CLIENT_ID: z.string().min(10, {
     message: "Product Name must be at least 10 characters.",
   }),
-  brand: z.string().min(3, {
-    message: "Brand must be at least 3 characters.",
+  PAYPAL_CLIENT_SECRET: z.string().min(10, {
+    message: "Product Name must be at least 10 characters.",
   }),
-  unit: z.string().min(3, {
-    message: "Unit must be at least 3 characters.",
+  paypal_sandbox: z.string().min(10, {
+    message: "Product Name must be at least 10 characters.",
   }),
-  weight: z.string().min(3, {
-    message: "Weight must be at least 3 characters.",
+  STRIPE_KEY: z.string().min(10, {
+    message: "Product Name must be at least 10 characters.",
   }),
-  minimum_purchase_qty: z.string().min(3, {
-    message: "Minimum Purchase Qty must be at least 3 characters.",
+  STRIPE_SECRET: z.string().min(10, {
+    message: "Product Name must be at least 10 characters.",
   }),
-  tag: z.string().min(3, {
-    message: "Tag Purchase Qty must be at least 3 characters.",
+  BKASH_CHECKOUT_APP_KEY: z.string().min(10, {
+    message: "Product Name must be at least 10 characters.",
   }),
-  barcode: z.string().min(3, {
-    message: "Barcode Purchase Qty must be at least 3 characters.",
+  BKASH_CHECKOUT_APP_SECRET: z.string().min(10, {
+    message: "Product Name must be at least 10 characters.",
   }),
-  thumbnail_image: z.string().min(3, {
-    message: "thumbnail_image Purchase Qty must be at least 3 characters.",
+  BKASH_CHECKOUT_USER_NAME: z.string().min(10, {
+    message: "Product Name must be at least 10 characters.",
   }),
-  gallery_images: z.string().min(3, {
-    message: "gallery_images Purchase Qty must be at least 3 characters.",
+  BKASH_CHECKOUT_PASSWORD: z.string().min(10, {
+    message: "Product Name must be at least 10 characters.",
   }),
-  video_provider: z.string().min(3, {
-    message: "Video Provider Purchase Qty must be at least 3 characters.",
+  bkash_sandbox: z.string().min(10, {
+    message: "Product Name must be at least 10 characters.",
   }),
-  video_link: z.string().min(3, {
-    message: "Video Link Purchase Qty must be at least 3 characters.",
+  NAGAD_MODE: z.string().min(10, {
+    message: "Product Name must be at least 10 characters.",
+  }),
+  NAGAD_MERCHANT_ID: z.string().min(10, {
+    message: "Product Name must be at least 10 characters.",
+  }),
+  NAGAD_MERCHANT_NUMBER: z.string().min(10, {
+    message: "Product Name must be at least 10 characters.",
+  }),
+  NAGAD_PG_PUBLIC_KEY: z.string().min(10, {
+    message: "Product Name must be at least 10 characters.",
+  }),
+  NAGAD_MERCHANT_PRIVATE_KEY: z.string().min(10, {
+    message: "Product Name must be at least 10 characters.",
+  }),
+  SSLCZ_STORE_ID: z.string().min(10, {
+    message: "Product Name must be at least 10 characters.",
+  }),
+  SSLCZ_STORE_PASSWD: z.string().min(10, {
+    message: "Product Name must be at least 10 characters.",
+  }),
+  sslcommerz_sandbox: z.string().min(10, {
+    message: "Product Name must be at least 10 characters.",
+  }),
+  AAMARPAY_STORE_ID: z.string().min(10, {
+    message: "Product Name must be at least 10 characters.",
+  }),
+  AAMARPAY_SIGNATURE_KEY: z.string().min(10, {
+    message: "Product Name must be at least 10 characters.",
+  }),
+  aamarpay_sandbox: z.string().min(10, {
+    message: "Product Name must be at least 10 characters.",
   }),
 });
 
@@ -60,17 +90,27 @@ export default function Addnew() {
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      product_name: "",
-      brand: "",
-      unit: "",
-      weight: "",
-      minimum_purchase_qty: "",
-      tag: "",
-      barcode: "",
-      thumbnail_image: "",
-      gallery_images: "",
-      video_provider: "",
-      video_link: "",
+      PAYPAL_CLIENT_ID: "",
+      PAYPAL_CLIENT_SECRET: "",
+      paypal_sandbox: "",
+      STRIPE_KEY: "",
+      STRIPE_SECRET: "",
+      BKASH_CHECKOUT_APP_KEY: "",
+      BKASH_CHECKOUT_APP_SECRET: "",
+      BKASH_CHECKOUT_USER_NAME: "",
+      BKASH_CHECKOUT_PASSWORD: "",
+      bkash_sandbox: "",
+      NAGAD_MODE: "",
+      NAGAD_MERCHANT_ID: "",
+      NAGAD_MERCHANT_NUMBER: "",
+      NAGAD_PG_PUBLIC_KEY: "",
+      NAGAD_MERCHANT_PRIVATE_KEY: "",
+      SSLCZ_STORE_ID: "",
+      SSLCZ_STORE_PASSWD: "",
+      sslcommerz_sandbox: "",
+      AAMARPAY_STORE_ID: "",
+      AAMARPAY_SIGNATURE_KEY: "",
+      aamarpay_sandbox: "",
     },
   });
 
@@ -101,7 +141,7 @@ export default function Addnew() {
                     <div className="flex flex-col gap-5.5 p-6.5">
                       <FormField
                         control={form.control}
-                        name="product_name"
+                        name="PAYPAL_CLIENT_ID"
                         render={({ field }) => (
                           <FormItem>
                             <FormLabel>Paypal Client Id</FormLabel>
@@ -120,7 +160,7 @@ export default function Addnew() {
                     <div className="mt-3 flex flex-col gap-5.5 p-6.5">
                       <FormField
                         control={form.control}
-                        name="brand"
+                        name="PAYPAL_CLIENT_SECRET"
                         render={({ field }) => (
                           <FormItem>
                             <FormLabel>Paypal Client Secret</FormLabel>
@@ -139,7 +179,7 @@ export default function Addnew() {
                     <div className="mt-3 flex flex-col gap-5.5 p-6.5">
                       <FormField
                         control={form.control}
-                        name="unit"
+                        name="paypal_sandbox"
                         render={({ field }) => (
                           <FormItem>
                             <FormLabel>Paypal Sandbox Mode</FormLabel>
@@ -177,7 +217,7 @@ export default function Addnew() {
                     <div className="flex flex-col gap-5.5 p-6.5">
                       <FormField
                         control={form.control}
-                        name="product_name"
+                        name="STRIPE_KEY"
                         render={({ field }) => (
                           <FormItem>
                             <FormLabel>Stripe Key</FormLabel>
@@ -201,7 +241,7 @@ export default function Addnew() {
                     <div className="mt-3 flex flex-col gap-5.5 p-6.5">
                       <FormField
                         control={form.control}
-                        name="brand"
+                        name="STRIPE_SECRET"
                         render={({ field }) => (
                           <FormItem>
                             <FormLabel>Stripe Secret</FormLabel>
@@ -240,7 +280,7 @@ export default function Addnew() {
                     <div className="flex flex-col gap-5.5 p-6.5">
                       <FormField
                         control={form.control}
-                        name="product_name"
+                        name="BKASH_CHECKOUT_APP_KEY"
                         render={({ field }) => (
                           <FormItem>
                             <FormLabel>BKASH CHECKOUT APP KEY</FormLabel>
@@ -264,7 +304,7 @@ export default function Addnew() {
                     <div className="mt-3 flex flex-col gap-5.5 p-6.5">
                       <FormField
                         control={form.control}
-                        name="brand"
+                        name="BKASH_CHECKOUT_APP_SECRET"
                         render={({ field }) => (
                           <FormItem>
                             <FormLabel>BKASH CHECKOUT APP SECRET</FormLabel>
@@ -283,7 +323,7 @@ export default function Addnew() {
                     <div className="mt-3 flex flex-col gap-5.5 p-6.5">
                       <FormField
                         control={form.control}
-                        name="brand"
+                        name="BKASH_CHECKOUT_USER_NAME"
                         render={({ field }) => (
                           <FormItem>
                             <FormLabel>BKASH CHECKOUT USER NAME</FormLabel>
@@ -302,7 +342,7 @@ export default function Addnew() {
                     <div className="mt-3 flex flex-col gap-5.5 p-6.5">
                       <FormField
                         control={form.control}
-                        name="brand"
+                        name="BKASH_CHECKOUT_PASSWORD"
                         render={({ field }) => (
                           <FormItem>
                             <FormLabel>BKASH CHECKOUT PASSWORD</FormLabel>
@@ -321,7 +361,7 @@ export default function Addnew() {
                     <div className="mt-3 flex flex-col gap-5.5 p-6.5">
                       <FormField
                         control={form.control}
-                        name="brand"
+                        name="bkash_sandbox"
                         render={({ field }) => (
                           <FormItem>
                             <div className="flex items-center space-x-12">
@@ -358,7 +398,7 @@ export default function Addnew() {
                     <div className="flex flex-col gap-5.5 p-6.5">
                       <FormField
                         control={form.control}
-                        name="product_name"
+                        name="NAGAD_MODE"
                         render={({ field }) => (
                           <FormItem>
                             <FormLabel>NAGAD MODE</FormLabel>
@@ -377,7 +417,7 @@ export default function Addnew() {
                     <div className="mt-3 flex flex-col gap-5.5 p-6.5">
                       <FormField
                         control={form.control}
-                        name="brand"
+                        name="NAGAD_MERCHANT_ID"
                         render={({ field }) => (
                           <FormItem>
                             <FormLabel>NAGAD MERCHANT ID</FormLabel>
@@ -396,7 +436,7 @@ export default function Addnew() {
                     <div className="mt-3 flex flex-col gap-5.5 p-6.5">
                       <FormField
                         control={form.control}
-                        name="brand"
+                        name="NAGAD_MERCHANT_NUMBER"
                         render={({ field }) => (
                           <FormItem>
                             <FormLabel>NAGAD MERCHANT NUMBER</FormLabel>
@@ -415,7 +455,7 @@ export default function Addnew() {
                     <div className="mt-3 flex flex-col gap-5.5 p-6.5">
                       <FormField
                         control={form.control}
-                        name="brand"
+                        name="NAGAD_PG_PUBLIC_KEY"
                         render={({ field }) => (
                           <FormItem>
                             <FormLabel>NAGAD PG PUBLIC KEY</FormLabel>
@@ -434,7 +474,7 @@ export default function Addnew() {
                     <div className="mt-3 flex flex-col gap-5.5 p-6.5">
                       <FormField
                         control={form.control}
-                        name="brand"
+                        name="NAGAD_MERCHANT_PRIVATE_KEY"
                         render={({ field }) => (
                           <FormItem>
                             <FormLabel>NAGAD MERCHANT PRIVATE KEY</FormLabel>
@@ -473,7 +513,7 @@ export default function Addnew() {
                     <div className="flex flex-col gap-5.5 p-6.5">
                       <FormField
                         control={form.control}
-                        name="product_name"
+                        name="SSLCZ_STORE_ID"
                         render={({ field }) => (
                           <FormItem>
                             <FormLabel>Sslcz Store Id</FormLabel>
@@ -492,7 +532,7 @@ export default function Addnew() {
                     <div className="mt-3 flex flex-col gap-5.5 p-6.5">
                       <FormField
                         control={form.control}
-                        name="brand"
+                        name="SSLCZ_STORE_PASSWD"
                         render={({ field }) => (
                           <FormItem>
                             <FormLabel>Sslcz store password</FormLabel>
@@ -511,7 +551,7 @@ export default function Addnew() {
                     <div className="mt-3 flex flex-col gap-5.5 p-6.5">
                       <FormField
                         control={form.control}
-                        name="brand"
+                        name="sslcommerz_sandbox"
                         render={({ field }) => (
                           <FormItem>
                             <div className="flex items-center space-x-12">
@@ -548,7 +588,7 @@ export default function Addnew() {
                     <div className="flex flex-col gap-5.5 p-6.5">
                       <FormField
                         control={form.control}
-                        name="product_name"
+                        name="AAMARPAY_STORE_ID"
                         render={({ field }) => (
                           <FormItem>
                             <FormLabel>Aamarpay Store Id</FormLabel>
@@ -567,7 +607,7 @@ export default function Addnew() {
                     <div className="mt-3 flex flex-col gap-5.5 p-6.5">
                       <FormField
                         control={form.control}
-                        name="brand"
+                        name="AAMARPAY_SIGNATURE_KEY"
                         render={({ field }) => (
                           <FormItem>
                             <FormLabel>Aamarpay signature key</FormLabel>
@@ -586,7 +626,7 @@ export default function Addnew() {
                     <div className="mt-3 flex flex-col gap-5.5 p-6.5">
                       <FormField
                         control={form.control}
-                        name="brand"
+                        name="aamarpay_sandbox"
                         render={({ field }) => (
                           <FormItem>
                             <div className="flex items-center space-x-12">

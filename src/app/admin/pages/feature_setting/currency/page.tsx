@@ -10,7 +10,7 @@ async function getData(): Promise<Products[]> {
       name: "Euro",
       symbol: "E",
       code: "EUR",
-      exchange_rate: "132",
+      exchange_rate: 120,
       status: "yes",
     },
     {
@@ -19,7 +19,7 @@ async function getData(): Promise<Products[]> {
       name: "Euro",
       symbol: "E",
       code: "EUR",
-      exchange_rate: "132",
+      exchange_rate: 120,
       status: "yes",
     },
     {
@@ -28,7 +28,7 @@ async function getData(): Promise<Products[]> {
       name: "Euro",
       symbol: "E",
       code: "EUR",
-      exchange_rate: "132",
+      exchange_rate: 120,
       status: "yes",
     },
     {
@@ -37,7 +37,7 @@ async function getData(): Promise<Products[]> {
       name: "Euro",
       symbol: "E",
       code: "EUR",
-      exchange_rate: "132",
+      exchange_rate: 120,
       status: "yes",
     },
     {
@@ -46,7 +46,7 @@ async function getData(): Promise<Products[]> {
       name: "Euro",
       symbol: "E",
       code: "EUR",
-      exchange_rate: "132",
+      exchange_rate: 120,
       status: "yes",
     },
     {
@@ -55,7 +55,7 @@ async function getData(): Promise<Products[]> {
       name: "Euro",
       symbol: "E",
       code: "EUR",
-      exchange_rate: "132",
+      exchange_rate: 120,
       status: "yes",
     },
     {
@@ -64,7 +64,7 @@ async function getData(): Promise<Products[]> {
       name: "Euro",
       symbol: "E",
       code: "EUR",
-      exchange_rate: "132",
+      exchange_rate: 120,
       status: "yes",
     },
     {
@@ -73,7 +73,7 @@ async function getData(): Promise<Products[]> {
       name: "Euro",
       symbol: "E",
       code: "EUR",
-      exchange_rate: "132",
+      exchange_rate: 120,
       status: "yes",
     },
     {
@@ -82,7 +82,7 @@ async function getData(): Promise<Products[]> {
       name: "Euro",
       symbol: "E",
       code: "EUR",
-      exchange_rate: "132",
+      exchange_rate: 120,
       status: "yes",
     },
     {
@@ -91,7 +91,7 @@ async function getData(): Promise<Products[]> {
       name: "Euro",
       symbol: "E",
       code: "EUR",
-      exchange_rate: "132",
+      exchange_rate: 120,
       status: "yes",
     },
     {
@@ -100,7 +100,7 @@ async function getData(): Promise<Products[]> {
       name: "Euro",
       symbol: "E",
       code: "EUR",
-      exchange_rate: "132",
+      exchange_rate: 120,
       status: "yes",
     },
     {
@@ -109,7 +109,7 @@ async function getData(): Promise<Products[]> {
       name: "Euro",
       symbol: "E",
       code: "EUR",
-      exchange_rate: "132",
+      exchange_rate: 120,
       status: "yes",
     },
     {
@@ -118,7 +118,7 @@ async function getData(): Promise<Products[]> {
       name: "Euro",
       symbol: "E",
       code: "EUR",
-      exchange_rate: "132",
+      exchange_rate: 120,
       status: "yes",
     },
     // ...

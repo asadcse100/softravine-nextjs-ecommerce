@@ -20,7 +20,19 @@ import Textarea from "@/shared/Textarea/Textarea";
 import { Select } from "@radix-ui/react-select";
 
 const formSchema = z.object({
-  product_name: z.string().min(10, {
+  name: z.string().min(10, {
+    message: "Product Name must be at least 10 characters.",
+  }),
+  address: z.string().min(10, {
+    message: "Product Name must be at least 10 characters.",
+  }),
+  phone: z.string().min(10, {
+    message: "Product Name must be at least 10 characters.",
+  }),
+  pick_up_status: z.string().min(10, {
+    message: "Product Name must be at least 10 characters.",
+  }),
+  staff_id: z.string().min(10, {
     message: "Product Name must be at least 10 characters.",
   }),
 });
@@ -31,7 +43,11 @@ export default function Addnew() {
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      product_name: "",
+      name: "",
+      address: "",
+      phone: "",
+      pick_up_status: "",
+      staff_id: "",
     },
   });
 
@@ -62,7 +78,7 @@ export default function Addnew() {
                     <div className="flex flex-col gap-5.5 p-6.5">
                       <FormField
                         control={form.control}
-                        name="product_name"
+                        name="name"
                         render={({ field }) => (
                           <FormItem>
                             <FormLabel>Name</FormLabel>
@@ -81,7 +97,7 @@ export default function Addnew() {
                     <div className="mt-3 flex flex-col gap-5.5 p-6.5">
                     <FormField
                         control={form.control}
-                        name="unit"
+                        name="address"
                         render={({ field }) => (
                           <FormItem>
                             <FormLabel>Location</FormLabel>
@@ -96,7 +112,7 @@ export default function Addnew() {
                     <div className="mt-3 flex flex-col gap-5.5 p-6.5">
                       <FormField
                         control={form.control}
-                        name="unit"
+                        name="phone"
                         render={({ field }) => (
                           <FormItem>
                             <FormLabel>Phone</FormLabel>
@@ -115,7 +131,7 @@ export default function Addnew() {
                     <div className="mt-3 flex flex-col gap-5.5 p-6.5">
                     <FormField
                       control={form.control}
-                      name="qty_multi"
+                      name="pick_up_status"
                       render={({ field }) => (
                         <FormItem>
                           <FormLabel className="mt-2">
@@ -130,7 +146,7 @@ export default function Addnew() {
                     <div className="mt-3 flex flex-col gap-5.5 p-6.5">
                     <FormField
                       control={form.control}
-                      name="qty_multi"
+                      name="staff_id"
                       render={({ field }) => (
                         <FormItem>
                           <FormLabel className="mt-2">

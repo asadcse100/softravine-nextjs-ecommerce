@@ -19,7 +19,7 @@ import {
 export type Products = {
   id: string;
   amount: number;
-  status: "pending" | "processing" | "success" | "failed";
+  status: string;
   email: string;
 };
 

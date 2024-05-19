@@ -18,9 +18,12 @@ import {
 // You can use a Zod schema here if you want.
 export type Products = {
   id: string;
-  amount: number;
-  status: "pending" | "processing" | "success" | "failed";
-  email: string;
+  date: string;
+  seller: string;
+  total_amount_to_pay: number;
+  request_amount: number;
+  message: string;
+  status: string;
 };
 
 export const columns: ColumnDef<Products>[] = [

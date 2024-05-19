@@ -17,38 +17,32 @@ import {
 import Input from "@/shared/Input/Input";
 
 const formSchema = z.object({
-  product_name: z.string().min(10, {
+  GOOGLE_CLIENT_ID: z.string().min(10, {
     message: "Product Name must be at least 10 characters.",
   }),
-  brand: z.string().min(3, {
-    message: "Brand must be at least 3 characters.",
+  GOOGLE_CLIENT_SECRET: z.string().min(10, {
+    message: "Product Name must be at least 10 characters.",
   }),
-  unit: z.string().min(3, {
-    message: "Unit must be at least 3 characters.",
+  FACEBOOK_CLIENT_ID: z.string().min(10, {
+    message: "Product Name must be at least 10 characters.",
   }),
-  weight: z.string().min(3, {
-    message: "Weight must be at least 3 characters.",
+  FACEBOOK_CLIENT_SECRET: z.string().min(10, {
+    message: "Product Name must be at least 10 characters.",
   }),
-  minimum_purchase_qty: z.string().min(3, {
-    message: "Minimum Purchase Qty must be at least 3 characters.",
+  TWITTER_CLIENT_ID: z.string().min(10, {
+    message: "Product Name must be at least 10 characters.",
   }),
-  tag: z.string().min(3, {
-    message: "Tag Purchase Qty must be at least 3 characters.",
+  TWITTER_CLIENT_SECRET: z.string().min(10, {
+    message: "Product Name must be at least 10 characters.",
   }),
-  barcode: z.string().min(3, {
-    message: "Barcode Purchase Qty must be at least 3 characters.",
+  SIGN_IN_WITH_APPLE_REDIRECT: z.string().min(10, {
+    message: "Product Name must be at least 10 characters.",
   }),
-  thumbnail_image: z.string().min(3, {
-    message: "thumbnail_image Purchase Qty must be at least 3 characters.",
+  SIGN_IN_WITH_APPLE_CLIENT_ID: z.string().min(10, {
+    message: "Product Name must be at least 10 characters.",
   }),
-  gallery_images: z.string().min(3, {
-    message: "gallery_images Purchase Qty must be at least 3 characters.",
-  }),
-  video_provider: z.string().min(3, {
-    message: "Video Provider Purchase Qty must be at least 3 characters.",
-  }),
-  video_link: z.string().min(3, {
-    message: "Video Link Purchase Qty must be at least 3 characters.",
+  SIGN_IN_WITH_APPLE_CLIENT_SECRET: z.string().min(10, {
+    message: "Product Name must be at least 10 characters.",
   }),
 });
 
@@ -58,17 +52,15 @@ export default function Addnew() {
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      product_name: "",
-      brand: "",
-      unit: "",
-      weight: "",
-      minimum_purchase_qty: "",
-      tag: "",
-      barcode: "",
-      thumbnail_image: "",
-      gallery_images: "",
-      video_provider: "",
-      video_link: "",
+      GOOGLE_CLIENT_ID: "",
+      GOOGLE_CLIENT_SECRET: "",
+      FACEBOOK_CLIENT_ID: "",
+      FACEBOOK_CLIENT_SECRET: "",
+      TWITTER_CLIENT_ID: "",
+      TWITTER_CLIENT_SECRET: "",
+      SIGN_IN_WITH_APPLE_REDIRECT: "",
+      SIGN_IN_WITH_APPLE_CLIENT_ID: "",
+      SIGN_IN_WITH_APPLE_CLIENT_SECRET: "",
     },
   });
 
@@ -99,7 +91,7 @@ export default function Addnew() {
                     <div className="flex flex-col gap-5.5 p-6.5">
                       <FormField
                         control={form.control}
-                        name="product_name"
+                        name="GOOGLE_CLIENT_ID"
                         render={({ field }) => (
                           <FormItem>
                             <FormLabel>Client ID</FormLabel>
@@ -118,7 +110,7 @@ export default function Addnew() {
                     <div className="mt-3 flex flex-col gap-5.5 p-6.5">
                       <FormField
                         control={form.control}
-                        name="brand"
+                        name="GOOGLE_CLIENT_SECRET"
                         render={({ field }) => (
                           <FormItem>
                             <FormLabel>Client Secret</FormLabel>
@@ -157,7 +149,7 @@ export default function Addnew() {
                     <div className="flex flex-col gap-5.5 p-6.5">
                       <FormField
                         control={form.control}
-                        name="product_name"
+                        name="FACEBOOK_CLIENT_ID"
                         render={({ field }) => (
                           <FormItem>
                             <FormLabel>App ID</FormLabel>
@@ -176,7 +168,7 @@ export default function Addnew() {
                     <div className="mt-3 flex flex-col gap-5.5 p-6.5">
                       <FormField
                         control={form.control}
-                        name="brand"
+                        name="FACEBOOK_CLIENT_SECRET"
                         render={({ field }) => (
                           <FormItem>
                             <FormLabel>App Secret</FormLabel>
@@ -215,7 +207,7 @@ export default function Addnew() {
                     <div className="flex flex-col gap-5.5 p-6.5">
                       <FormField
                         control={form.control}
-                        name="product_name"
+                        name="TWITTER_CLIENT_ID"
                         render={({ field }) => (
                           <FormItem>
                             <FormLabel>Client ID</FormLabel>
@@ -234,7 +226,7 @@ export default function Addnew() {
                     <div className="mt-3 flex flex-col gap-5.5 p-6.5">
                       <FormField
                         control={form.control}
-                        name="brand"
+                        name="TWITTER_CLIENT_SECRET"
                         render={({ field }) => (
                           <FormItem>
                             <FormLabel>Client Secret</FormLabel>
@@ -273,7 +265,7 @@ export default function Addnew() {
                     <div className="flex flex-col gap-5.5 p-6.5">
                       <FormField
                         control={form.control}
-                        name="product_name"
+                        name="SIGN_IN_WITH_APPLE_REDIRECT"
                         render={({ field }) => (
                           <FormItem>
                             <FormLabel>Callback URL</FormLabel>
@@ -292,7 +284,7 @@ export default function Addnew() {
                     <div className="mt-3 flex flex-col gap-5.5 p-6.5">
                       <FormField
                         control={form.control}
-                        name="brand"
+                        name="SIGN_IN_WITH_APPLE_CLIENT_ID"
                         render={({ field }) => (
                           <FormItem>
                             <FormLabel>Client ID</FormLabel>
@@ -311,7 +303,7 @@ export default function Addnew() {
                     <div className="mt-3 flex flex-col gap-5.5 p-6.5">
                       <FormField
                         control={form.control}
-                        name="brand"
+                        name="SIGN_IN_WITH_APPLE_CLIENT_SECRET"
                         render={({ field }) => (
                           <FormItem>
                             <FormLabel>Client Secret</FormLabel>

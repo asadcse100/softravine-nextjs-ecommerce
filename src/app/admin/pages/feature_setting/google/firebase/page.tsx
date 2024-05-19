@@ -18,7 +18,10 @@ import Input from "@/shared/Input/Input";
 import { Switch } from "@/app/admin/components/ui/switch";
 
 const formSchema = z.object({
-  product_name: z.string().min(10, {
+  google_firebase: z.string().min(10, {
+    message: "Product Name must be at least 10 characters.",
+  }),
+  FCM_SERVER_KEY: z.string().min(10, {
     message: "Product Name must be at least 10 characters.",
   }),
 });
@@ -29,7 +32,8 @@ export default function Addnew() {
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      product_name: "",
+      google_firebase: "",
+      FCM_SERVER_KEY: "",
     },
   });
 
@@ -61,7 +65,7 @@ export default function Addnew() {
                       
                       <FormField
                         control={form.control}
-                        name="product_name"
+                        name="google_firebase"
                         render={({ field }) => (
                           <FormItem>
                             <div className="flex items-center space-x-12">
@@ -78,7 +82,7 @@ export default function Addnew() {
                     <div className="mt-3 flex flex-col gap-5.5 p-6.5">
                       <FormField
                         control={form.control}
-                        name="brand"
+                        name="FCM_SERVER_KEY"
                         render={({ field }) => (
                           <FormItem>
                             <FormLabel>FCM SERVER KEY</FormLabel>

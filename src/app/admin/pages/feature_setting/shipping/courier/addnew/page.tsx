@@ -18,38 +18,32 @@ import Input from "@/shared/Input/Input";
 import Select from "@/shared/Select/Select";
 
 const formSchema = z.object({
-  product_name: z.string().min(10, {
+  carrier_name: z.string().min(10, {
     message: "Product Name must be at least 10 characters.",
   }),
-  brand: z.string().min(3, {
-    message: "Brand must be at least 3 characters.",
+  transit_time: z.string().min(10, {
+    message: "Product Name must be at least 10 characters.",
   }),
-  unit: z.string().min(3, {
-    message: "Unit must be at least 3 characters.",
+  logo: z.string().min(10, {
+    message: "Product Name must be at least 10 characters.",
   }),
-  weight: z.string().min(3, {
-    message: "Weight must be at least 3 characters.",
+  shipping_type: z.string().min(10, {
+    message: "Product Name must be at least 10 characters.",
   }),
-  minimum_purchase_qty: z.string().min(3, {
-    message: "Minimum Purchase Qty must be at least 3 characters.",
+  billing_type: z.string().min(10, {
+    message: "Product Name must be at least 10 characters.",
   }),
-  tag: z.string().min(3, {
-    message: "Tag Purchase Qty must be at least 3 characters.",
+  delimiter1: z.string().min(10, {
+    message: "Product Name must be at least 10 characters.",
   }),
-  barcode: z.string().min(3, {
-    message: "Barcode Purchase Qty must be at least 3 characters.",
+  delimiter2: z.string().min(10, {
+    message: "Product Name must be at least 10 characters.",
   }),
-  thumbnail_image: z.string().min(3, {
-    message: "thumbnail_image Purchase Qty must be at least 3 characters.",
+  zones: z.string().min(10, {
+    message: "Product Name must be at least 10 characters.",
   }),
-  gallery_images: z.string().min(3, {
-    message: "gallery_images Purchase Qty must be at least 3 characters.",
-  }),
-  video_provider: z.string().min(3, {
-    message: "Video Provider Purchase Qty must be at least 3 characters.",
-  }),
-  video_link: z.string().min(3, {
-    message: "Video Link Purchase Qty must be at least 3 characters.",
+  carrier_price: z.string().min(10, {
+    message: "Product Name must be at least 10 characters.",
   }),
 });
 
@@ -59,17 +53,15 @@ export default function Addnew() {
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      product_name: "",
-      brand: "",
-      unit: "",
-      weight: "",
-      minimum_purchase_qty: "",
-      tag: "",
-      barcode: "",
-      thumbnail_image: "",
-      gallery_images: "",
-      video_provider: "",
-      video_link: "",
+      carrier_name: "",
+      transit_time: "",
+      logo: "",
+      shipping_type: "",
+      billing_type: "",
+      delimiter1: "",
+      delimiter2: "",
+      zones: "",
+      carrier_price: "",
     },
   });
 
@@ -100,7 +92,7 @@ export default function Addnew() {
                     <div className="flex flex-col gap-5.5 p-6.5">
                       <FormField
                         control={form.control}
-                        name="product_name"
+                        name="carrier_name"
                         render={({ field }) => (
                           <FormItem>
                             <FormLabel>Carrier Name</FormLabel>
@@ -119,7 +111,7 @@ export default function Addnew() {
                     <div className="flex flex-col gap-5.5 p-6.5">
                       <FormField
                         control={form.control}
-                        name="product_name"
+                        name="transit_time"
                         render={({ field }) => (
                           <FormItem>
                             <FormLabel>Transit Time</FormLabel>
@@ -138,7 +130,7 @@ export default function Addnew() {
                     <div className="flex flex-col gap-5.5 p-6.5">
                       <FormField
                         control={form.control}
-                        name="product_name"
+                        name="logo"
                         render={({ field }) => (
                           <FormItem>
                             <FormLabel>Logo</FormLabel>
@@ -158,7 +150,7 @@ export default function Addnew() {
                     <div className="flex flex-col gap-5.5 p-6.5">
                       <FormField
                         control={form.control}
-                        name="product_name"
+                        name="shipping_type"
                         render={({ field }) => (
                           <FormItem>
                             <FormLabel>Free Shipping ?</FormLabel>
@@ -177,7 +169,7 @@ export default function Addnew() {
                     <div className="flex flex-col gap-5.5 p-6.5">
                       <FormField
                         control={form.control}
-                        name="product_name"
+                        name="billing_type"
                         render={({ field }) => (
                           <FormItem>
                             <FormLabel>Billing Type</FormLabel>
@@ -204,7 +196,7 @@ export default function Addnew() {
                     <div className="flex flex-col gap-5.5 p-6.5">
                       <FormField
                         control={form.control}
-                        name="product_name"
+                        name="delimiter1[]"
                         render={({ field }) => (
                           <FormItem>
                             <FormLabel>
@@ -229,7 +221,7 @@ export default function Addnew() {
                     <div className="flex flex-col gap-5.5 p-6.5">
                       <FormField
                         control={form.control}
-                        name="product_name"
+                        name="delimiter2[]"
                         render={({ field }) => (
                           <FormItem>
                             <FormLabel>
@@ -254,7 +246,7 @@ export default function Addnew() {
                     <div className="flex flex-col gap-5.5 p-6.5">
                       <FormField
                         control={form.control}
-                        name="product_name"
+                        name="zones[]"
                         render={({ field }) => (
                           <FormItem>
                             <FormLabel>Asia</FormLabel>
@@ -277,7 +269,7 @@ export default function Addnew() {
                     <div className="flex flex-col gap-5.5 p-6.5">
                       <FormField
                         control={form.control}
-                        name="product_name"
+                        name="carrier_price[1][]"
                         render={({ field }) => (
                           <FormItem>
                             <FormLabel>Europe</FormLabel>
@@ -300,7 +292,7 @@ export default function Addnew() {
                     <div className="flex flex-col gap-5.5 p-6.5">
                       <FormField
                         control={form.control}
-                        name="product_name"
+                        name="zones[]"
                         render={({ field }) => (
                           <FormItem>
                             <FormLabel>Africa</FormLabel>

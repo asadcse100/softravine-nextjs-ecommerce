@@ -7,9 +7,13 @@ import { Switch } from "@/app/admin/components/ui/switch";
 // You can use a Zod schema here if you want.
 export type Products = {
   id: string;
-  amount: number;
-  status: "pending" | "processing" | "success" | "failed";
-  email: string;
+  name: string;
+  package: string;
+  method: string;
+  txn_id: string;
+  reciept: string;
+  approval: string;
+  date: string;
 };
 
 export const columns: ColumnDef<Products>[] = [

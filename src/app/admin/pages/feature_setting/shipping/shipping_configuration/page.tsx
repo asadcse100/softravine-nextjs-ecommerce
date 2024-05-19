@@ -17,38 +17,14 @@ import {
 import Input from "@/shared/Input/Input";
 
 const formSchema = z.object({
-  product_name: z.string().min(10, {
+  shipping_type: z.string().min(10, {
     message: "Product Name must be at least 10 characters.",
   }),
-  brand: z.string().min(3, {
-    message: "Brand must be at least 3 characters.",
+  flat_rate_shipping_cost: z.string().min(10, {
+    message: "Product Name must be at least 10 characters.",
   }),
-  unit: z.string().min(3, {
-    message: "Unit must be at least 3 characters.",
-  }),
-  weight: z.string().min(3, {
-    message: "Weight must be at least 3 characters.",
-  }),
-  minimum_purchase_qty: z.string().min(3, {
-    message: "Minimum Purchase Qty must be at least 3 characters.",
-  }),
-  tag: z.string().min(3, {
-    message: "Tag Purchase Qty must be at least 3 characters.",
-  }),
-  barcode: z.string().min(3, {
-    message: "Barcode Purchase Qty must be at least 3 characters.",
-  }),
-  thumbnail_image: z.string().min(3, {
-    message: "thumbnail_image Purchase Qty must be at least 3 characters.",
-  }),
-  gallery_images: z.string().min(3, {
-    message: "gallery_images Purchase Qty must be at least 3 characters.",
-  }),
-  video_provider: z.string().min(3, {
-    message: "Video Provider Purchase Qty must be at least 3 characters.",
-  }),
-  video_link: z.string().min(3, {
-    message: "Video Link Purchase Qty must be at least 3 characters.",
+  shipping_cost_admin: z.string().min(10, {
+    message: "Product Name must be at least 10 characters.",
   }),
 });
 
@@ -58,17 +34,9 @@ export default function Addnew() {
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      product_name: "",
-      brand: "",
-      unit: "",
-      weight: "",
-      minimum_purchase_qty: "",
-      tag: "",
-      barcode: "",
-      thumbnail_image: "",
-      gallery_images: "",
-      video_provider: "",
-      video_link: "",
+      shipping_type: "",
+      flat_rate_shipping_cost: "",
+      shipping_cost_admin: "",
     },
   });
 
@@ -99,7 +67,7 @@ export default function Addnew() {
                     <div className="flex flex-col gap-5.5 p-6.5">
                       <FormField
                         control={form.control}
-                        name="product_name"
+                        name="shipping_type"
                         render={({ field }) => (
                           <FormItem>
                             <FormLabel> Product Wise Shipping Cost</FormLabel>
@@ -118,7 +86,7 @@ export default function Addnew() {
                     <div className="flex flex-col gap-5.5 p-6.5">
                       <FormField
                         control={form.control}
-                        name="product_name"
+                        name="shipping_type"
                         render={({ field }) => (
                           <FormItem>
                             <FormLabel> Flat Rate Shipping Cost</FormLabel>
@@ -137,7 +105,7 @@ export default function Addnew() {
                     <div className="flex flex-col gap-5.5 p-6.5">
                       <FormField
                         control={form.control}
-                        name="product_name"
+                        name="shipping_type"
                         render={({ field }) => (
                           <FormItem>
                             <FormLabel>
@@ -159,7 +127,7 @@ export default function Addnew() {
                     <div className="flex flex-col gap-5.5 p-6.5">
                       <FormField
                         control={form.control}
-                        name="product_name"
+                        name="shipping_type"
                         render={({ field }) => (
                           <FormItem>
                             <FormLabel> Area Wise Flat Shipping Cost</FormLabel>
@@ -178,7 +146,7 @@ export default function Addnew() {
                     <div className="flex flex-col gap-5.5 p-6.5">
                       <FormField
                         control={form.control}
-                        name="product_name"
+                        name="shipping_type"
                         render={({ field }) => (
                           <FormItem>
                             <FormLabel> Carrier Wise Shipping Cost</FormLabel>
@@ -261,7 +229,7 @@ export default function Addnew() {
                     <div className="flex flex-col gap-5.5 p-6.5">
                       <FormField
                         control={form.control}
-                        name="product_name"
+                        name="flat_rate_shipping_cost"
                         render={({ field }) => (
                           <FormItem>
                             <FormLabel> Cost</FormLabel>
@@ -319,7 +287,7 @@ export default function Addnew() {
                     <div className="flex flex-col gap-5.5 p-6.5">
                       <FormField
                         control={form.control}
-                        name="product_name"
+                        name="shipping_cost_admin"
                         render={({ field }) => (
                           <FormItem>
                             <FormLabel> Cost</FormLabel>

@@ -18,38 +18,98 @@ import Input from "@/shared/Input/Input";
 import Select from "@/shared/Select/Select";
 
 const formSchema = z.object({
-  product_name: z.string().min(10, {
+  NEXMO_KEY: z.string().min(10, {
     message: "Product Name must be at least 10 characters.",
   }),
-  brand: z.string().min(3, {
-    message: "Brand must be at least 3 characters.",
+  NEXMO_SECRET: z.string().min(10, {
+    message: "Product Name must be at least 10 characters.",
   }),
-  unit: z.string().min(3, {
-    message: "Unit must be at least 3 characters.",
+  NEXMO_SENDER_ID: z.string().min(10, {
+    message: "Product Name must be at least 10 characters.",
   }),
-  weight: z.string().min(3, {
-    message: "Weight must be at least 3 characters.",
+  TWILIO_SID: z.string().min(10, {
+    message: "Product Name must be at least 10 characters.",
   }),
-  minimum_purchase_qty: z.string().min(3, {
-    message: "Minimum Purchase Qty must be at least 3 characters.",
+  TWILIO_AUTH_TOKEN: z.string().min(10, {
+    message: "Product Name must be at least 10 characters.",
   }),
-  tag: z.string().min(3, {
-    message: "Tag Purchase Qty must be at least 3 characters.",
+  VALID_TWILLO_NUMBER: z.string().min(10, {
+    message: "Product Name must be at least 10 characters.",
   }),
-  barcode: z.string().min(3, {
-    message: "Barcode Purchase Qty must be at least 3 characters.",
+  TWILLO_TYPE: z.string().min(10, {
+    message: "Product Name must be at least 10 characters.",
   }),
-  thumbnail_image: z.string().min(3, {
-    message: "thumbnail_image Purchase Qty must be at least 3 characters.",
+  SSL_SMS_API_TOKEN: z.string().min(10, {
+    message: "Product Name must be at least 10 characters.",
   }),
-  gallery_images: z.string().min(3, {
-    message: "gallery_images Purchase Qty must be at least 3 characters.",
+  SSL_SMS_SID: z.string().min(10, {
+    message: "Product Name must be at least 10 characters.",
   }),
-  video_provider: z.string().min(3, {
-    message: "Video Provider Purchase Qty must be at least 3 characters.",
+  SSL_SMS_URL: z.string().min(10, {
+    message: "Product Name must be at least 10 characters.",
   }),
-  video_link: z.string().min(3, {
-    message: "Video Link Purchase Qty must be at least 3 characters.",
+  AUTH_KEY: z.string().min(10, {
+    message: "Product Name must be at least 10 characters.",
+  }),
+  ENTITY_ID: z.string().min(10, {
+    message: "Product Name must be at least 10 characters.",
+  }),
+  ROUTE: z.string().min(10, {
+    message: "Product Name must be at least 10 characters.",
+  }),
+  LANGUAGE: z.string().min(10, {
+    message: "Product Name must be at least 10 characters.",
+  }),
+  SENDER_ID: z.string().min(10, {
+    message: "Product Name must be at least 10 characters.",
+  }),
+  MIMO_USERNAME: z.string().min(10, {
+    message: "Product Name must be at least 10 characters.",
+  }),
+  MIMO_PASSWORD: z.string().min(10, {
+    message: "Product Name must be at least 10 characters.",
+  }),
+  MIMO_SENDER_ID: z.string().min(10, {
+    message: "Product Name must be at least 10 characters.",
+  }),
+  MIM_USER_NAME: z.string().min(10, {
+    message: "Product Name must be at least 10 characters.",
+  }),
+  MIM_API_KEY: z.string().min(10, {
+    message: "Product Name must be at least 10 characters.",
+  }),
+  MIM_SENDER_ID: z.string().min(10, {
+    message: "Product Name must be at least 10 characters.",
+  }),
+  MSEGAT_API_KEY: z.string().min(10, {
+    message: "Product Name must be at least 10 characters.",
+  }),
+  MSEGAT_USERNAME: z.string().min(10, {
+    message: "Product Name must be at least 10 characters.",
+  }),
+  MSEGAT_USER_SENDER: z.string().min(10, {
+    message: "Product Name must be at least 10 characters.",
+  }),
+  ZENDER_SITEURL: z.string().min(10, {
+    message: "Product Name must be at least 10 characters.",
+  }),
+  ZENDER_APIKEY: z.string().min(10, {
+    message: "Product Name must be at least 10 characters.",
+  }),
+  ZENDER_SERVICE: z.string().min(10, {
+    message: "Product Name must be at least 10 characters.",
+  }),
+  ZENDER_WHATSAPP: z.string().min(10, {
+    message: "Product Name must be at least 10 characters.",
+  }),
+  ZENDER_DEVICE: z.string().min(10, {
+    message: "Product Name must be at least 10 characters.",
+  }),
+  ZENDER_GATEWAY: z.string().min(10, {
+    message: "Product Name must be at least 10 characters.",
+  }),
+  ZENDER_SIM: z.string().min(10, {
+    message: "Product Name must be at least 10 characters.",
   }),
 });
 
@@ -59,17 +119,37 @@ export default function Addnew() {
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      product_name: "",
-      brand: "",
-      unit: "",
-      weight: "",
-      minimum_purchase_qty: "",
-      tag: "",
-      barcode: "",
-      thumbnail_image: "",
-      gallery_images: "",
-      video_provider: "",
-      video_link: "",
+      NEXMO_KEY: "",
+      NEXMO_SECRET: "",
+      NEXMO_SENDER_ID: "",
+      TWILIO_SID: "",
+      TWILIO_AUTH_TOKEN: "",
+      VALID_TWILLO_NUMBER: "",
+      TWILLO_TYPE: "",
+      SSL_SMS_API_TOKEN: "",
+      SSL_SMS_SID: "",
+      SSL_SMS_URL: "",
+      AUTH_KEY: "",
+      ENTITY_ID: "",
+      ROUTE: "",
+      LANGUAGE: "",
+      SENDER_ID: "",
+      MIMO_USERNAME: "",
+      MIMO_PASSWORD: "",
+      MIMO_SENDER_ID: "",
+      MIM_USER_NAME: "",
+      MIM_API_KEY: "",
+      MIM_SENDER_ID: "",
+      MSEGAT_API_KEY: "",
+      MSEGAT_USERNAME: "",
+      MSEGAT_USER_SENDER: "",
+      ZENDER_SITEURL: "",
+      ZENDER_APIKEY: "",
+      ZENDER_SERVICE: "",
+      ZENDER_WHATSAPP: "",
+      ZENDER_DEVICE: "",
+      ZENDER_GATEWAY: "",
+      ZENDER_SIM: "",
     },
   });
 
@@ -100,7 +180,7 @@ export default function Addnew() {
                     <div className="flex flex-col gap-5.5 p-6.5">
                       <FormField
                         control={form.control}
-                        name="product_name"
+                        name="NEXMO_KEY"
                         render={({ field }) => (
                           <FormItem>
                             <FormLabel>NEXMO KEY</FormLabel>
@@ -119,7 +199,7 @@ export default function Addnew() {
                     <div className="mt-3 flex flex-col gap-5.5 p-6.5">
                       <FormField
                         control={form.control}
-                        name="brand"
+                        name="NEXMO_SECRET"
                         render={({ field }) => (
                           <FormItem>
                             <FormLabel>NEXMO SECRET</FormLabel>
@@ -138,7 +218,7 @@ export default function Addnew() {
                     <div className="mt-3 flex flex-col gap-5.5 p-6.5">
                       <FormField
                         control={form.control}
-                        name="unit"
+                        name="NEXMO_SENDER_ID"
                         render={({ field }) => (
                           <FormItem>
                             <FormLabel>NEXMO SENDER ID</FormLabel>
@@ -177,7 +257,7 @@ export default function Addnew() {
                     <div className="flex flex-col gap-5.5 p-6.5">
                       <FormField
                         control={form.control}
-                        name="product_name"
+                        name="TWILIO_SID"
                         render={({ field }) => (
                           <FormItem>
                             <FormLabel>TWILIO SID</FormLabel>
@@ -196,7 +276,7 @@ export default function Addnew() {
                     <div className="mt-3 flex flex-col gap-5.5 p-6.5">
                       <FormField
                         control={form.control}
-                        name="brand"
+                        name="TWILIO_AUTH_TOKEN"
                         render={({ field }) => (
                           <FormItem>
                             <FormLabel>TWILIO AUTH TOKEN</FormLabel>
@@ -215,7 +295,7 @@ export default function Addnew() {
                     <div className="mt-3 flex flex-col gap-5.5 p-6.5">
                       <FormField
                         control={form.control}
-                        name="unit"
+                        name="VALID_TWILLO_NUMBER"
                         render={({ field }) => (
                           <FormItem>
                             <FormLabel>VALID TWILIO NUMBER</FormLabel>
@@ -234,7 +314,7 @@ export default function Addnew() {
                     <div className="mt-3 flex flex-col gap-5.5 p-6.5">
                       <FormField
                         control={form.control}
-                        name="unit"
+                        name="TWILLO_TYPE"
                         render={({ field }) => (
                           <FormItem>
                             <FormLabel>TWILIO TYPE</FormLabel>
@@ -277,7 +357,7 @@ export default function Addnew() {
                     <div className="flex flex-col gap-5.5 p-6.5">
                       <FormField
                         control={form.control}
-                        name="product_name"
+                        name="SSL_SMS_API_TOKEN"
                         render={({ field }) => (
                           <FormItem>
                             <FormLabel>SSL SMS API TOKEN</FormLabel>
@@ -296,7 +376,7 @@ export default function Addnew() {
                     <div className="mt-3 flex flex-col gap-5.5 p-6.5">
                       <FormField
                         control={form.control}
-                        name="brand"
+                        name="SSL_SMS_SID"
                         render={({ field }) => (
                           <FormItem>
                             <FormLabel>SSL SMS SID</FormLabel>
@@ -315,7 +395,7 @@ export default function Addnew() {
                     <div className="mt-3 flex flex-col gap-5.5 p-6.5">
                       <FormField
                         control={form.control}
-                        name="unit"
+                        name="SSL_SMS_URL"
                         render={({ field }) => (
                           <FormItem>
                             <FormLabel>SSL SMS URL</FormLabel>
@@ -354,7 +434,7 @@ export default function Addnew() {
                     <div className="flex flex-col gap-5.5 p-6.5">
                       <FormField
                         control={form.control}
-                        name="product_name"
+                        name="AUTH_KEY"
                         render={({ field }) => (
                           <FormItem>
                             <FormLabel>AUTH KEY</FormLabel>
@@ -373,7 +453,7 @@ export default function Addnew() {
                     <div className="mt-3 flex flex-col gap-5.5 p-6.5">
                       <FormField
                         control={form.control}
-                        name="brand"
+                        name="ENTITY_ID"
                         render={({ field }) => (
                           <FormItem>
                             <FormLabel>ENTITY ID</FormLabel>
@@ -392,7 +472,7 @@ export default function Addnew() {
                     <div className="mt-3 flex flex-col gap-5.5 p-6.5">
                       <FormField
                         control={form.control}
-                        name="unit"
+                        name="ROUTE"
                         render={({ field }) => (
                           <FormItem>
                             <FormLabel>ROUTE</FormLabel>
@@ -416,7 +496,7 @@ export default function Addnew() {
                     <div className="mt-3 flex flex-col gap-5.5 p-6.5">
                       <FormField
                         control={form.control}
-                        name="unit"
+                        name="LANGUAGE"
                         render={({ field }) => (
                           <FormItem>
                             <FormLabel>Language</FormLabel>
@@ -430,6 +510,25 @@ export default function Addnew() {
                                 placeholder="ROUTE"
                                 {...field}
                               /> */}
+                            </FormControl>
+                            <FormMessage />
+                          </FormItem>
+                        )}
+                      />
+                    </div>
+                    <div className="mt-3 flex flex-col gap-5.5 p-6.5">
+                      <FormField
+                        control={form.control}
+                        name="SENDER_ID"
+                        render={({ field }) => (
+                          <FormItem>
+                            <FormLabel>SENDER ID</FormLabel>
+                            <FormControl>
+                              <Input
+                                className={inputClass}
+                                placeholder="ROUTE"
+                                {...field}
+                              />
                             </FormControl>
                             <FormMessage />
                           </FormItem>
@@ -459,7 +558,7 @@ export default function Addnew() {
                     <div className="flex flex-col gap-5.5 p-6.5">
                       <FormField
                         control={form.control}
-                        name="product_name"
+                        name="MIMO_USERNAME"
                         render={({ field }) => (
                           <FormItem>
                             <FormLabel>MIMO_USERNAME</FormLabel>
@@ -478,7 +577,7 @@ export default function Addnew() {
                     <div className="mt-3 flex flex-col gap-5.5 p-6.5">
                       <FormField
                         control={form.control}
-                        name="brand"
+                        name="MIMO_PASSWORD"
                         render={({ field }) => (
                           <FormItem>
                             <FormLabel>MIMO_PASSWORD</FormLabel>
@@ -497,7 +596,7 @@ export default function Addnew() {
                     <div className="mt-3 flex flex-col gap-5.5 p-6.5">
                       <FormField
                         control={form.control}
-                        name="unit"
+                        name="MIMO_SENDER_ID"
                         render={({ field }) => (
                           <FormItem>
                             <FormLabel>MIMO_SENDER_ID</FormLabel>
@@ -536,7 +635,7 @@ export default function Addnew() {
                     <div className="flex flex-col gap-5.5 p-6.5">
                       <FormField
                         control={form.control}
-                        name="product_name"
+                        name="MIM_USER_NAME"
                         render={({ field }) => (
                           <FormItem>
                             <FormLabel>User Name</FormLabel>
@@ -555,7 +654,7 @@ export default function Addnew() {
                     <div className="mt-3 flex flex-col gap-5.5 p-6.5">
                       <FormField
                         control={form.control}
-                        name="brand"
+                        name="MIM_API_KEY"
                         render={({ field }) => (
                           <FormItem>
                             <FormLabel>API KEY</FormLabel>
@@ -574,7 +673,7 @@ export default function Addnew() {
                     <div className="mt-3 flex flex-col gap-5.5 p-6.5">
                       <FormField
                         control={form.control}
-                        name="unit"
+                        name="MIM_SENDER_ID"
                         render={({ field }) => (
                           <FormItem>
                             <FormLabel>SENDER ID</FormLabel>
@@ -613,7 +712,7 @@ export default function Addnew() {
                     <div className="flex flex-col gap-5.5 p-6.5">
                       <FormField
                         control={form.control}
-                        name="product_name"
+                        name="MSEGAT_API_KEY"
                         render={({ field }) => (
                           <FormItem>
                             <FormLabel>MSEGAT_API_KEY</FormLabel>
@@ -632,7 +731,7 @@ export default function Addnew() {
                     <div className="mt-3 flex flex-col gap-5.5 p-6.5">
                       <FormField
                         control={form.control}
-                        name="brand"
+                        name="MSEGAT_USERNAME"
                         render={({ field }) => (
                           <FormItem>
                             <FormLabel>MSEGAT_USERNAME</FormLabel>
@@ -651,7 +750,7 @@ export default function Addnew() {
                     <div className="mt-3 flex flex-col gap-5.5 p-6.5">
                       <FormField
                         control={form.control}
-                        name="unit"
+                        name="MSEGAT_USER_SENDER"
                         render={({ field }) => (
                           <FormItem>
                             <FormLabel>MSEGAT_USER_SENDER</FormLabel>
@@ -691,7 +790,7 @@ export default function Addnew() {
                     <div className="flex flex-col gap-5.5 p-6.5">
                       <FormField
                         control={form.control}
-                        name="product_name"
+                        name="ZENDER_SITEURL"
                         render={({ field }) => (
                           <FormItem>
                             <FormLabel>ZENDER_SITEURL</FormLabel>
@@ -710,7 +809,7 @@ export default function Addnew() {
                     <div className="mt-3 flex flex-col gap-5.5 p-6.5">
                       <FormField
                         control={form.control}
-                        name="brand"
+                        name="ZENDER_APIKEY"
                         render={({ field }) => (
                           <FormItem>
                             <FormLabel>ZENDER_APIKEY</FormLabel>
@@ -729,7 +828,7 @@ export default function Addnew() {
                     <div className="mt-3 flex flex-col gap-5.5 p-6.5">
                       <FormField
                         control={form.control}
-                        name="unit"
+                        name="ZENDER_SERVICE"
                         render={({ field }) => (
                           <FormItem>
                             <FormLabel>ZENDER_SERVICE</FormLabel>
@@ -752,7 +851,7 @@ export default function Addnew() {
                     <div className="mt-3 flex flex-col gap-5.5 p-6.5">
                       <FormField
                         control={form.control}
-                        name="unit"
+                        name="ZENDER_WHATSAPP"
                         render={({ field }) => (
                           <FormItem>
                             <FormLabel>ZENDER_WHATSAPP</FormLabel>
@@ -771,7 +870,7 @@ export default function Addnew() {
                     <div className="mt-3 flex flex-col gap-5.5 p-6.5">
                       <FormField
                         control={form.control}
-                        name="unit"
+                        name="ZENDER_DEVICE"
                         render={({ field }) => (
                           <FormItem>
                             <FormLabel>ZENDER_DEVICE</FormLabel>
@@ -790,7 +889,7 @@ export default function Addnew() {
                     <div className="mt-3 flex flex-col gap-5.5 p-6.5">
                       <FormField
                         control={form.control}
-                        name="unit"
+                        name="ZENDER_GATEWAY"
                         render={({ field }) => (
                           <FormItem>
                             <FormLabel>ZENDER_GATEWAY</FormLabel>
@@ -809,7 +908,7 @@ export default function Addnew() {
                     <div className="mt-3 flex flex-col gap-5.5 p-6.5">
                       <FormField
                         control={form.control}
-                        name="unit"
+                        name="ZENDER_SIM"
                         render={({ field }) => (
                           <FormItem>
                             <FormLabel>ZENDER_SIM</FormLabel>

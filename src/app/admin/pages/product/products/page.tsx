@@ -12,9 +12,9 @@ async function getData(): Promise<Products[]> {
       price: 5445,
       rating: 445,
       total_stock: 4250,
-      today_deal: "ok",
-      published: "ok",
-      featured: "ok",
+      today_deal: true,
+      published: true,
+      featured: true,
     },
  
     {
@@ -25,9 +25,9 @@ async function getData(): Promise<Products[]> {
       price: 5445,
       rating: 445,
       total_stock: 4250,
-      today_deal: "ok",
-      published: "ok",
-      featured: "ok",
+      today_deal: true,
+      published: true,
+      featured: true,
     },
  
     {
@@ -38,9 +38,9 @@ async function getData(): Promise<Products[]> {
       price: 445,
       rating: 445,
       total_stock: 450,
-      today_deal: "ok",
-      published: "ok",
-      featured: "ok",
+      today_deal: true,
+      published: true,
+      featured: true,
     },
  
     // ...

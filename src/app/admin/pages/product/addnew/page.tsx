@@ -1,8 +1,10 @@
 "use client";
-
+import * as React from "react"
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
+import { Check, ChevronsUpDown } from "lucide-react";
+import { cn } from "@/app/admin/utils";
 
 import { Button } from "@/app/admin/components/ui/button";
 import {
@@ -14,9 +16,36 @@ import {
   FormLabel,
   FormMessage,
 } from "@/app/admin/components/ui/form";
+import {
+  Command,
+  CommandEmpty,
+  CommandGroup,
+  CommandInput,
+  CommandItem,
+} from "@/app/admin/components/ui/command";
+
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "@/app/admin/components/ui/popover";
+
+import { toast } from "@/app/admin/components/ui/use-toast";
+
 import Input from "@/shared/Input/Input";
 import { Switch } from "@/app/admin/components/ui/switch";
-import Select from "@/shared/Select/Select";
+
+const languages = [
+  { label: "English", value: "en" },
+  { label: "French", value: "fr" },
+  { label: "German", value: "de" },
+  { label: "Spanish", value: "es" },
+  { label: "Portuguese", value: "pt" },
+  { label: "Russian", value: "ru" },
+  { label: "Japanese", value: "ja" },
+  { label: "Korean", value: "ko" },
+  { label: "Chinese", value: "zh" },
+] as const
 
 const formSchema = z.object({
   product_name: z.string().min(10, {
@@ -52,9 +81,95 @@ const formSchema = z.object({
   video_link: z.string().min(3, {
     message: "Video Link Purchase Qty must be at least 3 characters.",
   }),
+  color: z.string({
+    required_error: "Please select a color.",
+  }),
+  attribute: z.string({
+    required_error: "Please select a attribute.",
+  }),
+  unit_price: z.string({
+    required_error: "Please select a unit_price.",
+  }),
+  discount_date_range: z.string({
+    required_error: "Please select a discount_date_range.",
+  }),
+  discount: z.string({
+    required_error: "Please select a discount.",
+  }),
+  flat_percent: z.string({
+    required_error: "Please select a flat_percent.",
+  }),
+  reseller_unit_price: z.string({
+    required_error: "Please select a reseller unit price.",
+  }),
+  reseller_discount_date_range: z.string({
+    required_error: "Please select a discount_date_range.",
+  }),
+  reseller_discount: z.string({
+    required_error: "Please select a reseller_discount.",
+  }),
+  reseller_flat_percent: z.string({
+    required_error: "Please select a reseller_flat_percent.",
+  }),
+  quantity: z.string({
+    required_error: "Please select a quantity.",
+  }),
+  sku: z.string({
+    required_error: "Please select a sku.",
+  }),
+  external_link: z.string({
+    required_error: "Please select a external_link.",
+  }),
+  external_link_button: z.string({
+    required_error: "Please select a external_link_button.",
+  }),
+  product_description: z.string({
+    required_error: "Please select a product_description.",
+  }),
+  pdf_specification: z.string({
+    required_error: "Please select a pdf_specification.",
+  }),
+  meta_title: z.string({
+    required_error: "Please select a meta_title.",
+  }),
+  meta_description: z.string({
+    required_error: "Please select a meta_description.",
+  }),
+  meta_image: z.string({
+    required_error: "Please select a meta_image.",
+  }),
+  main_category: z.string({
+    required_error: "Please select a main_category.",
+  }),
+  sub_category: z.string({
+    required_error: "Please select a sub_category.",
+  }),
+  free_shippling: z.string({
+    required_error: "Please select a free_shippling.",
+  }),
+  flat_rate: z.string({
+    required_error: "Please select a flat_rate.",
+  }),
+  qty_multi: z.string({
+    required_error: "Please select a qty_multi.",
+  }),
+  show_stock_quantity: z.string({
+    required_error: "Please select a show_stock_quantity.",
+  }),
+  sub_category: z.string({
+    required_error: "Please select a sub_category.",
+  }),
+  sub_category: z.string({
+    required_error: "Please select a sub_category.",
+  }),
+  languages: z.string({
+    required_error: "Please select a language.",
+  }),
 });
 
 export default function Addnew() {
+  const [open, setOpen] = React.useState(false)
+  const [value, setValue] = React.useState("")
   // ...
   // 1. Define your form.
   const form = useForm<z.infer<typeof formSchema>>({
@@ -71,6 +186,30 @@ export default function Addnew() {
       gallery_images: "",
       video_provider: "",
       video_link: "",
+      color: "",
+      attribute: "",
+      unit_price: "",
+      discount_date_range: "",
+      discount: "",
+      flat_percent: "",
+      reseller_unit_price: "",
+      reseller_discount_date_range: "",
+      reseller_discount: "",
+      reseller_flat_percent: "",
+      quantity: "",
+      sku: "",
+      external_link: "",
+      external_link_button: "",
+      product_description: "",
+      pdf_specification: "",
+      meta_title: "",
+      meta_description: "",
+      meta_image: "",
+      main_category: "",
+      sub_category: "",
+      free_shippling: "",
+      qty_multi: "",
+      show_stock_quantity: "",
     },
   });
 
@@ -78,6 +217,14 @@ export default function Addnew() {
   function onSubmit(values: z.infer<typeof formSchema>) {
     // Do something with the form values.
     // ✅ This will be type-safe and validated.
+    toast({
+      title: "You submitted the following values:",
+      description: (
+        <pre className="mt-2 w-[340px] rounded-md bg-slate-950 p-4">
+          <code className="text-white">{JSON.stringify(data, null, 2)}</code>
+        </pre>
+      ),
+    })
     console.log(values);
   }
 
@@ -131,6 +278,132 @@ export default function Addnew() {
                                 {...field}
                               />
                             </FormControl>
+                            <FormMessage />
+                          </FormItem>
+                        )}
+                      />
+
+                      <FormField
+                        control={form.control}
+                        name="languages"
+                        render={({ field }) => (
+                          <FormItem className="flex flex-col">
+                            <FormLabel>Language</FormLabel>
+                            <Popover open={open} onOpenChange={setOpen}>
+      <PopoverTrigger asChild>
+        <Button
+          variant="outline"
+          role="combobox"
+          aria-expanded={open}
+          className="w-[200px] justify-between"
+        >
+          {value
+            ? languages.find((language) => language.value === value)?.label
+            : "Select language..."}
+          <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
+        </Button>
+      </PopoverTrigger>
+      <PopoverContent className="w-[200px] p-0">
+        <Command>
+          <CommandInput placeholder="Search language..." />
+          <CommandEmpty>No language found.</CommandEmpty>
+          <CommandGroup>
+            {languages.map((language) => (
+              <CommandItem
+                key={language.value}
+                value={language.value}
+                onSelect={(currentValue) => {
+                  setValue(currentValue === value ? "" : currentValue)
+                  setOpen(false)
+                }}
+              >
+                <Check
+                  className={cn(
+                    "mr-2 h-4 w-4",
+                    value === language.value ? "opacity-100" : "opacity-0"
+                  )}
+                />
+                {language.label}
+              </CommandItem>
+            ))}
+          </CommandGroup>
+        </Command>
+      </PopoverContent>
+    </Popover>
+                            {/* <Popover>
+                              <PopoverTrigger asChild>
+                                <FormControl>
+                                  <Button
+                                    variant="outline"
+                                    role="combobox"
+                                    className={cn(
+                                      "w-[200px] justify-between",
+                                      !field.value && "text-muted-foreground"
+                                    )}
+                                  >
+                                    {field.value
+                                      ? languages.find(
+                                        (language) => language.value === field.value
+                                      )?.label
+                                      : "Select language"}
+                                    <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
+                                  </Button>
+                                </FormControl>
+                              </PopoverTrigger>
+                              <PopoverContent className="w-[200px] p-0">
+                                <Command>
+                                  <CommandInput placeholder="Search language..." />
+                                  <CommandEmpty>No language found.</CommandEmpty>
+
+                                  {/* <CommandGroup>
+                                    {languages.map((language) => (
+                                      <CommandItem
+                                        value={language.label}
+                                        key={language.value}
+                                        onSelect={() => {
+                                          form.setValue("languages", language.value)
+                                        }}
+                                      >
+                                        <Check
+                                          className={cn(
+                                            "mr-2 h-4 w-4",
+                                            language.value === field.value
+                                              ? "opacity-100"
+                                              : "opacity-0"
+                                          )}
+                                        />
+                                        {language.label}
+                                      </CommandItem>
+                                    ))}
+                                  </CommandGroup> */}
+
+                                  {/* <CommandGroup>
+  <CommandItem>
+    {languages.map((language) => (
+      <CommandItem
+        key={language.value}
+        value={language.value}
+        onSelect={(currentValue) => {
+          form.setValue(currentValue === language.value ? "" : currentValue);
+          form.setOpen(false);
+          form.onSelect(currentValue);
+        }}
+      >
+        <Check
+          className={cn(
+            "mr-2 h-4 w-4",
+            field.value === language.value ? "opacity-100" : "opacity-0"
+          )}
+        />
+        {language.label}
+      </CommandItem>
+    ))}
+  </CommandItem>
+</CommandGroup>
+
+                                </Command>
+                              </PopoverContent>
+                            </Popover> */}
                             <FormMessage />
                           </FormItem>
                         )}
@@ -492,7 +765,7 @@ export default function Addnew() {
                       <div className="flex flex-col gap-5.5 p-6.5">
                         <FormField
                           control={form.control}
-                          name="unit_price"
+                          name="reseller_unit_price"
                           render={({ field }) => (
                             <FormItem>
                               <FormLabel>Reseller Unit Price</FormLabel>
@@ -512,7 +785,7 @@ export default function Addnew() {
                       <div className="mt-3 flex flex-col gap-5.5 p-6.5">
                         <FormField
                           control={form.control}
-                          name="discount_date_range"
+                          name="reseller_discount_date_range"
                           render={({ field }) => (
                             <FormItem>
                               <FormLabel>Discount Date Range</FormLabel>
@@ -531,7 +804,7 @@ export default function Addnew() {
                       <div className="mt-3 flex flex-col gap-5.5 p-6.5">
                         <FormField
                           control={form.control}
-                          name="discount"
+                          name="reseller_discount"
                           render={({ field }) => (
                             <FormItem>
                               <FormLabel>Discount</FormLabel>
@@ -550,7 +823,7 @@ export default function Addnew() {
                       <div className="mt-3 flex flex-col gap-5.5 p-6.5">
                         <FormField
                           control={form.control}
-                          name="flat_percent"
+                          name="reseller_flat_percent"
                           render={({ field }) => (
                             <FormItem>
                               <FormControl>
@@ -1059,7 +1332,7 @@ export default function Addnew() {
                             </FormItem>
                           )}
                         />
-                        <FormField
+                        {/* <FormField
                           control={form.control}
                           name=""
                           render={({ field }) => (
@@ -1073,7 +1346,7 @@ export default function Addnew() {
                               <FormMessage />
                             </FormItem>
                           )}
-                        />
+                        /> */}
                       </div>
                     </div>
                   </div>

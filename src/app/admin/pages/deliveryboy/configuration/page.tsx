@@ -19,7 +19,19 @@ import Select from "@/shared/Select/Select";
 import { Switch } from "@/app/admin/components/ui/switch";
 
 const formSchema = z.object({
-  product_name: z.string().min(10, {
+  delivery_boy_payment_type: z.string().min(10, {
+    message: "Product Name must be at least 10 characters.",
+  }),
+  delivery_boy_salary: z.string().min(10, {
+    message: "Product Name must be at least 10 characters.",
+  }),
+  delivery_boy_mail_notification: z.string().min(10, {
+    message: "Product Name must be at least 10 characters.",
+  }),
+  delivery_boy_otp_notification: z.string().min(10, {
+    message: "Product Name must be at least 10 characters.",
+  }),
+  delivery_boy_commission: z.string().min(10, {
     message: "Product Name must be at least 10 characters.",
   }),
 });
@@ -30,7 +42,11 @@ export default function Addnew() {
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      product_name: "",
+      delivery_boy_payment_type: "",
+      delivery_boy_salary: "",
+      delivery_boy_commission: "",
+      delivery_boy_mail_notification: "",
+      delivery_boy_otp_notification: "",
     },
   });
 
@@ -61,7 +77,7 @@ export default function Addnew() {
                     <div className="flex flex-col gap-5.5 p-6.5">
                       <FormField
                         control={form.control}
-                        name="product_name"
+                        name="delivery_boy_payment_type"
                         render={({ field }) => (
                           <FormItem>
                             <div className="flex items-center space-x-12">
@@ -76,7 +92,26 @@ export default function Addnew() {
                     <div className="mt-3 flex flex-col gap-5.5 p-6.5">
                       <FormField
                         control={form.control}
-                        name="brand"
+                        name="delivery_boy_salary"
+                        render={({ field }) => (
+                          <FormItem>
+                            <FormLabel>Salary Amount</FormLabel>
+                            <FormControl>
+                              <Input
+                                className={inputClass}
+                                placeholder="10"
+                                {...field}
+                              />
+                            </FormControl>
+                            <FormMessage />
+                          </FormItem>
+                        )}
+                      />
+                    </div>
+                    <div className="mt-3 flex flex-col gap-5.5 p-6.5">
+                      <FormField
+                        control={form.control}
+                        name="delivery_boy_payment_type"
                         render={({ field }) => (
                           <FormItem>
                             <div className="flex items-center space-x-12">
@@ -91,7 +126,7 @@ export default function Addnew() {
                     <div className="mt-3 flex flex-col gap-5.5 p-6.5">
                       <FormField
                         control={form.control}
-                        name="unit"
+                        name="delivery_boy_commission"
                         render={({ field }) => (
                           <FormItem>
                             <FormLabel>Commission Rate</FormLabel>
@@ -128,7 +163,7 @@ export default function Addnew() {
                     <div className="flex flex-col gap-5.5 p-6.5">
                       <FormField
                         control={form.control}
-                        name="product_name"
+                        name="delivery_boy_mail_notification"
                         render={({ field }) => (
                           <FormItem>
                             <div className="flex items-center space-x-12">
@@ -143,32 +178,13 @@ export default function Addnew() {
                     <div className="mt-3 flex flex-col gap-5.5 p-6.5">
                       <FormField
                         control={form.control}
-                        name="brand"
+                        name="delivery_boy_otp_notification"
                         render={({ field }) => (
                           <FormItem>
                             <div className="flex items-center space-x-12">
                             <FormLabel className="mt-2">Send OTP</FormLabel>
                               <Switch />
                             </div>
-                            <FormMessage />
-                          </FormItem>
-                        )}
-                      />
-                    </div>
-                    <div className="mt-3 flex flex-col gap-5.5 p-6.5">
-                      <FormField
-                        control={form.control}
-                        name="unit"
-                        render={({ field }) => (
-                          <FormItem>
-                            <FormLabel>Commission Rate</FormLabel>
-                            <FormControl>
-                              <Input
-                                className={inputClass}
-                                placeholder="10"
-                                {...field}
-                              />
-                            </FormControl>
                             <FormMessage />
                           </FormItem>
                         )}
