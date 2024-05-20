@@ -10,7 +10,7 @@ import Image from "next/image";
 const AccountPage = () => {
   return (
     <div className={`nc-AccountPage `}>
-      <div className="space-y-5 sm:space-y-5 bg-gray-300 dark:bg-gray-700 p-5 rounded-xl">
+      <div className="space-y-5 sm:space-y-5 bg-slate-300 dark:bg-slate-700 p-5 rounded-xl">
         {/* HEADING */}
         <h2 className="text-2xl sm:text-3xl font-semibold">
           Account infomation
@@ -56,10 +56,6 @@ const AccountPage = () => {
               <Label>Full name</Label>
               <Input className="mt-1.5" defaultValue="Enrico Cole" />
             </div>
-
-            {/* ---- */}
-
-            {/* ---- */}
             <div>
               <Label>Email</Label>
               <div className="mt-1.5 flex">
@@ -86,7 +82,6 @@ const AccountPage = () => {
               </div>
             </div>
 
-            {/* ---- */}
             <div>
               <Label>Phone number</Label>
               <div className="mt-1.5 flex">
@@ -96,7 +91,6 @@ const AccountPage = () => {
                 <Input className="!rounded-l-none" defaultValue="003 888 232" />
               </div>
             </div>
-            {/* ---- */}
             <div>
               <Label>About you</Label>
               <Textarea className="mt-1.5" defaultValue="..." />

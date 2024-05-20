@@ -6,7 +6,7 @@ import Select from "@/shared/Select/Select";
 
 const AccountPass = () => {
   return (
-    <div className="space-y-5 sm:space-y-5 bg-white dark:bg-gray-700 p-5 rounded-xl">
+    <div className="space-y-5 sm:space-y-5 bg-white dark:bg-slate-700 p-5 rounded-xl">
       {/* HEADING */}
       <h2 className="text-2xl sm:text-3xl font-semibold">
         Recharge Pack Seller Application

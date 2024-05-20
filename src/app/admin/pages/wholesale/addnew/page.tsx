@@ -17,19 +17,16 @@ import {
 import Input from "@/shared/Input/Input";
 
 const formSchema = z.object({
-  product_name: z.string().min(10, {
+  name: z.string().min(10, {
     message: "Product Name must be at least 10 characters.",
   }),
-  brand: z.string().min(3, {
+  brand_id: z.string().min(3, {
     message: "Brand must be at least 3 characters.",
   }),
   unit: z.string().min(3, {
     message: "Unit must be at least 3 characters.",
   }),
-  weight: z.string().min(3, {
-    message: "Weight must be at least 3 characters.",
-  }),
-  minimum_purchase_qty: z.string().min(3, {
+  min_qty: z.string().min(3, {
     message: "Minimum Purchase Qty must be at least 3 characters.",
   }),
   tag: z.string().min(3, {
@@ -38,11 +35,11 @@ const formSchema = z.object({
   barcode: z.string().min(3, {
     message: "Barcode Purchase Qty must be at least 3 characters.",
   }),
-  thumbnail_image: z.string().min(3, {
-    message: "thumbnail_image Purchase Qty must be at least 3 characters.",
+  thumbnail_img: z.string().min(3, {
+    message: "thumbnail_img Purchase Qty must be at least 3 characters.",
   }),
-  gallery_images: z.string().min(3, {
-    message: "gallery_images Purchase Qty must be at least 3 characters.",
+  photos: z.string().min(3, {
+    message: "photos Purchase Qty must be at least 3 characters.",
   }),
   video_provider: z.string().min(3, {
     message: "Video Provider Purchase Qty must be at least 3 characters.",
@@ -58,15 +55,14 @@ export default function Addnew() {
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      product_name: "",
-      brand: "",
+      name: "",
+      brand_id: "",
       unit: "",
-      weight: "",
-      minimum_purchase_qty: "",
+      min_qty: "",
       tag: "",
       barcode: "",
-      thumbnail_image: "",
-      gallery_images: "",
+      thumbnail_img: "",
+      photos: "",
       video_provider: "",
       video_link: "",
     },
@@ -100,7 +96,7 @@ export default function Addnew() {
                     <div className="flex flex-col gap-5.5 p-6.5">
                       <FormField
                         control={form.control}
-                        name="product_name"
+                        name="name"
                         render={({ field }) => (
                           <FormItem>
                             <FormLabel>Product Name</FormLabel>
@@ -119,7 +115,7 @@ export default function Addnew() {
                     <div className="mt-3 flex flex-col gap-5.5 p-6.5">
                       <FormField
                         control={form.control}
-                        name="brand"
+                        name="brand_id"
                         render={({ field }) => (
                           <FormItem>
                             <FormLabel>Brand</FormLabel>
@@ -157,33 +153,14 @@ export default function Addnew() {
                     <div className="mt-3 flex flex-col gap-5.5 p-6.5">
                       <FormField
                         control={form.control}
-                        name="weight"
-                        render={({ field }) => (
-                          <FormItem>
-                            <FormLabel>Weight</FormLabel>
-                            <FormControl>
-                              <Input
-                                className={inputClass}
-                                placeholder="weight"
-                                {...field}
-                              />
-                            </FormControl>
-                            <FormMessage />
-                          </FormItem>
-                        )}
-                      />
-                    </div>
-                    <div className="mt-3 flex flex-col gap-5.5 p-6.5">
-                      <FormField
-                        control={form.control}
-                        name="minimum_purchase_qty"
+                        name="min_qty"
                         render={({ field }) => (
                           <FormItem>
                             <FormLabel>Minimum Purchase Qty</FormLabel>
                             <FormControl>
                               <Input
                                 className={inputClass}
-                                placeholder="minimum_purchase_qty"
+                                placeholder="min_qty"
                                 {...field}
                               />
                             </FormControl>
@@ -195,7 +172,7 @@ export default function Addnew() {
                     <div className="mt-3 flex flex-col gap-5.5 p-6.5">
                       <FormField
                         control={form.control}
-                        name="tag"
+                        name="tags[]"
                         render={({ field }) => (
                           <FormItem>
                             <FormLabel>Tags</FormLabel>
@@ -246,7 +223,7 @@ export default function Addnew() {
                     <div className="flex flex-col gap-5.5 p-6.5">
                       <FormField
                         control={form.control}
-                        name="gallery_images"
+                        name="photos"
                         render={({ field }) => (
                           <FormItem>
                             <FormLabel>Gallery Images</FormLabel>
@@ -265,7 +242,7 @@ export default function Addnew() {
                     <div className="mt-3 flex flex-col gap-5.5 p-6.5">
                       <FormField
                         control={form.control}
-                        name="thumbnail_image"
+                        name="thumbnail_img"
                         render={({ field }) => (
                           <FormItem>
                             <FormLabel>Thumbnail Image</FormLabel>

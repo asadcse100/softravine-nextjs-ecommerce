@@ -23,16 +23,6 @@ export const MEGAMENU_TEMPLATES: NavItemType[] = [
       { id: ncNanoId(), href: "/frontend/pages/account", name: "Accout Page" },
       { id: ncNanoId(), href: "/frontend/pages/account-order", name: "Order Page" },
       { id: ncNanoId(), href: "/frontend/pages/subscription", name: "Subscription" },
-    ],
-  },
-  {
-    id: ncNanoId(),
-    href: "/#",
-    name: "Blog Page",
-    children: [
-      { id: ncNanoId(), href: "/frontend/pages/blog", name: "Blog Page" },
-      { id: ncNanoId(), href: "/frontend/pages/blog-single", name: "Blog Single" },
-      { id: ncNanoId(), href: "/frontend/pages/about", name: "About Page" },
       { id: ncNanoId(), href: "/frontend/pages/contact", name: "Contact Page" },
       { id: ncNanoId(), href: "/auth/login", name: "Login" },
       { id: ncNanoId(), href: "/auth/signup", name: "Signup" },
@@ -65,20 +55,15 @@ const OTHER_PAGE_CHILD: NavItemType[] = [
 export const NAVIGATION_DEMO_2: NavItemType[] = [
   {
     id: ncNanoId(),
-    href: "/frontend/pages/collection",
-    name: "Mega",
+    href: "#",
+    name: "Service",
     type: "megaMenu",
     children: MEGAMENU_TEMPLATES,
   },
   {
     id: ncNanoId(),
-    href: "/frontend/pages/collection",
-    name: "Men",
-  },
-  {
-    id: ncNanoId(),
-    href: "/frontend/pages/collection",
-    name: "WoMen",
+    href: "/frontend/pages/blog",
+    name: "Blog",
   },
   {
     id: ncNanoId(),

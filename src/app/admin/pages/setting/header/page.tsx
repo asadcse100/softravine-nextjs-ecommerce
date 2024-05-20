@@ -18,8 +18,32 @@ import Input from "@/shared/Input/Input";
 import { Switch } from "@/app/admin/components/ui/switch";
 
 const formSchema = z.object({
-  product_name: z.string().min(10, {
-    message: "Product Name must be at least 10 characters.",
+  header_logo: z.string().min(10, {
+    message: "header_logo must be at least 10 characters.",
+  }),
+  show_language_switcher: z.string().min(10, {
+    message: "show_language_switcher must be at least 10 characters.",
+  }),
+  show_currency_switcher: z.string().min(10, {
+    message: "show_currency_switcher must be at least 10 characters.",
+  }),
+  header_stikcy: z.string().min(10, {
+    message: "header_stikcy must be at least 10 characters.",
+  }),
+  topbar_banner: z.string().min(10, {
+    message: "topbar_banner must be at least 10 characters.",
+  }),
+  topbar_banner_link: z.string().min(10, {
+    message: "topbar_banner_link must be at least 10 characters.",
+  }),
+  helpline_number: z.string().min(10, {
+    message: "helpline_number must be at least 10 characters.",
+  }),
+  header_menu_labels: z.string().min(10, {
+    message: "header_menu_labels must be at least 10 characters.",
+  }),
+  header_menu_links: z.string().min(10, {
+    message: "header_menu_links must be at least 10 characters.",
   }),
 });
 
@@ -29,7 +53,15 @@ export default function Addnew() {
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      product_name: "",
+      header_logo: "",
+      show_language_switcher: "",
+      show_currency_switcher: "",
+      header_stikcy: "",
+      topbar_banner: "",
+      topbar_banner_link: "",
+      helpline_number: "",
+      header_menu_labels: "",
+      header_menu_links: "",
     },
   });
 
@@ -60,7 +92,7 @@ export default function Addnew() {
                     <div className="flex flex-col gap-5.5 p-6.5">
                       <FormField
                         control={form.control}
-                        name="product_name"
+                        name="header_logo"
                         render={({ field }) => (
                           <FormItem>
                             <FormLabel>Header Logo</FormLabel>
@@ -80,7 +112,7 @@ export default function Addnew() {
                     <div className="mt-3 flex flex-col gap-5.5 p-6.5">
                       <FormField
                         control={form.control}
-                        name="brand"
+                        name="show_language_switcher"
                         render={({ field }) => (
                           <FormItem>
                             <div className="flex items-center space-x-12">
@@ -97,7 +129,7 @@ export default function Addnew() {
                     <div className="mt-3 flex flex-col gap-5.5 p-6.5">
                       <FormField
                         control={form.control}
-                        name="unit"
+                        name="show_currency_switcher"
                         render={({ field }) => (
                           <FormItem>
                             <div className="flex items-center space-x-12">
@@ -114,7 +146,7 @@ export default function Addnew() {
                     <div className="mt-3 flex flex-col gap-5.5 p-6.5">
                       <FormField
                         control={form.control}
-                        name="weight"
+                        name="header_stikcy"
                         render={({ field }) => (
                           <FormItem>
                             <div className="flex items-center space-x-12">
@@ -132,7 +164,7 @@ export default function Addnew() {
                     <div className="mt-3 flex flex-col gap-5.5 p-6.5">
                       <FormField
                         control={form.control}
-                        name="minimum_purchase_qty"
+                        name="topbar_banner"
                         render={({ field }) => (
                           <FormItem>
                             <FormLabel>Topbar Banner</FormLabel>
@@ -152,7 +184,7 @@ export default function Addnew() {
                     <div className="mt-3 flex flex-col gap-5.5 p-6.5">
                       <FormField
                         control={form.control}
-                        name="minimum_purchase_qty"
+                        name="topbar_banner_link"
                         render={({ field }) => (
                           <FormItem>
                             <FormLabel>Topbar Banner Link</FormLabel>
@@ -171,7 +203,7 @@ export default function Addnew() {
                     <div className="mt-3 flex flex-col gap-5.5 p-6.5">
                       <FormField
                         control={form.control}
-                        name="tag"
+                        name="helpline_number"
                         render={({ field }) => (
                           <FormItem>
                             <FormLabel>Help line number</FormLabel>
@@ -192,7 +224,7 @@ export default function Addnew() {
                     <div className="mt-3 flex flex-col gap-5.5 p-6.5">
                       <FormField
                         control={form.control}
-                        name="barcode"
+                        name="header_menu_labels[]"
                         render={({ field }) => (
                           <FormItem>
                             {/* <FormLabel>Home</FormLabel> */}
@@ -209,7 +241,7 @@ export default function Addnew() {
                       />
                       <FormField
                         control={form.control}
-                        name="barcode"
+                        name="header_menu_links[]"
                         render={({ field }) => (
                           <FormItem>
                             {/* <FormLabel>Home</FormLabel> */}

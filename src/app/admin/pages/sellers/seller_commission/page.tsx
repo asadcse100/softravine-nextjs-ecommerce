@@ -18,8 +18,11 @@ import Input from "@/shared/Input/Input";
 import { Switch } from "@/app/admin/components/ui/switch";
 
 const formSchema = z.object({
-  product_name: z.string().min(10, {
-    message: "Product Name must be at least 10 characters.",
+  vendor_commission: z.string().min(10, {
+    message: "Seller vendor_commission must be at least 10 characters.",
+  }),
+  minimum_seller_amount_withdraw: z.string().min(10, {
+    message: "Seller minimum_seller_amount_withdraw must be at least 10 characters.",
   }),
 });
 
@@ -29,7 +32,8 @@ export default function Addnew() {
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      product_name: "",
+      vendor_commission: "",
+      minimum_seller_amount_withdraw: "",
     },
   });
 
@@ -106,7 +110,7 @@ export default function Addnew() {
                     <div className="flex flex-col gap-5.5 p-6.5">
                       <FormField
                         control={form.control}
-                        name="product_name"
+                        name="vendor_commission"
                         render={({ field }) => (
                           <FormItem>
                             <FormLabel>Seller Commission</FormLabel>
@@ -162,7 +166,7 @@ export default function Addnew() {
                     <div className="flex flex-col gap-5.5 p-6.5">
                       <FormField
                         control={form.control}
-                        name="product_name"
+                        name="minimum_seller_amount_withdraw"
                         render={({ field }) => (
                           <FormItem>
                             <FormLabel>

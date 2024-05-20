@@ -3,7 +3,7 @@ import ButtonPrimary from "@/shared/Button/ButtonPrimary";
 
 const AccountBilling = () => {
   return (
-    <div className="space-y-10 sm:space-y-12 bg-white dark:bg-gray-700 p-5 rounded-xl">
+    <div className="space-y-10 sm:space-y-12 bg-white dark:bg-slate-700 p-5 rounded-xl">
       {/* HEADING */}
       <h2 className="text-2xl sm:text-3xl font-semibold">Payments & payouts</h2>
       <div className="max-w-2xl prose prose-slate dark:prose-invert">

@@ -25,42 +25,36 @@ import {
 import { toast } from "@/app/admin/components/ui/use-toast";
 
 const formSchema = z.object({
-  product_name: z.string().min(10, {
-    message: "Product Name must be at least 10 characters.",
+  name: z.string().min(10, {
+    message: "Employe Name must be at least 10 characters.",
   }),
-  brand: z.string().min(3, {
-    message: "Brand must be at least 3 characters.",
+  email: z.string().min(10, {
+    message: "Employe email must be at least 10 characters.",
   }),
-  unit: z.string().min(3, {
-    message: "Unit must be at least 3 characters.",
+  mobile: z.string().min(10, {
+    message: "Employe mobile must be at least 10 characters.",
   }),
-  weight: z.string().min(3, {
-    message: "Weight must be at least 3 characters.",
+  password: z.string().min(10, {
+    message: "Employe password must be at least 10 characters.",
   }),
-  minimum_purchase_qty: z.string().min(3, {
-    message: "Minimum Purchase Qty must be at least 3 characters.",
-  }),
-  tag: z.string().min(3, {
-    message: "Tag Purchase Qty must be at least 3 characters.",
-  }),
-  barcode: z.string().min(3, {
-    message: "Barcode Purchase Qty must be at least 3 characters.",
-  }),
-  thumbnail_image: z.string().min(3, {
-    message: "thumbnail_image Purchase Qty must be at least 3 characters.",
-  }),
-  gallery_images: z.string().min(3, {
-    message: "gallery_images Purchase Qty must be at least 3 characters.",
-  }),
-  video_provider: z.string().min(3, {
-    message: "Video Provider Purchase Qty must be at least 3 characters.",
-  }),
-  video_link: z.string().min(3, {
-    message: "Video Link Purchase Qty must be at least 3 characters.",
+  role_id: z.string().min(10, {
+    message: "Employe role_id must be at least 10 characters.",
   }),
 });
 
 export default function Addnew() {
+
+  const form = useForm<z.infer<typeof formSchema>>({
+    resolver: zodResolver(formSchema),
+    defaultValues: {
+      name: "",
+      email: "",
+      mobile: "",
+      password: "",
+      role_id: "",
+    },
+  });
+
   function onSubmit(data: z.infer<typeof formSchema>) {
     toast({
       title: "You submitted the following values:",
@@ -71,23 +65,6 @@ export default function Addnew() {
       ),
     });
   }
-
-  const form = useForm<z.infer<typeof formSchema>>({
-    resolver: zodResolver(formSchema),
-    defaultValues: {
-      product_name: "",
-      brand: "",
-      unit: "",
-      weight: "",
-      minimum_purchase_qty: "",
-      tag: "",
-      barcode: "",
-      thumbnail_image: "",
-      gallery_images: "",
-      video_provider: "",
-      video_link: "",
-    },
-  });
 
   const inputClass =
     "w-full rounded-lg border-[1px] border-primary bg-transparent px-5 py-3 font-normal text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:bg-form-input dark:text-white";
@@ -109,7 +86,7 @@ export default function Addnew() {
                     <div className="flex flex-col gap-5.5 p-6.5">
                       <FormField
                         control={form.control}
-                        name="product_name"
+                        name="name"
                         render={({ field }) => (
                           <FormItem>
                             <FormLabel>Employe Name</FormLabel>
@@ -128,7 +105,7 @@ export default function Addnew() {
                     <div className="mt-3 flex flex-col gap-5.5 p-6.5">
                       <FormField
                         control={form.control}
-                        name="brand"
+                        name="email"
                         render={({ field }) => (
                           <FormItem>
                             <FormLabel>Employe Email</FormLabel>
@@ -147,7 +124,7 @@ export default function Addnew() {
                     <div className="mt-3 flex flex-col gap-5.5 p-6.5">
                       <FormField
                         control={form.control}
-                        name="unit"
+                        name="mobile"
                         render={({ field }) => (
                           <FormItem>
                             <FormLabel>Phone</FormLabel>
@@ -166,7 +143,7 @@ export default function Addnew() {
                     <div className="mt-3 flex flex-col gap-5.5 p-6.5">
                       <FormField
                         control={form.control}
-                        name="weight"
+                        name="password"
                         render={({ field }) => (
                           <FormItem>
                             <FormLabel>Password</FormLabel>
@@ -185,7 +162,7 @@ export default function Addnew() {
                     <div className="mt-3 flex flex-col gap-5.5 p-6.5">
                       <FormField
                         control={form.control}
-                        name="minimum_purchase_qty"
+                        name="role_id"
                         render={({ field }) => (
                           <FormItem>
                             <FormLabel>Role</FormLabel>

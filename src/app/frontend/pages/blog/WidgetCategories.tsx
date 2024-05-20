@@ -7,7 +7,7 @@ export interface WidgetCategoriesProps {
 }
 
 const WidgetCategories: FC<WidgetCategoriesProps> = ({
-  className = "bg-neutral-100 dark:bg-neutral-800",
+  className = "bg-white dark:bg-slate-700",
 }) => {
   return (
     <div
@@ -19,10 +19,10 @@ const WidgetCategories: FC<WidgetCategoriesProps> = ({
         viewAll={{ label: "View all", href: "/#" }}
       />
       <div className="flow-root">
-        <div className="flex flex-col divide-y divide-neutral-200 dark:divide-neutral-700">
+        <div className="flex flex-col divide-y divide-slate-200 dark:divide-slate-600">
           {[1, 1, 1, 1, 1, 1].map((_, index) => (
             <CardCategory1
-              className="p-4 xl:p-5 hover:bg-neutral-200 dark:hover:bg-neutral-700"
+              className="p-4 xl:p-5 hover:bg-slate-200 dark:hover:bg-slate-800"
               key={index}
             />
           ))}

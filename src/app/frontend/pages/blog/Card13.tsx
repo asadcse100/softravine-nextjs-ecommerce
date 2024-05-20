@@ -11,7 +11,7 @@ export interface Card13Props {
 const Card13: FC<Card13Props> = ({ className = "" }) => {
   return (
     <div className={`nc-Card13 relative flex ${className}`} data-nc-id="Card13">
-      <div className="flex flex-col h-full py-2">
+      <div className="flex flex-col h-full p-4 bg-white dark:bg-slate-600 rounded-xl">
         <h2 className={`nc-card-title block font-semibold text-base`}>
           <Link
             href={"/frontend/pages/blog-single"}

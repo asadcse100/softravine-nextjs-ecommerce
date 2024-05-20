@@ -156,11 +156,20 @@ const formSchema = z.object({
   show_stock_quantity: z.string({
     required_error: "Please select a show_stock_quantity.",
   }),
-  sub_category: z.string({
-    required_error: "Please select a sub_category.",
+  show_stock_with_tax: z.string({
+    required_error: "Please select a show_stock_with_tax.",
   }),
-  sub_category: z.string({
-    required_error: "Please select a sub_category.",
+  hide_stock: z.string({
+    required_error: "Please select a hide_stock.",
+  }),
+  case_on_delivery: z.string({
+    required_error: "Please select a case_on_delivery.",
+  }),
+  shipping_day: z.string({
+    required_error: "Please select a shipping_day.",
+  }),
+  vat_tax: z.string({
+    required_error: "Please select a vat_tax.",
   }),
   languages: z.string({
     required_error: "Please select a language.",
@@ -210,6 +219,11 @@ export default function Addnew() {
       free_shippling: "",
       qty_multi: "",
       show_stock_quantity: "",
+      show_stock_with_tax: "",
+      hide_stock: "",
+      case_on_delivery: "",
+      shipping_day: "",
+      vat_tax: "",
     },
   });
 
@@ -1210,7 +1224,7 @@ export default function Addnew() {
                       <div className="mt-3 flex flex-col gap-5.5 p-6.5">
                         <FormField
                           control={form.control}
-                          name=""
+                          name="show_stock_with_tax"
                           render={({ field }) => (
                             <FormItem>
                               <div className="flex items-center space-x-12">
@@ -1227,7 +1241,7 @@ export default function Addnew() {
                       <div className="mt-3 flex flex-col gap-5.5 p-6.5">
                         <FormField
                           control={form.control}
-                          name=""
+                          name="hide_stock"
                           render={({ field }) => (
                             <FormItem>
                               <div className="flex items-center space-x-12">
@@ -1257,7 +1271,7 @@ export default function Addnew() {
                       <div className="mt-3 flex flex-col gap-5.5 p-6.5">
                         <FormField
                           control={form.control}
-                          name="show_stock_quantity"
+                          name="case_on_delivery"
                           render={({ field }) => (
                             <FormItem>
                               <div className="flex items-center space-x-12">
@@ -1317,7 +1331,7 @@ export default function Addnew() {
                       <div className="mt-3 flex flex-col gap-5.5 p-6.5">
                         <FormField
                           control={form.control}
-                          name="tax"
+                          name="vat_tax"
                           render={({ field }) => (
                             <FormItem>
                               <FormLabel>TAX</FormLabel>
@@ -1332,21 +1346,6 @@ export default function Addnew() {
                             </FormItem>
                           )}
                         />
-                        {/* <FormField
-                          control={form.control}
-                          name=""
-                          render={({ field }) => (
-                            <FormItem>
-                              <FormControl>
-                                <Select>
-                                  <option value="">%</option>
-                                  <option value="">$</option>
-                                </Select>
-                              </FormControl>
-                              <FormMessage />
-                            </FormItem>
-                          )}
-                        /> */}
                       </div>
                     </div>
                   </div>

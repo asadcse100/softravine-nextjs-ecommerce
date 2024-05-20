@@ -31,7 +31,7 @@ const CartPage = () => {
     return (
       <div
         key={index}
-        className="relative flex py-8 sm:py-10 xl:py-12 bg-white dark:bg-gray-700 rounded-xl shadow-lg p-5"
+        className="relative flex py-8 sm:py-10 xl:py-12 bg-white dark:bg-slate-700 rounded-xl shadow-lg p-5"
       >
         <div className="relative h-36 w-24 sm:w-32 flex-shrink-0 overflow-hidden rounded-xl bg-slate-100 dark:bg-slate-400">
           <Image
@@ -216,7 +216,7 @@ const CartPage = () => {
           </div>
           <div className="border-t lg:border-t-0 lg:border-l border-slate-300 dark:border-slate-700 my-10 lg:my-0 lg:mx-10 xl:mx-16 2xl:mx-20 flex-shrink-0"></div>
           <div className="flex-1">
-            <div className="sticky top-28 bg-white dark:bg-gray-700 p-5 rounded-lg">
+            <div className="sticky top-28 bg-white dark:bg-slate-700 p-5 rounded-lg">
               <h3 className="text-lg font-semibold ">Order Summary</h3>
               <div className="mt-7 text-sm text-slate-500 dark:text-slate-400 divide-y divide-slate-200/70 dark:divide-slate-700/80">
                 <div className="flex justify-between pb-4">

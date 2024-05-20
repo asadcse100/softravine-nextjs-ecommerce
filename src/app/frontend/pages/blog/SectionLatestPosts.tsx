@@ -23,7 +23,7 @@ const SectionLatestPosts: FC<SectionLatestPostsProps> = ({
           <Heading>Latest Articles 🎈</Heading>
           <div className={`grid gap-6 md:gap-8 grid-cols-1`}>
             {[1, 1, 1, 1, 1, 1].map((_, index) => (
-              <Card3 key={index} className="" />
+              <Card3 key={index} className="p-4 bg-white dark:bg-slate-600 rounded-xl" />
             ))}
           </div>
           <div className="flex flex-col mt-12 md:mt-20 space-y-5 sm:space-y-0 sm:space-x-3 sm:flex-row sm:justify-between sm:items-center">

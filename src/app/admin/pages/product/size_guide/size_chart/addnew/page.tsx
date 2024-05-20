@@ -20,8 +20,29 @@ import Textarea from "@/shared/Textarea/Textarea";
 import { Checkbox } from "@radix-ui/react-checkbox";
 
 const formSchema = z.object({
-  product_name: z.string().min(10, {
+  name: z.string().min(10, {
     message: "Product Name must be at least 10 characters.",
+  }),
+  category_id: z.string().min(10, {
+    message: "Product category_id must be at least 10 characters.",
+  }),
+  photos: z.string().min(10, {
+    message: "Product photos must be at least 10 characters.",
+  }),
+  description: z.string().min(10, {
+    message: "Product description must be at least 10 characters.",
+  }),
+  fit_type: z.string().min(10, {
+    message: "Product fit_type must be at least 10 characters.",
+  }),
+  stretch_type: z.string().min(10, {
+    message: "Product stretch_type must be at least 10 characters.",
+  }),
+  measurement_points: z.string().min(10, {
+    message: "Product measurement_points must be at least 10 characters.",
+  }),
+  size_options: z.string().min(10, {
+    message: "Product size_options must be at least 10 characters.",
   }),
 });
 
@@ -31,7 +52,14 @@ export default function Addnew() {
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      product_name: "",
+      name: "",
+      category_id: "",
+      photos: "",
+      description: "",
+      fit_type: "",
+      stretch_type: "",
+      measurement_points: "",
+      size_options: "",
     },
   });
 
@@ -63,7 +91,7 @@ export default function Addnew() {
                     <div className="flex flex-col gap-5.5 p-6.5">
                       <FormField
                         control={form.control}
-                        name="product_name"
+                        name="name"
                         render={({ field }) => (
                           <FormItem>
                             <FormLabel>Chart Name</FormLabel>
@@ -82,7 +110,7 @@ export default function Addnew() {
                     <div className="mt-3 flex flex-col gap-5.5 p-6.5">
                       <FormField
                         control={form.control}
-                        name="brand"
+                        name="category_id"
                         render={({ field }) => (
                           <FormItem>
                             <FormLabel>Category</FormLabel>
@@ -105,7 +133,7 @@ export default function Addnew() {
                     <div className="mt-3 flex flex-col gap-5.5 p-6.5">
                       <FormField
                         control={form.control}
-                        name="unit"
+                        name="photos"
                         render={({ field }) => (
                           <FormItem>
                             <FormLabel>Image</FormLabel>
@@ -124,7 +152,7 @@ export default function Addnew() {
                     <div className="mt-3 flex flex-col gap-5.5 p-6.5">
                       <FormField
                         control={form.control}
-                        name="weight"
+                        name="description"
                         render={({ field }) => (
                           <FormItem>
                             <FormLabel>Size Description</FormLabel>
@@ -155,7 +183,7 @@ export default function Addnew() {
                     <div className="flex flex-col gap-5.5 p-6.5">
                       <FormField
                         control={form.control}
-                        name="gallery_images"
+                        name="fit_type"
                         render={({ field }) => (
                           <FormItem>
                             <FormLabel>Fit Type</FormLabel>
@@ -170,7 +198,7 @@ export default function Addnew() {
                     <div className="mt-3 flex flex-col gap-5.5 p-6.5">
                       <FormField
                         control={form.control}
-                        name="thumbnail_image"
+                        name="stretch_type"
                         render={({ field }) => (
                           <FormItem>
                             <FormLabel>Stretch Type</FormLabel>
@@ -185,7 +213,7 @@ export default function Addnew() {
                     <div className="mt-3 flex flex-col gap-5.5 p-6.5">
                       <FormField
                         control={form.control}
-                        name="thumbnail_image"
+                        name="measurement_points[]"
                         render={({ field }) => (
                           <FormItem>
                             <FormLabel>Measurement Points</FormLabel>
@@ -200,7 +228,7 @@ export default function Addnew() {
                     <div className="mt-3 flex flex-col gap-5.5 p-6.5">
                       <FormField
                         control={form.control}
-                        name="thumbnail_image"
+                        name="size_options[]"
                         render={({ field }) => (
                           <FormItem>
                             <FormLabel>Size Options</FormLabel>

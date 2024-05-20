@@ -6,9 +6,9 @@ import Select from "@/shared/Select/Select";
 
 const AccountPass = () => {
   return (
-    <div className="space-y-10 sm:space-y-12 bg-white dark:bg-gray-700 p-5 rounded-xl">
+    <div className="space-y-10 sm:space-y-12 bg-white dark:bg-slate-700 p-5 rounded-xl">
       <div className="max-w-xl space-y-6">
-        <div className="space-y-5 sm:space-y-6 bg-white dark:bg-gray-700 p-5 rounded-xl">
+        <div className="space-y-5 sm:space-y-6 bg-white dark:bg-slate-700 p-5 rounded-xl">
           <div className="max-w-sm">
             <Label>Where From</Label>
             <Select className="mt-1">

@@ -27,7 +27,7 @@ const Card12: FC<Card12Props> = ({ className = "h-full" }) => {
 
       <SocialsShare className="absolute hidden md:grid gap-[5px] right-4 top-4 opacity-0 z-[-1] group-hover:z-10 group-hover:opacity-100 transition-all duration-300" />
 
-      <div className=" mt-8 pr-10 flex flex-col">
+      <div className=" mt-8 pr-10 flex flex-col bg-white dark:bg-slate-600 rounded-xl p-4">
         <h2
           className={`nc-card-title block font-semibold text-neutral-900 dark:text-neutral-100 transition-colors text-lg sm:text-2xl`}
         >

@@ -18,8 +18,23 @@ import Input from "@/shared/Input/Input";
 import { Select } from "@radix-ui/react-select";
 
 const formSchema = z.object({
-  product_name: z.string().min(10, {
-    message: "Product Name must be at least 10 characters.",
+  code: z.string().min(10, {
+    message: "code must be at least 10 characters.",
+  }),
+  product_ids: z.string().min(10, {
+    message: "product_ids must be at least 10 characters.",
+  }),
+  date_range: z.string().min(10, {
+    message: "date_range must be at least 10 characters.",
+  }),
+  discount: z.string().min(10, {
+    message: "discount must be at least 10 characters.",
+  }),
+  min_buy: z.string().min(10, {
+    message: "discount must be at least 10 characters.",
+  }),
+  max_discount: z.string().min(10, {
+    message: "max_discount must be at least 10 characters.",
   }),
 });
 
@@ -29,7 +44,12 @@ export default function Addnew() {
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      product_name: "",
+      code: "",
+      product_ids: "",
+      date_range: "",
+      discount: "",
+      min_buy: "",
+      max_discount: "",
     },
   });
 
@@ -60,7 +80,7 @@ export default function Addnew() {
                     <div className="flex flex-col gap-5.5 p-6.5">
                       <FormField
                         control={form.control}
-                        name="coupon_code"
+                        name="code"
                         render={({ field }) => (
                           <FormItem>
                             <FormLabel>Coupon Code</FormLabel>
@@ -79,7 +99,7 @@ export default function Addnew() {
                     <div className="mt-3 flex flex-col gap-5.5 p-6.5">
                       <FormField
                         control={form.control}
-                        name="brand"
+                        name="product_ids[]"
                         render={({ field }) => (
                           <FormItem>
                             <FormLabel>Select Product</FormLabel>
@@ -98,7 +118,7 @@ export default function Addnew() {
                     <div className="mt-3 flex flex-col gap-5.5 p-6.5">
                       <FormField
                         control={form.control}
-                        name="unit"
+                        name="date_range"
                         render={({ field }) => (
                           <FormItem>
                             <FormLabel>Date</FormLabel>
@@ -118,7 +138,7 @@ export default function Addnew() {
                     <div className="mt-3 flex flex-col gap-5.5 p-6.5">
                       <FormField
                         control={form.control}
-                        name="tag"
+                        name="discount"
                         render={({ field }) => (
                           <FormItem>
                             <FormLabel>Discount</FormLabel>
@@ -158,7 +178,7 @@ export default function Addnew() {
                     <div className="flex flex-col gap-5.5 p-6.5">
                       <FormField
                         control={form.control}
-                        name="coupon_code"
+                        name="code"
                         render={({ field }) => (
                           <FormItem>
                             <FormLabel>Coupon Code</FormLabel>
@@ -177,7 +197,7 @@ export default function Addnew() {
                     <div className="mt-3 flex flex-col gap-5.5 p-6.5">
                       <FormField
                         control={form.control}
-                        name="brand"
+                        name="min_buy"
                         render={({ field }) => (
                           <FormItem>
                             <FormLabel>Minimum Shipping</FormLabel>
@@ -196,7 +216,7 @@ export default function Addnew() {
                     <div className="mt-3 flex flex-col gap-5.5 p-6.5">
                       <FormField
                         control={form.control}
-                        name="unit"
+                        name="date_range"
                         render={({ field }) => (
                           <FormItem>
                             <FormLabel>Date</FormLabel>
@@ -216,7 +236,7 @@ export default function Addnew() {
                     <div className="mt-3 flex flex-col gap-5.5 p-6.5">
                       <FormField
                         control={form.control}
-                        name="tag"
+                        name="discount"
                         render={({ field }) => (
                           <FormItem>
                             <FormLabel>Discount</FormLabel>
@@ -235,7 +255,7 @@ export default function Addnew() {
                     <div className="mt-3 flex flex-col gap-5.5 p-6.5">
                       <FormField
                         control={form.control}
-                        name="tag"
+                        name="max_discount"
                         render={({ field }) => (
                           <FormItem>
                             <FormLabel>Maximum Discount Amount</FormLabel>

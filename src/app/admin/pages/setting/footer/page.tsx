@@ -19,8 +19,59 @@ import Textarea from "@/shared/Textarea/Textarea";
 import { Switch } from "@/app/admin/components/ui/switch";
 
 const formSchema = z.object({
-  product_name: z.string().min(10, {
-    message: "Product Name must be at least 10 characters.",
+  footer_title: z.string().min(10, {
+    message: "footer_title must be at least 10 characters.",
+  }),
+  footer_description: z.string().min(10, {
+    message: "footer_description must be at least 10 characters.",
+  }),
+  footer_logo: z.string().min(10, {
+    message: "footer_logo must be at least 10 characters.",
+  }),
+  about_us_description: z.string().min(10, {
+    message: "about_us_description must be at least 10 characters.",
+  }),
+  play_store_link: z.string().min(10, {
+    message: "play_store_link must be at least 10 characters.",
+  }),
+  app_store_link: z.string().min(10, {
+    message: "app_store_link must be at least 10 characters.",
+  }),
+  contact_address: z.string().min(10, {
+    message: "contact_address must be at least 10 characters.",
+  }),
+  contact_email: z.string().min(10, {
+    message: "contact_email must be at least 10 characters.",
+  }),
+  widget_one: z.string().min(10, {
+    message: "widget_one must be at least 10 characters.",
+  }),
+  frontend_copyright_text: z.string().min(10, {
+    message: "frontend_copyright_text must be at least 10 characters.",
+  }),
+  show_social_links: z.string().min(10, {
+    message: "show_social_links must be at least 10 characters.",
+  }),
+  facebook_link: z.string().min(10, {
+    message: "facebook_link must be at least 10 characters.",
+  }),
+  twitter_link: z.string().min(10, {
+    message: "twitter_link must be at least 10 characters.",
+  }),
+  instagram_link: z.string().min(10, {
+    message: "instagram_link must be at least 10 characters.",
+  }),
+  youtube_link: z.string().min(10, {
+    message: "youtube_link must be at least 10 characters.",
+  }),
+  seller_app_link: z.string().min(10, {
+    message: "seller_app_link must be at least 10 characters.",
+  }),
+  delivery_boy_app_link: z.string().min(10, {
+    message: "delivery_boy_app_link must be at least 10 characters.",
+  }),
+  payment_method_images: z.string().min(10, {
+    message: "payment_method_images must be at least 10 characters.",
   }),
 });
 
@@ -30,7 +81,24 @@ export default function Addnew() {
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      product_name: "",
+      footer_title: "",
+      footer_description: "",
+      footer_logo: "",
+      about_us_description: "",
+      play_store_link: "",
+      app_store_link: "",
+      contact_address: "",
+      contact_email: "",
+      widget_one: "",
+      frontend_copyright_text: "",
+      show_social_links: "",
+      facebook_link: "",
+      twitter_link: "",
+      instagram_link: "",
+      youtube_link: "",
+      seller_app_link: "",
+      delivery_boy_app_link: "",
+      payment_method_images: "",
     },
   });
 
@@ -60,7 +128,7 @@ export default function Addnew() {
                   <div className="flex flex-col gap-5.5 p-6.5">
                     <FormField
                       control={form.control}
-                      name="product_name"
+                      name="footer_title"
                       render={({ field }) => (
                         <FormItem>
                           <FormLabel>Title (Translatable)</FormLabel>
@@ -79,7 +147,7 @@ export default function Addnew() {
                   <div className="mt-3 flex flex-col gap-5.5 p-6.5">
                     <FormField
                       control={form.control}
-                      name="brand"
+                      name="footer_description"
                       render={({ field }) => (
                         <FormItem>
                           <FormLabel>
@@ -124,7 +192,7 @@ export default function Addnew() {
                       <div className="flex flex-col gap-5.5 p-6.5">
                         <FormField
                           control={form.control}
-                          name="gallery_images"
+                          name="footer_logo"
                           render={({ field }) => (
                             <FormItem>
                               <FormLabel>Footer Logo</FormLabel>
@@ -144,7 +212,7 @@ export default function Addnew() {
                       <div className="mt-3 flex flex-col gap-5.5 p-6.5">
                         <FormField
                           control={form.control}
-                          name="thumbnail_image"
+                          name="about_us_description"
                           render={({ field }) => (
                             <FormItem>
                               <FormLabel>
@@ -166,7 +234,7 @@ export default function Addnew() {
                       <div className="mt-3 flex flex-col gap-5.5 p-6.5">
                         <FormField
                           control={form.control}
-                          name="thumbnail_image"
+                          name="play_store_link"
                           render={({ field }) => (
                             <FormItem>
                               <FormLabel>Play Store Link</FormLabel>
@@ -185,7 +253,7 @@ export default function Addnew() {
                       <div className="mt-3 flex flex-col gap-5.5 p-6.5">
                         <FormField
                           control={form.control}
-                          name="thumbnail_image"
+                          name="app_store_link"
                           render={({ field }) => (
                             <FormItem>
                               <FormLabel>App Store Link</FormLabel>
@@ -227,7 +295,7 @@ export default function Addnew() {
                       <div className="flex flex-col gap-5.5 p-6.5">
                         <FormField
                           control={form.control}
-                          name="video_provider"
+                          name="contact_address"
                           render={({ field }) => (
                             <FormItem>
                               <FormLabel>
@@ -248,7 +316,7 @@ export default function Addnew() {
                       <div className="mt-3 flex flex-col gap-5.5 p-6.5">
                         <FormField
                           control={form.control}
-                          name="video_link"
+                          name="contact_email"
                           render={({ field }) => (
                             <FormItem>
                               <FormLabel>Contact phone</FormLabel>
@@ -267,7 +335,7 @@ export default function Addnew() {
                       <div className="mt-3 flex flex-col gap-5.5 p-6.5">
                         <FormField
                           control={form.control}
-                          name="video_link"
+                          name="widget_one"
                           render={({ field }) => (
                             <FormItem>
                               <FormLabel>Contact email</FormLabel>
@@ -309,7 +377,7 @@ export default function Addnew() {
                       <div className="flex flex-col gap-5.5 p-6.5">
                         <FormField
                           control={form.control}
-                          name="color"
+                          name="frontend_copyright_text"
                           render={({ field }) => (
                             <FormItem>
                               <FormLabel>
@@ -353,7 +421,7 @@ export default function Addnew() {
                       <div className="flex flex-col gap-5.5 p-6.5">
                         <FormField
                           control={form.control}
-                          name="unit_price"
+                          name="show_social_links"
                           render={({ field }) => (
                             <FormItem>
                               <div className="flex items-center space-x-12">
@@ -369,26 +437,10 @@ export default function Addnew() {
                         />
                       </div>
                       <div className="mt-3 flex flex-col gap-5.5 p-6.5">
+                      Social Links
                         <FormField
                           control={form.control}
-                          name="discount_date_range"
-                          render={({ field }) => (
-                            <FormItem>
-                              <FormLabel>Social Links</FormLabel>
-                              <FormControl>
-                                <Input
-                                  className={inputClass}
-                                  placeholder="https://facebook.com/"
-                                  {...field}
-                                />
-                              </FormControl>
-                              <FormMessage />
-                            </FormItem>
-                          )}
-                        />
-                        <FormField
-                          control={form.control}
-                          name="discount_date_range"
+                          name="facebook_link"
                           render={({ field }) => (
                             <FormItem>
                               {/* <FormLabel>Social Links</FormLabel> */}
@@ -405,7 +457,7 @@ export default function Addnew() {
                         />
                         <FormField
                           control={form.control}
-                          name="discount_date_range"
+                          name="twitter_link"
                           render={({ field }) => (
                             <FormItem>
                               {/* <FormLabel>Social Links</FormLabel> */}
@@ -422,7 +474,7 @@ export default function Addnew() {
                         />
                         <FormField
                           control={form.control}
-                          name="discount_date_range"
+                          name="instagram_link"
                           render={({ field }) => (
                             <FormItem>
                               {/* <FormLabel>Social Links</FormLabel> */}
@@ -439,7 +491,7 @@ export default function Addnew() {
                         />
                         <FormField
                           control={form.control}
-                          name="discount_date_range"
+                          name="youtube_link"
                           render={({ field }) => (
                             <FormItem>
                               {/* <FormLabel>Social Links</FormLabel> */}
@@ -481,7 +533,7 @@ export default function Addnew() {
                       <div className="flex flex-col gap-5.5 p-6.5">
                         <FormField
                           control={form.control}
-                          name="unit_price"
+                          name="seller_app_link"
                           render={({ field }) => (
                             <FormItem>
                               <FormLabel>Seller App Link</FormLabel>
@@ -501,7 +553,7 @@ export default function Addnew() {
                       <div className="mt-3 flex flex-col gap-5.5 p-6.5">
                         <FormField
                           control={form.control}
-                          name="discount_date_range"
+                          name="delivery_boy_app_link"
                           render={({ field }) => (
                             <FormItem>
                               <FormLabel>Delivery Boy App Link</FormLabel>
@@ -543,7 +595,7 @@ export default function Addnew() {
                       <div className="mt-3 flex flex-col gap-5.5 p-6.5">
                         <FormField
                           control={form.control}
-                          name="quantity"
+                          name="payment_method_images"
                           render={({ field }) => (
                             <FormItem>
                               <FormLabel>Payment Methods</FormLabel>

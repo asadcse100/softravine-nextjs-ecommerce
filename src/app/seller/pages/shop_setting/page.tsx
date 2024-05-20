@@ -17,38 +17,44 @@ import {
 import Input from "@/shared/Input/Input";
 
 const formSchema = z.object({
-  product_name: z.string().min(10, {
-    message: "Product Name must be at least 10 characters.",
+  name: z.string().min(10, {
+    message: "Name must be at least 10 characters.",
   }),
-  brand: z.string().min(3, {
-    message: "Brand must be at least 3 characters.",
+  logo: z.string().min(10, {
+    message: "logo must be at least 10 characters.",
   }),
-  unit: z.string().min(3, {
-    message: "Unit must be at least 3 characters.",
+  phone: z.string().min(10, {
+    message: "phone must be at least 10 characters.",
   }),
-  weight: z.string().min(3, {
-    message: "Weight must be at least 3 characters.",
+  address: z.string().min(10, {
+    message: "address must be at least 10 characters.",
   }),
-  minimum_purchase_qty: z.string().min(3, {
-    message: "Minimum Purchase Qty must be at least 3 characters.",
+  meta_title: z.string().min(10, {
+    message: "meta_title must be at least 10 characters.",
   }),
-  tag: z.string().min(3, {
-    message: "Tag Purchase Qty must be at least 3 characters.",
+  meta_description: z.string().min(10, {
+    message: "meta_description must be at least 10 characters.",
   }),
-  barcode: z.string().min(3, {
-    message: "Barcode Purchase Qty must be at least 3 characters.",
+  top_banner: z.string().min(10, {
+    message: "top_banner must be at least 10 characters.",
   }),
-  thumbnail_image: z.string().min(3, {
-    message: "thumbnail_image Purchase Qty must be at least 3 characters.",
+  sliders: z.string().min(10, {
+    message: "sliders must be at least 10 characters.",
   }),
-  gallery_images: z.string().min(3, {
-    message: "gallery_images Purchase Qty must be at least 3 characters.",
+  facebook: z.string().min(10, {
+    message: "facebook must be at least 10 characters.",
   }),
-  video_provider: z.string().min(3, {
-    message: "Video Provider Purchase Qty must be at least 3 characters.",
+  instagram: z.string().min(10, {
+    message: "instagram must be at least 10 characters.",
   }),
-  video_link: z.string().min(3, {
-    message: "Video Link Purchase Qty must be at least 3 characters.",
+  twitter: z.string().min(10, {
+    message: "twitter must be at least 10 characters.",
+  }),
+  google: z.string().min(10, {
+    message: "google must be at least 10 characters.",
+  }),
+  youtube: z.string().min(10, {
+    message: "youtube must be at least 10 characters.",
   }),
 });
 
@@ -58,17 +64,19 @@ export default function Addnew() {
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      product_name: "",
-      brand: "",
-      unit: "",
-      weight: "",
-      minimum_purchase_qty: "",
-      tag: "",
-      barcode: "",
-      thumbnail_image: "",
-      gallery_images: "",
-      video_provider: "",
-      video_link: "",
+      name: "",
+      logo: "",
+      phone: "",
+      address: "",
+      meta_title: "",
+      meta_description: "",
+      top_banner: "",
+      sliders: "",
+      facebook: "",
+      instagram: "",
+      twitter: "",
+      google: "",
+      youtube: "",
     },
   });
 
@@ -99,7 +107,7 @@ export default function Addnew() {
                     <div className="flex flex-col gap-5.5 p-6.5">
                       <FormField
                         control={form.control}
-                        name="product_name"
+                        name="name"
                         render={({ field }) => (
                           <FormItem>
                             <FormLabel>Business Name</FormLabel>
@@ -118,7 +126,7 @@ export default function Addnew() {
                     <div className="mt-3 flex flex-col gap-5.5 p-6.5">
                       <FormField
                         control={form.control}
-                        name="brand"
+                        name="logo"
                         render={({ field }) => (
                           <FormItem>
                             <FormLabel>Business Logo</FormLabel>
@@ -138,7 +146,7 @@ export default function Addnew() {
                     <div className="mt-3 flex flex-col gap-5.5 p-6.5">
                       <FormField
                         control={form.control}
-                        name="unit"
+                        name="phone"
                         render={({ field }) => (
                           <FormItem>
                             <FormLabel>Business Phone</FormLabel>
@@ -157,7 +165,7 @@ export default function Addnew() {
                     <div className="mt-3 flex flex-col gap-5.5 p-6.5">
                       <FormField
                         control={form.control}
-                        name="weight"
+                        name="address"
                         render={({ field }) => (
                           <FormItem>
                             <FormLabel>Business Address</FormLabel>
@@ -176,7 +184,7 @@ export default function Addnew() {
                     <div className="mt-3 flex flex-col gap-5.5 p-6.5">
                       <FormField
                         control={form.control}
-                        name="minimum_purchase_qty"
+                        name="meta_title"
                         render={({ field }) => (
                           <FormItem>
                             <FormLabel>Meta Title</FormLabel>
@@ -195,7 +203,7 @@ export default function Addnew() {
                     <div className="mt-3 flex flex-col gap-5.5 p-6.5">
                       <FormField
                         control={form.control}
-                        name="tag"
+                        name="meta_description"
                         render={({ field }) => (
                           <FormItem>
                             <FormLabel>Meta Description</FormLabel>
@@ -236,7 +244,7 @@ export default function Addnew() {
                       <div className="flex flex-col gap-5.5 p-6.5">
                         <FormField
                           control={form.control}
-                          name="gallery_images"
+                          name="top_banner"
                           render={({ field }) => (
                             <FormItem>
                               <FormLabel>Top Banner</FormLabel>
@@ -255,7 +263,7 @@ export default function Addnew() {
                       <div className="mt-3 flex flex-col gap-5.5 p-6.5">
                         <FormField
                           control={form.control}
-                          name="thumbnail_image"
+                          name="sliders"
                           render={({ field }) => (
                             <FormItem>
                               <FormLabel>Slider Banner</FormLabel>
@@ -297,7 +305,7 @@ export default function Addnew() {
                       <div className="flex flex-col gap-5.5 p-6.5">
                         <FormField
                           control={form.control}
-                          name="video_provider"
+                          name="facebook"
                           render={({ field }) => (
                             <FormItem>
                               <FormLabel>Facebook</FormLabel>
@@ -316,7 +324,7 @@ export default function Addnew() {
                       <div className="mt-3 flex flex-col gap-5.5 p-6.5">
                         <FormField
                           control={form.control}
-                          name="video_link"
+                          name="instagram"
                           render={({ field }) => (
                             <FormItem>
                               <FormLabel>Instagram</FormLabel>
@@ -335,7 +343,7 @@ export default function Addnew() {
                       <div className="mt-3 flex flex-col gap-5.5 p-6.5">
                         <FormField
                           control={form.control}
-                          name="video_link"
+                          name="twitter"
                           render={({ field }) => (
                             <FormItem>
                               <FormLabel>Twitter</FormLabel>
@@ -354,7 +362,7 @@ export default function Addnew() {
                       <div className="mt-3 flex flex-col gap-5.5 p-6.5">
                         <FormField
                           control={form.control}
-                          name="video_link"
+                          name="google"
                           render={({ field }) => (
                             <FormItem>
                               <FormLabel>Google</FormLabel>
@@ -373,7 +381,7 @@ export default function Addnew() {
                       <div className="mt-3 flex flex-col gap-5.5 p-6.5">
                         <FormField
                           control={form.control}
-                          name="video_link"
+                          name="youtube"
                           render={({ field }) => (
                             <FormItem>
                               <FormLabel>Youtube</FormLabel>

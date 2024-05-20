@@ -10,7 +10,7 @@ import Image from "next/image";
 const AccountAddressPage = () => {
   return (
     <div className={`nc-AccountPage `}>
-      <div className="space-y-5 sm:space-y-5 bg-gray-300 dark:bg-gray-700 p-5 rounded-xl">
+      <div className="space-y-5 sm:space-y-5 bg-slate-300 dark:bg-slate-700 p-5 rounded-xl">
         {/* HEADING */}
         <h2 className="text-2xl sm:text-3xl font-semibold">
           Full Address

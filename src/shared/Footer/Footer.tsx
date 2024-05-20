@@ -58,6 +58,7 @@ const widgetMenus: WidgetFooterMenu[] = [
 const Footer: React.FC = () => {
   const renderWidgetMenuItem = (menu: WidgetFooterMenu, index: number) => {
     return (
+      <div className="px-10 py-10">
       <div key={index} className="text-sm">
         <h2 className="font-semibold text-neutral-700 dark:text-neutral-200">
           {menu.title}
@@ -67,7 +68,7 @@ const Footer: React.FC = () => {
             <li key={index}>
               <a
                 key={index}
-                className="text-gray-600 dark:text-neutral-300 hover:text-black dark:hover:text-white"
+                className="text-slate-600 dark:text-neutral-300 hover:text-black dark:hover:text-white"
                 href={item.href}
                 target="_blank"
                 rel="noopener noreferrer"
@@ -78,11 +79,13 @@ const Footer: React.FC = () => {
           ))}
         </ul>
       </div>
+      </div>
+
     );
   };
 
   return (
-    <div className="nc-Footer relative py-5 lg:pt-5 lg:pb-0 border-t border-neutral-300 dark:border-neutral-700 bg-gray-300 dark:bg-gray-900">
+    <div className="nc-Footer relative py-5 lg:pt-5 lg:pb-0 border-t border-neutral-300 dark:border-neutral-700 bg-slate-300 dark:bg-slate-900">
       <div className="container grid grid-cols-2 gap-y-10 gap-x-5 pb-5 sm:gap-x-8 md:grid-cols-4 lg:grid-cols-5 lg:gap-x-10 ">
         <div className="grid grid-cols-4 gap-5 col-span-2 md:col-span-4 lg:md:col-span-1 lg:flex lg:flex-col">
           <div className="col-span-2 md:col-span-1">
@@ -95,7 +98,7 @@ const Footer: React.FC = () => {
         {widgetMenus.map(renderWidgetMenuItem)}
 
       </div>
-      <div className="bg-gray-950 y-5 pt-5 p-4">
+      <div className="bg-slate-950 y-5 pt-5 p-4">
         <p className="text-slate-200">Copyright © {year} | All Rights Reserved by mybis-shopping.com </p>
       </div>
     </div>

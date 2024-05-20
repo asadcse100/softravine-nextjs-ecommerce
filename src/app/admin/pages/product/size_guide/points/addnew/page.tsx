@@ -19,7 +19,7 @@ import Select from "@/shared/Select/Select";
 import Textarea from "@/shared/Textarea/Textarea";
 
 const formSchema = z.object({
-  product_name: z.string().min(10, {
+  name: z.string().min(10, {
     message: "Product Name must be at least 10 characters.",
   }),
 });
@@ -30,7 +30,7 @@ export default function Addnew() {
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      product_name: "",
+      name: "",
     },
   });
 
@@ -61,7 +61,7 @@ export default function Addnew() {
                     <div className="flex flex-col gap-5.5 p-6.5">
                       <FormField
                         control={form.control}
-                        name="product_name"
+                        name="name"
                         render={({ field }) => (
                           <FormItem>
                             <FormLabel>Name</FormLabel>

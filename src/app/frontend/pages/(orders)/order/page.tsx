@@ -33,7 +33,7 @@ const Order = () => {
             </div>
           </div>
           <div className="flex flex-1 items-end justify-between text-sm">
-            <p className="text-gray-500 dark:text-slate-400 flex items-center">
+            <p className="text-slate-500 dark:text-slate-400 flex items-center">
               <span className="hidden sm:inline-block">Qty</span>
               <span className="inline-block sm:hidden">x</span>
               <span className="ml-2">1</span>
@@ -55,7 +55,7 @@ const Order = () => {
 
   const renderOrder = () => {
     return (
-      <div className="border border-gray-100 dark:border-slate-700 rounded-lg overflow-hidden z-0">
+      <div className="border border-slate-100 dark:border-slate-700 rounded-lg overflow-hidden z-0">
         <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center p-4 sm:p-8 bg-white dark:bg-slate-500/5">
           <div>
             <p className="text-lg font-semibold">#WU3746HGG12</p>

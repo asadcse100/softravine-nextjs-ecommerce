@@ -23,31 +23,31 @@ const pages: {
     img: MR,
     imgDark: MR,
     name: "Grameen Phone",
-    link: "/drive-offer/operator/gp",
+    link: "/frontend/pages/drive-offer/operator/gp",
   },
   {
     img: MR,
     imgDark: MR,
     name: "Robi",
-    link: "/drive-offer/operator/robi",
+    link: "/frontend/pages/drive-offer/operator/robi",
   },
   {
     img: MR,
     imgDark: MR,
     name: "Airtel",
-    link: "/drive-offer/operator/airtel",
+    link: "/frontend/pages/drive-offer/operator/airtel",
   },
   {
     img: MR,
     imgDark: MR,
     name: "Banglalink",
-    link: "/drive-offer/operator/bl",
+    link: "/frontend/pages/drive-offer/operator/bl",
   },
   {
     img: MR,
     imgDark: MR,
     name: "Teletalk",
-    link: "/drive-offer/operator/teletalk",
+    link: "/frontend/pages/drive-offer/operator/teletalk",
   },
 ];
 
@@ -91,7 +91,7 @@ const CommonLayout: FC<CommonLayoutProps> = ({ children }) => {
           })}
         </div>
       </div>
-      <div className="flex">
+      <div className="flex py-3">
         <div className="px-5">
           <ButtonSecondary
             sizeClass="py-2.5 px-10 sm:px-10"

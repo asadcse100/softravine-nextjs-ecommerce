@@ -15,12 +15,13 @@ import {
   FormMessage,
 } from "@/app/seller/components/ui/form";
 import Input from "@/shared/Input/Input";
+import { Switch } from "@/app/seller/components/ui/switch";
 
 const formSchema = z.object({
-  product_name: z.string().min(10, {
+  name: z.string().min(10, {
     message: "Product Name must be at least 10 characters.",
   }),
-  brand: z.string().min(3, {
+  brand_id: z.string().min(3, {
     message: "Brand must be at least 3 characters.",
   }),
   unit: z.string().min(3, {
@@ -29,7 +30,7 @@ const formSchema = z.object({
   weight: z.string().min(3, {
     message: "Weight must be at least 3 characters.",
   }),
-  minimum_purchase_qty: z.string().min(3, {
+  min_qty: z.string().min(3, {
     message: "Minimum Purchase Qty must be at least 3 characters.",
   }),
   tag: z.string().min(3, {
@@ -38,17 +39,92 @@ const formSchema = z.object({
   barcode: z.string().min(3, {
     message: "Barcode Purchase Qty must be at least 3 characters.",
   }),
-  thumbnail_image: z.string().min(3, {
+  refundable: z.string().min(3, {
+    message: "refundable Purchase Qty must be at least 3 characters.",
+  }),
+  photos: z.string().min(3, {
     message: "thumbnail_image Purchase Qty must be at least 3 characters.",
   }),
-  gallery_images: z.string().min(3, {
-    message: "gallery_images Purchase Qty must be at least 3 characters.",
+  thumbnail_img: z.string().min(3, {
+    message: "thumbnail_img Purchase Qty must be at least 3 characters.",
   }),
   video_provider: z.string().min(3, {
     message: "Video Provider Purchase Qty must be at least 3 characters.",
   }),
   video_link: z.string().min(3, {
     message: "Video Link Purchase Qty must be at least 3 characters.",
+  }),
+  unit_price: z.string().min(3, {
+    message: "unit_price Qty must be at least 3 characters.",
+  }),
+  wholesale_min_qty: z.string().min(3, {
+    message: "wholesale_min_qty Qty must be at least 3 characters.",
+  }),
+  wholesale_max_qty: z.string().min(3, {
+    message: "wholesale_max_qty Qty must be at least 3 characters.",
+  }),
+  wholesale_price: z.string().min(3, {
+    message: "wholesale_price Qty must be at least 3 characters.",
+  }),
+  reseller_unit_price: z.string().min(3, {
+    message: "reseller_unit_price Qty must be at least 3 characters.",
+  }),
+  reseller_min_qty: z.string().min(3, {
+    message: "reseller_min_qty Qty must be at least 3 characters.",
+  }),
+  reseller_max_qty: z.string().min(3, {
+    message: "reseller_max_qty Qty must be at least 3 characters.",
+  }),
+  reseller_price: z.string().min(3, {
+    message: "reseller_price Qty must be at least 3 characters.",
+  }),
+  current_stock: z.string().min(3, {
+    message: "current_stock Qty must be at least 3 characters.",
+  }),
+  sku: z.string().min(3, {
+    message: "sku Qty must be at least 3 characters.",
+  }),
+  description: z.string().min(3, {
+    message: "description Qty must be at least 3 characters.",
+  }),
+  pdf: z.string().min(3, {
+    message: "pdf Qty must be at least 3 characters.",
+  }),
+  meta_title: z.string().min(3, {
+    message: "meta_title Qty must be at least 3 characters.",
+  }),
+  meta_description: z.string().min(3, {
+    message: "meta_description Qty must be at least 3 characters.",
+  }),
+  meta_img: z.string().min(3, {
+    message: "meta_img Qty must be at least 3 characters.",
+  }),
+  main_category: z.string().min(3, {
+    message: "main_category Qty must be at least 3 characters.",
+  }),
+  sub_category: z.string().min(3, {
+    message: "sub_category Qty must be at least 3 characters.",
+  }),
+  shipping_type: z.string().min(3, {
+    message: "shipping_type Qty must be at least 3 characters.",
+  }),
+  low_stock_quantity: z.string().min(3, {
+    message: "low_stock_quantity Qty must be at least 3 characters.",
+  }),
+  stock_visibility_state: z.string().min(3, {
+    message: "stock_visibility_state Qty must be at least 3 characters.",
+  }),
+  cash_on_delivery: z.string().min(3, {
+    message: "cash_on_delivery Qty must be at least 3 characters.",
+  }),
+  est_shipping_days: z.string().min(3, {
+    message: "est_shipping_days Qty must be at least 3 characters.",
+  }),
+  tax: z.string().min(3, {
+    message: "tax Qty must be at least 3 characters.",
+  }),
+  tax_type: z.string().min(3, {
+    message: "tax_type Qty must be at least 3 characters.",
   }),
 });
 
@@ -58,17 +134,41 @@ export default function Addnew() {
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      product_name: "",
-      brand: "",
+      name: "",
+      brand_id: "",
       unit: "",
       weight: "",
-      minimum_purchase_qty: "",
+      min_qty: "",
       tag: "",
       barcode: "",
-      thumbnail_image: "",
-      gallery_images: "",
+      refundable: "",
+      photos: "",
+      thumbnail_img: "",
       video_provider: "",
       video_link: "",
+      unit_price: "",
+      wholesale_min_qty: "",
+      wholesale_price: "",
+      reseller_unit_price: "",
+      reseller_min_qty: "",
+      reseller_max_qty: "",
+      reseller_price: "",
+      current_stock: "",
+      sku: "",
+      description: "",
+      pdf: "",
+      meta_title: "",
+      meta_description: "",
+      meta_img: "",
+      main_category: "",
+      sub_category: "",
+      shipping_type: "",
+      low_stock_quantity: "",
+      stock_visibility_state: "",
+      cash_on_delivery: "",
+      est_shipping_days: "",
+      tax: "",
+      tax_type: "",
     },
   });
 
@@ -100,7 +200,7 @@ export default function Addnew() {
                     <div className="flex flex-col gap-5.5 p-6.5">
                       <FormField
                         control={form.control}
-                        name="product_name"
+                        name="name"
                         render={({ field }) => (
                           <FormItem>
                             <FormLabel>Product Name</FormLabel>
@@ -119,7 +219,7 @@ export default function Addnew() {
                     <div className="mt-3 flex flex-col gap-5.5 p-6.5">
                       <FormField
                         control={form.control}
-                        name="brand"
+                        name="brand_id"
                         render={({ field }) => (
                           <FormItem>
                             <FormLabel>Brand</FormLabel>
@@ -157,7 +257,7 @@ export default function Addnew() {
                     <div className="mt-3 flex flex-col gap-5.5 p-6.5">
                       <FormField
                         control={form.control}
-                        name="minimum_purchase_qty"
+                        name="min_qty"
                         render={({ field }) => (
                           <FormItem>
                             <FormLabel>Minimum Purchase Qty</FormLabel>
@@ -176,7 +276,7 @@ export default function Addnew() {
                     <div className="mt-3 flex flex-col gap-5.5 p-6.5">
                       <FormField
                         control={form.control}
-                        name="tag"
+                        name="tags[]"
                         render={({ field }) => (
                           <FormItem>
                             <FormLabel>Tags</FormLabel>
@@ -211,6 +311,21 @@ export default function Addnew() {
                         )}
                       />
                     </div>
+                    <div className="mt-3 flex flex-col gap-5.5 p-6.5">
+                        <FormField
+                          control={form.control}
+                          name="refundable"
+                          render={({ field }) => (
+                            <FormItem>
+                              <div className="flex items-center space-x-12">
+                                <FormLabel className="mt-2">refundable</FormLabel>
+                                <Switch />
+                              </div>
+                              <FormMessage />
+                            </FormItem>
+                          )}
+                        />
+                      </div>
                   </div>
                 </div>
               </div>
@@ -227,7 +342,7 @@ export default function Addnew() {
                     <div className="flex flex-col gap-5.5 p-6.5">
                       <FormField
                         control={form.control}
-                        name="gallery_images"
+                        name="photos"
                         render={({ field }) => (
                           <FormItem>
                             <FormLabel>Gallery Images</FormLabel>
@@ -246,7 +361,7 @@ export default function Addnew() {
                     <div className="mt-3 flex flex-col gap-5.5 p-6.5">
                       <FormField
                         control={form.control}
-                        name="thumbnail_image"
+                        name="thumbnail_img"
                         render={({ field }) => (
                           <FormItem>
                             <FormLabel>Thumbnail Image</FormLabel>
@@ -350,7 +465,7 @@ export default function Addnew() {
                     <div className="flex flex-col gap-5.5 p-6.5">
                       <FormField
                         control={form.control}
-                        name="unit_price"
+                        name="wholesale_min_qty[]"
                         render={({ field }) => (
                           <FormItem>
                             <FormLabel>Wholesale Price</FormLabel>
@@ -367,7 +482,7 @@ export default function Addnew() {
                       />
                       <FormField
                         control={form.control}
-                        name="unit_price"
+                        name="wholesale_max_qty[]"
                         render={({ field }) => (
                           <FormItem>
                             <FormControl>
@@ -383,7 +498,7 @@ export default function Addnew() {
                       />
                       <FormField
                         control={form.control}
-                        name="unit_price"
+                        name="wholesale_price[]"
                         render={({ field }) => (
                           <FormItem>
                             <FormControl>
@@ -415,7 +530,7 @@ export default function Addnew() {
                     <div className="flex flex-col gap-5.5 p-6.5">
                       <FormField
                         control={form.control}
-                        name="unit_price"
+                        name="reseller_unit_price"
                         render={({ field }) => (
                           <FormItem>
                             <FormLabel>Reseller Unit Price</FormLabel>
@@ -434,14 +549,14 @@ export default function Addnew() {
                     <div className="flex flex-col gap-5.5 p-6.5">
                       <FormField
                         control={form.control}
-                        name="unit_price"
+                        name="reseller_min_qty[]"
                         render={({ field }) => (
                           <FormItem>
                             <FormLabel>Reseller Wholesale Price</FormLabel>
                             <FormControl>
                               <Input
                                 className={inputClass}
-                                placeholder="Min Qty"
+                                placeholder="Reseller Min Qty"
                                 {...field}
                               />
                             </FormControl>
@@ -451,13 +566,13 @@ export default function Addnew() {
                       />
                       <FormField
                         control={form.control}
-                        name="unit_price"
+                        name="reseller_max_qty[]"
                         render={({ field }) => (
                           <FormItem>
                             <FormControl>
                               <Input
                                 className={inputClass}
-                                placeholder="Max Qty"
+                                placeholder="Reseller Max Qty"
                                 {...field}
                               />
                             </FormControl>
@@ -467,7 +582,7 @@ export default function Addnew() {
                       />
                       <FormField
                         control={form.control}
-                        name="unit_price"
+                        name="reseller_price[]"
                         render={({ field }) => (
                           <FormItem>
                             <FormControl>
@@ -500,7 +615,7 @@ export default function Addnew() {
                     <div className="mt-3 flex flex-col gap-5.5 p-6.5">
                       <FormField
                         control={form.control}
-                        name="quantity"
+                        name="current_stock"
                         render={({ field }) => (
                           <FormItem>
                             <FormLabel>Quantity</FormLabel>
@@ -551,7 +666,7 @@ export default function Addnew() {
                     <div className="mt-3 flex flex-col gap-5.5 p-6.5">
                       <FormField
                         control={form.control}
-                        name="product_description"
+                        name="description"
                         render={({ field }) => (
                           <FormItem>
                             <FormLabel>Description</FormLabel>
@@ -583,7 +698,7 @@ export default function Addnew() {
                     <div className="mt-3 flex flex-col gap-5.5 p-6.5">
                       <FormField
                         control={form.control}
-                        name="pdf_specification"
+                        name="pdf"
                         render={({ field }) => (
                           <FormItem>
                             <FormLabel>PDF Specification</FormLabel>
@@ -736,7 +851,7 @@ export default function Addnew() {
                     <div className="mt-3 flex flex-col gap-5.5 p-6.5">
                       <FormField
                         control={form.control}
-                        name="free_shippling"
+                        name="shipping_type"
                         render={({ field }) => (
                           <FormItem>
                             <FormLabel>Free Shipping</FormLabel>
@@ -755,7 +870,7 @@ export default function Addnew() {
                     <div className="mt-3 flex flex-col gap-5.5 p-6.5">
                       <FormField
                         control={form.control}
-                        name="flat_rate"
+                        name="shipping_type"
                         render={({ field }) => (
                           <FormItem>
                             <FormLabel>Flat Rate</FormLabel>
@@ -774,7 +889,7 @@ export default function Addnew() {
                     <div className="mt-3 flex flex-col gap-5.5 p-6.5">
                       <FormField
                         control={form.control}
-                        name="qty_multi"
+                        name="shipping_type"
                         render={({ field }) => (
                           <FormItem>
                             <FormLabel>Is Product Quantity Multiply</FormLabel>
@@ -806,7 +921,7 @@ export default function Addnew() {
                     <div className="mt-3 flex flex-col gap-5.5 p-6.5">
                       <FormField
                         control={form.control}
-                        name="show_stock_quantity"
+                        name="stock_visibility_state"
                         render={({ field }) => (
                           <FormItem>
                             <FormLabel>Show Stock quantity</FormLabel>
@@ -825,7 +940,7 @@ export default function Addnew() {
                     <div className="mt-3 flex flex-col gap-5.5 p-6.5">
                       <FormField
                         control={form.control}
-                        name=""
+                        name="stock_visibility_state"
                         render={({ field }) => (
                           <FormItem>
                             <FormLabel>Show Stock With Text Only</FormLabel>
@@ -844,7 +959,7 @@ export default function Addnew() {
                     <div className="mt-3 flex flex-col gap-5.5 p-6.5">
                       <FormField
                         control={form.control}
-                        name=""
+                        name="stock_visibility_state"
                         render={({ field }) => (
                           <FormItem>
                             <FormLabel>Hide Stock</FormLabel>
@@ -876,7 +991,7 @@ export default function Addnew() {
                     <div className="mt-3 flex flex-col gap-5.5 p-6.5">
                       <FormField
                         control={form.control}
-                        name="show_stock_quantity"
+                        name="cash_on_delivery"
                         render={({ field }) => (
                           <FormItem>
                             <FormLabel>Status</FormLabel>
@@ -908,7 +1023,7 @@ export default function Addnew() {
                     <div className="mt-3 flex flex-col gap-5.5 p-6.5">
                       <FormField
                         control={form.control}
-                        name="shipping_day"
+                        name="est_shipping_days"
                         render={({ field }) => (
                           <FormItem>
                             <FormLabel>Shipping Days</FormLabel>
@@ -940,7 +1055,7 @@ export default function Addnew() {
                     <div className="mt-3 flex flex-col gap-5.5 p-6.5">
                       <FormField
                         control={form.control}
-                        name="tax"
+                        name="tax[]"
                         render={({ field }) => (
                           <FormItem>
                             <FormLabel>TAX</FormLabel>
@@ -957,7 +1072,7 @@ export default function Addnew() {
                       />
                       <FormField
                         control={form.control}
-                        name=""
+                        name="tax_type[]"
                         render={({ field }) => (
                           <FormItem>
                             <FormControl>

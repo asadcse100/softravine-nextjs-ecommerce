@@ -17,38 +17,23 @@ import {
 import Input from "@/shared/Input/Input";
 
 const formSchema = z.object({
-  product_name: z.string().min(10, {
+  name: z.string().min(10, {
     message: "Product Name must be at least 10 characters.",
   }),
-  product_file: z.string().min(3, {
-    message: "product_file must be at least 3 characters.",
+  file_name: z.string().min(10, {
+    message: "Product file_name must be at least 10 characters.",
   }),
-  unit: z.string().min(3, {
-    message: "Unit must be at least 3 characters.",
+  tags: z.string().min(10, {
+    message: "Product Tag must be at least 10 characters.",
   }),
-  weight: z.string().min(3, {
-    message: "Weight must be at least 3 characters.",
+  photos: z.string().min(10, {
+    message: "Product photos must be at least 10 characters.",
   }),
-  minimum_purchase_qty: z.string().min(3, {
-    message: "Minimum Purchase Qty must be at least 3 characters.",
+  thumbnail_img: z.string().min(10, {
+    message: "Product thumbnail_img must be at least 10 characters.",
   }),
-  tag: z.string().min(3, {
-    message: "Tag Purchase Qty must be at least 3 characters.",
-  }),
-  barcode: z.string().min(3, {
-    message: "Barcode Purchase Qty must be at least 3 characters.",
-  }),
-  thumbnail_image: z.string().min(3, {
-    message: "thumbnail_image Purchase Qty must be at least 3 characters.",
-  }),
-  gallery_images: z.string().min(3, {
-    message: "gallery_images Purchase Qty must be at least 3 characters.",
-  }),
-  video_provider: z.string().min(3, {
-    message: "Video Provider Purchase Qty must be at least 3 characters.",
-  }),
-  video_link: z.string().min(3, {
-    message: "Video Link Purchase Qty must be at least 3 characters.",
+  meta_title: z.string().min(10, {
+    message: "Product meta_title must be at least 10 characters.",
   }),
 });
 
@@ -58,17 +43,13 @@ export default function Addnew() {
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      product_name: "",
-      product_file: "",
-      unit: "",
-      weight: "",
-      minimum_purchase_qty: "",
-      tag: "",
-      barcode: "",
-      thumbnail_image: "",
-      gallery_images: "",
-      video_provider: "",
-      video_link: "",
+      name: "",
+      file_name: "",
+      tags: "",
+      photos: "",
+      thumbnail_img: "",
+      meta_title: "",
+      name: "",
     },
   });
 
@@ -100,7 +81,7 @@ export default function Addnew() {
                     <div className="flex flex-col gap-5.5 p-6.5">
                       <FormField
                         control={form.control}
-                        name="product_name"
+                        name="name"
                         render={({ field }) => (
                           <FormItem>
                             <FormLabel>Product Name</FormLabel>
@@ -119,7 +100,7 @@ export default function Addnew() {
                     <div className="mt-3 flex flex-col gap-5.5 p-6.5">
                       <FormField
                         control={form.control}
-                        name="product_file"
+                        name="file_name"
                         render={({ field }) => (
                           <FormItem>
                             <FormLabel>Product File</FormLabel>
@@ -138,7 +119,7 @@ export default function Addnew() {
                     <div className="mt-3 flex flex-col gap-5.5 p-6.5">
                       <FormField
                         control={form.control}
-                        name="tag"
+                        name="tags[]"
                         render={({ field }) => (
                           <FormItem>
                             <FormLabel>Tags</FormLabel>
@@ -170,7 +151,7 @@ export default function Addnew() {
                     <div className="flex flex-col gap-5.5 p-6.5">
                       <FormField
                         control={form.control}
-                        name="gallery_images"
+                        name="photos"
                         render={({ field }) => (
                           <FormItem>
                             <FormLabel>Main Images</FormLabel>
@@ -189,7 +170,7 @@ export default function Addnew() {
                     <div className="mt-3 flex flex-col gap-5.5 p-6.5">
                       <FormField
                         control={form.control}
-                        name="thumbnail_image"
+                        name="thumbnail_img"
                         render={({ field }) => (
                           <FormItem>
                             <FormLabel>Thumbnail Image</FormLabel>

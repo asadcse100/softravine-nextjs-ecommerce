@@ -23,12 +23,14 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en" dir="" className={poppins.className}>
-      <body className="bg-neutral-200 text-base dark:bg-neutral-800 text-neutral-800 dark:text-neutral-200">
+      <body className="bg-slate-200 text-base dark:bg-slate-800 text-slate-800 dark:text-slate-200">
         <SiteHeader />
         {children}
         <CommonClient />
         <Chat />
-        <Footer />
+        <div className="bg-slate-800">
+          <Footer />
+        </div>
       </body>
     </html>
   );

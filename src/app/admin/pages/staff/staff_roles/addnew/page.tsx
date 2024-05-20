@@ -18,8 +18,8 @@ import Input from "@/shared/Input/Input";
 import { Switch } from "@/app/admin/components/ui/switch";
 
 const formSchema = z.object({
-  product_name: z.string().min(10, {
-    message: "Product Name must be at least 10 characters.",
+  permissions: z.string().min(10, {
+    message: "permissions must be at least 10 characters.",
   }),
 });
 
@@ -29,7 +29,7 @@ export default function Addnew() {
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      product_name: "",
+      permissions: "",
     },
   });
 
@@ -59,7 +59,7 @@ export default function Addnew() {
                   <div className="flex flex-col gap-5.5 p-6.5">
                     <FormField
                       control={form.control}
-                      name="product_name"
+                      name="permissions[]"
                       render={({ field }) => (
                         <FormItem>
                           {/* <FormLabel>Name</FormLabel> */}

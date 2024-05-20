@@ -18,8 +18,11 @@ import {
 import Input from "@/shared/Input/Input";
 
 const formSchema = z.object({
-  product_name: z.string().min(10, {
-    message: "Product Name must be at least 10 characters.",
+  name: z.string().min(10, {
+    message: "Name must be at least 10 characters.",
+  }),
+  code: z.string().min(10, {
+    message: "Color Code must be at least 10 characters.",
   }),
 });
 
@@ -29,7 +32,8 @@ export default function Addnew() {
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      product_name: "",
+      name: "",
+      code: "",
     },
   });
 
@@ -60,7 +64,7 @@ export default function Addnew() {
                     <div className="flex flex-col gap-5.5 p-6.5">
                       <FormField
                         control={form.control}
-                        name="product_name"
+                        name="name"
                         render={({ field }) => (
                           <FormItem>
                             <FormLabel>Name</FormLabel>
@@ -79,7 +83,7 @@ export default function Addnew() {
                     <div className="flex flex-col gap-5.5 p-6.5">
                       <FormField
                         control={form.control}
-                        name="product_name"
+                        name="code"
                         render={({ field }) => (
                           <FormItem>
                             <FormLabel>Color Code</FormLabel>

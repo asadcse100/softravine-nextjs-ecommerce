@@ -23,7 +23,7 @@ const NavMobile: React.FC<NavMobileProps> = ({
 }) => {
   const _renderMenuChild = (
     item: NavItemType,
-    itemClass = " pl-3 text-neutral-900 dark:text-neutral-200 font-medium "
+    itemClass = " pl-3 text-slate-900 dark:text-slate-200 font-medium "
   ) => {
     return (
       <ul className="nav-mobile-sub-menu pl-6 pb-1 text-base">
@@ -33,7 +33,7 @@ const NavMobile: React.FC<NavMobileProps> = ({
               href={{
                 pathname: i.href || undefined,
               }}
-              className={`flex text-sm rounded-lg hover:bg-neutral-100 dark:hover:bg-neutral-800 mt-0.5 pr-4 ${itemClass}`}
+              className={`flex text-sm rounded-lg hover:bg-slate-100 dark:hover:bg-slate-800 mt-0.5 pr-4 ${itemClass}`}
             >
               <span
                 className={`py-2.5 ${!i.children ? "block w-full" : ""}`}
@@ -101,7 +101,7 @@ const NavMobile: React.FC<NavMobileProps> = ({
                 className="flex justify-end flex-grow"
               >
                 <ChevronDownIcon
-                  className="ml-2 h-4 w-4 text-neutral-500"
+                  className="ml-2 h-4 w-4 text-slate-500"
                   aria-hidden="true"
                 />
               </Disclosure.Button>
@@ -163,7 +163,7 @@ const NavMobile: React.FC<NavMobileProps> = ({
   };
 
   return (
-    <div className="overflow-y-auto w-full h-screen py-2 transition transform shadow-lg ring-1 dark:ring-neutral-700 bg-white dark:bg-neutral-900 divide-y-2 divide-neutral-100 dark:divide-neutral-800">
+    <div className="overflow-y-auto w-full h-screen py-2 transition transform shadow-lg ring-1 dark:ring-slate-700 bg-white dark:bg-slate-900 divide-y-2 divide-slate-100 dark:divide-slate-800">
       <div className="py-6 px-5">
         <Logo />
         <div className="flex flex-col mt-5 text-slate-600 dark:text-slate-300 text-sm">
@@ -175,7 +175,7 @@ const NavMobile: React.FC<NavMobileProps> = ({
           <div className="flex justify-between items-center mt-4">
             <SocialsList itemClass="w-7 h-7 sm:w-8 sm:h-8 flex items-center justify-center rounded-full text-xl" />
             <span className="block">
-              <SwitchDarkMode className="bg-neutral-100 dark:bg-neutral-800" />
+              <SwitchDarkMode className="bg-slate-100 dark:bg-slate-800" />
             </span>
           </div>
         </div>
