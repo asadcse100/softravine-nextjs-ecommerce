@@ -17,12 +17,9 @@ const CommonLayout: FC<CommonLayoutProps> = ({ children }) => {
   return (
     <div className="nc-AccountCommonLayout container">
       <div className="mt-5 sm:mt-5">
-        <div className="max-w-4xl mx-auto">
-          <hr className="border-slate-300 dark:border-slate-700"></hr>
+        <div className="max-w-4xl mx-auto pt-5 sm:pt-5 pb-10 lg:pb-10">
+          {children}
         </div>
-      </div>
-      <div className="max-w-4xl mx-auto pt-5 sm:pt-5 pb-10 lg:pb-10">
-        {children}
       </div>
     </div>
   );

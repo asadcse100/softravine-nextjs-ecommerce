@@ -28,8 +28,46 @@ export const SIDENAV_ITEMS:SideNavItem[] = [
         ],
     },
     {
-        title: 'Uploaded Files',
-        path: '/seller/pages/uploads',
+        title: 'Auction Products',
+        path: '/auction',
+        icon: <BsKanban size={20} />,
+        submenu: true,
+        subMenuItems: [
+            {title: 'All Auction', path: '/seller/pages/auction'},
+            {title: 'Add New', path: '/seller/pages/auction/addnew'},
+            {title: 'Orders', path: '/seller/pages/auction/order'},
+        ]
+    },
+    {
+        title: 'Wholesale Products',
+        path: '/wolesale',
+        icon: <BsKanban size={20} />,
+        submenu: true,
+        subMenuItems: [
+            {title: 'All Wolesale', path: '/seller/pages/wolesale/products'},
+            {title: 'Add New', path: '/seller/pages/wolesale/addnew'},
+        ]
+    },
+    {
+        title: 'Earning',
+        path: '/earning',
+        icon: <BsKanban size={20} />,
+        submenu: true,
+        subMenuItems: [
+            {title: 'Earning Balance', path: '/seller/pages/earning-balance'},
+            {title: 'Payment History', path: '/seller/pages/payment_history'},
+            {title: 'Withdraw History', path: '/seller/pages/money_withdraw'},
+            {title: 'Commission History', path: '/seller/pages/commission_history'},
+        ]
+    },
+    {
+        title: 'Voucher Balance',
+        path: '/seller/pages/voucher-balance',
+        icon: <BsListUl size={20} />
+    },
+    {
+        title: 'Orders',
+        path: '/seller/pages/orders',
         icon: <BsListUl size={20} />
     },
     {
@@ -53,32 +91,6 @@ export const SIDENAV_ITEMS:SideNavItem[] = [
         ]
     },
     {
-        title: 'Wholesale Products',
-        path: '/wolesale',
-        icon: <BsKanban size={20} />,
-        submenu: true,
-        subMenuItems: [
-            {title: 'All Wolesale', path: '/seller/pages/wolesale/products'},
-            {title: 'Add New', path: '/seller/pages/wolesale/addnew'},
-        ]
-    },
-    {
-        title: 'Auction Products',
-        path: '/auction',
-        icon: <BsKanban size={20} />,
-        submenu: true,
-        subMenuItems: [
-            {title: 'All Auction', path: '/seller/pages/auction'},
-            {title: 'Add New', path: '/seller/pages/auction/addnew'},
-            {title: 'Orders', path: '/seller/pages/auction/order'},
-        ]
-    },
-    {
-        title: 'Orders',
-        path: '/seller/pages/orders',
-        icon: <BsListUl size={20} />
-    },
-    {
         title: 'Received Refund',
         path: '/seller/pages/received_refund',
         icon: <BsListUl size={20} />
@@ -86,21 +98,6 @@ export const SIDENAV_ITEMS:SideNavItem[] = [
     {
         title: 'Shop Setting',
         path: '/seller/pages/shop_setting',
-        icon: <BsListUl size={20} />
-    },
-    {
-        title: 'Payment History',
-        path: '/seller/pages/payment_history',
-        icon: <BsListUl size={20} />
-    },
-    {
-        title: 'Money Withdraw',
-        path: '/seller/pages/money_withdraw',
-        icon: <BsListUl size={20} />
-    },
-    {
-        title: 'Commission History',
-        path: '/seller/pages/commission_history',
         icon: <BsListUl size={20} />
     },
     {
@@ -116,6 +113,11 @@ export const SIDENAV_ITEMS:SideNavItem[] = [
     {
         title: 'Support Ticket',
         path: '/seller/pages/support_ticket',
+        icon: <BsListUl size={20} />
+    },
+    {
+        title: 'Uploaded Files',
+        path: '/seller/pages/uploads',
         icon: <BsListUl size={20} />
     },
     {
