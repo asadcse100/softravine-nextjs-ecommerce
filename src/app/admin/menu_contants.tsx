@@ -1,4 +1,31 @@
-import { BsGear, BsHouseDoor, BsKanban, BsListUl, BsPostage } from "react-icons/bs";
+import { 
+    BsGear,
+    BsHouseDoor,
+    BsKanban,
+    BsShopWindow,
+    BsPeople,
+    BsNewspaper,
+    BsCart3,
+    BsCart4,
+    BsHammer,
+    BsCartPlus,
+    BsPersonWalking,
+    BsCash,
+    BsCloudUpload,
+    BsPersonWorkspace,
+    BsMegaphone,
+    BsDiagram3,
+    BsCashCoin,
+    BsBookmarkStarFill,
+    BsShieldLock,
+    BsGraphUp,
+    BsChatQuoteFill,
+    BsBlockquoteLeft,
+    BsGearWideConnected,
+    BsTools,
+    BsWindowDesktop,
+    BsPuzzle
+ } from "react-icons/bs";
 import { SideNavItem } from "@/../types/types";
 
 export const SIDENAV_ITEMS:SideNavItem[] = [
@@ -10,7 +37,7 @@ export const SIDENAV_ITEMS:SideNavItem[] = [
     {
         title: 'Staffs',
         path: '/staffs',
-        icon: <BsKanban size={20} />,
+        icon: <BsPersonWorkspace size={20} />,
         submenu: true,
         subMenuItems: [
             {title: 'All Staff', path: '/admin/pages/staff/staffs'},
@@ -22,7 +49,7 @@ export const SIDENAV_ITEMS:SideNavItem[] = [
     {
         title: 'POS',
         path: '/staffs',
-        icon: <BsKanban size={20} />,
+        icon: <BsNewspaper size={20} />,
         submenu: true,
         subMenuItems: [
             {title: 'POS Manager', path: '/admin/pages/pos'},
@@ -32,7 +59,7 @@ export const SIDENAV_ITEMS:SideNavItem[] = [
     {
         title: 'Products',
         path: '/products',
-        icon: <BsKanban size={20} />,
+        icon: <BsCart3 size={20} />,
         submenu: true,
         subMenuItems: [
             {title: 'All Products', path: '/admin/pages/product/products'},
@@ -63,7 +90,7 @@ export const SIDENAV_ITEMS:SideNavItem[] = [
     {
         title: 'Auction Products',
         path: '/auction',
-        icon: <BsKanban size={20} />,
+        icon: <BsHammer size={20} />,
         submenu: true,
         subMenuItems: [
             {title: 'All Auction', path: '/admin/pages/auction'},
@@ -76,7 +103,7 @@ export const SIDENAV_ITEMS:SideNavItem[] = [
     {
         title: 'WholeSale Products',
         path: '/wholesale',
-        icon: <BsKanban size={20} />,
+        icon: <BsCart4 size={20} />,
         submenu: true,
         subMenuItems: [
             {title: 'All wholesale', path: '/admin/pages/wholesale'},
@@ -88,7 +115,7 @@ export const SIDENAV_ITEMS:SideNavItem[] = [
     {
         title: 'Order',
         path: '#',
-        icon: <BsListUl size={20} />,
+        icon: <BsCartPlus size={20} />,
         submenu: true,
         subMenuItems: [
             {title: 'All Order', path: '/admin/pages/order'},
@@ -100,7 +127,7 @@ export const SIDENAV_ITEMS:SideNavItem[] = [
     {
         title: 'Delivery Boy',
         path: '/deliveryboy',
-        icon: <BsKanban size={20} />,
+        icon: <BsPersonWalking size={20} />,
         submenu: true,
         subMenuItems: [
             {title: 'All Delivery Boy', path: '/admin/pages/deliveryboy'},
@@ -114,7 +141,7 @@ export const SIDENAV_ITEMS:SideNavItem[] = [
     {
         title: 'Refunds',
         path: '/refunds',
-        icon: <BsKanban size={20} />,
+        icon: <BsCash size={20} />,
         submenu: true,
         subMenuItems: [
             {title: 'Refund Requests', path: '/admin/pages/refund/refund_request'},
@@ -126,7 +153,7 @@ export const SIDENAV_ITEMS:SideNavItem[] = [
     {
         title: 'Customers',
         path: '/customer',
-        icon: <BsKanban size={20} />,
+        icon: <BsPeople size={20} />,
         submenu: true,
         subMenuItems: [
             {title: 'All Customer', path: '/admin/pages/customer'},
@@ -137,7 +164,7 @@ export const SIDENAV_ITEMS:SideNavItem[] = [
     {
         title: 'Sellers',
         path: '/sellers',
-        icon: <BsKanban size={20} />,
+        icon: <BsShopWindow size={20} />,
         submenu: true,
         subMenuItems: [
             {title: 'All Seller', path: '/admin/pages/sellers'},
@@ -148,41 +175,9 @@ export const SIDENAV_ITEMS:SideNavItem[] = [
         ],
     },
     {
-        title: 'Uploaded Files',
-        path: '/admin/pages/upload',
-        icon: <BsGear size={20} />
-    },
-    {
-        title: 'Reports',
-        path: '/report',
-        icon: <BsKanban size={20} />,
-        submenu: true,
-        subMenuItems: [
-            {title: 'Admin Sale', path: '/admin/pages/report/admin_sale'},
-            {title: 'Seller Sale', path: '/admin/pages/report/seller_sale'},
-            {title: 'Stock', path: '/admin/pages/report/stock'},
-            {title: 'Favorite List', path: '/admin/pages/report/favorite_list'},
-            {title: 'Visitor Searches', path: '/admin/pages/report/visitor_search'},
-            {title: 'Commission Histories', path: '/admin/pages/report/commission_history'},
-            {title: 'Wallet Histories', path: '/admin/pages/report/wallet_history'},
-        ],
-    },
-    {
-        title: 'Blogs',
-        path: '/blog',
-        icon: <BsKanban size={20} />,
-        submenu: true,
-        subMenuItems: [
-            {title: 'All Blogs', path: '/admin/pages/blog_system/all_blog'},
-            {title: 'Add New', path: '/admin/pages/blog_system/all_blog/addnew'},
-            {title: 'Categories', path: '/admin/pages/blog_system/category'},
-            {title: 'Add Category', path: '/admin/pages/blog_system/category/addnew'},
-        ],
-    },
-    {
         title: 'Marketing',
         path: '/marketing',
-        icon: <BsKanban size={20} />,
+        icon: <BsMegaphone size={20} />,
         submenu: true,
         subMenuItems: [
             {title: 'Flash Deals', path: '/admin/pages/marketing/flash_deals'},
@@ -198,20 +193,9 @@ export const SIDENAV_ITEMS:SideNavItem[] = [
         ],
     },
     {
-        title: 'Support',
-        path: '/support',
-        icon: <BsKanban size={20} />,
-        submenu: true,
-        subMenuItems: [
-            {title: 'Ticket', path: '/admin/pages/support/support_ticket'},
-            {title: 'Product Conversions', path: '/admin/pages/support/conversion'},
-            {title: 'Product Queries', path: '/admin/pages/support/product_query'},
-        ],
-    },
-    {
         title: 'Affiliate',
         path: '/affiliate',
-        icon: <BsKanban size={20} />,
+        icon: <BsDiagram3 size={20} />,
         submenu: true,
         subMenuItems: [
             {title: 'Configarations', path: '/admin/pages/affiliate/configuration'},
@@ -224,7 +208,7 @@ export const SIDENAV_ITEMS:SideNavItem[] = [
     {
         title: 'Offline Payment',
         path: '/offline_payment',
-        icon: <BsKanban size={20} />,
+        icon: <BsCashCoin size={20} />,
         submenu: true,
         subMenuItems: [
             {title: 'Manual Payment Methods', path: '/admin/pages/offline_payment/manual_payment_method'},
@@ -237,7 +221,7 @@ export const SIDENAV_ITEMS:SideNavItem[] = [
     {
         title: 'Club Point',
         path: '/club_point',
-        icon: <BsKanban size={20} />,
+        icon: <BsBookmarkStarFill size={20} />,
         submenu: true,
         subMenuItems: [
             {title: 'Configurations', path: '/admin/pages/club_point/configuration'},
@@ -249,7 +233,7 @@ export const SIDENAV_ITEMS:SideNavItem[] = [
     {
         title: 'OTP',
         path: '/otp',
-        icon: <BsKanban size={20} />,
+        icon: <BsShieldLock size={20} />,
         submenu: true,
         subMenuItems: [
             {title: 'Configurations', path: '/admin/pages/otp/configuration'},
@@ -258,9 +242,52 @@ export const SIDENAV_ITEMS:SideNavItem[] = [
         ],
     },
     {
+        title: 'Reports',
+        path: '/report',
+        icon: <BsGraphUp size={20} />,
+        submenu: true,
+        subMenuItems: [
+            {title: 'Admin Sale', path: '/admin/pages/report/admin_sale'},
+            {title: 'Seller Sale', path: '/admin/pages/report/seller_sale'},
+            {title: 'Stock', path: '/admin/pages/report/stock'},
+            {title: 'Favorite List', path: '/admin/pages/report/favorite_list'},
+            {title: 'Visitor Searches', path: '/admin/pages/report/visitor_search'},
+            {title: 'Commission Histories', path: '/admin/pages/report/commission_history'},
+            {title: 'Wallet Histories', path: '/admin/pages/report/wallet_history'},
+        ],
+    },
+    {
+        title: 'Uploaded Files',
+        path: '/admin/pages/upload',
+        icon: <BsCloudUpload size={20} />
+    },
+    {
+        title: 'Blogs',
+        path: '/blog',
+        icon: <BsBlockquoteLeft size={20} />,
+        submenu: true,
+        subMenuItems: [
+            {title: 'All Blogs', path: '/admin/pages/blog_system/all_blog'},
+            {title: 'Add New', path: '/admin/pages/blog_system/all_blog/addnew'},
+            {title: 'Categories', path: '/admin/pages/blog_system/category'},
+            {title: 'Add Category', path: '/admin/pages/blog_system/category/addnew'},
+        ],
+    },
+    {
+        title: 'Support',
+        path: '/support',
+        icon: <BsChatQuoteFill size={20} />,
+        submenu: true,
+        subMenuItems: [
+            {title: 'Ticket', path: '/admin/pages/support/support_ticket'},
+            {title: 'Product Conversions', path: '/admin/pages/support/conversion'},
+            {title: 'Product Queries', path: '/admin/pages/support/product_query'},
+        ],
+    },
+    {
         title: 'Website Settings',
         path: '/setting',
-        icon: <BsKanban size={20} />,
+        icon: <BsWindowDesktop size={20} />,
         submenu: true,
         subMenuItems: [
             {title: 'Header', path: '/admin/pages/setting/header'},
@@ -273,7 +300,7 @@ export const SIDENAV_ITEMS:SideNavItem[] = [
     {
         title: 'Feature Settings',
         path: '/feature_setting',  
-        icon: <BsGear size={20} />,
+        icon: <BsGearWideConnected size={20} />,
         submenu: true,
         subMenuItems: [
             {title: 'Features Activation', path: '/admin/pages/feature_setting/feature_activation'},
@@ -310,7 +337,7 @@ export const SIDENAV_ITEMS:SideNavItem[] = [
     {
         title: 'Software System',
         path: '/software_system',
-        icon: <BsKanban size={20} />,
+        icon: <BsTools size={20} />,
         submenu: true,
         subMenuItems: [
             {title: 'Update', path: '/admin/pages/software_system/update'},
@@ -320,6 +347,6 @@ export const SIDENAV_ITEMS:SideNavItem[] = [
     {
         title: 'Add Feature',
         path: '/admin/pages/plugin',
-        icon: <BsGear size={20} />
+        icon: <BsPuzzle size={20} />
     },
 ]
