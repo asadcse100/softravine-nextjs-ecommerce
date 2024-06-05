@@ -4,7 +4,7 @@ import { Color } from '../models/Color';
 import { Product } from '../models/Product';
 import { User } from '../models/User';
 import { Wishlist } from '../models/Wishlist';
-import { ProductUtility } from '../utility/ProductUtility';
+import { ProductUtility } from '../utils/ProductUtility';
 import { Combinations } from 'combinations'; // Assuming Combinations is a valid package
 
 import { NextApiRequest, NextApiResponse } from 'next';

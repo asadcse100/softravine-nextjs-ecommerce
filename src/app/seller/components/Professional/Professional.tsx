@@ -15,56 +15,55 @@ import { CustomLink } from "@/data/types";
 
 export interface SectionProfessionalProps {
   className?: string;
-  data?: (typeof DEMO_DATA)[0][];
+  // data?: (typeof DEMO_DATA)[0][];
 }
 
-const DEMO_DATA: {
-  id: number;
-  img: string;
-  imgDark: object;
-  title: string;
-  link: Route;
-}[] = [
-    {
-      id: 1,
-      img: MR,
-      imgDark: MR,
-      title: "Local Outlet",
-      link: "/seller/pages/localoutlet",
-    },
-    {
-      id: 2,
-      img: DO,
-      imgDark: DO,
-      title: "eCommerce Vendor ship",
-      link: "/seller/pages/ecommerce-vendor",
-    },
-    {
-      id: 3,
-      img: AT,
-      imgDark: AT,
-      title: "Drive Pack Agent",
-      link: "/seller/pages/drive-pack-agent",
-    },
-    {
-      id: 4,
-      img: NP,
-      imgDark: NP,
-      title: "Doctor",
-      link: "/seller/pages/doctor",
-    },
-    {
-      id: 5,
-      img: LT,
-      imgDark: LT,
-      title: "Tuition Agency",
-      link: "/seller/pages/tuition-agency",
-    },
-  ];
+// const DEMO_DATA: {
+//   id: number;
+//   img: string;
+//   imgDark: object;
+//   title: string;
+//   link: Route;
+// }[] = [
+//     {
+//       id: 1,
+//       img: MR,
+//       imgDark: MR,
+//       title: "Local Outlet",
+//       link: "/seller/pages/localoutlet",
+//     },
+//     {
+//       id: 2,
+//       img: DO,
+//       imgDark: DO,
+//       title: "eCommerce Vendor ship",
+//       link: "/seller/pages/ecommerce-vendor",
+//     },
+//     {
+//       id: 3,
+//       img: AT,
+//       imgDark: AT,
+//       title: "Drive Pack Agent",
+//       link: "/seller/pages/drive-pack-agent",
+//     },
+//     {
+//       id: 4,
+//       img: NP,
+//       imgDark: NP,
+//       title: "Doctor",
+//       link: "/seller/pages/doctor",
+//     },
+//     {
+//       id: 5,
+//       img: LT,
+//       imgDark: LT,
+//       title: "Tuition Agency",
+//       link: "/seller/pages/tuition-agency",
+//     },
+//   ];
 
 const SectionProfessional: FC<SectionProfessionalProps> = ({
   className = "",
-  data = DEMO_DATA,
 }) => {
   return (
     <div className={`nc-SectionHowItWork ${className}`}>
@@ -84,22 +83,26 @@ const SectionProfessional: FC<SectionProfessionalProps> = ({
             </Link>
           ))} */}
 
-          <NcImage
-            containerClassName="max-w-[300px] mx-auto"
-            className="rounded-sm"
-            src={MR}
-            sizes="350px"
-            alt="HIW"
-          />
+          <Link key={1} href={'/seller/pages/localoutlet'}>
+            <NcImage
+              containerClassName="max-w-[300px] mx-auto"
+              className="rounded-sm"
+              src={MR}
+              sizes="350px"
+              alt="HIW"
+            />
+          </Link>
 
-          <NcImage
-            containerClassName="max-w-[300px] mx-auto"
-            className="rounded-sm"
-            src={DO}
-            sizes="350px"
-            alt="HIW"
-          />
-
+          <Link key={2} href={'/seller/pages/ecommerce-vendor'}>
+            <NcImage
+              containerClassName="max-w-[300px] mx-auto"
+              className="rounded-sm"
+              src={DO}
+              sizes="350px"
+              alt="HIW"
+            />
+          </Link>
+          <Link key={3} href={'/seller/pages/drive-pack-agent'}>
           <NcImage
             containerClassName="max-w-[300px] mx-auto"
             className="rounded-sm"
@@ -107,7 +110,8 @@ const SectionProfessional: FC<SectionProfessionalProps> = ({
             sizes="350px"
             alt="HIW"
           />
-
+          </Link>
+          <Link key={4} href={'/seller/pages/doctor'}>
           <NcImage
             containerClassName="max-w-[300px] mx-auto"
             className="rounded-sm"
@@ -115,7 +119,8 @@ const SectionProfessional: FC<SectionProfessionalProps> = ({
             sizes="350px"
             alt="HIW"
           />
-
+          </Link>
+          <Link key={5} href={'/seller/pages/tuition-agency'}>
           <NcImage
             containerClassName="max-w-[300px] mx-auto"
             className="rounded-sm"
@@ -123,6 +128,7 @@ const SectionProfessional: FC<SectionProfessionalProps> = ({
             sizes="350px"
             alt="HIW"
           />
+          </Link>
         </div>
       </div>
     </div>

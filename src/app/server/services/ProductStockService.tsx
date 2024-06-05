@@ -2,7 +2,7 @@
 import { useEffect, useState } from 'react';
 import { CombinationService } from 'AizPackages/CombinationGenerate/Services/CombinationService';
 import ProductStock from '../models/ProductStock';
-import ProductUtility from '../utility/ProductUtility';
+import ProductUtility from '../utils/ProductUtility';
 
 interface ProductData {
   // Define types for product data

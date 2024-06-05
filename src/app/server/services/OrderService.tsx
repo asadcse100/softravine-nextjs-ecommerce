@@ -3,8 +3,8 @@ import Order from '../models/Order';
 import ProductStock from '../models/ProductStock';
 import SmsTemplate from '../models/SmsTemplate';
 import User from '../models/User';
-import NotificationUtility from '../utility/NotificationUtility';
-import SmsUtility from '../utility/SmsUtility';
+import NotificationUtility from '../utils/NotificationUtility';
+import SmsUtility from '../utils/SmsUtility';
 import AffiliateController from '../controllers/AffiliateController';
 import DeliveryBoyController from '../controllers/DeliveryBoyController';
 

@@ -1,0 +1,25 @@
+Seller Repotation
+
+Product page e cpoy description
+
+Customer account and seller panel same
+
+Affliate option
+
+10 gen ditribution
+
+On demand product
+
+====================
+
+npx create-next-app crud-next-prisma-mysql
+
+cd my-next-prisma-mysql
+
+npm install @prisma/client
+npm install prisma --save-dev
+
+generator client {
+    provider = "prisma-client.tsx"
+    output = "./generated/client"
+}

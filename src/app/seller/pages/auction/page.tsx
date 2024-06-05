@@ -3,6 +3,7 @@ import { DataTable } from "./data-table"
 
 async function getData(): Promise<Products[]> {
   // Fetch data from your API here.
+  const res = await fetch('https://api.example.com/')
   return [
     {
       id: "728ed52f",

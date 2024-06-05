@@ -3,6 +3,8 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
+import { useState } from 'react';
+import axios from 'axios';
 
 import { Button } from "@/app/admin/components/ui/button";
 import {
@@ -74,9 +76,14 @@ export default function Addnew() {
   });
 
   // 2. Define a submit handler.
-  function onSubmit(values: z.infer<typeof formSchema>) {
-    // Do something with the form values.
-    // ✅ This will be type-safe and validated.
+  async function onSubmit(values: z.infer<typeof formSchema>) {
+    try {
+      const response = await axios.post('/api/routes/admin/createAuction', values);
+      console.log(response.data);
+    } catch (error) {
+      console.error('Error creating auction:', error);
+    }
+  
     console.log(values);
   }
 

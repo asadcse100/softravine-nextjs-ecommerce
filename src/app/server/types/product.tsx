@@ -1,0 +1,40 @@
+// types/index.ts
+export interface Product {
+    id: number;
+    categoryId: number;
+    brandId: number;
+    barcode?: string;
+    cashOnDelivery: boolean;
+    isQuantityMultiplied: boolean;
+    refundable: boolean;
+    lang: string;
+    photos?: string;
+    thumbnailImg?: string;
+    tags?: string[];
+    videoProvider?: string;
+    videoLink?: string;
+    auctionStartDate?: Date;
+    auctionEndDate?: Date;
+    shippingType?: string;
+    estShippingDays?: number;
+    earnPoint?: string;
+    shippingCost?: number | string;
+    metaTitle?: string;
+    metaDescription?: string;
+    metaImg?: string;
+    pdf?: string;
+    colors?: string;
+    attributes?: string;
+    choiceOptions?: string;
+    name: string;
+    unit: string;
+    description: string;
+    slug: string;
+    auctionDateRange: string;
+    flatShippingCost: string;
+    tax_id: number[];
+    length: number;
+    tax: string;
+    tax_type: string;
+    startingBid: string;
+}
