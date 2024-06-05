@@ -1,0 +1,140 @@
+import { NextApiRequest, NextApiResponse } from 'next';
+import { PrismaClient } from '@prisma/client';
+
+const prisma = new PrismaClient();
+
+export const getManualPaymentMethods = async (req: NextApiRequest, res: NextApiResponse) => {
+  try {
+    const manualPaymentMethods = await prisma.manualPaymentMethod.findMany();
+    res.status(200).json(manualPaymentMethods);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: 'Internal server error' });
+  }
+};
+
+export const storeManualPaymentMethod = async (req: NextApiRequest, res: NextApiResponse) => {
+    const { type, photo, heading, description, bank_name, account_name, account_number, routing_number } = req.body;
+  
+    try {
+      let bankInfo = null;
+  
+      if (type === 'bank_payment') {
+        const banksInformations = bank_name.map((_, i) => ({
+          bank_name: bank_name[i],
+          account_name: account_name[i],
+          account_number: account_number[i],
+          routing_number: routing_number[i],
+        }));
+  
+        bankInfo = JSON.stringify(banksInformations);
+      }
+  
+      const manualPaymentMethod = await prisma.manualPaymentMethod.create({
+        data: {
+          type,
+          photo,
+          heading,
+          description,
+          bank_info: bankInfo,
+        },
+      });
+  
+      res.status(201).json({ message: 'Method has been inserted successfully', manualPaymentMethod });
+    } catch (error) {
+      console.error(error);
+      res.status(500).json({ error: 'Internal server error' });
+    }
+  };
+
+
+  export const updateManualPaymentMethod = async (req: NextApiRequest, res: NextApiResponse) => {
+    const { id } = req.query;
+    const { type, photo, heading, description, bank_name, account_name, account_number, routing_number } = req.body;
+  
+    try {
+      let bankInfo = null;
+  
+      if (type === 'bank_payment') {
+        const banksInformations = bank_name.map((_, i) => ({
+          bank_name: bank_name[i],
+          account_name: account_name[i],
+          account_number: account_number[i],
+          routing_number: routing_number[i],
+        }));
+  
+        bankInfo = JSON.stringify(banksInformations);
+      }
+  
+      const manualPaymentMethod = await prisma.manualPaymentMethod.update({
+        where: { id: Number(id) },
+        data: {
+          type,
+          photo,
+          heading,
+          description,
+          bank_info: bankInfo,
+        },
+      });
+  
+      res.status(200).json({ message: 'Method has been updated successfully', manualPaymentMethod });
+    } catch (error) {
+      console.error(error);
+      res.status(500).json({ error: 'Internal server error' });
+    }
+  };
+
+  export const deleteManualPaymentMethod = async (req: NextApiRequest, res: NextApiResponse) => {
+    const { id } = req.query;
+  
+    try {
+      const deletedManualPaymentMethod = await prisma.manualPaymentMethod.delete({
+        where: { id: Number(id) },
+      });
+  
+      res.status(200).json({ message: 'Method has been deleted successfully', deletedManualPaymentMethod });
+    } catch (error) {
+      console.error(error);
+      res.status(500).json({ error: 'Something went wrong' });
+    }
+  };
+
+  export const submitOfflinePayment = async (req: NextApiRequest, res: NextApiResponse) => {
+    const { order_id, name, amount, trx_id, photo, payment_option } = req.body;
+  
+    if (!name || !amount || !trx_id) {
+      res.status(400).json({ error: 'Please fill all the fields' });
+      return;
+    }
+  
+    try {
+      const order = await prisma.order.findUnique({ where: { id: Number(order_id) } });
+  
+      if (!order) {
+        res.status(404).json({ error: 'Order not found' });
+        return;
+      }
+  
+      const manualPaymentData = {
+        name,
+        amount,
+        trx_id,
+        photo,
+      };
+  
+      const updatedOrder = await prisma.order.update({
+        where: { id: Number(order_id) },
+        data: {
+          manual_payment_data: JSON.stringify(manualPaymentData),
+          payment_type: payment_option,
+          payment_status: 'Submitted',
+          manual_payment: true,
+        },
+      });
+  
+      res.status(200).json({ message: 'Your payment data has been submitted successfully', updatedOrder });
+    } catch (error) {
+      console.error(error);
+      res.status(500).json({ error: 'Internal server error' });
+    }
+  };
