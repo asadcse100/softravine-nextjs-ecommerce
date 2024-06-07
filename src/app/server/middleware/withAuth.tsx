@@ -11,3 +11,4 @@ export const withAuth = (handler: NextApiHandler) => async (req: NextApiRequest,
 
     return handler(req, res);
 };
+
