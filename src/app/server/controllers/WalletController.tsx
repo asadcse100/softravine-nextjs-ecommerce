@@ -1,5 +1,6 @@
 import { PrismaClient } from '@prisma/client';
 import { NextApiRequest, NextApiResponse } from 'next';
+import { getSession } from 'next-auth/react';
 
 const prisma = new PrismaClient();
 
@@ -27,7 +28,6 @@ export const index = async (req: NextApiRequest, res: NextApiResponse) => {
         res.status(500).json({ error: 'Internal Server Error' });
     }
 }
-
 
 // export default async function recharge(req: NextApiRequest, res: NextApiResponse) {
     export const recharge = async (req: NextApiRequest, res: NextApiResponse) => {
@@ -57,4 +57,136 @@ export const index = async (req: NextApiRequest, res: NextApiResponse) => {
     }
   }
 
+  export async function walletPaymentDone(req: NextApiRequest, res: NextApiResponse) {
+    const session = await getSession({ req });
+    if (!session) {
+      return res.status(401).json({ error: 'Unauthorized' });
+    }
   
+    const { amount, paymentMethod, paymentDetails } = req.body;
+  
+    try {
+      const user = await prisma.user.findUnique({
+        where: { email: session.user.email }
+      });
+  
+      if (!user) {
+        return res.status(404).json({ error: 'User not found' });
+      }
+  
+      const updatedUser = await prisma.user.update({
+        where: { id: user.id },
+        data: { balance: user.balance + amount }
+      });
+  
+      const wallet = await prisma.wallet.create({
+        data: {
+          userId: user.id,
+          amount,
+          paymentMethod,
+          paymentDetails
+        }
+      });
+  
+      // Clear session data equivalent
+      // This might not be directly applicable in Next.js; instead, manage the session as needed
+      // Example: req.session.paymentData = null;
+      // Example: req.session.paymentType = null;
+  
+      return res.status(200).json({ message: 'Recharge completed', user: updatedUser, wallet });
+    } catch (error) {
+      return res.status(500).json({ error: 'Internal server error' });
+    }
+  }
+
+
+  export async function offlineRecharge(req: NextApiRequest, res: NextApiResponse) {
+    const session = await getSession({ req });
+    if (!session) {
+      return res.status(401).json({ error: 'Unauthorized' });
+    }
+  
+    const { amount, paymentOption, trxId, photo } = req.body;
+  
+    try {
+      const user = await prisma.user.findUnique({
+        where: { email: session.user.email }
+      });
+  
+      if (!user) {
+        return res.status(404).json({ error: 'User not found' });
+      }
+  
+      const wallet = await prisma.wallet.create({
+        data: {
+          userId: user.id,
+          amount,
+          paymentMethod: paymentOption,
+          paymentDetails: trxId,
+          approval: false,
+          offlinePayment: true,
+          receipt: photo
+        }
+      });
+  
+      return res.status(200).json({ message: 'Offline Recharge has been done. Please wait for response.', wallet });
+    } catch (error) {
+      return res.status(500).json({ error: 'Internal server error' });
+    }
+  }
+
+  export async function getOfflineRechargeRequests(req: NextApiRequest, res: NextApiResponse) {
+    try {
+      const wallets = await prisma.wallet.findMany({
+        where: { offlinePayment: true },
+        include: { user: true } // Include related user data if needed
+      });
+  
+      return res.status(200).json(wallets);
+    } catch (error) {
+      return res.status(500).json({ error: 'Internal server error' });
+    }
+  }
+
+
+  export async function updateApproved(req: NextApiRequest, res: NextApiResponse) {
+    const { id, status } = req.body;
+  
+    try {
+      const wallet = await prisma.wallet.findUnique({
+        where: { id: Number(id) },
+        include: { user: true },
+      });
+  
+      if (!wallet) {
+        return res.status(404).json({ error: 'Wallet not found' });
+      }
+  
+      const user = wallet.user;
+  
+      if (status === 1) {
+        await prisma.user.update({
+          where: { id: user.id },
+          data: { balance: user.balance + wallet.amount },
+        });
+      } else {
+        await prisma.user.update({
+          where: { id: user.id },
+          data: { balance: user.balance - wallet.amount },
+        });
+      }
+  
+      const updatedWallet = await prisma.wallet.update({
+        where: { id: Number(id) },
+        data: { approval: status },
+      });
+  
+      if (updatedWallet) {
+        return res.status(200).json({ success: true });
+      }
+  
+      return res.status(500).json({ success: false });
+    } catch (error) {
+      return res.status(500).json({ error: 'Internal server error' });
+    }
+  }

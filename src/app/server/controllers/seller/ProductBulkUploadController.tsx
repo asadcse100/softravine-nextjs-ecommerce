@@ -1,8 +1,9 @@
 import { NextApiRequest, NextApiResponse } from 'next';
-import prisma from '../../lib/prisma';
-import { Category, Brand } from '@prisma/client';
 import { createInvoicePDF } from '../../utils/pdf';
 import { parseExcelFile } from '../../utils/excel';
+import { PrismaClient } from '@prisma/client';
+
+const prisma = new PrismaClient();
 
 export default async function ProductBulkUploadController(
   req: NextApiRequest,

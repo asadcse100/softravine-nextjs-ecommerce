@@ -1,6 +1,7 @@
 import { NextApiRequest, NextApiResponse } from 'next';
-import prisma from '../../lib/prisma';
-import { User, SellerWithdrawRequest } from '@prisma/client';
+import { PrismaClient } from '@prisma/client';
+
+const prisma = new PrismaClient();
 
 export default async function SellerWithdrawRequestController(req: NextApiRequest, res: NextApiResponse) {
     if (req.method === 'GET') {

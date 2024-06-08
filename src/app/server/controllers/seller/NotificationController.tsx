@@ -1,7 +1,8 @@
 // pages/api/seller/notifications/index.ts
 
 import { getSession } from 'next-auth/client';
-import prisma from '../../../../lib/prisma';
+import { PrismaClient } from '@prisma/client';
+const prisma = new PrismaClient();
 
 export default async function handler(req, res) {
   const session = await getSession({ req });

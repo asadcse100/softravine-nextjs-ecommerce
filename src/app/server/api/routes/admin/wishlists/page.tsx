@@ -1,15 +1,15 @@
 import { NextApiRequest, NextApiResponse } from 'next';
-import { recharge, walletPaymentDone } from '@/app/server/controllers/WalletController'; // Import the controller function
+import { wishlists, store } from '@/app/server/controllers/WishlistController';
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
   if (req.method === 'GET') {
-    await recharge(req, res); // Call the controller function
+    return wishlists(req, res);
   } else {
     res.setHeader('Allow', ['GET']);
-    res.status(405).json({ error: 'Method not allowed' });
+    res.status(405).end(`Method ${req.method} Not Allowed`);
   }
   if (req.method === 'POST') {
-    return walletPaymentDone(req, res);
+    return store(req, res);
   } else {
     res.setHeader('Allow', ['POST']);
     res.status(405).end(`Method ${req.method} Not Allowed`);

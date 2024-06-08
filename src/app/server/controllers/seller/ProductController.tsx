@@ -1,11 +1,12 @@
 import { NextApiRequest, NextApiResponse } from 'next';
-import prisma from '../../lib/prisma';
-import { Product, Category, ProductTranslation } from '@prisma/client';
 import { ProductService } from '../../services/ProductService';
 import { ProductTaxService } from '../../services/ProductTaxService';
 import { ProductFlashDealService } from '../../services/ProductFlashDealService';
 import { ProductStockService } from '../../services/ProductStockService';
 import { NotificationService } from '../../services/NotificationService';
+import { PrismaClient } from '@prisma/client';
+
+const prisma = new PrismaClient();
 
 const productService = new ProductService();
 const productTaxService = new ProductTaxService();
