@@ -5,6 +5,7 @@ import { getAllBlogs, createBlogPost } from '@/app/server/controllers/BlogContro
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
   if (req.method === 'GET') {
     const { search = null, selectedCategories = [] } = req.query;
+console.log(req.query);
 
     try {
       const categoriesArray = Array.isArray(selectedCategories) ? selectedCategories : [selectedCategories];

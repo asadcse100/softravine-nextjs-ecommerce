@@ -17,6 +17,7 @@ import {
 
 import { z } from "zod";
 import Input from "@/shared/Input/Input";
+import Link from "next/link";
 
 
 const formSchema = z.object({
@@ -68,38 +69,6 @@ export const columns: ColumnDef<Products>[] = [
     enableHiding: false,
   },
   {
-    header: "Action",
-    id: "actions",
-    cell: ({ row }) => {
-      const payment = row.original;
-
-      return (
-        <DropdownMenu>
-          <DropdownMenuTrigger asChild>
-            <Button variant="ghost" className="h-8 w-8 p-0">
-              <span className="sr-only">Open menu</span>
-              <MoreHorizontal className="h-6 w-6" />
-            </Button>
-          </DropdownMenuTrigger>
-          <DropdownMenuContent
-            className="dark:bg-slate-700 dark:text-slate-200 bg-slate-100"
-            align="start"
-          >
-            <DropdownMenuLabel>Actions</DropdownMenuLabel>
-            <DropdownMenuItem
-              onClick={() => navigator.clipboard.writeText(payment.id)}
-            >
-              Copy payment ID
-            </DropdownMenuItem>
-            <DropdownMenuSeparator />
-            <DropdownMenuItem>View customer</DropdownMenuItem>
-            <DropdownMenuItem>View payment details</DropdownMenuItem>
-          </DropdownMenuContent>
-        </DropdownMenu>
-      );
-    },
-  },
-  {
     accessorKey: "icon",
     header: "Icon",
   },
@@ -130,5 +99,16 @@ export const columns: ColumnDef<Products>[] = [
   {
     accessorKey: "seller_product",
     header: "Seller Product",
+  },
+  {
+    header: "Action",
+    id: "actions",
+    cell: ({ row }) => {
+      const payment = row.original;
+
+      return (
+      <Link href="/">Set</Link>
+      );
+    },
   },
 ];
