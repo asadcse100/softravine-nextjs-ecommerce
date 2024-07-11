@@ -22,6 +22,7 @@ import OurServices from "@/app/frontend/components/OurServices/OurServices";
 function PageHome() {
   return (
     <div className="nc-PageHome relative overflow-hidden">
+
       <SectionHero2 />
 
       <div className="py-10 lg:py-20 border-t border-b border-slate-400 dark:border-slate-700">

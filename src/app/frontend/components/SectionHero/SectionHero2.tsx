@@ -97,9 +97,8 @@ const SectionHero2: FC<SectionHero2Props> = ({ className = "" }) => {
                 >
                   {isActive && (
                     <div
-                      className={`nc-SectionHero2Item__dot absolute inset-0 bg-slate-900 rounded-md ${
-                        isActive ? " " : " "
-                      }`}
+                      className={`nc-SectionHero2Item__dot absolute inset-0 bg-slate-900 rounded-md ${isActive ? " " : " "
+                        }`}
                     ></div>
                   )}
                 </div>
@@ -109,20 +108,20 @@ const SectionHero2: FC<SectionHero2Props> = ({ className = "" }) => {
         </div>
 
         <Prev
-          className="absolute start-1 sm:start-5 top-3/4 sm:top-1/2 sm:-translate-y-1/2 z-10 !text-slate-700"
+          className="absolute start-1 sm:start-5 top-3/4 sm:top-1/2 sm:-translate-y-1/2 z-10 !text-slate-300"
           btnClassName="w-12 h-12 hover:border-slate-400 dark:hover:border-slate-400"
           svgSize="w-6 h-6"
           onClickPrev={handleClickPrev}
         />
         <Next
-          className="absolute end-1 sm:end-5 top-3/4 sm:top-1/2 sm:-translate-y-1/2 z-10 !text-slate-700"
+          className="absolute end-1 sm:end-5 top-3/4 sm:top-1/2 sm:-translate-y-1/2 z-10 !text-slate-300"
           btnClassName="w-12 h-12 hover:border-slate-400 dark:hover:border-slate-400"
           svgSize="w-6 h-6"
           onClickNext={handleClickNext}
         />
 
         {/* BG */}
-        <div className="absolute inset-0 bg-[#E3FFE6]">
+        <div className="absolute inset-0 dark:bg-slate-700 bg-slate-100">
           <Image
             fill
             sizes="(max-width: 768px) 100vw, 50vw"
@@ -137,15 +136,15 @@ const SectionHero2: FC<SectionHero2Props> = ({ className = "" }) => {
             className={`relative z-[1] w-full max-w-3xl space-y-8 sm:space-y-14 nc-SectionHero2Item__left`}
           >
             <div className="space-y-5 sm:space-y-6">
-              <span className="nc-SectionHero2Item__subheading block text-base md:text-xl text-slate-700 font-medium">
+              <span className="nc-SectionHero2Item__subheading block text-base md:text-xl dark:text-slate-300 text-slate-700 font-medium">
                 {item.subHeading}
               </span>
-              <h2 className="nc-SectionHero2Item__heading font-semibold text-3xl sm:text-4xl md:text-5xl xl:text-6xl 2xl:text-7xl !leading-[114%] text-slate-900">
+              <h2 className="nc-SectionHero2Item__heading font-semibold text-3xl sm:text-4xl md:text-5xl xl:text-6xl 2xl:text-7xl !leading-[114%] dark:text-slate-300 text-slate-900">
                 {item.heading}
               </h2>
             </div>
 
-            <ButtonPrimary
+            {/* <ButtonPrimary
               className="nc-SectionHero2Item__button"
               sizeClass="py-3 px-6 sm:py-5 sm:px-9"
               href={item.btnLink}
@@ -169,7 +168,7 @@ const SectionHero2: FC<SectionHero2Props> = ({ className = "" }) => {
                   />
                 </svg>
               </span>
-            </ButtonPrimary>
+            </ButtonPrimary> */}
           </div>
           <div className="mt-10 lg:mt-0 lg:absolute end-0 rtl:-end-28 bottom-0 top-0 w-full max-w-2xl xl:max-w-3xl 2xl:max-w-4xl">
             <Image

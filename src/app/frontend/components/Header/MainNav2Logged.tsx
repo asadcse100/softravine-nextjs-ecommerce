@@ -9,68 +9,11 @@ import CartDropdown from "./CartDropdown";
 import { XMarkIcon } from "@heroicons/react/24/outline";
 import { useRouter } from "next/navigation";
 import SwitchDarkMode2 from "@/shared/SwitchDarkMode/SwitchDarkMode";
+import Link from "next/link";
 
-export interface MainNav2LoggedProps {}
+export interface MainNav2LoggedProps { }
 
 const MainNav2Logged: FC<MainNav2LoggedProps> = () => {
-  const inputRef = createRef<HTMLInputElement>();
-  const [showSearchForm, setShowSearchForm] = useState(false);
-  const router = useRouter();
-
-  const renderMagnifyingGlassIcon = () => {
-    return (
-      <svg
-        width={22}
-        height={22}
-        viewBox="0 0 24 24"
-        fill="none"
-        xmlns="http://www.w3.org/2000/svg"
-      >
-        <path
-          d="M11.5 21C16.7467 21 21 16.7467 21 11.5C21 6.25329 16.7467 2 11.5 2C6.25329 2 2 6.25329 2 11.5C2 16.7467 6.25329 21 11.5 21Z"
-          stroke="currentColor"
-          strokeWidth="1.5"
-          strokeLinecap="round"
-          strokeLinejoin="round"
-        />
-        <path
-          d="M22 22L20 20"
-          stroke="currentColor"
-          strokeWidth="1.5"
-          strokeLinecap="round"
-          strokeLinejoin="round"
-        />
-      </svg>
-    );
-  };
-
-  const renderSearchForm = () => {
-    return (
-      <form
-        className="flex-1 py-2 text-slate-900 dark:text-slate-100"
-        onSubmit={(e) => {
-          e.preventDefault();
-          router.push("/frontend/pages/search");
-          inputRef.current?.blur();
-        }}
-      >
-        <div className="bg-slate-50 dark:bg-slate-800 flex items-center space-x-1.5 px-5 h-full rounded">
-          {renderMagnifyingGlassIcon()}
-          <input
-            ref={inputRef}
-            type="text"
-            placeholder="Type and press enter"
-            className="border-none bg-transparent focus:outline-none focus:ring-0 w-full text-base"
-            autoFocus
-          />
-          <button type="button" onClick={() => setShowSearchForm(false)}>
-            <XMarkIcon className="w-5 h-5" />
-          </button>
-        </div>
-        <input type="submit" hidden value="" />
-      </form>
-    );
-  };
 
   const renderContent = () => {
     return (
@@ -83,24 +26,35 @@ const MainNav2Logged: FC<MainNav2LoggedProps> = () => {
           <Logo className="flex-shrink-0" />
         </div>
 
-        <div className="flex-[2] hidden lg:flex justify-center mx-4">
-          {showSearchForm ? renderSearchForm() : <Navigation />}
+        {/* <div className="flex-[2] hidden lg:flex justify-center mx-4">
+           <Navigation />
+        </div> */}
+
+        <div className="lg:flex-1 flex items-center">
+          <form className="max-w-md w-full">
+            <div className="relative">
+              <input type="search" className="block w-full p-2 ps-5 text-sm text-slate-900 border border-slate-300 rounded-full bg-slate-50 focus:ring-slate-500 focus:border-slate-500 dark:bg-slate-700 dark:border-slate-600 dark:placeholder-slate-400 dark:text-white dark:focus:ring-slate-500 dark:focus:border-slate-500" placeholder="Search Mockups, Logos..." required />
+              <button type="submit" className="text-white absolute end-1 bottom-1 bg-slate-300 hover:bg-slate-400 focus:ring-4 focus:outline-none focus:ring-slate-300 font-medium rounded-full text-sm px-7 py-4 dark:bg-slate-800 dark:hover:bg-slate-900 dark:focus:ring-slate-800">
+                <div className="absolute inset-y-0 start-2 flex items-center ps-3 pointer-events-none">
+                  <svg className="w-4 h-4 text-slate-500 dark:text-slate-400" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
+                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z" />
+                  </svg>
+                </div>
+              </button>
+            </div>
+          </form>
+        </div>
+        <div className="lg:flex-2 p-2 flex items-center">
+          <Link href="/">Download App</Link>
         </div>
 
         <div className="flex-1 flex items-center justify-end text-slate-700 dark:text-slate-100">
-          {!showSearchForm && (
-            <button
-              className="hidden lg:flex w-10 h-10 sm:w-12 sm:h-12 rounded-full text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 focus:outline-none items-center justify-center"
-              onClick={() => setShowSearchForm(!showSearchForm)}
-            >
-              {renderMagnifyingGlassIcon()}
-            </button>
-          )}
           <SwitchDarkMode2 />
-          <CartDropdown />
           <AvatarDropdown />
+          <CartDropdown />
         </div>
       </div>
+
     );
   };
 

@@ -5,6 +5,7 @@ import "@/app/frontend/styles/index.scss";
 import "rc-slider/assets/index.css";
 import Footer from "@/shared/Footer/Footer";
 import SiteHeader from "@/app/frontend/SiteHeader";
+import SubSiteHeader from "@/app/frontend/SubSiteHeader";
 import CommonClient from "../CommonClient";
 import Chat from "@/shared/Chat/Chat";
 
@@ -25,9 +26,10 @@ export default function RootLayout({
     <html lang="en" dir="" className={poppins.className}>
       <body className="bg-slate-200 text-base dark:bg-slate-800 text-slate-800 dark:text-slate-200">
         <SiteHeader />
+        <SubSiteHeader />
         {children}
         <CommonClient />
-        <Chat />
+        {/* <Chat /> */}
         <div className="bg-slate-800">
           <Footer />
         </div>

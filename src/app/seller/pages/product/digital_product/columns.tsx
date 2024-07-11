@@ -14,6 +14,7 @@ import {
   DropdownMenuTrigger,
 } from "@/app/seller/components/ui/dropdown-menu";
 import { Switch } from "@/app/seller/components/ui/switch";
+import Link from "next/link";
 
 // This type is used to define the shape of our data.
 // You can use a Zod schema here if you want.
