@@ -1,5 +1,4 @@
-// pages/api/messages.ts
-import type { NextApiRequest, NextApiResponse } from 'next';
+import { NextResponse } from "next/server";
 import { getSession } from 'next-auth/react';
 import { createMessage } from '@/app/server/controllers/MessageController';
 

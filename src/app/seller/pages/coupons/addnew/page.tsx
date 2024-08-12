@@ -15,7 +15,13 @@ import {
   FormMessage,
 } from "@/app/seller/components/ui/form";
 import Input from "@/shared/Input/Input";
-import { Select } from "@radix-ui/react-select";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/app/admin/components/ui/select";
 
 const formSchema = z.object({
   code: z.string().min(10, {
@@ -102,13 +108,30 @@ export default function Addnew() {
                         name="product_ids[]"
                         render={({ field }) => (
                           <FormItem>
-                            <FormLabel>Select Product</FormLabel>
+                            <FormLabel>Select Products</FormLabel>
                             <FormControl>
-                              <Select>
-                                <option value="">Apple</option>
-                                <option value="">Apple</option>
-                                <option value="">Apple</option>
-                              </Select>
+                            <Select
+                              onValueChange={field.onChange}
+                              defaultValue={field.value}
+                            >
+                              <FormControl>
+                                <SelectTrigger>
+                                  <SelectValue placeholder="Select Products" />
+                                </SelectTrigger>
+                              </FormControl>
+                              <SelectContent>
+                                <SelectItem value="Apple">Apple</SelectItem>
+                                <SelectItem value="m2@example.com">Pran</SelectItem>
+                                <SelectItem value="m22@example.com">Squre</SelectItem>
+                                <SelectItem value="m3@example.com">ACI</SelectItem>
+                                <SelectItem value="m4@example.com">SoftRavine</SelectItem>
+                                <SelectItem value="m5@example.com">Samsung</SelectItem>
+                                <SelectItem value="m6@example.com">LG</SelectItem>
+                                <SelectItem value="m7@example.com">Logitech</SelectItem>
+                                <SelectItem value="m8@example.com">A4tech</SelectItem>
+                                <SelectItem value="m9@example.com">HP</SelectItem>
+                              </SelectContent>
+                            </Select>
                             </FormControl>
                             <FormMessage />
                           </FormItem>

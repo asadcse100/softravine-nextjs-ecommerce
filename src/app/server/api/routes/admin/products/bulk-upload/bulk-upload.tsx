@@ -1,12 +1,13 @@
-
+import { NextResponse } from "next/server";
 import { bulkUpload } from '@/app/server/controllers/ProductBulkUploadController';
-import type { NextApiRequest, NextApiResponse } from 'next';
 
-export default async function handler(req: NextApiRequest, res: NextApiResponse) {
-    if (req.method === 'POST') {
-        return bulkUpload(req, res);
-    } else {
-        res.setHeader('Allow', ['POST']);
-        res.status(405).end(`Method ${req.method} Not Allowed`);
+export async function GET() {
+    const result = await bulkUpload();
+    try{
+        const users = result.data;
+        return NextResponse.json(users);
+    }catch(error){
+        console.error("Error fetching users:", error);
+        return NextResponse.error();
     }
-};
+  }

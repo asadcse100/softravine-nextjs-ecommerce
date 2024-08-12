@@ -1,20 +1,14 @@
-import { NextApiRequest, NextApiResponse } from 'next';
+import { NextResponse } from "next/server";
 import { withAuth } from '@/app/server/middleware/withAuth';
 import { handleCreateAddress, handleGetAddress, handleUpdateAddress, handleDeleteAddress } from '@/app/server/controllers/AddressController';
 
-const addressHandler = async (req: NextApiRequest, res: NextApiResponse) => {
-  switch (req.method) {
-    case 'POST':
-      return handleCreateAddress(req, res);
-    case 'GET':
-      return handleGetAddress(req, res);
-    case 'PUT':
-      return handleUpdateAddress(req, res);
-    case 'DELETE':
-      return handleDeleteAddress(req, res);
-    default:
-      return res.status(405).json({ message: 'Method Not Allowed' });
+export async function GET() {
+  const result = await handleCreateAddress();
+  try{
+      const users = result.data;
+      return NextResponse.json(users);
+  }catch(error){
+      console.error("Error fetching users:", error);
+      return NextResponse.error();
   }
-};
-
-export default withAuth(addressHandler);
+}

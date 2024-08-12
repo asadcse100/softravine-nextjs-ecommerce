@@ -1,5 +1,4 @@
-// pages/api/flash-deals/[id].ts
-import { NextApiRequest, NextApiResponse } from 'next';
+import { NextResponse } from "next/server";
 import { updateFlashDeal, deleteFlashDeal } from '@/app/server/controllers/FlashDealController';
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {

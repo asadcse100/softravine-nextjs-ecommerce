@@ -1,5 +1,4 @@
-// pages/api/blog-categories/[id].ts
-import type { NextApiRequest, NextApiResponse } from 'next';
+import { NextResponse } from "next/server";
 import { updateBlogCategory, deleteBlogCategory } from '@/app/server/controllers/BlogCategoryController';
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {

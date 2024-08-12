@@ -1,5 +1,4 @@
-// pages/api/products/[id].ts
-import { NextApiRequest, NextApiResponse } from 'next';
+import { NextResponse } from "next/server";
 import { updateProduct, deleteProduct } from '@/app/server/controllers/DigitalProductController';
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {

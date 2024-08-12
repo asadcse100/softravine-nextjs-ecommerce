@@ -1,12 +1,13 @@
-// pages/api/orders/bulk_delete.ts
-
-import { NextApiRequest, NextApiResponse } from 'next';
+import { NextResponse } from "next/server";
 import { bulkDeleteOrders } from '@/app/server/controllers/OrderController';
 
-export default async function handler(req: NextApiRequest, res: NextApiResponse) {
-  if (req.method === 'POST') {
-    return bulkDeleteOrders(req, res);
-  } else {
-    res.status(405).json({ error: 'Method not allowed' });
+export async function GET() {
+  const result = await bulkDeleteOrders();
+  try{
+      const users = result.data;
+      return NextResponse.json(users);
+  }catch(error){
+      console.error("Error fetching users:", error);
+      return NextResponse.error();
   }
 }

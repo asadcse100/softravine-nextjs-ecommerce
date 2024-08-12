@@ -1,6 +1,4 @@
-// pages/api/refund-request/[id]/store.ts
-
-import { NextApiRequest, NextApiResponse } from 'next';
+import { NextResponse } from "next/server";
 import { requestStore } from '@/app/server/controllers/RefundRequestController';
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {

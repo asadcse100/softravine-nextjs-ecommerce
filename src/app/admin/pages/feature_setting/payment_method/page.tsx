@@ -182,7 +182,7 @@ export default function Addnew() {
                         name="paypal_sandbox"
                         render={({ field }) => (
                           <FormItem>
-                            <FormLabel>Paypal Sandbox Mode</FormLabel>
+                            {/* <FormLabel>Paypal Sandbox Mode</FormLabel> */}
                             <div className="flex items-center space-x-12">
                               <FormLabel className="mt-2">
                                 Paypal Sandbox Mode

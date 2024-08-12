@@ -1,5 +1,4 @@
-// pages/api/flash-deals/update-featured.ts
-import { NextApiRequest, NextApiResponse } from 'next';
+import { NextResponse } from "next/server";
 import { updateFlashDealFeatured } from '@/app/server/controllers/FlashDealController';
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {

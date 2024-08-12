@@ -1,6 +1,4 @@
-// pages/api/orders/[id]/delete.ts
-
-import { NextApiRequest, NextApiResponse } from 'next';
+import { NextResponse } from "next/server";
 import { deleteOrder } from '@/app/server/controllers/OrderController';
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {

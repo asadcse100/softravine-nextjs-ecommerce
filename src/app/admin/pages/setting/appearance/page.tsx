@@ -15,7 +15,13 @@ import {
   FormMessage,
 } from "@/app/admin/components/ui/form";
 import Input from "@/shared/Input/Input";
-import Select from "@/shared/Select/Select";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/app/admin/components/ui/select";
 import Textarea from "@/shared/Textarea/Textarea";
 import { Switch } from "@/app/admin/components/ui/switch";
 
@@ -276,15 +282,24 @@ export default function Addnew() {
                           <FormItem>
                             <FormLabel>System Timezone</FormLabel>
                             <FormControl>
-                              <Select>
-                                <option value="">(GMT) UTC</option>
-                                <option value="">(GMT) London</option>
-                              </Select>
-                              {/* <Input
-                                className={inputClass}
-                                placeholder="barcode"
-                                {...field}
-                              /> */}
+                            <Select
+                              onValueChange={field.onChange}
+                              defaultValue={field.value}
+                            >
+                              <FormControl>
+                                <SelectTrigger>
+                                  <SelectValue placeholder="Select Timezone" />
+                                </SelectTrigger>
+                              </FormControl>
+                              <SelectContent>
+                                <SelectItem value="Apple">Apple</SelectItem>
+                                <SelectItem value="m2@example.com">Pran</SelectItem>
+                                <SelectItem value="m22@example.com">Squre</SelectItem>
+                                <SelectItem value="m3@example.com">ACI</SelectItem>
+                                <SelectItem value="m4@example.com">SoftRavine</SelectItem>
+                                <SelectItem value="m5@example.com">Samsung</SelectItem>
+                              </SelectContent>
+                            </Select>
                             </FormControl>
                             <FormMessage />
                           </FormItem>

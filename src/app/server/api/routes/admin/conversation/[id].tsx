@@ -1,4 +1,4 @@
-import { NextApiRequest, NextApiResponse } from 'next';
+import { NextResponse } from "next/server";
 import { destroy } from '@/app/server/controllers/ConversationController';
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {

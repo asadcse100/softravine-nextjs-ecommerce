@@ -1,5 +1,4 @@
-// pages/api/brands/[id].ts
-import type { NextApiRequest, NextApiResponse } from 'next';
+import { NextResponse } from "next/server";
 import { updateBrand, deleteBrand } from '@/app/server/controllers/BrandController';
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {

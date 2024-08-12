@@ -1,6 +1,4 @@
-// pages/api/users/[id]/payments.ts
-
-import { NextApiRequest, NextApiResponse } from 'next';
+import { NextResponse } from "next/server";
 import { showUserPayments } from '@/app/server/controllers/PaymentController';
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {

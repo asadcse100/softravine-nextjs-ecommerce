@@ -15,7 +15,13 @@ import {
   FormMessage,
 } from "@/app/admin/components/ui/form";
 import Input from "@/shared/Input/Input";
-import Select from "@/shared/Select/Select";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/app/admin/components/ui/select";
 
 const formSchema = z.object({
   carrier_name: z.string().min(10, {
@@ -82,7 +88,7 @@ export default function Addnew() {
           <div className="mx-auto max-w-screen-2xl">
             <div className="grid gap-4 md:grid-cols-1 lg:grid-cols-2 sm:grid-cols-1">
               <div className="flex flex-col gap-4">
-                <div className="px-6 rounded-sm border border-stroke bg-slate-300 shadow-default dark:border-strokedark dark:bg-boxdark">
+                <div className="px-6 rounded-sm border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark">
                   <div className="border-b border-stroke px-6.5 py-4 dark:border-strokedark">
                     <h3 className="font-medium text-black dark:text-slate-300">
                       Carrier Information
@@ -174,15 +180,20 @@ export default function Addnew() {
                           <FormItem>
                             <FormLabel>Billing Type</FormLabel>
                             <FormControl>
-                              <Select>
-                                <option>According to Weight</option>
-                                <option>According to Price</option>
-                              </Select>
-                              {/* <Input
-                                className={inputClass}
-                                placeholder="Facebook Chat"
-                                {...field}
-                              /> */}
+                              <Select
+                              onValueChange={field.onChange}
+                              defaultValue={field.value}
+                            >
+                              <FormControl>
+                                <SelectTrigger>
+                                  <SelectValue placeholder="Select Billing Type" />
+                                </SelectTrigger>
+                              </FormControl>
+                              <SelectContent>
+                                <SelectItem value="Apple">According to Weight</SelectItem>
+                                <SelectItem value="m2@example.com">According to Price</SelectItem>
+                              </SelectContent>
+                            </Select>
                             </FormControl>
                             <FormMessage />
                           </FormItem>

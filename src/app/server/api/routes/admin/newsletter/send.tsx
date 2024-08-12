@@ -1,5 +1,4 @@
-// pages/api/newsletters/send.ts
-import type { NextApiRequest, NextApiResponse } from 'next';
+import { NextResponse } from "next/server";
 import { sendEmail } from '@/app/server/controllers/NewsletterController';
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {

@@ -1,4 +1,4 @@
-import type { NextApiRequest, NextApiResponse } from 'next';
+import { NextResponse } from "next/server";
 import { updateLanguage, destroyLanguage } from '@/app/server/controllers/LanguageController';
 
 // export default async (req: NextApiRequest, res: NextApiResponse) => {

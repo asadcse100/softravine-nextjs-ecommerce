@@ -24,21 +24,31 @@ export const handleCreateAddress = async (req: NextApiRequest, res: NextApiRespo
   }
 };
 
-export const handleGetAddress = async (req: NextApiRequest, res: NextApiResponse) => {
-  try {
-    const addressId = req.query.id as string;
-    const address = await getAddressById(addressId);
+// export const handleGetAddress = async (req: NextApiRequest, res: NextApiResponse) => {
+//   try {
+//     const addressId = req.query.id as string;
+//     const address = await getAddressById(addressId);
 
-    if (!address) {
-      return res.status(404).json({ message: 'Address not found' });
-    }
+//     if (!address) {
+//       return res.status(404).json({ message: 'Address not found' });
+//     }
 
-    return res.status(200).json({ address });
-  } catch (error) {
-    console.error(error);
-    return res.status(500).json({ message: 'Internal server error' });
+//     return res.status(200).json({ address });
+//   } catch (error) {
+//     console.error(error);
+//     return res.status(500).json({ message: 'Internal server error' });
+//   }
+// };
+
+export const handleGetAddress = async () => {
+  try{
+      const texes = await prisma.ProductTax.findMany();
+      return { success: true, data: texes };
+  }catch(error){
+      console.error("Error fetching texes:", error);
+      return { success: false, error };
   }
-};
+}
 
 export const handleUpdateAddress = async (req: NextApiRequest, res: NextApiResponse) => {
   try {

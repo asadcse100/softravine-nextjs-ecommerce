@@ -249,7 +249,7 @@ export default function Addnew() {
                             <FormItem>
                               <FormLabel>Top Banner</FormLabel>
                               <FormControl>
-                                <Input
+                                <Input type="file"
                                   className={inputClass}
                                   placeholder="Top Banner"
                                   {...field}
@@ -268,7 +268,7 @@ export default function Addnew() {
                             <FormItem>
                               <FormLabel>Slider Banner</FormLabel>
                               <FormControl>
-                                <Input
+                                <Input type="file"
                                   className={inputClass}
                                   placeholder="Slider Banner"
                                   {...field}

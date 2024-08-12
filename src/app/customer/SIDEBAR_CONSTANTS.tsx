@@ -27,7 +27,11 @@ export const SIDENAV_ITEMS: SideNavItem[] = [
         path: "/customer",
         icon: <BsHouseDoor size={20} />
     },
-    
+    {
+        title: 'Eraning Balance',
+        path: '/customer/pages/earning-balance',
+        icon: <BsListUl size={20} />
+    },
     {
         title: 'Voucher Balance',
         path: '/customer/pages/voucher-balance',
@@ -53,31 +57,31 @@ export const SIDENAV_ITEMS: SideNavItem[] = [
         path: '/customer/pages/followed-seller',
         icon: <BsShop size={20} />
     },
-    {
-        title: 'Classified Products',
-        path: '/customer/pages/customer_products',
-        icon: <BsFillPeopleFill size={20} />
-    },
-    {
-        title: 'Auction',
-        path: '/auction',
-        icon: <BsBackpack4 size={20} />,
-        submenu: true,
-        subMenuItems: [
-            { title: 'Bidded Products', path: '/customer/pages/auction/product_bids' },
-            { title: 'Purchase History', path: '/customer/pages/auction/purchase_history' },
-        ],
-    },
+    // {
+    //     title: 'Classified Products',
+    //     path: '/customer/pages/customer_products',
+    //     icon: <BsFillPeopleFill size={20} />
+    // },
+    // {
+    //     title: 'Auction',
+    //     path: '/auction',
+    //     icon: <BsBackpack4 size={20} />,
+    //     submenu: true,
+    //     subMenuItems: [
+    //         { title: 'Bidded Products', path: '/customer/pages/auction/product_bids' },
+    //         { title: 'Purchase History', path: '/customer/pages/auction/purchase_history' },
+    //     ],
+    // },
     {
         title: 'Refund Requests',
         path: '/customer/pages/sent-refund-request',
         icon: <BsCashStack size={20} />
     },
-    {
-        title: 'Conversations',
-        path: '/customer/pages/conversations',
-        icon: <BsArrowLeftRight size={20} />
-    },
+    // {
+    //     title: 'Conversations',
+    //     path: '/customer/pages/conversations',
+    //     icon: <BsArrowLeftRight size={20} />
+    // },
     {
         title: 'My Wallet',
         path: '/customer/pages/wallet',
@@ -114,9 +118,9 @@ export const SIDENAV_ITEMS: SideNavItem[] = [
         path: '/customer/pages/profile',
         icon: <BsGear size={20} />
     },
-    {
-        title: 'Delete My Account',
-        path: '#',
-        icon: <BsGear size={20} />
-    }
+    // {
+    //     title: 'Delete My Account',
+    //     path: '#',
+    //     icon: <BsGear size={20} />
+    // }
 ]

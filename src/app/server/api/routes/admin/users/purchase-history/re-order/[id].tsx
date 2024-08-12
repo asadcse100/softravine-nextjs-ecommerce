@@ -1,6 +1,4 @@
-// pages/api/users/re-order/[id].ts
-
-import { NextApiRequest, NextApiResponse } from 'next';
+import { NextResponse } from "next/server";
 import { reOrder } from '@/app/server/controllers/PurchaseHistoryController';
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {

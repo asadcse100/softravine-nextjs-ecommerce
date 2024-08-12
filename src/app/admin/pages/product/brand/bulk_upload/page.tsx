@@ -57,7 +57,7 @@ export default function Addnew() {
                     </h3>
                   </div>
                   <div className="py-6">
-                    <div className="py-4 dark:text-slate-300">
+                    <div className="dark:text-slate-300">
                       <p className="text-xl">For Non-SSL</p>
                       <div className="border dark:border-slate-500 dark:text-slate-400 mt-2 p-3">
                       1. Download the skeleton file and fill it with proper data.

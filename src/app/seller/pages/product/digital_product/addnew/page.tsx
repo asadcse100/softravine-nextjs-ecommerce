@@ -17,6 +17,14 @@ import {
 import Input from "@/shared/Input/Input";
 import { Switch } from "@/app/seller/components/ui/switch";
 
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/app/admin/components/ui/select";
+
 const formSchema = z.object({
   product_name: z.string().min(10, {
     message: "Product Name must be at least 10 characters.",
@@ -117,7 +125,7 @@ export default function Addnew() {
                         )}
                       />
                     </div>
-                    <div className="flex flex-col gap-5.5 p-6.5">
+                    <div className="mt-3 flex flex-col gap-5.5 p-6.5">
                       <FormField
                         control={form.control}
                         name="product_file"
@@ -125,7 +133,7 @@ export default function Addnew() {
                           <FormItem>
                             <FormLabel>Product File</FormLabel>
                             <FormControl>
-                              <Input
+                              <Input type="file"
                                 className={inputClass}
                                 placeholder="Product File"
                                 {...field}
@@ -136,7 +144,7 @@ export default function Addnew() {
                         )}
                       />
                     </div>
-                    <div className="flex flex-col gap-5.5 p-6.5">
+                    <div className="mt-3 flex flex-col gap-5.5 p-6.5">
                       <FormField
                         control={form.control}
                         name="tag"
@@ -176,7 +184,7 @@ export default function Addnew() {
                           <FormItem>
                             <FormLabel>Gallery Images</FormLabel>
                             <FormControl>
-                              <Input
+                              <Input type="file"
                                 className={inputClass}
                                 placeholder="Gallery Images"
                                 {...field}
@@ -187,7 +195,7 @@ export default function Addnew() {
                         )}
                       />
                     </div>
-                    <div className="flex flex-col gap-5.5 p-6.5">
+                    <div className="mt-3 flex flex-col gap-5.5 p-6.5">
                       <FormField
                         control={form.control}
                         name="thumbnail_image"
@@ -195,7 +203,7 @@ export default function Addnew() {
                           <FormItem>
                             <FormLabel>Thumbnail Image</FormLabel>
                             <FormControl>
-                              <Input
+                              <Input type="file"
                                 className={inputClass}
                                 placeholder="Thumbnail Image"
                                 {...field}
@@ -240,7 +248,7 @@ export default function Addnew() {
                         )}
                       />
                     </div>
-                    <div className="flex flex-col gap-5.5 p-6.5">
+                    <div className="mt-3 flex flex-col gap-5.5 p-6.5">
                       <FormField
                         control={form.control}
                         name="video_link"
@@ -292,7 +300,7 @@ export default function Addnew() {
                         )}
                       />
                     </div>
-                    <div className="flex flex-col gap-5.5 p-6.5">
+                    <div className="mt-3 flex flex-col gap-5.5 p-6.5">
                       <FormField
                         control={form.control}
                         name="discount_date_range"
@@ -311,7 +319,7 @@ export default function Addnew() {
                         )}
                       />
                     </div>
-                    <div className="flex flex-col gap-5.5 p-6.5">
+                    <div className="mt-3 flex flex-col gap-5.5 p-6.5">
                       <FormField
                         control={form.control}
                         name="discount"
@@ -330,7 +338,7 @@ export default function Addnew() {
                         )}
                       />
                     </div>
-                    <div className="flex flex-col gap-5.5 p-6.5">
+                    <div className="mt-3 flex flex-col gap-5.5 p-6.5">
                       <FormField
                         control={form.control}
                         name="flat_percent"
@@ -382,7 +390,7 @@ export default function Addnew() {
                       />
                     </div>
  
-                    <div className="flex flex-col gap-5.5 p-6.5">
+                    <div className="mt-3 flex flex-col gap-5.5 p-6.5">
                       <FormField
                         control={form.control}
                         name="discount_date_range"
@@ -401,7 +409,7 @@ export default function Addnew() {
                         )}
                       />
                     </div>
-                    <div className="flex flex-col gap-5.5 p-6.5">
+                    <div className="mt-3 flex flex-col gap-5.5 p-6.5">
                       <FormField
                         control={form.control}
                         name="discount"
@@ -420,7 +428,7 @@ export default function Addnew() {
                         )}
                       />
                     </div>
-                    <div className="flex flex-col gap-5.5 p-6.5">
+                    <div className="mt-3 flex flex-col gap-5.5 p-6.5">
                       <FormField
                         control={form.control}
                         name="flat_percent"
@@ -492,7 +500,7 @@ export default function Addnew() {
                           <FormItem>
                             <FormLabel>PDF Specification</FormLabel>
                             <FormControl>
-                              <Input
+                              <Input type="file"
                                 className={inputClass}
                                 placeholder="pdf_specification"
                                 {...field}
@@ -535,7 +543,7 @@ export default function Addnew() {
                         )}
                       />
                     </div>
-                    <div className="flex flex-col gap-5.5 p-6.5">
+                    <div className="mt-3 flex flex-col gap-5.5 p-6.5">
                       <FormField
                         control={form.control}
                         name="meta_description"
@@ -554,7 +562,7 @@ export default function Addnew() {
                         )}
                       />
                     </div>
-                    <div className="flex flex-col gap-5.5 p-6.5">
+                    <div className="mt-3 flex flex-col gap-5.5 p-6.5">
                       <FormField
                         control={form.control}
                         name="meta_image"
@@ -562,7 +570,7 @@ export default function Addnew() {
                           <FormItem>
                             <FormLabel>Meta Imgae</FormLabel>
                             <FormControl>
-                              <Input
+                              <Input type="file"
                                 className={inputClass}
                                 placeholder="meta_image"
                                 {...field}
@@ -594,18 +602,35 @@ export default function Addnew() {
                           <FormItem>
                             <FormLabel>Main Category</FormLabel>
                             <FormControl>
-                              <Input
-                                className={inputClass}
-                                placeholder=""
-                                {...field}
-                              />
+                            <Select
+                              onValueChange={field.onChange}
+                              defaultValue={field.value}
+                            >
+                              <FormControl>
+                                <SelectTrigger>
+                                  <SelectValue placeholder="Select Category" />
+                                </SelectTrigger>
+                              </FormControl>
+                              <SelectContent>
+                                <SelectItem value="Apple">Apple</SelectItem>
+                                <SelectItem value="m2@example.com">Pran</SelectItem>
+                                <SelectItem value="m22@example.com">Squre</SelectItem>
+                                <SelectItem value="m3@example.com">ACI</SelectItem>
+                                <SelectItem value="m4@example.com">SoftRavine</SelectItem>
+                                <SelectItem value="m5@example.com">Samsung</SelectItem>
+                                <SelectItem value="m6@example.com">LG</SelectItem>
+                                <SelectItem value="m7@example.com">Logitech</SelectItem>
+                                <SelectItem value="m8@example.com">A4tech</SelectItem>
+                                <SelectItem value="m9@example.com">HP</SelectItem>
+                              </SelectContent>
+                            </Select>
                             </FormControl>
                             <FormMessage />
                           </FormItem>
                         )}
                       />
                     </div>
-                    <div className="flex flex-col gap-5.5 p-6.5">
+                    <div className="mt-3 flex flex-col gap-5.5 p-6.5">
                       <FormField
                         control={form.control}
                         name="sub_category"
@@ -613,11 +638,28 @@ export default function Addnew() {
                           <FormItem>
                             <FormLabel>Sub Category</FormLabel>
                             <FormControl>
-                              <Input
-                                className={inputClass}
-                                placeholder=""
-                                {...field}
-                              />
+                            <Select
+                              onValueChange={field.onChange}
+                              defaultValue={field.value}
+                            >
+                              <FormControl>
+                                <SelectTrigger>
+                                  <SelectValue placeholder="Select Sub Category" />
+                                </SelectTrigger>
+                              </FormControl>
+                              <SelectContent>
+                                <SelectItem value="Apple">Apple</SelectItem>
+                                <SelectItem value="m2@example.com">Pran</SelectItem>
+                                <SelectItem value="m22@example.com">Squre</SelectItem>
+                                <SelectItem value="m3@example.com">ACI</SelectItem>
+                                <SelectItem value="m4@example.com">SoftRavine</SelectItem>
+                                <SelectItem value="m5@example.com">Samsung</SelectItem>
+                                <SelectItem value="m6@example.com">LG</SelectItem>
+                                <SelectItem value="m7@example.com">Logitech</SelectItem>
+                                <SelectItem value="m8@example.com">A4tech</SelectItem>
+                                <SelectItem value="m9@example.com">HP</SelectItem>
+                              </SelectContent>
+                            </Select>
                             </FormControl>
                             <FormMessage />
                           </FormItem>

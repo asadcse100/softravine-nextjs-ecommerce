@@ -1,22 +1,16 @@
 import { PrismaClient } from '@prisma/client';
-import { NextApiRequest, NextApiResponse } from 'next';
 
 const prisma = new PrismaClient();
 
-// export default async function index(req: NextApiRequest, res: NextApiResponse) {
-export const index = async (req: NextApiRequest, res: NextApiResponse) => {
-    try {
-        const allTaxes = await prisma.tax.findMany({
-            orderBy: {
-                created_at: 'desc',
-            },
-        });
-        res.status(200).json(allTaxes);
-    } catch (error) {
-        console.error(error);
-        res.status(500).json({ error: 'Internal Server Error' });
+export const getTaxes = async () => {
+        try{
+            const texes = await prisma.ProductTax.findMany();
+            return { success: true, data: texes };
+        }catch(error){
+            console.error("Error fetching texes:", error);
+            return { success: false, error };
+        }
     }
-}
 
 // export default async function store(req: NextApiRequest, res: NextApiResponse) {
 export const store = async (req: NextApiRequest, res: NextApiResponse) => {

@@ -15,8 +15,15 @@ import {
   FormMessage,
 } from "@/app/admin/components/ui/form";
 import Input from "@/shared/Input/Input";
-import Select from "@/shared/Select/Select";
 import Textarea from "@/shared/Textarea/Textarea";
+
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/app/admin/components/ui/select";
 
 const formSchema = z.object({
   type: z.string().min(10, {
@@ -74,11 +81,21 @@ export default function Addnew() {
                           <FormItem>
                             <FormLabel>Type</FormLabel>
                             <FormControl>
-                              <Select>
-                                <option value="">Custom Payment</option>
-                                <option value="">Bank Payment</option>
-                                <option value="">Check Payment</option>
-                              </Select>
+                            <Select
+                              onValueChange={field.onChange}
+                              defaultValue={field.value}
+                            >
+                              <FormControl>
+                                <SelectTrigger>
+                                  <SelectValue placeholder="Select Type" />
+                                </SelectTrigger>
+                              </FormControl>
+                              <SelectContent>
+                                <SelectItem value="Custom_Payment">Custom Payment</SelectItem>
+                                <SelectItem value="m2@example.com">Bank Payment</SelectItem>
+                                <SelectItem value="m22@example.com">Check Payment</SelectItem>
+                              </SelectContent>
+                            </Select>
                             </FormControl>
                             <FormMessage />
                           </FormItem>

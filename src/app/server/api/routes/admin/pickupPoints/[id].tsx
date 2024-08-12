@@ -1,18 +1,13 @@
-import { NextApiRequest, NextApiResponse } from 'next';
+import { NextResponse } from "next/server";
 import { updatePickupPoint, deletePickupPoint } from '@/app/server/controllers/PickupPointController';
 
-// export default async (req: NextApiRequest, res: NextApiResponse) => {
-export default async function handler(req: NextApiRequest, res: NextApiResponse) {
-    if (req.method === 'PUT') {
-        return updatePickupPoint(req, res);
-    } else {
-        res.setHeader('Allow', ['PUT']);
-        res.status(405).end(`Method ${req.method} Not Allowed`);
+export async function GET() {
+    const result = await getAuctionProductDetails();
+    try{
+        const users = result.data;
+        return NextResponse.json(users);
+    }catch(error){
+        console.error("Error fetching users:", error);
+        return NextResponse.error();
     }
-    if (req.method === 'DELETE') {
-        return deletePickupPoint(req, res);
-    } else {
-        res.setHeader('Allow', ['DELETE']);
-        res.status(405).end(`Method ${req.method} Not Allowed`);
-    }
-}
+  }

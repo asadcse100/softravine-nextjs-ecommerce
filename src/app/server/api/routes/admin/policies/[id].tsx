@@ -1,4 +1,4 @@
-import { NextApiRequest, NextApiResponse } from 'next';
+import { NextResponse } from "next/server";
 import { getPolicyByName, upsertPolicy } from '@/app/server/controllers/PolicyController';
 
 // export default async (req: NextApiRequest, res: NextApiResponse) => {

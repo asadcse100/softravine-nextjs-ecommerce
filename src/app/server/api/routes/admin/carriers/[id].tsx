@@ -1,5 +1,4 @@
-// pages/api/carriers/[id].ts
-import type { NextApiRequest, NextApiResponse } from 'next';
+import { NextResponse } from "next/server";
 import { updateCarrier, deleteCarrier } from '@/app/server/controllers/CarrierController';
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {

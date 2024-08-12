@@ -1,21 +1,13 @@
-// pages/api/blogs/[slug].ts
-import type { NextApiRequest, NextApiResponse } from 'next';
+import { NextResponse } from "next/server";
 import { getBlogDetails, getRecentBlogs } from '@/app/server/controllers/BlogController';
 
-export default async function handler(req: NextApiRequest, res: NextApiResponse) {
-  const { slug } = req.query;
-
-  try {
-    const blog = await getBlogDetails(slug as string);
-    const recentBlogs = await getRecentBlogs();
-    
-    if (blog) {
-      res.status(200).json({ blog, recentBlogs });
-    } else {
-      res.status(404).json({ error: 'Blog not found' });
-    }
-  } catch (error) {
-    console.error(error);
-    res.status(500).json({ error: 'Internal Server Error' });
+export async function GET() {
+  const result = await getBlogDetails();
+  try{
+      const users = result.data;
+      return NextResponse.json(users);
+  }catch(error){
+      console.error("Error fetching users:", error);
+      return NextResponse.error();
   }
 }

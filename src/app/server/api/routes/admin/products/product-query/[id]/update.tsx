@@ -1,6 +1,4 @@
-// pages/api/users/[id]/update.ts
-
-import { NextApiRequest, NextApiResponse } from 'next';
+import { NextResponse } from "next/server";
 import { updateUser } from '@/app/server/controllers/ProfileController';
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {

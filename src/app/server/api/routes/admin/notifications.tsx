@@ -1,5 +1,4 @@
-// pages/api/notifications/index.ts
-import type { NextApiRequest, NextApiResponse } from 'next';
+import { NextResponse } from "next/server";
 import { getSession } from 'next-auth/react';
 import { getUserNotifications } from '@/app/server/controllers/NotificationController';
 

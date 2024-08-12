@@ -1,15 +1,14 @@
-// pages/api/orders/purchase-history.ts
-import { NextApiRequest, NextApiResponse } from 'next';
+import { NextResponse } from "next/server";
 import { getUserPurchaseHistory } from '@/app/server/controllers/AuctionProductController';
 import { withAuth } from '@/app/server/middleware/withAuth';
 
-const handler = async (req: NextApiRequest, res: NextApiResponse) => {
-    if (req.method === 'GET') {
-        return getUserPurchaseHistory(req, res);
-    } else {
-        res.setHeader('Allow', ['GET']);
-        res.status(405).end(`Method ${req.method} Not Allowed`);
+export async function GET() {
+    const result = await getUserPurchaseHistory();
+    try{
+        const users = result.data;
+        return NextResponse.json(users);
+    }catch(error){
+        console.error("Error fetching users:", error);
+        return NextResponse.error();
     }
-};
-
-export default withAuth(handler);
+  }

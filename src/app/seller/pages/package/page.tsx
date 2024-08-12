@@ -54,14 +54,14 @@ const PageSubcription = ({}) => {
     return (
       <div
         key={index}
-        className={`h-full relative px-6 py-8 rounded-3xl border-2 flex flex-col overflow-hidden ${
+        className={`h-full relative px-6 py-8 rounded-3xl border-2 flex flex-col overflow-hidden bg-slate-300 dark:bg-slate-700 ${
           pricing.isPopular
             ? "border-primary-500"
             : "border-slate-100 dark:border-slate-700"
         }`}
       >
         {pricing.isPopular && (
-          <span className="bg-primary-500 text-white px-3 py-1 tracking-widest text-xs absolute right-3 top-3 rounded-full z-10">
+          <span className="bg-primary-500 text-red-500 px-3 py-1 tracking-widest text-sm absolute right-3 top-3 rounded-full z-10">
             POPULAR
           </span>
         )}
@@ -92,7 +92,7 @@ const PageSubcription = ({}) => {
           {pricing.isPopular ? (
             <ButtonPrimary>Submit</ButtonPrimary>
           ) : (
-            <ButtonSecondary>
+            <ButtonSecondary className="bg-red-500">
               <span className="font-medium">Submit</span>
             </ButtonSecondary>
           )}

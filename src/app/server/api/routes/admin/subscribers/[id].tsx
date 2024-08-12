@@ -1,4 +1,4 @@
-import { NextApiRequest, NextApiResponse } from 'next';
+import { NextResponse } from "next/server";
 import { deleteSubscriber } from '@/app/server/controllers/SubscriberController'; // Import the controller function
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {

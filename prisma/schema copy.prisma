@@ -1,0 +1,1439 @@
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+// schema.prisma
+
+model Address {
+  id         Int      @id @default(autoincrement())
+  setDefault Boolean
+  user_id    Int
+  country_id Int
+  state_id   Int
+  city_id    Int
+  created_at DateTime @default(now())
+  updated_at DateTime @updatedAt
+  carts      Cart[]
+  user       User     @relation(fields: [user_id], references: [id])
+  country    Country  @relation(fields: [country_id], references: [id])
+  state      State    @relation(fields: [state_id], references: [id])
+  city       City     @relation(fields: [city_id], references: [id])
+}
+
+model AffiliateConfig {
+  id         Int      @id @default(autoincrement())
+  type       String
+  value      String
+  created_at DateTime @default(now())
+  updated_at DateTime @updatedAt
+}
+
+model AffiliateLog {
+  id               Int         @id @default(autoincrement())
+  user_id          Int
+  guest_id         Int
+  referred_by_user Int
+  order_detail_id  Int
+  order_id         Int
+  amount           String
+  affiliate_type   String
+  status           Int
+  created_at       DateTime    @default(now())
+  updated_at       DateTime    @updatedAt
+  user             User        @relation(fields: [user_id], references: [id])
+  order_detail     OrderDetail @relation(fields: [order_detail_id], references: [id])
+  order            Order       @relation(fields: [order_id], references: [id])
+}
+
+model AffiliateOption {
+  id         Int      @id @default(autoincrement())
+  type       String
+  details    String
+  percentage String
+  status     Int
+  created_at DateTime @default(now())
+  updated_at DateTime @updatedAt
+}
+
+model AffiliatePayment {
+  id                Int            @id @default(autoincrement())
+  affiliate_user_id Int?
+  amount            Float
+  payment_method    String
+  payment_details   String
+  created_at        DateTime       @default(now())
+  updated_at        DateTime       @updatedAt
+  AffiliateUser     AffiliateUser? @relation(fields: [affiliate_user_id], references: [id])
+}
+
+model AffiliateStats {
+  id                Int      @id @default(autoincrement())
+  affiliate_user_id Int
+  no_of_click       Int
+  no_of_order_item  Int
+  no_of_delivered   Int
+  no_of_cancel      Int
+  created_at        DateTime @default(now())
+  updated_at        DateTime @updatedAt
+}
+
+model AffiliateUser {
+  id                 Int                @id @default(autoincrement())
+  user_id            Int
+  paypal_email       String
+  bank_information   String
+  informations       String
+  balance            Float
+  status             Int
+  created_at         DateTime           @default(now())
+  updated_at         DateTime           @updatedAt
+  affiliate_payments AffiliatePayment[] @relation("AffiliateUserAffiliatePayment")
+  user               User               @relation(fields: [user_id], references: [id])
+}
+
+model AffiliateWithdrawRequest {
+  id         Int      @id @default(autoincrement())
+  user_id    Int
+  amount     Float
+  status     Int
+  created_at DateTime @default(now())
+  updated_at DateTime @updatedAt
+  user       User     @relation(fields: [user_id], references: [id])
+}
+
+model AppTranslation {
+  id         Int      @id @default(autoincrement())
+  lang       String
+  lang_key   String
+  lang_value String
+  created_at DateTime @default(now())
+  updated_at DateTime @updatedAt
+}
+
+model Attribute {
+  id         Int      @id @default(autoincrement())
+  name       String
+  created_at DateTime @default(now())
+  updated_at DateTime @updatedAt
+}
+
+model AttributeCategory {
+  id           Int      @id @default(autoincrement())
+  category_id  Int
+  attribute_id Int
+  created_at   DateTime @default(now())
+  updated_at   DateTime @updatedAt
+}
+
+model AttributeTranslation {
+  id           Int       @id @default(autoincrement())
+  attribute_id Int
+  lang         String
+  name         String
+  created_at   DateTime  @default(now())
+  updated_at   DateTime  @updatedAt
+  attribute    Attribute @relation(fields: [attribute_id], references: [id])
+}
+
+model AttributeValue {
+  id           Int       @id @default(autoincrement())
+  attribute_id Int
+  value        String
+  color_code   String
+  created_at   DateTime  @default(now())
+  updated_at   DateTime  @updatedAt
+  attribute    Attribute @relation(fields: [attribute_id], references: [id])
+}
+
+model AuctionProductBid {
+  id         Int      @id @default(autoincrement())
+  product_id Int
+  user_id    Int
+  amount     Float
+  created_at DateTime @default(now())
+  updated_at DateTime @updatedAt
+  product    Product  @relation(fields: [product_id], references: [id])
+  user       User     @relation(fields: [user_id], references: [id])
+}
+
+model AppSetting {
+  id         Int      @id @default(autoincrement())
+  currencyId Int
+  created_at DateTime @default(now())
+  updated_at DateTime @updatedAt
+  currency   Currency @relation(fields: [currencyId], references: [id])
+}
+
+
+model Banner {
+  id         Int      @id @default(autoincrement())
+  created_at DateTime @default(now())
+  updated_at DateTime @updatedAt
+}
+
+model Blog {
+  id          Int          @id @default(autoincrement())
+  category_id Int
+  title String
+  slug String
+  short_description String
+  description String
+  banner Int
+  meta_img Int
+  meta_description String
+  meta_keywords String
+  meta_keywstatusords Int
+  created_at  DateTime     @default(now())
+  updated_at  DateTime     @updatedAt
+  deleted_at  DateTime
+  category    BlogCategory @relation(fields: [category_id], references: [id])
+}
+
+model BlogCategory {
+  id         Int      @id @default(autoincrement())
+  category_name String
+  slug String
+  Blog       Blog[]
+  created_at DateTime @default(now())
+  updated_at DateTime @updatedAt
+  deleted_at DateTime
+}
+
+model Brand {
+  id                Int                @id @default(autoincrement())
+  logo_id           Int
+  name           String
+  // logo           String
+  top           String
+  slug           String
+  meta_title           String
+  meta_description           String
+  created_at        DateTime           @default(now())
+  updated_at        DateTime           @updatedAt
+  customerProducts  CustomerProduct[]
+  brandTranslations BrandTranslation[]
+  Product           Product[]
+  logo              Upload             @relation(fields: [logo_id], references: [id])
+}
+
+model BrandTranslation {
+  id         Int      @id @default(autoincrement())
+  name       String
+  lang       String
+  brand_id   Int
+  created_at DateTime @default(now())
+  updated_at DateTime @updatedAt
+  brand      Brand    @relation(fields: [brand_id], references: [id])
+}
+
+model BusinessSetting {
+  id         Int      @id @default(autoincrement())
+  type       String
+  value       String
+  lang       String
+  created_at DateTime @default(now())
+  updated_at DateTime @updatedAt
+}
+
+model Carrier {
+  id                 Int                 @id @default(autoincrement())
+  name        String
+  	logo        Int
+  	transit_time        Int
+  	free_shipping        Boolean
+  created_at         DateTime            @default(now())
+  updated_at         DateTime            @updatedAt
+  status             Boolean
+  carrierRanges      CarrierRange[]
+  carrierRangePrices CarrierRangePrice[]
+  Order              Order[]
+}
+
+model CarrierRange {
+  id                 Int                 @id @default(autoincrement())
+  carrier_id         Int
+  billing_type         String
+  delimiter1	         Decimal
+  delimiter2	         Decimal
+  created_at         DateTime            @default(now())
+  updated_at         DateTime            @updatedAt
+  carrierRangePrices CarrierRangePrice[]
+  carrier            Carrier             @relation(fields: [carrier_id], references: [id])
+}
+
+model CarrierRangePrice {
+  id               Int          @id @default(autoincrement())
+  carrier_id       Int
+  carrier_range_id Int
+  zone_id          Int
+  price Float
+  created_at       DateTime     @default(now())
+  updated_at       DateTime     @updatedAt
+  carrier          Carrier      @relation(fields: [carrier_id], references: [id])
+  carrier_range    CarrierRange @relation(fields: [carrier_range_id], references: [id])
+  zone             Zone         @relation(fields: [zone_id], references: [id])
+}
+
+model Currency {
+  id          Int           @id @default(autoincrement())
+  name        String
+  symbol      String
+  created_at  DateTime      @default(now())
+  updated_at  DateTime      @updatedAt
+  AppSettings AppSetting[]
+}
+
+model Cart {
+  id                    Int           @id @default(autoincrement())
+  address_id            Int
+  price                 Float
+  tax                   Float
+  shipping_cost         Float
+  shipping_type         String
+  discount              Float
+  product_referral_code String
+  coupon_code           String
+  coupon_applied        Boolean
+  quantity              Int
+  user_id               Int
+  temp_user_id          Int
+  owner_id              Int
+  product_id            Int
+  pickup_point            Int
+  carrier_id            Int
+  variation             String
+  created_at            DateTime      @default(now())
+  updated_at            DateTime      @updatedAt
+  CartProduct           CartProduct[]
+  user                  User?         @relation(fields: [user_id], references: [id])
+  product               Product?      @relation(fields: [product_id], references: [id])
+  address               Address?      @relation(fields: [address_id], references: [id])
+}
+
+model Category {
+  id                    Int                   @id @default(autoincrement())
+  cover_image_id        Int?
+  icon_id               Int?
+  banner_id             Int?
+  parent_id             Int?
+  category_id            Int?
+  level            Int?
+  name            String?
+  order_level            Int?
+  commision_rate            Float?
+  banner            String?
+  icon            String?
+  cover_image            String?
+  featured            Int?
+  top            Int?
+  digital            Int?
+  slug            String?
+  meta_title            String?
+  meta_description            String?
+  created_at            DateTime              @default(now())
+  updated_at            DateTime              @updatedAt
+  category_translations CategoryTranslation[]
+  classified_products   CustomerProduct[]
+  Product               Product[]
+  ProductCategory       ProductCategory[]
+  SizeChart             SizeChart[]
+  SubCategory           SubCategory[]
+  categories            Category[]            @relation("ChildCategories", fields: [parent_id], references: [id])
+  parentCategory        Category?             @relation("ChildCategories", fields: [categoryId], references: [id])
+  attributes            Attribute[]           @relation("CategoryAttribute")
+  coverImage            Upload?               @relation("CategoryCoverImage", fields: [cover_image_id], references: [id])
+  catIcon               Upload?               @relation("CategoryIcon", fields: [icon_id], references: [id])
+  bannerImage           Upload?               @relation("CategoryBanner", fields: [banner_id], references: [id])
+  products              Product[]             @relation("ProductCategory")
+}
+
+
+model CategoryTranslation {
+  id          Int      @id @default(autoincrement())
+  category_id Int
+  lang        String
+  name        String
+  description String?
+  created_at  DateTime @default(now())
+  updated_at  DateTime @updatedAt
+  category    Category @relation(fields: [category_id], references: [id])
+  @@unique([category_id, lang])
+}
+
+model CartProduct {
+  id         Int      @id @default(autoincrement())
+  cartId     Int
+  productId  Int
+  created_at DateTime @default(now())
+  updated_at DateTime @updatedAt
+  cart       Cart     @relation(fields: [cartId], references: [id])
+  product    Product  @relation(fields: [productId], references: [id])
+}
+
+model City {
+  id                Int               @id @default(autoincrement())
+  state_id          Int
+  name          String
+  cost          Float
+  status          Int
+  created_at        DateTime          @default(now())
+  updated_at        DateTime          @updatedAt
+  deleted_at        DateTime
+  city_translations CityTranslation[]
+  addresses         Address[]
+  customerProducts  CustomerProduct[]
+  state             State             @relation(fields: [state_id], references: [id])
+}
+
+model CityTranslation {
+  id         Int      @id @default(autoincrement())
+  name       String
+  lang       String
+  city_id    Int
+  created_at DateTime @default(now())
+  updated_at DateTime @updatedAt
+  city       City     @relation(fields: [city_id], references: [id])
+
+  @@unique([city_id, lang])
+}
+
+model Color {
+  id         Int      @id @default(autoincrement())
+  name String
+  code String
+  created_at DateTime @default(now())
+  updated_at DateTime @updatedAt
+}
+
+model ClubPointDetail {
+  id            Int       @id @default(autoincrement())
+  product_id    Int
+  club_point_id Int
+  created_at    DateTime  @default(now())
+  updated_at    DateTime  @updatedAt
+  product       Product   @relation(fields: [product_id], references: [id])
+  club_point    ClubPoint @relation(fields: [club_point_id], references: [id])
+}
+
+
+model CombinedOrder {
+  id         Int      @id @default(autoincrement())
+  user_id    Int
+  shipping_address    String
+  grand_total    Float
+  created_at DateTime @default(now())
+  updated_at DateTime @updatedAt
+  orders     Order[]
+  user       User     @relation(fields: [user_id], references: [id])
+}
+
+model CommissionHistory {
+  id         Int      @id @default(autoincrement())
+  order_id   Int
+  order_detail_id   Int
+  seller_id   Int
+  admin_commission   Float
+  seller_earning   Float
+  created_at DateTime @default(now())
+  updated_at DateTime @updatedAt
+  order      Order    @relation(fields: [order_id], references: [id])
+}
+
+model Conversation {
+  id          Int       @id @default(autoincrement())
+  sender_id   Int
+  receiver_id Int
+  title String
+  sender_viewed Int
+  receiver_viewed Int
+  created_at  DateTime  @default(now())
+  updated_at  DateTime  @updatedAt
+  messages    Message[]
+  sender      User      @relation("SenderConversation", fields: [sender_id], references: [id])
+  receiver    User      @relation("ReceiverConversation", fields: [receiver_id], references: [id])
+}
+
+model Country {
+  id         Int       @id @default(autoincrement())
+  name       String
+  code       String
+  zone_id    Int?
+  status     Boolean   @default(true)
+  created_at DateTime  @default(now())
+  updated_at DateTime  @updatedAt
+  deleted_at DateTime
+  cities     City[]
+  addresses  Address[]
+  State      State[]
+  zone       Zone?     @relation(fields: [zone_id], references: [id])
+}
+
+model Coupon {
+  id            Int          @id @default(autoincrement())
+  user_id       Int
+  type          String
+  code          String
+  details       String
+  discount      Float
+  discount_type String
+  start_date    Int
+  end_date      Int
+  status      Boolean
+  created_at    DateTime     @default(now())
+  updated_at    DateTime     @updatedAt
+  user          User         @relation(fields: [user_id], references: [id])
+  UserCoupon    UserCoupon[]
+}
+
+model CouponUsage {
+  id Int @id @default(autoincrement())
+  user_id Int
+  coupon_id Int
+    created_at    DateTime     @default(now())
+  updated_at    DateTime     @updatedAt
+}
+
+model Currencie {
+  id Int @id @default(autoincrement())
+  	name String
+  symbol String
+  exchange_rate Float
+  status Int
+  code String
+    created_at    DateTime     @default(now())
+  updated_at    DateTime     @updatedAt
+}
+
+model Customer {
+  id         Int      @id @default(autoincrement())
+  user_id    Int
+  created_at DateTime @default(now())
+  updated_at DateTime @updatedAt
+  user       User     @relation(fields: [user_id], references: [id])
+}
+
+model CustomerPackage {
+  id                          Int                          @id @default(autoincrement())
+  name String
+  amount Float
+  product_upload Int
+  logo String
+  created_at                  DateTime                     @default(now())
+  updated_at                  DateTime                     @updatedAt
+  customerPackagePayments     CustomerPackagePayment[]
+  customerPackageTranslations CustomerPackageTranslation[]
+}
+
+model CustomerPackagePayment {
+  id                 Int             @id @default(autoincrement())
+  user_id            Int
+  	customer_package_id Int
+  payment_method String
+  payment_details String
+  approval Int
+  offline_payment Int
+  reciept Int
+  created_at         DateTime        @default(now())
+  updated_at         DateTime        @updatedAt
+  user               User            @relation(fields: [user_id], references: [id])
+  customer_package   CustomerPackage @relation(fields: [customer_package_id], references: [id])
+}
+
+model CustomerPackageTranslation {
+  id                  Int             @id @default(autoincrement())
+  	customer_package_id  Int
+  name                String
+  description         String?
+  lang                String
+  created_at          DateTime        @default(now())
+  updated_at          DateTime        @updatedAt
+  customer_package    CustomerPackage @relation(fields: [customer_package_id], references: [id])
+
+  @@unique([customer_package_id, lang])
+}
+
+model CustomerProductTranslation {
+  id                  Int             @id @default(autoincrement())
+  customer_product_id Int
+  name                String
+  unit                String
+  lang                String
+  description         String?
+  created_at          DateTime        @default(now())
+  updated_at          DateTime        @updatedAt
+  customer_product    CustomerProduct @relation(fields: [customer_product_id], references: [id])
+}
+
+model CustomerProduct {
+  id                            Int                          @id @default(autoincrement())
+  category_id                   Int?
+  subcategory_id                Int?
+  subsubcategory_id             Int?
+  brand_id                      Int?
+  user_id                       Int?
+  state_id                      Int?
+  city_id                       Int?
+  thumbnail_img_id              Int?
+  name              String?
+  added_by              String?
+  photos              String?
+  thumbnail_img              String?
+  conditon              String?
+  location              String?
+  video_provider              String?
+  video_link              String?
+  unit              String?
+  tags              String?
+  	description              String?
+  		unit_price              Float?
+  		meta_title              String?
+  			meta_description              String?
+  			meta_img              String?
+  			pdf              String?
+  			slug              String?
+  status                        Boolean                      @default(true)
+  published                     Boolean                      @default(true)
+  created_at                    DateTime                     @default(now())
+  updated_at                    DateTime                     @updatedAt
+  customer_product_translations CustomerProductTranslation[]
+  category                      Category?                    @relation(fields: [category_id], references: [id])
+  subcategory                   SubCategory?                 @relation(fields: [subcategory_id], references: [id])
+  subsubcategory                SubSubCategory?              @relation(fields: [subsubcategory_id], references: [id])
+  brand                         Brand?                       @relation(fields: [brand_id], references: [id])
+  user                          User?                        @relation(fields: [user_id], references: [id])
+  state                         State?                       @relation(fields: [state_id], references: [id])
+  city                          City?                        @relation(fields: [city_id], references: [id])
+  thumbnail                     Upload?                      @relation("CustomerProductThumbnail", fields: [thumbnail_img_id], references: [id])
+}
+
+model CustomersImport {
+  id         Int      @id @default(autoincrement())
+  user_id    Int
+  created_at DateTime @default(now())
+  updated_at DateTime @updatedAt
+}
+
+model DeliveryBoy {
+  id         Int      @id @default(autoincrement())
+  user       User     @relation(fields: [user_id], references: [id])
+  user_id    Int
+  created_at DateTime @default(now())
+  updated_at DateTime @updatedAt
+}
+
+model DeliveryBoyCollection {
+  id         Int      @id @default(autoincrement())
+  user       User     @relation(fields: [user_id], references: [id])
+  user_id    Int
+  created_at DateTime @default(now())
+  updated_at DateTime @updatedAt
+}
+
+model DeliveryBoyPayment {
+  id         Int      @id @default(autoincrement())
+  user       User     @relation(fields: [user_id], references: [id])
+  user_id    Int
+  created_at DateTime @default(now())
+  updated_at DateTime @updatedAt
+}
+
+model DeliveryHistory {
+  id         Int      @id @default(autoincrement())
+  order      Order    @relation(fields: [order_id], references: [id])
+  order_id   Int
+  created_at DateTime @default(now())
+  updated_at DateTime @updatedAt
+}
+
+model FirebaseNotification {
+  id         Int      @id @default(autoincrement())
+  item_type_id Int
+  receiver_id Int
+  title String
+  text String
+  item_type String
+  is_read Boolean
+  created_at DateTime @default(now())
+  updated_at DateTime @updatedAt
+}
+
+model FlashDeal {
+  id                      Int                    @id @default(autoincrement())
+  title                  String
+  status                  String
+  start_date                  Int
+  end_date                  Int
+  featured                Boolean
+  background_color                String
+  text_color                String
+  banner                String
+  slug                String
+  created_at              DateTime               @default(now())
+  updated_at              DateTime               @updatedAt
+  flash_deal_translations FlashDealTranslation[]
+  flash_deal_products     FlashDealProduct[]
+}
+
+model FlashDealProduct {
+  id            Int       @id @default(autoincrement())
+  flash_deal_id Int
+  product_id    Int
+  discount    Float
+  discount_type    String
+  created_at    DateTime  @default(now())
+  updated_at    DateTime  @updatedAt
+  product       Product   @relation(fields: [product_id], references: [id])
+  flash_deal    FlashDeal @relation(fields: [flash_deal_id], references: [id])
+}
+
+model FlashDealTranslation {
+  id            Int       @id @default(autoincrement())
+  title         String
+  lang          String
+  flash_deal_id Int
+  created_at    DateTime  @default(now())
+  updated_at    DateTime  @updatedAt
+  flash_deal    FlashDeal @relation(fields: [flash_deal_id], references: [id])
+}
+
+model FollowSeller {
+  id         Int      @id @default(autoincrement())
+  user_id    Int
+  shop_id    Int
+  created_at DateTime @default(now())
+  updated_at DateTime @updatedAt
+  shop       Shop     @relation(fields: [shop_id], references: [id])
+}
+
+model HomeCategorie {
+  id         Int      @id @default(autoincrement())
+  category_id Int
+  subsubcategories String
+  status Int
+  created_at DateTime @default(now())
+  updated_at DateTime @updatedAt
+}
+
+model Language {
+  id         Int      @id @default(autoincrement())
+  	name String
+  	code String
+  	app_lang_code String
+  	rtl Boolean
+  		status Boolean
+  created_at DateTime @default(now())
+  updated_at DateTime @updatedAt
+}
+
+model ManualPaymentMethod {
+  id         Int      @id @default(autoincrement())
+  	type String
+  	heading String
+  	description String
+  	bank_info String
+  	photo String
+  created_at DateTime @default(now())
+  updated_at DateTime @updatedAt
+}
+
+model MeasurementPoint {
+  id         Int      @id @default(autoincrement())
+  name String
+  created_at DateTime @default(now())
+  updated_at DateTime @updatedAt
+}
+
+model Message {
+  id              Int          @id @default(autoincrement())
+  conversation_id Int
+  user_id         Int
+  message         String
+  created_at      DateTime     @default(now())
+  updated_at      DateTime     @updatedAt
+  user            User         @relation(fields: [user_id], references: [id])
+  conversation    Conversation @relation(fields: [conversation_id], references: [id])
+}
+
+model ModelHasPermissions {
+  permission_id BigInt
+  model_type String
+  model_id BigInt
+}
+
+model ModelHasRole {
+  role_id BigInt
+  model_type String
+  model_id BigInt
+}
+
+model Notification {
+    id                      Int                @id @default(autoincrement())
+  type String
+  notifiable_type String
+  notifiable_id BigInt
+  data String
+    read_at      DateTime
+    created_at      DateTime     @default(now())
+  updated_at      DateTime     @updatedAt
+}
+
+model Order {
+  id                      Int                @id @default(autoincrement())
+  commission_history_id    Int
+  combined_order_id        Int
+  user_id                 Int
+  guest_id                 Int
+  seller_id               Int
+  pickup_point_id         Int?
+  carrier_id              Int?
+  assign_delivery_boy_id  Int?
+  manual_payment  Int?
+  shipping_address  String?
+  additional_info  String?
+  shipping_type  String?
+  order_from  String?
+  delivery_status  String?
+  	payment_type  String?
+  	manual_payment_data  String?
+  	payment_status  String?
+  	payment_details  String?
+  	grand_total  Float?
+  	coupon_discount  Float?
+  	code  String?
+  	tracking_code  String?
+  		date  Int?
+  		viewed  Int?
+  		delivery_viewed  Int?
+  		payment_status_viewed	  Int?
+  		commission_calculated	  Int?
+  created_at              DateTime           @default(now())
+  updated_at              DateTime           @updatedAt
+  orderDetails            OrderDetail[]
+  refund_requests         RefundRequest[]
+  affiliate_log           AffiliateLog[]
+  club_point              ClubPoint[]
+  DeliveryHistory         DeliveryHistory[]
+  ProxyPayment            ProxyPayment[]
+  proxy_cart_reference_id ProxyPayment[]     @relation("OrderProxyCartReference", references: [reference_id])
+  commissionHistory       CommissionHistory? @relation(fields: [commission_history_id], references: [id])
+  combinedOrder           CombinedOrder?     @relation(fields: [combined_order_id], references: [id])
+  User                    User?              @relation(fields: [user_id], references: [id])
+  assign_delivery_boy     User?              @relation("AssignedDeliveryBoy", fields: [assign_delivery_boy_id], references: [id])
+  carrier                 Carrier?           @relation(fields: [carrier_id], references: [id])
+  pickup_point            PickupPoint?       @relation(fields: [pickup_point_id], references: [id])
+  seller                  Shop               @relation(fields: [seller_id], references: [id])
+  user                    User               @relation(fields: [user_id], references: [id])
+}
+
+model OrderDetail {
+  id              Int            @id @default(autoincrement())
+  order_id        Int
+  seller_id        Int
+  product_id      Int
+  pickup_point_id Int?
+  user_id         Int?
+  variation         String?
+  price         Float?
+  tax         Float?
+  quantity         Int?
+  shipping_cost         Float?
+    earn_point         Float?
+  payment_status         String?
+  delivery_status         String?
+  shipping_type         String?
+  	product_referral_code         String?
+  created_at      DateTime       @default(now())
+  updated_at      DateTime       @updatedAt
+  refund_request  RefundRequest?
+  affiliate_log   AffiliateLog[]
+  pickup_point    PickupPoint?   @relation(fields: [pickup_point_id], references: [id])
+  User            User?          @relation(fields: [user_id], references: [id])
+  product         Product        @relation(fields: [product_id], references: [id])
+  order           Order          @relation(fields: [order_id], references: [id])
+}
+
+model ClubPoint {
+  id                 Int               @id @default(autoincrement())
+  order_id           Int
+  user_id            Int
+  club_point_details ClubPointDetail[]
+  created_at         DateTime          @default(now())
+  updated_at         DateTime          @updatedAt
+  user               User              @relation(fields: [user_id], references: [id])
+  order              Order             @relation(fields: [order_id], references: [id])
+}
+
+model OtpConfiguration {
+  id         Int      @id @default(autoincrement())
+  created_at DateTime @default(now())
+  updated_at DateTime @updatedAt
+}
+
+model Page {
+  id                Int               @id @default(autoincrement())
+  type String
+  title String
+  slug String
+  	content String
+  	meta_title String
+  	meta_description String
+  	keywords String
+  		meta_image String
+  created_at        DateTime          @default(now())
+  updated_at        DateTime          @updatedAt
+  page_translations PageTranslation[]
+}
+
+model PageTranslation {
+  id         Int      @id @default(autoincrement())
+  page_id    Int
+  title      String
+  content    String
+  lang       String
+  created_at DateTime @default(now())
+  updated_at DateTime @updatedAt
+  page       Page     @relation(fields: [page_id], references: [id])
+}
+
+model PasswordReset {
+  id         Int      @id @default(autoincrement())
+  email      String
+  token      String
+  created_at DateTime @default(now())
+  updated_at DateTime @updatedAt
+}
+
+model Permission {
+  id         Int      @id @default(autoincrement())
+  name       String
+  created_at DateTime @default(now())
+  updated_at DateTime @updatedAt
+}
+
+model PickupPoint {
+  id                      Int                      @id @default(autoincrement())
+  pickUpStatus            Boolean                  @default(true)
+  staffId                 Int
+  created_at              DateTime                 @default(now())
+  updated_at              DateTime                 @updatedAt
+  pickupPointTranslations PickupPointTranslation[]
+  Order                   Order[]
+  OrderDetail             OrderDetail[]
+  staff                   Staff                    @relation(fields: [staffId], references: [id])
+}
+
+model PickupPointTranslation {
+  id            Int         @id @default(autoincrement())
+  name          String
+  address       String
+  lang          String
+  pickupPointId Int
+  created_at    DateTime    @default(now())
+  updated_at    DateTime    @updatedAt
+  pickupPoint   PickupPoint @relation(fields: [pickupPointId], references: [id])
+}
+
+model Plugin {
+  id          Int      @id @default(autoincrement())
+  name        String
+  description String?
+  version     String
+  created_at  DateTime @default(now())
+  updated_at  DateTime @updatedAt
+}
+
+model Policy {
+  id          Int      @id @default(autoincrement())
+  name        String
+  description String?
+  created_at  DateTime @default(now())
+  updated_at  DateTime @updatedAt
+}
+
+model Product {
+  id                  Int                  @id @default(autoincrement())
+  name                String
+  description         String?
+  categoryId          Int
+  brandId             Int
+  user_id             Int
+  thumbnailImg        Int
+  subCategoryId       Int?
+  productId           Int?
+  created_at          DateTime             @default(now())
+  updated_at          DateTime             @updatedAt
+  productTranslations ProductTranslation[]
+  taxes               ProductTax[]
+  orderDetails        OrderDetail[]
+  reviews             Review[]
+  productQueries      ProductQuery[]
+  wishlists           Wishlist[]
+  flashDealProduct    FlashDealProduct?
+  bids                AuctionProductBid[]
+  carts               Cart[]
+  clubPointDetails    ClubPointDetail[]
+  cartProducts        CartProduct[]
+  IsApprovedPublished Product[]
+  productStocks       ProductStock[]
+  ProductCategory     ProductCategory[]
+  category            Category             @relation(fields: [categoryId], references: [id])
+  brand               Brand                @relation(fields: [brandId], references: [id])
+  user                User                 @relation(fields: [user_id], references: [id])
+  thumbnail           Upload               @relation(fields: [thumbnailImg], references: [id])
+  Physical            Product[]            @relation("PhysicalProducts", references: [id])
+  Digital             Product[]            @relation("DigitalProducts", references: [id])
+  categories          Category[]           @relation("ProductCategory")
+  Product             Product?             @relation(fields: [productId], references: [id])
+  SubCategory         SubCategory?         @relation(fields: [subCategoryId], references: [id])
+}
+
+model ProductTax {
+  id         Int      @id @default(autoincrement())
+  taxRate    Float
+  productId  Int
+  created_at DateTime @default(now())
+  updated_at DateTime @updatedAt
+  product    Product  @relation(fields: [productId], references: [id])
+}
+
+model ProductQuery {
+  id         Int      @id @default(autoincrement())
+  productId  Int
+  user_id    Int
+  created_at DateTime @default(now())
+  updated_at DateTime @updatedAt
+  user       User     @relation(fields: [user_id], references: [id])
+  product    Product  @relation(fields: [productId], references: [id])
+}
+
+model ProductCategory {
+  id         Int      @id @default(autoincrement())
+  productId  Int
+  categoryId Int
+  created_at DateTime @default(now())
+  updated_at DateTime @updatedAt
+  category   Category @relation(fields: [categoryId], references: [id])
+  product    Product  @relation(fields: [productId], references: [id])
+}
+
+model ProductStock {
+  id              Int              @id @default(autoincrement())
+  product_id      Int
+  variant         String
+  sku             String
+  price           Float
+  qty             Int
+  image           String?
+  created_at      DateTime         @default(now())
+  updated_at      DateTime         @updatedAt
+  wholesalePrices WholesalePrice[]
+  product         Product          @relation(fields: [product_id], references: [id])
+}
+
+model ProductTranslation {
+  id          Int      @id @default(autoincrement())
+  productId   Int
+  name        String
+  unit        String
+  description String
+  lang        String
+  created_at  DateTime @default(now())
+  updated_at  DateTime @updatedAt
+  product     Product  @relation(fields: [productId], references: [id])
+}
+
+model ProxyPayment {
+  id           Int      @id @default(autoincrement())
+  order_id     Int
+  reference_id String
+  orderId      Int?
+  created_at   DateTime @default(now())
+  updated_at   DateTime @updatedAt
+  Order        Order?   @relation(fields: [orderId], references: [id])
+  order        Order    @relation(fields: [order_id], references: [id])
+
+  @@map("proxypay_payments")
+}
+
+model RefundRequest {
+  id              Int         @id @default(autoincrement())
+  order_detail_id Int
+  user_id         Int
+  sellerId        Int
+  order_id        Int
+  created_at      DateTime    @default(now())
+  updated_at      DateTime    @updatedAt
+  order           Order       @relation(fields: [order_id], references: [id])
+  seller          User        @relation("SellerRefunds", fields: [sellerId], references: [id])
+  user            User        @relation(fields: [user_id], references: [id])
+  orderDetail     OrderDetail @relation(fields: [order_detail_id], references: [id])
+}
+
+model Review {
+  id         Int      @id @default(autoincrement())
+  user_id    Int
+  productId  Int
+  status     Int
+  created_at DateTime @default(now())
+  updated_at DateTime @updatedAt
+  product    Product  @relation(fields: [productId], references: [id])
+  user       User     @relation(fields: [user_id], references: [id])
+}
+
+model Role {
+  id                Int               @id @default(autoincrement())
+  created_at        DateTime          @default(now())
+  updated_at        DateTime          @updatedAt
+  role_translations RoleTranslation[]
+  Staff             Staff[]
+}
+
+model RoleTranslation {
+  id         Int      @id @default(autoincrement())
+  roleId     Int
+  lang       String
+  created_at DateTime @default(now())
+  updated_at DateTime @updatedAt
+  role       Role     @relation(fields: [roleId], references: [id])
+}
+
+model Search {
+  id         Int      @id @default(autoincrement())
+  created_at DateTime @default(now())
+  updated_at DateTime @updatedAt
+}
+
+model Seller {
+  id              Int            @id @default(autoincrement())
+  user_id         Int
+  sellerPackageId Int?
+  payments        Payment[]      @relation("SellerPayments")
+  created_at      DateTime       @default(now())
+  updated_at      DateTime       @updatedAt
+  seller_package  SellerPackage? @relation(fields: [sellerPackageId], references: [id])
+  user            User           @relation(fields: [user_id], references: [id])
+}
+
+model Payment {
+  id         Int      @id @default(autoincrement())
+  amount     Float
+  sellerId   Int
+  created_at DateTime @default(now())
+  updated_at DateTime @updatedAt
+  seller     Seller   @relation("SellerPayments", fields: [sellerId], references: [id])
+}
+
+model SellerPackage {
+  id                        Int                        @id @default(autoincrement())
+  shopId                    Int?
+  Seller                    Seller[]
+  created_at                DateTime                   @default(now())
+  updated_at                DateTime                   @updatedAt
+  sellerPackageTranslations SellerPackageTranslation[]
+  sellerPackagePayments     SelllerPackagePayment[]
+  shop                      Shop?                      @relation(fields: [shopId], references: [id])
+}
+
+model SelllerPackagePayment {
+  id              Int           @id @default(autoincrement())
+  amount          Float
+  user_id         Int
+  sellerPackageId Int
+  created_at      DateTime      @default(now())
+  updated_at      DateTime      @updatedAt
+  sellerPackage   SellerPackage @relation(fields: [sellerPackageId], references: [id])
+  user            User          @relation(fields: [user_id], references: [id])
+}
+
+model SellerPackageTranslation {
+  id              Int           @id @default(autoincrement())
+  name            String
+  lang            String
+  sellerPackageId Int
+  description     String?
+  created_at      DateTime      @default(now())
+  updated_at      DateTime      @updatedAt
+  sellerPackage   SellerPackage @relation(fields: [sellerPackageId], references: [id])
+}
+
+model SellerWithdrawRequest {
+  id         Int      @id @default(autoincrement())
+  user_id    Int
+  shopId     Int
+  created_at DateTime @default(now())
+  updated_at DateTime @updatedAt
+  shop       Shop     @relation(fields: [shopId], references: [id])
+  user       User     @relation(fields: [user_id], references: [id])
+}
+
+model Shop {
+  id                    Int                     @id @default(autoincrement())
+  user_id               Int
+  sellerPackageId       Int?
+  created_at            DateTime                @default(now())
+  updated_at            DateTime                @updatedAt
+  followers             FollowSeller[]
+  Order                 Order[]
+  SellerWithdrawRequest SellerWithdrawRequest[]
+  sellerPackage         SellerPackage?          @relation(fields: [sellerPackageId], references: [id])
+  user                  User                    @relation(fields: [user_id], references: [id])
+}
+
+model SizeChart {
+  id               Int               @id @default(autoincrement())
+  sizeChartDetails SizeChartDetail[]
+  categoryId       Int
+  created_at       DateTime          @default(now())
+  updated_at       DateTime          @updatedAt
+  category         Category          @relation(fields: [categoryId], references: [id])
+}
+
+model SizeChartDetail {
+  id          Int       @id @default(autoincrement())
+  sizeChartId Int
+  created_at  DateTime  @default(now())
+  updated_at  DateTime  @updatedAt
+  sizeChart   SizeChart @relation(fields: [sizeChartId], references: [id])
+}
+
+model Slider {
+  id         Int      @id @default(autoincrement())
+  created_at DateTime @default(now())
+  updated_at DateTime @updatedAt
+}
+
+model SmsTemplate {
+  id         Int      @id @default(autoincrement())
+  created_at DateTime @default(now())
+  updated_at DateTime @updatedAt
+}
+
+model Staff {
+  id            Int          @id @default(autoincrement())
+  user_id       Int
+  roleId        Int
+  pickUpPointId Int?
+  created_at    DateTime     @default(now())
+  updated_at    DateTime     @updatedAt
+  pick_up_point PickupPoint? @relation(fields: [pickUpPointId], references: [id])
+  role          Role         @relation(fields: [roleId], references: [id])
+  user          User         @relation(fields: [user_id], references: [id])
+}
+
+model State {
+  id               Int               @id @default(autoincrement())
+  country_id       Int
+  created_at       DateTime          @default(now())
+  updated_at       DateTime          @updatedAt
+  cities           City[]
+  customerProducts CustomerProduct[]
+  addresses        Address[]
+  country          Country           @relation(fields: [country_id], references: [id])
+}
+
+model SubCategory {
+  id               Int               @id @default(autoincrement())
+  categoryId       Int
+  created_at       DateTime          @default(now())
+  updated_at       DateTime          @updatedAt
+  products         Product[]
+  subSubCategories SubSubCategory[]
+  customerProducts CustomerProduct[]
+  category         Category          @relation(fields: [categoryId], references: [id])
+}
+
+model Subscriber {
+  id         Int      @id @default(autoincrement())
+  created_at DateTime @default(now())
+  updated_at DateTime @updatedAt
+}
+
+model SubSubCategory {
+  id               Int               @id @default(autoincrement())
+  name             String
+  subCategoryId    Int
+  created_at       DateTime          @default(now())
+  updated_at       DateTime          @updatedAt
+  customerProducts CustomerProduct[]
+  subCategory      SubCategory       @relation(fields: [subCategoryId], references: [id])
+}
+
+model TicketReply {
+  id         Int      @id @default(autoincrement())
+  ticketId   Int
+  user_id    Int
+  created_at DateTime @default(now())
+  updated_at DateTime @updatedAt
+  user       User     @relation(fields: [user_id], references: [id])
+  ticket     Ticket   @relation(fields: [ticketId], references: [id])
+}
+
+model Ticket {
+  id            Int           @id @default(autoincrement())
+  user_id       Int
+  created_at    DateTime      @default(now())
+  updated_at    DateTime      @updatedAt
+  user          User          @relation(fields: [user_id], references: [id])
+  ticketReplies TicketReply[]
+}
+
+model Transaction {
+  id         Int      @id @default(autoincrement())
+  created_at DateTime @default(now())
+  updated_at DateTime @updatedAt
+}
+
+model Translation {
+  id         Int      @id @default(autoincrement())
+  created_at DateTime @default(now())
+  updated_at DateTime @updatedAt
+}
+
+model Upload {
+  id               Int               @id @default(autoincrement())
+  fileOriginalName String
+  fileName         String
+  user_id          Int
+  extension        String
+  type             String
+  fileSize         Int
+  created_at       DateTime          @default(now())
+  updated_at       DateTime          @updatedAt
+  customerProducts CustomerProduct[] @relation("CustomerProductThumbnail")
+  user             User              @relation(fields: [user_id], references: [id])
+  Brand            Brand[]
+  Category         Category[]
+  Product          Product[]
+}
+
+model User {
+  id                Int       @id @default(autoincrement())
+  seller_id         Int
+  name              String
+  email             String    @unique
+  password          String
+  address           String?
+  city              String?
+  postal_code       String?
+  phone             String?
+  country           String?
+  provider_id       String?
+  email_verified_at DateTime?
+  verification_code String?
+  created_at        DateTime  @default(now())
+  updated_at        DateTime  @updatedAt
+
+  wishlists                  Wishlist[]
+  customer                   Customer?
+  affiliate_user             AffiliateUser?
+  affiliate_withdraw_request AffiliateWithdrawRequest[]
+  products                   Product[]
+  shop                       Shop?
+  seller                     Seller?
+  staff                      Staff?
+  orders                     Order[]
+  wallets                    Wallet[]
+  club_point                 ClubPoint?
+  customer_package_payments  CustomerPackagePayment[]
+  customer_products          CustomerProduct[]
+  carts                      Cart[]
+  reviews                    Review[]
+  addresses                  Address[]
+  affiliate_log              AffiliateLog[]
+  product_bids               AuctionProductBid[]
+  product_queries            ProductQuery[]
+  uploads                    Upload[]
+  combinedOrders             CombinedOrder[]
+  coupons                    Coupon[]
+  seller_package_payments    SellerPackagePayment[]
+  DeliveryBoy                DeliveryBoy[]
+  DeliveryBoyCollection      DeliveryBoyCollection[]
+  DeliveryBoyPayment         DeliveryBoyPayment[]
+  Message                    Message[]
+  Order                      Order[]
+  RefundRequest              RefundRequest[]
+  SelllerPackagePayment      SelllerPackagePayment[]
+  SellerWithdrawRequest      SellerWithdrawRequest[]
+  TicketReply                TicketReply[]
+  Ticket                     Ticket[]
+  UserCoupon                 UserCoupon[]
+  senderConversations        Conversation[]             @relation("SenderConversation")
+  receiverConversations      Conversation[]             @relation("ReceiverConversation")
+  seller_orders              Order[]                    @relation("SellerOrders", fields: [seller_id], references: [id])
+  seller_sales               OrderDetail[]              @relation("SellerSales", fields: [seller_id], references: [id])
+}
+
+model SellerPackagePayment {
+  id         Int      @id @default(autoincrement())
+  amount     Float
+  paidAt     DateTime
+  user_id    Int
+  created_at DateTime @default(now())
+  updated_at DateTime @updatedAt
+  user       User     @relation(fields: [user_id], references: [id])
+}
+
+model UserCoupon {
+  id         Int      @id @default(autoincrement())
+  coupon_id  Int
+  user_id    Int
+  created_at DateTime @default(now())
+  updated_at DateTime @updatedAt
+  user       User     @relation(fields: [user_id], references: [id])
+  coupon     Coupon   @relation(fields: [coupon_id], references: [id])
+
+  @@index([user_id, coupon_id], name: "user_coupon_unique_idx")
+}
+
+model Wallet {
+  id         Int      @id @default(autoincrement())
+  user_id    Int
+  amount     Float
+  created_at DateTime @default(now())
+  updated_at DateTime @updatedAt
+  user       User     @relation(fields: [user_id], references: [id])
+
+  @@index([user_id], name: "wallet_user_index")
+}
+
+model WholesalePrice {
+  id             Int          @id @default(autoincrement())
+  productId      Int
+  price          Float
+  productStockId Int
+  created_at     DateTime     @default(now())
+  updated_at     DateTime     @updatedAt
+  productStock   ProductStock @relation(fields: [productStockId], references: [id])
+
+  @@index([productId], name: "wholesale_price_product_index")
+}
+
+model Wishlist {
+  id         Int      @id @default(autoincrement())
+  user_id    Int
+  productId  Int
+  created_at DateTime @default(now())
+  updated_at DateTime @updatedAt
+  product    Product  @relation(fields: [productId], references: [id])
+  user       User     @relation(fields: [user_id], references: [id])
+
+  @@index([user_id], name: "wishlist_user_index")
+}
+
+model Zone {
+  id                   Int                 @id @default(autoincrement())
+  name                 String
+  status               String
+  created_at           DateTime            @default(now())
+  updated_at           DateTime            @updatedAt
+  carrier_range_prices CarrierRangePrice[]
+  countries            Country[]
+
+  @@index([name], name: "zone_name_index")
+}

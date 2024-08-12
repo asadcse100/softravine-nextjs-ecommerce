@@ -12,3 +12,32 @@ datasource db {
   provider = "mysql"
   url      = env("DATABASE_URL")
 }
+
+
+model Users {
+  id                Int       @id @default(autoincrement())
+  seller_id         Int
+  name              String
+  email             String    @unique
+  password          String
+  address           String?
+  city              String?
+  postal_code       String?
+  phone             String?
+  country           String?
+  provider_id       String?
+  email_verified_at DateTime?
+  verification_code String?
+  created_at        DateTime  @default(now())
+  updated_at        DateTime  @updatedAt
+
+}
+
+model ProductTax {
+  id         Int      @id @default(autoincrement())
+  taxRate    Float
+  productId  Int
+  created_at DateTime @default(now())
+  updated_at DateTime @updatedAt
+  // product    Product  @relation(fields: [productId], references: [id])
+}

@@ -1,4 +1,4 @@
-import { NextApiRequest, NextApiResponse } from 'next';
+import { NextResponse } from "next/server";
 import { update, destroy  } from '@/app/server/controllers/CouponController';
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {

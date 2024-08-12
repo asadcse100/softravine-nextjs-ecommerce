@@ -1,6 +1,4 @@
-// pages/api/pages/[id]/delete.ts
-
-import { NextApiRequest, NextApiResponse } from 'next';
+import { NextResponse } from "next/server";
 import { deletePage } from '@/app/server/controllers/PageController';
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {

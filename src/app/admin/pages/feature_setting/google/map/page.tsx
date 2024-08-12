@@ -54,7 +54,7 @@ export default function Addnew() {
           <div className="mx-auto max-w-screen-2xl">
             <div className="grid gap-4 md:grid-cols-1 lg:grid-cols-2 sm:grid-cols-1">
               <div className="flex flex-col gap-4">
-                <div className="px-6 rounded-sm border border-stroke bg-slate-300 shadow-default dark:border-strokedark dark:bg-boxdark">
+                <div className="px-6 rounded-sm border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark">
                   <div className="border-b border-stroke px-6.5 py-4 dark:border-strokedark">
                     <h3 className="font-medium text-black dark:text-slate-300">
                       Google Map Setting
@@ -109,7 +109,7 @@ export default function Addnew() {
               </div>
 
               <div className="flex flex-col gap-4">
-                <div className="px-6 rounded-sm border border-stroke bg-slate-300 shadow-default dark:border-strokedark dark:bg-boxdark">
+                <div className="px-6 rounded-sm border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark">
                   <div className="border-b border-stroke px-6.5 py-4 dark:border-strokedark">
                     <h3 className="font-medium text-black dark:text-slate-300">
                       Google Map Configuration Notes

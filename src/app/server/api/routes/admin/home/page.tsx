@@ -1,14 +1,13 @@
-import { NextApiRequest, NextApiResponse } from 'next';
+import { NextResponse } from "next/server";
 import { getData } from '@/app/server/controllers/HomeController';
 
-// const handler = async (req: NextApiRequest, res: NextApiResponse) => {
-export default async function handler(req: NextApiRequest, res: NextApiResponse) {
-    if (req.method === 'GET') {
-        await getData(req, res);
-    } else {
-        res.setHeader('Allow', ['GET']);
-        res.status(405).end(`Method ${req.method} Not Allowed`);
+export async function GET() {
+    const result = await getData();
+    try{
+        const users = result.data;
+        return NextResponse.json(users);
+    }catch(error){
+        console.error("Error fetching users:", error);
+        return NextResponse.error();
     }
-};
-
-// export default handler;
+  }

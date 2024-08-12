@@ -1,11 +1,13 @@
-import { NextApiRequest, NextApiResponse } from 'next';
+import { NextResponse } from "next/server";
 import { store } from '@/app/server/controllers/ZoneController';
 
-export default async function handler(req: NextApiRequest, res: NextApiResponse) {
-  if (req.method === 'POST') {
-    return store(req, res);
-  } else {
-    res.setHeader('Allow', ['POST']);
-    res.status(405).end(`Method ${req.method} Not Allowed`);
+export async function GET() {
+  const result = await store();
+  try{
+      const users = result.data;
+      return NextResponse.json(users);
+  }catch(error){
+      console.error("Error fetching users:", error);
+      return NextResponse.error();
   }
 }

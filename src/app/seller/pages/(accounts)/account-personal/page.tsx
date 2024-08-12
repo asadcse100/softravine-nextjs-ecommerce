@@ -1,16 +1,66 @@
+"use client";
+
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useForm } from "react-hook-form";
+import { z } from "zod";
+
 import Label from "@/app/seller/components/Label/Label";
 import React, { FC } from "react";
 import ButtonPrimary from "@/shared/Button/ButtonPrimary";
 import Input from "@/shared/Input/Input";
-import Select from "@/shared/Select/Select";
-import Textarea from "@/shared/Textarea/Textarea";
-import { avatarImgs } from "@/contains/fakeData";
-import Image from "next/image";
+import {
+  Form,
+  FormControl,
+  FormDescription,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+} from "@/app/admin/components/ui/form";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/app/admin/components/ui/select";
 
-const AccountPersonalPage = () => {
+const formSchema = z.object({
+  user_emails: z.string().min(10, {
+    message: "Product Name must be at least 10 characters.",
+  }),
+  subscriber_emails: z.string().min(10, {
+    message: "Product Name must be at least 10 characters.",
+  }),
+  subject: z.string().min(10, {
+    message: "Product Name must be at least 10 characters.",
+  }),
+  content: z.string().min(10, {
+    message: "Product Name must be at least 10 characters.",
+  }),
+});
+
+export default function Addnew() {
+  const form = useForm<z.infer<typeof formSchema>>({
+    resolver: zodResolver(formSchema),
+    defaultValues: {
+      user_emails: "",
+      subscriber_emails: "",
+      subject: "",
+      content: "",
+    },
+  });
+
+  // 2. Define a submit handler.
+  function onSubmit(values: z.infer<typeof formSchema>) {
+    console.log(values);
+  }
   return (
     <div className={`nc-AccountPage `}>
-      <div className="space-y-5 sm:space-y-5 bg-slate-300 dark:bg-slate-700 p-5 rounded-xl">
+            <Form {...form}>
+        <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
+          
+      <div className="space-y-5 sm:space-y-5 bg-white dark:bg-slate-700 p-5 rounded-xl">
         {/* HEADING */}
         <h2 className="text-2xl sm:text-3xl font-semibold dark:text-slate-300">
           Personal infomation
@@ -42,12 +92,34 @@ const AccountPersonalPage = () => {
                 />
               </div>
 
-              <Label className="dark:text-slate-400">Gender</Label>
-              <Select className="mt-1.5 dark:text-slate-500">
-                <option value="Male">Male</option>
-                <option value="Female">Female</option>
-                <option value="Other">Other</option>
-              </Select>
+              <FormField
+                control={form.control}
+                name="subscriber_emails[]"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Gender</FormLabel>
+                    <FormControl>
+                    <Select
+                      onValueChange={field.onChange}
+                      defaultValue={field.value}
+                    >
+                      <FormControl>
+                        <SelectTrigger>
+                          <SelectValue placeholder="Select Gender" />
+                        </SelectTrigger>
+                      </FormControl>
+                      <SelectContent>
+                        <SelectItem value="Apple">Male</SelectItem>
+                        <SelectItem value="m2@example.com">Female</SelectItem>
+                        <SelectItem value="m22@example.com">Other</SelectItem>
+                      </SelectContent>
+                    </Select>
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+              
             </div>
 
             <div className="pt-2">
@@ -56,8 +128,10 @@ const AccountPersonalPage = () => {
           </div>
         </div>
       </div>
+      
+      </form>
+      </Form>
     </div>
   );
 };
 
-export default AccountPersonalPage;

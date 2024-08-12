@@ -219,8 +219,28 @@ export default function Addnew() {
                         )}
                       />
                     </div>
-                    <hr className="py-3" />
-                    <p className="dark:text-slate-300">Header Nav Menu</p>
+                    
+                    <div className="grid mt-3 justify-items-end">
+                      <Button
+                        className="dark:text-slate-200"
+                        variant="outline"
+                        type="submit"
+                      >
+                        Update
+                      </Button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              
+              <div className="flex flex-col gap-4">
+                <div className="px-6 rounded-sm border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark">
+                  <div className="border-b border-stroke px-6.5 py-4 dark:border-strokedark">
+                    <h3 className="font-medium text-black dark:text-white">
+                    Header Nav Menu
+                    </h3>
+                  </div>
+                  <div className="py-6">
                     <div className="mt-3 flex flex-col gap-5.5 p-6.5">
                       <FormField
                         control={form.control}
@@ -509,6 +529,7 @@ export default function Addnew() {
                         )}
                       />
                     </div>
+                    
                     <div className="grid mt-3 justify-items-end">
                       <Button
                         className="dark:text-slate-200"

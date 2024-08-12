@@ -1,6 +1,4 @@
-// pages/api/pages/[id]/update.ts
-
-import { NextApiRequest, NextApiResponse } from 'next';
+import { NextResponse } from "next/server";
 import { updatePage } from '@/app/server/controllers/PageController';
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {

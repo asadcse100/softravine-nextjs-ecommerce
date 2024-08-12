@@ -1,16 +1,13 @@
-import { NextApiRequest, NextApiResponse } from 'next';
+import { NextResponse } from "next/server";
 import { addToCompare, getCategories  } from '@/app/server/controllers/CompareController';
 
-export default async function handler(req: NextApiRequest, res: NextApiResponse) {
-  if (req.method === 'POST') {
-    await addToCompare(req, res);
-  } else {
-    res.status(405).json({ error: 'Method not allowed' });
-  }
-
-  if (req.method === 'GET') {
-    await getCategories(req, res);
-  } else {
-    res.status(405).json({ error: 'Method not allowed' });
+export async function GET() {
+  const result = await addToCompare();
+  try{
+      const users = result.data;
+      return NextResponse.json(users);
+  }catch(error){
+      console.error("Error fetching users:", error);
+      return NextResponse.error();
   }
 }

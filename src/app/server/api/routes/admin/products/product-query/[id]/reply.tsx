@@ -1,6 +1,4 @@
-// pages/api/support/product-query/[id]/reply.ts
-
-import { NextApiRequest, NextApiResponse } from 'next';
+import { NextResponse } from "next/server";
 import { replyToQuery } from '@/app/server/controllers/ProductQueryController';
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {

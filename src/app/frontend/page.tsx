@@ -53,18 +53,18 @@ function PageHome() {
           <SectionGridMoreExplore />
         </div>
 
-        <SectionSliderProductCard
-          heading="Best Sellers"
-          subHeading="Best selling of the month"
-        />
-
-        <SectionPromo2 />
+        {/* <SectionPromo2 /> */}
 
         <SectionSliderLargeProduct cardStyle="style2" />
 
         <SectionSliderCategories />
 
-        <div className="relative py-24 lg:py-32">
+        <SectionSliderProductCard
+          heading="Best Sellers"
+          subHeading="Best selling of the month"
+        />
+        
+        {/* <div className="relative py-24 lg:py-32">
           <BackgroundSection />
           <div>
             <Heading rightDescText="From the Ciseco blog">
@@ -75,9 +75,9 @@ function PageHome() {
               <ButtonSecondary>Show all blog articles</ButtonSecondary>
             </div>
           </div>
-        </div>
-        <SectionClientSay />
-        <SectionPromo3 />
+        </div> */}
+        {/* <SectionClientSay /> */}
+        {/* <SectionPromo3 /> */}
       </div>
     </div>
   );

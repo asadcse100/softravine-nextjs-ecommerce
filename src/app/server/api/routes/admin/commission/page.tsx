@@ -1,15 +1,13 @@
-import type { NextApiRequest, NextApiResponse } from 'next';
+import { NextResponse } from "next/server";
 import { payToSeller } from '@/app/server/controllers/CommissionController';
 
-export default async function handler(req: NextApiRequest, res: NextApiResponse) {
-    if (req.method === 'POST') {
-        try {
-            await payToSeller(req.body);
-            return res.status(200).json({ success: true, message: 'Payment completed' });
-        } catch (error) {
-            return res.status(500).json({ success: false, message: error.message });
-        }
-    } else {
-        return res.status(405).json({ success: false, message: 'Method Not Allowed' });
+export async function GET() {
+    const result = await payToSeller();
+    try{
+        const users = result.data;
+        return NextResponse.json(users);
+    }catch(error){
+        console.error("Error fetching users:", error);
+        return NextResponse.error();
     }
-}
+  }

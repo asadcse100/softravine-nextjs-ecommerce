@@ -1,23 +1,13 @@
-// pages/api/flash-deals.ts
-import { NextApiRequest, NextApiResponse } from 'next';
+import { NextResponse } from "next/server";
 import { getFlashDeals, createFlashDeal } from '@/app/server/controllers/FlashDealController';
 
-export default async function handler(req: NextApiRequest, res: NextApiResponse) {
-    const { search, page = '1', pageSize = '15' } = req.query;
-    if (req.method === 'GET') {
-        try {
-            const flashDeals = await getFlashDeals(search ? String(search) : undefined);
-            res.status(200).json({ flashDeals });
-        } catch (error) {
-            res.status(500).json({ error: 'Internal Server Error', details: error.message });
-        }
+export async function GET() {
+    const result = await getFlashDeals();
+    try{
+        const users = result.data;
+        return NextResponse.json(users);
+    }catch(error){
+        console.error("Error fetching users:", error);
+        return NextResponse.error();
     }
-    if (req.method === 'POST') {
-        try {
-            const flashDeal = await createFlashDeal(req.body);
-            res.status(201).json({ message: 'Flash Deal has been inserted successfully', flashDeal });
-        } catch (error) {
-            res.status(500).json({ error: 'Internal Server Error', details: error.message });
-        }
-    }
-}
+  }

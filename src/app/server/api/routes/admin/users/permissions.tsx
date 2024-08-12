@@ -1,12 +1,13 @@
-// pages/api/permissions.ts
-
-import { NextApiRequest, NextApiResponse } from 'next';
+import { NextResponse } from "next/server";
 import { addPermission } from '@/app/server/controllers/RoleController'; // Import the controller function
 
-export default async function handler(req: NextApiRequest, res: NextApiResponse) {
-  if (req.method === 'POST') {
-    await addPermission(req, res); // Call the controller function
-  } else {
-    res.status(405).json({ error: 'Method not allowed' });
+export async function GET() {
+  const result = await addPermission();
+  try{
+      const users = result.data;
+      return NextResponse.json(users);
+  }catch(error){
+      console.error("Error fetching users:", error);
+      return NextResponse.error();
   }
 }

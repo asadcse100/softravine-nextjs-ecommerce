@@ -1,11 +1,13 @@
-import { NextApiRequest, NextApiResponse } from 'next';
+import { NextResponse } from "next/server";
 import { index } from '@/app/server/controllers/WalletController'; // Import the controller function
 
-export default async function handler(req: NextApiRequest, res: NextApiResponse) {
-  if (req.method === 'GET') {
-    await index(req, res); // Call the controller function
-  } else {
-    res.setHeader('Allow', ['GET']);
-    res.status(405).json({ error: 'Method not allowed' });
+export async function GET() {
+  const result = await index();
+  try{
+      const users = result.data;
+      return NextResponse.json(users);
+  }catch(error){
+      console.error("Error fetching users:", error);
+      return NextResponse.error();
   }
 }

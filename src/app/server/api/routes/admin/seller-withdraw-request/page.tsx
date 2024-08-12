@@ -1,17 +1,13 @@
-// pages/api/sellers.ts
-
-import { NextApiRequest, NextApiResponse } from 'next';
+import { NextResponse } from "next/server";
 import { getSellerWithdrawRequests, storeWithdrawRequest } from '@/app/server/controllers/SellerWithdrawRequestController'; // Import the controller function
 
-export default async function handler(req: NextApiRequest, res: NextApiResponse) {
-  if (req.method === 'GET') {
-    await getSellerWithdrawRequests(req, res); // Call the controller function
-  } else {
-    res.status(405).json({ error: 'Method not allowed' });
-  }
-  if (req.method === 'POST') {
-    await storeWithdrawRequest(req, res); // Call the controller function
-  } else {
-    res.status(405).json({ error: 'Method not allowed' });
+export async function GET() {
+  const result = await getSellerWithdrawRequests();
+  try{
+      const users = result.data;
+      return NextResponse.json(users);
+  }catch(error){
+      console.error("Error fetching users:", error);
+      return NextResponse.error();
   }
 }

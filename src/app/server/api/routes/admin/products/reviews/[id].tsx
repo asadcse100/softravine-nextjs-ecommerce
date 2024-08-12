@@ -1,6 +1,4 @@
-// pages/api/reviews.ts
-
-import { NextApiRequest, NextApiResponse } from 'next';
+import { NextResponse } from "next/server";
 import { updatePublished } from '@/app/server/controllers/ReviewController';
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {

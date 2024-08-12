@@ -1,13 +1,13 @@
-// pages/api/pages/[slug].ts
-
-import { NextApiRequest, NextApiResponse } from 'next';
+import { NextResponse } from "next/server";
 import { showCustomPage } from '@/app/server/controllers/PageController';
 
-export default async function handler(req: NextApiRequest, res: NextApiResponse) {
-  const { slug } = req.query;
-  if (req.method === 'GET') {
-    return showCustomPage(req, res);
-  } else {
-    res.status(405).json({ error: `Method ${req.method} not allowed` });
+export async function GET() {
+  const result = await showCustomPage();
+  try{
+      const users = result.data;
+      return NextResponse.json(users);
+  }catch(error){
+      console.error("Error fetching users:", error);
+      return NextResponse.error();
   }
 }

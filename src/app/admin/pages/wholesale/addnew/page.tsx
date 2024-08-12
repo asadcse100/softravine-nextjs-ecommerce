@@ -14,7 +14,17 @@ import {
   FormLabel,
   FormMessage,
 } from "@/app/admin/components/ui/form";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/app/admin/components/ui/select";
+
 import Input from "@/shared/Input/Input";
+
+import { Switch } from "@/app/admin/components/ui/switch";
 
 const formSchema = z.object({
   name: z.string().min(10, {
@@ -119,13 +129,28 @@ export default function Addnew() {
                         render={({ field }) => (
                           <FormItem>
                             <FormLabel>Brand</FormLabel>
-                            <FormControl>
-                              <Input
-                                className={inputClass}
-                                placeholder="Brand"
-                                {...field}
-                              />
-                            </FormControl>
+                            <Select
+                              onValueChange={field.onChange}
+                              defaultValue={field.value}
+                            >
+                              <FormControl>
+                                <SelectTrigger>
+                                  <SelectValue placeholder="Select Brand" />
+                                </SelectTrigger>
+                              </FormControl>
+                              <SelectContent>
+                                <SelectItem value="Apple">Apple</SelectItem>
+                                <SelectItem value="m2@example.com">Pran</SelectItem>
+                                <SelectItem value="m22@example.com">Squre</SelectItem>
+                                <SelectItem value="m3@example.com">ACI</SelectItem>
+                                <SelectItem value="m4@example.com">SoftRavine</SelectItem>
+                                <SelectItem value="m5@example.com">Samsung</SelectItem>
+                                <SelectItem value="m6@example.com">LG</SelectItem>
+                                <SelectItem value="m7@example.com">Logitech</SelectItem>
+                                <SelectItem value="m8@example.com">A4tech</SelectItem>
+                                <SelectItem value="m9@example.com">HP</SelectItem>
+                              </SelectContent>
+                            </Select>
                             <FormMessage />
                           </FormItem>
                         )}
@@ -228,7 +253,7 @@ export default function Addnew() {
                           <FormItem>
                             <FormLabel>Gallery Images</FormLabel>
                             <FormControl>
-                              <Input
+                              <Input type="file"
                                 className={inputClass}
                                 placeholder="Gallery Images"
                                 {...field}
@@ -247,7 +272,7 @@ export default function Addnew() {
                           <FormItem>
                             <FormLabel>Thumbnail Image</FormLabel>
                             <FormControl>
-                              <Input
+                              <Input type="file"
                                 className={inputClass}
                                 placeholder="Thumbnail Image"
                                 {...field}
@@ -333,11 +358,28 @@ export default function Addnew() {
                           <FormItem>
                             <FormLabel>Colors</FormLabel>
                             <FormControl>
-                              <Input
-                                className={inputClass}
-                                placeholder="Select Color"
-                                {...field}
-                              />
+                            <Select
+                              onValueChange={field.onChange}
+                              defaultValue={field.value}
+                            >
+                              <FormControl>
+                                <SelectTrigger>
+                                  <SelectValue placeholder="Select Color" />
+                                </SelectTrigger>
+                              </FormControl>
+                              <SelectContent>
+                                <SelectItem value="Apple">Apple</SelectItem>
+                                <SelectItem value="m2@example.com">Pran</SelectItem>
+                                <SelectItem value="m22@example.com">Squre</SelectItem>
+                                <SelectItem value="m3@example.com">ACI</SelectItem>
+                                <SelectItem value="m4@example.com">SoftRavine</SelectItem>
+                                <SelectItem value="m5@example.com">Samsung</SelectItem>
+                                <SelectItem value="m6@example.com">LG</SelectItem>
+                                <SelectItem value="m7@example.com">Logitech</SelectItem>
+                                <SelectItem value="m8@example.com">A4tech</SelectItem>
+                                <SelectItem value="m9@example.com">HP</SelectItem>
+                              </SelectContent>
+                            </Select>
                             </FormControl>
                             <FormMessage />
                           </FormItem>
@@ -352,11 +394,28 @@ export default function Addnew() {
                           <FormItem>
                             <FormLabel>Attributes</FormLabel>
                             <FormControl>
-                              <Input
-                                className={inputClass}
-                                placeholder="Attributes"
-                                {...field}
-                              />
+                            <Select
+                              onValueChange={field.onChange}
+                              defaultValue={field.value}
+                            >
+                              <FormControl>
+                                <SelectTrigger>
+                                  <SelectValue placeholder="Select Attributes" />
+                                </SelectTrigger>
+                              </FormControl>
+                              <SelectContent>
+                                <SelectItem value="Apple">Apple</SelectItem>
+                                <SelectItem value="m2@example.com">Pran</SelectItem>
+                                <SelectItem value="m22@example.com">Squre</SelectItem>
+                                <SelectItem value="m3@example.com">ACI</SelectItem>
+                                <SelectItem value="m4@example.com">SoftRavine</SelectItem>
+                                <SelectItem value="m5@example.com">Samsung</SelectItem>
+                                <SelectItem value="m6@example.com">LG</SelectItem>
+                                <SelectItem value="m7@example.com">Logitech</SelectItem>
+                                <SelectItem value="m8@example.com">A4tech</SelectItem>
+                                <SelectItem value="m9@example.com">HP</SelectItem>
+                              </SelectContent>
+                            </Select>
                             </FormControl>
                             <FormMessage />
                           </FormItem>
@@ -556,7 +615,7 @@ export default function Addnew() {
                     </h3>
                   </div>
                   <div className="py-6">
-                    <div className="mt-3 flex flex-col gap-5.5 p-6.5">
+                    <div className="flex flex-col gap-5.5 p-6.5">
                       <FormField
                         control={form.control}
                         name="quantity"
@@ -646,7 +705,7 @@ export default function Addnew() {
                     </h3>
                   </div>
                   <div className="py-6">
-                    <div className="mt-3 flex flex-col gap-5.5 p-6.5">
+                    <div className="flex flex-col gap-5.5 p-6.5">
                       <FormField
                         control={form.control}
                         name="product_description"
@@ -678,7 +737,7 @@ export default function Addnew() {
                     </h3>
                   </div>
                   <div className="py-6">
-                    <div className="mt-3 flex flex-col gap-5.5 p-6.5">
+                    <div className="flex flex-col gap-5.5 p-6.5">
                       <FormField
                         control={form.control}
                         name="pdf_specification"
@@ -686,7 +745,7 @@ export default function Addnew() {
                           <FormItem>
                             <FormLabel>PDF Specification</FormLabel>
                             <FormControl>
-                              <Input
+                              <Input type="file"
                                 className={inputClass}
                                 placeholder="pdf_specification"
                                 {...field}
@@ -710,7 +769,7 @@ export default function Addnew() {
                     </h3>
                   </div>
                   <div className="py-6">
-                    <div className="mt-3 flex flex-col gap-5.5 p-6.5">
+                    <div className="flex flex-col gap-5.5 p-6.5">
                       <FormField
                         control={form.control}
                         name="meta_title"
@@ -756,7 +815,7 @@ export default function Addnew() {
                           <FormItem>
                             <FormLabel>Meta Imgae</FormLabel>
                             <FormControl>
-                              <Input
+                              <Input type="file"
                                 className={inputClass}
                                 placeholder="meta_image"
                                 {...field}
@@ -780,7 +839,7 @@ export default function Addnew() {
                     </h3>
                   </div>
                   <div className="py-6">
-                    <div className="mt-3 flex flex-col gap-5.5 p-6.5">
+                    <div className="flex flex-col gap-5.5 p-6.5">
                       <FormField
                         control={form.control}
                         name="main_category"
@@ -788,11 +847,28 @@ export default function Addnew() {
                           <FormItem>
                             <FormLabel>Main Category</FormLabel>
                             <FormControl>
-                              <Input
-                                className={inputClass}
-                                placeholder=""
-                                {...field}
-                              />
+                            <Select
+                              onValueChange={field.onChange}
+                              defaultValue={field.value}
+                            >
+                              <FormControl>
+                                <SelectTrigger>
+                                  <SelectValue placeholder="Select Category" />
+                                </SelectTrigger>
+                              </FormControl>
+                              <SelectContent>
+                                <SelectItem value="Apple">Apple</SelectItem>
+                                <SelectItem value="m2@example.com">Pran</SelectItem>
+                                <SelectItem value="m22@example.com">Squre</SelectItem>
+                                <SelectItem value="m3@example.com">ACI</SelectItem>
+                                <SelectItem value="m4@example.com">SoftRavine</SelectItem>
+                                <SelectItem value="m5@example.com">Samsung</SelectItem>
+                                <SelectItem value="m6@example.com">LG</SelectItem>
+                                <SelectItem value="m7@example.com">Logitech</SelectItem>
+                                <SelectItem value="m8@example.com">A4tech</SelectItem>
+                                <SelectItem value="m9@example.com">HP</SelectItem>
+                              </SelectContent>
+                            </Select>
                             </FormControl>
                             <FormMessage />
                           </FormItem>
@@ -807,11 +883,28 @@ export default function Addnew() {
                           <FormItem>
                             <FormLabel>Sub Category</FormLabel>
                             <FormControl>
-                              <Input
-                                className={inputClass}
-                                placeholder=""
-                                {...field}
-                              />
+                            <Select
+                              onValueChange={field.onChange}
+                              defaultValue={field.value}
+                            >
+                              <FormControl>
+                                <SelectTrigger>
+                                  <SelectValue placeholder="Select Sub Category" />
+                                </SelectTrigger>
+                              </FormControl>
+                              <SelectContent>
+                                <SelectItem value="Apple">Apple</SelectItem>
+                                <SelectItem value="m2@example.com">Pran</SelectItem>
+                                <SelectItem value="m22@example.com">Squre</SelectItem>
+                                <SelectItem value="m3@example.com">ACI</SelectItem>
+                                <SelectItem value="m4@example.com">SoftRavine</SelectItem>
+                                <SelectItem value="m5@example.com">Samsung</SelectItem>
+                                <SelectItem value="m6@example.com">LG</SelectItem>
+                                <SelectItem value="m7@example.com">Logitech</SelectItem>
+                                <SelectItem value="m8@example.com">A4tech</SelectItem>
+                                <SelectItem value="m9@example.com">HP</SelectItem>
+                              </SelectContent>
+                            </Select>
                             </FormControl>
                             <FormMessage />
                           </FormItem>
@@ -823,177 +916,161 @@ export default function Addnew() {
               </div>
             </div>
             <div className="grid grid-cols-1 gap-4 md:grid-cols-1 sm:grid-cols-2">
-              <div className="flex flex-col gap-4">
-                <div className="px-6 rounded-sm border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark">
-                  <div className="border-b border-stroke px-6.5 py-4 dark:border-strokedark">
-                    <h3 className="font-medium text-black dark:text-white">
-                    Shipping Configuration
-                    </h3>
-                  </div>
-                  <div className="py-6">
-                    <div className="mt-3 flex flex-col gap-5.5 p-6.5">
-                      <FormField
-                        control={form.control}
-                        name="free_shippling"
-                        render={({ field }) => (
-                          <FormItem>
-                            <FormLabel>Free Shipping</FormLabel>
-                            <FormControl>
-                              {/* <Input
-                                className={inputClass}
-                                placeholder=""
-                                {...field}
-                              /> */}
-                            </FormControl>
-                            <FormMessage />
-                          </FormItem>
-                        )}
-                      />
+                <div className="flex flex-col gap-4">
+                  <div className="px-6 rounded-sm border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark">
+                    <div className="border-b border-stroke px-6.5 py-4 dark:border-strokedark">
+                      <h3 className="font-medium text-black dark:text-white">
+                        Shipping Configuration
+                      </h3>
                     </div>
-                    <div className="mt-3 flex flex-col gap-5.5 p-6.5">
-                      <FormField
-                        control={form.control}
-                        name="flat_rate"
-                        render={({ field }) => (
-                          <FormItem>
-                            <FormLabel>Flat Rate</FormLabel>
-                            <FormControl>
-                              {/* <Input
-                                className={inputClass}
-                                placeholder=""
-                                {...field}
-                              /> */}
-                            </FormControl>
-                            <FormMessage />
-                          </FormItem>
-                        )}
-                      />
-                    </div>
-                    <div className="mt-3 flex flex-col gap-5.5 p-6.5">
-                      <FormField
-                        control={form.control}
-                        name="qty_multi"
-                        render={({ field }) => (
-                          <FormItem>
-                            <FormLabel>Is Product Quantity Multiply</FormLabel>
-                            <FormControl>
-                              {/* <Input
-                                className={inputClass}
-                                placeholder="meta_image"
-                                {...field}
-                              /> */}
-                            </FormControl>
-                            <FormMessage />
-                          </FormItem>
-                        )}
-                      />
+                    <div className="py-6">
+                      <div className="flex flex-col gap-5.5 p-6.5">
+                        <FormField
+                          control={form.control}
+                          name="free_shippling"
+                          render={({ field }) => (
+                            <FormItem>
+                              <div className="flex items-center space-x-12">
+                                <FormLabel className="mt-2">
+                                  Free Shipping
+                                </FormLabel>
+                                <Switch />
+                              </div>
+                              <FormMessage />
+                            </FormItem>
+                          )}
+                        />
+                      </div>
+                      <div className="mt-3 flex flex-col gap-5.5 p-6.5">
+                        <FormField
+                          control={form.control}
+                          name="flat_rate"
+                          render={({ field }) => (
+                            <FormItem>
+                              <div className="flex items-center space-x-12">
+                                <FormLabel className="mt-2">
+                                  Flat Rate
+                                </FormLabel>
+                                <Switch />
+                              </div>
+                              <FormMessage />
+                            </FormItem>
+                          )}
+                        />
+                      </div>
+                      <div className="mt-3 flex flex-col gap-5.5 p-6.5">
+                        <FormField
+                          control={form.control}
+                          name="qty_multi"
+                          render={({ field }) => (
+                            <FormItem>
+                              <div className="flex items-center space-x-12">
+                                <FormLabel className="mt-2">
+                                  Is Product Quantity Multiply
+                                </FormLabel>
+                                <Switch />
+                              </div>
+                              <FormMessage />
+                            </FormItem>
+                          )}
+                        />
+                      </div>
                     </div>
                   </div>
                 </div>
               </div>
-            </div>
-            <div className="grid grid-cols-1 gap-4 md:grid-cols-1 sm:grid-cols-2">
-              <div className="flex flex-col gap-4">
-                <div className="px-6 rounded-sm border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark">
-                  <div className="border-b border-stroke px-6.5 py-4 dark:border-strokedark">
-                    <h3 className="font-medium text-black dark:text-white">
-                    Stock Visibility
-                    </h3>
-                  </div>
-                  <div className="py-6">
-                    <div className="mt-3 flex flex-col gap-5.5 p-6.5">
-                      <FormField
-                        control={form.control}
-                        name="show_stock_quantity"
-                        render={({ field }) => (
-                          <FormItem>
-                            <FormLabel>Show Stock quantity</FormLabel>
-                            <FormControl>
-                              {/* <Input
-                                className={inputClass}
-                                placeholder=""
-                                {...field}
-                              /> */}
-                            </FormControl>
-                            <FormMessage />
-                          </FormItem>
-                        )}
-                      />
+              <div className="grid grid-cols-1 gap-4 md:grid-cols-1 sm:grid-cols-2">
+                <div className="flex flex-col gap-4">
+                  <div className="px-6 rounded-sm border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark">
+                    <div className="border-b border-stroke px-6.5 py-4 dark:border-strokedark">
+                      <h3 className="font-medium text-black dark:text-white">
+                        Stock Visibility
+                      </h3>
                     </div>
-                    <div className="mt-3 flex flex-col gap-5.5 p-6.5">
-                      <FormField
-                        control={form.control}
-                        name=""
-                        render={({ field }) => (
-                          <FormItem>
-                            <FormLabel>Show Stock With Text Only</FormLabel>
-                            <FormControl>
-                              {/* <Input
-                                className={inputClass}
-                                placeholder=""
-                                {...field}
-                              /> */}
-                            </FormControl>
-                            <FormMessage />
-                          </FormItem>
-                        )}
-                      />
-                    </div>
-                    <div className="mt-3 flex flex-col gap-5.5 p-6.5">
-                      <FormField
-                        control={form.control}
-                        name=""
-                        render={({ field }) => (
-                          <FormItem>
-                            <FormLabel>Hide Stock</FormLabel>
-                            <FormControl>
-                              {/* <Input
-                                className={inputClass}
-                                placeholder="meta_image"
-                                {...field}
-                              /> */}
-                            </FormControl>
-                            <FormMessage />
-                          </FormItem>
-                        )}
-                      />
+                    <div className="py-6">
+                      <div className="flex flex-col gap-5.5 p-6.5">
+                        <FormField
+                          control={form.control}
+                          name="show_stock_quantity"
+                          render={({ field }) => (
+                            <FormItem>
+                              <div className="flex items-center space-x-12">
+                                <FormLabel className="mt-2">
+                                  Show Stock quantity
+                                </FormLabel>
+                                <Switch />
+                              </div>
+                              <FormMessage />
+                            </FormItem>
+                          )}
+                        />
+                      </div>
+                      <div className="mt-3 flex flex-col gap-5.5 p-6.5">
+                        <FormField
+                          control={form.control}
+                          name="show_stock_with_tax"
+                          render={({ field }) => (
+                            <FormItem>
+                              <div className="flex items-center space-x-12">
+                                <FormLabel className="mt-2">
+                                  Show Stock With Text Only
+                                </FormLabel>
+                                <Switch />
+                              </div>
+                              <FormMessage />
+                            </FormItem>
+                          )}
+                        />
+                      </div>
+                      <div className="mt-3 flex flex-col gap-5.5 p-6.5">
+                        <FormField
+                          control={form.control}
+                          name="hide_stock"
+                          render={({ field }) => (
+                            <FormItem>
+                              <div className="flex items-center space-x-12">
+                                <FormLabel className="mt-2">
+                                  Hide Stock
+                                </FormLabel>
+                                <Switch />
+                              </div>
+                              <FormMessage />
+                            </FormItem>
+                          )}
+                        />
+                      </div>
                     </div>
                   </div>
                 </div>
               </div>
-            </div>
-            <div className="grid grid-cols-1 gap-4 md:grid-cols-1 sm:grid-cols-2">
-              <div className="flex flex-col gap-4">
-                <div className="px-6 rounded-sm border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark">
-                  <div className="border-b border-stroke px-6.5 py-4 dark:border-strokedark">
-                    <h3 className="font-medium text-black dark:text-white">
-                    Case On Delivery
-                    </h3>
-                  </div>
-                  <div className="py-6">
-                    <div className="mt-3 flex flex-col gap-5.5 p-6.5">
-                      <FormField
-                        control={form.control}
-                        name="show_stock_quantity"
-                        render={({ field }) => (
-                          <FormItem>
-                            <FormLabel>Status</FormLabel>
-                            <FormControl>
-                              {/* <Input
-                                className={inputClass}
-                                placeholder=""
-                                {...field}
-                              /> */}
-                            </FormControl>
-                            <FormMessage />
-                          </FormItem>
-                        )}
-                      />
+              <div className="grid grid-cols-1 gap-4 md:grid-cols-1 sm:grid-cols-2">
+                <div className="flex flex-col gap-4">
+                  <div className="px-6 rounded-sm border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark">
+                    <div className="border-b border-stroke px-6.5 py-4 dark:border-strokedark">
+                      <h3 className="font-medium text-black dark:text-white">
+                        Case On Delivery
+                      </h3>
+                    </div>
+                    <div className="py-6">
+                      <div className="flex flex-col gap-5.5 p-6.5">
+                        <FormField
+                          control={form.control}
+                          name="case_on_delivery"
+                          render={({ field }) => (
+                            <FormItem>
+                              <div className="flex items-center space-x-12">
+                                <FormLabel className="mt-2">Status</FormLabel>
+                                <Switch />
+                              </div>
+                              <FormMessage />
+                            </FormItem>
+                          )}
+                        />
+                      </div>
                     </div>
                   </div>
                 </div>
               </div>
-            </div>
             <div className="grid grid-cols-1 gap-4 md:grid-cols-1 sm:grid-cols-2">
               <div className="flex flex-col gap-4">
                 <div className="px-6 rounded-sm border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark">
@@ -1003,7 +1080,7 @@ export default function Addnew() {
                     </h3>
                   </div>
                   <div className="py-6">
-                    <div className="mt-3 flex flex-col gap-5.5 p-6.5">
+                    <div className="flex flex-col gap-5.5 p-6.5">
                       <FormField
                         control={form.control}
                         name="shipping_day"
@@ -1035,7 +1112,7 @@ export default function Addnew() {
                     </h3>
                   </div>
                   <div className="py-6">
-                    <div className="mt-3 flex flex-col gap-5.5 p-6.5">
+                    <div className="flex flex-col gap-5.5 p-6.5">
                       <FormField
                         control={form.control}
                         name="tax"

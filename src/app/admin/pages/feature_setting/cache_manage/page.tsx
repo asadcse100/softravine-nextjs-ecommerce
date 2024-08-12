@@ -15,7 +15,13 @@ import {
   FormMessage,
 } from "@/app/admin/components/ui/form";
 import Input from "@/shared/Input/Input";
-import Select from "@/shared/Select/Select";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/app/admin/components/ui/select";
 
 const formSchema = z.object({
   CACHE_DRIVER: z.string().min(10, {
@@ -82,22 +88,27 @@ export default function Addnew() {
                             <FormItem>
                               <FormLabel>CACHE_DRIVER</FormLabel>
                               <FormControl>
-                                <Select>
-                                  <option value="">File</option>
-                                  <option value="">Redis</option>
-                                </Select>
-                                {/* <Input
-                                  className={inputClass}
-                                  placeholder="CACHE_DRIVER"
-                                  {...field}
-                                /> */}
+                                <Select
+                              onValueChange={field.onChange}
+                              defaultValue={field.value}
+                            >
+                              <FormControl>
+                                <SelectTrigger>
+                                  <SelectValue placeholder="Select CACHE_DRIVER" />
+                                </SelectTrigger>
+                              </FormControl>
+                              <SelectContent>
+                                <SelectItem value="Apple">File</SelectItem>
+                                <SelectItem value="m2@example.com">Redis</SelectItem>
+                              </SelectContent>
+                            </Select>
                               </FormControl>
                               <FormMessage />
                             </FormItem>
                           )}
                         />
                       </div>
-                      <div className="flex flex-col gap-5.5 p-6.5">
+                      <div className="mt-3 flex flex-col gap-5.5 p-6.5">
                         <FormField
                           control={form.control}
                           name="SESSION_DRIVER"
@@ -105,15 +116,20 @@ export default function Addnew() {
                             <FormItem>
                               <FormLabel>SESSION_DRIVER</FormLabel>
                               <FormControl>
-                                <Select>
-                                  <option value="">File</option>
-                                  <option value="">Redis</option>
-                                </Select>
-                                {/* <Input
-                                  className={inputClass}
-                                  placeholder="CACHE_DRIVER"
-                                  {...field}
-                                /> */}
+                                <Select
+                              onValueChange={field.onChange}
+                              defaultValue={field.value}
+                            >
+                              <FormControl>
+                                <SelectTrigger>
+                                  <SelectValue placeholder="Select SESSION_DRIVER" />
+                                </SelectTrigger>
+                              </FormControl>
+                              <SelectContent>
+                                <SelectItem value="Apple">File</SelectItem>
+                                <SelectItem value="m2@example.com">Redis</SelectItem>
+                              </SelectContent>
+                            </Select>
                               </FormControl>
                               <FormMessage />
                             </FormItem>
@@ -162,7 +178,7 @@ export default function Addnew() {
                           )}
                         />
                       </div>
-                      <div className="flex flex-col gap-5.5 p-6.5">
+                      <div className="mt-3 flex flex-col gap-5.5 p-6.5">
                         <FormField
                           control={form.control}
                           name="REDIS_PASSWORD"
@@ -181,7 +197,7 @@ export default function Addnew() {
                           )}
                         />
                       </div>
-                      <div className="flex flex-col gap-5.5 p-6.5">
+                      <div className="mt-3 flex flex-col gap-5.5 p-6.5">
                         <FormField
                           control={form.control}
                           name="REDIS_PORT"

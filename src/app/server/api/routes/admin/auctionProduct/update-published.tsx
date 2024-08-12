@@ -1,14 +1,13 @@
-// pages/api/products/update-published.ts
-import { NextApiRequest, NextApiResponse } from 'next';
+import { NextResponse } from "next/server";
 import { updatePublished } from '@/app/server/controllers/AuctionProductController';
 
-const handler = async (req: NextApiRequest, res: NextApiResponse) => {
-    if (req.method === 'PUT') {
-        return updatePublished(req, res);
-    } else {
-        res.setHeader('Allow', ['PUT']);
-        res.status(405).end(`Method ${req.method} Not Allowed`);
+export async function GET() {
+    const result = await updatePublished();
+    try{
+        const users = result.data;
+        return NextResponse.json(users);
+    }catch(error){
+        console.error("Error fetching users:", error);
+        return NextResponse.error();
     }
-};
-
-export default handler;
+  }

@@ -10,7 +10,7 @@ import Image from "next/image";
 const AccountPage = () => {
   return (
     <div className={`nc-AccountPage `}>
-      <div className="space-y-5 sm:space-y-5 bg-slate-300 dark:bg-slate-700 p-5 rounded-md">
+      <div className="space-y-5 sm:space-y-5 bg-white dark:bg-slate-700 p-5 rounded-md">
         {/* HEADING */}
         <h2 className="text-2xl sm:text-3xl font-semibold dark:text-slate-300">
           Account infomation

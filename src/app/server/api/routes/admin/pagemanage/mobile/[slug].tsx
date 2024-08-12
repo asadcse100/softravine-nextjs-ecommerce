@@ -1,13 +1,13 @@
-// pages/api/pages/mobile/[slug].ts
-
-import { NextApiRequest, NextApiResponse } from 'next';
+import { NextResponse } from "next/server";
 import { showMobileCustomPage } from '@/app/server/controllers/PageController';
 
-export default async function handler(req: NextApiRequest, res: NextApiResponse) {
-  const { slug } = req.query;
-  if (req.method === 'GET') {
-    return showMobileCustomPage(req, res);
-  } else {
-    res.status(405).json({ error: `Method ${req.method} not allowed` });
+export async function GET() {
+  const result = await getAuctionProductDetails();
+  try{
+      const users = result.data;
+      return NextResponse.json(users);
+  }catch(error){
+      console.error("Error fetching users:", error);
+      return NextResponse.error();
   }
 }

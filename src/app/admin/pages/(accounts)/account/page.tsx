@@ -57,9 +57,6 @@ const AccountPage = () => {
               <Input className="mt-1.5" defaultValue="Enrico Cole" />
             </div>
 
-            {/* ---- */}
-
-            {/* ---- */}
             <div>
               <Label>Email</Label>
               <div className="mt-1.5 flex">

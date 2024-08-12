@@ -1,4 +1,4 @@
-import type { NextApiRequest, NextApiResponse } from 'next';
+import { NextResponse } from "next/server";
 import { updateManualPaymentMethod, deleteManualPaymentMethod } from '@/app/server/controllers/ManualPaymentMethodController';
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {

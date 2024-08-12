@@ -1,6 +1,4 @@
-// pages/api/sellers/update.ts
-
-import { NextApiRequest, NextApiResponse } from 'next';
+import { NextResponse } from "next/server";
 import { updateSeller, deleteSeller } from '@/app/server/controllers/SellerController'; // Import the controller function
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {

@@ -1,19 +1,13 @@
-// pages/api/carriers/status.ts
-import type { NextApiRequest, NextApiResponse } from 'next';
+import { NextResponse } from "next/server";
 import { updateCarrierStatus } from '@/app/server/controllers/CarrierController';
 
-export default async function handler(req: NextApiRequest, res: NextApiResponse) {
-  if (req.method === 'POST') {
-    try {
-      const { id, status } = req.body;
-      const updatedCarrier = await updateCarrierStatus(id, status);
-      res.status(200).json({ carrier: updatedCarrier });
-    } catch (error) {
-      console.error(error);
-      res.status(500).json({ error: 'Internal Server Error' });
-    }
-  } else {
-    res.setHeader('Allow', ['POST']);
-    res.status(405).end(`Method ${req.method} Not Allowed`);
+export async function GET() {
+  const result = await updateCarrierStatus();
+  try{
+      const users = result.data;
+      return NextResponse.json(users);
+  }catch(error){
+      console.error("Error fetching users:", error);
+      return NextResponse.error();
   }
 }

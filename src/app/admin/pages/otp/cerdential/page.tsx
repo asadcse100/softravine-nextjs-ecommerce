@@ -15,7 +15,13 @@ import {
   FormMessage,
 } from "@/app/admin/components/ui/form";
 import Input from "@/shared/Input/Input";
-import Select from "@/shared/Select/Select";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/app/admin/components/ui/select";
 
 const formSchema = z.object({
   NEXMO_KEY: z.string().min(10, {
@@ -319,15 +325,20 @@ export default function Addnew() {
                           <FormItem>
                             <FormLabel>TWILIO TYPE</FormLabel>
                             <FormControl>
-                              <Select>
-                                <option>SMS</option>
-                                <option>What App</option>
-                              </Select>
-                              {/* <Input
-                                className={inputClass}
-                                placeholder="VALID TWILIO NUMBER"
-                                {...field}
-                              /> */}
+                              <Select
+                              onValueChange={field.onChange}
+                              defaultValue={field.value}
+                            >
+                              <FormControl>
+                                <SelectTrigger>
+                                  <SelectValue placeholder="Select TWILIO TYPE" />
+                                </SelectTrigger>
+                              </FormControl>
+                              <SelectContent>
+                                <SelectItem value="Apple">SMS</SelectItem>
+                                <SelectItem value="m2@example.com">WhatsApp</SelectItem>
+                              </SelectContent>
+                            </Select>
                             </FormControl>
                             <FormMessage />
                           </FormItem>
@@ -477,16 +488,21 @@ export default function Addnew() {
                           <FormItem>
                             <FormLabel>ROUTE</FormLabel>
                             <FormControl>
-                              <Select>
-                                <option>Transactional Use</option>
-                                <option>DLT Manual</option>
-                                <option>Promotional Use</option>
-                              </Select>
-                              {/* <Input
-                                className={inputClass}
-                                placeholder="ROUTE"
-                                {...field}
-                              /> */}
+                              <Select
+                              onValueChange={field.onChange}
+                              defaultValue={field.value}
+                            >
+                              <FormControl>
+                                <SelectTrigger>
+                                  <SelectValue placeholder="Select ROUTE" />
+                                </SelectTrigger>
+                              </FormControl>
+                              <SelectContent>
+                                <SelectItem value="Apple">Transactional Use</SelectItem>
+                                <SelectItem value="m2@example.com">DLT Manual</SelectItem>
+                                <SelectItem value="m3@example.com">Promotional Use</SelectItem>
+                              </SelectContent>
+                            </Select>
                             </FormControl>
                             <FormMessage />
                           </FormItem>
@@ -501,15 +517,20 @@ export default function Addnew() {
                           <FormItem>
                             <FormLabel>Language</FormLabel>
                             <FormControl>
-                              <Select>
-                                <option>English</option>
-                                <option>Unicode</option>
-                              </Select>
-                              {/* <Input
-                                className={inputClass}
-                                placeholder="ROUTE"
-                                {...field}
-                              /> */}
+                              <Select
+                              onValueChange={field.onChange}
+                              defaultValue={field.value}
+                            >
+                              <FormControl>
+                                <SelectTrigger>
+                                  <SelectValue placeholder="Select Language" />
+                                </SelectTrigger>
+                              </FormControl>
+                              <SelectContent>
+                                <SelectItem value="Apple">English</SelectItem>
+                                <SelectItem value="m2@example.com">Unicode</SelectItem>
+                              </SelectContent>
+                            </Select>
                             </FormControl>
                             <FormMessage />
                           </FormItem>
@@ -833,15 +854,20 @@ export default function Addnew() {
                           <FormItem>
                             <FormLabel>ZENDER_SERVICE</FormLabel>
                             <FormControl>
-                              <Select>
-                                <option>SMS</option>
-                                <option>Whats App</option>
-                              </Select>
-                              {/* <Input
-                                className={inputClass}
-                                placeholder="ZENDER_SERVICE"
-                                {...field}
-                              /> */}
+                              <Select
+                              onValueChange={field.onChange}
+                              defaultValue={field.value}
+                            >
+                              <FormControl>
+                                <SelectTrigger>
+                                  <SelectValue placeholder="Select ZENDER_SERVICE" />
+                                </SelectTrigger>
+                              </FormControl>
+                              <SelectContent>
+                                <SelectItem value="Apple">SMS</SelectItem>
+                                <SelectItem value="m2@example.com">WhatsApp</SelectItem>
+                              </SelectContent>
+                            </Select>
                             </FormControl>
                             <FormMessage />
                           </FormItem>

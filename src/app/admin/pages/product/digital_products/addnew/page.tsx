@@ -16,6 +16,17 @@ import {
 } from "@/app/admin/components/ui/form";
 import Input from "@/shared/Input/Input";
 
+import { Switch } from "@/app/admin/components/ui/switch";
+import Textarea from "@/shared/Textarea/Textarea";
+
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/app/admin/components/ui/select";
+
 const formSchema = z.object({
   name: z.string().min(10, {
     message: "Product Name must be at least 10 characters.",
@@ -105,7 +116,7 @@ export default function Addnew() {
                           <FormItem>
                             <FormLabel>Product File</FormLabel>
                             <FormControl>
-                              <Input
+                              <Input type="file"
                                 className={inputClass}
                                 placeholder="Product File"
                                 {...field}
@@ -156,7 +167,7 @@ export default function Addnew() {
                           <FormItem>
                             <FormLabel>Main Images</FormLabel>
                             <FormControl>
-                              <Input
+                              <Input type="file"
                                 className={inputClass}
                                 placeholder="Main Images"
                                 {...field}
@@ -175,7 +186,7 @@ export default function Addnew() {
                           <FormItem>
                             <FormLabel>Thumbnail Image</FormLabel>
                             <FormControl>
-                              <Input
+                              <Input type="file"
                                 className={inputClass}
                                 placeholder="Thumbnail Image"
                                 {...field}
@@ -190,7 +201,6 @@ export default function Addnew() {
                 </div>
               </div>
             </div>
-
 
             <div className="grid grid-cols-1 gap-4 md:grid-cols-1 sm:grid-cols-2">
               <div className="flex flex-col gap-4">
@@ -432,24 +442,11 @@ export default function Addnew() {
                     </h3>
                   </div>
                   <div className="py-6">
-                    <div className="mt-3 flex flex-col gap-5.5 p-6.5">
-                      <FormField
-                        control={form.control}
-                        name="product_description"
-                        render={({ field }) => (
-                          <FormItem>
-                            <FormLabel>Description</FormLabel>
-                            <FormControl>
-                              <Input
-                                className={inputClass}
-                                placeholder="product_description"
-                                {...field}
-                              />
-                            </FormControl>
-                            <FormMessage />
-                          </FormItem>
-                        )}
-                      />
+                    <div className="flex flex-col gap-5.5 p-6.5">
+                    <Textarea
+                      className="!rounded-l-none"
+                      defaultValue="New york, USA"
+                    />
                     </div>
                   </div>
                 </div>
@@ -472,7 +469,7 @@ export default function Addnew() {
                           <FormItem>
                             <FormLabel>PDF Specification</FormLabel>
                             <FormControl>
-                              <Input
+                              <Input type="file"
                                 className={inputClass}
                                 placeholder="pdf_specification"
                                 {...field}
@@ -496,7 +493,7 @@ export default function Addnew() {
                     </h3>
                   </div>
                   <div className="py-6">
-                    <div className="mt-3 flex flex-col gap-5.5 p-6.5">
+                    <div className="flex flex-col gap-5.5 p-6.5">
                       <FormField
                         control={form.control}
                         name="meta_title"
@@ -523,11 +520,10 @@ export default function Addnew() {
                           <FormItem>
                             <FormLabel>Meta Description</FormLabel>
                             <FormControl>
-                              <Input
-                                className={inputClass}
-                                placeholder="meta_description"
-                                {...field}
-                              />
+                            <Textarea
+                              className="!rounded-l-none"
+                              defaultValue="New york, USA"
+                            />
                             </FormControl>
                             <FormMessage />
                           </FormItem>
@@ -542,7 +538,7 @@ export default function Addnew() {
                           <FormItem>
                             <FormLabel>Meta Imgae</FormLabel>
                             <FormControl>
-                              <Input
+                              <Input type="file"
                                 className={inputClass}
                                 placeholder="meta_image"
                                 {...field}
@@ -566,20 +562,35 @@ export default function Addnew() {
                     </h3>
                   </div>
                   <div className="py-6">
-                    <div className="mt-3 flex flex-col gap-5.5 p-6.5">
+                    <div className="flex flex-col gap-5.5 p-6.5">
                       <FormField
                         control={form.control}
                         name="main_category"
                         render={({ field }) => (
                           <FormItem>
                             <FormLabel>Main Category</FormLabel>
-                            <FormControl>
-                              <Input
-                                className={inputClass}
-                                placeholder=""
-                                {...field}
-                              />
-                            </FormControl>
+                            <Select
+                              onValueChange={field.onChange}
+                              defaultValue={field.value}
+                            >
+                              <FormControl>
+                                <SelectTrigger>
+                                  <SelectValue placeholder="Select Brand" />
+                                </SelectTrigger>
+                              </FormControl>
+                              <SelectContent>
+                                <SelectItem value="Apple">Apple</SelectItem>
+                                <SelectItem value="m2@example.com">Pran</SelectItem>
+                                <SelectItem value="m22@example.com">Squre</SelectItem>
+                                <SelectItem value="m3@example.com">ACI</SelectItem>
+                                <SelectItem value="m4@example.com">SoftRavine</SelectItem>
+                                <SelectItem value="m5@example.com">Samsung</SelectItem>
+                                <SelectItem value="m6@example.com">LG</SelectItem>
+                                <SelectItem value="m7@example.com">Logitech</SelectItem>
+                                <SelectItem value="m8@example.com">A4tech</SelectItem>
+                                <SelectItem value="m9@example.com">HP</SelectItem>
+                              </SelectContent>
+                            </Select>
                             <FormMessage />
                           </FormItem>
                         )}
@@ -592,13 +603,28 @@ export default function Addnew() {
                         render={({ field }) => (
                           <FormItem>
                             <FormLabel>Sub Category</FormLabel>
-                            <FormControl>
-                              <Input
-                                className={inputClass}
-                                placeholder=""
-                                {...field}
-                              />
-                            </FormControl>
+                            <Select
+                              onValueChange={field.onChange}
+                              defaultValue={field.value}
+                            >
+                              <FormControl>
+                                <SelectTrigger>
+                                  <SelectValue placeholder="Select Brand" />
+                                </SelectTrigger>
+                              </FormControl>
+                              <SelectContent>
+                                <SelectItem value="Apple">Apple</SelectItem>
+                                <SelectItem value="m2@example.com">Pran</SelectItem>
+                                <SelectItem value="m22@example.com">Squre</SelectItem>
+                                <SelectItem value="m3@example.com">ACI</SelectItem>
+                                <SelectItem value="m4@example.com">SoftRavine</SelectItem>
+                                <SelectItem value="m5@example.com">Samsung</SelectItem>
+                                <SelectItem value="m6@example.com">LG</SelectItem>
+                                <SelectItem value="m7@example.com">Logitech</SelectItem>
+                                <SelectItem value="m8@example.com">A4tech</SelectItem>
+                                <SelectItem value="m9@example.com">HP</SelectItem>
+                              </SelectContent>
+                            </Select>
                             <FormMessage />
                           </FormItem>
                         )}
@@ -610,37 +636,33 @@ export default function Addnew() {
             </div>
 
             <div className="grid grid-cols-1 gap-4 md:grid-cols-1 sm:grid-cols-2">
-              <div className="flex flex-col gap-4">
-                <div className="px-6 rounded-sm border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark">
-                  <div className="border-b border-stroke px-6.5 py-4 dark:border-strokedark">
-                    <h3 className="font-medium text-black dark:text-white">
-                    Case On Delivery
-                    </h3>
-                  </div>
-                  <div className="py-6">
-                    <div className="mt-3 flex flex-col gap-5.5 p-6.5">
-                      <FormField
-                        control={form.control}
-                        name="show_stock_quantity"
-                        render={({ field }) => (
-                          <FormItem>
-                            <FormLabel>Status</FormLabel>
-                            <FormControl>
-                              {/* <Input
-                                className={inputClass}
-                                placeholder=""
-                                {...field}
-                              /> */}
-                            </FormControl>
-                            <FormMessage />
-                          </FormItem>
-                        )}
-                      />
+                <div className="flex flex-col gap-4">
+                  <div className="px-6 rounded-sm border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark">
+                    <div className="border-b border-stroke px-6.5 py-4 dark:border-strokedark">
+                      <h3 className="font-medium text-black dark:text-white">
+                        Case On Delivery
+                      </h3>
+                    </div>
+                    <div className="py-6">
+                      <div className="flex flex-col gap-5.5 p-6.5">
+                        <FormField
+                          control={form.control}
+                          name="case_on_delivery"
+                          render={({ field }) => (
+                            <FormItem>
+                              <div className="flex items-center space-x-12">
+                                <FormLabel className="mt-2">Status</FormLabel>
+                                <Switch />
+                              </div>
+                              <FormMessage />
+                            </FormItem>
+                          )}
+                        />
+                      </div>
                     </div>
                   </div>
                 </div>
               </div>
-            </div>
     
             <div className="grid grid-cols-1 gap-4 md:grid-cols-1 sm:grid-cols-2">
               <div className="flex flex-col gap-4">
@@ -651,7 +673,7 @@ export default function Addnew() {
                     </h3>
                   </div>
                   <div className="py-6">
-                    <div className="mt-3 flex flex-col gap-5.5 p-6.5">
+                    <div className="flex flex-col gap-5.5 p-6.5">
                       <FormField
                         control={form.control}
                         name="tax"

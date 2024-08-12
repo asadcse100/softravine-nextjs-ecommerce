@@ -15,7 +15,13 @@ import {
   FormMessage,
 } from "@/app/admin/components/ui/form";
 import Input from "@/shared/Input/Input";
-import Select from "@/shared/Select/Select";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/app/admin/components/ui/select";
 
 const formSchema = z.object({
   MAIL_DRIVER: z.string().min(10, {
@@ -97,16 +103,21 @@ export default function Addnew() {
                           <FormItem>
                             <FormLabel>Type</FormLabel>
                             <FormControl>
-                              <Select>
-                                <option>SMTP</option>
-                                <option>Send Mail</option>
-                                <option>Mail Gun</option>
-                              </Select>
-                              {/* <Input
-                                className={inputClass}
-                                placeholder="Employe Name"
-                                {...field}
-                              /> */}
+                              <Select
+                              onValueChange={field.onChange}
+                              defaultValue={field.value}
+                            >
+                              <FormControl>
+                                <SelectTrigger>
+                                  <SelectValue placeholder="Select Type" />
+                                </SelectTrigger>
+                              </FormControl>
+                              <SelectContent>
+                                <SelectItem value="Apple">SMTP</SelectItem>
+                                <SelectItem value="m2@example.com">Send Mail</SelectItem>
+                                <SelectItem value="m22@example.com">Mail Gun</SelectItem>
+                              </SelectContent>
+                            </Select>
                             </FormControl>
                             <FormMessage />
                           </FormItem>

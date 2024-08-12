@@ -1,5 +1,4 @@
-// src/pages/api/orders/[id]/invoice.ts
-import { NextApiRequest, NextApiResponse } from 'next';
+import { NextResponse } from "next/server";
 import { downloadInvoice } from '@/app/server/controllers/InvoiceController';
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {

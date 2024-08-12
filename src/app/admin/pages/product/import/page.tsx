@@ -64,7 +64,7 @@ export default function Addnew() {
                           <FormItem>
                             <FormLabel>Upload Product File</FormLabel>
                             <FormControl>
-                              <Input
+                              <Input type="file"
                                 className={inputClass}
                                 placeholder="Upload Product File"
                                 {...field}

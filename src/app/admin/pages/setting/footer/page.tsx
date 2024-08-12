@@ -437,7 +437,9 @@ export default function Addnew() {
                         />
                       </div>
                       <div className="mt-3 flex flex-col gap-5.5 p-6.5">
-                      Social Links
+                      <h3 className="font-medium text-black dark:text-white">
+                        Social Links
+                      </h3>
                         <FormField
                           control={form.control}
                           name="facebook_link"
@@ -592,7 +594,7 @@ export default function Addnew() {
                       </h3>
                     </div>
                     <div className="py-6">
-                      <div className="mt-3 flex flex-col gap-5.5 p-6.5">
+                      <div className="flex flex-col gap-5.5 p-6.5">
                         <FormField
                           control={form.control}
                           name="payment_method_images"

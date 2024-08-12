@@ -1,12 +1,13 @@
-// pages/api/orders/update_tracking_code.ts
-
-import { NextApiRequest, NextApiResponse } from 'next';
+import { NextResponse } from "next/server";
 import { updateTrackingCode } from '@/app/server/controllers/OrderController';
 
-export default async function handler(req: NextApiRequest, res: NextApiResponse) {
-  if (req.method === 'POST') {
-    return updateTrackingCode(req, res);
-  } else {
-    res.status(405).json({ error: 'Method not allowed' });
+export async function GET() {
+  const result = await updateTrackingCode();
+  try{
+      const users = result.data;
+      return NextResponse.json(users);
+  }catch(error){
+      console.error("Error fetching users:", error);
+      return NextResponse.error();
   }
 }

@@ -15,7 +15,13 @@ import {
   FormMessage,
 } from "@/app/admin/components/ui/form";
 import Input from "@/shared/Input/Input";
-import Select from "@/shared/Select/Select";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/app/admin/components/ui/select";
 import Textarea from "@/shared/Textarea/Textarea";
 
 const formSchema = z.object({
@@ -117,11 +123,28 @@ export default function Addnew() {
                           <FormItem>
                             <FormLabel>Category</FormLabel>
                             <FormControl>
-                              <Select>
-                                <option>Life Style</option>
-                                <option>Home</option>
-                                <option>Teding</option>
-                              </Select>
+                            <Select
+                              onValueChange={field.onChange}
+                              defaultValue={field.value}
+                            >
+                              <FormControl>
+                                <SelectTrigger>
+                                  <SelectValue placeholder="Select Category" />
+                                </SelectTrigger>
+                              </FormControl>
+                              <SelectContent>
+                                <SelectItem value="Apple">Apple</SelectItem>
+                                <SelectItem value="m2@example.com">Pran</SelectItem>
+                                <SelectItem value="m22@example.com">Squre</SelectItem>
+                                <SelectItem value="m3@example.com">ACI</SelectItem>
+                                <SelectItem value="m4@example.com">SoftRavine</SelectItem>
+                                <SelectItem value="m5@example.com">Samsung</SelectItem>
+                                <SelectItem value="m6@example.com">LG</SelectItem>
+                                <SelectItem value="m7@example.com">Logitech</SelectItem>
+                                <SelectItem value="m8@example.com">A4tech</SelectItem>
+                                <SelectItem value="m9@example.com">HP</SelectItem>
+                              </SelectContent>
+                            </Select>
                             </FormControl>
                             <FormMessage />
                           </FormItem>
@@ -175,11 +198,6 @@ export default function Addnew() {
                             <FormLabel>Short Description</FormLabel>
                             <FormControl>
                               <Textarea></Textarea>
-                              {/* <Input
-                                className={inputClass}
-                                placeholder="minimum_purchase_qty"
-                                {...field}
-                              /> */}
                             </FormControl>
                             <FormMessage />
                           </FormItem>
@@ -195,11 +213,6 @@ export default function Addnew() {
                             <FormLabel>Description</FormLabel>
                             <FormControl>
                               <Textarea></Textarea>
-                              {/* <Input
-                                className={inputClass}
-                                placeholder="tag"
-                                {...field}
-                              /> */}
                             </FormControl>
                             <FormMessage />
                           </FormItem>
@@ -272,37 +285,28 @@ export default function Addnew() {
                           )}
                         />
                       </div>
-                      {/* <div className="mt-3 flex flex-col gap-5.5 p-6.5">
-                        <FormField
-                          control={form.control}
-                          name="thumbnail_image"
-                          render={({ field }) => (
-                            <FormItem>
-                              <FormLabel>Meta Keyword</FormLabel>
-                              <FormControl>
-                                <Input
-                                  className={inputClass}
-                                  placeholder="Meta Keyword"
-                                  {...field}
-                                />
-                              </FormControl>
-                              <FormMessage />
-                            </FormItem>
-                          )}
-                        />
-                      </div> */}
-                      <div className="grid mt-4 justify-items-end">
-                        <Button
-                          className="dark:text-slate-200"
-                          variant="outline"
-                          type="submit"
-                        >
-                          Save
-                        </Button>
-                      </div>
-                    </div>
+                    </div>                    
                   </div>
                 </div>
+              </div>
+            </div>
+            <div className="grid justify-items-end">
+              <div className="flex gap-2">
+              <Button
+                className="dark:text-slate-200"
+                variant="outline"
+                type="submit"
+              >
+                Daft
+              </Button>
+              
+              <Button
+                className="dark:text-slate-200"
+                variant="outline"
+                type="submit"
+              >
+                Publish
+              </Button>
               </div>
             </div>
           </div>

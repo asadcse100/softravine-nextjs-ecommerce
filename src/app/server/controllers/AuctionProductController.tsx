@@ -373,7 +373,7 @@ export const getUserPurchaseHistory = async (req: NextApiRequest, res: NextApiRe
     }
 };
 
-export const getAuctionProductOrders = async (req: NextApiRequest, res: NextApiResponse) => {
+export const getAuctionProductOrders = async () => {
   const { payment_status, delivery_status, search, date } = req.query;
 
   const filters: any = {
