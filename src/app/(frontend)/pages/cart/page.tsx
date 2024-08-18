@@ -211,7 +211,6 @@ const CartPage = () => {
               PRODUCTS[1],
               PRODUCTS[2],
               PRODUCTS[3],
-              PRODUCTS[4],
             ].map(renderProduct)}
           </div>
           <div className="border-t lg:border-t-0 lg:border-l border-slate-300 dark:border-slate-700 my-10 lg:my-0 lg:mx-10 xl:mx-16 2xl:mx-20 flex-shrink-0"></div>
@@ -242,7 +241,7 @@ const CartPage = () => {
                   <span>$276.00</span>
                 </div>
               </div>
-              <ButtonPrimary href="/checkout" className="mt-8 w-full">
+              <ButtonPrimary href="/pages/checkout" className="mt-8 w-full">
                 Checkout
               </ButtonPrimary>
               <div className="mt-5 text-sm text-slate-500 dark:text-slate-400 flex items-center justify-center">

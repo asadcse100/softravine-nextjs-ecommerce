@@ -38,7 +38,7 @@ export const SideBarMenuItem = ({ item }: { item: SideNavItem }) => {
     <>
       {item.submenu ? (
         <div className="rounded-md min-w-[18px]">
-          <a
+          <Link
             href="#"
             className={`${dropdownMenuHeaderLink} ${
               pathname.includes(item.path) ? activeLink : ""
@@ -58,13 +58,13 @@ export const SideBarMenuItem = ({ item }: { item: SideNavItem }) => {
                 />
               </>
             )}
-          </a>
+          </Link>
           {subMenuOpen && !toggleCollapse && (
             <div className="bg-slate-200 dark:bg-slate-800 border-l-4">
               <div className="grid gap-y-2 px-10 leading-5 py-3">
                 {item.subMenuItems?.map((subItem, idx) => {
                   return (
-                    <a
+                    <Link
                       key={idx}
                       href={subItem.path}
                       className={`${navMenuDropdownItem} ${
@@ -74,7 +74,7 @@ export const SideBarMenuItem = ({ item }: { item: SideNavItem }) => {
                       }`}
                     >
                       <span>{subItem.title}</span>
-                    </a>
+                    </Link>
                   );
                 })}
               </div>
@@ -82,7 +82,7 @@ export const SideBarMenuItem = ({ item }: { item: SideNavItem }) => {
           )}
         </div>
       ) : (
-        <a
+        <Link
           href={item.path}
           className={`${inactiveLink} ${
             item.path === pathname ? activeLink : "dark:text-slate-200"
@@ -92,7 +92,7 @@ export const SideBarMenuItem = ({ item }: { item: SideNavItem }) => {
           {!toggleCollapse && (
             <span className="ml-3 leading-6 font-semibold">{item.title}</span>
           )}
-        </a>
+        </Link>
       )}
     </>
   );

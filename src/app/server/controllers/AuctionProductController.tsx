@@ -1,5 +1,4 @@
 import { PrismaClient } from '@prisma/client';
-// import { NextApiRequest, NextApiResponse } from 'next';
 import { NextResponse } from "next/server";
 import { getProductById, updateProduct } from '../models/AuctionProduct';
 import { slugify } from '@/app/server/utils/slugify';  // Utility function for generating slugs
@@ -399,7 +398,7 @@ export const getAuctionProductOrders = async () => {
   }
 
   try {
-    const orders = await prisma.order.findMany({
+    const orders = await prisma.orders.findMany({
       where: filters,
       orderBy: {
         code: 'desc'
@@ -412,10 +411,10 @@ export const getAuctionProductOrders = async () => {
         }
       }
     });
-
-    res.status(200).json({ orders });
+    return { success: true, data: orders };
   } catch (error) {
-    res.status(500).json({ error: 'Internal server error' });
+    console.error("Error fetching orders:", error);
+    return { success: false, error };
   }
 };
 
