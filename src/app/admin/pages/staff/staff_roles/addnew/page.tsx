@@ -83,7 +83,7 @@ export default function Addnew() {
                     Product
                   </h3>
                 </div>
-                <div className="grid gap-4 md:grid-cols-4 lg:grid-cols-6 sm:grid-cols-3 py-6">
+                <div className="grid gap-4 xl:grid-cols-8 lg:grid-cols-6 md:grid-cols-4 sm:grid-cols-2 py-6">
                   <div className="block max-w-sm p-2 rounded-md shadow hover:bg-slate-200 bg-slate-100 dark:bg-slate-700 dark:border-slate-900 dark:hover:bg-slate-800">
                     <FormField
                       control={form.control}
@@ -299,7 +299,7 @@ export default function Addnew() {
                     Product category
                   </h3>
                 </div>
-                <div className="grid gap-4 md:grid-cols-4 lg:grid-cols-6 sm:grid-cols-3 py-6">
+                <div className="grid gap-4 xl:grid-cols-8 lg:grid-cols-6 md:grid-cols-4 sm:grid-cols-2 py-6">
                   <div className="block max-w-sm p-2 rounded-md shadow hover:bg-slate-200 bg-slate-100 dark:bg-slate-700 dark:border-slate-900 dark:hover:bg-slate-800">
                     <FormField
                       control={form.control}
@@ -384,7 +384,7 @@ export default function Addnew() {
                     Brand
                   </h3>
                 </div>
-                <div className="grid gap-4 md:grid-cols-4 lg:grid-cols-6 sm:grid-cols-3 py-6">
+                <div className="grid gap-4 xl:grid-cols-8 lg:grid-cols-6 md:grid-cols-4 sm:grid-cols-2 py-6">
                   <div className="block max-w-sm p-2 rounded-md shadow hover:bg-slate-200 bg-slate-100 dark:bg-slate-700 dark:border-slate-900 dark:hover:bg-slate-800">
                     <FormField
                       control={form.control}
@@ -462,7 +462,7 @@ export default function Addnew() {
                     Product Attribute
                   </h3>
                 </div>
-                <div className="grid gap-4 md:grid-cols-4 lg:grid-cols-6 sm:grid-cols-3 py-6">
+                <div className="grid gap-4 xl:grid-cols-8 lg:grid-cols-6 md:grid-cols-4 sm:grid-cols-2 py-6">
                   <div className="block max-w-sm p-2 rounded-md shadow hover:bg-slate-200 bg-slate-100 dark:bg-slate-700 dark:border-slate-900 dark:hover:bg-slate-800">
                     <FormField
                       control={form.control}
@@ -644,7 +644,7 @@ export default function Addnew() {
                     Product Review
                   </h3>
                 </div>
-                <div className="grid gap-4 md:grid-cols-4 lg:grid-cols-6 sm:grid-cols-3 py-6">
+                <div className="grid gap-4 xl:grid-cols-8 lg:grid-cols-6 md:grid-cols-4 sm:grid-cols-2 py-6">
                   <div className="block max-w-sm p-2 rounded-md shadow hover:bg-slate-200 bg-slate-100 dark:bg-slate-700 dark:border-slate-900 dark:hover:bg-slate-800">
                     <FormField
                       control={form.control}
@@ -683,7 +683,7 @@ export default function Addnew() {
                     Sale
                   </h3>
                 </div>
-                <div className="grid gap-4 md:grid-cols-4 lg:grid-cols-6 sm:grid-cols-3 py-6">
+                <div className="grid gap-4 xl:grid-cols-8 lg:grid-cols-6 md:grid-cols-4 sm:grid-cols-2 py-6">
                   <div className="block max-w-sm p-2 rounded-md shadow hover:bg-slate-200 bg-slate-100 dark:bg-slate-700 dark:border-slate-900 dark:hover:bg-slate-800">
                     <FormField
                       control={form.control}
@@ -810,7 +810,7 @@ export default function Addnew() {
                     Customer
                   </h3>
                 </div>
-                <div className="grid gap-4 md:grid-cols-4 lg:grid-cols-6 sm:grid-cols-3 py-6">
+                <div className="grid gap-4 xl:grid-cols-8 lg:grid-cols-6 md:grid-cols-4 sm:grid-cols-2 py-6">
                   <div className="block max-w-sm p-2 rounded-md shadow hover:bg-slate-200 bg-slate-100 dark:bg-slate-700 dark:border-slate-900 dark:hover:bg-slate-800">
                     <FormField
                       control={form.control}
@@ -982,7 +982,7 @@ export default function Addnew() {
                     Seller
                   </h3>
                 </div>
-                <div className="grid gap-4 md:grid-cols-4 lg:grid-cols-6 sm:grid-cols-3 py-6">
+                <div className="grid gap-4 xl:grid-cols-8 lg:grid-cols-6 md:grid-cols-4 sm:grid-cols-2 py-6">
                   <div className="block max-w-sm p-2 rounded-md shadow hover:bg-slate-200 bg-slate-100 dark:bg-slate-700 dark:border-slate-900 dark:hover:bg-slate-800">
                     <FormField
                       control={form.control}
@@ -1161,7 +1161,7 @@ export default function Addnew() {
                     Report
                   </h3>
                 </div>
-                <div className="grid gap-4 md:grid-cols-4 lg:grid-cols-6 sm:grid-cols-3 py-6">
+                <div className="grid gap-4 xl:grid-cols-8 lg:grid-cols-6 md:grid-cols-4 sm:grid-cols-2 py-6">
                   <div className="block max-w-sm p-2 rounded-md shadow hover:bg-slate-200 bg-slate-100 dark:bg-slate-700 dark:border-slate-900 dark:hover:bg-slate-800">
                     <FormField
                       control={form.control}
@@ -1275,7 +1275,7 @@ export default function Addnew() {
                     Blog
                   </h3>
                 </div>
-                <div className="grid gap-4 md:grid-cols-4 lg:grid-cols-6 sm:grid-cols-3 py-6">
+                <div className="grid gap-4 xl:grid-cols-8 lg:grid-cols-6 md:grid-cols-4 sm:grid-cols-2 py-6">
                   <div className="block max-w-sm p-2 rounded-md shadow hover:bg-slate-200 bg-slate-100 dark:bg-slate-700 dark:border-slate-900 dark:hover:bg-slate-800">
                     <FormField
                       control={form.control}
@@ -1409,7 +1409,7 @@ export default function Addnew() {
                     Marketing
                   </h3>
                 </div>
-                <div className="grid gap-4 md:grid-cols-4 lg:grid-cols-6 sm:grid-cols-3 py-6">
+                <div className="grid gap-4 xl:grid-cols-8 lg:grid-cols-6 md:grid-cols-4 sm:grid-cols-2 py-6">
                   <div className="block max-w-sm p-2 rounded-md shadow hover:bg-slate-200 bg-slate-100 dark:bg-slate-700 dark:border-slate-900 dark:hover:bg-slate-800">
                     <FormField
                       control={form.control}
@@ -1755,7 +1755,7 @@ export default function Addnew() {
                     Support
                   </h3>
                 </div>
-                <div className="grid gap-4 md:grid-cols-4 lg:grid-cols-6 sm:grid-cols-3 py-6">
+                <div className="grid gap-4 xl:grid-cols-8 lg:grid-cols-6 md:grid-cols-4 sm:grid-cols-2 py-6">
                   <div className="block max-w-sm p-2 rounded-md shadow hover:bg-slate-200 bg-slate-100 dark:bg-slate-700 dark:border-slate-900 dark:hover:bg-slate-800">
                     <FormField
                       control={form.control}
@@ -1869,7 +1869,7 @@ export default function Addnew() {
                     Website Setup
                   </h3>
                 </div>
-                <div className="grid gap-4 md:grid-cols-4 lg:grid-cols-6 sm:grid-cols-3 py-6">
+                <div className="grid gap-4 xl:grid-cols-8 lg:grid-cols-6 md:grid-cols-4 sm:grid-cols-2 py-6">
                   <div className="block max-w-sm p-2 rounded-md shadow hover:bg-slate-200 bg-slate-100 dark:bg-slate-700 dark:border-slate-900 dark:hover:bg-slate-800">
                     <FormField
                       control={form.control}
@@ -2009,7 +2009,7 @@ export default function Addnew() {
                     Setup Configurations
                   </h3>
                 </div>
-                <div className="grid gap-4 md:grid-cols-4 lg:grid-cols-6 sm:grid-cols-3 py-6">
+                <div className="grid gap-4 xl:grid-cols-8 lg:grid-cols-6 md:grid-cols-4 sm:grid-cols-2 py-6">
                   <div className="block max-w-sm p-2 rounded-md shadow hover:bg-slate-200 bg-slate-100 dark:bg-slate-700 dark:border-slate-900 dark:hover:bg-slate-800">
                     <FormField
                       control={form.control}
@@ -2353,7 +2353,7 @@ export default function Addnew() {
                     Staff
                   </h3>
                 </div>
-                <div className="grid gap-4 md:grid-cols-4 lg:grid-cols-6 sm:grid-cols-3 py-6">
+                <div className="grid gap-4 xl:grid-cols-8 lg:grid-cols-6 md:grid-cols-4 sm:grid-cols-2 py-6">
                   <div className="block max-w-sm p-2 rounded-md shadow hover:bg-slate-200 bg-slate-100 dark:bg-slate-700 dark:border-slate-900 dark:hover:bg-slate-800">
                     <FormField
                       control={form.control}
@@ -2474,7 +2474,7 @@ export default function Addnew() {
                     System
                   </h3>
                 </div>
-                <div className="grid gap-4 md:grid-cols-4 lg:grid-cols-6 sm:grid-cols-3 py-6">
+                <div className="grid gap-4 xl:grid-cols-8 lg:grid-cols-6 md:grid-cols-4 sm:grid-cols-2 py-6">
                   <div className="block max-w-sm p-2 rounded-md shadow hover:bg-slate-200 bg-slate-100 dark:bg-slate-700 dark:border-slate-900 dark:hover:bg-slate-800">
                     <FormField
                       control={form.control}
@@ -2550,7 +2550,7 @@ export default function Addnew() {
                     POS System
                   </h3>
                 </div>
-                <div className="grid gap-4 md:grid-cols-4 lg:grid-cols-6 sm:grid-cols-3 py-6">
+                <div className="grid gap-4 xl:grid-cols-8 lg:grid-cols-6 md:grid-cols-4 sm:grid-cols-2 py-6">
                   <div className="block max-w-sm p-2 rounded-md shadow hover:bg-slate-200 bg-slate-100 dark:bg-slate-700 dark:border-slate-900 dark:hover:bg-slate-800">
                     <FormField
                       control={form.control}
@@ -2587,7 +2587,7 @@ export default function Addnew() {
                     Auction
                   </h3>
                 </div>
-                <div className="grid gap-4 md:grid-cols-4 lg:grid-cols-6 sm:grid-cols-3 py-6">
+                <div className="grid gap-4 xl:grid-cols-8 lg:grid-cols-6 md:grid-cols-4 sm:grid-cols-2 py-6">
                   <div className="block max-w-sm p-2 rounded-md shadow hover:bg-slate-200 bg-slate-100 dark:bg-slate-700 dark:border-slate-900 dark:hover:bg-slate-800">
                     <FormField
                       control={form.control}
@@ -2731,7 +2731,7 @@ export default function Addnew() {
                     Wholesale
                   </h3>
                 </div>
-                <div className="grid gap-4 md:grid-cols-4 lg:grid-cols-6 sm:grid-cols-3 py-6">
+                <div className="grid gap-4 xl:grid-cols-8 lg:grid-cols-6 md:grid-cols-4 sm:grid-cols-2 py-6">
                   <div className="block max-w-sm p-2 rounded-md shadow hover:bg-slate-200 bg-slate-100 dark:bg-slate-700 dark:border-slate-900 dark:hover:bg-slate-800">
                     <FormField
                       control={form.control}
@@ -2830,7 +2830,7 @@ export default function Addnew() {
                     Delivery Boy
                   </h3>
                 </div>
-                <div className="grid gap-4 md:grid-cols-4 lg:grid-cols-6 sm:grid-cols-3 py-6">
+                <div className="grid gap-4 xl:grid-cols-8 lg:grid-cols-6 md:grid-cols-4 sm:grid-cols-2 py-6">
                   <div className="block max-w-sm p-2 rounded-md shadow hover:bg-slate-200 bg-slate-100 dark:bg-slate-700 dark:border-slate-900 dark:hover:bg-slate-800">
                     <FormField
                       control={form.control}
@@ -3004,7 +3004,7 @@ export default function Addnew() {
                     Refund Request
                   </h3>
                 </div>
-                <div className="grid gap-4 md:grid-cols-4 lg:grid-cols-6 sm:grid-cols-3 py-6">
+                <div className="grid gap-4 xl:grid-cols-8 lg:grid-cols-6 md:grid-cols-4 sm:grid-cols-2 py-6">
                   <div className="block max-w-sm p-2 rounded-md shadow hover:bg-slate-200 bg-slate-100 dark:bg-slate-700 dark:border-slate-900 dark:hover:bg-slate-800">
                     <FormField
                       control={form.control}
@@ -3103,7 +3103,7 @@ export default function Addnew() {
                     Affiliate System
                   </h3>
                 </div>
-                <div className="grid gap-4 md:grid-cols-4 lg:grid-cols-6 sm:grid-cols-3 py-6">
+                <div className="grid gap-4 xl:grid-cols-8 lg:grid-cols-6 md:grid-cols-4 sm:grid-cols-2 py-6">
                   <div className="block max-w-sm p-2 rounded-md shadow hover:bg-slate-200 bg-slate-100 dark:bg-slate-700 dark:border-slate-900 dark:hover:bg-slate-800">
                     <FormField
                       control={form.control}
@@ -3262,7 +3262,7 @@ export default function Addnew() {
                     Offline payment
                   </h3>
                 </div>
-                <div className="grid gap-4 md:grid-cols-4 lg:grid-cols-6 sm:grid-cols-3 py-6">
+                <div className="grid gap-4 xl:grid-cols-8 lg:grid-cols-6 md:grid-cols-4 sm:grid-cols-2 py-6">
                   <div className="block max-w-sm p-2 rounded-md shadow hover:bg-slate-200 bg-slate-100 dark:bg-slate-700 dark:border-slate-900 dark:hover:bg-slate-800">
                     <FormField
                       control={form.control}
@@ -3421,7 +3421,7 @@ export default function Addnew() {
                     Club Point
                   </h3>
                 </div>
-                <div className="grid gap-4 md:grid-cols-4 lg:grid-cols-6 sm:grid-cols-3 py-6">
+                <div className="grid gap-4 xl:grid-cols-8 lg:grid-cols-6 md:grid-cols-4 sm:grid-cols-2 py-6">
                   <div className="block max-w-sm p-2 rounded-md shadow hover:bg-slate-200 bg-slate-100 dark:bg-slate-700 dark:border-slate-900 dark:hover:bg-slate-800">
                     <FormField
                       control={form.control}
@@ -3475,7 +3475,7 @@ export default function Addnew() {
                     OTP System
                   </h3>
                 </div>
-                <div className="grid gap-4 md:grid-cols-4 lg:grid-cols-6 sm:grid-cols-3 py-6">
+                <div className="grid gap-4 xl:grid-cols-8 lg:grid-cols-6 md:grid-cols-4 sm:grid-cols-2 py-6">
                   <div className="block max-w-sm p-2 rounded-md shadow hover:bg-slate-200 bg-slate-100 dark:bg-slate-700 dark:border-slate-900 dark:hover:bg-slate-800">
                     <FormField
                       control={form.control}
@@ -3542,7 +3542,7 @@ export default function Addnew() {
                   Seller Subscription
                   </h3>
                 </div>
-                <div className="grid gap-4 md:grid-cols-4 lg:grid-cols-6 sm:grid-cols-3 py-6">
+                <div className="grid gap-4 xl:grid-cols-8 lg:grid-cols-6 md:grid-cols-4 sm:grid-cols-2 py-6">
                   <div className="block max-w-sm p-2 rounded-md shadow hover:bg-slate-200 bg-slate-100 dark:bg-slate-700 dark:border-slate-900 dark:hover:bg-slate-800">
                     <FormField
                       control={form.control}
@@ -3609,7 +3609,7 @@ export default function Addnew() {
                   Size Guide
                   </h3>
                 </div>
-                <div className="grid gap-4 md:grid-cols-4 lg:grid-cols-6 sm:grid-cols-3 py-6">
+                <div className="grid gap-4 xl:grid-cols-8 lg:grid-cols-6 md:grid-cols-4 sm:grid-cols-2 py-6">
                   <div className="block max-w-sm p-2 rounded-md shadow hover:bg-slate-200 bg-slate-100 dark:bg-slate-700 dark:border-slate-900 dark:hover:bg-slate-800">
                     <FormField
                       control={form.control}

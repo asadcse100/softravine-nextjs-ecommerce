@@ -79,8 +79,8 @@ export default function Addnew() {
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
           <div className="mx-auto max-w-screen-2xl">
-            <div className="grid gap-4 md:grid-cols-1 lg:grid-cols-2 sm:grid-cols-1">
-              
+            <div className="gap-4 grid xl:grid-cols-2 lg:grid-cols-2 md:grid-cols-1 sm:grid-cols-1">
+
               <div className="flex flex-col gap-4">
                 <div className="px-6 rounded-sm border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark">
                   <div className="border-b border-stroke px-6.5 py-4 dark:border-strokedark">
@@ -150,7 +150,6 @@ export default function Addnew() {
                 </div>
               </div>
 
-            <div className="grid grid-cols-1 gap-4 md:grid-cols-1 sm:grid-cols-2">
               <div className="flex flex-col gap-4">
                 <div className="px-6 rounded-sm border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark">
                   <div className="border-b border-stroke px-6.5 py-4 dark:border-strokedark">
@@ -200,14 +199,12 @@ export default function Addnew() {
                   </div>
                 </div>
               </div>
-            </div>
 
-            <div className="grid grid-cols-1 gap-4 md:grid-cols-1 sm:grid-cols-2">
               <div className="flex flex-col gap-4">
                 <div className="px-6 rounded-sm border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark">
                   <div className="border-b border-stroke px-6.5 py-4 dark:border-strokedark">
                     <h3 className="font-medium text-black dark:text-white">
-                    Product Videos
+                      Product Videos
                     </h3>
                   </div>
                   <div className="py-6">
@@ -252,14 +249,12 @@ export default function Addnew() {
                   </div>
                 </div>
               </div>
-            </div>
 
-            <div className="grid grid-cols-1 gap-4 md:grid-cols-1 sm:grid-cols-2">
               <div className="flex flex-col gap-4">
                 <div className="px-6 rounded-sm border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark">
                   <div className="border-b border-stroke px-6.5 py-4 dark:border-strokedark">
                     <h3 className="font-medium text-black dark:text-white">
-                    Product price
+                      Product price
                     </h3>
                   </div>
                   <div className="py-6">
@@ -341,14 +336,12 @@ export default function Addnew() {
                   </div>
                 </div>
               </div>
-            </div>
 
-            <div className="grid grid-cols-1 gap-4 md:grid-cols-1 sm:grid-cols-2">
               <div className="flex flex-col gap-4">
                 <div className="px-6 rounded-sm border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark">
                   <div className="border-b border-stroke px-6.5 py-4 dark:border-strokedark">
                     <h3 className="font-medium text-black dark:text-white">
-                    Reseller Product price
+                      Reseller Product price
                     </h3>
                   </div>
                   <div className="py-6">
@@ -371,7 +364,7 @@ export default function Addnew() {
                         )}
                       />
                     </div>
- 
+
                     <div className="mt-3 flex flex-col gap-5.5 p-6.5">
                       <FormField
                         control={form.control}
@@ -431,33 +424,30 @@ export default function Addnew() {
                   </div>
                 </div>
               </div>
-            </div>
 
-            <div className="grid grid-cols-1 gap-4 md:grid-cols-1 sm:grid-cols-2">
               <div className="flex flex-col gap-4">
                 <div className="px-6 rounded-sm border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark">
                   <div className="border-b border-stroke px-6.5 py-4 dark:border-strokedark">
                     <h3 className="font-medium text-black dark:text-white">
-                    Product Description
+                      Product Description
                     </h3>
                   </div>
                   <div className="py-6">
                     <div className="flex flex-col gap-5.5 p-6.5">
-                    <Textarea
-                      className="!rounded-l-none"
-                      defaultValue="New york, USA"
-                    />
+                      <Textarea
+                        className="!rounded-l-none"
+                        defaultValue="New york, USA"
+                      />
                     </div>
                   </div>
                 </div>
               </div>
-            </div>
-            <div className="grid grid-cols-1 gap-4 md:grid-cols-1 sm:grid-cols-2">
+
               <div className="flex flex-col gap-4">
                 <div className="px-6 rounded-sm border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark">
                   <div className="border-b border-stroke px-6.5 py-4 dark:border-strokedark">
                     <h3 className="font-medium text-black dark:text-white">
-                    PDF Specification
+                      PDF Specification
                     </h3>
                   </div>
                   <div className="py-6">
@@ -483,13 +473,12 @@ export default function Addnew() {
                   </div>
                 </div>
               </div>
-            </div>
-            <div className="grid grid-cols-1 gap-4 md:grid-cols-1 sm:grid-cols-2">
+
               <div className="flex flex-col gap-4">
                 <div className="px-6 rounded-sm border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark">
                   <div className="border-b border-stroke px-6.5 py-4 dark:border-strokedark">
                     <h3 className="font-medium text-black dark:text-white">
-                    SEO Section
+                      SEO Section
                     </h3>
                   </div>
                   <div className="py-6">
@@ -520,10 +509,10 @@ export default function Addnew() {
                           <FormItem>
                             <FormLabel>Meta Description</FormLabel>
                             <FormControl>
-                            <Textarea
-                              className="!rounded-l-none"
-                              defaultValue="New york, USA"
-                            />
+                              <Textarea
+                                className="!rounded-l-none"
+                                defaultValue="New york, USA"
+                              />
                             </FormControl>
                             <FormMessage />
                           </FormItem>
@@ -552,13 +541,12 @@ export default function Addnew() {
                   </div>
                 </div>
               </div>
-            </div>
-            <div className="grid grid-cols-1 gap-4 md:grid-cols-1 sm:grid-cols-2">
+
               <div className="flex flex-col gap-4">
                 <div className="px-6 rounded-sm border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark">
                   <div className="border-b border-stroke px-6.5 py-4 dark:border-strokedark">
                     <h3 className="font-medium text-black dark:text-white">
-                    Product Ceategory
+                      Product Ceategory
                     </h3>
                   </div>
                   <div className="py-6">
@@ -633,43 +621,39 @@ export default function Addnew() {
                   </div>
                 </div>
               </div>
-            </div>
 
-            <div className="grid grid-cols-1 gap-4 md:grid-cols-1 sm:grid-cols-2">
-                <div className="flex flex-col gap-4">
-                  <div className="px-6 rounded-sm border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark">
-                    <div className="border-b border-stroke px-6.5 py-4 dark:border-strokedark">
-                      <h3 className="font-medium text-black dark:text-white">
-                        Case On Delivery
-                      </h3>
-                    </div>
-                    <div className="py-6">
-                      <div className="flex flex-col gap-5.5 p-6.5">
-                        <FormField
-                          control={form.control}
-                          name="case_on_delivery"
-                          render={({ field }) => (
-                            <FormItem>
-                              <div className="flex items-center space-x-12">
-                                <FormLabel className="mt-2">Status</FormLabel>
-                                <Switch />
-                              </div>
-                              <FormMessage />
-                            </FormItem>
-                          )}
-                        />
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-    
-            <div className="grid grid-cols-1 gap-4 md:grid-cols-1 sm:grid-cols-2">
               <div className="flex flex-col gap-4">
                 <div className="px-6 rounded-sm border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark">
                   <div className="border-b border-stroke px-6.5 py-4 dark:border-strokedark">
                     <h3 className="font-medium text-black dark:text-white">
-                    Vat & Tax
+                      Case On Delivery
+                    </h3>
+                  </div>
+                  <div className="py-6">
+                    <div className="flex flex-col gap-5.5 p-6.5">
+                      <FormField
+                        control={form.control}
+                        name="case_on_delivery"
+                        render={({ field }) => (
+                          <FormItem>
+                            <div className="flex items-center space-x-12">
+                              <FormLabel className="mt-2">Status</FormLabel>
+                              <Switch />
+                            </div>
+                            <FormMessage />
+                          </FormItem>
+                        )}
+                      />
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div className="flex flex-col gap-4">
+                <div className="px-6 rounded-sm border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark">
+                  <div className="border-b border-stroke px-6.5 py-4 dark:border-strokedark">
+                    <h3 className="font-medium text-black dark:text-white">
+                      Vat & Tax
                     </h3>
                   </div>
                   <div className="py-6">
@@ -711,19 +695,18 @@ export default function Addnew() {
                   </div>
                 </div>
               </div>
-            </div>
 
-          </div>
+            </div>
           </div>
           <div className="grid justify-items-end">
-              <Button
-                className="dark:text-slate-200"
-                variant="outline"
-                type="submit"
-              >
-                Submit Product
-              </Button>
-            </div>
+            <Button
+              className="dark:text-slate-200"
+              variant="outline"
+              type="submit"
+            >
+              Submit Product
+            </Button>
+          </div>
         </form>
       </Form>
     </div>

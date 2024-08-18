@@ -22,18 +22,18 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={poppins.className}>
-      <ThemeProvider
-            attribute="class"
-            defaultTheme="system"
-            enableSystem
-            disableTransitionOnChange
-          >
-        <div className="flex min-h-screen">
-          <SideBar></SideBar>
-          <Header></Header>
-          <PageWrapper>{children}</PageWrapper>
-          {/* <Chat /> */}
-        </div>
+        <ThemeProvider
+          attribute="class"
+          defaultTheme="system"
+          enableSystem
+          disableTransitionOnChange
+        >
+          <div className="flex min-h-screen">
+            <SideBar></SideBar>
+            <Header></Header>
+            <PageWrapper>{children}</PageWrapper>
+            {/* <Chat /> */}
+          </div>
         </ThemeProvider>
       </body>
     </html>
