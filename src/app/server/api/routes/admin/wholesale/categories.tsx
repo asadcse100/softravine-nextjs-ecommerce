@@ -4,10 +4,10 @@ import { getCategories } from '@/app/server/controllers/WholesaleProductControll
 export async function GET() {
   const result = await getCategories();
   try{
-      const users = result.data;
-      return NextResponse.json(users);
+      const wholesaleCategories = result.data;
+      return NextResponse.json(wholesaleCategories);
   }catch(error){
-      console.error("Error fetching users:", error);
-      return NextResponse.error();
+      console.error("Error fetching wholesaleCategories:", error);
+      return NextResponse.json({ error: "Failed to fetch Wholesale Categories" }, { status: 500 });
   }
 }

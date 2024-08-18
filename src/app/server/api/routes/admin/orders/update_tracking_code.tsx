@@ -4,10 +4,10 @@ import { updateTrackingCode } from '@/app/server/controllers/OrderController';
 export async function GET() {
   const result = await updateTrackingCode();
   try{
-      const users = result.data;
-      return NextResponse.json(users);
+      const updateTrackingCode = result.data;
+      return NextResponse.json(updateTrackingCode);
   }catch(error){
-      console.error("Error fetching users:", error);
-      return NextResponse.error();
+      console.error("Error fetching updateTrackingCode:", error);
+      return NextResponse.json({ error: "Failed to fetch Update Tracking Code" }, { status: 500 });
   }
 }

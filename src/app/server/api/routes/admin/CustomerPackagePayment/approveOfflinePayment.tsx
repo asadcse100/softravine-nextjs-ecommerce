@@ -4,10 +4,10 @@ import { approveOfflinePayment } from '@/app/server/controllers/CustomerPackageP
 export async function GET() {
   const result = await approveOfflinePayment();
   try{
-      const users = result.data;
-      return NextResponse.json(users);
+      const approveOfflinePayment = result.data;
+      return NextResponse.json(approveOfflinePayment);
   }catch(error){
-      console.error("Error fetching users:", error);
-      return NextResponse.error();
+      console.error("Error fetching approveOfflinePayment:", error);
+      return NextResponse.json({ error: "Failed to fetch Filter Approve Offline Payment" }, { status: 500 });
   }
 }

@@ -4,10 +4,10 @@ import { sendEmailVerificationMail } from '@/app/server/controllers/HomeControll
 export async function GET() {
   const result = await sendEmailVerificationMail();
   try{
-      const users = result.data;
-      return NextResponse.json(users);
+      const sendEmailVerificationMail = result.data;
+      return NextResponse.json(sendEmailVerificationMail);
   }catch(error){
-      console.error("Error fetching users:", error);
-      return NextResponse.error();
+      console.error("Error fetching sendEmailVerificationMail:", error);
+      return NextResponse.json({ error: "Failed to fetch Send Email Verification Mail" }, { status: 500 });
   }
 }

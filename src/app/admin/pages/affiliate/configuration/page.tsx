@@ -1,9 +1,9 @@
 "use client";
 
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useForm } from "react-hook-form";
+import { useForm, Controller } from "react-hook-form";
 import { z } from "zod";
-
+import { useState } from 'react';
 import { Button } from "@/app/admin/components/ui/button";
 import {
   Form,
@@ -18,6 +18,26 @@ import Input from "@/shared/Input/Input";
 import Select from "@/shared/Select/Select";
 import { Switch } from "@/app/admin/components/ui/switch";
 
+const leadershipFormSchema = z.object({
+  leaderships: z.array(
+    z.object({
+      leadership_name: z.string(),
+      direct_account_required: z.string(),
+      team_account_required: z.string(),
+      total_account_included_team: z.string(),
+      leadership_award: z.string(),
+      monthly_reword_fund: z.string(),
+      mobile_recharged: z.string(),
+      drivepack_recharged: z.string(),
+      reseller_shop_ordered: z.string(),
+    })
+  )
+});
+
+const referralFormSchema = z.object({
+  referrals: z.array(z.string().nonempty())
+});
+
 const formSchema = z.object({
   amount: z.string().min(10, {
     message: "Product Name must be at least 10 characters.",
@@ -26,7 +46,72 @@ const formSchema = z.object({
 
 export default function Addnew() {
   // ...
-  // 1. Define your form.
+  const [leadershipFields, setLeadershipFields] = useState([
+    {
+      leadership_name: "",
+      direct_account_required: "",
+      team_account_required: "",
+      total_account_included_team: "",
+      leadership_award: "",
+      monthly_reword_fund: "",
+      mobile_recharged: "",
+      drivepack_recharged: "",
+      reseller_shop_ordered: "",
+    },
+  ]);
+
+  const [referralFields, setReferralFields] = useState([{ value: "" }]);
+
+  const leadershipForm = useForm({
+    resolver: zodResolver(leadershipFormSchema),
+    defaultValues: {
+      leaderships: leadershipFields,
+    },
+  });
+
+  const referralForm = useForm({
+    resolver: zodResolver(referralFormSchema),
+    defaultValues: {
+      referrals: referralFields.map(field => field.value),
+    },
+  });
+
+  const handleAddLeadershipField = () => {
+    setLeadershipFields([
+      ...leadershipFields,
+      {
+        leadership_name: "",
+        direct_account_required: "",
+        team_account_required: "",
+        total_account_included_team: "",
+        leadership_award: "",
+        monthly_reword_fund: "",
+        mobile_recharged: "",
+        drivepack_recharged: "",
+        reseller_shop_ordered: "",
+      },
+    ]);
+  };
+
+  const handleAddReferralField = () => {
+    setReferralFields([...referralFields, { value: "" }]);
+  };
+
+  const handleReferralInputChange = (index: number, event: React.ChangeEvent<HTMLInputElement>) => {
+    const newFields = [...referralFields];
+    newFields[index].value = event.target.value;
+    setReferralFields(newFields);
+  };
+
+
+  const onSubmitLeadership = (values: z.infer<typeof leadershipFormSchema>) => {
+    console.log("Leadership Form Values:", values);
+  };
+
+  const onSubmitReferral = (values: z.infer<typeof referralFormSchema>) => {
+    console.log("Referral Form Values:", values);
+  };
+
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -41,15 +126,22 @@ export default function Addnew() {
     console.log(values);
   }
 
+
   const inputClass =
     "w-full rounded-lg border-[1px] border-primary bg-transparent px-5 py-3 font-normal text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:bg-form-input dark:text-white";
 
+  const referralClass = "py-3 px-4 block w-full border-gray-200 shadow-sm rounded-0 text-sm focus:z-10 focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none dark:bg-neutral-900 dark:border-neutral-700 dark:text-neutral-400 dark:placeholder-neutral-500 dark:focus:ring-neutral-600"
   return (
     <div className="min-h-screen mx-auto max-w-screen-2xl mt-4 p-4 py-4 md:p-6 2xl:p-10 bg-slate-100 dark:bg-slate-900">
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
           <div className="mx-auto max-w-screen-2xl">
             <div className="grid gap-4 md:grid-cols-1 lg:grid-cols-2 sm:grid-cols-1">
+
+  
+
+
+
               <div className="flex flex-col gap-4">
                 <div className="px-6 rounded-sm border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark">
                   <div className="border-b border-stroke px-6.5 py-4 dark:border-strokedark">
@@ -167,7 +259,7 @@ export default function Addnew() {
                           <FormItem>
                             <FormControl>
                               <div className="flex mt-4 items-center space-x-12">
-                              <FormLabel className="mt-2">Status</FormLabel>
+                                <FormLabel className="mt-2">Status</FormLabel>
                                 <Switch />
                               </div>
                             </FormControl>
@@ -250,8 +342,8 @@ export default function Addnew() {
                           <FormItem>
                             <div className="flex mt-4 items-center space-x-12">
                               <FormLabel className="mt-2">Status</FormLabel>
-                                <Switch />
-                              </div>
+                              <Switch />
+                            </div>
                             <FormMessage />
                           </FormItem>
                         )}
@@ -286,9 +378,9 @@ export default function Addnew() {
                           render={({ field }) => (
                             <FormItem>
                               <div className="flex items-center space-x-12">
-                            <FormLabel className="mt-2">Status</FormLabel>
-                              <Switch />
-                            </div>
+                                <FormLabel className="mt-2">Status</FormLabel>
+                                <Switch />
+                              </div>
                               <FormMessage />
                             </FormItem>
                           )}
@@ -342,6 +434,263 @@ export default function Addnew() {
                   </div>
                 </div>
               </div>
+
+              <div className="flex flex-col gap-4">
+                <div className="px-6 rounded-sm border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark">
+                  <div className="border-b border-stroke px-6.5 py-4 dark:border-strokedark">
+                    <h3 className="font-medium text-black dark:text-white">
+                      Referral User Configuration
+                    </h3>
+                  </div>
+                  <div className="py-6">
+                    <div className="flex flex-col gap-5.5 p-6.5">
+                      {referralFields.map((field, index) => (
+                        <FormField
+                          key={index}
+                          control={form.control}
+                          name={`amount-${index}`}
+                          render={({ field }) => (
+                            <FormItem>
+                              <FormLabel>
+                                Channel {index + 1}
+                              </FormLabel>
+                              <FormControl>
+                                <Input
+                                  className={inputClass}
+                                  placeholder="%"
+                                  value={field.value}
+                                  onChange={(event) => handleInputChange(index, event)}
+                                  {...field}
+                                />
+                              </FormControl>
+                              <FormMessage />
+                            </FormItem>
+                          )}
+                        />
+                      ))}
+
+                      <Button
+                        className="mt-4 p-2 dark:text-slate-200"
+                        onClick={handleAddReferralField}
+                        variant="outline"
+                        type="button"
+                      >
+                        + Add New
+                      </Button>
+
+                    </div>
+                    <div className="grid mt-3 justify-items-end">
+                      <Button
+                        className="dark:text-slate-200"
+                        variant="outline"
+                        type="submit"
+                      >
+                        Save
+                      </Button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              
+
+              <div className="flex flex-col gap-4">
+      <div className="px-6 rounded-sm border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark">
+        <div className="border-b border-stroke px-6.5 py-4 dark:border-strokedark">
+          <h3 className="font-medium text-black dark:text-white">
+            Leadership Configuration
+          </h3>
+        </div>
+        <form onSubmit={onSubmitLeadership(onSubmit)}>
+          <div className="py-6">
+            {leadershipFields.map((field, index) => (
+              <div key={index} className="flex flex-col gap-5.5 p-6.5">
+                <Controller
+                  control={leadershipForm.control}
+                  name={`leaderships.${index}.leadership_name`}
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>Leadership Name</FormLabel>
+                      <FormControl>
+                        <Input
+                          className="inputClass"
+                          placeholder="Creative leadership"
+                          {...field}
+                        />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+
+                <Controller
+                  control={leadershipForm.control}
+                  name={`leaderships.${index}.direct_account_required`}
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>Direct account is required</FormLabel>
+                      <FormControl>
+                        <Input
+                          className="inputClass"
+                          placeholder="10"
+                          {...field}
+                        />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+
+                <Controller
+                  control={leadershipForm.control}
+                  name={`leaderships.${index}.team_account_required`}
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>Team account is required</FormLabel>
+                      <FormControl>
+                        <Input
+                          className="inputClass"
+                          placeholder="10"
+                          {...field}
+                        />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+
+                <Controller
+                  control={leadershipForm.control}
+                  name={`leaderships.${index}.total_account_included_team`}
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>Total accounts including teams</FormLabel>
+                      <FormControl>
+                        <Input
+                          className="inputClass"
+                          placeholder="10"
+                          {...field}
+                        />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+
+                <Controller
+                  control={leadershipForm.control}
+                  name={`leaderships.${index}.leadership_award`}
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>Leadership Awards</FormLabel>
+                      <FormControl>
+                        <Input
+                          className="inputClass"
+                          placeholder="70%"
+                          {...field}
+                        />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+
+                <Controller
+                  control={leadershipForm.control}
+                  name={`leaderships.${index}.monthly_reword_fund`}
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>Monthly Rewards fund</FormLabel>
+                      <FormControl>
+                        <Input
+                          className="inputClass"
+                          placeholder="15%"
+                          {...field}
+                        />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+
+                <Controller
+                  control={leadershipForm.control}
+                  name={`leaderships.${index}.mobile_recharged`}
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>Mobile should be recharged</FormLabel>
+                      <FormControl>
+                        <Input
+                          className="inputClass"
+                          placeholder="200"
+                          {...field}
+                        />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+
+                <Controller
+                  control={leadershipForm.control}
+                  name={`leaderships.${index}.drivepack_recharged`}
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>Driverpack Should be recharged</FormLabel>
+                      <FormControl>
+                        <Input
+                          className="inputClass"
+                          placeholder="500"
+                          {...field}
+                        />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+
+                <Controller
+                  control={leadershipForm.control}
+                  name={`leaderships.${index}.reseller_shop_ordered`}
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>Reseller shop should be ordered</FormLabel>
+                      <FormControl>
+                        <Input
+                          className="inputClass"
+                          placeholder="100"
+                          {...field}
+                        />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+              </div>
+            ))}
+
+            <Button
+              className="mt-4 p-2 dark:text-slate-200"
+              onClick={handleAddLeadershipField}
+              variant="outline"
+              type="button"
+            >
+              + Add New
+            </Button>
+
+            <div className="grid mt-3 justify-items-end">
+              <Button
+                className="dark:text-slate-200"
+                variant="outline"
+                type="submit"
+              >
+                Save
+              </Button>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+
             </div>
           </div>
         </form>

@@ -4,10 +4,10 @@ import { requestApprovalVendor } from '@/app/server/controllers/RefundRequestCon
 export async function GET() {
     const result = await requestApprovalVendor();
     try{
-        const users = result.data;
-        return NextResponse.json(users);
+        const requestApprovalVendor = result.data;
+        return NextResponse.json(requestApprovalVendor);
     }catch(error){
-        console.error("Error fetching users:", error);
-        return NextResponse.error();
+        console.error("Error fetching requestApprovalVendor:", error);
+        return NextResponse.json({ error: "Failed to fetch Request Approval Vendor" }, { status: 500 });
     }
   }

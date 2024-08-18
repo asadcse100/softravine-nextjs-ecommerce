@@ -4,10 +4,10 @@ import { getMyBiddedProducts } from '@/app/server/controllers/AuctionProductBidC
 export async function GET() {
   const result = await getMyBiddedProducts();
   try{
-      const users = result.data;
-      return NextResponse.json(users);
+      const myBids = result.data;
+      return NextResponse.json(myBids);
   }catch(error){
-      console.error("Error fetching users:", error);
-      return NextResponse.error();
+      console.error("Error fetching myBids:", error);
+      return NextResponse.json({ error: "Failed to fetch My Bids" }, { status: 500 });
   }
 }

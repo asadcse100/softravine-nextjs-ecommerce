@@ -4,10 +4,10 @@ import { filterShop } from '@/app/server/controllers/HomeController';
 export async function GET() {
   const result = await filterShop();
   try{
-      const users = result.data;
-      return NextResponse.json(users);
+      const filterShop = result.data;
+      return NextResponse.json(filterShop);
   }catch(error){
-      console.error("Error fetching users:", error);
-      return NextResponse.error();
+      console.error("Error fetching filterShop:", error);
+      return NextResponse.json({ error: "Failed to fetch Filter Shop" }, { status: 500 });
   }
 }

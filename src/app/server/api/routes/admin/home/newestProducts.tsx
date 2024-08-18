@@ -4,10 +4,10 @@ import { loadNewestProductSection } from '@/app/server/controllers/HomeControlle
 export async function GET() {
   const result = await loadNewestProductSection();
   try{
-      const users = result.data;
-      return NextResponse.json(users);
+      const loadNewestProductSection = result.data;
+      return NextResponse.json(loadNewestProductSection);
   }catch(error){
-      console.error("Error fetching users:", error);
-      return NextResponse.error();
+      console.error("Error fetching loadNewestProductSection:", error);
+      return NextResponse.json({ error: "Failed to fetch Newest Product Section" }, { status: 500 });
   }
 }

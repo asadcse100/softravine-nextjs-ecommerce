@@ -5,10 +5,10 @@ import { withAuth } from '@/app/server/middleware/withAuth';
 export async function GET() {
     const result = await getUserPurchaseHistory();
     try{
-        const users = result.data;
-        return NextResponse.json(users);
+        const getUserPurchaseHistory = result.data;
+        return NextResponse.json(getUserPurchaseHistory);
     }catch(error){
-        console.error("Error fetching users:", error);
-        return NextResponse.error();
+        console.error("Error fetching getUserPurchaseHistory:", error);
+        return NextResponse.json({ error: "Failed to fetch User Purchase History" }, { status: 500 });
     }
   }

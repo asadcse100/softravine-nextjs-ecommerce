@@ -1,5 +1,6 @@
 import { PrismaClient } from '@prisma/client';
-import { NextApiRequest, NextApiResponse } from 'next';
+// import { NextApiRequest, NextApiResponse } from 'next';
+import { NextResponse } from "next/server";
 import { getProductById, updateProduct } from '../models/AuctionProduct';
 import { slugify } from '@/app/server/utils/slugify';  // Utility function for generating slugs
 import { Product } from '@/app/server/types/product';
@@ -259,14 +260,14 @@ export const updatePublished = async (req: NextApiRequest, res: NextApiResponse)
   }
 };
 
-
-export const getAllAuctionProducts = async (req: NextApiRequest, res: NextApiResponse) => {
-  const { page = 1, pageSize = 12 } = req.query;
+export const getAllAuctionProducts = async () => {
+// export const getAllAuctionProducts = async (req: NextApiRequest, res: NextApiResponse) => {
+  const { page = 1, pageSize = 12 } = NextResponse.query;
   const currentPage = parseInt(page as string, 10);
   const currentPageSize = parseInt(pageSize as string, 10);
 
   try {
-      const products = await prisma.product.findMany({
+      const products = await prisma.products.findMany({
           where: {
               published: true,
               auctionProduct: true,
@@ -284,7 +285,7 @@ export const getAllAuctionProducts = async (req: NextApiRequest, res: NextApiRes
           take: currentPageSize,
       });
 
-      const totalProducts = await prisma.product.count({
+      const totalProducts = await prisma.products.count({
           where: {
               published: true,
               auctionProduct: true,

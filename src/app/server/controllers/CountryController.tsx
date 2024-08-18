@@ -1,13 +1,14 @@
-import { NextApiRequest, NextApiResponse } from 'next';
+
 import { PrismaClient } from '@prisma/client';
 
 const prisma = new PrismaClient();
 
-export const index = async (req: NextApiRequest, res: NextApiResponse) => {
+// export const index = async (req: NextApiRequest, res: NextApiResponse) => {
+  export const index = async () => {
   const { sort_country } = req.query;
 
   try {
-    const countryQueries = prisma.country.findMany({
+    const countryQueries = prisma.countries.findMany({
       where: {
         name: {
           contains: sort_country as string || '',
@@ -23,6 +24,8 @@ export const index = async (req: NextApiRequest, res: NextApiResponse) => {
 
     res.status(200).json({ countries, sort_country });
   } catch (error) {
+    console.error("Error fetching texes:", error);
+    return { success: false, error };
     res.status(500).json({ error: 'Failed to fetch countries' });
   }
 };

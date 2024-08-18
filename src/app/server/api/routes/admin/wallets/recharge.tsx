@@ -4,10 +4,10 @@ import { recharge, walletPaymentDone } from '@/app/server/controllers/WalletCont
 export async function GET() {
   const result = await recharge();
   try{
-      const users = result.data;
-      return NextResponse.json(users);
+      const recharges = result.data;
+      return NextResponse.json(recharges);
   }catch(error){
-      console.error("Error fetching users:", error);
-      return NextResponse.error();
+      console.error("Error fetching recharges:", error);
+      return NextResponse.json({ error: "Failed to fetch Recharges" }, { status: 500 });
   }
 }

@@ -4,10 +4,10 @@ import { returnPolicy } from '@/app/server/controllers/HomeController';
 export async function GET() {
   const result = await returnPolicy();
   try{
-      const users = result.data;
-      return NextResponse.json(users);
+      const returnPolicy = result.data;
+      return NextResponse.json(returnPolicy);
   }catch(error){
-      console.error("Error fetching users:", error);
-      return NextResponse.error();
+      console.error("Error fetching returnPolicy:", error);
+      return NextResponse.json({ error: "Failed to fetch Return Policy" }, { status: 500 });
   }
 }

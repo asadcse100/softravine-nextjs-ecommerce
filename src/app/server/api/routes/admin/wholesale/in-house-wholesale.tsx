@@ -4,10 +4,10 @@ import { getInHouseWholesaleProducts } from '@/app/server/controllers/WholesaleP
 export async function GET() {
   const result = await getInHouseWholesaleProducts();
   try{
-      const users = result.data;
-      return NextResponse.json(users);
+      const inHouseWholesale = result.data;
+      return NextResponse.json(inHouseWholesale);
   }catch(error){
-      console.error("Error fetching users:", error);
-      return NextResponse.error();
+      console.error("Error fetching inHouseWholesale:", error);
+      return NextResponse.json({ error: "Failed to fetch InHouse Wholesale" }, { status: 500 });
   }
 }

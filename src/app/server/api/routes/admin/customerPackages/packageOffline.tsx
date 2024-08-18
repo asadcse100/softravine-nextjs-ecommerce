@@ -4,10 +4,10 @@ import { purchasePackageOffline } from '@/app/server/controllers/CustomerPackage
 export async function GET() {
   const result = await purchasePackageOffline();
   try{
-      const users = result.data;
-      return NextResponse.json(users);
+      const purchasePackageOffline = result.data;
+      return NextResponse.json(purchasePackageOffline);
   }catch(error){
-      console.error("Error fetching users:", error);
-      return NextResponse.error();
+      console.error("Error fetching purchasePackageOffline:", error);
+      return NextResponse.json({ error: "Failed to fetch Filter Purchase Package Offline" }, { status: 500 });
   }
 }

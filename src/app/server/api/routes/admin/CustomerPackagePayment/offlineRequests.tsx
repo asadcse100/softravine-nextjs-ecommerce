@@ -4,10 +4,10 @@ import { getOfflinePaymentRequests } from '@/app/server/controllers/CustomerPack
 export async function GET() {
   const result = await getOfflinePaymentRequests();
   try{
-      const users = result.data;
-      return NextResponse.json(users);
+      const getOfflinePaymentRequests = result.data;
+      return NextResponse.json(getOfflinePaymentRequests);
   }catch(error){
-      console.error("Error fetching users:", error);
-      return NextResponse.error();
+      console.error("Error fetching getOfflinePaymentRequests:", error);
+      return NextResponse.json({ error: "Failed to fetch Filter Offline Payment Requests" }, { status: 500 });
   }
 }

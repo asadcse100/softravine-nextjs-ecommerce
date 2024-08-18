@@ -1,5 +1,7 @@
-import { NextApiRequest, NextApiResponse } from 'next';
+import { NextResponse } from "next/server";
 import { PrismaClient } from '@prisma/client';
+import type { NextRequest } from 'next/server';
+
 const prisma = new PrismaClient();
 
 interface Category {
@@ -21,7 +23,7 @@ interface Stock {
   // Other stock properties
 }
 
-export default async function adminDashboard(req: NextApiRequest, res: NextApiResponse) {
+export async function adminDashboard(req: NextRequest) {
   try {
     const rootCategories: Category[] = await prisma.category.findMany({
       where: {
@@ -31,9 +33,10 @@ export default async function adminDashboard(req: NextApiRequest, res: NextApiRe
 
     const cachedGraphData = await getCachedGraphData(rootCategories);
 
-    res.status(200).json({ rootCategories, cachedGraphData });
+    return NextResponse.json({ rootCategories, cachedGraphData }, { status: 200 });
   } catch (error) {
-    res.status(500).json({ error: 'Internal server error' });
+    console.error(error);
+    return NextResponse.json({ error: 'Internal server error' }, { status: 500 });
   }
 }
 
@@ -79,16 +82,17 @@ async function getCachedGraphData(rootCategories: Category[]) {
         num_of_sale_data += sale + ',';
       }
 
-      const cachedData = await prisma.cache.create({
+      const newCachedData = await prisma.cache.create({
         data: {
           id: 'cached_graph_data',
           data: { num_of_sale_data, qty_data }
         }
       });
 
-      return cachedData.data;
+      return newCachedData.data;
     }
   } catch (error) {
+    console.error("Error getting cached graph data:", error);
     throw new Error('Error getting cached graph data');
   }
 }

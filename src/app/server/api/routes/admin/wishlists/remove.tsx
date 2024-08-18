@@ -4,10 +4,10 @@ import { remove } from '@/app/server/controllers/WishlistController';
 export async function GET() {
   const result = await remove();
   try{
-      const users = result.data;
-      return NextResponse.json(users);
+      const remove = result.data;
+      return NextResponse.json(remove);
   }catch(error){
-      console.error("Error fetching users:", error);
-      return NextResponse.error();
+      console.error("Error fetching remove:", error);
+      return NextResponse.json({ error: "Failed to fetch Wishlist Remove" }, { status: 500 });
   }
 }

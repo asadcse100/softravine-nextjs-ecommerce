@@ -4,10 +4,10 @@ import { updateStateStatus } from '@/app/server/controllers/StateController'; //
 export async function GET() {
   const result = await updateStateStatus();
   try{
-      const users = result.data;
-      return NextResponse.json(users);
+      const updateStateStatus = result.data;
+      return NextResponse.json(updateStateStatus);
   }catch(error){
-      console.error("Error fetching users:", error);
-      return NextResponse.error();
+      console.error("Error fetching updateStateStatus:", error);
+      return NextResponse.json({ error: "Failed to fetch Update State Status" }, { status: 500 });
   }
 }

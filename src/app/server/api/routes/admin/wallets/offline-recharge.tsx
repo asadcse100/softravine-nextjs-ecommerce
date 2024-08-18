@@ -4,10 +4,10 @@ import { offlineRecharge } from '@/app/server/controllers/WalletController';
 export async function GET() {
   const result = await offlineRecharge();
   try{
-      const users = result.data;
-      return NextResponse.json(users);
+      const offlineRecharge = result.data;
+      return NextResponse.json(offlineRecharge);
   }catch(error){
-      console.error("Error fetching users:", error);
-      return NextResponse.error();
+      console.error("Error fetching offlineRecharge:", error);
+      return NextResponse.json({ error: "Failed to fetch Offline Recharge" }, { status: 500 });
   }
 }

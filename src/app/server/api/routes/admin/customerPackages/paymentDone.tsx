@@ -4,10 +4,10 @@ import { purchasePaymentDone } from '@/app/server/controllers/CustomerPackageCon
 export async function GET() {
   const result = await purchasePaymentDone();
   try{
-      const users = result.data;
-      return NextResponse.json(users);
+      const purchasePaymentDone = result.data;
+      return NextResponse.json(purchasePaymentDone);
   }catch(error){
-      console.error("Error fetching users:", error);
-      return NextResponse.error();
+      console.error("Error fetching purchasePaymentDone:", error);
+      return NextResponse.json({ error: "Failed to fetch Filter Purchase Payment Done" }, { status: 500 });
   }
 }

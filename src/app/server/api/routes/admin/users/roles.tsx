@@ -4,10 +4,10 @@ import { index, store } from '@/app/server/controllers/RoleController';
 export async function GET() {
   const result = await index();
   try{
-      const users = result.data;
-      return NextResponse.json(users);
+      const roles = result.data;
+      return NextResponse.json(roles);
   }catch(error){
-      console.error("Error fetching users:", error);
-      return NextResponse.error();
+      console.error("Error fetching roles:", error);
+      return NextResponse.json({ error: "Failed to fetch Roles" }, { status: 500 });
   }
 }

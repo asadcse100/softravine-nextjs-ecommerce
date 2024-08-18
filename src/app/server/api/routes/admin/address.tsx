@@ -5,10 +5,10 @@ import { handleCreateAddress, handleGetAddress, handleUpdateAddress, handleDelet
 export async function GET() {
   const result = await handleCreateAddress();
   try{
-      const users = result.data;
-      return NextResponse.json(users);
+      const address = result.data;
+      return NextResponse.json(address);
   }catch(error){
-      console.error("Error fetching users:", error);
-      return NextResponse.error();
+      console.error("Error fetching address:", error);
+      return NextResponse.json({ error: "Failed to fetch Address" }, { status: 500 });
   }
 }

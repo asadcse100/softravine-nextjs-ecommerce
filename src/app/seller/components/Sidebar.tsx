@@ -18,14 +18,7 @@ export default function Sidebar() {
 
   return (
     <aside className={asideStyle}>
-      <div className="sidebar-top flex placeholder:flex relative items-center py-4 px-2 m-2">
-        {/* <Image
-          className="w-10 min-h-fit"
-          src="/public/logo.png"
-          alt="logo"
-          width={15}
-          height={15}
-        /> */}
+      <div className="sidebar-top flex placeholder:flex relative items-center py-3.5 px-2 m-2">
         <Logo/> 
         {!toggleCollapse && (
           <h3 className="pl-2 font-bold text-2xl text-slate-500 min-w-max">

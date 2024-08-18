@@ -4,8 +4,8 @@ import classNames from 'classnames';
 import React, { useEffect, useState } from 'react'
 import { useSideBarToggle } from '@/hooks/use-sidebar-toggle';
 import { SideBarMenuItem } from "./sidebar-menu-item";
-import { SideBarLogo } from './sidebar-logo';
-
+import Logo from "@/app/admin/components/Logo";
+import Link from "next/link";
 
 export const SideBar = () => {
     const [mounted, setMounted] = useState(false);
@@ -22,10 +22,12 @@ export const SideBar = () => {
     return (
         <aside className={asideStyle}>
             <div className="sidebar-top relative flex items-center px-3.5 py-5">
-                {mounted && <SideBarLogo />}
-                <h3 className={classNames("pl-2 font-bold text-2xl min-w-max text-sidebar-foreground",
-                    { hidden: toggleCollapse })}>
-                    MY- BIS</h3>
+                <Logo />
+                {!toggleCollapse && (
+                    <h3 className="pl-2 font-bold text-2xl text-slate-500 min-w-max">
+                        <Link href="/admin">My-Bis</Link>
+                    </h3>
+                )}
             </div>
             <nav className="flex flex-col gap-2 transition duration-300 ease-in-out">
                 <div className="flex flex-col gap-2 px-4">

@@ -4,11 +4,11 @@ import { getAttributes, createAttribute, updateAttribute } from '@/app/server/co
 export async function GET() {
   const result = await getAttributes();
   try{
-      const users = result.data;
-      return NextResponse.json(users);
+      const attributes = result.data;
+      return NextResponse.json(attributes);
   }catch(error){
-      console.error("Error fetching users:", error);
-      return NextResponse.error();
+      console.error("Error fetching attributes:", error);
+      return NextResponse.json({ error: "Failed to fetch Attributes" }, { status: 500 });
   }
 }
 

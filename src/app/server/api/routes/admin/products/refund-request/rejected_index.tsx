@@ -4,10 +4,10 @@ import { rejectedIndex } from '@/app/server/controllers/RefundRequestController'
 export async function GET() {
     const result = await rejectedIndex();
     try{
-        const users = result.data;
-        return NextResponse.json(users);
+        const rejectedIndex = result.data;
+        return NextResponse.json(rejectedIndex);
     }catch(error){
-        console.error("Error fetching users:", error);
-        return NextResponse.error();
+        console.error("Error fetching rejectedIndex:", error);
+        return NextResponse.json({ error: "Failed to fetch Rejected Index" }, { status: 500 });
     }
   }

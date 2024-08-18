@@ -4,10 +4,10 @@ import { pdfDownloadSeller } from '@/app/server/controllers/ProductBulkUploadCon
 export async function GET() {
     const result = await pdfDownloadSeller();
     try{
-        const users = result.data;
-        return NextResponse.json(users);
+        const sellerPdfDownload = result.data;
+        return NextResponse.json(sellerPdfDownload);
     }catch(error){
-        console.error("Error fetching users:", error);
-        return NextResponse.error();
+        console.error("Error fetching sellerPdfDownload:", error);
+        return NextResponse.json({ error: "Failed to fetch Seller PdfDownload" }, { status: 500 });
     }
   }

@@ -4,10 +4,10 @@ import { refundStickerUpdate } from '@/app/server/controllers/RefundRequestContr
 export async function GET() {
     const result = await refundStickerUpdate();
     try{
-        const users = result.data;
-        return NextResponse.json(users);
+        const refundStickerUpdate = result.data;
+        return NextResponse.json(refundStickerUpdate);
     }catch(error){
-        console.error("Error fetching users:", error);
-        return NextResponse.error();
+        console.error("Error fetching refundStickerUpdate:", error);
+        return NextResponse.json({ error: "Failed to fetch Refund Sticker Update" }, { status: 500 });
     }
   }

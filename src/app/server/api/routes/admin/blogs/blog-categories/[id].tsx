@@ -1,39 +1,34 @@
 import { NextResponse } from "next/server";
 import { updateBlogCategory, deleteBlogCategory } from '@/app/server/controllers/BlogCategoryController';
+import type { NextRequest } from 'next/server';
 
-export default async function handler(req: NextApiRequest, res: NextApiResponse) {
-  const { id } = req.query;
+export async function handler(req: NextRequest) {
+  const { searchParams } = new URL(req.url);
+  const id = searchParams.get('id');
 
   if (req.method === 'PUT') {
-    const { categoryName } = req.body;
+    const { categoryName } = await req.json();
 
     if (!categoryName || typeof categoryName !== 'string' || categoryName.length > 255) {
-      return res.status(400).json({ error: 'Category name is required and must be less than 255 characters.' });
+      return NextResponse.json({ error: 'Category name is required and must be less than 255 characters.' }, { status: 400 });
     }
 
     try {
       const category = await updateBlogCategory(Number(id), categoryName);
-      res.status(200).json({ category });
+      return NextResponse.json({ category }, { status: 200 });
     } catch (error) {
       console.error(error);
-      res.status(500).json({ error: 'Internal Server Error' });
+      return NextResponse.json({ error: 'Internal Server Error' }, { status: 500 });
     }
-  } else {
-    res.setHeader('Allow', ['PUT']);
-    res.status(405).end(`Method ${req.method} Not Allowed`);
-  }
-
-  if (req.method === 'DELETE') {
+  } else if (req.method === 'DELETE') {
     try {
       await deleteBlogCategory(Number(id));
-      res.status(200).json({ message: 'Blog category deleted successfully' });
+      return NextResponse.json({ message: 'Blog category deleted successfully' }, { status: 200 });
     } catch (error) {
       console.error(error);
-      res.status(500).json({ error: 'Internal Server Error' });
+      return NextResponse.json({ error: 'Internal Server Error' }, { status: 500 });
     }
   } else {
-    res.setHeader('Allow', ['DELETE']);
-    res.status(405).end(`Method ${req.method} Not Allowed`);
+    return NextResponse.json({ error: `Method ${req.method} Not Allowed` }, { status: 405, headers: { Allow: 'PUT, DELETE' } });
   }
-
 }

@@ -285,6 +285,21 @@ export const SIDENAV_ITEMS:SideNavItem[] = [
         ],
     },
     {
+        title: 'My-bis Option',
+        path: '/my_bis_option',
+        icon: <BsWindowDesktop size={20} />,
+        submenu: true,
+        subMenuItems: [
+            {title: 'Mobile Recharge', path: '/admin/pages/my_bis_option/mobile_recharge'},
+            {title: 'Drive Offer', path: '/admin/pages/my_bis_option/drive_offer'},
+            {title: 'Air Ticket', path: '/admin/pages/my_bis_option/air_ticket'},
+            {title: 'News Paper', path: '/admin/pages/my_bis_option/news_paper'},
+            {title: 'Live TV', path: '/admin/pages/my_bis_option/live_tv'},
+            {title: 'Blood Bank', path: '/admin/pages/my_bis_option/blood_bank'},
+            {title: 'Online Doctor', path: '/admin/pages/my_bis_option/online_doctor'},
+        ],
+    },
+    {
         title: 'Website Settings',
         path: '/setting',
         icon: <BsWindowDesktop size={20} />,

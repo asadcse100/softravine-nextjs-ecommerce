@@ -4,10 +4,10 @@ import { sellerPolicy } from '@/app/server/controllers/HomeController';
 export async function GET() {
   const result = await sellerPolicy();
   try{
-      const users = result.data;
-      return NextResponse.json(users);
+      const policy = result.data;
+      return NextResponse.json(policy);
   }catch(error){
-      console.error("Error fetching users:", error);
-      return NextResponse.error();
+      console.error("Error fetching Policy:", error);
+      return NextResponse.json({ error: "Failed to fetch Policy" }, { status: 500 });
   }
 }

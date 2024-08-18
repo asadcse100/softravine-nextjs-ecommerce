@@ -3,16 +3,16 @@ import { PrismaClient } from '@prisma/client';
 const prisma = new PrismaClient();
 
 export const getTaxes = async () => {
-        try{
-            const texes = await prisma.ProductTax.findMany();
-            return { success: true, data: texes };
-        }catch(error){
-            console.error("Error fetching texes:", error);
-            return { success: false, error };
-        }
+    try{
+        const texes = await prisma.product_taxes.findMany();
+        return { success: true, data: texes };
+    }catch(error){
+        console.error("Error fetching texes:", error);
+        return { success: false, error };
     }
+}
 
-// export default async function store(req: NextApiRequest, res: NextApiResponse) {
+
 export const store = async (req: NextApiRequest, res: NextApiResponse) => {
     try {
         const { name } = req.body;

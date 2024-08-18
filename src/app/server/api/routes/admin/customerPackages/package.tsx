@@ -4,10 +4,10 @@ import { purchasePackage } from '@/app/server/controllers/CustomerPackageControl
 export async function GET() {
   const result = await purchasePackage();
   try{
-      const users = result.data;
-      return NextResponse.json(users);
+      const purchasePackage = result.data;
+      return NextResponse.json(purchasePackage);
   }catch(error){
-      console.error("Error fetching users:", error);
-      return NextResponse.error();
+      console.error("Error fetching purchasePackage:", error);
+      return NextResponse.json({ error: "Failed to fetch Filter Purchase Package" }, { status: 500 });
   }
 }

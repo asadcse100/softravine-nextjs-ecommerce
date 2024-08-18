@@ -4,10 +4,10 @@ import { orderStore } from '@/app/server/controllers/PosController';
 export async function GET() {
     const result = await orderStore();
     try{
-        const users = result.data;
-        return NextResponse.json(users);
+        const order = result.data;
+        return NextResponse.json(order);
     }catch(error){
-        console.error("Error fetching users:", error);
-        return NextResponse.error();
+        console.error("Error fetching order:", error);
+        return NextResponse.json({ error: "Failed to fetch order" }, { status: 500 });
     }
   }

@@ -4,10 +4,10 @@ import { refundTimeUpdate } from '@/app/server/controllers/RefundRequestControll
 export async function GET() {
     const result = await refundTimeUpdate();
     try{
-        const users = result.data;
-        return NextResponse.json(users);
+        const refundTimeUpdate = result.data;
+        return NextResponse.json(refundTimeUpdate);
     }catch(error){
-        console.error("Error fetching users:", error);
-        return NextResponse.error();
+        console.error("Error fetching refundTimeUpdate:", error);
+        return NextResponse.json({ error: "Failed to fetch Refund Time Update" }, { status: 500 });
     }
   }

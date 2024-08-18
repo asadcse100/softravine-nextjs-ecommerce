@@ -4,10 +4,10 @@ import { addToCart, updateQuantity, removeFromCart } from '@/app/server/controll
 export async function GET() {
     const result = await addToCart();
     try{
-        const users = result.data;
-        return NextResponse.json(users);
+        const cart = result.data;
+        return NextResponse.json(cart);
     }catch(error){
-        console.error("Error fetching users:", error);
-        return NextResponse.error();
+        console.error("Error fetching cart:", error);
+        return NextResponse.json({ error: "Failed to fetch cart" }, { status: 500 });
     }
   }

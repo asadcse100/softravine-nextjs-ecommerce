@@ -4,10 +4,10 @@ import { updateTop10Settings } from '@/app/server/controllers/HomeController';
 export async function GET() {
   const result = await updateTop10Settings();
   try{
-      const users = result.data;
-      return NextResponse.json(users);
+      const updateTop10Settings = result.data;
+      return NextResponse.json(updateTop10Settings);
   }catch(error){
-      console.error("Error fetching users:", error);
-      return NextResponse.error();
+      console.error("Error fetching updateTop10Settings:", error);
+      return NextResponse.json({ error: "Failed to fetch Update Top 10Settings" }, { status: 500 });
   }
 }

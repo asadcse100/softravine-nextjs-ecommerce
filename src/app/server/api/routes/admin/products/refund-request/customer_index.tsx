@@ -4,10 +4,10 @@ import { customerIndex } from '@/app/server/controllers/RefundRequestController'
 export async function GET() {
     const result = await customerIndex();
     try{
-        const users = result.data;
-        return NextResponse.json(users);
+        const customerIndex = result.data;
+        return NextResponse.json(customerIndex);
     }catch(error){
-        console.error("Error fetching users:", error);
-        return NextResponse.error();
+        console.error("Error fetching customerIndex:", error);
+        return NextResponse.json({ error: "Failed to fetch Customer Index" }, { status: 500 });
     }
   }

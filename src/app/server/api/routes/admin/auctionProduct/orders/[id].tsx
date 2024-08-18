@@ -4,10 +4,10 @@ import { getAuctionOrderDetails } from '@/app/server/controllers/AuctionProductC
 export async function GET() {
   const result = await getAuctionOrderDetails();
   try{
-      const users = result.data;
-      return NextResponse.json(users);
+      const getAuctionOrderDetails = result.data;
+      return NextResponse.json(getAuctionOrderDetails);
   }catch(error){
-      console.error("Error fetching users:", error);
-      return NextResponse.error();
+      console.error("Error fetching getAuctionOrderDetails:", error);
+      return NextResponse.json({ error: "Failed to fetch Auction Order Details" }, { status: 500 });
   }
 }

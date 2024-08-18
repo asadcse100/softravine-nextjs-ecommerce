@@ -1,85 +1,79 @@
-import { NextApiRequest, NextApiResponse } from 'next';
+import { NextResponse } from "next/server";
 import { createAddress, getAddressById, updateAddress, deleteAddress } from '../models/Address';
 import { AddressData } from '../types/Address';
+import type { NextRequest } from 'next/server';
 
-export const handleCreateAddress = async (req: NextApiRequest, res: NextApiResponse) => {
+export const handleCreateAddress = async (req: NextRequest) => {
   try {
+    const body = await req.json();
     const addressData: AddressData = {
-      user_id: req.body.customer_id ? req.body.customer_id : req.session.user.id,
-      address: req.body.address,
-      country_id: req.body.country_id,
-      state_id: req.body.state_id,
-      city_id: req.body.city_id,
-      longitude: req.body.longitude,
-      latitude: req.body.latitude,
-      postal_code: req.body.postal_code,
-      phone: req.body.phone,
+      user_id: body.customer_id ? body.customer_id : req.nextauth.user.id, // Adjust based on your session management
+      address: body.address,
+      country_id: body.country_id,
+      state_id: body.state_id,
+      city_id: body.city_id,
+      longitude: body.longitude,
+      latitude: body.latitude,
+      postal_code: body.postal_code,
+      phone: body.phone,
     };
 
     const address = await createAddress(addressData);
-    return res.status(200).json({ message: 'Address info stored successfully', address });
+    return NextResponse.json({ message: 'Address info stored successfully', address }, { status: 200 });
   } catch (error) {
     console.error(error);
-    return res.status(500).json({ message: 'Internal server error' });
+    return NextResponse.json({ message: 'Internal server error' }, { status: 500 });
   }
 };
 
-// export const handleGetAddress = async (req: NextApiRequest, res: NextApiResponse) => {
-//   try {
-//     const addressId = req.query.id as string;
-//     const address = await getAddressById(addressId);
-
-//     if (!address) {
-//       return res.status(404).json({ message: 'Address not found' });
-//     }
-
-//     return res.status(200).json({ address });
-//   } catch (error) {
-//     console.error(error);
-//     return res.status(500).json({ message: 'Internal server error' });
-//   }
-// };
-
-export const handleGetAddress = async () => {
-  try{
-      const texes = await prisma.ProductTax.findMany();
-      return { success: true, data: texes };
-  }catch(error){
-      console.error("Error fetching texes:", error);
-      return { success: false, error };
-  }
-}
-
-export const handleUpdateAddress = async (req: NextApiRequest, res: NextApiResponse) => {
+export const handleGetAddress = async (req: NextRequest) => {
   try {
-    const addressId = req.body.id;
+    const addressId = new URL(req.url).searchParams.get('id');
+    const address = await getAddressById(addressId);
+
+    if (!address) {
+      return NextResponse.json({ message: 'Address not found' }, { status: 404 });
+    }
+
+    return NextResponse.json({ address }, { status: 200 });
+  } catch (error) {
+    console.error(error);
+    return NextResponse.json({ message: 'Internal server error' }, { status: 500 });
+  }
+};
+
+export const handleUpdateAddress = async (req: NextRequest) => {
+  try {
+    const body = await req.json();
+    const addressId = body.id;
     const addressData: Partial<AddressData> = {
-      address: req.body.address,
-      country_id: req.body.country_id,
-      state_id: req.body.state_id,
-      city_id: req.body.city_id,
-      longitude: req.body.longitude,
-      latitude: req.body.latitude,
-      postal_code: req.body.postal_code,
-      phone: req.body.phone,
+      address: body.address,
+      country_id: body.country_id,
+      state_id: body.state_id,
+      city_id: body.city_id,
+      longitude: body.longitude,
+      latitude: body.latitude,
+      postal_code: body.postal_code,
+      phone: body.phone,
     };
 
     const address = await updateAddress(addressId, addressData);
-    return res.status(200).json({ message: 'Address info updated successfully', address });
+    return NextResponse.json({ message: 'Address info updated successfully', address }, { status: 200 });
   } catch (error) {
     console.error(error);
-    return res.status(500).json({ message: 'Internal server error' });
+    return NextResponse.json({ message: 'Internal server error' }, { status: 500 });
   }
 };
 
-export const handleDeleteAddress = async (req: NextApiRequest, res: NextApiResponse) => {
+export const handleDeleteAddress = async (req: NextRequest) => {
   try {
-    const addressId = req.body.id;
+    const body = await req.json();
+    const addressId = body.id;
     const address = await deleteAddress(addressId);
 
-    return res.status(200).json({ message: 'Address info deleted successfully', address });
+    return NextResponse.json({ message: 'Address info deleted successfully', address }, { status: 200 });
   } catch (error) {
     console.error(error);
-    return res.status(500).json({ message: 'Internal server error' });
+    return NextResponse.json({ message: 'Internal server error' }, { status: 500 });
   }
 };

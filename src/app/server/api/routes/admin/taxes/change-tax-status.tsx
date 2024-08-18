@@ -4,10 +4,10 @@ import { changeTaxStatus } from '@/app/server/controllers/TaxController'; // Imp
 export async function GET() {
   const result = await changeTaxStatus();
   try{
-      const users = result.data;
-      return NextResponse.json(users);
+      const changeTaxStatus = result.data;
+      return NextResponse.json(changeTaxStatus);
   }catch(error){
-      console.error("Error fetching users:", error);
-      return NextResponse.error();
+      console.error("Error fetching changeTaxStatus:", error);
+      return NextResponse.json({ error: "Failed to fetch change Tax Status" }, { status: 500 });
   }
 }

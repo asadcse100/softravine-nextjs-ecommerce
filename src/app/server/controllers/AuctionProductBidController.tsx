@@ -4,10 +4,13 @@ import { getSession } from 'next-auth/react';
 
 const prisma = new PrismaClient();
 
-export const getMyBiddedProducts = async (req: NextApiRequest, res: NextApiResponse) => {
+// export const getMyBiddedProducts = async (req: NextApiRequest, res: NextApiResponse) => {
+  export const getMyBiddedProducts = async () => {
   const session = await getSession({ req });
   if (!session) {
-    return res.status(401).json({ error: 'Unauthorized' });
+    // return res.status(401).json({ error: 'Unauthorized' });
+    console.error("Unauthorized", error);
+    return { success: false, error };
   }
 
   const userId = session.user.id;
@@ -20,12 +23,14 @@ export const getMyBiddedProducts = async (req: NextApiRequest, res: NextApiRespo
       include: {
         product: true
       },
-      take: 10 // For pagination purposes, you can adjust as needed
+      take: 20 // For pagination purposes, you can adjust as needed
     });
 
-    res.status(200).json({ bids });
+    // res.status(200).json({ bids });
+    return { success: true, data: bids };
   } catch (error) {
-    res.status(500).json({ error: 'Internal server error' });
+    console.error("Error fetching bids:", error);
+    return { success: false, error };
   }
 };
 

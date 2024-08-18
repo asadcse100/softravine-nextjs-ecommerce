@@ -4,10 +4,10 @@ import { pdfDownloadCategory } from '@/app/server/controllers/ProductBulkUploadC
 export async function GET() {
     const result = await pdfDownloadCategory();
     try{
-        const users = result.data;
-        return NextResponse.json(users);
+        const pdfDownloadCategory = result.data;
+        return NextResponse.json(pdfDownloadCategory);
     }catch(error){
-        console.error("Error fetching users:", error);
-        return NextResponse.error();
+        console.error("Error fetching pdfDownloadCategory:", error);
+        return NextResponse.json({ error: "Failed to fetch PDF Download Category" }, { status: 500 });
     }
   }

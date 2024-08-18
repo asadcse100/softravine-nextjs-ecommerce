@@ -1,11 +1,13 @@
-import { NextApiRequest, NextApiResponse } from 'next';
-import prisma from '@/app/server/prisma/lib/prisma';
+import { NextResponse } from "next/server";
 import bcrypt from 'bcrypt';
-import { AffiliateOption, AffiliateConfig } from '../types/Affiliate';
 import { getSession } from 'next-auth/client';
 
-export const affiliateOptionStore = async (req: NextApiRequest, res: NextApiResponse) => {
-  const { type, percentage, amount, amount_type, status } = req.body;
+import { PrismaClient } from '@prisma/client';
+
+const prisma = new PrismaClient();
+
+export const affiliateOptionStore = async (req: NextRequest) => {
+  const { type, percentage, amount, amount_type, status } = await req.json();
 
   let affiliateOption = await prisma.affiliateOption.findFirst({ where: { type } });
   if (!affiliateOption) {
@@ -67,126 +69,121 @@ export const affiliateOptionStore = async (req: NextApiRequest, res: NextApiResp
     data: affiliateOption,
   });
 
-  res.json({ message: "This has been updated successfully" });
+  return NextResponse.json({ message: "This has been updated successfully" });
 };
 
+export const configStore = async (req: NextRequest) => {
+  const { type } = await req.json();
 
-export const configStore = async (req: NextApiRequest, res: NextApiResponse) => {
-    const { type } = req.body;
-  
-    if (type === 'validation_time') {
-      let affiliateConfig = await prisma.affiliateConfig.findFirst({ where: { type } });
-      if (!affiliateConfig) {
-        affiliateConfig = await prisma.affiliateConfig.create({ data: { type, value: {} } });
-      }
-  
-      affiliateConfig.value = req.body[type];
-      await prisma.affiliateConfig.update({ where: { id: affiliateConfig.id }, data: affiliateConfig });
-  
-      res.json({ message: "Validation time updated successfully" });
-    } else {
-      const form: any[] = [];
-      const selectTypes = ['select', 'multi_select', 'radio'];
-      let j = 0;
-  
-      for (let i = 0; i < req.body.type.length; i++) {
-        const item: any = {
-          type: req.body.type[i],
-          label: req.body.label[i],
-        };
-  
-        if (selectTypes.includes(req.body.type[i])) {
-          item.options = JSON.stringify(req.body[`options_${req.body.option[j]}`]);
-          j++;
-        }
-  
-        form.push(item);
-      }
-  
-      let affiliateConfig = await prisma.affiliateConfig.findFirst({ where: { type: 'verification_form' } });
-      if (!affiliateConfig) {
-        affiliateConfig = await prisma.affiliateConfig.create({ data: { type: 'verification_form', value: {} } });
-      }
-  
-      affiliateConfig.value = JSON.stringify(form);
-      await prisma.affiliateConfig.update({ where: { id: affiliateConfig.id }, data: affiliateConfig });
-  
-      res.json({ message: "Verification form updated successfully" });
+  if (type === 'validation_time') {
+    let affiliateConfig = await prisma.affiliateConfig.findFirst({ where: { type } });
+    if (!affiliateConfig) {
+      affiliateConfig = await prisma.affiliateConfig.create({ data: { type, value: {} } });
     }
-  };
 
+    affiliateConfig.value = req.body[type];
+    await prisma.affiliateConfig.update({ where: { id: affiliateConfig.id }, data: affiliateConfig });
 
-  export const storeAffiliateUser = async (req: NextApiRequest, res: NextApiResponse) => {
-    const session = await getSession({ req });
-  
-    if (!session) {
-      const existingUser = await prisma.user.findUnique({ where: { email: req.body.email } });
-      if (existingUser) {
-        return res.status(400).json({ error: 'Email already exists!' });
-      }
-  
-      if (req.body.password !== req.body.password_confirmation) {
-        return res.status(400).json({ error: 'Password did not match.' });
-      }
-  
-      const hashedPassword = await bcrypt.hash(req.body.password, 10);
-      const user = await prisma.user.create({
-        data: {
-          name: req.body.name,
-          email: req.body.email,
-          user_type: 'customer',
-          password: hashedPassword,
-        },
-      });
-  
-      // Authenticate the user
-      // You can use a NextAuth.js signIn function here
-      // await signIn('credentials', { redirect: false, email: req.body.email, password: req.body.password });
-  
-      if (process.env.EMAIL_VERIFICATION !== '1') {
-        await prisma.user.update({
-          where: { id: user.id },
-          data: { email_verified_at: new Date() },
-        });
-      } else {
-        // Trigger email verification event
-        // await sendVerificationEmail(user);
-      }
-    }
-  
-    const userId = session ? session.userId : user.id;
-    let affiliateUser = await prisma.affiliateUser.findUnique({ where: { userId } });
-  
-    if (!affiliateUser) {
-      affiliateUser = await prisma.affiliateUser.create({ data: { userId, informations: [] } });
-    }
-  
-    const config = await prisma.affiliateConfig.findUnique({ where: { type: 'verification_form' } });
-    const formData = JSON.parse(config.value);
-    const data = formData.map((element: any, index: number) => {
+    return NextResponse.json({ message: "Validation time updated successfully" });
+  } else {
+    const form: any[] = [];
+    const selectTypes = ['select', 'multi_select', 'radio'];
+    let j = 0;
+
+    for (let i = 0; i < req.body.type.length; i++) {
       const item: any = {
-        type: element.type,
-        label: element.label,
-        value: req.body[`element_${index}`],
+        type: req.body.type[i],
+        label: req.body.label[i],
       };
-  
-      if (element.type === 'multi_select') {
-        item.value = JSON.stringify(req.body[`element_${index}`]);
-      } else if (element.type === 'file') {
-        // Handle file upload
-        const file = req.body[`element_${index}`];
-        const filePath = `/uploads/affiliate_verification_form/${file.name}`;
-        // Save file to filePath
-        item.value = filePath;
+
+      if (selectTypes.includes(req.body.type[i])) {
+        item.options = JSON.stringify(req.body[`options_${req.body.option[j]}`]);
+        j++;
       }
-  
-      return item;
+
+      form.push(item);
+    }
+
+    let affiliateConfig = await prisma.affiliateConfig.findFirst({ where: { type: 'verification_form' } });
+    if (!affiliateConfig) {
+      affiliateConfig = await prisma.affiliateConfig.create({ data: { type: 'verification_form', value: {} } });
+    }
+
+    affiliateConfig.value = JSON.stringify(form);
+    await prisma.affiliateConfig.update({ where: { id: affiliateConfig.id }, data: affiliateConfig });
+
+    return NextResponse.json({ message: "Verification form updated successfully" });
+  }
+};
+
+export const storeAffiliateUser = async (req: NextRequest) => {
+  const session = await getSession({ req });
+
+  if (!session) {
+    const existingUser = await prisma.user.findUnique({ where: { email: req.body.email } });
+    if (existingUser) {
+      return NextResponse.json({ error: 'Email already exists!' }, { status: 400 });
+    }
+
+    if (req.body.password !== req.body.password_confirmation) {
+      return NextResponse.json({ error: 'Password did not match.' }, { status: 400 });
+    }
+
+    const hashedPassword = await bcrypt.hash(req.body.password, 10);
+    const user = await prisma.user.create({
+      data: {
+        name: req.body.name,
+        email: req.body.email,
+        user_type: 'customer',
+        password: hashedPassword,
+      },
     });
-  
-    await prisma.affiliateUser.update({
-      where: { userId },
-      data: { informations: JSON.stringify(data) },
-    });
-  
-    res.status(200).json({ message: 'Your verification request has been submitted successfully!' });
-  };
+
+    // You can implement authentication logic here, e.g., using NextAuth.js signIn
+
+    if (process.env.EMAIL_VERIFICATION !== '1') {
+      await prisma.user.update({
+        where: { id: user.id },
+        data: { email_verified_at: new Date() },
+      });
+    } else {
+      // Trigger email verification event
+    }
+  }
+
+  const userId = session ? session.userId : user.id;
+  let affiliateUser = await prisma.affiliateUser.findUnique({ where: { userId } });
+
+  if (!affiliateUser) {
+    affiliateUser = await prisma.affiliateUser.create({ data: { userId, informations: [] } });
+  }
+
+  const config = await prisma.affiliateConfig.findUnique({ where: { type: 'verification_form' } });
+  const formData = JSON.parse(config.value);
+  const data = formData.map((element: any, index: number) => {
+    const item: any = {
+      type: element.type,
+      label: element.label,
+      value: req.body[`element_${index}`],
+    };
+
+    if (element.type === 'multi_select') {
+      item.value = JSON.stringify(req.body[`element_${index}`]);
+    } else if (element.type === 'file') {
+      // Handle file upload
+      const file = req.body[`element_${index}`];
+      const filePath = `/uploads/affiliate_verification_form/${file.name}`;
+      // Save file to filePath
+      item.value = filePath;
+    }
+
+    return item;
+  });
+
+  await prisma.affiliateUser.update({
+    where: { userId },
+    data: { informations: JSON.stringify(data) },
+  });
+
+  return NextResponse.json({ message: 'Your verification request has been submitted successfully!' }, { status: 200 });
+};

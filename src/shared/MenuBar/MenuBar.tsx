@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState, Fragment } from "react";
-import { Transition, Dialog } from "@/app/frontend/headlessui";
+import { Transition, Dialog } from "@/app/(frontend)/headlessui";
 import NavMobile from "@/shared/Navigation/NavMobile";
 
 export interface MenuBarProps {}

@@ -4,10 +4,10 @@ import { affiliateOptionStore } from '@/app/server/controllers/AffiliateControll
 export async function GET() {
   const result = await affiliateOptionStore();
   try{
-      const users = result.data;
-      return NextResponse.json(users);
+      const affiliateOption = result.data;
+      return NextResponse.json(affiliateOption);
   }catch(error){
-      console.error("Error fetching users:", error);
-      return NextResponse.error();
+      console.error("Error fetching affiliateOptionStore:", error);
+      return NextResponse.json({ error: "Failed to fetch Affiliate Option" }, { status: 500 });
   }
 }

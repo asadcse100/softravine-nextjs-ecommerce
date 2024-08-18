@@ -1,8 +1,8 @@
 "use client";
 
-import { Popover, Transition } from "@/app/frontend/headlessui";
+import { Popover, Transition } from "@/app/(frontend)/headlessui";
 import { ChevronDownIcon } from "@heroicons/react/24/solid";
-import CardCategory3 from "@/app/frontend/components/CardCategories/CardCategory3";
+import CardCategory3 from "@/app/(frontend)/components/CardCategories/CardCategory3";
 import React, { FC, Fragment, useState } from "react";
 import { Route } from "@/routers/types";
 import Link from "next/link";

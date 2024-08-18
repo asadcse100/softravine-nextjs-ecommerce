@@ -4,10 +4,10 @@ import { addPermission } from '@/app/server/controllers/RoleController'; // Impo
 export async function GET() {
   const result = await addPermission();
   try{
-      const users = result.data;
-      return NextResponse.json(users);
+      const permission = result.data;
+      return NextResponse.json(permission);
   }catch(error){
-      console.error("Error fetching users:", error);
-      return NextResponse.error();
+      console.error("Error fetching permission:", error);
+      return NextResponse.json({ error: "Failed to fetch Permission" }, { status: 500 });
   }
 }

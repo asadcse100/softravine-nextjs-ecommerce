@@ -4,10 +4,10 @@ import { exportARBFile } from '@/app/server/controllers/LanguageController';
 export async function GET() {
   const result = await exportARBFile();
   try{
-      const users = result.data;
-      return NextResponse.json(users);
+      const exportARBFile = result.data;
+      return NextResponse.json(exportARBFile);
   }catch(error){
-      console.error("Error fetching users:", error);
-      return NextResponse.error();
+      console.error("Error fetching exportARBFile:", error);
+      return NextResponse.json({ error: "Failed to fetch Export ARB File" }, { status: 500 });
   }
 }

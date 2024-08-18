@@ -4,7 +4,8 @@ import { SideBarMenuItem } from "./sidebar-menu-item";
 import classNames from "classnames";
 import { useSideBarToggle } from "@/hooks/use-sidebar-toggle";
 import React from "react";
-import Logo from "@/shared/Logo/Logo";
+import Logo from "@/app/customer/components/Logo";
+import Link from "next/link";
 
 export default function Sidebar() {
   const { toggleCollapse } = useSideBarToggle();
@@ -19,17 +20,10 @@ export default function Sidebar() {
   return (
     <aside className={asideStyle}>
       <div className="sidebar-top flex placeholder:flex relative items-center py-4 px-2 m-2">
-        {/* <Image
-          className="w-10 min-h-fit"
-          src="/public/logo.png"
-          alt="logo"
-          width={15}
-          height={15}
-        /> */}
         <Logo/> 
         {!toggleCollapse && (
           <h3 className="pl-2 font-bold text-2xl text-slate-500 min-w-max">
-            My-Bis
+            <Link href="/customer">My-Bis</Link>
           </h3>
         )}
 

@@ -4,10 +4,10 @@ import { getAllBrands } from '@/app/server/controllers/HomeController';
 export async function GET() {
   const result = await getAllBrands();
   try{
-      const users = result.data;
-      return NextResponse.json(users);
+      const getAllBrands = result.data;
+      return NextResponse.json(getAllBrands);
   }catch(error){
-      console.error("Error fetching users:", error);
-      return NextResponse.error();
+      console.error("Error fetching getAllBrands:", error);
+      return NextResponse.json({ error: "Failed to fetch All Brands" }, { status: 500 });
   }
 }
