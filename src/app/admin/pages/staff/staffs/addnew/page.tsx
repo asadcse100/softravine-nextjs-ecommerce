@@ -66,8 +66,7 @@ export default function Addnew() {
     });
   }
 
-  const inputClass =
-    "w-full rounded-lg border-[1px] border-primary bg-transparent px-5 py-3 font-normal text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:bg-form-input dark:text-white";
+  const inputClass = "bg-zinc-50 border border-slate-300 text-slate-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-slate-900 dark:border-slate-800 dark:placeholder-slate-700 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500";
 
   return (
     <div className="min-h-screen mx-auto max-w-screen-2xl mt-4 p-4 py-4 md:p-6 2xl:p-10 bg-slate-100 dark:bg-slate-900">
@@ -89,14 +88,20 @@ export default function Addnew() {
                         name="name"
                         render={({ field }) => (
                           <FormItem>
-                            <FormLabel>Employe Name</FormLabel>
-                            <FormControl>
-                              <Input
-                                className={inputClass}
-                                placeholder="Employe Name"
-                                {...field}
-                              />
-                            </FormControl>
+                            <div className="grid grid-cols-1 md:grid-cols-12">
+                              <div className="col-span-3 mt-2">
+                                <FormLabel>Employe Name</FormLabel>
+                              </div>
+                              <div className="col-span-8">
+                                <FormControl>
+                                  <Input
+                                    className={inputClass}
+                                    placeholder="Employe Name"
+                                    {...field}
+                                  />
+                                </FormControl>
+                              </div>
+                            </div>
                             <FormMessage />
                           </FormItem>
                         )}
@@ -108,14 +113,20 @@ export default function Addnew() {
                         name="email"
                         render={({ field }) => (
                           <FormItem>
-                            <FormLabel>Employe Email</FormLabel>
-                            <FormControl>
-                              <Input
-                                className={inputClass}
-                                placeholder="Employe Email"
-                                {...field}
-                              />
-                            </FormControl>
+                            <div className="grid grid-cols-1 md:grid-cols-12">
+                              <div className="col-span-3 mt-2">
+                                <FormLabel>Employe Email</FormLabel>
+                              </div>
+                              <div className="col-span-8">
+                                <FormControl>
+                                  <Input
+                                    className={inputClass}
+                                    placeholder="Employe Email"
+                                    {...field}
+                                  />
+                                </FormControl>
+                              </div>
+                            </div>
                             <FormMessage />
                           </FormItem>
                         )}
@@ -127,14 +138,20 @@ export default function Addnew() {
                         name="mobile"
                         render={({ field }) => (
                           <FormItem>
-                            <FormLabel>Phone</FormLabel>
-                            <FormControl>
-                              <Input
-                                className={inputClass}
-                                placeholder="Phone"
-                                {...field}
-                              />
-                            </FormControl>
+                            <div className="grid grid-cols-1 md:grid-cols-12">
+                              <div className="col-span-3 mt-2">
+                                <FormLabel>Phone</FormLabel>
+                              </div>
+                              <div className="col-span-8">
+                                <FormControl>
+                                  <Input
+                                    className={inputClass}
+                                    placeholder="Phone"
+                                    {...field}
+                                  />
+                                </FormControl>
+                              </div>
+                            </div>
                             <FormMessage />
                           </FormItem>
                         )}
@@ -146,14 +163,20 @@ export default function Addnew() {
                         name="password"
                         render={({ field }) => (
                           <FormItem>
-                            <FormLabel>Password</FormLabel>
-                            <FormControl>
-                              <Input
-                                className={inputClass}
-                                placeholder="Password"
-                                {...field}
-                              />
-                            </FormControl>
+                            <div className="grid grid-cols-1 md:grid-cols-12">
+                              <div className="col-span-3 mt-2">
+                                <FormLabel>Password</FormLabel>
+                              </div>
+                              <div className="col-span-8">
+                                <FormControl>
+                                  <Input
+                                    className={inputClass}
+                                    placeholder="Password"
+                                    {...field}
+                                  />
+                                </FormControl>
+                              </div>
+                            </div>
                             <FormMessage />
                           </FormItem>
                         )}
@@ -165,35 +188,44 @@ export default function Addnew() {
                         name="role_id"
                         render={({ field }) => (
                           <FormItem>
-                            <FormLabel>Role</FormLabel>
-                            <Select
-                              onValueChange={field.onChange}
-                              defaultValue={field.value}
-                            >
-                              <FormControl>
-                                <SelectTrigger>
-                                  <SelectValue placeholder="Select Role" />
-                                </SelectTrigger>
-                              </FormControl>
-                              <SelectContent>
-                                <SelectItem value="m@example.com">m@example.com</SelectItem>
-                                <SelectItem value="m2@example.com">m@example.com</SelectItem>
-                                <SelectItem value="m22@example.com">m@example.com</SelectItem>
-                                <SelectItem value="m3@example.com">m@example.com</SelectItem>
-                                <SelectItem value="m4@example.com">m@example.com</SelectItem>
-                                <SelectItem value="m5@example.com">m@example.com</SelectItem>
-                                <SelectItem value="m6@example.com">m@example.com</SelectItem>
-                                <SelectItem value="m7@example.com">m@example.com</SelectItem>
-                                <SelectItem value="m8@example.com">m@example.com</SelectItem>
-                                <SelectItem value="m9@example.com">m@example.com</SelectItem>
-                              </SelectContent>
-                            </Select>
+                            <div className="grid grid-cols-1 md:grid-cols-12">
+                              <div className="col-span-3 mt-2">
+                                <FormLabel>Role</FormLabel>
+                              </div>
+                              <div className="col-span-8">
+                                <FormControl>
+                                  <Select
+                                    onValueChange={field.onChange}
+                                    defaultValue={field.value}
+                                  >
+                                    <FormControl>
+                                      <SelectTrigger>
+                                        <SelectValue placeholder="Select Role" />
+                                      </SelectTrigger>
+                                    </FormControl>
+                                    <SelectContent>
+                                      <SelectItem value="m@example.com">m@example.com</SelectItem>
+                                      <SelectItem value="m2@example.com">m@example.com</SelectItem>
+                                      <SelectItem value="m22@example.com">m@example.com</SelectItem>
+                                      <SelectItem value="m3@example.com">m@example.com</SelectItem>
+                                      <SelectItem value="m4@example.com">m@example.com</SelectItem>
+                                      <SelectItem value="m5@example.com">m@example.com</SelectItem>
+                                      <SelectItem value="m6@example.com">m@example.com</SelectItem>
+                                      <SelectItem value="m7@example.com">m@example.com</SelectItem>
+                                      <SelectItem value="m8@example.com">m@example.com</SelectItem>
+                                      <SelectItem value="m9@example.com">m@example.com</SelectItem>
+                                    </SelectContent>
+                                  </Select>
+                                </FormControl>
+                              </div>
+                            </div>
+
                             <FormMessage />
                           </FormItem>
                         )}
                       />
                     </div>
-                    <div className="grid mt-4 justify-items-end">
+                    <div className="grid mt-4 justify-items-end px-10">
                       <Button
                         className="dark:text-slate-200"
                         variant="outline"

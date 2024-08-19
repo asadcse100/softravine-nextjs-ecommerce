@@ -44,8 +44,7 @@ export default function Addnew() {
     console.log(values);
   }
 
-  const inputClass =
-    "w-full rounded-lg border-[1px] border-primary bg-transparent px-5 py-3 font-normal text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:bg-form-input dark:text-white";
+  const inputClass = "bg-zinc-50 border border-slate-300 text-slate-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-slate-900 dark:border-slate-800 dark:placeholder-slate-700 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500";
 
   return (
     <div className="min-h-screen mx-auto max-w-screen-2xl mt-4 p-4 py-4 md:p-6 2xl:p-10 bg-slate-100 dark:bg-slate-900">
@@ -113,14 +112,20 @@ export default function Addnew() {
                         name="vendor_commission"
                         render={({ field }) => (
                           <FormItem>
-                            <FormLabel>Seller Commission</FormLabel>
-                            <FormControl>
-                              <Input
-                                className={inputClass}
-                                placeholder="10%"
-                                {...field}
-                              />
-                            </FormControl>
+                            <div className="grid grid-cols-1 md:grid-cols-12">
+                                <div className="col-span-3 mt-2">
+                                  <FormLabel>Seller Commission</FormLabel>
+                                </div>
+                                <div className="col-span-8">
+                                  <FormControl>
+                                    <Input
+                                      className={inputClass}
+                                      placeholder="Seller Commission"
+                                      {...field}
+                                    />
+                                  </FormControl>
+                                </div>
+                              </div>
                             <FormMessage />
                           </FormItem>
                         )}
@@ -169,16 +174,20 @@ export default function Addnew() {
                         name="minimum_seller_amount_withdraw"
                         render={({ field }) => (
                           <FormItem>
-                            <FormLabel>
-                              Minimum Seller Amount Withdraw
-                            </FormLabel>
-                            <FormControl>
-                              <Input
-                                className={inputClass}
-                                placeholder="Minimum Seller Amount Withdraw"
-                                {...field}
-                              />
-                            </FormControl>
+                            <div className="grid grid-cols-1 md:grid-cols-12">
+                                <div className="col-span-3 mt-2">
+                                  <FormLabel>Minimum Seller Amount Withdraw</FormLabel>
+                                </div>
+                                <div className="col-span-8">
+                                  <FormControl>
+                                    <Input
+                                      className={inputClass}
+                                      placeholder="Minimum Seller Amount Withdraw"
+                                      {...field}
+                                    />
+                                  </FormControl>
+                                </div>
+                              </div>
                             <FormMessage />
                           </FormItem>
                         )}

@@ -166,8 +166,7 @@ export default function Addnew() {
     console.log(values);
   }
 
-  const inputClass =
-    "w-full rounded-lg border-[1px] border-primary bg-transparent px-5 py-3 font-normal text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:bg-form-input dark:text-white";
+  const inputClass = "bg-zinc-50 border border-slate-300 text-slate-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-slate-900 dark:border-slate-800 dark:placeholder-slate-700 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500";
 
   return (
     <div className="min-h-screen mx-auto max-w-screen-2xl mt-4 p-4 py-4 md:p-6 2xl:p-10 bg-slate-100 dark:bg-slate-900">
@@ -189,14 +188,20 @@ export default function Addnew() {
                         name="NEXMO_KEY"
                         render={({ field }) => (
                           <FormItem>
-                            <FormLabel>NEXMO KEY</FormLabel>
-                            <FormControl>
-                              <Input
-                                className={inputClass}
-                                placeholder="NEXMO KEY"
-                                {...field}
-                              />
-                            </FormControl>
+                            <div className="grid grid-cols-1 md:grid-cols-12">
+                              <div className="col-span-4 mt-2">
+                                <FormLabel>NEXMO KEY</FormLabel>
+                              </div>
+                              <div className="col-span-8">
+                                <FormControl>
+                                  <Input
+                                    className={inputClass}
+                                    placeholder="NEXMO KEY"
+                                    {...field}
+                                  />
+                                </FormControl>
+                              </div>
+                            </div>
                             <FormMessage />
                           </FormItem>
                         )}
@@ -208,14 +213,20 @@ export default function Addnew() {
                         name="NEXMO_SECRET"
                         render={({ field }) => (
                           <FormItem>
-                            <FormLabel>NEXMO SECRET</FormLabel>
-                            <FormControl>
-                              <Input
-                                className={inputClass}
-                                placeholder="NEXMO SECRET"
-                                {...field}
-                              />
-                            </FormControl>
+                            <div className="grid grid-cols-1 md:grid-cols-12">
+                              <div className="col-span-4 mt-2">
+                                <FormLabel>NEXMO SECRET</FormLabel>
+                              </div>
+                              <div className="col-span-8">
+                                <FormControl>
+                                  <Input
+                                    className={inputClass}
+                                    placeholder="NEXMO SECRET"
+                                    {...field}
+                                  />
+                                </FormControl>
+                              </div>
+                            </div>
                             <FormMessage />
                           </FormItem>
                         )}
@@ -227,14 +238,20 @@ export default function Addnew() {
                         name="NEXMO_SENDER_ID"
                         render={({ field }) => (
                           <FormItem>
-                            <FormLabel>NEXMO SENDER ID</FormLabel>
-                            <FormControl>
-                              <Input
-                                className={inputClass}
-                                placeholder="NEXMO SENDER ID"
-                                {...field}
-                              />
-                            </FormControl>
+                            <div className="grid grid-cols-1 md:grid-cols-12">
+                              <div className="col-span-4 mt-2">
+                                <FormLabel>NEXMO SENDER ID</FormLabel>
+                              </div>
+                              <div className="col-span-8">
+                                <FormControl>
+                                  <Input
+                                    className={inputClass}
+                                    placeholder="NEXMO SENDER ID"
+                                    {...field}
+                                  />
+                                </FormControl>
+                              </div>
+                            </div>
                             <FormMessage />
                           </FormItem>
                         )}
@@ -266,14 +283,20 @@ export default function Addnew() {
                         name="TWILIO_SID"
                         render={({ field }) => (
                           <FormItem>
-                            <FormLabel>TWILIO SID</FormLabel>
-                            <FormControl>
-                              <Input
-                                className={inputClass}
-                                placeholder="TWILIO SID"
-                                {...field}
-                              />
-                            </FormControl>
+                            <div className="grid grid-cols-1 md:grid-cols-12">
+                              <div className="col-span-4 mt-2">
+                                <FormLabel>TWILIO SID</FormLabel>
+                              </div>
+                              <div className="col-span-8">
+                                <FormControl>
+                                  <Input
+                                    className={inputClass}
+                                    placeholder="TWILIO SID"
+                                    {...field}
+                                  />
+                                </FormControl>
+                              </div>
+                            </div>
                             <FormMessage />
                           </FormItem>
                         )}
@@ -285,14 +308,20 @@ export default function Addnew() {
                         name="TWILIO_AUTH_TOKEN"
                         render={({ field }) => (
                           <FormItem>
-                            <FormLabel>TWILIO AUTH TOKEN</FormLabel>
-                            <FormControl>
-                              <Input
-                                className={inputClass}
-                                placeholder="TWILIO AUTH TOKEN"
-                                {...field}
-                              />
-                            </FormControl>
+                            <div className="grid grid-cols-1 md:grid-cols-12">
+                              <div className="col-span-4 mt-2">
+                                <FormLabel>TWILIO AUTH TOKEN</FormLabel>
+                              </div>
+                              <div className="col-span-8">
+                                <FormControl>
+                                  <Input
+                                    className={inputClass}
+                                    placeholder="TWILIO AUTH TOKEN"
+                                    {...field}
+                                  />
+                                </FormControl>
+                              </div>
+                            </div>
                             <FormMessage />
                           </FormItem>
                         )}
@@ -304,14 +333,20 @@ export default function Addnew() {
                         name="VALID_TWILLO_NUMBER"
                         render={({ field }) => (
                           <FormItem>
-                            <FormLabel>VALID TWILIO NUMBER</FormLabel>
-                            <FormControl>
-                              <Input
-                                className={inputClass}
-                                placeholder="VALID TWILIO NUMBER"
-                                {...field}
-                              />
-                            </FormControl>
+                            <div className="grid grid-cols-1 md:grid-cols-12">
+                              <div className="col-span-4 mt-2">
+                                <FormLabel>VALID TWILIO NUMBER</FormLabel>
+                              </div>
+                              <div className="col-span-8">
+                                <FormControl>
+                                  <Input
+                                    className={inputClass}
+                                    placeholder="VALID TWILIO NUMBER"
+                                    {...field}
+                                  />
+                                </FormControl>
+                              </div>
+                            </div>
                             <FormMessage />
                           </FormItem>
                         )}
@@ -323,23 +358,29 @@ export default function Addnew() {
                         name="TWILLO_TYPE"
                         render={({ field }) => (
                           <FormItem>
-                            <FormLabel>TWILIO TYPE</FormLabel>
-                            <FormControl>
-                              <Select
-                              onValueChange={field.onChange}
-                              defaultValue={field.value}
-                            >
-                              <FormControl>
-                                <SelectTrigger>
-                                  <SelectValue placeholder="Select TWILIO TYPE" />
-                                </SelectTrigger>
-                              </FormControl>
-                              <SelectContent>
-                                <SelectItem value="Apple">SMS</SelectItem>
-                                <SelectItem value="m2@example.com">WhatsApp</SelectItem>
-                              </SelectContent>
-                            </Select>
-                            </FormControl>
+                            <div className="grid grid-cols-1 md:grid-cols-12">
+                              <div className="col-span-4 mt-2">
+                                <FormLabel>TWILIO TYPE</FormLabel>
+                              </div>
+                              <div className="col-span-8">
+                                <FormControl>
+                                  <Select
+                                    onValueChange={field.onChange}
+                                    defaultValue={field.value}
+                                  >
+                                    <FormControl>
+                                      <SelectTrigger>
+                                        <SelectValue placeholder="Select TWILIO TYPE" />
+                                      </SelectTrigger>
+                                    </FormControl>
+                                    <SelectContent>
+                                      <SelectItem value="Apple">SMS</SelectItem>
+                                      <SelectItem value="m2@example.com">WhatsApp</SelectItem>
+                                    </SelectContent>
+                                  </Select>
+                                </FormControl>
+                              </div>
+                            </div>
                             <FormMessage />
                           </FormItem>
                         )}
@@ -371,14 +412,20 @@ export default function Addnew() {
                         name="SSL_SMS_API_TOKEN"
                         render={({ field }) => (
                           <FormItem>
-                            <FormLabel>SSL SMS API TOKEN</FormLabel>
-                            <FormControl>
-                              <Input
-                                className={inputClass}
-                                placeholder="SSL SMS API TOKEN"
-                                {...field}
-                              />
-                            </FormControl>
+                            <div className="grid grid-cols-1 md:grid-cols-12">
+                              <div className="col-span-4 mt-2">
+                                <FormLabel>SSL SMS API TOKEN</FormLabel>
+                              </div>
+                              <div className="col-span-8">
+                                <FormControl>
+                                  <Input
+                                    className={inputClass}
+                                    placeholder="SSL SMS API TOKEN"
+                                    {...field}
+                                  />
+                                </FormControl>
+                              </div>
+                            </div>
                             <FormMessage />
                           </FormItem>
                         )}
@@ -390,14 +437,20 @@ export default function Addnew() {
                         name="SSL_SMS_SID"
                         render={({ field }) => (
                           <FormItem>
-                            <FormLabel>SSL SMS SID</FormLabel>
-                            <FormControl>
-                              <Input
-                                className={inputClass}
-                                placeholder="SSL SMS SID"
-                                {...field}
-                              />
-                            </FormControl>
+                            <div className="grid grid-cols-1 md:grid-cols-12">
+                              <div className="col-span-4 mt-2">
+                                <FormLabel>SSL SMS SID</FormLabel>
+                              </div>
+                              <div className="col-span-8">
+                                <FormControl>
+                                  <Input
+                                    className={inputClass}
+                                    placeholder="SSL SMS SID"
+                                    {...field}
+                                  />
+                                </FormControl>
+                              </div>
+                            </div>
                             <FormMessage />
                           </FormItem>
                         )}
@@ -409,14 +462,20 @@ export default function Addnew() {
                         name="SSL_SMS_URL"
                         render={({ field }) => (
                           <FormItem>
-                            <FormLabel>SSL SMS URL</FormLabel>
-                            <FormControl>
-                              <Input
-                                className={inputClass}
-                                placeholder="SSL SMS URL"
-                                {...field}
-                              />
-                            </FormControl>
+                            <div className="grid grid-cols-1 md:grid-cols-12">
+                              <div className="col-span-4 mt-2">
+                                <FormLabel>SSL SMS URL</FormLabel>
+                              </div>
+                              <div className="col-span-8">
+                                <FormControl>
+                                  <Input
+                                    className={inputClass}
+                                    placeholder="SSL SMS URL"
+                                    {...field}
+                                  />
+                                </FormControl>
+                              </div>
+                            </div>
                             <FormMessage />
                           </FormItem>
                         )}
@@ -448,14 +507,20 @@ export default function Addnew() {
                         name="AUTH_KEY"
                         render={({ field }) => (
                           <FormItem>
-                            <FormLabel>AUTH KEY</FormLabel>
-                            <FormControl>
-                              <Input
-                                className={inputClass}
-                                placeholder="AUTH KEY"
-                                {...field}
-                              />
-                            </FormControl>
+                            <div className="grid grid-cols-1 md:grid-cols-12">
+                              <div className="col-span-4 mt-2">
+                                <FormLabel>AUTH KEY</FormLabel>
+                              </div>
+                              <div className="col-span-8">
+                                <FormControl>
+                                  <Input
+                                    className={inputClass}
+                                    placeholder="AUTH KEY"
+                                    {...field}
+                                  />
+                                </FormControl>
+                              </div>
+                            </div>
                             <FormMessage />
                           </FormItem>
                         )}
@@ -467,14 +532,20 @@ export default function Addnew() {
                         name="ENTITY_ID"
                         render={({ field }) => (
                           <FormItem>
-                            <FormLabel>ENTITY ID</FormLabel>
-                            <FormControl>
-                              <Input
-                                className={inputClass}
-                                placeholder="ENTITY ID"
-                                {...field}
-                              />
-                            </FormControl>
+                            <div className="grid grid-cols-1 md:grid-cols-12">
+                              <div className="col-span-4 mt-2">
+                                <FormLabel>ENTITY ID</FormLabel>
+                              </div>
+                              <div className="col-span-8">
+                                <FormControl>
+                                  <Input
+                                    className={inputClass}
+                                    placeholder="ENTITY ID"
+                                    {...field}
+                                  />
+                                </FormControl>
+                              </div>
+                            </div>
                             <FormMessage />
                           </FormItem>
                         )}
@@ -486,24 +557,30 @@ export default function Addnew() {
                         name="ROUTE"
                         render={({ field }) => (
                           <FormItem>
-                            <FormLabel>ROUTE</FormLabel>
-                            <FormControl>
-                              <Select
-                              onValueChange={field.onChange}
-                              defaultValue={field.value}
-                            >
-                              <FormControl>
-                                <SelectTrigger>
-                                  <SelectValue placeholder="Select ROUTE" />
-                                </SelectTrigger>
-                              </FormControl>
-                              <SelectContent>
-                                <SelectItem value="Apple">Transactional Use</SelectItem>
-                                <SelectItem value="m2@example.com">DLT Manual</SelectItem>
-                                <SelectItem value="m3@example.com">Promotional Use</SelectItem>
-                              </SelectContent>
-                            </Select>
-                            </FormControl>
+                            <div className="grid grid-cols-1 md:grid-cols-12">
+                              <div className="col-span-4 mt-2">
+                                <FormLabel>ROUTE</FormLabel>
+                              </div>
+                              <div className="col-span-8">
+                                <FormControl>
+                                  <Select
+                                    onValueChange={field.onChange}
+                                    defaultValue={field.value}
+                                  >
+                                    <FormControl>
+                                      <SelectTrigger>
+                                        <SelectValue placeholder="Select ROUTE" />
+                                      </SelectTrigger>
+                                    </FormControl>
+                                    <SelectContent>
+                                      <SelectItem value="Apple">Transactional Use</SelectItem>
+                                      <SelectItem value="m2@example.com">DLT Manual</SelectItem>
+                                      <SelectItem value="m3@example.com">Promotional Use</SelectItem>
+                                    </SelectContent>
+                                  </Select>
+                                </FormControl>
+                              </div>
+                            </div>
                             <FormMessage />
                           </FormItem>
                         )}
@@ -515,23 +592,29 @@ export default function Addnew() {
                         name="LANGUAGE"
                         render={({ field }) => (
                           <FormItem>
-                            <FormLabel>Language</FormLabel>
-                            <FormControl>
-                              <Select
-                              onValueChange={field.onChange}
-                              defaultValue={field.value}
-                            >
-                              <FormControl>
-                                <SelectTrigger>
-                                  <SelectValue placeholder="Select Language" />
-                                </SelectTrigger>
-                              </FormControl>
-                              <SelectContent>
-                                <SelectItem value="Apple">English</SelectItem>
-                                <SelectItem value="m2@example.com">Unicode</SelectItem>
-                              </SelectContent>
-                            </Select>
-                            </FormControl>
+                            <div className="grid grid-cols-1 md:grid-cols-12">
+                              <div className="col-span-4 mt-2">
+                                <FormLabel>Language</FormLabel>
+                              </div>
+                              <div className="col-span-8">
+                                <FormControl>
+                                  <Select
+                                    onValueChange={field.onChange}
+                                    defaultValue={field.value}
+                                  >
+                                    <FormControl>
+                                      <SelectTrigger>
+                                        <SelectValue placeholder="Select Language" />
+                                      </SelectTrigger>
+                                    </FormControl>
+                                    <SelectContent>
+                                      <SelectItem value="English">English</SelectItem>
+                                      <SelectItem value="Unicode">Unicode</SelectItem>
+                                    </SelectContent>
+                                  </Select>
+                                </FormControl>
+                              </div>
+                            </div>
                             <FormMessage />
                           </FormItem>
                         )}
@@ -543,14 +626,20 @@ export default function Addnew() {
                         name="SENDER_ID"
                         render={({ field }) => (
                           <FormItem>
-                            <FormLabel>SENDER ID</FormLabel>
-                            <FormControl>
-                              <Input
-                                className={inputClass}
-                                placeholder="ROUTE"
-                                {...field}
-                              />
-                            </FormControl>
+                            <div className="grid grid-cols-1 md:grid-cols-12">
+                              <div className="col-span-4 mt-2">
+                                <FormLabel>SENDER ID</FormLabel>
+                              </div>
+                              <div className="col-span-8">
+                                <FormControl>
+                                  <Input
+                                    className={inputClass}
+                                    placeholder="SENDER ID"
+                                    {...field}
+                                  />
+                                </FormControl>
+                              </div>
+                            </div>
                             <FormMessage />
                           </FormItem>
                         )}
@@ -582,14 +671,20 @@ export default function Addnew() {
                         name="MIMO_USERNAME"
                         render={({ field }) => (
                           <FormItem>
-                            <FormLabel>MIMO_USERNAME</FormLabel>
-                            <FormControl>
-                              <Input
-                                className={inputClass}
-                                placeholder="MIMO_USERNAME"
-                                {...field}
-                              />
-                            </FormControl>
+                            <div className="grid grid-cols-1 md:grid-cols-12">
+                              <div className="col-span-4 mt-2">
+                                <FormLabel>MIMO_USERNAME</FormLabel>
+                              </div>
+                              <div className="col-span-8">
+                                <FormControl>
+                                  <Input
+                                    className={inputClass}
+                                    placeholder="MIMO_USERNAME"
+                                    {...field}
+                                  />
+                                </FormControl>
+                              </div>
+                            </div>
                             <FormMessage />
                           </FormItem>
                         )}
@@ -601,14 +696,20 @@ export default function Addnew() {
                         name="MIMO_PASSWORD"
                         render={({ field }) => (
                           <FormItem>
-                            <FormLabel>MIMO_PASSWORD</FormLabel>
-                            <FormControl>
-                              <Input
-                                className={inputClass}
-                                placeholder="MIMO_PASSWORD"
-                                {...field}
-                              />
-                            </FormControl>
+                            <div className="grid grid-cols-1 md:grid-cols-12">
+                              <div className="col-span-4 mt-2">
+                                <FormLabel>MIMO_PASSWORD</FormLabel>
+                              </div>
+                              <div className="col-span-8">
+                                <FormControl>
+                                  <Input
+                                    className={inputClass}
+                                    placeholder="MIMO_PASSWORD"
+                                    {...field}
+                                  />
+                                </FormControl>
+                              </div>
+                            </div>
                             <FormMessage />
                           </FormItem>
                         )}
@@ -620,14 +721,20 @@ export default function Addnew() {
                         name="MIMO_SENDER_ID"
                         render={({ field }) => (
                           <FormItem>
-                            <FormLabel>MIMO_SENDER_ID</FormLabel>
-                            <FormControl>
-                              <Input
-                                className={inputClass}
-                                placeholder="FSTSMS"
-                                {...field}
-                              />
-                            </FormControl>
+                            <div className="grid grid-cols-1 md:grid-cols-12">
+                              <div className="col-span-4 mt-2">
+                                <FormLabel>MIMO_SENDER_ID</FormLabel>
+                              </div>
+                              <div className="col-span-8">
+                                <FormControl>
+                                  <Input
+                                    className={inputClass}
+                                    placeholder="MIMO_SENDER_ID"
+                                    {...field}
+                                  />
+                                </FormControl>
+                              </div>
+                            </div>
                             <FormMessage />
                           </FormItem>
                         )}
@@ -659,14 +766,20 @@ export default function Addnew() {
                         name="MIM_USER_NAME"
                         render={({ field }) => (
                           <FormItem>
-                            <FormLabel>User Name</FormLabel>
-                            <FormControl>
-                              <Input
-                                className={inputClass}
-                                placeholder="User Name"
-                                {...field}
-                              />
-                            </FormControl>
+                            <div className="grid grid-cols-1 md:grid-cols-12">
+                              <div className="col-span-4 mt-2">
+                                <FormLabel>User Name</FormLabel>
+                              </div>
+                              <div className="col-span-8">
+                                <FormControl>
+                                  <Input
+                                    className={inputClass}
+                                    placeholder="User Name"
+                                    {...field}
+                                  />
+                                </FormControl>
+                              </div>
+                            </div>
                             <FormMessage />
                           </FormItem>
                         )}
@@ -678,14 +791,20 @@ export default function Addnew() {
                         name="MIM_API_KEY"
                         render={({ field }) => (
                           <FormItem>
-                            <FormLabel>API KEY</FormLabel>
-                            <FormControl>
-                              <Input
-                                className={inputClass}
-                                placeholder="API KEY"
-                                {...field}
-                              />
-                            </FormControl>
+                            <div className="grid grid-cols-1 md:grid-cols-12">
+                              <div className="col-span-4 mt-2">
+                                <FormLabel>API KEY</FormLabel>
+                              </div>
+                              <div className="col-span-8">
+                                <FormControl>
+                                  <Input
+                                    className={inputClass}
+                                    placeholder="API KEY"
+                                    {...field}
+                                  />
+                                </FormControl>
+                              </div>
+                            </div>
                             <FormMessage />
                           </FormItem>
                         )}
@@ -697,14 +816,20 @@ export default function Addnew() {
                         name="MIM_SENDER_ID"
                         render={({ field }) => (
                           <FormItem>
-                            <FormLabel>SENDER ID</FormLabel>
-                            <FormControl>
-                              <Input
-                                className={inputClass}
-                                placeholder="SENDER ID"
-                                {...field}
-                              />
-                            </FormControl>
+                            <div className="grid grid-cols-1 md:grid-cols-12">
+                              <div className="col-span-4 mt-2">
+                                <FormLabel>SENDER ID</FormLabel>
+                              </div>
+                              <div className="col-span-8">
+                                <FormControl>
+                                  <Input
+                                    className={inputClass}
+                                    placeholder="SENDER ID"
+                                    {...field}
+                                  />
+                                </FormControl>
+                              </div>
+                            </div>
                             <FormMessage />
                           </FormItem>
                         )}
@@ -736,14 +861,20 @@ export default function Addnew() {
                         name="MSEGAT_API_KEY"
                         render={({ field }) => (
                           <FormItem>
-                            <FormLabel>MSEGAT_API_KEY</FormLabel>
-                            <FormControl>
-                              <Input
-                                className={inputClass}
-                                placeholder="MSEGAT_API_KEY"
-                                {...field}
-                              />
-                            </FormControl>
+                            <div className="grid grid-cols-1 md:grid-cols-12">
+                              <div className="col-span-4 mt-2">
+                                <FormLabel>MSEGAT_API_KEY</FormLabel>
+                              </div>
+                              <div className="col-span-8">
+                                <FormControl>
+                                  <Input
+                                    className={inputClass}
+                                    placeholder="MSEGAT_API_KEY"
+                                    {...field}
+                                  />
+                                </FormControl>
+                              </div>
+                            </div>
                             <FormMessage />
                           </FormItem>
                         )}
@@ -755,14 +886,20 @@ export default function Addnew() {
                         name="MSEGAT_USERNAME"
                         render={({ field }) => (
                           <FormItem>
-                            <FormLabel>MSEGAT_USERNAME</FormLabel>
-                            <FormControl>
-                              <Input
-                                className={inputClass}
-                                placeholder="MSEGAT_USERNAME"
-                                {...field}
-                              />
-                            </FormControl>
+                            <div className="grid grid-cols-1 md:grid-cols-12">
+                              <div className="col-span-4 mt-2">
+                                <FormLabel>MSEGAT_USERNAME</FormLabel>
+                              </div>
+                              <div className="col-span-8">
+                                <FormControl>
+                                  <Input
+                                    className={inputClass}
+                                    placeholder="MSEGAT_USERNAME"
+                                    {...field}
+                                  />
+                                </FormControl>
+                              </div>
+                            </div>
                             <FormMessage />
                           </FormItem>
                         )}
@@ -774,15 +911,20 @@ export default function Addnew() {
                         name="MSEGAT_USER_SENDER"
                         render={({ field }) => (
                           <FormItem>
-                            <FormLabel>MSEGAT_USER_SENDER</FormLabel>
-                            <FormControl>
-                              <Input
-                                className={inputClass}
-                                placeholder="MSEGAT_USER_SENDER
-"
-                                {...field}
-                              />
-                            </FormControl>
+                            <div className="grid grid-cols-1 md:grid-cols-12">
+                              <div className="col-span-4 mt-2">
+                                <FormLabel>MSEGAT_USER_SENDER</FormLabel>
+                              </div>
+                              <div className="col-span-8">
+                                <FormControl>
+                                  <Input
+                                    className={inputClass}
+                                    placeholder="MSEGAT_USER_SENDER"
+                                    {...field}
+                                  />
+                                </FormControl>
+                              </div>
+                            </div>
                             <FormMessage />
                           </FormItem>
                         )}
@@ -814,14 +956,20 @@ export default function Addnew() {
                         name="ZENDER_SITEURL"
                         render={({ field }) => (
                           <FormItem>
-                            <FormLabel>ZENDER_SITEURL</FormLabel>
-                            <FormControl>
-                              <Input
-                                className={inputClass}
-                                placeholder="ZENDER_SITEURL"
-                                {...field}
-                              />
-                            </FormControl>
+                            <div className="grid grid-cols-1 md:grid-cols-12">
+                              <div className="col-span-4 mt-2">
+                                <FormLabel>ZENDER_SITEURL</FormLabel>
+                              </div>
+                              <div className="col-span-8">
+                                <FormControl>
+                                  <Input
+                                    className={inputClass}
+                                    placeholder="ZENDER_SITEURL"
+                                    {...field}
+                                  />
+                                </FormControl>
+                              </div>
+                            </div>
                             <FormMessage />
                           </FormItem>
                         )}
@@ -833,14 +981,20 @@ export default function Addnew() {
                         name="ZENDER_APIKEY"
                         render={({ field }) => (
                           <FormItem>
-                            <FormLabel>ZENDER_APIKEY</FormLabel>
-                            <FormControl>
-                              <Input
-                                className={inputClass}
-                                placeholder="ZENDER_APIKEY"
-                                {...field}
-                              />
-                            </FormControl>
+                            <div className="grid grid-cols-1 md:grid-cols-12">
+                              <div className="col-span-4 mt-2">
+                                <FormLabel>ZENDER_APIKEY</FormLabel>
+                              </div>
+                              <div className="col-span-8">
+                                <FormControl>
+                                  <Input
+                                    className={inputClass}
+                                    placeholder="ZENDER_APIKEY"
+                                    {...field}
+                                  />
+                                </FormControl>
+                              </div>
+                            </div>
                             <FormMessage />
                           </FormItem>
                         )}
@@ -852,23 +1006,29 @@ export default function Addnew() {
                         name="ZENDER_SERVICE"
                         render={({ field }) => (
                           <FormItem>
-                            <FormLabel>ZENDER_SERVICE</FormLabel>
-                            <FormControl>
-                              <Select
-                              onValueChange={field.onChange}
-                              defaultValue={field.value}
-                            >
-                              <FormControl>
-                                <SelectTrigger>
-                                  <SelectValue placeholder="Select ZENDER_SERVICE" />
-                                </SelectTrigger>
-                              </FormControl>
-                              <SelectContent>
-                                <SelectItem value="Apple">SMS</SelectItem>
-                                <SelectItem value="m2@example.com">WhatsApp</SelectItem>
-                              </SelectContent>
-                            </Select>
-                            </FormControl>
+                            <div className="grid grid-cols-1 md:grid-cols-12">
+                              <div className="col-span-4 mt-2">
+                                <FormLabel>ZENDER_SERVICE</FormLabel>
+                              </div>
+                              <div className="col-span-8">
+                                <FormControl>
+                                  <Select
+                                    onValueChange={field.onChange}
+                                    defaultValue={field.value}
+                                  >
+                                    <FormControl>
+                                      <SelectTrigger>
+                                        <SelectValue placeholder="Select ZENDER_SERVICE" />
+                                      </SelectTrigger>
+                                    </FormControl>
+                                    <SelectContent>
+                                      <SelectItem value="Apple">SMS</SelectItem>
+                                      <SelectItem value="m2@example.com">WhatsApp</SelectItem>
+                                    </SelectContent>
+                                  </Select>
+                                </FormControl>
+                              </div>
+                            </div>
                             <FormMessage />
                           </FormItem>
                         )}
@@ -880,14 +1040,20 @@ export default function Addnew() {
                         name="ZENDER_WHATSAPP"
                         render={({ field }) => (
                           <FormItem>
-                            <FormLabel>ZENDER_WHATSAPP</FormLabel>
-                            <FormControl>
-                              <Input
-                                className={inputClass}
-                                placeholder="ZENDER_WHATSAPP"
-                                {...field}
-                              />
-                            </FormControl>
+                            <div className="grid grid-cols-1 md:grid-cols-12">
+                              <div className="col-span-4 mt-2">
+                                <FormLabel>ZENDER_WHATSAPP</FormLabel>
+                              </div>
+                              <div className="col-span-8">
+                                <FormControl>
+                                  <Input
+                                    className={inputClass}
+                                    placeholder="ZENDER_WHATSAPP"
+                                    {...field}
+                                  />
+                                </FormControl>
+                              </div>
+                            </div>
                             <FormMessage />
                           </FormItem>
                         )}
@@ -899,14 +1065,20 @@ export default function Addnew() {
                         name="ZENDER_DEVICE"
                         render={({ field }) => (
                           <FormItem>
-                            <FormLabel>ZENDER_DEVICE</FormLabel>
-                            <FormControl>
-                              <Input
-                                className={inputClass}
-                                placeholder="ZENDER_DEVICE"
-                                {...field}
-                              />
-                            </FormControl>
+                            <div className="grid grid-cols-1 md:grid-cols-12">
+                              <div className="col-span-4 mt-2">
+                                <FormLabel>ZENDER_DEVICE</FormLabel>
+                              </div>
+                              <div className="col-span-8">
+                                <FormControl>
+                                  <Input
+                                    className={inputClass}
+                                    placeholder="ZENDER_DEVICE"
+                                    {...field}
+                                  />
+                                </FormControl>
+                              </div>
+                            </div>
                             <FormMessage />
                           </FormItem>
                         )}
@@ -918,14 +1090,20 @@ export default function Addnew() {
                         name="ZENDER_GATEWAY"
                         render={({ field }) => (
                           <FormItem>
-                            <FormLabel>ZENDER_GATEWAY</FormLabel>
-                            <FormControl>
-                              <Input
-                                className={inputClass}
-                                placeholder="ZENDER_GATEWAY"
-                                {...field}
-                              />
-                            </FormControl>
+                            <div className="grid grid-cols-1 md:grid-cols-12">
+                              <div className="col-span-4 mt-2">
+                                <FormLabel>ZENDER_GATEWAY</FormLabel>
+                              </div>
+                              <div className="col-span-8">
+                                <FormControl>
+                                  <Input
+                                    className={inputClass}
+                                    placeholder="ZENDER_GATEWAY"
+                                    {...field}
+                                  />
+                                </FormControl>
+                              </div>
+                            </div>
                             <FormMessage />
                           </FormItem>
                         )}
@@ -937,14 +1115,20 @@ export default function Addnew() {
                         name="ZENDER_SIM"
                         render={({ field }) => (
                           <FormItem>
-                            <FormLabel>ZENDER_SIM</FormLabel>
-                            <FormControl>
-                              <Input
-                                className={inputClass}
-                                placeholder="ZENDER_SIM"
-                                {...field}
-                              />
-                            </FormControl>
+                            <div className="grid grid-cols-1 md:grid-cols-12">
+                              <div className="col-span-4 mt-2">
+                                <FormLabel>ZENDER_SIM</FormLabel>
+                              </div>
+                              <div className="col-span-8">
+                                <FormControl>
+                                  <Input
+                                    className={inputClass}
+                                    placeholder="ZENDER_SIM"
+                                    {...field}
+                                  />
+                                </FormControl>
+                              </div>
+                            </div>
                             <FormMessage />
                           </FormItem>
                         )}

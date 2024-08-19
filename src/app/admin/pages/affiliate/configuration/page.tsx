@@ -127,8 +127,7 @@ export default function Addnew() {
   }
 
 
-  const inputClass =
-    "w-full rounded-lg border-[1px] border-primary bg-transparent px-5 py-3 font-normal text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:bg-form-input dark:text-white";
+  const inputClass = "bg-zinc-50 border border-slate-300 text-slate-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-slate-900 dark:border-slate-800 dark:placeholder-slate-700 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500";
 
   const referralClass = "py-3 px-4 block w-full border-gray-200 shadow-sm rounded-0 text-sm focus:z-10 focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none dark:bg-neutral-900 dark:border-neutral-700 dark:text-neutral-400 dark:placeholder-neutral-500 dark:focus:ring-neutral-600"
   return (
@@ -137,10 +136,6 @@ export default function Addnew() {
         <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
           <div className="mx-auto max-w-screen-2xl">
             <div className="grid gap-4 md:grid-cols-1 lg:grid-cols-2 sm:grid-cols-1">
-
-  
-
-
 
               <div className="flex flex-col gap-4">
                 <div className="px-6 rounded-sm border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark">
@@ -156,16 +151,20 @@ export default function Addnew() {
                         name="amount"
                         render={({ field }) => (
                           <FormItem>
-                            <FormLabel>
-                              Minimum Affiliate Withdrow Amount
-                            </FormLabel>
-                            <FormControl>
-                              <Input
-                                className={inputClass}
-                                placeholder="100"
-                                {...field}
-                              />
-                            </FormControl>
+                            <div className="grid grid-cols-1 md:grid-cols-12">
+                              <div className="col-span-3 mt-2">
+                                <FormLabel>Minimum Withdrow</FormLabel>
+                              </div>
+                              <div className="col-span-8">
+                                <FormControl>
+                                  <Input
+                                    className={inputClass}
+                                    placeholder="Minimum Withdrow Amount"
+                                    {...field}
+                                  />
+                                </FormControl>
+                              </div>
+                            </div>
                             <FormMessage />
                           </FormItem>
                         )}
@@ -194,17 +193,23 @@ export default function Addnew() {
                     <div className="flex flex-col gap-5.5 p-6.5">
                       <FormField
                         control={form.control}
-                        name="product_name"
+                        name="validation_time"
                         render={({ field }) => (
                           <FormItem>
-                            <FormLabel>Validation Time</FormLabel>
-                            <FormControl>
-                              <Input
-                                className={inputClass}
-                                placeholder="100"
-                                {...field}
-                              />
-                            </FormControl>
+                            <div className="grid grid-cols-1 md:grid-cols-12">
+                              <div className="col-span-3 mt-2">
+                                <FormLabel>Validation Time</FormLabel>
+                              </div>
+                              <div className="col-span-8">
+                                <FormControl>
+                                  <Input
+                                    className={inputClass}
+                                    placeholder="Validation Time"
+                                    {...field}
+                                  />
+                                </FormControl>
+                              </div>
+                            </div>
                             <FormMessage />
                           </FormItem>
                         )}
@@ -233,19 +238,23 @@ export default function Addnew() {
                     <div className="flex flex-col gap-5.5 p-6.5">
                       <FormField
                         control={form.control}
-                        name="product_name"
+                        name="registration"
                         render={({ field }) => (
                           <FormItem>
-                            <FormLabel>
-                              User Registration & First Purchase
-                            </FormLabel>
-                            <FormControl>
-                              <Input
-                                className={inputClass}
-                                placeholder="100"
-                                {...field}
-                              />
-                            </FormControl>
+                            <div className="grid grid-cols-1 md:grid-cols-12">
+                              <div className="col-span-3 mt-2">
+                                <FormLabel>Registration</FormLabel>
+                              </div>
+                              <div className="col-span-8">
+                                <FormControl>
+                                  <Input
+                                    className={inputClass}
+                                    placeholder="Registration & First Purchase"
+                                    {...field}
+                                  />
+                                </FormControl>
+                              </div>
+                            </div>
                             <FormMessage />
                           </FormItem>
                         )}
@@ -254,7 +263,7 @@ export default function Addnew() {
                     <div className="flex flex-col gap-5.5 p-6.5">
                       <FormField
                         control={form.control}
-                        name="product_name"
+                        name="status"
                         render={({ field }) => (
                           <FormItem>
                             <FormControl>
@@ -291,19 +300,23 @@ export default function Addnew() {
                     <div className="flex flex-col gap-5.5 p-6.5">
                       <FormField
                         control={form.control}
-                        name="product_name"
+                        name="product_sharing"
                         render={({ field }) => (
                           <FormItem>
-                            <FormLabel>
-                              Product Sharing and Purchasing
-                            </FormLabel>
-                            <FormControl>
-                              <Input
-                                className={inputClass}
-                                placeholder="100"
-                                {...field}
-                              />
-                            </FormControl>
+                            <div className="grid grid-cols-1 md:grid-cols-12">
+                              <div className="col-span-3 mt-2">
+                                <FormLabel>Product Sharing</FormLabel>
+                              </div>
+                              <div className="col-span-8">
+                                <FormControl>
+                                  <Input
+                                    className={inputClass}
+                                    placeholder="Product Sharing and Purchasing"
+                                    {...field}
+                                  />
+                                </FormControl>
+                              </div>
+                            </div>
                             <FormMessage />
                           </FormItem>
                         )}
@@ -337,14 +350,20 @@ export default function Addnew() {
                     <div className="flex flex-col gap-5.5 p-6.5">
                       <FormField
                         control={form.control}
-                        name="product_name"
+                        name="status"
                         render={({ field }) => (
                           <FormItem>
-                            <div className="flex mt-4 items-center space-x-12">
-                              <FormLabel className="mt-2">Status</FormLabel>
-                              <Switch />
-                            </div>
                             <FormMessage />
+                            <div className="grid grid-cols-1 md:grid-cols-12">
+                              <div className="col-span-3 mt-2">
+                                <FormLabel>Status</FormLabel>
+                              </div>
+                              <div className="col-span-8">
+                                <FormControl>
+                                  <Switch />
+                                </FormControl>
+                              </div>
+                            </div>
                           </FormItem>
                         )}
                       />
@@ -377,10 +396,17 @@ export default function Addnew() {
                           name="gallery_images"
                           render={({ field }) => (
                             <FormItem>
-                              <div className="flex items-center space-x-12">
-                                <FormLabel className="mt-2">Status</FormLabel>
-                                <Switch />
+                              <div className="grid grid-cols-1 md:grid-cols-12">
+                                <div className="col-span-3 mt-2">
+                                  <FormLabel>Status</FormLabel>
+                                </div>
+                                <div className="col-span-8">
+                                  <FormControl>
+                                    <Switch />
+                                  </FormControl>
+                                </div>
                               </div>
+
                               <FormMessage />
                             </FormItem>
                           )}
@@ -392,14 +418,20 @@ export default function Addnew() {
                           name="thumbnail_image"
                           render={({ field }) => (
                             <FormItem>
-                              <FormLabel>Women Clothing & Fashion</FormLabel>
-                              <FormControl>
-                                <Input
-                                  className={inputClass}
-                                  placeholder="2"
-                                  {...field}
-                                />
-                              </FormControl>
+                              <div className="grid grid-cols-1 md:grid-cols-12">
+                                <div className="col-span-3 mt-2">
+                                  <FormLabel>Women Clothing & Fashion</FormLabel>
+                                </div>
+                                <div className="col-span-8">
+                                  <FormControl>
+                                    <Input
+                                      className={inputClass}
+                                      placeholder="Women Clothing & Fashion"
+                                      {...field}
+                                    />
+                                  </FormControl>
+                                </div>
+                              </div>
                               <FormMessage />
                             </FormItem>
                           )}
@@ -451,18 +483,22 @@ export default function Addnew() {
                           name={`amount-${index}`}
                           render={({ field }) => (
                             <FormItem>
-                              <FormLabel>
-                                Channel {index + 1}
-                              </FormLabel>
-                              <FormControl>
-                                <Input
-                                  className={inputClass}
-                                  placeholder="%"
-                                  value={field.value}
-                                  onChange={(event) => handleInputChange(index, event)}
-                                  {...field}
-                                />
-                              </FormControl>
+                              <div className="grid grid-cols-1 md:grid-cols-12">
+                                <div className="col-span-3 mt-2">
+                                  <FormLabel>Channel {index + 1}</FormLabel>
+                                </div>
+                                <div className="col-span-8">
+                                  <FormControl>
+                                    <Input
+                                      className={inputClass}
+                                      placeholder="%"
+                                      value={field.value}
+                                      onChange={(event) => handleInputChange(index, event)}
+                                      {...field}
+                                    />
+                                  </FormControl>
+                                </div>
+                              </div>
                               <FormMessage />
                             </FormItem>
                           )}
@@ -491,205 +527,259 @@ export default function Addnew() {
                   </div>
                 </div>
               </div>
-              
+
 
               <div className="flex flex-col gap-4">
-      <div className="px-6 rounded-sm border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark">
-        <div className="border-b border-stroke px-6.5 py-4 dark:border-strokedark">
-          <h3 className="font-medium text-black dark:text-white">
-            Leadership Configuration
-          </h3>
-        </div>
-        <form onSubmit={onSubmitLeadership(onSubmit)}>
-          <div className="py-6">
-            {leadershipFields.map((field, index) => (
-              <div key={index} className="flex flex-col gap-5.5 p-6.5">
-                <Controller
-                  control={leadershipForm.control}
-                  name={`leaderships.${index}.leadership_name`}
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel>Leadership Name</FormLabel>
-                      <FormControl>
-                        <Input
-                          className="inputClass"
-                          placeholder="Creative leadership"
-                          {...field}
-                        />
-                      </FormControl>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
+                <div className="px-6 rounded-sm border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark">
+                  <div className="border-b border-stroke px-6.5 py-4 dark:border-strokedark">
+                    <h3 className="font-medium text-black dark:text-white">
+                      Leadership Configuration
+                    </h3>
+                  </div>
+                  <form onSubmit={onSubmitLeadership(onSubmit)}>
+                    <div className="py-6">
+                      {leadershipFields.map((field, index) => (
+                        <div key={index} className="flex flex-col gap-5.5 p-6.5 border border-slate-500 p-2 mt-2">
+                          <Controller
+                            control={leadershipForm.control}
+                            name={`leaderships.${index}.leadership_name`}
+                            render={({ field }) => (
+                              <FormItem>
+                                <div className="grid grid-cols-1 md:grid-cols-12">
+                                  <div className="col-span-4 mt-2">
+                                    <FormLabel>Leadership Name</FormLabel>
+                                  </div>
+                                  <div className="col-span-8">
+                                    <FormControl>
+                                      <Input
+                                        className={inputClass}
+                                        placeholder="10"
+                                        {...field}
+                                      />
+                                    </FormControl>
+                                  </div>
+                                </div>
+                                <FormMessage />
+                              </FormItem>
+                            )}
+                          />
 
-                <Controller
-                  control={leadershipForm.control}
-                  name={`leaderships.${index}.direct_account_required`}
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel>Direct account is required</FormLabel>
-                      <FormControl>
-                        <Input
-                          className="inputClass"
-                          placeholder="10"
-                          {...field}
-                        />
-                      </FormControl>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
+                          <Controller
+                            control={leadershipForm.control}
+                            name={`leaderships.${index}.direct_account_required`}
+                            render={({ field }) => (
+                              <FormItem>
+                                <div className="grid grid-cols-1 md:grid-cols-12">
+                                  <div className="col-span-4 mt-2">
+                                    <FormLabel>Direct account is required</FormLabel>
+                                  </div>
+                                  <div className="col-span-8">
+                                    <FormControl>
+                                      <Input
+                                        className={inputClass}
+                                        placeholder="0"
+                                        {...field}
+                                      />
+                                    </FormControl>
+                                  </div>
+                                </div>
+                                <FormMessage />
+                              </FormItem>
+                            )}
+                          />
 
-                <Controller
-                  control={leadershipForm.control}
-                  name={`leaderships.${index}.team_account_required`}
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel>Team account is required</FormLabel>
-                      <FormControl>
-                        <Input
-                          className="inputClass"
-                          placeholder="10"
-                          {...field}
-                        />
-                      </FormControl>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
+                          <Controller
+                            control={leadershipForm.control}
+                            name={`leaderships.${index}.team_account_required`}
+                            render={({ field }) => (
+                              <FormItem>
+                                <div className="grid grid-cols-1 md:grid-cols-12">
+                                  <div className="col-span-4 mt-2">
+                                    <FormLabel>Team account is required</FormLabel>
+                                  </div>
+                                  <div className="col-span-8">
+                                    <FormControl>
+                                      <Input
+                                        className={inputClass}
+                                        placeholder="10"
+                                        {...field}
+                                      />
+                                    </FormControl>
+                                  </div>
+                                </div>
+                                <FormMessage />
+                              </FormItem>
+                            )}
+                          />
 
-                <Controller
-                  control={leadershipForm.control}
-                  name={`leaderships.${index}.total_account_included_team`}
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel>Total accounts including teams</FormLabel>
-                      <FormControl>
-                        <Input
-                          className="inputClass"
-                          placeholder="10"
-                          {...field}
-                        />
-                      </FormControl>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
+                          <Controller
+                            control={leadershipForm.control}
+                            name={`leaderships.${index}.total_account_included_team`}
+                            render={({ field }) => (
+                              <FormItem>
+                                <div className="grid grid-cols-1 md:grid-cols-12">
+                                  <div className="col-span-4 mt-2">
+                                    <FormLabel>Total accounts including teams</FormLabel>
+                                  </div>
+                                  <div className="col-span-8">
+                                    <FormControl>
+                                      <Input
+                                        className={inputClass}
+                                        placeholder="10"
+                                        {...field}
+                                      />
+                                    </FormControl>
+                                  </div>
+                                </div>
+                                <FormMessage />
+                              </FormItem>
+                            )}
+                          />
 
-                <Controller
-                  control={leadershipForm.control}
-                  name={`leaderships.${index}.leadership_award`}
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel>Leadership Awards</FormLabel>
-                      <FormControl>
-                        <Input
-                          className="inputClass"
-                          placeholder="70%"
-                          {...field}
-                        />
-                      </FormControl>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
+                          <Controller
+                            control={leadershipForm.control}
+                            name={`leaderships.${index}.leadership_award`}
+                            render={({ field }) => (
+                              <FormItem>
+                                <div className="grid grid-cols-1 md:grid-cols-12">
+                                  <div className="col-span-4 mt-2">
+                                    <FormLabel>Leadership Awards</FormLabel>
+                                  </div>
+                                  <div className="col-span-8">
+                                    <FormControl>
+                                      <Input
+                                        className={inputClass}
+                                        placeholder="70%"
+                                        {...field}
+                                      />
+                                    </FormControl>
+                                  </div>
+                                </div>
+                                <FormMessage />
+                              </FormItem>
+                            )}
+                          />
 
-                <Controller
-                  control={leadershipForm.control}
-                  name={`leaderships.${index}.monthly_reword_fund`}
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel>Monthly Rewards fund</FormLabel>
-                      <FormControl>
-                        <Input
-                          className="inputClass"
-                          placeholder="15%"
-                          {...field}
-                        />
-                      </FormControl>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
+                          <Controller
+                            control={leadershipForm.control}
+                            name={`leaderships.${index}.monthly_reword_fund`}
+                            render={({ field }) => (
+                              <FormItem>
+                                <div className="grid grid-cols-1 md:grid-cols-12">
+                                  <div className="col-span-4 mt-2">
+                                    <FormLabel>Monthly Rewards fund</FormLabel>
+                                  </div>
+                                  <div className="col-span-8">
+                                    <FormControl>
+                                      <Input
+                                        className={inputClass}
+                                        placeholder="15%"
+                                        {...field}
+                                      />
+                                    </FormControl>
+                                  </div>
+                                </div>
+                                <FormMessage />
+                              </FormItem>
+                            )}
+                          />
 
-                <Controller
-                  control={leadershipForm.control}
-                  name={`leaderships.${index}.mobile_recharged`}
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel>Mobile should be recharged</FormLabel>
-                      <FormControl>
-                        <Input
-                          className="inputClass"
-                          placeholder="200"
-                          {...field}
-                        />
-                      </FormControl>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
+                          <Controller
+                            control={leadershipForm.control}
+                            name={`leaderships.${index}.mobile_recharged`}
+                            render={({ field }) => (
+                              <FormItem>
+                                <div className="grid grid-cols-1 md:grid-cols-12">
+                                  <div className="col-span-4 mt-2">
+                                    <FormLabel>Mobile should be recharged</FormLabel>
+                                  </div>
+                                  <div className="col-span-8">
+                                    <FormControl>
+                                      <Input
+                                        className={inputClass}
+                                        placeholder="200"
+                                        {...field}
+                                      />
+                                    </FormControl>
+                                  </div>
+                                </div>
+                                <FormMessage />
+                              </FormItem>
+                            )}
+                          />
 
-                <Controller
-                  control={leadershipForm.control}
-                  name={`leaderships.${index}.drivepack_recharged`}
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel>Driverpack Should be recharged</FormLabel>
-                      <FormControl>
-                        <Input
-                          className="inputClass"
-                          placeholder="500"
-                          {...field}
-                        />
-                      </FormControl>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
+                          <Controller
+                            control={leadershipForm.control}
+                            name={`leaderships.${index}.drivepack_recharged`}
+                            render={({ field }) => (
+                              <FormItem>
+                                <div className="grid grid-cols-1 md:grid-cols-12">
+                                  <div className="col-span-4 mt-2">
+                                    <FormLabel>Driverpack Should be recharged</FormLabel>
+                                  </div>
+                                  <div className="col-span-8">
+                                    <FormControl>
+                                      <Input
+                                        className={inputClass}
+                                        placeholder="500"
+                                        {...field}
+                                      />
+                                    </FormControl>
+                                  </div>
+                                </div>
+                                <FormMessage />
+                              </FormItem>
+                            )}
+                          />
 
-                <Controller
-                  control={leadershipForm.control}
-                  name={`leaderships.${index}.reseller_shop_ordered`}
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel>Reseller shop should be ordered</FormLabel>
-                      <FormControl>
-                        <Input
-                          className="inputClass"
-                          placeholder="100"
-                          {...field}
-                        />
-                      </FormControl>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
+                          <Controller
+                            control={leadershipForm.control}
+                            name={`leaderships.${index}.reseller_shop_ordered`}
+                            render={({ field }) => (
+                              <FormItem>
+                                <div className="grid grid-cols-1 md:grid-cols-12">
+                                  <div className="col-span-4 mt-2">
+                                    <FormLabel>Reseller shop should be ordered</FormLabel>
+                                  </div>
+                                  <div className="col-span-8">
+                                    <FormControl>
+                                      <Input
+                                        className={inputClass}
+                                        placeholder="100"
+                                        {...field}
+                                      />
+                                    </FormControl>
+                                  </div>
+                                </div>
+                                <FormMessage />
+                              </FormItem>
+                            )}
+                          />
+                        </div>
+                      ))}
+
+                      <Button
+                        className="mt-4 p-2 dark:text-slate-200"
+                        onClick={handleAddLeadershipField}
+                        variant="outline"
+                        type="button"
+                      >
+                        + Add New
+                      </Button>
+
+                      <div className="grid mt-3 justify-items-end">
+                        <Button
+                          className="dark:text-slate-200"
+                          variant="outline"
+                          type="submit"
+                        >
+                          Save
+                        </Button>
+                      </div>
+                    </div>
+                  </form>
+                </div>
               </div>
-            ))}
-
-            <Button
-              className="mt-4 p-2 dark:text-slate-200"
-              onClick={handleAddLeadershipField}
-              variant="outline"
-              type="button"
-            >
-              + Add New
-            </Button>
-
-            <div className="grid mt-3 justify-items-end">
-              <Button
-                className="dark:text-slate-200"
-                variant="outline"
-                type="submit"
-              >
-                Save
-              </Button>
-            </div>
-          </div>
-        </form>
-      </div>
-    </div>
 
             </div>
           </div>

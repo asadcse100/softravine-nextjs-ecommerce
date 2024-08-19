@@ -15,8 +15,14 @@ import {
   FormMessage,
 } from "@/app/admin/components/ui/form";
 import Input from "@/shared/Input/Input";
-import Select from "@/shared/Select/Select";
 import Textarea from "@/shared/Textarea/Textarea";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/app/admin/components/ui/select";
 
 const formSchema = z.object({
   user_phones: z.string().min(10, {
@@ -49,20 +55,20 @@ export default function Addnew() {
     console.log(values);
   }
 
-  const inputClass =
-    "w-full rounded-lg border-[1px] border-primary bg-transparent px-5 py-3 font-normal text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:bg-form-input dark:text-white";
+  const inputClass = "bg-zinc-50 border border-slate-300 text-slate-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-slate-900 dark:border-slate-800 dark:placeholder-slate-700 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500";
 
   return (
     <div className="min-h-screen mx-auto max-w-screen-2xl mt-4 p-4 py-4 md:p-6 2xl:p-10 bg-slate-100 dark:bg-slate-900">
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
           <div className="mx-auto max-w-screen-2xl">
-            <div className="grid gap-4 md:grid-cols-1 lg:grid-cols-2 sm:grid-cols-1">
-              <div className="flex flex-col gap-4">
+            <div className="grid grid-cols-1 lg:grid-cols-12">
+
+              <div className="col-span-7">
                 <div className="px-6 rounded-sm border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark">
                   <div className="border-b border-stroke px-6.5 py-4 dark:border-strokedark">
                     <h3 className="font-medium text-black dark:text-white">
-                    Send Bulk SMS
+                      Send Bulk SMS
                     </h3>
                   </div>
                   <div className="py-6">
@@ -72,19 +78,37 @@ export default function Addnew() {
                         name="user_phones[]"
                         render={({ field }) => (
                           <FormItem>
-                            <FormLabel>Mobile Users</FormLabel>
-                            <FormControl>
-                              <Select>
-                                <option value="">Mr. Kamal 013123424</option>
-                                <option value="">Mr. Kamal 013123424</option>
-                                <option value="">Mr. Kamal 013123424</option>
-                              </Select>
-                              {/* <Input
-                                className={inputClass}
-                                placeholder="Mobile Users"
-                                {...field}
-                              /> */}
-                            </FormControl>
+                            <div className="grid grid-cols-1 md:grid-cols-12">
+                              <div className="col-span-3 mt-2">
+                                <FormLabel>Mobile Users</FormLabel>
+                              </div>
+                              <div className="col-span-9">
+                                <FormControl>
+                                  <Select
+                                    onValueChange={field.onChange}
+                                    defaultValue={field.value}
+                                  >
+                                    <FormControl>
+                                      <SelectTrigger>
+                                        <SelectValue placeholder="Select Brand" />
+                                      </SelectTrigger>
+                                    </FormControl>
+                                    <SelectContent>
+                                      <SelectItem value="Apple">Apple</SelectItem>
+                                      <SelectItem value="m2@example.com">Pran</SelectItem>
+                                      <SelectItem value="m22@example.com">Squre</SelectItem>
+                                      <SelectItem value="m3@example.com">ACI</SelectItem>
+                                      <SelectItem value="m4@example.com">SoftRavine</SelectItem>
+                                      <SelectItem value="m5@example.com">Samsung</SelectItem>
+                                      <SelectItem value="m6@example.com">LG</SelectItem>
+                                      <SelectItem value="m7@example.com">Logitech</SelectItem>
+                                      <SelectItem value="m8@example.com">A4tech</SelectItem>
+                                      <SelectItem value="m9@example.com">HP</SelectItem>
+                                    </SelectContent>
+                                  </Select>
+                                </FormControl>
+                              </div>
+                            </div>
                             <FormMessage />
                           </FormItem>
                         )}
@@ -96,15 +120,16 @@ export default function Addnew() {
                         name="content"
                         render={({ field }) => (
                           <FormItem>
-                            <FormLabel>SMS Content</FormLabel>
-                            <FormControl>
-                              <Textarea></Textarea>
-                              {/* <Input
-                                className={inputClass}
-                                placeholder="Employe Email"
-                                {...field}
-                              /> */}
-                            </FormControl>
+                            <div className="grid grid-cols-1 md:grid-cols-12">
+                              <div className="col-span-3 mt-2">
+                                <FormLabel>SMS Content</FormLabel>
+                              </div>
+                              <div className="col-span-9">
+                                <FormControl>
+                                  <Textarea></Textarea>
+                                </FormControl>
+                              </div>
+                            </div>
                             <FormMessage />
                           </FormItem>
                         )}
@@ -116,20 +141,27 @@ export default function Addnew() {
                         name="template_id"
                         render={({ field }) => (
                           <FormItem>
-                            <FormLabel>Template ID</FormLabel>
-                            <FormControl>
-                              <Input
-                                className={inputClass}
-                                placeholder="Template ID"
-                                {...field}
-                              />
-                            </FormControl>
+                            <div className="grid grid-cols-1 md:grid-cols-12">
+                              <div className="col-span-3 mt-2">
+                                <FormLabel>Template ID</FormLabel>
+                              </div>
+                              <div className="col-span-9">
+                                <FormControl>
+                                  <Input
+                                    className={inputClass}
+                                    placeholder="Template ID"
+                                    {...field}
+                                  />
+                                </FormControl>
+                              </div>
+                            </div>
                             <FormMessage />
                           </FormItem>
                         )}
                       />
-                      <p className="dark:text-slate-400">**N.B : Template ID is Required Only for Fast2SMS DLT Manual **</p>
+                      
                     </div>
+                    <p className="dark:text-slate-400 py-4">**N.B : Template ID is Required Only for Fast2SMS DLT Manual **</p>
                     <div className="grid mt-3 justify-items-end">
                       <Button
                         className="dark:text-slate-200"

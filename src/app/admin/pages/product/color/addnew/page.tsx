@@ -44,8 +44,7 @@ export default function Addnew() {
     console.log(values);
   }
 
-  const inputClass =
-    "w-full rounded-lg border-[1px] border-primary bg-transparent px-5 py-3 font-normal text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:bg-form-input dark:text-white";
+  const inputClass = "bg-zinc-50 border border-slate-300 text-slate-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-slate-900 dark:border-slate-800 dark:placeholder-slate-700 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500";
 
   return (
     <div className="min-h-screen mx-auto max-w-screen-2xl mt-4 p-4 py-4 md:p-6 2xl:p-10 bg-slate-100 dark:bg-slate-900">
@@ -67,14 +66,20 @@ export default function Addnew() {
                         name="name"
                         render={({ field }) => (
                           <FormItem>
-                            <FormLabel>Name</FormLabel>
-                            <FormControl>
-                              <Input
-                                className={inputClass}
-                                placeholder="Name"
-                                {...field}
-                              />
-                            </FormControl>
+                            <div className="grid grid-cols-1 md:grid-cols-12">
+                                <div className="col-span-3 mt-2">
+                                  <FormLabel>Name</FormLabel>
+                                </div>
+                                <div className="col-span-8">
+                                  <FormControl>
+                                    <Input
+                                      className={inputClass}
+                                      placeholder="Name"
+                                      {...field}
+                                    />
+                                  </FormControl>
+                                </div>
+                              </div>
                             <FormMessage />
                           </FormItem>
                         )}
@@ -86,21 +91,27 @@ export default function Addnew() {
                         name="code"
                         render={({ field }) => (
                           <FormItem>
-                            <FormLabel>Color Code</FormLabel>
-                            <FormControl>
-                              <Input
-                                className={inputClass}
-                                placeholder="Color Code"
-                                {...field}
-                              />
-                            </FormControl>
+                            <div className="grid grid-cols-1 md:grid-cols-12">
+                                <div className="col-span-3 mt-2">
+                                  <FormLabel>Color Code</FormLabel>
+                                </div>
+                                <div className="col-span-8">
+                                  <FormControl>
+                                    <Input
+                                      className={inputClass}
+                                      placeholder="Color Code"
+                                      {...field}
+                                    />
+                                  </FormControl>
+                                </div>
+                              </div>
                             <FormMessage />
                           </FormItem>
                         )}
                       />
                     </div>
 
-                    <div className="grid mt-3 justify-items-end">
+                    <div className="grid mt-3 justify-items-end px-10">
                       <Button
                         className="dark:text-slate-200"
                         variant="outline"
@@ -118,7 +129,7 @@ export default function Addnew() {
                     </h3>
                   </div>
                   <div className="py-6">
-                    <div className="flex flex-col gap-5.5 p-6.5">
+                    <div className="flex flex-col gap-5.5 p-6.5 px-10">
                       <FormField
                         control={form.control}
                         name="product_name"
