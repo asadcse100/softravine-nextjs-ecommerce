@@ -327,7 +327,7 @@ export default function Addnew() {
                           render={({ field }) => (
                             <FormItem>
                               <div className="grid grid-cols-1 md:grid-cols-12">
-                                <div className="col-span-3 mt-2">
+                                <div className="col-span-3 mt-3">
                                   <FormLabel>Barcode</FormLabel>
                                 </div>
                                 <div className="col-span-8">

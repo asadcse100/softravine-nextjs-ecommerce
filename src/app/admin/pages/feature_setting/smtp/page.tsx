@@ -100,9 +100,13 @@ export default function Addnew() {
                         name="MAIL_DRIVER"
                         render={({ field }) => (
                           <FormItem>
-                            <FormLabel>Type</FormLabel>
-                            <FormControl>
-                              <Select
+                            <div className="grid grid-cols-1 md:grid-cols-12">
+                                <div className="col-span-3 mt-2">
+                                  <FormLabel>Type</FormLabel>
+                                </div>
+                                <div className="col-span-8">
+                                  <FormControl>
+                                  <Select
                               onValueChange={field.onChange}
                               defaultValue={field.value}
                             >
@@ -117,7 +121,9 @@ export default function Addnew() {
                                 <SelectItem value="m22@example.com">Mail Gun</SelectItem>
                               </SelectContent>
                             </Select>
-                            </FormControl>
+                                  </FormControl>
+                                </div>
+                              </div>
                             <FormMessage />
                           </FormItem>
                         )}
@@ -129,14 +135,20 @@ export default function Addnew() {
                         name="MAIL_HOST"
                         render={({ field }) => (
                           <FormItem>
-                            <FormLabel>Mail Host</FormLabel>
-                            <FormControl>
-                              <Input
-                                className={inputClass}
-                                placeholder="123.45.34.435"
-                                {...field}
-                              />
-                            </FormControl>
+                            <div className="grid grid-cols-1 md:grid-cols-12">
+                                <div className="col-span-3 mt-2">
+                                  <FormLabel>Mail Host</FormLabel>
+                                </div>
+                                <div className="col-span-8">
+                                  <FormControl>
+                                    <Input
+                                      className={inputClass}
+                                      placeholder="Mail Host"
+                                      {...field}
+                                    />
+                                  </FormControl>
+                                </div>
+                              </div>
                             <FormMessage />
                           </FormItem>
                         )}
@@ -148,14 +160,20 @@ export default function Addnew() {
                         name="MAIL_PORT"
                         render={({ field }) => (
                           <FormItem>
-                            <FormLabel>Mail Port</FormLabel>
-                            <FormControl>
-                              <Input
-                                className={inputClass}
-                                placeholder="587"
-                                {...field}
-                              />
-                            </FormControl>
+                            <div className="grid grid-cols-1 md:grid-cols-12">
+                                <div className="col-span-3 mt-2">
+                                  <FormLabel>Mail Port</FormLabel>
+                                </div>
+                                <div className="col-span-8">
+                                  <FormControl>
+                                    <Input
+                                      className={inputClass}
+                                      placeholder="Mail Port"
+                                      {...field}
+                                    />
+                                  </FormControl>
+                                </div>
+                              </div>
                             <FormMessage />
                           </FormItem>
                         )}
@@ -167,14 +185,20 @@ export default function Addnew() {
                         name="MAIL_USERNAME"
                         render={({ field }) => (
                           <FormItem>
-                            <FormLabel>Mail Username</FormLabel>
-                            <FormControl>
-                              <Input
-                                className={inputClass}
-                                placeholder="test@mail.com"
-                                {...field}
-                              />
-                            </FormControl>
+                            <div className="grid grid-cols-1 md:grid-cols-12">
+                                <div className="col-span-3 mt-2">
+                                  <FormLabel>Mail Username</FormLabel>
+                                </div>
+                                <div className="col-span-8">
+                                  <FormControl>
+                                    <Input
+                                      className={inputClass}
+                                      placeholder="Mail Username"
+                                      {...field}
+                                    />
+                                  </FormControl>
+                                </div>
+                              </div>
                             <FormMessage />
                           </FormItem>
                         )}
@@ -186,14 +210,20 @@ export default function Addnew() {
                         name="MAIL_PASSWORD"
                         render={({ field }) => (
                           <FormItem>
-                            <FormLabel>Mail Password</FormLabel>
-                            <FormControl>
-                              <Input
-                                className={inputClass}
-                                placeholder="Password"
-                                {...field}
-                              />
-                            </FormControl>
+                            <div className="grid grid-cols-1 md:grid-cols-12">
+                                <div className="col-span-3 mt-2">
+                                  <FormLabel>Mail Password</FormLabel>
+                                </div>
+                                <div className="col-span-8">
+                                  <FormControl>
+                                    <Input
+                                      className={inputClass}
+                                      placeholder="Mail Password"
+                                      {...field}
+                                    />
+                                  </FormControl>
+                                </div>
+                              </div>
                             <FormMessage />
                           </FormItem>
                         )}
@@ -205,14 +235,20 @@ export default function Addnew() {
                         name="MAIL_ENCRYPTION"
                         render={({ field }) => (
                           <FormItem>
-                            <FormLabel>Mail Encription</FormLabel>
-                            <FormControl>
-                              <Input
-                                className={inputClass}
-                                placeholder="SSL"
-                                {...field}
-                              />
-                            </FormControl>
+                            <div className="grid grid-cols-1 md:grid-cols-12">
+                                <div className="col-span-3 mt-2">
+                                  <FormLabel>Mail Encription</FormLabel>
+                                </div>
+                                <div className="col-span-8">
+                                  <FormControl>
+                                    <Input
+                                      className={inputClass}
+                                      placeholder="Mail Encription"
+                                      {...field}
+                                    />
+                                  </FormControl>
+                                </div>
+                              </div>
                             <FormMessage />
                           </FormItem>
                         )}
@@ -224,14 +260,20 @@ export default function Addnew() {
                         name="MAIL_FROM_ADDRESS"
                         render={({ field }) => (
                           <FormItem>
-                            <FormLabel>Mail From Address</FormLabel>
-                            <FormControl>
-                              <Input
-                                className={inputClass}
-                                placeholder="test@softravine.com"
-                                {...field}
-                              />
-                            </FormControl>
+                            <div className="grid grid-cols-1 md:grid-cols-12">
+                                <div className="col-span-3 mt-2">
+                                  <FormLabel>Mail From Address</FormLabel>
+                                </div>
+                                <div className="col-span-8">
+                                  <FormControl>
+                                    <Input
+                                      className={inputClass}
+                                      placeholder="Mail From Address"
+                                      {...field}
+                                    />
+                                  </FormControl>
+                                </div>
+                              </div>
                             <FormMessage />
                           </FormItem>
                         )}
@@ -243,14 +285,20 @@ export default function Addnew() {
                         name="MAIL_FROM_NAME"
                         render={({ field }) => (
                           <FormItem>
-                            <FormLabel>Mail From Name</FormLabel>
-                            <FormControl>
-                              <Input
-                                className={inputClass}
-                                placeholder="no-reply"
-                                {...field}
-                              />
-                            </FormControl>
+                            <div className="grid grid-cols-1 md:grid-cols-12">
+                                <div className="col-span-3 mt-2">
+                                  <FormLabel>Mail From Name</FormLabel>
+                                </div>
+                                <div className="col-span-8">
+                                  <FormControl>
+                                    <Input
+                                      className={inputClass}
+                                      placeholder="Mail From Name"
+                                      {...field}
+                                    />
+                                  </FormControl>
+                                </div>
+                              </div>
                             <FormMessage />
                           </FormItem>
                         )}
@@ -283,14 +331,20 @@ export default function Addnew() {
                           name="email"
                           render={({ field }) => (
                             <FormItem>
-                              <FormLabel>For Test SMTP Mail</FormLabel>
-                              <FormControl>
-                                <Input
-                                  className={inputClass}
-                                  placeholder="your@mail.com"
-                                  {...field}
-                                />
-                              </FormControl>
+                              <div className="grid grid-cols-1 md:grid-cols-12">
+                                <div className="col-span-4 mt-2">
+                                  <FormLabel>For Test SMTP Mail</FormLabel>
+                                </div>
+                                <div className="col-span-8">
+                                  <FormControl>
+                                    <Input
+                                      className={inputClass}
+                                      placeholder="For Test SMTP Mail"
+                                      {...field}
+                                    />
+                                  </FormControl>
+                                </div>
+                              </div>
                               <FormMessage />
                             </FormItem>
                           )}

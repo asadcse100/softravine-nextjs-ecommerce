@@ -83,14 +83,20 @@ export default function Addnew() {
                         name="FACEBOOK_PAGE_ID"
                         render={({ field }) => (
                           <FormItem>
-                            <FormLabel>Facebook Page ID</FormLabel>
-                            <FormControl>
-                              <Input
-                                className={inputClass}
-                                placeholder="Facebook Page ID"
-                                {...field}
-                              />
-                            </FormControl>
+                            <div className="grid grid-cols-1 md:grid-cols-12">
+                              <div className="col-span-3 mt-2">
+                                <FormLabel>Facebook Page ID</FormLabel>
+                              </div>
+                              <div className="col-span-8">
+                                <FormControl>
+                                  <Input
+                                    className={inputClass}
+                                    placeholder="Facebook Page ID"
+                                    {...field}
+                                  />
+                                </FormControl>
+                              </div>
+                            </div>
                             <FormMessage />
                           </FormItem>
                         )}

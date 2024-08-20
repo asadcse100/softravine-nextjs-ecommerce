@@ -83,14 +83,20 @@ export default function Addnew() {
                         name="FACEBOOK_APP_ID"
                         render={({ field }) => (
                           <FormItem>
-                            <FormLabel>Facebook App ID</FormLabel>
-                            <FormControl>
-                              <Input
-                                className={inputClass}
-                                placeholder="Facebook App ID"
-                                {...field}
-                              />
-                            </FormControl>
+                            <div className="grid grid-cols-1 md:grid-cols-12">
+                              <div className="col-span-3 mt-2">
+                                <FormLabel>Facebook App ID</FormLabel>
+                              </div>
+                              <div className="col-span-8">
+                                <FormControl>
+                                  <Input
+                                    className={inputClass}
+                                    placeholder="Facebook App ID"
+                                    {...field}
+                                  />
+                                </FormControl>
+                              </div>
+                            </div>
                             <FormMessage />
                           </FormItem>
                         )}
@@ -109,33 +115,33 @@ export default function Addnew() {
                 </div>
               </div>
               <div className="flex flex-col gap-4">
-                  <div className="px-6 rounded-sm border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark">
-                    <div className="border-b border-stroke px-6.5 py-4 dark:border-strokedark">
-                      <h3 className="font-medium text-black dark:text-slate-300">
-                        Please be carefull when you are configuring Facebook
-                        Comment. For incorrect configuration you will not get
-                        comment section on your user-end site.
-                      </h3>
-                    </div>
-                    <div className="py-6">
-                      <div className="dark:text-slate-300">
-                        <div className="border dark:border-slate-500 dark:text-slate-400 mt-2 p-3">
-                          1. Login into your facebook page
-                        </div>
-                        <div className="border dark:border-slate-500 dark:text-slate-400 p-3">
-                          2. After then go to this URL
-                          https://developers.facebook.com/apps/.
-                        </div>
-                        <div className="border dark:border-slate-500 dark:text-slate-400 p-3">
-                          3. Create Your App.
-                        </div>
-                        <div className="border dark:border-slate-500 dark:text-slate-400 p-3">
-                          4. In Dashboard page you will get your App ID.
-                        </div>
+                <div className="px-6 rounded-sm border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark">
+                  <div className="border-b border-stroke px-6.5 py-4 dark:border-strokedark">
+                    <h3 className="font-medium text-black dark:text-slate-300">
+                      Please be carefull when you are configuring Facebook
+                      Comment. For incorrect configuration you will not get
+                      comment section on your user-end site.
+                    </h3>
+                  </div>
+                  <div className="py-6">
+                    <div className="dark:text-slate-300">
+                      <div className="border dark:border-slate-500 dark:text-slate-400 mt-2 p-3">
+                        1. Login into your facebook page
+                      </div>
+                      <div className="border dark:border-slate-500 dark:text-slate-400 p-3">
+                        2. After then go to this URL
+                        https://developers.facebook.com/apps/.
+                      </div>
+                      <div className="border dark:border-slate-500 dark:text-slate-400 p-3">
+                        3. Create Your App.
+                      </div>
+                      <div className="border dark:border-slate-500 dark:text-slate-400 p-3">
+                        4. In Dashboard page you will get your App ID.
                       </div>
                     </div>
                   </div>
                 </div>
+              </div>
             </div>
           </div>
         </form>

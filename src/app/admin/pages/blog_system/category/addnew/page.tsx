@@ -61,14 +61,20 @@ export default function Addnew() {
                         name="category_name"
                         render={({ field }) => (
                           <FormItem>
-                            <FormLabel>Name</FormLabel>
-                            <FormControl>
-                              <Input
-                                className={inputClass}
-                                placeholder="Name"
-                                {...field}
-                              />
-                            </FormControl>
+                            <div className="grid grid-cols-1 md:grid-cols-12">
+                                <div className="col-span-3 mt-2">
+                                  <FormLabel>Name</FormLabel>
+                                </div>
+                                <div className="col-span-8">
+                                  <FormControl>
+                                    <Input
+                                      className={inputClass}
+                                      placeholder="Name"
+                                      {...field}
+                                    />
+                                  </FormControl>
+                                </div>
+                              </div>
                             <FormMessage />
                           </FormItem>
                         )}

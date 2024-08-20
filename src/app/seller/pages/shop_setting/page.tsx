@@ -110,14 +110,20 @@ export default function Addnew() {
                         name="name"
                         render={({ field }) => (
                           <FormItem>
-                            <FormLabel>Business Name</FormLabel>
-                            <FormControl>
-                              <Input
-                                className={inputClass}
-                                placeholder="Product Name"
-                                {...field}
-                              />
-                            </FormControl>
+                            <div className="grid grid-cols-1 md:grid-cols-12">
+                              <div className="col-span-3 mt-3">
+                                <FormLabel>Business Name</FormLabel>
+                              </div>
+                              <div className="col-span-8">
+                                <FormControl>
+                                  <Input
+                                    className={inputClass}
+                                    placeholder="Business Name"
+                                    {...field}
+                                  />
+                                </FormControl>
+                              </div>
+                            </div>
                             <FormMessage />
                           </FormItem>
                         )}
@@ -129,15 +135,20 @@ export default function Addnew() {
                         name="logo"
                         render={({ field }) => (
                           <FormItem>
-                            <FormLabel>Business Logo</FormLabel>
-                            <FormControl>
-                              <Input
-                                type="file"
-                                className={inputClass}
-                                placeholder="Brand"
-                                {...field}
-                              />
-                            </FormControl>
+                            <div className="grid grid-cols-1 md:grid-cols-12">
+                              <div className="col-span-3 mt-3">
+                                <FormLabel>Business Logo</FormLabel>
+                              </div>
+                              <div className="col-span-8">
+                                <FormControl>
+                                  <Input
+                                    className={inputClass}
+                                    placeholder="Business Logo"
+                                    {...field}
+                                  />
+                                </FormControl>
+                              </div>
+                            </div>
                             <FormMessage />
                           </FormItem>
                         )}
@@ -149,14 +160,20 @@ export default function Addnew() {
                         name="phone"
                         render={({ field }) => (
                           <FormItem>
-                            <FormLabel>Business Phone</FormLabel>
-                            <FormControl>
-                              <Input
-                                className={inputClass}
-                                placeholder="Business Phone"
-                                {...field}
-                              />
-                            </FormControl>
+                            <div className="grid grid-cols-1 md:grid-cols-12">
+                              <div className="col-span-3 mt-3">
+                                <FormLabel>Business Phone</FormLabel>
+                              </div>
+                              <div className="col-span-8">
+                                <FormControl>
+                                  <Input
+                                    className={inputClass}
+                                    placeholder="Business Phone"
+                                    {...field}
+                                  />
+                                </FormControl>
+                              </div>
+                            </div>
                             <FormMessage />
                           </FormItem>
                         )}
@@ -168,14 +185,20 @@ export default function Addnew() {
                         name="address"
                         render={({ field }) => (
                           <FormItem>
-                            <FormLabel>Business Address</FormLabel>
-                            <FormControl>
-                              <Input
-                                className={inputClass}
-                                placeholder="Business Address"
-                                {...field}
-                              />
-                            </FormControl>
+                            <div className="grid grid-cols-1 md:grid-cols-12">
+                              <div className="col-span-3 mt-3">
+                                <FormLabel>Business Address</FormLabel>
+                              </div>
+                              <div className="col-span-8">
+                                <FormControl>
+                                  <Input
+                                    className={inputClass}
+                                    placeholder="Business Address"
+                                    {...field}
+                                  />
+                                </FormControl>
+                              </div>
+                            </div>
                             <FormMessage />
                           </FormItem>
                         )}
@@ -187,14 +210,20 @@ export default function Addnew() {
                         name="meta_title"
                         render={({ field }) => (
                           <FormItem>
-                            <FormLabel>Meta Title</FormLabel>
-                            <FormControl>
-                              <Input
-                                className={inputClass}
-                                placeholder="Meta Title"
-                                {...field}
-                              />
-                            </FormControl>
+                            <div className="grid grid-cols-1 md:grid-cols-12">
+                              <div className="col-span-3 mt-3">
+                                <FormLabel>Meta Title</FormLabel>
+                              </div>
+                              <div className="col-span-8">
+                                <FormControl>
+                                  <Input
+                                    className={inputClass}
+                                    placeholder="Meta Title"
+                                    {...field}
+                                  />
+                                </FormControl>
+                              </div>
+                            </div>
                             <FormMessage />
                           </FormItem>
                         )}
@@ -206,28 +235,34 @@ export default function Addnew() {
                         name="meta_description"
                         render={({ field }) => (
                           <FormItem>
-                            <FormLabel>Meta Description</FormLabel>
-                            <FormControl>
-                              <Input
-                                className={inputClass}
-                                placeholder="Meta Description"
-                                {...field}
-                              />
-                            </FormControl>
+                            <div className="grid grid-cols-1 md:grid-cols-12">
+                              <div className="col-span-3 mt-3">
+                                <FormLabel>Meta Description</FormLabel>
+                              </div>
+                              <div className="col-span-8">
+                                <FormControl>
+                                  <Input
+                                    className={inputClass}
+                                    placeholder="Meta Description"
+                                    {...field}
+                                  />
+                                </FormControl>
+                              </div>
+                            </div>
                             <FormMessage />
                           </FormItem>
                         )}
                       />
                     </div>
                     <div className="grid mt-4 justify-items-end">
-                        <Button
-                          className="dark:text-slate-200"
-                          variant="outline"
-                          type="submit"
-                        >
-                          Save
-                        </Button>
-                      </div>
+                      <Button
+                        className="dark:text-slate-200"
+                        variant="outline"
+                        type="submit"
+                      >
+                        Save
+                      </Button>
+                    </div>
                   </div>
                 </div>
               </div>
@@ -247,14 +282,20 @@ export default function Addnew() {
                           name="top_banner"
                           render={({ field }) => (
                             <FormItem>
-                              <FormLabel>Top Banner</FormLabel>
-                              <FormControl>
-                                <Input type="file"
-                                  className={inputClass}
-                                  placeholder="Top Banner"
-                                  {...field}
-                                />
-                              </FormControl>
+                              <div className="grid grid-cols-1 md:grid-cols-12">
+                                <div className="col-span-3 mt-3">
+                                  <FormLabel>Top Banner</FormLabel>
+                                </div>
+                                <div className="col-span-8">
+                                  <FormControl>
+                                    <Input type="file"
+                                      className={inputClass}
+                                      placeholder="Top Banner"
+                                      {...field}
+                                    />
+                                  </FormControl>
+                                </div>
+                              </div>
                               <FormMessage />
                             </FormItem>
                           )}
@@ -266,14 +307,20 @@ export default function Addnew() {
                           name="sliders"
                           render={({ field }) => (
                             <FormItem>
-                              <FormLabel>Slider Banner</FormLabel>
-                              <FormControl>
-                                <Input type="file"
-                                  className={inputClass}
-                                  placeholder="Slider Banner"
-                                  {...field}
-                                />
-                              </FormControl>
+                              <div className="grid grid-cols-1 md:grid-cols-12">
+                                <div className="col-span-3 mt-3">
+                                  <FormLabel>Slider Banner</FormLabel>
+                                </div>
+                                <div className="col-span-8">
+                                  <FormControl>
+                                    <Input type="file"
+                                      className={inputClass}
+                                      placeholder="Slider Banner"
+                                      {...field}
+                                    />
+                                  </FormControl>
+                                </div>
+                              </div>
                               <FormMessage />
                             </FormItem>
                           )}
@@ -308,14 +355,20 @@ export default function Addnew() {
                           name="facebook"
                           render={({ field }) => (
                             <FormItem>
-                              <FormLabel>Facebook</FormLabel>
-                              <FormControl>
-                                <Input
-                                  className={inputClass}
-                                  placeholder="Facebook"
-                                  {...field}
-                                />
-                              </FormControl>
+                              <div className="grid grid-cols-1 md:grid-cols-12">
+                                <div className="col-span-3 mt-3">
+                                  <FormLabel>Facebook</FormLabel>
+                                </div>
+                                <div className="col-span-8">
+                                  <FormControl>
+                                    <Input type="text"
+                                      className={inputClass}
+                                      placeholder="Facebook"
+                                      {...field}
+                                    />
+                                  </FormControl>
+                                </div>
+                              </div>
                               <FormMessage />
                             </FormItem>
                           )}
@@ -327,14 +380,20 @@ export default function Addnew() {
                           name="instagram"
                           render={({ field }) => (
                             <FormItem>
-                              <FormLabel>Instagram</FormLabel>
-                              <FormControl>
-                                <Input
-                                  className={inputClass}
-                                  placeholder="Instagram"
-                                  {...field}
-                                />
-                              </FormControl>
+                              <div className="grid grid-cols-1 md:grid-cols-12">
+                                <div className="col-span-3 mt-3">
+                                  <FormLabel>Instagram</FormLabel>
+                                </div>
+                                <div className="col-span-8">
+                                  <FormControl>
+                                    <Input type="text"
+                                      className={inputClass}
+                                      placeholder="Instagram"
+                                      {...field}
+                                    />
+                                  </FormControl>
+                                </div>
+                              </div>
                               <FormMessage />
                             </FormItem>
                           )}
@@ -346,14 +405,20 @@ export default function Addnew() {
                           name="twitter"
                           render={({ field }) => (
                             <FormItem>
-                              <FormLabel>Twitter</FormLabel>
-                              <FormControl>
-                                <Input
-                                  className={inputClass}
-                                  placeholder="Twitter"
-                                  {...field}
-                                />
-                              </FormControl>
+                              <div className="grid grid-cols-1 md:grid-cols-12">
+                                <div className="col-span-3 mt-3">
+                                  <FormLabel>Twitter</FormLabel>
+                                </div>
+                                <div className="col-span-8">
+                                  <FormControl>
+                                    <Input type="text"
+                                      className={inputClass}
+                                      placeholder="Twitter"
+                                      {...field}
+                                    />
+                                  </FormControl>
+                                </div>
+                              </div>
                               <FormMessage />
                             </FormItem>
                           )}
@@ -365,14 +430,20 @@ export default function Addnew() {
                           name="google"
                           render={({ field }) => (
                             <FormItem>
-                              <FormLabel>Google</FormLabel>
-                              <FormControl>
-                                <Input
-                                  className={inputClass}
-                                  placeholder="Google"
-                                  {...field}
-                                />
-                              </FormControl>
+                              <div className="grid grid-cols-1 md:grid-cols-12">
+                                <div className="col-span-3 mt-3">
+                                  <FormLabel>Google</FormLabel>
+                                </div>
+                                <div className="col-span-8">
+                                  <FormControl>
+                                    <Input type="text"
+                                      className={inputClass}
+                                      placeholder="Google"
+                                      {...field}
+                                    />
+                                  </FormControl>
+                                </div>
+                              </div>
                               <FormMessage />
                             </FormItem>
                           )}
@@ -384,14 +455,20 @@ export default function Addnew() {
                           name="youtube"
                           render={({ field }) => (
                             <FormItem>
-                              <FormLabel>Youtube</FormLabel>
-                              <FormControl>
-                                <Input
-                                  className={inputClass}
-                                  placeholder="Youtube"
-                                  {...field}
-                                />
-                              </FormControl>
+                              <div className="grid grid-cols-1 md:grid-cols-12">
+                                <div className="col-span-3 mt-3">
+                                  <FormLabel>Youtube</FormLabel>
+                                </div>
+                                <div className="col-span-8">
+                                  <FormControl>
+                                    <Input type="text"
+                                      className={inputClass}
+                                      placeholder="Youtube"
+                                      {...field}
+                                    />
+                                  </FormControl>
+                                </div>
+                              </div>
                               <FormMessage />
                             </FormItem>
                           )}

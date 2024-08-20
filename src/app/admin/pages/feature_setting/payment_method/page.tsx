@@ -143,14 +143,20 @@ export default function Addnew() {
                         name="PAYPAL_CLIENT_ID"
                         render={({ field }) => (
                           <FormItem>
-                            <FormLabel>Paypal Client Id</FormLabel>
-                            <FormControl>
-                              <Input
-                                className={inputClass}
-                                placeholder="Paypal Client Id"
-                                {...field}
-                              />
-                            </FormControl>
+                            <div className="grid grid-cols-1 md:grid-cols-12">
+                              <div className="col-span-3 mt-2">
+                                <FormLabel>Paypal Client Id</FormLabel>
+                              </div>
+                              <div className="col-span-8">
+                                <FormControl>
+                                  <Input
+                                    className={inputClass}
+                                    placeholder="Paypal Client Id"
+                                    {...field}
+                                  />
+                                </FormControl>
+                              </div>
+                            </div>
                             <FormMessage />
                           </FormItem>
                         )}
@@ -162,14 +168,20 @@ export default function Addnew() {
                         name="PAYPAL_CLIENT_SECRET"
                         render={({ field }) => (
                           <FormItem>
-                            <FormLabel>Paypal Client Secret</FormLabel>
-                            <FormControl>
-                              <Input
-                                className={inputClass}
-                                placeholder="Paypal Client Secret"
-                                {...field}
-                              />
-                            </FormControl>
+                            <div className="grid grid-cols-1 md:grid-cols-12">
+                              <div className="col-span-3 mt-2">
+                                <FormLabel>Paypal Client Secret</FormLabel>
+                              </div>
+                              <div className="col-span-8">
+                                <FormControl>
+                                  <Input
+                                    className={inputClass}
+                                    placeholder="Paypal Client Secret"
+                                    {...field}
+                                  />
+                                </FormControl>
+                              </div>
+                            </div>
                             <FormMessage />
                           </FormItem>
                         )}
@@ -181,12 +193,15 @@ export default function Addnew() {
                         name="paypal_sandbox"
                         render={({ field }) => (
                           <FormItem>
-                            {/* <FormLabel>Paypal Sandbox Mode</FormLabel> */}
-                            <div className="flex items-center space-x-12">
-                              <FormLabel className="mt-2">
-                                Paypal Sandbox Mode
-                              </FormLabel>
-                              <Switch />
+                            <div className="grid grid-cols-1 md:grid-cols-12">
+                              <div className="col-span-5">
+                                <FormLabel>Paypal Sandbox Mode</FormLabel>
+                              </div>
+                              <div className="col-span-7">
+                                <FormControl>
+                                  <Switch />
+                                </FormControl>
+                              </div>
                             </div>
                             <FormMessage />
                           </FormItem>
@@ -219,19 +234,20 @@ export default function Addnew() {
                         name="STRIPE_KEY"
                         render={({ field }) => (
                           <FormItem>
-                            <FormLabel>Stripe Key</FormLabel>
-                            <FormControl>
-                              {/* <Select>
-                                <option>SMTP</option>
-                                <option>Send Mail</option>
-                                <option>Mail Gun</option>
-                              </Select> */}
-                              <Input
-                                className={inputClass}
-                                placeholder="Stripe Key"
-                                {...field}
-                              />
-                            </FormControl>
+                            <div className="grid grid-cols-1 md:grid-cols-12">
+                              <div className="col-span-3 mt-2">
+                                <FormLabel>Stripe Key</FormLabel>
+                              </div>
+                              <div className="col-span-8">
+                                <FormControl>
+                                  <Input
+                                    className={inputClass}
+                                    placeholder="Stripe Key"
+                                    {...field}
+                                  />
+                                </FormControl>
+                              </div>
+                            </div>
                             <FormMessage />
                           </FormItem>
                         )}
@@ -243,14 +259,20 @@ export default function Addnew() {
                         name="STRIPE_SECRET"
                         render={({ field }) => (
                           <FormItem>
-                            <FormLabel>Stripe Secret</FormLabel>
-                            <FormControl>
-                              <Input
-                                className={inputClass}
-                                placeholder="Stripe Secret"
-                                {...field}
-                              />
-                            </FormControl>
+                            <div className="grid grid-cols-1 md:grid-cols-12">
+                              <div className="col-span-3 mt-2">
+                                <FormLabel>Stripe Secret</FormLabel>
+                              </div>
+                              <div className="col-span-8">
+                                <FormControl>
+                                  <Input
+                                    className={inputClass}
+                                    placeholder="Stripe Secret"
+                                    {...field}
+                                  />
+                                </FormControl>
+                              </div>
+                            </div>
                             <FormMessage />
                           </FormItem>
                         )}
@@ -282,19 +304,20 @@ export default function Addnew() {
                         name="BKASH_CHECKOUT_APP_KEY"
                         render={({ field }) => (
                           <FormItem>
-                            <FormLabel>BKASH CHECKOUT APP KEY</FormLabel>
-                            <FormControl>
-                              {/* <Select>
-                                <option>SMTP</option>
-                                <option>Send Mail</option>
-                                <option>Mail Gun</option>
-                              </Select> */}
-                              <Input
-                                className={inputClass}
-                                placeholder="BKASH CHECKOUT APP KEY"
-                                {...field}
-                              />
-                            </FormControl>
+                            <div className="grid grid-cols-1 md:grid-cols-12">
+                              <div className="col-span-3 mt-2">
+                                <FormLabel>BKASH CHECKOUT APP KEY</FormLabel>
+                              </div>
+                              <div className="col-span-8">
+                                <FormControl>
+                                  <Input
+                                    className={inputClass}
+                                    placeholder="BKASH CHECKOUT APP KEY"
+                                    {...field}
+                                  />
+                                </FormControl>
+                              </div>
+                            </div>
                             <FormMessage />
                           </FormItem>
                         )}
@@ -306,14 +329,20 @@ export default function Addnew() {
                         name="BKASH_CHECKOUT_APP_SECRET"
                         render={({ field }) => (
                           <FormItem>
-                            <FormLabel>BKASH CHECKOUT APP SECRET</FormLabel>
-                            <FormControl>
-                              <Input
-                                className={inputClass}
-                                placeholder="BKASH CHECKOUT APP SECRET"
-                                {...field}
-                              />
-                            </FormControl>
+                            <div className="grid grid-cols-1 md:grid-cols-12">
+                              <div className="col-span-3 mt-2">
+                                <FormLabel>BKASH CHECKOUT APP SECRET</FormLabel>
+                              </div>
+                              <div className="col-span-8">
+                                <FormControl>
+                                  <Input
+                                    className={inputClass}
+                                    placeholder="BKASH CHECKOUT APP SECRET"
+                                    {...field}
+                                  />
+                                </FormControl>
+                              </div>
+                            </div>
                             <FormMessage />
                           </FormItem>
                         )}
@@ -325,14 +354,20 @@ export default function Addnew() {
                         name="BKASH_CHECKOUT_USER_NAME"
                         render={({ field }) => (
                           <FormItem>
-                            <FormLabel>BKASH CHECKOUT USER NAME</FormLabel>
-                            <FormControl>
-                              <Input
-                                className={inputClass}
-                                placeholder="BKASH CHECKOUT USER NAME"
-                                {...field}
-                              />
-                            </FormControl>
+                            <div className="grid grid-cols-1 md:grid-cols-12">
+                              <div className="col-span-3 mt-2">
+                                <FormLabel>BKASH CHECKOUT USER NAME</FormLabel>
+                              </div>
+                              <div className="col-span-8">
+                                <FormControl>
+                                  <Input
+                                    className={inputClass}
+                                    placeholder="BKASH CHECKOUT USER NAME"
+                                    {...field}
+                                  />
+                                </FormControl>
+                              </div>
+                            </div>
                             <FormMessage />
                           </FormItem>
                         )}
@@ -344,14 +379,20 @@ export default function Addnew() {
                         name="BKASH_CHECKOUT_PASSWORD"
                         render={({ field }) => (
                           <FormItem>
-                            <FormLabel>BKASH CHECKOUT PASSWORD</FormLabel>
-                            <FormControl>
-                              <Input
-                                className={inputClass}
-                                placeholder="BKASH CHECKOUT PASSWORD"
-                                {...field}
-                              />
-                            </FormControl>
+                            <div className="grid grid-cols-1 md:grid-cols-12">
+                              <div className="col-span-3 mt-2">
+                                <FormLabel>BKASH CHECKOUT PASSWORD</FormLabel>
+                              </div>
+                              <div className="col-span-8">
+                                <FormControl>
+                                  <Input
+                                    className={inputClass}
+                                    placeholder="BKASH CHECKOUT PASSWORD"
+                                    {...field}
+                                  />
+                                </FormControl>
+                              </div>
+                            </div>
                             <FormMessage />
                           </FormItem>
                         )}
@@ -363,11 +404,15 @@ export default function Addnew() {
                         name="bkash_sandbox"
                         render={({ field }) => (
                           <FormItem>
-                            <div className="flex items-center space-x-12">
-                              <FormLabel className="mt-2">
-                                Bkash Sandbox Mode
-                              </FormLabel>
-                              <Switch />
+                            <div className="grid grid-cols-1 md:grid-cols-12">
+                              <div className="col-span-3 mt-2">
+                                <FormLabel>Bkash Sandbox Mode</FormLabel>
+                              </div>
+                              <div className="col-span-8">
+                                <FormControl>
+                                  <Switch />
+                                </FormControl>
+                              </div>
                             </div>
                             <FormMessage />
                           </FormItem>
@@ -400,14 +445,20 @@ export default function Addnew() {
                         name="NAGAD_MODE"
                         render={({ field }) => (
                           <FormItem>
-                            <FormLabel>NAGAD MODE</FormLabel>
-                            <FormControl>
-                              <Input
-                                className={inputClass}
-                                placeholder="NAGAD MODE"
-                                {...field}
-                              />
-                            </FormControl>
+                            <div className="grid grid-cols-1 md:grid-cols-12">
+                              <div className="col-span-3 mt-2">
+                                <FormLabel>NAGAD MODE</FormLabel>
+                              </div>
+                              <div className="col-span-8">
+                                <FormControl>
+                                  <Input
+                                    className={inputClass}
+                                    placeholder="NAGAD MODE"
+                                    {...field}
+                                  />
+                                </FormControl>
+                              </div>
+                            </div>
                             <FormMessage />
                           </FormItem>
                         )}
@@ -419,14 +470,20 @@ export default function Addnew() {
                         name="NAGAD_MERCHANT_ID"
                         render={({ field }) => (
                           <FormItem>
-                            <FormLabel>NAGAD MERCHANT ID</FormLabel>
-                            <FormControl>
-                              <Input
-                                className={inputClass}
-                                placeholder="NAGAD MERCHANT ID"
-                                {...field}
-                              />
-                            </FormControl>
+                            <div className="grid grid-cols-1 md:grid-cols-12">
+                              <div className="col-span-3 mt-2">
+                                <FormLabel>NAGAD MERCHANT ID</FormLabel>
+                              </div>
+                              <div className="col-span-8">
+                                <FormControl>
+                                  <Input
+                                    className={inputClass}
+                                    placeholder="NAGAD MERCHANT ID"
+                                    {...field}
+                                  />
+                                </FormControl>
+                              </div>
+                            </div>
                             <FormMessage />
                           </FormItem>
                         )}
@@ -438,14 +495,20 @@ export default function Addnew() {
                         name="NAGAD_MERCHANT_NUMBER"
                         render={({ field }) => (
                           <FormItem>
-                            <FormLabel>NAGAD MERCHANT NUMBER</FormLabel>
-                            <FormControl>
-                              <Input
-                                className={inputClass}
-                                placeholder="NAGAD MERCHANT NUMBER"
-                                {...field}
-                              />
-                            </FormControl>
+                            <div className="grid grid-cols-1 md:grid-cols-12">
+                              <div className="col-span-3 mt-2">
+                                <FormLabel>NAGAD MERCHANT NUMBER</FormLabel>
+                              </div>
+                              <div className="col-span-8">
+                                <FormControl>
+                                  <Input
+                                    className={inputClass}
+                                    placeholder="NAGAD MERCHANT NUMBER"
+                                    {...field}
+                                  />
+                                </FormControl>
+                              </div>
+                            </div>
                             <FormMessage />
                           </FormItem>
                         )}
@@ -457,14 +520,20 @@ export default function Addnew() {
                         name="NAGAD_PG_PUBLIC_KEY"
                         render={({ field }) => (
                           <FormItem>
-                            <FormLabel>NAGAD PG PUBLIC KEY</FormLabel>
-                            <FormControl>
-                              <Input
-                                className={inputClass}
-                                placeholder="NAGAD PG PUBLIC KEY"
-                                {...field}
-                              />
-                            </FormControl>
+                            <div className="grid grid-cols-1 md:grid-cols-12">
+                                <div className="col-span-3 mt-2">
+                                  <FormLabel>NAGAD PG PUBLIC KEY</FormLabel>
+                                </div>
+                                <div className="col-span-8">
+                                  <FormControl>
+                                    <Input
+                                      className={inputClass}
+                                      placeholder="NAGAD PG PUBLIC KEY"
+                                      {...field}
+                                    />
+                                  </FormControl>
+                                </div>
+                              </div>
                             <FormMessage />
                           </FormItem>
                         )}
@@ -476,14 +545,20 @@ export default function Addnew() {
                         name="NAGAD_MERCHANT_PRIVATE_KEY"
                         render={({ field }) => (
                           <FormItem>
-                            <FormLabel>NAGAD MERCHANT PRIVATE KEY</FormLabel>
-                            <FormControl>
-                              <Input
-                                className={inputClass}
-                                placeholder="NAGAD MERCHANT PRIVATE KEY"
-                                {...field}
-                              />
-                            </FormControl>
+                            <div className="grid grid-cols-1 md:grid-cols-12">
+                                <div className="col-span-3 mt-2">
+                                  <FormLabel>NAGAD MERCHANT PRIVATE KEY</FormLabel>
+                                </div>
+                                <div className="col-span-8">
+                                  <FormControl>
+                                    <Input
+                                      className={inputClass}
+                                      placeholder="NAGAD MERCHANT PRIVATE KEY"
+                                      {...field}
+                                    />
+                                  </FormControl>
+                                </div>
+                              </div>
                             <FormMessage />
                           </FormItem>
                         )}
@@ -515,14 +590,20 @@ export default function Addnew() {
                         name="SSLCZ_STORE_ID"
                         render={({ field }) => (
                           <FormItem>
-                            <FormLabel>Sslcz Store Id</FormLabel>
-                            <FormControl>
-                              <Input
-                                className={inputClass}
-                                placeholder="Sslcz Store Id"
-                                {...field}
-                              />
-                            </FormControl>
+                            <div className="grid grid-cols-1 md:grid-cols-12">
+                                <div className="col-span-3 mt-2">
+                                  <FormLabel>Sslcz Store Id</FormLabel>
+                                </div>
+                                <div className="col-span-8">
+                                  <FormControl>
+                                    <Input
+                                      className={inputClass}
+                                      placeholder="Sslcz Store Id"
+                                      {...field}
+                                    />
+                                  </FormControl>
+                                </div>
+                              </div>
                             <FormMessage />
                           </FormItem>
                         )}
@@ -534,14 +615,20 @@ export default function Addnew() {
                         name="SSLCZ_STORE_PASSWD"
                         render={({ field }) => (
                           <FormItem>
-                            <FormLabel>Sslcz store password</FormLabel>
-                            <FormControl>
-                              <Input
-                                className={inputClass}
-                                placeholder="Sslcz store password"
-                                {...field}
-                              />
-                            </FormControl>
+                            <div className="grid grid-cols-1 md:grid-cols-12">
+                                <div className="col-span-3 mt-2">
+                                  <FormLabel>Sslcz store password</FormLabel>
+                                </div>
+                                <div className="col-span-8">
+                                  <FormControl>
+                                    <Input
+                                      className={inputClass}
+                                      placeholder="Sslcz store password"
+                                      {...field}
+                                    />
+                                  </FormControl>
+                                </div>
+                              </div>
                             <FormMessage />
                           </FormItem>
                         )}
@@ -590,14 +677,20 @@ export default function Addnew() {
                         name="AAMARPAY_STORE_ID"
                         render={({ field }) => (
                           <FormItem>
-                            <FormLabel>Aamarpay Store Id</FormLabel>
-                            <FormControl>
-                              <Input
-                                className={inputClass}
-                                placeholder="Aamarpay Store Id"
-                                {...field}
-                              />
-                            </FormControl>
+                            <div className="grid grid-cols-1 md:grid-cols-12">
+                                <div className="col-span-3 mt-2">
+                                  <FormLabel>Aamarpay Store Id</FormLabel>
+                                </div>
+                                <div className="col-span-8">
+                                  <FormControl>
+                                    <Input
+                                      className={inputClass}
+                                      placeholder="Aamarpay Store Id"
+                                      {...field}
+                                    />
+                                  </FormControl>
+                                </div>
+                              </div>
                             <FormMessage />
                           </FormItem>
                         )}
@@ -609,14 +702,20 @@ export default function Addnew() {
                         name="AAMARPAY_SIGNATURE_KEY"
                         render={({ field }) => (
                           <FormItem>
-                            <FormLabel>Aamarpay signature key</FormLabel>
-                            <FormControl>
-                              <Input
-                                className={inputClass}
-                                placeholder="Aamarpay signature key"
-                                {...field}
-                              />
-                            </FormControl>
+                            <div className="grid grid-cols-1 md:grid-cols-12">
+                                <div className="col-span-3 mt-2">
+                                  <FormLabel>Aamarpay signature key</FormLabel>
+                                </div>
+                                <div className="col-span-8">
+                                  <FormControl>
+                                    <Input
+                                      className={inputClass}
+                                      placeholder="Aamarpay signature key"
+                                      {...field}
+                                    />
+                                  </FormControl>
+                                </div>
+                              </div>
                             <FormMessage />
                           </FormItem>
                         )}

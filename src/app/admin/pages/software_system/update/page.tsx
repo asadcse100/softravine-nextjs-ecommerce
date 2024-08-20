@@ -61,14 +61,20 @@ export default function Addnew() {
                         name="update_zip"
                         render={({ field }) => (
                           <FormItem>
-                            <FormLabel>File Upload</FormLabel>
-                            <FormControl>
-                              <Input type="file"
-                                className={inputClass}
-                                placeholder="Employe Name"
-                                {...field}
-                              />
-                            </FormControl>
+                            <div className="grid grid-cols-1 md:grid-cols-12">
+                                <div className="col-span-3 mt-3">
+                                  <FormLabel>File Upload</FormLabel>
+                                </div>
+                                <div className="col-span-8">
+                                  <FormControl>
+                                    <Input type="file"
+                                      className={inputClass}
+                                      placeholder="File Upload"
+                                      {...field}
+                                    />
+                                  </FormControl>
+                                </div>
+                              </div>
                             <FormMessage />
                           </FormItem>
                         )}

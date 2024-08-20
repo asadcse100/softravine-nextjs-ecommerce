@@ -60,12 +60,12 @@ export default function Addnew() {
                 <div className="px-6 rounded-sm border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark">
                   <div className="border-b border-stroke px-6.5 py-4 dark:border-strokedark">
                     <h3 className="font-medium text-black dark:text-slate-300">
-                    Google reCAPTCHA Setting
+                      Google reCAPTCHA Setting
                     </h3>
                   </div>
                   <div className="py-6">
                     <div className="flex flex-col gap-5.5 p-6.5">
-                      
+
                       <FormField
                         control={form.control}
                         name="google_recaptcha"
@@ -73,7 +73,7 @@ export default function Addnew() {
                           <FormItem>
                             <div className="flex items-center space-x-12">
                               <FormLabel className="mt-2">
-                              Google reCAPTCHA
+                                Google reCAPTCHA
                               </FormLabel>
                               <Switch />
                             </div>
@@ -88,14 +88,20 @@ export default function Addnew() {
                         name="CAPTCHA_KEY"
                         render={({ field }) => (
                           <FormItem>
-                            <FormLabel>Site KEY</FormLabel>
-                            <FormControl>
-                              <Input
-                                className={inputClass}
-                                placeholder="Site KEY"
-                                {...field}
-                              />
-                            </FormControl>
+                            <div className="grid grid-cols-1 md:grid-cols-12">
+                              <div className="col-span-3 mt-2">
+                                <FormLabel>Site KEY</FormLabel>
+                              </div>
+                              <div className="col-span-8">
+                                <FormControl>
+                                  <Input
+                                    className={inputClass}
+                                    placeholder="Site KEY"
+                                    {...field}
+                                  />
+                                </FormControl>
+                              </div>
+                            </div>
                             <FormMessage />
                           </FormItem>
                         )}
@@ -107,14 +113,20 @@ export default function Addnew() {
                         name="RECAPTCHA_SECRET_KEY"
                         render={({ field }) => (
                           <FormItem>
-                            <FormLabel>SECRET KEY</FormLabel>
-                            <FormControl>
-                              <Input
-                                className={inputClass}
-                                placeholder="SECRET KEY"
-                                {...field}
-                              />
-                            </FormControl>
+                            <div className="grid grid-cols-1 md:grid-cols-12">
+                              <div className="col-span-3 mt-2">
+                                <FormLabel>SECRET KEY</FormLabel>
+                              </div>
+                              <div className="col-span-8">
+                                <FormControl>
+                                  <Input
+                                    className={inputClass}
+                                    placeholder="SECRET KEY"
+                                    {...field}
+                                  />
+                                </FormControl>
+                              </div>
+                            </div>
                             <FormMessage />
                           </FormItem>
                         )}

@@ -76,7 +76,7 @@ export default function Addnew() {
                 <div className="px-6 rounded-sm border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark">
                   <div className="border-b border-stroke px-6.5 py-4 dark:border-strokedark">
                     <h3 className="font-medium text-black dark:text-white">
-                    Pickup Point Information
+                      Pickup Point Information
                     </h3>
                   </div>
                   <div className="py-6">
@@ -86,29 +86,41 @@ export default function Addnew() {
                         name="name"
                         render={({ field }) => (
                           <FormItem>
-                            <FormLabel>Name</FormLabel>
-                            <FormControl>
-                              <Input
-                                className={inputClass}
-                                placeholder="Name"
-                                {...field}
-                              />
-                            </FormControl>
+                            <div className="grid grid-cols-1 md:grid-cols-12">
+                              <div className="col-span-3 mt-2">
+                                <FormLabel>Name</FormLabel>
+                              </div>
+                              <div className="col-span-8">
+                                <FormControl>
+                                  <Input
+                                    className={inputClass}
+                                    placeholder="Name"
+                                    {...field}
+                                  />
+                                </FormControl>
+                              </div>
+                            </div>
                             <FormMessage />
                           </FormItem>
                         )}
                       />
                     </div>
                     <div className="mt-3 flex flex-col gap-5.5 p-6.5">
-                    <FormField
+                      <FormField
                         control={form.control}
                         name="address"
                         render={({ field }) => (
                           <FormItem>
-                            <FormLabel>Location</FormLabel>
-                            <FormControl>
-                              <Textarea></Textarea>
-                            </FormControl>
+                            <div className="grid grid-cols-1 md:grid-cols-12">
+                              <div className="col-span-3 mt-2">
+                                <FormLabel>Location</FormLabel>
+                              </div>
+                              <div className="col-span-8">
+                                <FormControl>
+                                  <Textarea></Textarea>
+                                </FormControl>
+                              </div>
+                            </div>
                             <FormMessage />
                           </FormItem>
                         )}
@@ -120,71 +132,87 @@ export default function Addnew() {
                         name="phone"
                         render={({ field }) => (
                           <FormItem>
-                            <FormLabel>Phone</FormLabel>
-                            <FormControl>
-                              <Input
-                                className={inputClass}
-                                placeholder="Phone"
-                                {...field}
-                              />
-                            </FormControl>
+                            <div className="grid grid-cols-1 md:grid-cols-12">
+                              <div className="col-span-3 mt-2">
+                                <FormLabel>Phone</FormLabel>
+                              </div>
+                              <div className="col-span-8">
+                                <FormControl>
+                                  <Input
+                                    className={inputClass}
+                                    placeholder="Phone"
+                                    {...field}
+                                  />
+                                </FormControl>
+                              </div>
+                            </div>
                             <FormMessage />
                           </FormItem>
                         )}
                       />
                     </div>
                     <div className="mt-3 flex flex-col gap-5.5 p-6.5">
-                    <FormField
-                      control={form.control}
-                      name="pick_up_status"
-                      render={({ field }) => (
-                        <FormItem>
-                          <FormLabel className="mt-2">
-                          Pickup Point Status
-                          </FormLabel>
-                          <Switch />
-                          <FormMessage />
-                        </FormItem>
-                      )}
-                    />
+                      <FormField
+                        control={form.control}
+                        name="pick_up_status"
+                        render={({ field }) => (
+                          <FormItem>
+                            <div className="grid grid-cols-1 md:grid-cols-12">
+                              <div className="col-span-4">
+                                <FormLabel>Pickup Point Status</FormLabel>
+                              </div>
+                              <div className="col-span-6">
+                                <FormControl>
+                                  <Switch />
+                                </FormControl>
+                              </div>
+                            </div>
+                            <FormMessage />
+                          </FormItem>
+                        )}
+                      />
                     </div>
                     <div className="mt-3 flex flex-col gap-5.5 p-6.5">
-                    <FormField
-                      control={form.control}
-                      name="staff_id"
-                      render={({ field }) => (
-                        <FormItem>
-                          <FormLabel className="mt-2">
-                          Pick-up Point Manager
-                          </FormLabel>
-                          <FormControl>
-                            <Select
-                              onValueChange={field.onChange}
-                              defaultValue={field.value}
-                            >
-                              <FormControl>
-                                <SelectTrigger>
-                                  <SelectValue placeholder="Select Pick-up Point Manager" />
-                                </SelectTrigger>
-                              </FormControl>
-                              <SelectContent>
-                                <SelectItem value="Apple">Apple</SelectItem>
-                                <SelectItem value="m2@example.com">Pran</SelectItem>
-                                <SelectItem value="m22@example.com">Squre</SelectItem>
-                                <SelectItem value="m3@example.com">ACI</SelectItem>
-                                <SelectItem value="m4@example.com">SoftRavine</SelectItem>
-                                <SelectItem value="m5@example.com">Samsung</SelectItem>
-                                <SelectItem value="m6@example.com">LG</SelectItem>
-                                <SelectItem value="m7@example.com">Logitech</SelectItem>
-                                <SelectItem value="m8@example.com">A4tech</SelectItem>
-                                <SelectItem value="m9@example.com">HP</SelectItem>
-                              </SelectContent>
-                            </Select>
-                            </FormControl>
-                          <FormMessage />
-                        </FormItem>
-                      )}
-                    />
+                      <FormField
+                        control={form.control}
+                        name="staff_id"
+                        render={({ field }) => (
+                          <FormItem>
+                            <div className="grid grid-cols-1 md:grid-cols-12">
+                              <div className="col-span-3 mt-2">
+                                <FormLabel>Pick-up Point Manager</FormLabel>
+                              </div>
+                              <div className="col-span-8">
+                                <FormControl>
+                                  <Select
+                                    onValueChange={field.onChange}
+                                    defaultValue={field.value}
+                                  >
+                                    <FormControl>
+                                      <SelectTrigger>
+                                        <SelectValue placeholder="Select Pick-up Point Manager" />
+                                      </SelectTrigger>
+                                    </FormControl>
+                                    <SelectContent>
+                                      <SelectItem value="Apple">Apple</SelectItem>
+                                      <SelectItem value="m2@example.com">Pran</SelectItem>
+                                      <SelectItem value="m22@example.com">Squre</SelectItem>
+                                      <SelectItem value="m3@example.com">ACI</SelectItem>
+                                      <SelectItem value="m4@example.com">SoftRavine</SelectItem>
+                                      <SelectItem value="m5@example.com">Samsung</SelectItem>
+                                      <SelectItem value="m6@example.com">LG</SelectItem>
+                                      <SelectItem value="m7@example.com">Logitech</SelectItem>
+                                      <SelectItem value="m8@example.com">A4tech</SelectItem>
+                                      <SelectItem value="m9@example.com">HP</SelectItem>
+                                    </SelectContent>
+                                  </Select>
+                                </FormControl>
+                              </div>
+                            </div>
+                            <FormMessage />
+                          </FormItem>
+                        )}
+                      />
                     </div>
                     <div className="grid mt-2 justify-items-end">
                       <Button

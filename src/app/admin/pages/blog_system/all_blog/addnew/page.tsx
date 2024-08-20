@@ -101,14 +101,20 @@ export default function Addnew() {
                         name="title"
                         render={({ field }) => (
                           <FormItem>
-                            <FormLabel>Title</FormLabel>
-                            <FormControl>
-                              <Input
-                                className={inputClass}
-                                placeholder="Blog Title"
-                                {...field}
-                              />
-                            </FormControl>
+                            <div className="grid grid-cols-1 md:grid-cols-12">
+                              <div className="col-span-3 mt-2">
+                                <FormLabel>Title</FormLabel>
+                              </div>
+                              <div className="col-span-8">
+                                <FormControl>
+                                  <Input
+                                    className={inputClass}
+                                    placeholder="Title"
+                                    {...field}
+                                  />
+                                </FormControl>
+                              </div>
+                            </div>
                             <FormMessage />
                           </FormItem>
                         )}
@@ -120,31 +126,37 @@ export default function Addnew() {
                         name="category_id"
                         render={({ field }) => (
                           <FormItem>
-                            <FormLabel>Category</FormLabel>
-                            <FormControl>
-                            <Select
-                              onValueChange={field.onChange}
-                              defaultValue={field.value}
-                            >
-                              <FormControl>
-                                <SelectTrigger>
-                                  <SelectValue placeholder="Select Category" />
-                                </SelectTrigger>
-                              </FormControl>
-                              <SelectContent>
-                                <SelectItem value="Apple">Apple</SelectItem>
-                                <SelectItem value="m2@example.com">Pran</SelectItem>
-                                <SelectItem value="m22@example.com">Squre</SelectItem>
-                                <SelectItem value="m3@example.com">ACI</SelectItem>
-                                <SelectItem value="m4@example.com">SoftRavine</SelectItem>
-                                <SelectItem value="m5@example.com">Samsung</SelectItem>
-                                <SelectItem value="m6@example.com">LG</SelectItem>
-                                <SelectItem value="m7@example.com">Logitech</SelectItem>
-                                <SelectItem value="m8@example.com">A4tech</SelectItem>
-                                <SelectItem value="m9@example.com">HP</SelectItem>
-                              </SelectContent>
-                            </Select>
-                            </FormControl>
+                            <div className="grid grid-cols-1 md:grid-cols-12">
+                              <div className="col-span-3 mt-2">
+                                <FormLabel>Category</FormLabel>
+                              </div>
+                              <div className="col-span-8">
+                                <FormControl>
+                                  <Select
+                                    onValueChange={field.onChange}
+                                    defaultValue={field.value}
+                                  >
+                                    <FormControl>
+                                      <SelectTrigger>
+                                        <SelectValue placeholder="Select Category" />
+                                      </SelectTrigger>
+                                    </FormControl>
+                                    <SelectContent>
+                                      <SelectItem value="Apple">Apple</SelectItem>
+                                      <SelectItem value="m2@example.com">Pran</SelectItem>
+                                      <SelectItem value="m22@example.com">Squre</SelectItem>
+                                      <SelectItem value="m3@example.com">ACI</SelectItem>
+                                      <SelectItem value="m4@example.com">SoftRavine</SelectItem>
+                                      <SelectItem value="m5@example.com">Samsung</SelectItem>
+                                      <SelectItem value="m6@example.com">LG</SelectItem>
+                                      <SelectItem value="m7@example.com">Logitech</SelectItem>
+                                      <SelectItem value="m8@example.com">A4tech</SelectItem>
+                                      <SelectItem value="m9@example.com">HP</SelectItem>
+                                    </SelectContent>
+                                  </Select>
+                                </FormControl>
+                              </div>
+                            </div>
                             <FormMessage />
                           </FormItem>
                         )}
@@ -156,14 +168,20 @@ export default function Addnew() {
                         name="slug"
                         render={({ field }) => (
                           <FormItem>
-                            <FormLabel>Slug</FormLabel>
-                            <FormControl>
-                              <Input
-                                className={inputClass}
-                                placeholder="Slug"
-                                {...field}
-                              />
-                            </FormControl>
+                            <div className="grid grid-cols-1 md:grid-cols-12">
+                              <div className="col-span-3 mt-2">
+                                <FormLabel>Slug</FormLabel>
+                              </div>
+                              <div className="col-span-8">
+                                <FormControl>
+                                  <Input
+                                    className={inputClass}
+                                    placeholder="Slug"
+                                    {...field}
+                                  />
+                                </FormControl>
+                              </div>
+                            </div>
                             <FormMessage />
                           </FormItem>
                         )}
@@ -175,14 +193,20 @@ export default function Addnew() {
                         name="banner"
                         render={({ field }) => (
                           <FormItem>
-                            <FormLabel>Blog Banner</FormLabel>
-                            <FormControl>
-                              <Input type="file"
-                                className={inputClass}
-                                placeholder="Banner"
-                                {...field}
-                              />
-                            </FormControl>
+                            <div className="grid grid-cols-1 md:grid-cols-12">
+                              <div className="col-span-3 mt-2">
+                                <FormLabel>Blog Banner</FormLabel>
+                              </div>
+                              <div className="col-span-8">
+                                <FormControl>
+                                  <Input type="file"
+                                    className={inputClass}
+                                    placeholder="Blog Banner"
+                                    {...field}
+                                  />
+                                </FormControl>
+                              </div>
+                            </div>
                             <FormMessage />
                           </FormItem>
                         )}
@@ -194,10 +218,16 @@ export default function Addnew() {
                         name="short_description"
                         render={({ field }) => (
                           <FormItem>
-                            <FormLabel>Short Description</FormLabel>
-                            <FormControl>
-                              <Textarea></Textarea>
-                            </FormControl>
+                            <div className="grid grid-cols-1 md:grid-cols-12">
+                              <div className="col-span-3 mt-2">
+                                <FormLabel>Short Description</FormLabel>
+                              </div>
+                              <div className="col-span-8">
+                                <FormControl>
+                                  <Textarea></Textarea>
+                                </FormControl>
+                              </div>
+                            </div>
                             <FormMessage />
                           </FormItem>
                         )}
@@ -209,10 +239,16 @@ export default function Addnew() {
                         name="description"
                         render={({ field }) => (
                           <FormItem>
-                            <FormLabel>Description</FormLabel>
-                            <FormControl>
-                              <Textarea></Textarea>
-                            </FormControl>
+                            <div className="grid grid-cols-1 md:grid-cols-12">
+                              <div className="col-span-3 mt-2">
+                                <FormLabel>Description</FormLabel>
+                              </div>
+                              <div className="col-span-8">
+                                <FormControl>
+                                  <Textarea></Textarea>
+                                </FormControl>
+                              </div>
+                            </div>
                             <FormMessage />
                           </FormItem>
                         )}
@@ -237,14 +273,20 @@ export default function Addnew() {
                           name="meta_title"
                           render={({ field }) => (
                             <FormItem>
-                              <FormLabel>Meta Title</FormLabel>
-                              <FormControl>
-                                <Input
-                                  className={inputClass}
-                                  placeholder="Meta Title"
-                                  {...field}
-                                />
-                              </FormControl>
+                              <div className="grid grid-cols-1 md:grid-cols-12">
+                                <div className="col-span-3 mt-2">
+                                  <FormLabel>Meta Title</FormLabel>
+                                </div>
+                                <div className="col-span-8">
+                                  <FormControl>
+                                    <Input
+                                      className={inputClass}
+                                      placeholder="Meta Title"
+                                      {...field}
+                                    />
+                                  </FormControl>
+                                </div>
+                              </div>
                               <FormMessage />
                             </FormItem>
                           )}
@@ -256,14 +298,20 @@ export default function Addnew() {
                           name="meta_img"
                           render={({ field }) => (
                             <FormItem>
-                              <FormLabel>Meta Image</FormLabel>
-                              <FormControl>
-                                <Input type="file"
-                                  className={inputClass}
-                                  placeholder="Meta Image"
-                                  {...field}
-                                />
-                              </FormControl>
+                              <div className="grid grid-cols-1 md:grid-cols-12">
+                                <div className="col-span-3 mt-2">
+                                  <FormLabel>Meta Image</FormLabel>
+                                </div>
+                                <div className="col-span-8">
+                                  <FormControl>
+                                    <Input
+                                      className={inputClass}
+                                      placeholder="Meta Image"
+                                      {...field}
+                                    />
+                                  </FormControl>
+                                </div>
+                              </div>
                               <FormMessage />
                             </FormItem>
                           )}
@@ -275,37 +323,43 @@ export default function Addnew() {
                           name="meta_description"
                           render={({ field }) => (
                             <FormItem>
-                              <FormLabel>Meta Description</FormLabel>
-                              <FormControl>
-                                <Textarea></Textarea>
-                              </FormControl>
+                              <div className="grid grid-cols-1 md:grid-cols-12">
+                                <div className="col-span-3 mt-2">
+                                  <FormLabel>Meta Description</FormLabel>
+                                </div>
+                                <div className="col-span-8">
+                                  <FormControl>
+                                  <Textarea></Textarea>
+                                  </FormControl>
+                                </div>
+                              </div>
                               <FormMessage />
                             </FormItem>
                           )}
                         />
                       </div>
-                    </div>                    
+                    </div>
                   </div>
                 </div>
               </div>
             </div>
             <div className="grid justify-items-end">
               <div className="flex gap-2">
-              <Button
-                className="dark:text-slate-200"
-                variant="outline"
-                type="submit"
-              >
-                Daft
-              </Button>
-              
-              <Button
-                className="dark:text-slate-200"
-                variant="outline"
-                type="submit"
-              >
-                Publish
-              </Button>
+                <Button
+                  className="dark:text-slate-200"
+                  variant="outline"
+                  type="submit"
+                >
+                  Daft
+                </Button>
+
+                <Button
+                  className="dark:text-slate-200"
+                  variant="outline"
+                  type="submit"
+                >
+                  Publish
+                </Button>
               </div>
             </div>
           </div>

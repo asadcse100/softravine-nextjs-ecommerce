@@ -107,14 +107,20 @@ export default function Addnew() {
                         name="AWS_ACCESS_KEY_ID"
                         render={({ field }) => (
                           <FormItem>
-                            <FormLabel>AWS_ACCESS_KEY_ID</FormLabel>
-                            <FormControl>
-                              <Input
-                                className={inputClass}
-                                placeholder="AWS_ACCESS_KEY_ID"
-                                {...field}
-                              />
-                            </FormControl>
+                            <div className="grid grid-cols-1 md:grid-cols-12">
+                                <div className="col-span-4 mt-2">
+                                  <FormLabel>AWS ACCESS KEY ID</FormLabel>
+                                </div>
+                                <div className="col-span-8">
+                                  <FormControl>
+                                    <Input
+                                      className={inputClass}
+                                      placeholder="AWS_ACCESS_KEY_ID"
+                                      {...field}
+                                    />
+                                  </FormControl>
+                                </div>
+                              </div>
                             <FormMessage />
                           </FormItem>
                         )}
@@ -126,14 +132,20 @@ export default function Addnew() {
                         name="AWS_SECRET_ACCESS_KEY"
                         render={({ field }) => (
                           <FormItem>
-                            <FormLabel>AWS_SECRET_ACCESS_KEY</FormLabel>
-                            <FormControl>
-                              <Input
-                                className={inputClass}
-                                placeholder="AWS_SECRET_ACCESS_KEY"
-                                {...field}
-                              />
-                            </FormControl>
+                            <div className="grid grid-cols-1 md:grid-cols-12">
+                                <div className="col-span-4 mt-2">
+                                  <FormLabel>AWS SECRET ACCESS KEY</FormLabel>
+                                </div>
+                                <div className="col-span-8">
+                                  <FormControl>
+                                    <Input
+                                      className={inputClass}
+                                      placeholder="AWS_SECRET_ACCESS_KEY"
+                                      {...field}
+                                    />
+                                  </FormControl>
+                                </div>
+                              </div>
                             <FormMessage />
                           </FormItem>
                         )}
@@ -145,14 +157,20 @@ export default function Addnew() {
                         name="AWS_DEFAULT_REGION"
                         render={({ field }) => (
                           <FormItem>
-                            <FormLabel>AWS_DEFAULT_REGION</FormLabel>
-                            <FormControl>
-                              <Input
-                                className={inputClass}
-                                placeholder="AWS_DEFAULT_REGION"
-                                {...field}
-                              />
-                            </FormControl>
+                            <div className="grid grid-cols-1 md:grid-cols-12">
+                                <div className="col-span-4 mt-2">
+                                  <FormLabel>AWS DEFAULT REGION</FormLabel>
+                                </div>
+                                <div className="col-span-8">
+                                  <FormControl>
+                                    <Input
+                                      className={inputClass}
+                                      placeholder="AWS_DEFAULT_REGION"
+                                      {...field}
+                                    />
+                                  </FormControl>
+                                </div>
+                              </div>
                             <FormMessage />
                           </FormItem>
                         )}
@@ -164,14 +182,20 @@ export default function Addnew() {
                         name="AWS_BUCKET"
                         render={({ field }) => (
                           <FormItem>
-                            <FormLabel>AWS_BUCKET</FormLabel>
-                            <FormControl>
-                              <Input
-                                className={inputClass}
-                                placeholder="AWS_BUCKET"
-                                {...field}
-                              />
-                            </FormControl>
+                            <div className="grid grid-cols-1 md:grid-cols-12">
+                                <div className="col-span-4 mt-2">
+                                  <FormLabel>AWS BUCKET</FormLabel>
+                                </div>
+                                <div className="col-span-8">
+                                  <FormControl>
+                                    <Input
+                                      className={inputClass}
+                                      placeholder="AWS_BUCKET"
+                                      {...field}
+                                    />
+                                  </FormControl>
+                                </div>
+                              </div>
                             <FormMessage />
                           </FormItem>
                         )}
@@ -183,14 +207,20 @@ export default function Addnew() {
                         name="AWS_URL"
                         render={({ field }) => (
                           <FormItem>
-                            <FormLabel>AWS_URL</FormLabel>
-                            <FormControl>
-                              <Input
-                                className={inputClass}
-                                placeholder="https://bucket-name.s3.region.amazonaws.com"
-                                {...field}
-                              />
-                            </FormControl>
+                            <div className="grid grid-cols-1 md:grid-cols-12">
+                                <div className="col-span-4 mt-2">
+                                  <FormLabel>AWS URL</FormLabel>
+                                </div>
+                                <div className="col-span-8">
+                                  <FormControl>
+                                    <Input
+                                      className={inputClass}
+                                      placeholder="https://bucket-name.s3.region.amazonaws.com"
+                                      {...field}
+                                    />
+                                  </FormControl>
+                                </div>
+                              </div>
                             <FormMessage />
                           </FormItem>
                         )}
@@ -224,14 +254,20 @@ export default function Addnew() {
                           name="BACKBLAZE_ACCESS_KEY_ID"
                           render={({ field }) => (
                             <FormItem>
-                              <FormLabel>BACKBLAZE_ACCESS_KEY_ID</FormLabel>
-                              <FormControl>
-                                <Input
-                                  className={inputClass}
-                                  placeholder="BACKBLAZE_ACCESS_KEY_ID"
-                                  {...field}
-                                />
-                              </FormControl>
+                              <div className="grid grid-cols-1 md:grid-cols-12">
+                                <div className="col-span-4 mt-2">
+                                  <FormLabel>BACKBLAZE ACCESS KEY ID</FormLabel>
+                                </div>
+                                <div className="col-span-8">
+                                  <FormControl>
+                                    <Input
+                                      className={inputClass}
+                                      placeholder="BACKBLAZE_ACCESS_KEY_ID"
+                                      {...field}
+                                    />
+                                  </FormControl>
+                                </div>
+                              </div>
                               <FormMessage />
                             </FormItem>
                           )}
@@ -243,14 +279,20 @@ export default function Addnew() {
                           name="BACKBLAZE_SECRET_ACCESS_KEY"
                           render={({ field }) => (
                             <FormItem>
-                              <FormLabel>BACKBLAZE_SECRET_ACCESS_KEY</FormLabel>
-                              <FormControl>
-                                <Input
-                                  className={inputClass}
-                                  placeholder="BACKBLAZE_SECRET_ACCESS_KEY"
-                                  {...field}
-                                />
-                              </FormControl>
+                              <div className="grid grid-cols-1 md:grid-cols-12">
+                                <div className="col-span-4 mt-2">
+                                  <FormLabel>BACKBLAZE SECRET ACCESS KEY</FormLabel>
+                                </div>
+                                <div className="col-span-8">
+                                  <FormControl>
+                                    <Input
+                                      className={inputClass}
+                                      placeholder="BACKBLAZE_SECRET_ACCESS_KEY"
+                                      {...field}
+                                    />
+                                  </FormControl>
+                                </div>
+                              </div>
                               <FormMessage />
                             </FormItem>
                           )}
@@ -262,14 +304,20 @@ export default function Addnew() {
                           name="BACKBLAZE_DEFAULT_REGION"
                           render={({ field }) => (
                             <FormItem>
-                              <FormLabel>BACKBLAZE_SECRET_ACCESS_KEY</FormLabel>
-                              <FormControl>
-                                <Input
-                                  className={inputClass}
-                                  placeholder="BACKBLAZE_SECRET_ACCESS_KEY"
-                                  {...field}
-                                />
-                              </FormControl>
+                              <div className="grid grid-cols-1 md:grid-cols-12">
+                                <div className="col-span-4 mt-2">
+                                  <FormLabel>BACKBLAZE SECRET ACCESS KEY</FormLabel>
+                                </div>
+                                <div className="col-span-8">
+                                  <FormControl>
+                                    <Input
+                                      className={inputClass}
+                                      placeholder="BACKBLAZE_SECRET_ACCESS_KEY"
+                                      {...field}
+                                    />
+                                  </FormControl>
+                                </div>
+                              </div>
                               <FormMessage />
                             </FormItem>
                           )}
@@ -281,14 +329,20 @@ export default function Addnew() {
                           name="BACKBLAZE_BUCKET"
                           render={({ field }) => (
                             <FormItem>
-                              <FormLabel>BACKBLAZE_BUCKET</FormLabel>
-                              <FormControl>
-                                <Input
-                                  className={inputClass}
-                                  placeholder="BACKBLAZE_BUCKET"
-                                  {...field}
-                                />
-                              </FormControl>
+                              <div className="grid grid-cols-1 md:grid-cols-12">
+                                <div className="col-span-4 mt-2">
+                                  <FormLabel>BACKBLAZE BUCKET</FormLabel>
+                                </div>
+                                <div className="col-span-8">
+                                  <FormControl>
+                                    <Input
+                                      className={inputClass}
+                                      placeholder="BACKBLAZE BUCKET"
+                                      {...field}
+                                    />
+                                  </FormControl>
+                                </div>
+                              </div>
                               <FormMessage />
                             </FormItem>
                           )}
@@ -300,14 +354,20 @@ export default function Addnew() {
                           name="BACKBLAZE_ENDPOINT"
                           render={({ field }) => (
                             <FormItem>
-                              <FormLabel>BACKBLAZE_ENDPOINT</FormLabel>
-                              <FormControl>
-                                <Input
-                                  className={inputClass}
-                                  placeholder="BACKBLAZE_ENDPOINT"
-                                  {...field}
-                                />
-                              </FormControl>
+                              <div className="grid grid-cols-1 md:grid-cols-12">
+                                <div className="col-span-4 mt-2">
+                                  <FormLabel>BACKBLAZE ENDPOINT</FormLabel>
+                                </div>
+                                <div className="col-span-8">
+                                  <FormControl>
+                                    <Input
+                                      className={inputClass}
+                                      placeholder="BACKBLAZE ENDPOINT"
+                                      {...field}
+                                    />
+                                  </FormControl>
+                                </div>
+                              </div>
                               <FormMessage />
                             </FormItem>
                           )}
@@ -319,14 +379,20 @@ export default function Addnew() {
                           name="BACKBLAZE_URL"
                           render={({ field }) => (
                             <FormItem>
-                              <FormLabel>BACKBLAZE_URL</FormLabel>
-                              <FormControl>
-                                <Input
-                                  className={inputClass}
-                                  placeholder="BACKBLAZE_URL"
-                                  {...field}
-                                />
-                              </FormControl>
+                              <div className="grid grid-cols-1 md:grid-cols-12">
+                                <div className="col-span-4 mt-2">
+                                  <FormLabel>BACKBLAZE URL</FormLabel>
+                                </div>
+                                <div className="col-span-8">
+                                  <FormControl>
+                                    <Input
+                                      className={inputClass}
+                                      placeholder="BACKBLAZE URL"
+                                      {...field}
+                                    />
+                                  </FormControl>
+                                </div>
+                              </div>
                               <FormMessage />
                             </FormItem>
                           )}
