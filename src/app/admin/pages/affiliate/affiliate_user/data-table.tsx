@@ -78,10 +78,11 @@ export function DataTable<TData, TValue>({
           }
           className="max-w-sm border-b border-[#eee] px-4 py-5 pl-9 dark:border-strokedark xl:pl-11 caret-stone-500 pointer-events-auto"
         />
+        
          <DropdownMenu>
           <DropdownMenuTrigger asChild>
             <Button variant="outline" className="ml-auto dark:text-slate-300">
-              Columns
+              View
             </Button>
           </DropdownMenuTrigger>
           <DropdownMenuContent className="dark:bg-slate-700 dark:text-slate-200 bg-slate-100" align="end">

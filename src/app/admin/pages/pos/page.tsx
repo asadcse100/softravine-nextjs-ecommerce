@@ -1,9 +1,11 @@
 "use client";
-
+import * as React from "react"
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
-
+import { Check, ChevronsUpDown } from "lucide-react";
+import { cn } from "@/app/admin/utils";
+import { useState, useEffect, useRef } from 'react';
 import { Button } from "@/app/admin/components/ui/button";
 import {
   Form,
@@ -14,7 +16,19 @@ import {
   FormLabel,
   FormMessage,
 } from "@/app/admin/components/ui/form";
+import Breadcrumb from "@/app/admin/components/Breadcrumbs/Breadcrumb"
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/app/admin/components/ui/select";
+
+import { toast } from "@/app/admin/components/ui/use-toast";
+
 import Input from "@/shared/Input/Input";
+import { Switch } from "@/app/admin/components/ui/switch";
 
 const formSchema = z.object({
   product_name: z.string().min(10, {
@@ -86,118 +100,359 @@ export default function Addnew() {
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
           <div className="mx-auto max-w-screen-2xl">
-            <div className="grid gap-4 md:grid-cols-1 lg:grid-cols-2 sm:grid-cols-1">
-              <div className="flex flex-col gap-4">
-                <div className="px-6 rounded-sm border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark">
-                  <div className="border-b border-stroke px-6.5 py-4 dark:border-strokedark">
-                    <h3 className="font-medium text-black dark:text-white">
-                      Staff Information
-                    </h3>
+            <div className="grid grid-cols-1 lg:grid-cols-12">
+              <div className="col-span-8">
+                <div className="p-2">
+                  <div className="px-6 rounded-sm border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark">
+                    <div className="py-6">
+                      <div className="flex flex-col gap-5.5 p-6.5">
+                        <FormField
+                          control={form.control}
+                          name="product_name"
+                          render={({ field }) => (
+                            <FormItem>
+                              <div className="grid grid-cols-1 md:grid-cols-12">
+                                <div className="col-span-6">
+                                  <div className="p-2">
+                                    <FormControl>
+                                      <Input
+                                        className={inputClass}
+                                        placeholder="Search by Product Name/Barcode"
+                                        {...field}
+                                      />
+                                    </FormControl>
+                                  </div>
+                                </div>
+                                <div className="col-span-3 mt-2">
+                                  <div className="col-span-6">
+                                    <Select
+                                      onValueChange={field.onChange}
+                                      defaultValue={field.value}
+                                    >
+                                      <FormControl>
+                                        <SelectTrigger>
+                                          <SelectValue placeholder="All Categories" />
+                                        </SelectTrigger>
+                                      </FormControl>
+                                      <SelectContent>
+                                        <SelectItem value="Apple">Apple</SelectItem>
+                                        <SelectItem value="m2@example.com">Pran</SelectItem>
+                                        <SelectItem value="m22@example.com">Squre</SelectItem>
+                                        <SelectItem value="m3@example.com">ACI</SelectItem>
+                                        <SelectItem value="m4@example.com">SoftRavine</SelectItem>
+                                        <SelectItem value="m5@example.com">Samsung</SelectItem>
+                                        <SelectItem value="m6@example.com">LG</SelectItem>
+                                        <SelectItem value="m7@example.com">Logitech</SelectItem>
+                                        <SelectItem value="m8@example.com">A4tech</SelectItem>
+                                        <SelectItem value="m9@example.com">HP</SelectItem>
+                                      </SelectContent>
+                                    </Select>
+                                  </div>
+                                </div>
+                                <div className="col-span-3 mt-2">
+                                  <div className="col-span-6">
+                                    <Select
+                                      onValueChange={field.onChange}
+                                      defaultValue={field.value}
+                                    >
+                                      <FormControl>
+                                        <SelectTrigger>
+                                          <SelectValue placeholder="All Brands" />
+                                        </SelectTrigger>
+                                      </FormControl>
+                                      <SelectContent>
+                                        <SelectItem value="Apple">Apple</SelectItem>
+                                        <SelectItem value="m2@example.com">Pran</SelectItem>
+                                        <SelectItem value="m22@example.com">Squre</SelectItem>
+                                        <SelectItem value="m3@example.com">ACI</SelectItem>
+                                        <SelectItem value="m4@example.com">SoftRavine</SelectItem>
+                                        <SelectItem value="m5@example.com">Samsung</SelectItem>
+                                        <SelectItem value="m6@example.com">LG</SelectItem>
+                                        <SelectItem value="m7@example.com">Logitech</SelectItem>
+                                        <SelectItem value="m8@example.com">A4tech</SelectItem>
+                                        <SelectItem value="m9@example.com">HP</SelectItem>
+                                      </SelectContent>
+                                    </Select>
+                                  </div>
+                                </div>
+                              </div>
+
+
+                              <div className="grid grid-cols-1 md:grid-cols-12">
+                                <div className="col-span-3 p-1">
+                                  <div className="relative m-2 w-full max-w-xs overflow-hidden bg-white shadow-md">
+                                    <a href="#">
+                                      <img className="h-40 object-cover" src="https://images.unsplash.com/flagged/photo-1556637640-2c80d3201be8?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8M3x8c25lYWtlcnxlbnwwfHwwfHw%3D&auto=format&fit=crop&w=500&q=60" alt="product image" />
+                                    </a>
+                                    <span className="absolute top-0 left-0 w-28 translate-y-4 -translate-x-6 -rotate-45 bg-black text-center text-sm text-white">Sale</span>
+                                    <div className="mt-4 px-5 pb-5">
+                                      <a href="#">
+                                        <h5 className="text-xl font-semibold tracking-tight text-slate-900">Nike Air MX Super 5000</h5>
+                                      </a>
+                                      <div className="flex items-center justify-between">
+                                        <p>
+                                          <span className="text-3xl font-bold text-slate-900">$249</span>
+                                          <span className="text-sm text-slate-900 line-through">$299</span>
+                                        </p>
+                                      </div>
+                                    </div>
+                                  </div>
+                                </div>
+                                <div className="col-span-3 p-1">
+                                  <div className="relative m-2 w-full max-w-xs overflow-hidden bg-white shadow-md">
+                                    <a href="#">
+                                      <img className="h-40 object-cover" src="https://images.unsplash.com/flagged/photo-1556637640-2c80d3201be8?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8M3x8c25lYWtlcnxlbnwwfHwwfHw%3D&auto=format&fit=crop&w=500&q=60" alt="product image" />
+                                    </a>
+                                    <span className="absolute top-0 left-0 w-28 translate-y-4 -translate-x-6 -rotate-45 bg-black text-center text-sm text-white">Sale</span>
+                                    <div className="mt-4 px-5 pb-5">
+                                      <a href="#">
+                                        <h5 className="text-xl font-semibold tracking-tight text-slate-900">Nike Air MX Super 5000</h5>
+                                      </a>
+                                      <div className="flex items-center justify-between">
+                                        <p>
+                                          <span className="text-3xl font-bold text-slate-900">$249</span>
+                                          <span className="text-sm text-slate-900 line-through">$299</span>
+                                        </p>
+                                      </div>
+                                    </div>
+                                  </div>
+                                </div>
+                                <div className="col-span-3 p-1">
+                                  <div className="relative m-2 w-full max-w-xs overflow-hidden bg-white shadow-md">
+                                    <a href="#">
+                                      <img className="h-40 object-cover" src="https://images.unsplash.com/flagged/photo-1556637640-2c80d3201be8?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8M3x8c25lYWtlcnxlbnwwfHwwfHw%3D&auto=format&fit=crop&w=500&q=60" alt="product image" />
+                                    </a>
+                                    <span className="absolute top-0 left-0 w-28 translate-y-4 -translate-x-6 -rotate-45 bg-black text-center text-sm text-white">Sale</span>
+                                    <div className="mt-4 px-5 pb-5">
+                                      <a href="#">
+                                        <h5 className="text-xl font-semibold tracking-tight text-slate-900">Nike Air MX Super 5000</h5>
+                                      </a>
+                                      <div className="flex items-center justify-between">
+                                        <p>
+                                          <span className="text-3xl font-bold text-slate-900">$249</span>
+                                          <span className="text-sm text-slate-900 line-through">$299</span>
+                                        </p>
+                                      </div>
+                                    </div>
+                                  </div>
+                                </div>
+                                <div className="col-span-3 p-1">
+                                  <div className="relative m-2 w-full max-w-xs overflow-hidden bg-white shadow-md">
+                                    <a href="#">
+                                      <img className="h-40 object-cover" src="https://images.unsplash.com/flagged/photo-1556637640-2c80d3201be8?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8M3x8c25lYWtlcnxlbnwwfHwwfHw%3D&auto=format&fit=crop&w=500&q=60" alt="product image" />
+                                    </a>
+                                    <span className="absolute top-0 left-0 w-28 translate-y-4 -translate-x-6 -rotate-45 bg-black text-center text-sm text-white">Sale</span>
+                                    <div className="mt-4 px-5 pb-5">
+                                      <a href="#">
+                                        <h5 className="text-xl font-semibold tracking-tight text-slate-900">Nike Air MX Super 5000</h5>
+                                      </a>
+                                      <div className="flex items-center justify-between">
+                                        <p>
+                                          <span className="text-3xl font-bold text-slate-900">$249</span>
+                                          <span className="text-sm text-slate-900 line-through">$299</span>
+                                        </p>
+                                      </div>
+                                    </div>
+                                  </div>
+                                </div>
+                                <div className="col-span-3 p-1">
+                                  <div className="relative m-2 w-full max-w-xs overflow-hidden bg-white shadow-md">
+                                    <a href="#">
+                                      <img className="h-40 object-cover" src="https://images.unsplash.com/flagged/photo-1556637640-2c80d3201be8?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8M3x8c25lYWtlcnxlbnwwfHwwfHw%3D&auto=format&fit=crop&w=500&q=60" alt="product image" />
+                                    </a>
+                                    <span className="absolute top-0 left-0 w-28 translate-y-4 -translate-x-6 -rotate-45 bg-black text-center text-sm text-white">Sale</span>
+                                    <div className="mt-4 px-5 pb-5">
+                                      <a href="#">
+                                        <h5 className="text-xl font-semibold tracking-tight text-slate-900">Nike Air MX Super 5000</h5>
+                                      </a>
+                                      <div className="flex items-center justify-between">
+                                        <p>
+                                          <span className="text-3xl font-bold text-slate-900">$249</span>
+                                          <span className="text-sm text-slate-900 line-through">$299</span>
+                                        </p>
+                                      </div>
+                                    </div>
+                                  </div>
+                                </div>
+                                <div className="col-span-3 p-1">
+                                  <div className="relative m-2 w-full max-w-xs overflow-hidden bg-white shadow-md">
+                                    <a href="#">
+                                      <img className="h-40 object-cover" src="https://images.unsplash.com/flagged/photo-1556637640-2c80d3201be8?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8M3x8c25lYWtlcnxlbnwwfHwwfHw%3D&auto=format&fit=crop&w=500&q=60" alt="product image" />
+                                    </a>
+                                    <span className="absolute top-0 left-0 w-28 translate-y-4 -translate-x-6 -rotate-45 bg-black text-center text-sm text-white">Sale</span>
+                                    <div className="mt-4 px-5 pb-5">
+                                      <a href="#">
+                                        <h5 className="text-xl font-semibold tracking-tight text-slate-900">Nike Air MX Super 5000</h5>
+                                      </a>
+                                      <div className="flex items-center justify-between">
+                                        <p>
+                                          <span className="text-3xl font-bold text-slate-900">$249</span>
+                                          <span className="text-sm text-slate-900 line-through">$299</span>
+                                        </p>
+                                      </div>
+                                    </div>
+                                  </div>
+                                </div>
+                                <div className="col-span-3 p-1">
+                                  <div className="relative m-2 w-full max-w-xs overflow-hidden bg-white shadow-md">
+                                    <a href="#">
+                                      <img className="h-40 object-cover" src="https://images.unsplash.com/flagged/photo-1556637640-2c80d3201be8?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8M3x8c25lYWtlcnxlbnwwfHwwfHw%3D&auto=format&fit=crop&w=500&q=60" alt="product image" />
+                                    </a>
+                                    <span className="absolute top-0 left-0 w-28 translate-y-4 -translate-x-6 -rotate-45 bg-black text-center text-sm text-white">Sale</span>
+                                    <div className="mt-4 px-5 pb-5">
+                                      <a href="#">
+                                        <h5 className="text-xl font-semibold tracking-tight text-slate-900">Nike Air MX Super 5000</h5>
+                                      </a>
+                                      <div className="flex items-center justify-between">
+                                        <p>
+                                          <span className="text-3xl font-bold text-slate-900">$249</span>
+                                          <span className="text-sm text-slate-900 line-through">$299</span>
+                                        </p>
+                                      </div>
+                                    </div>
+                                  </div>
+                                </div>
+                                <div className="col-span-3 p-1">
+                                  <div className="relative m-2 w-full max-w-xs overflow-hidden bg-white shadow-md">
+                                    <a href="#">
+                                      <img className="h-40 object-cover" src="https://images.unsplash.com/flagged/photo-1556637640-2c80d3201be8?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8M3x8c25lYWtlcnxlbnwwfHwwfHw%3D&auto=format&fit=crop&w=500&q=60" alt="product image" />
+                                    </a>
+                                    <span className="absolute top-0 left-0 w-28 translate-y-4 -translate-x-6 -rotate-45 bg-black text-center text-sm text-white">Sale</span>
+                                    <div className="mt-4 px-5 pb-5">
+                                      <a href="#">
+                                        <h5 className="text-xl font-semibold tracking-tight text-slate-900">Nike Air MX Super 5000</h5>
+                                      </a>
+                                      <div className="flex items-center justify-between">
+                                        <p>
+                                          <span className="text-3xl font-bold text-slate-900">$249</span>
+                                          <span className="text-sm text-slate-900 line-through">$299</span>
+                                        </p>
+                                      </div>
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+
+                              <FormMessage />
+                            </FormItem>
+                          )}
+                        />
+                      </div>
+
+                      <div className="grid mt-4 justify-items-end">
+                        <Button
+                          className="dark:text-slate-200"
+                          variant="outline"
+                          type="submit"
+                        >
+                          Save
+                        </Button>
+                      </div>
+                    </div>
                   </div>
-                  <div className="py-6">
-                    <div className="flex flex-col gap-5.5 p-6.5">
-                      <FormField
-                        control={form.control}
-                        name="product_name"
-                        render={({ field }) => (
-                          <FormItem>
-                            <FormLabel>Employe Name</FormLabel>
-                            <FormControl>
-                              <Input
-                                className={inputClass}
-                                placeholder="Employe Name"
-                                {...field}
-                              />
-                            </FormControl>
-                            <FormMessage />
-                          </FormItem>
-                        )}
-                      />
-                    </div>
-                    <div className="mt-3 flex flex-col gap-5.5 p-6.5">
-                      <FormField
-                        control={form.control}
-                        name="brand"
-                        render={({ field }) => (
-                          <FormItem>
-                            <FormLabel>Employe Email</FormLabel>
-                            <FormControl>
-                              <Input
-                                className={inputClass}
-                                placeholder="Employe Email"
-                                {...field}
-                              />
-                            </FormControl>
-                            <FormMessage />
-                          </FormItem>
-                        )}
-                      />
-                    </div>
-                    <div className="mt-3 flex flex-col gap-5.5 p-6.5">
-                      <FormField
-                        control={form.control}
-                        name="unit"
-                        render={({ field }) => (
-                          <FormItem>
-                            <FormLabel>Phone</FormLabel>
-                            <FormControl>
-                              <Input
-                                className={inputClass}
-                                placeholder="Phone"
-                                {...field}
-                              />
-                            </FormControl>
-                            <FormMessage />
-                          </FormItem>
-                        )}
-                      />
-                    </div>
-                    <div className="mt-3 flex flex-col gap-5.5 p-6.5">
-                      <FormField
-                        control={form.control}
-                        name="weight"
-                        render={({ field }) => (
-                          <FormItem>
-                            <FormLabel>Password</FormLabel>
-                            <FormControl>
-                              <Input
-                                className={inputClass}
-                                placeholder="Password"
-                                {...field}
-                              />
-                            </FormControl>
-                            <FormMessage />
-                          </FormItem>
-                        )}
-                      />
-                    </div>
-                    <div className="mt-3 flex flex-col gap-5.5 p-6.5">
-                      <FormField
-                        control={form.control}
-                        name="minimum_purchase_qty"
-                        render={({ field }) => (
-                          <FormItem>
-                            <FormLabel>Role</FormLabel>
-                            <FormControl>
-                              {/* <Input
-                                className={inputClass}
-                                placeholder="minimum_purchase_qty"
-                                {...field}
-                              /> */}
-                            </FormControl>
-                            <FormMessage />
-                          </FormItem>
-                        )}
-                      />
-                    </div>
-                    <div className="grid mt-4 justify-items-end">
-                      <Button
-                        className="dark:text-slate-200"
-                        variant="outline"
-                        type="submit"
-                      >
-                        Save
-                      </Button>
+                </div>
+
+              </div>
+
+              <div className="col-span-4">
+                <div className="p-2">
+                  <div className="px-6 rounded-sm border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark">
+                    <div className="py-6">
+                      <div className="flex flex-col gap-5.5 p-6.5">
+                        <FormField
+                          control={form.control}
+                          name="product_name"
+                          render={({ field }) => (
+                            <FormItem>
+                              <div className="grid grid-cols-1 md:grid-cols-12">
+                                <div className="col-span-10">
+                                  <Select
+                                    onValueChange={field.onChange}
+                                    defaultValue={field.value}
+                                  >
+                                    <FormControl>
+                                      <SelectTrigger>
+                                        <SelectValue placeholder="Walk in Customer" />
+                                      </SelectTrigger>
+                                    </FormControl>
+                                    <SelectContent>
+                                      <SelectItem value="Apple">Apple</SelectItem>
+                                      <SelectItem value="m2@example.com">Pran</SelectItem>
+                                      <SelectItem value="m22@example.com">Squre</SelectItem>
+                                      <SelectItem value="m3@example.com">ACI</SelectItem>
+                                      <SelectItem value="m4@example.com">SoftRavine</SelectItem>
+                                      <SelectItem value="m5@example.com">Samsung</SelectItem>
+                                      <SelectItem value="m6@example.com">LG</SelectItem>
+                                      <SelectItem value="m7@example.com">Logitech</SelectItem>
+                                      <SelectItem value="m8@example.com">A4tech</SelectItem>
+                                      <SelectItem value="m9@example.com">HP</SelectItem>
+                                    </SelectContent>
+                                  </Select>
+                                </div>
+
+                                <div className="col-span-2">
+                                  <Button
+                                    className="dark:text-slate-200"
+                                    variant="outline"
+                                    type="submit"
+                                  >
+                                    Save
+                                  </Button>
+                                </div>
+
+                              </div>
+
+                              <div className="grid grid-cols-12 text-white">
+                                <div className="col-span-12 min-h-96">
+                                  <p>No Product Added</p>
+                                </div>
+
+                                <div className="col-span-6">
+                                  <span>Sub Total</span>
+                                </div>
+                                <div className="col-span-6">
+                                  <span>$ 0.00</span>
+                                </div>
+                                <div className="col-span-6">
+                                  <span>Tax</span>
+                                </div>
+                                <div className="col-span-6">
+                                  <span>$ 0.00</span>
+                                </div>
+                                <div className="col-span-6">
+                                  <span>Shipping</span>
+                                </div>
+                                <div className="col-span-6">
+                                  <span>$ 0.00</span>
+                                </div>
+                                <div className="col-span-6">
+                                  <span>Discount</span>
+                                </div>
+                                <div className="col-span-6">
+                                  <span>$ 0.00</span>
+                                </div>
+                                <div className="col-span-6">
+                                  <span>Total</span>
+                                </div>
+                                <div className="col-span-6">
+                                  <span>$ 0.00</span>
+                                </div>
+                              </div>
+                              <FormMessage />
+                            </FormItem>
+                          )}
+                        />
+                      </div>
+
+                      <div className="grid mt-4 justify-items-end">
+                        <Button
+                          className="dark:text-slate-200"
+                          variant="outline"
+                          type="submit"
+                        >
+                          Save
+                        </Button>
+                      </div>
                     </div>
                   </div>
                 </div>
@@ -206,6 +461,6 @@ export default function Addnew() {
           </div>
         </form>
       </Form>
-    </div>
+    </div >
   );
 }

@@ -3,6 +3,7 @@
 import { useState } from 'react';
 import axios from 'axios';
 import { useRouter } from 'next/router';
+import Breadcrumb from "@/app/admin/components/Breadcrumbs/Breadcrumb"
 
 const NewAttributePage = () => {
   const [name, setName] = useState('');

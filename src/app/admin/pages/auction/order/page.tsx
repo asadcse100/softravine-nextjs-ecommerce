@@ -1,5 +1,6 @@
 import { Products, columns } from "./columns"
 import { DataTable } from "./data-table"
+import Breadcrumb from "@/app/admin/components/Breadcrumbs/Breadcrumb"
 
 async function getData(): Promise<Products[]> {
   // Fetch data from your API here.

@@ -12,7 +12,7 @@ const AccountSavelists = () => {
           </h2>
         </div>
 
-        <div className="grid grid-cols-1 gap-6 md:gap-8 sm:grid-cols-2 lg:grid-cols-3 ">
+        <div className="grid grid-cols-1 gap-6 md:gap-8 sm:grid-cols-2 lg:grid-cols-4">
           {PRODUCTS.filter((_, i) => i < 6).map((stay) => (
             <ProductCard key={stay.id} data={stay} />
           ))}

@@ -43,8 +43,8 @@ export const SIDENAV_ITEMS: SideNavItem[] = [
         icon: <BsCartPlus size={20} />
     },
     {
-        title: 'Wishlist',
-        path: '/customer/pages/wishlist',
+        title: 'Favoritelish',
+        path: '/customer/pages/favoritelish',
         icon: <BsBalloonHeart size={20} />
     },
     {
