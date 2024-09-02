@@ -75,10 +75,13 @@ export default function Addnew() {
   const inputClass = "bg-zinc-50 border border-slate-300 text-slate-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-slate-900 dark:border-slate-800 dark:placeholder-slate-700 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500";
 
   return (
-    <div className="min-h-screen mx-auto max-w-screen-2xl mt-4 p-4 py-4 md:p-6 2xl:p-10 bg-slate-100 dark:bg-slate-900">
+    <div className="min-h-screen mx-auto max-w-screen-2xl mt-2 p-4 py-4 md:p-6 2xl:p-10 bg-slate-100 dark:bg-slate-900">
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
           <div className="mx-auto max-w-screen-2xl">
+            <div className="mb-3 flex flex-row items-center justify-between gap-3 sm:flex-row sm:items-center sm:justify-between">
+              <Breadcrumb pageName="Header Setting" />
+            </div>
             <div className="grid gap-4 md:grid-cols-1 lg:grid-cols-2 sm:grid-cols-1">
               <div className="flex flex-col gap-4">
                 <div className="px-6 rounded-sm border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark">
@@ -95,19 +98,19 @@ export default function Addnew() {
                         render={({ field }) => (
                           <FormItem>
                             <div className="grid grid-cols-1 md:grid-cols-12">
-                                <div className="col-span-3 mt-2">
-                                  <FormLabel>Header Logo</FormLabel>
-                                </div>
-                                <div className="col-span-8">
-                                  <FormControl>
-                                    <Input
-                                      className={inputClass}
-                                      placeholder="Header Logo"
-                                      {...field}
-                                    />
-                                  </FormControl>
-                                </div>
+                              <div className="col-span-3 mt-2">
+                                <FormLabel>Header Logo</FormLabel>
                               </div>
+                              <div className="col-span-8">
+                                <FormControl>
+                                  <Input
+                                    className={inputClass}
+                                    placeholder="Header Logo"
+                                    {...field}
+                                  />
+                                </FormControl>
+                              </div>
+                            </div>
                             <FormMessage />
                           </FormItem>
                         )}
@@ -119,16 +122,16 @@ export default function Addnew() {
                         name="show_language_switcher"
                         render={({ field }) => (
                           <FormItem>
-                              <div className="grid grid-cols-1 md:grid-cols-12">
-                                <div className="col-span-6">
-                                  <FormLabel>Show Language Switcher?</FormLabel>
-                                </div>
-                                <div className="col-span-6">
-                                  <FormControl>
-                                  <Switch />
-                                  </FormControl>
-                                </div>
+                            <div className="grid grid-cols-1 md:grid-cols-12">
+                              <div className="col-span-6">
+                                <FormLabel>Show Language Switcher?</FormLabel>
                               </div>
+                              <div className="col-span-6">
+                                <FormControl>
+                                  <Switch />
+                                </FormControl>
+                              </div>
+                            </div>
                             <FormMessage />
                           </FormItem>
                         )}
@@ -140,16 +143,16 @@ export default function Addnew() {
                         name="show_currency_switcher"
                         render={({ field }) => (
                           <FormItem>
-                              <div className="grid grid-cols-1 md:grid-cols-12">
-                                <div className="col-span-6">
-                                  <FormLabel>Show Currency Switcher?</FormLabel>
-                                </div>
-                                <div className="col-span-6">
-                                  <FormControl>
-                                  <Switch />
-                                  </FormControl>
-                                </div>
+                            <div className="grid grid-cols-1 md:grid-cols-12">
+                              <div className="col-span-6">
+                                <FormLabel>Show Currency Switcher?</FormLabel>
                               </div>
+                              <div className="col-span-6">
+                                <FormControl>
+                                  <Switch />
+                                </FormControl>
+                              </div>
+                            </div>
                             <FormMessage />
                           </FormItem>
                         )}
@@ -161,16 +164,16 @@ export default function Addnew() {
                         name="header_stikcy"
                         render={({ field }) => (
                           <FormItem>
-                              <div className="grid grid-cols-1 md:grid-cols-12">
-                                <div className="col-span-6">
-                                  <FormLabel>Enable stikcy header?</FormLabel>
-                                </div>
-                                <div className="col-span-6">
-                                  <FormControl>
-                                  <Switch />
-                                  </FormControl>
-                                </div>
+                            <div className="grid grid-cols-1 md:grid-cols-12">
+                              <div className="col-span-6">
+                                <FormLabel>Enable stikcy header?</FormLabel>
                               </div>
+                              <div className="col-span-6">
+                                <FormControl>
+                                  <Switch />
+                                </FormControl>
+                              </div>
+                            </div>
                             <FormMessage />
                           </FormItem>
                         )}
@@ -184,19 +187,19 @@ export default function Addnew() {
                         render={({ field }) => (
                           <FormItem>
                             <div className="grid grid-cols-1 md:grid-cols-12">
-                                <div className="col-span-3 mt-2">
-                                  <FormLabel>Topbar Banner</FormLabel>
-                                </div>
-                                <div className="col-span-8">
-                                  <FormControl>
-                                    <Input type="file"
-                                      className={inputClass}
-                                      placeholder="Topbar Banner"
-                                      {...field}
-                                    />
-                                  </FormControl>
-                                </div>
+                              <div className="col-span-3 mt-2">
+                                <FormLabel>Topbar Banner</FormLabel>
                               </div>
+                              <div className="col-span-8">
+                                <FormControl>
+                                  <Input type="file"
+                                    className={inputClass}
+                                    placeholder="Topbar Banner"
+                                    {...field}
+                                  />
+                                </FormControl>
+                              </div>
+                            </div>
                             <FormMessage />
                           </FormItem>
                         )}
@@ -209,19 +212,19 @@ export default function Addnew() {
                         render={({ field }) => (
                           <FormItem>
                             <div className="grid grid-cols-1 md:grid-cols-12">
-                                <div className="col-span-3 mt-2">
-                                  <FormLabel>Topbar Banner Link</FormLabel>
-                                </div>
-                                <div className="col-span-8">
-                                  <FormControl>
-                                    <Input
-                                      className={inputClass}
-                                      placeholder="Topbar Banner Link"
-                                      {...field}
-                                    />
-                                  </FormControl>
-                                </div>
+                              <div className="col-span-3 mt-2">
+                                <FormLabel>Topbar Banner Link</FormLabel>
                               </div>
+                              <div className="col-span-8">
+                                <FormControl>
+                                  <Input
+                                    className={inputClass}
+                                    placeholder="Topbar Banner Link"
+                                    {...field}
+                                  />
+                                </FormControl>
+                              </div>
+                            </div>
                             <FormMessage />
                           </FormItem>
                         )}
@@ -234,25 +237,25 @@ export default function Addnew() {
                         render={({ field }) => (
                           <FormItem>
                             <div className="grid grid-cols-1 md:grid-cols-12">
-                                <div className="col-span-3 mt-2">
-                                  <FormLabel>Help line number</FormLabel>
-                                </div>
-                                <div className="col-span-8">
-                                  <FormControl>
-                                    <Input
-                                      className={inputClass}
-                                      placeholder="Help line number"
-                                      {...field}
-                                    />
-                                  </FormControl>
-                                </div>
+                              <div className="col-span-3 mt-2">
+                                <FormLabel>Help line number</FormLabel>
                               </div>
+                              <div className="col-span-8">
+                                <FormControl>
+                                  <Input
+                                    className={inputClass}
+                                    placeholder="Help line number"
+                                    {...field}
+                                  />
+                                </FormControl>
+                              </div>
+                            </div>
                             <FormMessage />
                           </FormItem>
                         )}
                       />
                     </div>
-                    
+
                     <div className="grid mt-3 justify-items-end">
                       <Button
                         className="dark:text-slate-200"
@@ -265,12 +268,12 @@ export default function Addnew() {
                   </div>
                 </div>
               </div>
-              
+
               <div className="flex flex-col gap-4">
                 <div className="px-6 rounded-sm border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark">
                   <div className="border-b border-stroke px-6.5 py-4 dark:border-strokedark">
                     <h3 className="font-medium text-black dark:text-white">
-                    Header Nav Menu
+                      Header Nav Menu
                     </h3>
                   </div>
                   <div className="py-6">
@@ -562,7 +565,7 @@ export default function Addnew() {
                         )}
                       />
                     </div>
-                    
+
                     <div className="grid mt-3 justify-items-end">
                       <Button
                         className="dark:text-slate-200"

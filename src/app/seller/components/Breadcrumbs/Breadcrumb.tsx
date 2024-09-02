@@ -1,25 +1,31 @@
+"use client";
 import Link from "next/link";
 interface BreadcrumbProps {
   pageName: string;
 }
-const Breadcrumb = ({ pageName }: BreadcrumbProps) => {
-  return (
-    <div className="mb-6 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
-      <h2 className="text-title-md2 font-semibold text-black dark:text-white">
-        {pageName}
-      </h2>
+import { usePathname } from 'next/navigation';
 
+const Breadcrumb = ({ pageName }: BreadcrumbProps) => {
+  const pathname = usePathname();
+  const segments = pathname.split('/').filter(Boolean);
+  const lastValue = segments[segments.length - 2];
+  
+  return (
+    <>
       <nav>
-        <ol className="flex items-center gap-2">
+        <ol className="flex items-center gap-1">
           <li>
-            <Link className="font-medium" href="/">
-              Dashboard /
+            <Link className="font-medium dark:text-slate-300" href="/admin">
+             Dashboard /
             </Link>
           </li>
-          <li className="font-medium text-primary">{pageName}</li>
+          <li className="font-medium dark:text-slate-400">{lastValue}</li>
         </ol>
       </nav>
-    </div>
+      <h2 className="text-title-sm font-semibold text-black dark:text-slate-400 sm:justify-center">
+        {pageName}
+      </h2>
+    </>
   );
 };
 

@@ -1,6 +1,5 @@
 "use client";
 import Link from "next/link";
-import { Button } from "@/app/admin/components/ui/button";
 interface BreadcrumbProps {
   pageName: string;
 }
@@ -10,11 +9,9 @@ const Breadcrumb = ({ pageName }: BreadcrumbProps) => {
   const pathname = usePathname();
   const segments = pathname.split('/').filter(Boolean);
   const lastValue = segments[segments.length - 2];
+  
   return (
     <>
-      <h2 className="text-title-sm font-semibold text-black dark:text-slate-400">
-        {pageName}
-      </h2>
       <nav>
         <ol className="flex items-center gap-1">
           <li>
@@ -25,6 +22,9 @@ const Breadcrumb = ({ pageName }: BreadcrumbProps) => {
           <li className="font-medium dark:text-slate-400">{lastValue}</li>
         </ol>
       </nav>
+      <h2 className="text-title-sm font-semibold text-black dark:text-slate-400 sm:justify-center">
+        {pageName}
+      </h2>
     </>
   );
 };

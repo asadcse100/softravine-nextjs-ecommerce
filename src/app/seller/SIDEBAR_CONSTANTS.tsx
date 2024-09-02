@@ -38,7 +38,7 @@ export const SIDENAV_ITEMS: SideNavItem[] = [
         submenu: true,
         subMenuItems: [
             { title: 'All Products', path: '/seller/pages/product/products' },
-            { title: 'Add New', path: '/seller/pages/product/addnew' },
+            // { title: 'Add New', path: '/seller/pages/product/addnew' },
             { title: 'Category Wise Discount', path: '/seller/pages/product/category_wise_discount' },
             // {title: 'Bulk Upload', path: '/seller/pages/product/product_bulk_upload'},
             { title: 'Digital Products', path: '/seller/pages/product/digital_product' },

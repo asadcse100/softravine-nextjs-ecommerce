@@ -24,6 +24,7 @@ import {
   SelectValue,
 } from "@/app/admin/components/ui/select";
 import Textarea from "@/shared/Textarea/Textarea";
+import Breadcrumb from "@/app/seller/components/Breadcrumbs/Breadcrumb";
 
 const formSchema = z.object({
   product_name: z.string().min(10, {
@@ -56,6 +57,9 @@ export default function Addnew() {
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
           <div className="mx-auto max-w-screen-2xl">
+            <div className="mb-3 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+              <Breadcrumb pageName="Product Add"/>
+            </div>
             <div className="grid gap-4 md:grid-cols-1 lg:grid-cols-2 sm:grid-cols-1">
 
               <div className="flex flex-col gap-4">
@@ -1099,7 +1103,7 @@ export default function Addnew() {
                                 </div>
                                 <div className="col-span-6">
                                   <FormControl>
-                                  <Switch />
+                                    <Switch />
                                   </FormControl>
                                 </div>
                               </div>
@@ -1120,7 +1124,7 @@ export default function Addnew() {
                                 </div>
                                 <div className="col-span-6">
                                   <FormControl>
-                                  <Switch />
+                                    <Switch />
                                   </FormControl>
                                 </div>
                               </div>
@@ -1134,14 +1138,14 @@ export default function Addnew() {
                           control={form.control}
                           name="qty_multi"
                           render={({ field }) => (
-                            <FormItem>                              
+                            <FormItem>
                               <div className="grid grid-cols-1 md:grid-cols-12">
                                 <div className="col-span-6">
                                   <FormLabel>Is Product Quantity Multiply</FormLabel>
                                 </div>
                                 <div className="col-span-6">
                                   <FormControl>
-                                  <Switch />
+                                    <Switch />
                                   </FormControl>
                                 </div>
                               </div>
@@ -1175,7 +1179,7 @@ export default function Addnew() {
                                 </div>
                                 <div className="col-span-6">
                                   <FormControl>
-                                  <Switch />
+                                    <Switch />
                                   </FormControl>
                                 </div>
                               </div>
@@ -1196,7 +1200,7 @@ export default function Addnew() {
                                 </div>
                                 <div className="col-span-6">
                                   <FormControl>
-                                  <Switch />
+                                    <Switch />
                                   </FormControl>
                                 </div>
                               </div>
@@ -1217,7 +1221,7 @@ export default function Addnew() {
                                 </div>
                                 <div className="col-span-6">
                                   <FormControl>
-                                  <Switch />
+                                    <Switch />
                                   </FormControl>
                                 </div>
                               </div>
@@ -1251,7 +1255,7 @@ export default function Addnew() {
                                 </div>
                                 <div className="col-span-6">
                                   <FormControl>
-                                  <Switch />
+                                    <Switch />
                                   </FormControl>
                                 </div>
                               </div>

@@ -43,10 +43,13 @@ export default function Addnew() {
   const inputClass = "bg-zinc-50 border border-slate-300 text-slate-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-slate-900 dark:border-slate-800 dark:placeholder-slate-700 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500";
 
   return (
-    <div className="min-h-screen mx-auto max-w-screen-2xl mt-4 p-4 py-4 md:p-6 2xl:p-10 bg-slate-100 dark:bg-slate-900">
+    <div className="min-h-screen mx-auto max-w-screen-2xl mt-2 p-4 py-4 md:p-6 2xl:p-10 bg-slate-100 dark:bg-slate-900">
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
           <div className="mx-auto max-w-screen-2xl">
+            <div className="mb-3 flex flex-row items-center justify-between gap-3 sm:flex-row sm:items-center sm:justify-between">
+              <Breadcrumb pageName="Brands Bulk Upload" />
+            </div>
             <div className="grid gap-4 md:grid-cols-1 lg:grid-cols-2 sm:grid-cols-1">
               <div className="flex flex-col gap-4">
                 <div className="px-6 rounded-sm border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark">
@@ -59,13 +62,13 @@ export default function Addnew() {
                     <div className="dark:text-slate-300">
                       <p className="text-xl">For Non-SSL</p>
                       <div className="border dark:border-slate-500 dark:text-slate-400 mt-2 p-3">
-                      1. Download the skeleton file and fill it with proper data.
+                        1. Download the skeleton file and fill it with proper data.
                       </div>
                       <div className="border dark:border-slate-500 dark:text-slate-400 p-3">
-                      2. You can download the example file to understand how the data must be filled.
+                        2. You can download the example file to understand how the data must be filled.
                       </div>
                       <div className="border dark:border-slate-500 dark:text-slate-400 p-3">
-                      3. Once you have downloaded and filled the skeleton file, upload it in the form below and submit.
+                        3. Once you have downloaded and filled the skeleton file, upload it in the form below and submit.
                       </div>
                     </div>
                     <div className="grid py-4 justify-items-start">
@@ -84,19 +87,19 @@ export default function Addnew() {
                         render={({ field }) => (
                           <FormItem>
                             <div className="grid grid-cols-1 md:grid-cols-12">
-                                <div className="col-span-4 mt-2">
-                                  <FormLabel>Upload Brand File</FormLabel>
-                                </div>
-                                <div className="col-span-8">
-                                  <FormControl>
-                                    <Input type="file"
-                                      className={inputClass}
-                                      placeholder="Upload Brand File"
-                                      {...field}
-                                    />
-                                  </FormControl>
-                                </div>
+                              <div className="col-span-4 mt-2">
+                                <FormLabel>Upload Brand File</FormLabel>
                               </div>
+                              <div className="col-span-8">
+                                <FormControl>
+                                  <Input type="file"
+                                    className={inputClass}
+                                    placeholder="Upload Brand File"
+                                    {...field}
+                                  />
+                                </FormControl>
+                              </div>
+                            </div>
                             <FormMessage />
                           </FormItem>
                         )}
