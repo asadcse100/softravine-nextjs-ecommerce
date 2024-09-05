@@ -16,27 +16,27 @@ const pages: {
 }[] = [
   {
     name: "Account info",
-    link: "/seller/pages/account",
+    link: "/customer/pages/account",
   },
   {
     name: "Personal info",
-    link: "/seller/pages/account-personal",
+    link: "/customer/pages/account-personal",
   },
   {
     name: "Full Address",
-    link: "/seller/pages/address",
+    link: "/customer/pages/address",
   },
   {
     name: "KCY",
-    link: "/seller/pages/kcy",
+    link: "/customer/pages/kcy",
   },
   {
     name: "Nominee",
-    link: "/seller/pages/nominee",
+    link: "/customer/pages/nominee",
   },
   {
     name: "Additional info",
-    link: "/seller/pages/additional-info",
+    link: "/customer/pages/additional-info",
   },
 ];
 

@@ -43,8 +43,8 @@ export const SIDENAV_ITEMS: SideNavItem[] = [
         icon: <BsCartPlus size={20} />
     },
     {
-        title: 'Favoritelish',
-        path: '/customer/pages/favoritelish',
+        title: 'Favoritelist',
+        path: '/customer/pages/favoritelist',
         icon: <BsBalloonHeart size={20} />
     },
     {
@@ -52,11 +52,11 @@ export const SIDENAV_ITEMS: SideNavItem[] = [
         path: '/customer/pages/compare',
         icon: <BsRepeat size={20} />
     },
-    {
-        title: 'Followed Sellers',
-        path: '/customer/pages/followed-seller',
-        icon: <BsShop size={20} />
-    },
+    // {
+    //     title: 'Followed Sellers',
+    //     path: '/customer/pages/followed-seller',
+    //     icon: <BsShop size={20} />
+    // },
     // {
     //     title: 'Classified Products',
     //     path: '/customer/pages/customer_products',
@@ -85,11 +85,11 @@ export const SIDENAV_ITEMS: SideNavItem[] = [
     {
         title: 'My Wallet',
         path: '/customer/pages/wallet',
-        icon: <BsPatchQuestion size={20} />
+        icon: <BsCashStack size={20} />
     },
     {
         title: 'Earning Points',
-        path: '/customer/pages/earning-points',
+        path: '/customer/pages/earning-point',
         icon: <BsPatchQuestion size={20} />
     },
     {
@@ -115,9 +115,9 @@ export const SIDENAV_ITEMS: SideNavItem[] = [
     },
     {
         title: 'Manage Account',
-        path: '/customer/pages/profile',
+        path: '/customer/pages/account',
         icon: <BsGear size={20} />
-    },
+    }
     // {
     //     title: 'Delete My Account',
     //     path: '#',

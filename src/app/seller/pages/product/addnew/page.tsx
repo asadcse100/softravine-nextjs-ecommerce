@@ -58,7 +58,7 @@ export default function Addnew() {
         <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
           <div className="mx-auto max-w-screen-2xl">
             <div className="mb-3 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
-              <Breadcrumb pageName="Product Add"/>
+              <Breadcrumb pageName="Product Add" />
             </div>
             <div className="grid gap-4 md:grid-cols-1 lg:grid-cols-2 sm:grid-cols-1">
 

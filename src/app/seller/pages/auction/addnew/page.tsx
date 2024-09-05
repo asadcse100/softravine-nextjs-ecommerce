@@ -23,6 +23,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/app/admin/components/ui/select";
+import Breadcrumb from "@/app/seller/components/Breadcrumbs/Breadcrumb";
 
 const formSchema = z.object({
   product_name: z.string().min(10, {
@@ -95,8 +96,12 @@ export default function Addnew() {
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
           <div className="mx-auto max-w-screen-2xl">
-            <div className="grid gap-4 md:grid-cols-1 lg:grid-cols-2 sm:grid-cols-1">
 
+            <div className="mb-3 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+              <Breadcrumb pageName="Auction Products" />
+            </div>
+
+            <div className="grid gap-4 md:grid-cols-1 lg:grid-cols-2 sm:grid-cols-1">
               <div className="flex flex-col gap-4">
                 <div className="px-6 rounded-sm border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark">
                   <div className="border-b border-stroke px-6.5 py-4 dark:border-strokedark">
@@ -177,21 +182,21 @@ export default function Addnew() {
                         control={form.control}
                         name="unit"
                         render={({ field }) => (
-                          <FormItem>                            
+                          <FormItem>
                             <div className="grid grid-cols-1 md:grid-cols-12">
-                                <div className="col-span-3 mt-3">
-                                  <FormLabel>Unit</FormLabel>
-                                </div>
-                                <div className="col-span-8">
-                                  <FormControl>
-                                    <Input
-                                      className={inputClass}
-                                      placeholder="Unit"
-                                      {...field}
-                                    />
-                                  </FormControl>
-                                </div>
+                              <div className="col-span-3 mt-3">
+                                <FormLabel>Unit</FormLabel>
                               </div>
+                              <div className="col-span-8">
+                                <FormControl>
+                                  <Input
+                                    className={inputClass}
+                                    placeholder="Unit"
+                                    {...field}
+                                  />
+                                </FormControl>
+                              </div>
+                            </div>
                             <FormMessage />
                           </FormItem>
                         )}
@@ -204,19 +209,19 @@ export default function Addnew() {
                         render={({ field }) => (
                           <FormItem>
                             <div className="grid grid-cols-1 md:grid-cols-12">
-                                <div className="col-span-3 mt-3">
-                                  <FormLabel>Weight</FormLabel>
-                                </div>
-                                <div className="col-span-8">
-                                  <FormControl>
-                                    <Input
-                                      className={inputClass}
-                                      placeholder="Weight"
-                                      {...field}
-                                    />
-                                  </FormControl>
-                                </div>
+                              <div className="col-span-3 mt-3">
+                                <FormLabel>Weight</FormLabel>
                               </div>
+                              <div className="col-span-8">
+                                <FormControl>
+                                  <Input
+                                    className={inputClass}
+                                    placeholder="Weight"
+                                    {...field}
+                                  />
+                                </FormControl>
+                              </div>
+                            </div>
                             <FormMessage />
                           </FormItem>
                         )}
@@ -229,19 +234,19 @@ export default function Addnew() {
                         render={({ field }) => (
                           <FormItem>
                             <div className="grid grid-cols-1 md:grid-cols-12">
-                                <div className="col-span-3 mt-3">
-                                  <FormLabel>Minimum Purchase Qty</FormLabel>
-                                </div>
-                                <div className="col-span-8">
-                                  <FormControl>
-                                    <Input
-                                      className={inputClass}
-                                      placeholder="Minimum Purchase Qty"
-                                      {...field}
-                                    />
-                                  </FormControl>
-                                </div>
+                              <div className="col-span-3 mt-3">
+                                <FormLabel>Minimum Purchase Qty</FormLabel>
                               </div>
+                              <div className="col-span-8">
+                                <FormControl>
+                                  <Input
+                                    className={inputClass}
+                                    placeholder="Minimum Purchase Qty"
+                                    {...field}
+                                  />
+                                </FormControl>
+                              </div>
+                            </div>
                             <FormMessage />
                           </FormItem>
                         )}
@@ -254,19 +259,19 @@ export default function Addnew() {
                         render={({ field }) => (
                           <FormItem>
                             <div className="grid grid-cols-1 md:grid-cols-12">
-                                <div className="col-span-3 mt-3">
-                                  <FormLabel>Tags</FormLabel>
-                                </div>
-                                <div className="col-span-8">
-                                  <FormControl>
-                                    <Input
-                                      className={inputClass}
-                                      placeholder="Tags"
-                                      {...field}
-                                    />
-                                  </FormControl>
-                                </div>
+                              <div className="col-span-3 mt-3">
+                                <FormLabel>Tags</FormLabel>
                               </div>
+                              <div className="col-span-8">
+                                <FormControl>
+                                  <Input
+                                    className={inputClass}
+                                    placeholder="Tags"
+                                    {...field}
+                                  />
+                                </FormControl>
+                              </div>
+                            </div>
                             <FormMessage />
                           </FormItem>
                         )}
@@ -279,19 +284,19 @@ export default function Addnew() {
                         render={({ field }) => (
                           <FormItem>
                             <div className="grid grid-cols-1 md:grid-cols-12">
-                                <div className="col-span-3 mt-3">
-                                  <FormLabel>Barcode</FormLabel>
-                                </div>
-                                <div className="col-span-8">
-                                  <FormControl>
-                                    <Input
-                                      className={inputClass}
-                                      placeholder="Barcode"
-                                      {...field}
-                                    />
-                                  </FormControl>
-                                </div>
+                              <div className="col-span-3 mt-3">
+                                <FormLabel>Barcode</FormLabel>
                               </div>
+                              <div className="col-span-8">
+                                <FormControl>
+                                  <Input
+                                    className={inputClass}
+                                    placeholder="Barcode"
+                                    {...field}
+                                  />
+                                </FormControl>
+                              </div>
+                            </div>
                             <FormMessage />
                           </FormItem>
                         )}
@@ -451,28 +456,28 @@ export default function Addnew() {
                                 </div>
                                 <div className="col-span-8">
                                   <FormControl>
-                                  <Select
-                                  onValueChange={field.onChange}
-                                  defaultValue={field.value}
-                                >
-                                  <FormControl>
-                                    <SelectTrigger>
-                                      <SelectValue placeholder="Select Color" />
-                                    </SelectTrigger>
-                                  </FormControl>
-                                  <SelectContent>
-                                    <SelectItem value="Apple">Apple</SelectItem>
-                                    <SelectItem value="m2@example.com">Pran</SelectItem>
-                                    <SelectItem value="m22@example.com">Squre</SelectItem>
-                                    <SelectItem value="m3@example.com">ACI</SelectItem>
-                                    <SelectItem value="m4@example.com">SoftRavine</SelectItem>
-                                    <SelectItem value="m5@example.com">Samsung</SelectItem>
-                                    <SelectItem value="m6@example.com">LG</SelectItem>
-                                    <SelectItem value="m7@example.com">Logitech</SelectItem>
-                                    <SelectItem value="m8@example.com">A4tech</SelectItem>
-                                    <SelectItem value="m9@example.com">HP</SelectItem>
-                                  </SelectContent>
-                                </Select>
+                                    <Select
+                                      onValueChange={field.onChange}
+                                      defaultValue={field.value}
+                                    >
+                                      <FormControl>
+                                        <SelectTrigger>
+                                          <SelectValue placeholder="Select Color" />
+                                        </SelectTrigger>
+                                      </FormControl>
+                                      <SelectContent>
+                                        <SelectItem value="Apple">Apple</SelectItem>
+                                        <SelectItem value="m2@example.com">Pran</SelectItem>
+                                        <SelectItem value="m22@example.com">Squre</SelectItem>
+                                        <SelectItem value="m3@example.com">ACI</SelectItem>
+                                        <SelectItem value="m4@example.com">SoftRavine</SelectItem>
+                                        <SelectItem value="m5@example.com">Samsung</SelectItem>
+                                        <SelectItem value="m6@example.com">LG</SelectItem>
+                                        <SelectItem value="m7@example.com">Logitech</SelectItem>
+                                        <SelectItem value="m8@example.com">A4tech</SelectItem>
+                                        <SelectItem value="m9@example.com">HP</SelectItem>
+                                      </SelectContent>
+                                    </Select>
                                   </FormControl>
                                 </div>
                               </div>
@@ -493,28 +498,28 @@ export default function Addnew() {
                                 </div>
                                 <div className="col-span-8">
                                   <FormControl>
-                                  <Select
-                                  onValueChange={field.onChange}
-                                  defaultValue={field.value}
-                                >
-                                  <FormControl>
-                                    <SelectTrigger>
-                                      <SelectValue placeholder="Select Color" />
-                                    </SelectTrigger>
-                                  </FormControl>
-                                  <SelectContent>
-                                    <SelectItem value="Apple">Apple</SelectItem>
-                                    <SelectItem value="m2@example.com">Pran</SelectItem>
-                                    <SelectItem value="m22@example.com">Squre</SelectItem>
-                                    <SelectItem value="m3@example.com">ACI</SelectItem>
-                                    <SelectItem value="m4@example.com">SoftRavine</SelectItem>
-                                    <SelectItem value="m5@example.com">Samsung</SelectItem>
-                                    <SelectItem value="m6@example.com">LG</SelectItem>
-                                    <SelectItem value="m7@example.com">Logitech</SelectItem>
-                                    <SelectItem value="m8@example.com">A4tech</SelectItem>
-                                    <SelectItem value="m9@example.com">HP</SelectItem>
-                                  </SelectContent>
-                                </Select>
+                                    <Select
+                                      onValueChange={field.onChange}
+                                      defaultValue={field.value}
+                                    >
+                                      <FormControl>
+                                        <SelectTrigger>
+                                          <SelectValue placeholder="Select Color" />
+                                        </SelectTrigger>
+                                      </FormControl>
+                                      <SelectContent>
+                                        <SelectItem value="Apple">Apple</SelectItem>
+                                        <SelectItem value="m2@example.com">Pran</SelectItem>
+                                        <SelectItem value="m22@example.com">Squre</SelectItem>
+                                        <SelectItem value="m3@example.com">ACI</SelectItem>
+                                        <SelectItem value="m4@example.com">SoftRavine</SelectItem>
+                                        <SelectItem value="m5@example.com">Samsung</SelectItem>
+                                        <SelectItem value="m6@example.com">LG</SelectItem>
+                                        <SelectItem value="m7@example.com">Logitech</SelectItem>
+                                        <SelectItem value="m8@example.com">A4tech</SelectItem>
+                                        <SelectItem value="m9@example.com">HP</SelectItem>
+                                      </SelectContent>
+                                    </Select>
                                   </FormControl>
                                 </div>
                               </div>
@@ -972,7 +977,7 @@ export default function Addnew() {
                           control={form.control}
                           name="meta_description"
                           render={({ field }) => (
-                            <FormItem>                              
+                            <FormItem>
                               <div className="grid grid-cols-1 md:grid-cols-12">
                                 <div className="col-span-3 mt-3">
                                   <FormLabel>Meta Description</FormLabel>
@@ -1042,28 +1047,28 @@ export default function Addnew() {
                                 </div>
                                 <div className="col-span-8">
                                   <FormControl>
-                                  <Select
-                                  onValueChange={field.onChange}
-                                  defaultValue={field.value}
-                                >
-                                  <FormControl>
-                                    <SelectTrigger>
-                                      <SelectValue placeholder="Select Category" />
-                                    </SelectTrigger>
-                                  </FormControl>
-                                  <SelectContent>
-                                    <SelectItem value="Apple">Apple</SelectItem>
-                                    <SelectItem value="m2@example.com">Pran</SelectItem>
-                                    <SelectItem value="m22@example.com">Squre</SelectItem>
-                                    <SelectItem value="m3@example.com">ACI</SelectItem>
-                                    <SelectItem value="m4@example.com">SoftRavine</SelectItem>
-                                    <SelectItem value="m5@example.com">Samsung</SelectItem>
-                                    <SelectItem value="m6@example.com">LG</SelectItem>
-                                    <SelectItem value="m7@example.com">Logitech</SelectItem>
-                                    <SelectItem value="m8@example.com">A4tech</SelectItem>
-                                    <SelectItem value="m9@example.com">HP</SelectItem>
-                                  </SelectContent>
-                                </Select>
+                                    <Select
+                                      onValueChange={field.onChange}
+                                      defaultValue={field.value}
+                                    >
+                                      <FormControl>
+                                        <SelectTrigger>
+                                          <SelectValue placeholder="Select Category" />
+                                        </SelectTrigger>
+                                      </FormControl>
+                                      <SelectContent>
+                                        <SelectItem value="Apple">Apple</SelectItem>
+                                        <SelectItem value="m2@example.com">Pran</SelectItem>
+                                        <SelectItem value="m22@example.com">Squre</SelectItem>
+                                        <SelectItem value="m3@example.com">ACI</SelectItem>
+                                        <SelectItem value="m4@example.com">SoftRavine</SelectItem>
+                                        <SelectItem value="m5@example.com">Samsung</SelectItem>
+                                        <SelectItem value="m6@example.com">LG</SelectItem>
+                                        <SelectItem value="m7@example.com">Logitech</SelectItem>
+                                        <SelectItem value="m8@example.com">A4tech</SelectItem>
+                                        <SelectItem value="m9@example.com">HP</SelectItem>
+                                      </SelectContent>
+                                    </Select>
                                   </FormControl>
                                 </div>
                               </div>
@@ -1084,28 +1089,28 @@ export default function Addnew() {
                                 </div>
                                 <div className="col-span-8">
                                   <FormControl>
-                                  <Select
-                                  onValueChange={field.onChange}
-                                  defaultValue={field.value}
-                                >
-                                  <FormControl>
-                                    <SelectTrigger>
-                                      <SelectValue placeholder="Select Sub Category" />
-                                    </SelectTrigger>
-                                  </FormControl>
-                                  <SelectContent>
-                                    <SelectItem value="Apple">Apple</SelectItem>
-                                    <SelectItem value="m2@example.com">Pran</SelectItem>
-                                    <SelectItem value="m22@example.com">Squre</SelectItem>
-                                    <SelectItem value="m3@example.com">ACI</SelectItem>
-                                    <SelectItem value="m4@example.com">SoftRavine</SelectItem>
-                                    <SelectItem value="m5@example.com">Samsung</SelectItem>
-                                    <SelectItem value="m6@example.com">LG</SelectItem>
-                                    <SelectItem value="m7@example.com">Logitech</SelectItem>
-                                    <SelectItem value="m8@example.com">A4tech</SelectItem>
-                                    <SelectItem value="m9@example.com">HP</SelectItem>
-                                  </SelectContent>
-                                </Select>
+                                    <Select
+                                      onValueChange={field.onChange}
+                                      defaultValue={field.value}
+                                    >
+                                      <FormControl>
+                                        <SelectTrigger>
+                                          <SelectValue placeholder="Select Sub Category" />
+                                        </SelectTrigger>
+                                      </FormControl>
+                                      <SelectContent>
+                                        <SelectItem value="Apple">Apple</SelectItem>
+                                        <SelectItem value="m2@example.com">Pran</SelectItem>
+                                        <SelectItem value="m22@example.com">Squre</SelectItem>
+                                        <SelectItem value="m3@example.com">ACI</SelectItem>
+                                        <SelectItem value="m4@example.com">SoftRavine</SelectItem>
+                                        <SelectItem value="m5@example.com">Samsung</SelectItem>
+                                        <SelectItem value="m6@example.com">LG</SelectItem>
+                                        <SelectItem value="m7@example.com">Logitech</SelectItem>
+                                        <SelectItem value="m8@example.com">A4tech</SelectItem>
+                                        <SelectItem value="m9@example.com">HP</SelectItem>
+                                      </SelectContent>
+                                    </Select>
                                   </FormControl>
                                 </div>
                               </div>
@@ -1139,7 +1144,7 @@ export default function Addnew() {
                                 </div>
                                 <div className="col-span-7">
                                   <FormControl>
-                                  <Switch />
+                                    <Switch />
                                   </FormControl>
                                 </div>
                               </div>
@@ -1160,7 +1165,7 @@ export default function Addnew() {
                                 </div>
                                 <div className="col-span-7">
                                   <FormControl>
-                                  <Switch />
+                                    <Switch />
                                   </FormControl>
                                 </div>
                               </div>
@@ -1181,7 +1186,7 @@ export default function Addnew() {
                                 </div>
                                 <div className="col-span-7">
                                   <FormControl>
-                                  <Switch />
+                                    <Switch />
                                   </FormControl>
                                 </div>
                               </div>
@@ -1208,14 +1213,14 @@ export default function Addnew() {
                           control={form.control}
                           name="show_stock_quantity"
                           render={({ field }) => (
-                            <FormItem>                              
+                            <FormItem>
                               <div className="grid grid-cols-1 md:grid-cols-12">
                                 <div className="col-span-5">
                                   <FormLabel>Show Stock quantity</FormLabel>
                                 </div>
                                 <div className="col-span-7">
                                   <FormControl>
-                                  <Switch />
+                                    <Switch />
                                   </FormControl>
                                 </div>
                               </div>
@@ -1229,14 +1234,14 @@ export default function Addnew() {
                           control={form.control}
                           name=""
                           render={({ field }) => (
-                            <FormItem>                         
+                            <FormItem>
                               <div className="grid grid-cols-1 md:grid-cols-12">
                                 <div className="col-span-5">
                                   <FormLabel>Show Stock With Text Only</FormLabel>
                                 </div>
                                 <div className="col-span-7">
                                   <FormControl>
-                                  <Switch />
+                                    <Switch />
                                   </FormControl>
                                 </div>
                               </div>
@@ -1257,7 +1262,7 @@ export default function Addnew() {
                                 </div>
                                 <div className="col-span-7">
                                   <FormControl>
-                                  <Switch />
+                                    <Switch />
                                   </FormControl>
                                 </div>
                               </div>
@@ -1284,14 +1289,14 @@ export default function Addnew() {
                           control={form.control}
                           name="show_stock_quantity"
                           render={({ field }) => (
-                            <FormItem>                              
+                            <FormItem>
                               <div className="grid grid-cols-1 md:grid-cols-12">
                                 <div className="col-span-5">
                                   <FormLabel>Status</FormLabel>
                                 </div>
                                 <div className="col-span-7">
                                   <FormControl>
-                                  <Switch />
+                                    <Switch />
                                   </FormControl>
                                 </div>
                               </div>

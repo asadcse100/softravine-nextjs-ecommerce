@@ -42,7 +42,7 @@ export const SIDENAV_ITEMS: SideNavItem[] = [
             { title: 'Category Wise Discount', path: '/seller/pages/product/category_wise_discount' },
             // {title: 'Bulk Upload', path: '/seller/pages/product/product_bulk_upload'},
             { title: 'Digital Products', path: '/seller/pages/product/digital_product' },
-            { title: 'Digital Products Add', path: '/seller/pages/product/digital_product/addnew' },
+            // { title: 'Digital Products Add', path: '/seller/pages/product/digital_product/addnew' },
             { title: 'Product Reviews', path: '/seller/pages/product/product_review' },
         ],
     },
@@ -53,18 +53,18 @@ export const SIDENAV_ITEMS: SideNavItem[] = [
         submenu: true,
         subMenuItems: [
             { title: 'All Auction', path: '/seller/pages/auction' },
-            { title: 'Add New', path: '/seller/pages/auction/addnew' },
+            // { title: 'Add New', path: '/seller/pages/auction/addnew' },
             { title: 'Orders', path: '/seller/pages/auction/order' },
         ]
     },
     {
         title: 'Wholesale Products',
-        path: '/wolesale',
+        path: '/wholesale',
         icon: <BsCart4 size={20} />,
         submenu: true,
         subMenuItems: [
-            { title: 'All Wolesale', path: '/seller/pages/wolesale/products' },
-            { title: 'Add New', path: '/seller/pages/wolesale/addnew' },
+            { title: 'All Wholesale', path: '/seller/pages/wholesale/products' },
+            // { title: 'Add New', path: '/seller/pages/wolesale/addnew' },
         ]
     },
     {
@@ -106,7 +106,7 @@ export const SIDENAV_ITEMS: SideNavItem[] = [
         submenu: true,
         subMenuItems: [
             { title: 'Coupons', path: '/seller/pages/coupons' },
-            { title: 'Add New', path: '/seller/pages/coupons/addnew' },
+            // { title: 'Add New', path: '/seller/pages/coupons/addnew' },
         ]
     },
     {

@@ -24,6 +24,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/app/admin/components/ui/select";
+import Breadcrumb from "@/app/seller/components/Breadcrumbs/Breadcrumb"
 
 const formSchema = z.object({
   product_name: z.string().min(10, {
@@ -96,8 +97,11 @@ export default function Addnew() {
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
           <div className="mx-auto max-w-screen-2xl">
-            <div className="grid gap-4 md:grid-cols-1 lg:grid-cols-2 sm:grid-cols-1">
+            <div className="mb-3 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+              <Breadcrumb pageName="Digital Product Add" />
+            </div>
 
+            <div className="grid gap-4 md:grid-cols-1 lg:grid-cols-2 sm:grid-cols-1">
               <div className="flex flex-col gap-4">
                 <div className="px-6 rounded-sm border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark">
                   <div className="border-b border-stroke px-6.5 py-4 dark:border-strokedark">
@@ -812,7 +816,7 @@ export default function Addnew() {
                                 </div>
                                 <div className="col-span-8">
                                   <FormControl>
-                                  <Switch />
+                                    <Switch />
                                   </FormControl>
                                 </div>
                               </div>

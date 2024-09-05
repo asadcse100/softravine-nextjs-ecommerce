@@ -22,6 +22,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/app/admin/components/ui/select";
+import Breadcrumb from "@/app/seller/components/Breadcrumbs/Breadcrumb";
 
 const formSchema = z.object({
   code: z.string().min(10, {
@@ -74,6 +75,9 @@ export default function Addnew() {
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
           <div className="mx-auto max-w-screen-2xl">
+            <div className="mb-3 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+              <Breadcrumb pageName="Coupon Add" />
+            </div>
             <div className="grid gap-4 md:grid-cols-1 lg:grid-cols-2 sm:grid-cols-1">
               <div className="flex flex-col gap-4">
                 <div className="px-6 rounded-sm border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark">
@@ -157,19 +161,19 @@ export default function Addnew() {
                         render={({ field }) => (
                           <FormItem>
                             <div className="grid grid-cols-1 md:grid-cols-12">
-                                <div className="col-span-3 mt-3">
-                                  <FormLabel>Date</FormLabel>
-                                </div>
-                                <div className="col-span-8">
-                                  <FormControl>
-                                    <Input
-                                      className={inputClass}
-                                      placeholder="Date"
-                                      {...field}
-                                    />
-                                  </FormControl>
-                                </div>
+                              <div className="col-span-3 mt-3">
+                                <FormLabel>Date</FormLabel>
                               </div>
+                              <div className="col-span-8">
+                                <FormControl>
+                                  <Input
+                                    className={inputClass}
+                                    placeholder="Date"
+                                    {...field}
+                                  />
+                                </FormControl>
+                              </div>
+                            </div>
                             <FormMessage />
                           </FormItem>
                         )}
@@ -182,19 +186,19 @@ export default function Addnew() {
                         render={({ field }) => (
                           <FormItem>
                             <div className="grid grid-cols-1 md:grid-cols-12">
-                                <div className="col-span-3 mt-3">
-                                  <FormLabel>Discount</FormLabel>
-                                </div>
-                                <div className="col-span-8">
-                                  <FormControl>
-                                    <Input
-                                      className={inputClass}
-                                      placeholder="Discount"
-                                      {...field}
-                                    />
-                                  </FormControl>
-                                </div>
+                              <div className="col-span-3 mt-3">
+                                <FormLabel>Discount</FormLabel>
                               </div>
+                              <div className="col-span-8">
+                                <FormControl>
+                                  <Input
+                                    className={inputClass}
+                                    placeholder="Discount"
+                                    {...field}
+                                  />
+                                </FormControl>
+                              </div>
+                            </div>
                             <FormMessage />
                           </FormItem>
                         )}
@@ -228,19 +232,19 @@ export default function Addnew() {
                         render={({ field }) => (
                           <FormItem>
                             <div className="grid grid-cols-1 md:grid-cols-12">
-                                <div className="col-span-3 mt-3">
-                                  <FormLabel>Coupon Code</FormLabel>
-                                </div>
-                                <div className="col-span-8">
-                                  <FormControl>
-                                    <Input
-                                      className={inputClass}
-                                      placeholder="Coupon Code"
-                                      {...field}
-                                    />
-                                  </FormControl>
-                                </div>
+                              <div className="col-span-3 mt-3">
+                                <FormLabel>Coupon Code</FormLabel>
                               </div>
+                              <div className="col-span-8">
+                                <FormControl>
+                                  <Input
+                                    className={inputClass}
+                                    placeholder="Coupon Code"
+                                    {...field}
+                                  />
+                                </FormControl>
+                              </div>
+                            </div>
                             <FormMessage />
                           </FormItem>
                         )}
@@ -253,19 +257,19 @@ export default function Addnew() {
                         render={({ field }) => (
                           <FormItem>
                             <div className="grid grid-cols-1 md:grid-cols-12">
-                                <div className="col-span-3 mt-3">
-                                  <FormLabel>Minimum Shipping</FormLabel>
-                                </div>
-                                <div className="col-span-8">
-                                  <FormControl>
-                                    <Input
-                                      className={inputClass}
-                                      placeholder="Minimum Shipping"
-                                      {...field}
-                                    />
-                                  </FormControl>
-                                </div>
+                              <div className="col-span-3 mt-3">
+                                <FormLabel>Minimum Shipping</FormLabel>
                               </div>
+                              <div className="col-span-8">
+                                <FormControl>
+                                  <Input
+                                    className={inputClass}
+                                    placeholder="Minimum Shipping"
+                                    {...field}
+                                  />
+                                </FormControl>
+                              </div>
+                            </div>
                             <FormMessage />
                           </FormItem>
                         )}
@@ -278,19 +282,19 @@ export default function Addnew() {
                         render={({ field }) => (
                           <FormItem>
                             <div className="grid grid-cols-1 md:grid-cols-12">
-                                <div className="col-span-3 mt-3">
-                                  <FormLabel>Date</FormLabel>
-                                </div>
-                                <div className="col-span-8">
-                                  <FormControl>
-                                    <Input type="date"
-                                      className={inputClass}
-                                      placeholder="Date"
-                                      {...field}
-                                    />
-                                  </FormControl>
-                                </div>
+                              <div className="col-span-3 mt-3">
+                                <FormLabel>Date</FormLabel>
                               </div>
+                              <div className="col-span-8">
+                                <FormControl>
+                                  <Input type="date"
+                                    className={inputClass}
+                                    placeholder="Date"
+                                    {...field}
+                                  />
+                                </FormControl>
+                              </div>
+                            </div>
                             <FormMessage />
                           </FormItem>
                         )}
@@ -303,19 +307,19 @@ export default function Addnew() {
                         render={({ field }) => (
                           <FormItem>
                             <div className="grid grid-cols-1 md:grid-cols-12">
-                                <div className="col-span-3 mt-3">
-                                  <FormLabel>Discount</FormLabel>
-                                </div>
-                                <div className="col-span-8">
-                                  <FormControl>
-                                    <Input type="text"
-                                      className={inputClass}
-                                      placeholder="Discount"
-                                      {...field}
-                                    />
-                                  </FormControl>
-                                </div>
+                              <div className="col-span-3 mt-3">
+                                <FormLabel>Discount</FormLabel>
                               </div>
+                              <div className="col-span-8">
+                                <FormControl>
+                                  <Input type="text"
+                                    className={inputClass}
+                                    placeholder="Discount"
+                                    {...field}
+                                  />
+                                </FormControl>
+                              </div>
+                            </div>
                             <FormMessage />
                           </FormItem>
                         )}
@@ -328,19 +332,19 @@ export default function Addnew() {
                         render={({ field }) => (
                           <FormItem>
                             <div className="grid grid-cols-1 md:grid-cols-12">
-                                <div className="col-span-3 mt-3">
-                                  <FormLabel>Maximum Discount Amount</FormLabel>
-                                </div>
-                                <div className="col-span-8">
-                                  <FormControl>
-                                    <Input type="text"
-                                      className={inputClass}
-                                      placeholder="Maximum Discount Amount"
-                                      {...field}
-                                    />
-                                  </FormControl>
-                                </div>
+                              <div className="col-span-3 mt-3">
+                                <FormLabel>Maximum Discount Amount</FormLabel>
                               </div>
+                              <div className="col-span-8">
+                                <FormControl>
+                                  <Input type="text"
+                                    className={inputClass}
+                                    placeholder="Maximum Discount Amount"
+                                    {...field}
+                                  />
+                                </FormControl>
+                              </div>
+                            </div>
                             <FormMessage />
                           </FormItem>
                         )}

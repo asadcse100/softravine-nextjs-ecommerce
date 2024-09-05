@@ -1,15 +1,14 @@
 import ProductCard from "@/app/(frontend)/components/ProductCard";
+import Breadcrumb from "@/app/seller/components/Breadcrumbs/Breadcrumb";
 import { PRODUCTS } from "@/data/data";
 import ButtonSecondary from "@/shared/Button/ButtonSecondary";
 
 const AccountSavelists = () => {
   const renderSection1 = () => {
     return (
-      <div className="space-y-10 sm:space-y-12 bg-gray-300 dark:bg-gray-700 p-5 rounded-xl">
-        <div>
-          <h2 className="text-2xl sm:text-3xl font-semibold">
-            List of Favorite products
-          </h2>
+      <div className="space-y-10 sm:space-y-12 bg-gray-300 dark:bg-gray-700 p-4 rounded-xl mt-2">
+        <div className="mb-2 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+          <Breadcrumb pageName="Favorite List" />
         </div>
 
         <div className="grid grid-cols-1 gap-6 md:gap-8 sm:grid-cols-2 lg:grid-cols-4">
