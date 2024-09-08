@@ -5,15 +5,24 @@ import bcrypt from 'bcrypt';
 
 const prisma = new PrismaClient();
 
-export const getStaffs = async (req: NextApiRequest, res: NextApiResponse) => {
-  try {
-    const staffs = await prisma.staff.findMany();
-    res.status(200).json({ staffs });
-  } catch (error) {
-    res.status(500).json({ error: 'Something went wrong while fetching the staffs.' });
-  }
-};
+// export const getStaffs = async (req: NextApiRequest, res: NextApiResponse) => {
+//   try {
+//     const staffs = await prisma.staff.findMany();
+//     res.status(200).json({ staffs });
+//   } catch (error) {
+//     res.status(500).json({ error: 'Something went wrong while fetching the staffs.' });
+//   }
+// };
 
+export const getStaffs = async () => {
+  try{
+      const staffs = await prisma.users.findMany();
+      return { success: true, data: staffs };
+  }catch(error){
+      console.error("Error fetching staffs:", error);
+      return { success: false, error };
+  }
+}
 
 export const storeStaff = async (req: NextApiRequest, res: NextApiResponse) => {
     const { name, email, mobile, password, roleId } = req.body;

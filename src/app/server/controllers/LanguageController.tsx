@@ -7,37 +7,47 @@ import path from 'path';
 
 const prisma = new PrismaClient();
 
-export const changeLanguage = async (req: NextApiRequest, res: NextApiResponse) => {
-  try {
-    const { locale } = req.body;
+// export const changeLanguage = async (req: NextApiRequest, res: NextApiResponse) => {
+//   try {
+//     const { locale } = req.body;
 
-    if (!locale) {
-      return res.status(400).json({ message: 'Locale is required' });
-    }
+//     if (!locale) {
+//       return res.status(400).json({ message: 'Locale is required' });
+//     }
 
-    const language = await prisma.language.findUnique({
-      where: { code: locale }
-    });
+//     const language = await prisma.language.findUnique({
+//       where: { code: locale }
+//     });
 
-    if (!language) {
-      return res.status(404).json({ message: 'Language not found' });
-    }
+//     if (!language) {
+//       return res.status(404).json({ message: 'Language not found' });
+//     }
 
-    // Assuming we have some session management logic
-    // For simplicity, we mock session storage
-    const session = req.session || {};  // Replace with actual session handling
-    session.locale = locale;
-    session.langcode = language.app_lang_code;
+//     // Assuming we have some session management logic
+//     // For simplicity, we mock session storage
+//     const session = req.session || {};  // Replace with actual session handling
+//     session.locale = locale;
+//     session.langcode = language.app_lang_code;
 
-    res.status(200).json({
-      message: `Language changed to ${language.name}`,
-      success: true,
-    });
-  } catch (error) {
-    console.error(error);
-    res.status(500).json({ message: 'Internal Server Error' });
+//     res.status(200).json({
+//       message: `Language changed to ${language.name}`,
+//       success: true,
+//     });
+//   } catch (error) {
+//     console.error(error);
+//     res.status(500).json({ message: 'Internal Server Error' });
+//   }
+// };
+
+export const changeLanguage = async () => {
+  try{
+      const language = await prisma.languages.findMany();
+      return { success: true, data: language };
+  }catch(error){
+      console.error("Error fetching language:", error);
+      return { success: false, error };
   }
-};
+}
 
 
 export const getLanguages = async (req: NextApiRequest, res: NextApiResponse) => {

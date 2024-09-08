@@ -4,18 +4,27 @@ import { PrismaClient } from '@prisma/client';
 
 const prisma = new PrismaClient();
 
-export const getSubscribers = async (req: NextApiRequest, res: NextApiResponse) => {
-  try {
-    const subscribers = await prisma.subscriber.findMany({
-      orderBy: { createdAt: 'desc' },
-    });
+// export const getSubscribers = async (req: NextApiRequest, res: NextApiResponse) => {
+//   try {
+//     const subscribers = await prisma.subscriber.findMany({
+//       orderBy: { createdAt: 'desc' },
+//     });
     
-    res.status(200).json({ subscribers });
-  } catch (error) {
-    res.status(500).json({ error: 'Something went wrong' });
-  }
-};
+//     res.status(200).json({ subscribers });
+//   } catch (error) {
+//     res.status(500).json({ error: 'Something went wrong' });
+//   }
+// };
 
+export const getSubscribers = async () => {
+  try{
+      const subscribers = await prisma.subscribers.findMany();
+      return { success: true, data: subscribers };
+  }catch(error){
+      console.error("Error fetching subscribers:", error);
+      return { success: false, error };
+  }
+}
 
 export const subscribeUser = async (req: NextApiRequest, res: NextApiResponse) => {
     const { email } = req.body;

@@ -6,19 +6,29 @@ import { PrismaClient } from '@prisma/client';
 const prisma = new PrismaClient();
 
 // export default async (req: NextApiRequest, res: NextApiResponse) => {
-export async function wishlists(req: NextApiRequest, res: NextApiResponse) {
-    const session = await getSession({ req });
+// export async function wishlists(req: NextApiRequest, res: NextApiResponse) {
+//     const session = await getSession({ req });
 
-    if (!session) {
-        return res.status(401).json({ message: 'Unauthorized' });
+//     if (!session) {
+//         return res.status(401).json({ message: 'Unauthorized' });
+//     }
+
+//     const wishlists = await prisma.wishlist.findMany({
+//         where: { userId: session.user.id },
+//     });
+
+//     res.status(200).json(wishlists);
+// };
+
+export const wishlists = async () => {
+    try {
+        const wishlist = await prisma.wishlists.findMany();
+        return { success: true, data: wishlist };
+    } catch (error) {
+        console.error("Error fetching wishlist:", error);
+        return { success: false, error };
     }
-
-    const wishlists = await prisma.wishlist.findMany({
-        where: { userId: session.user.id },
-    });
-
-    res.status(200).json(wishlists);
-};
+}
 
 export async function store(req: NextApiRequest, res: NextApiResponse) {
     const { id } = req.body;

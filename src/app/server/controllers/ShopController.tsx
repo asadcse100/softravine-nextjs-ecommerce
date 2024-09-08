@@ -6,22 +6,31 @@ import { sendEmailVerification } from '../utils/sendEmailVerification';
 
 const prisma = new PrismaClient();
 
-export const createSeller = (req: NextApiRequest, res: NextApiResponse) => {
-  if (req.isAuthenticated()) {
-    const user = req.user;
+// export const createSeller = (req: NextApiRequest, res: NextApiResponse) => {
+//   if (req.isAuthenticated()) {
+//     const user = req.user;
 
-    if (user.userType === 'admin' || user.userType === 'customer') {
-      return res.status(400).json({ error: 'Admin or Customer cannot be a seller' });
-    }
+//     if (user.userType === 'admin' || user.userType === 'customer') {
+//       return res.status(400).json({ error: 'Admin or Customer cannot be a seller' });
+//     }
     
-    if (user.userType === 'seller') {
-      return res.status(400).json({ error: 'This user is already a seller' });
-    }
-  } else {
-    return res.status(200).json({ view: 'frontend.seller_form' });
-  }
-};
+//     if (user.userType === 'seller') {
+//       return res.status(400).json({ error: 'This user is already a seller' });
+//     }
+//   } else {
+//     return res.status(200).json({ view: 'frontend.seller_form' });
+//   }
+// };
 
+export const createSeller = async () => {
+  try{
+      const user = await prisma.users.findMany();
+      return { success: true, data: user };
+  }catch(error){
+      console.error("Error fetching user:", error);
+      return { success: false, error };
+  }
+}
 
 export const storeSeller = async (req: NextApiRequest, res: NextApiResponse) => {
     const { name, email, password, shopName, address } = req.body;

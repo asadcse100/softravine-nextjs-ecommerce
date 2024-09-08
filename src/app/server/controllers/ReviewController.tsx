@@ -5,27 +5,37 @@ import { PrismaClient } from '@prisma/client';
 
 const prisma = new PrismaClient();
 
-export async function getReviews(req: NextApiRequest, res: NextApiResponse) {
-  try {
-    let reviews = await prisma.review.findMany({
-      orderBy: { created_at: 'desc' },
-    });
+// export async function getReviews(req: NextApiRequest, res: NextApiResponse) {
+//   try {
+//     let reviews = await prisma.review.findMany({
+//       orderBy: { created_at: 'desc' },
+//     });
 
-    if (req.query.rating) {
-      const [order, direction] = (req.query.rating as string).split(',');
-      reviews = reviews.sort((a, b) => {
-        if (direction === 'asc') {
-          return a.rating - b.rating;
-        } else {
-          return b.rating - a.rating;
-        }
-      });
-    }
+//     if (req.query.rating) {
+//       const [order, direction] = (req.query.rating as string).split(',');
+//       reviews = reviews.sort((a, b) => {
+//         if (direction === 'asc') {
+//           return a.rating - b.rating;
+//         } else {
+//           return b.rating - a.rating;
+//         }
+//       });
+//     }
 
-    res.status(200).json({ reviews });
-  } catch (error) {
-    console.error('Error:', error);
-    res.status(500).json({ error: 'Internal server error' });
+//     res.status(200).json({ reviews });
+//   } catch (error) {
+//     console.error('Error:', error);
+//     res.status(500).json({ error: 'Internal server error' });
+//   }
+// }
+
+export const getReviews = async () => {
+  try{
+      const reviews = await prisma.reviews.findMany();
+      return { success: true, data: reviews };
+  }catch(error){
+      console.error("Error fetching reviews:", error);
+      return { success: false, error };
   }
 }
 

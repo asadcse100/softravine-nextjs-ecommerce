@@ -3,15 +3,25 @@ import { PrismaClient } from '@prisma/client';
 
 const prisma = new PrismaClient();
 
-export const getManualPaymentMethods = async (req: NextApiRequest, res: NextApiResponse) => {
-  try {
-    const manualPaymentMethods = await prisma.manualPaymentMethod.findMany();
-    res.status(200).json(manualPaymentMethods);
-  } catch (error) {
-    console.error(error);
-    res.status(500).json({ error: 'Internal server error' });
+// export const getManualPaymentMethods = async (req: NextApiRequest, res: NextApiResponse) => {
+//   try {
+//     const manualPaymentMethods = await prisma.manualPaymentMethod.findMany();
+//     res.status(200).json(manualPaymentMethods);
+//   } catch (error) {
+//     console.error(error);
+//     res.status(500).json({ error: 'Internal server error' });
+//   }
+// };
+
+export const getManualPaymentMethods = async () => {
+  try{
+      const manualPaymentMethods = await prisma.manual_payment_methods.findMany();
+      return { success: true, data: manualPaymentMethods };
+  }catch(error){
+      console.error("Error fetching manualPaymentMethods:", error);
+      return { success: false, error };
   }
-};
+}
 
 export const storeManualPaymentMethod = async (req: NextApiRequest, res: NextApiResponse) => {
     const { type, photo, heading, description, bank_name, account_name, account_number, routing_number } = req.body;

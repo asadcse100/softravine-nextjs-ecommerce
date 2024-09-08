@@ -24,10 +24,10 @@ export const getFlashDeals = async (search: string | undefined) => {
       },
     } : {};
   
-    const flashDeals = await prisma.flashDeal.findMany({
+    const flashDeals = await prisma.flash_deals.findMany({
       where,
       orderBy: {
-        createdAt: 'desc',
+        created_at: 'desc',
       },
     });
   

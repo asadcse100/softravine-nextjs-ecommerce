@@ -3,43 +3,54 @@ import { PrismaClient } from '@prisma/client';
 
 const prisma = new PrismaClient();
 
-export const getCustomerList = async (req: NextApiRequest, res: NextApiResponse) => {
-  try {
-    const { search } = req.query;
-    const sortSearch = search ? String(search) : null;
+// export const getCustomerList = async (req: NextApiRequest, res: NextApiResponse) => {
+//   try {
+//     const { search } = req.query;
+//     const sortSearch = search ? String(search) : null;
 
-    const customers = await prisma.user.findMany({
-      where: {
-        user_type: 'customer',
-        email_verified_at: {
-          not: null,
-        },
-        OR: [
-          {
-            name: {
-              contains: sortSearch,
-              mode: 'insensitive',
-            },
-          },
-          {
-            email: {
-              contains: sortSearch,
-              mode: 'insensitive',
-            },
-          },
-        ],
-      },
-      orderBy: {
-        created_at: 'desc',
-      },
-      take: 15,
-    });
+//     const customers = await prisma.user.findMany({
+//       where: {
+//         user_type: 'customer',
+//         email_verified_at: {
+//           not: null,
+//         },
+//         OR: [
+//           {
+//             name: {
+//               contains: sortSearch,
+//               mode: 'insensitive',
+//             },
+//           },
+//           {
+//             email: {
+//               contains: sortSearch,
+//               mode: 'insensitive',
+//             },
+//           },
+//         ],
+//       },
+//       orderBy: {
+//         created_at: 'desc',
+//       },
+//       take: 15,
+//     });
 
-    res.status(200).json({ customers, sort_search: sortSearch });
-  } catch (error) {
-    res.status(500).json({ error: 'Failed to fetch customers' });
+//     res.status(200).json({ customers, sort_search: sortSearch });
+//   } catch (error) {
+//     res.status(500).json({ error: 'Failed to fetch customers' });
+//   }
+// };
+
+export const getCurrencyList = async () => {
+  try{
+      const customers = await prisma.users.findMany();
+      return { success: true, data: customers };
+  }catch(error){
+      console.error("Error fetching customers:", error);
+      return { success: false, error };
   }
-};
+}
+
 
 export const createUserAndCustomer = async (req: NextApiRequest, res: NextApiResponse) => {
     try {

@@ -5,13 +5,23 @@ import { createCategory } from '../models/Category';
 
 const prisma = new PrismaClient();
 
-export async function getCategories(search?: string) {
-  const categories = await prisma.category.findMany({
-    where: search ? { name: { contains: search, mode: 'insensitive' } } : {},
-    orderBy: { orderLevel: 'desc' },
-  });
+// export async function getCategories(search?: string) {
+//   const categories = await prisma.category.findMany({
+//     where: search ? { name: { contains: search, mode: 'insensitive' } } : {},
+//     orderBy: { orderLevel: 'desc' },
+//   });
 
-  return categories;
+//   return categories;
+// }
+
+export const getCategories = async () => {
+  try{
+      const categories = await prisma.categories.findMany();
+      return { success: true, data: categories };
+  }catch(error){
+      console.error("Error fetching categories:", error);
+      return { success: false, error };
+  }
 }
 
 export default async function store(req: NextApiRequest, res: NextApiResponse) {

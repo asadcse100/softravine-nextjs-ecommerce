@@ -17,17 +17,16 @@ interface ProductRequest {
   }
 
 export const getDigitalProducts = async (search: string | undefined) => {
-  const products = await prisma.product.findMany({
+  const products = await prisma.products.findMany({
     where: {
-      addedBy: 'admin',
-      digital: true,
+      added_by: 'admin',
+      digital: 1,
       name: {
         contains: search ?? '',
-        mode: 'insensitive',
       },
     },
     orderBy: {
-      createdAt: 'desc',
+      created_at: 'desc',
     },
   });
 

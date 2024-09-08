@@ -5,20 +5,30 @@ import nodemailer from 'nodemailer';
 
 const prisma = new PrismaClient();
 
-export const getUserTickets = async (req: NextApiRequest, res: NextApiResponse) => {
-  const userId = req.query.userId as string;
+// export const getUserTickets = async (req: NextApiRequest, res: NextApiResponse) => {
+//   const userId = req.query.userId as string;
 
-  try {
-    const tickets = await prisma.ticket.findMany({
-      where: { userId: Number(userId) },
-      orderBy: { createdAt: 'desc' },
-    });
+//   try {
+//     const tickets = await prisma.ticket.findMany({
+//       where: { userId: Number(userId) },
+//       orderBy: { createdAt: 'desc' },
+//     });
 
-    res.status(200).json({ tickets });
-  } catch (error) {
-    res.status(500).json({ error: 'Something went wrong' });
+//     res.status(200).json({ tickets });
+//   } catch (error) {
+//     res.status(500).json({ error: 'Something went wrong' });
+//   }
+// };
+
+export const getUserTickets = async () => {
+  try{
+      const ticket = await prisma.tickets.findMany();
+      return { success: true, data: ticket };
+  }catch(error){
+      console.error("Error fetching ticket:", error);
+      return { success: false, error };
   }
-};
+}
 
 export const getAdminTickets = async (req: NextApiRequest, res: NextApiResponse) => {
     const { search } = req.query;

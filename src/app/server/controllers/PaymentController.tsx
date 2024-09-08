@@ -14,26 +14,36 @@ function decrypt(text: string): string {
   return decrypted;
 }
 
-export async function getPaymentHistories(req: NextApiRequest, res: NextApiResponse) {
-    try {
-      const { page = 1, pageSize = 15 } = req.query;
-      const pageNum = parseInt(page as string, 10);
-      const pageSizeNum = parseInt(pageSize as string, 10);
+// export async function getPaymentHistories(req: NextApiRequest, res: NextApiResponse) {
+//     try {
+//       const { page = 1, pageSize = 15 } = req.query;
+//       const pageNum = parseInt(page as string, 10);
+//       const pageSizeNum = parseInt(pageSize as string, 10);
   
-      const payments = await prisma.payment.findMany({
-        orderBy: { createdAt: 'desc' },
-        skip: (pageNum - 1) * pageSizeNum,
-        take: pageSizeNum,
-      });
+//       const payments = await prisma.payment.findMany({
+//         orderBy: { createdAt: 'desc' },
+//         skip: (pageNum - 1) * pageSizeNum,
+//         take: pageSizeNum,
+//       });
   
-      const totalPayments = await prisma.payment.count();
+//       const totalPayments = await prisma.payment.count();
   
-      return res.status(200).json({ payments, totalPayments, page: pageNum, pageSize: pageSizeNum });
-    } catch (error) {
-      console.error(error);
-      return res.status(500).json({ error: 'Internal server error' });
-    }
+//       return res.status(200).json({ payments, totalPayments, page: pageNum, pageSize: pageSizeNum });
+//     } catch (error) {
+//       console.error(error);
+//       return res.status(500).json({ error: 'Internal server error' });
+//     }
+//   }
+
+export const getPaymentHistories = async () => {
+  try{
+      const payments = await prisma.payments.findMany();
+      return { success: true, data: payments };
+  }catch(error){
+      console.error("Error fetching payments:", error);
+      return { success: false, error };
   }
+}
 
 export async function showUserPayments(req: NextApiRequest, res: NextApiResponse) {
   try {

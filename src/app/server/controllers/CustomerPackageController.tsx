@@ -3,17 +3,27 @@ import { PrismaClient } from '@prisma/client';
 
 const prisma = new PrismaClient();
 
-export const getAllCustomerPackages = async (req: NextApiRequest, res: NextApiResponse) => {
-  try {
-    // Retrieve all customer packages
-    const customerPackages = await prisma.customerPackage.findMany();
+// export const getAllCustomerPackages = async (req: NextApiRequest, res: NextApiResponse) => {
+//   try {
+//     // Retrieve all customer packages
+//     const customerPackages = await prisma.customerPackage.findMany();
 
-    res.status(200).json(customerPackages);
-  } catch (error) {
-    console.error(error);
-    res.status(500).json({ error: 'Failed to retrieve customer packages' });
+//     res.status(200).json(customerPackages);
+//   } catch (error) {
+//     console.error(error);
+//     res.status(500).json({ error: 'Failed to retrieve customer packages' });
+//   }
+// };
+
+export const getAllCustomerPackages = async () => {
+  try{
+      const customerPackages = await prisma.customer_packages.findMany();
+      return { success: true, data: customerPackages };
+  }catch(error){
+      console.error("Error fetching customerPackages:", error);
+      return { success: false, error };
   }
-};
+}
 
 export const createCustomerPackage = async (req: NextApiRequest, res: NextApiResponse) => {
     try {

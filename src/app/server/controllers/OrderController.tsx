@@ -17,7 +17,7 @@ export async function getAllOrders(filters: OrderFilters, page: number, perPage:
     let adminUserId: number | null = null;
 
     if (filters.route !== 'pick_up_point.index') {
-        const adminUser = await prisma.user.findFirst({ where: { userType: 'admin' } });
+        const adminUser = await prisma.users.findFirst({ where: { user_type: 'admin' } });
         adminUserId = adminUser ? adminUser.id : null;
     }
 
@@ -29,9 +29,9 @@ export async function getAllOrders(filters: OrderFilters, page: number, perPage:
         whereClause.sellerId = { not: adminUserId };
     } else if (filters.route === 'pick_up_point.index' && filters.userType === 'staff') {
         whereClause.shippingType = 'pickup_point';
-        const staff = await prisma.staff.findFirst({ where: { userId: filters.userId } });
+        const staff = await prisma.staff.findFirst({ where: { user_id: filters.userId } });
         if (staff) {
-            whereClause.pickupPointId = staff.pickupPointId;
+            whereClause.pickupPointId = staff.pickup_point_id;
         }
     } else if (filters.route === 'all_orders.index' && filters.userType === 'admin') {
         // No additional filter for admin viewing all orders
@@ -59,7 +59,7 @@ export async function getAllOrders(filters: OrderFilters, page: number, perPage:
         };
     }
 
-    const orders = await prisma.order.findMany({
+    const orders = await prisma.orders.findMany({
         where: whereClause,
         orderBy: { id: 'desc' },
         skip: (page - 1) * perPage,

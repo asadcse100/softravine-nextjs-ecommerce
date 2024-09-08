@@ -3,35 +3,45 @@ import { PrismaClient } from '@prisma/client';
 
 const prisma = new PrismaClient();
 
-export const getCurrencyList = async (req: NextApiRequest, res: NextApiResponse) => {
-  try {
-    const { search } = req.query;
-    const sortSearch = search ? String(search) : null;
+// export const getCurrencyList = async (req: NextApiRequest, res: NextApiResponse) => {
+//   try {
+//     const { search } = req.query;
+//     const sortSearch = search ? String(search) : null;
 
-    const currencies = await prisma.currency.findMany({
-      where: {
-        name: {
-          contains: sortSearch,
-          mode: 'insensitive',
-        },
-      },
-      orderBy: {
-        created_at: 'desc',
-      },
-      take: 10,
-    });
+//     const currencies = await prisma.currency.findMany({
+//       where: {
+//         name: {
+//           contains: sortSearch,
+//           mode: 'insensitive',
+//         },
+//       },
+//       orderBy: {
+//         created_at: 'desc',
+//       },
+//       take: 10,
+//     });
 
-    const activeCurrencies = await prisma.currency.findMany({
-      where: {
-        status: true,
-      },
-    });
+//     const activeCurrencies = await prisma.currency.findMany({
+//       where: {
+//         status: true,
+//       },
+//     });
 
-    res.status(200).json({ currencies, activeCurrencies, sortSearch });
-  } catch (error) {
-    res.status(500).json({ error: 'Failed to fetch currencies' });
+//     res.status(200).json({ currencies, activeCurrencies, sortSearch });
+//   } catch (error) {
+//     res.status(500).json({ error: 'Failed to fetch currencies' });
+//   }
+// };
+
+export const getCurrencyList = async () => {
+  try{
+      const currencies = await prisma.currencies.findMany();
+      return { success: true, data: currencies };
+  }catch(error){
+      console.error("Error fetching currencies:", error);
+      return { success: false, error };
   }
-};
+}
 
 export const updateCurrency = async (req: NextApiRequest, res: NextApiResponse) => {
     try {

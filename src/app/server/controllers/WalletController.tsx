@@ -5,28 +5,38 @@ import { getSession } from 'next-auth/react';
 const prisma = new PrismaClient();
 
 // export default async function index(req: NextApiRequest, res: NextApiResponse) {
-export const index = async (req: NextApiRequest, res: NextApiResponse) => {
-    try {
-        const userId = req.headers['user-id'] as string; // Assuming user ID is passed in the headers
-        if (!userId) {
-            res.status(400).json({ error: 'User ID not provided' });
-            return;
-        }
+// export const index = async (req: NextApiRequest, res: NextApiResponse) => {
+//     try {
+//         const userId = req.headers['user-id'] as string; // Assuming user ID is passed in the headers
+//         if (!userId) {
+//             res.status(400).json({ error: 'User ID not provided' });
+//             return;
+//         }
 
-        const wallets = await prisma.wallet.findMany({
-            where: {
-                user_id: parseInt(userId),
-            },
-            orderBy: {
-                created_at: 'desc',
-            },
-        });
+//         const wallets = await prisma.wallet.findMany({
+//             where: {
+//                 user_id: parseInt(userId),
+//             },
+//             orderBy: {
+//                 created_at: 'desc',
+//             },
+//         });
 
-        res.status(200).json(wallets);
-    } catch (error) {
-        console.error(error);
-        res.status(500).json({ error: 'Internal Server Error' });
-    }
+//         res.status(200).json(wallets);
+//     } catch (error) {
+//         console.error(error);
+//         res.status(500).json({ error: 'Internal Server Error' });
+//     }
+// }
+
+export const index = async () => {
+  try{
+      const wallet = await prisma.wallets.findMany();
+      return { success: true, data: wallet };
+  }catch(error){
+      console.error("Error fetching wallet:", error);
+      return { success: false, error };
+  }
 }
 
 // export default async function recharge(req: NextApiRequest, res: NextApiResponse) {

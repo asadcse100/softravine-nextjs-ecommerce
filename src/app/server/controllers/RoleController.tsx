@@ -5,20 +5,30 @@ import { PrismaClient } from '@prisma/client';
 
 const prisma = new PrismaClient();
 
-export async function index(req: NextApiRequest, res: NextApiResponse) {
-  try {
-    const roles = await prisma.role.findMany({
-      where: {
-        id: {
-          not: 1,
-        },
-      },
-    });
+// export async function index(req: NextApiRequest, res: NextApiResponse) {
+//   try {
+//     const roles = await prisma.role.findMany({
+//       where: {
+//         id: {
+//           not: 1,
+//         },
+//       },
+//     });
 
-    res.status(200).json({ roles });
-  } catch (error) {
-    console.error('Error:', error);
-    res.status(500).json({ error: 'Internal server error' });
+//     res.status(200).json({ roles });
+//   } catch (error) {
+//     console.error('Error:', error);
+//     res.status(500).json({ error: 'Internal server error' });
+//   }
+// }
+
+export const index = async () => {
+  try{
+      const roles = await prisma.roles.findMany();
+      return { success: true, data: roles };
+  }catch(error){
+      console.error("Error fetching roles:", error);
+      return { success: false, error };
   }
 }
 

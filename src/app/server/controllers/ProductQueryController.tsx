@@ -6,7 +6,7 @@ const prisma = new PrismaClient();
 
 export const getProductQueries = async () => {
     try {
-        const admin = await prisma.user.findFirst({
+        const admin = await prisma.users.findFirst({
             where: {
                 user_type: 'admin'
             },
@@ -15,12 +15,12 @@ export const getProductQueries = async () => {
             }
         });
 
-        const queries = await prisma.productQuery.findMany({
+        const queries = await prisma.product_queries.findMany({
             where: {
                 seller_id: admin?.id
             },
             orderBy: {
-                createdAt: 'desc'
+                created_at: 'desc'
             },
             take: 20
         });

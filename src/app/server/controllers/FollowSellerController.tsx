@@ -4,31 +4,41 @@ import { PrismaClient } from '@prisma/client';
 
 const prisma = new PrismaClient();
 
-export const getFollowedSellers = async (req: NextApiRequest, res: NextApiResponse) => {
-  try {
-    const userId = req.user.id; // Assuming you have middleware to attach user to request
-    if (!userId) {
-      return res.status(401).json({ message: 'Unauthorized' });
-    }
+// export const getFollowedSellers = async (req: NextApiRequest, res: NextApiResponse) => {
+//   try {
+//     const userId = req.user.id; // Assuming you have middleware to attach user to request
+//     if (!userId) {
+//       return res.status(401).json({ message: 'Unauthorized' });
+//     }
 
-    const followedSellers = await prisma.followSeller.findMany({
-      where: {
-        userId: userId,
-      },
-      orderBy: {
-        shopId: 'asc',
-      },
-      include: {
-        shop: true, // Assuming there's a relation to the shop model
-      },
-    });
+//     const followedSellers = await prisma.followSeller.findMany({
+//       where: {
+//         userId: userId,
+//       },
+//       orderBy: {
+//         shopId: 'asc',
+//       },
+//       include: {
+//         shop: true, // Assuming there's a relation to the shop model
+//       },
+//     });
 
-    res.status(200).json(followedSellers);
-  } catch (error) {
-    console.error('Error:', error);
-    res.status(500).json({ message: 'Internal Server Error' });
+//     res.status(200).json(followedSellers);
+//   } catch (error) {
+//     console.error('Error:', error);
+//     res.status(500).json({ message: 'Internal Server Error' });
+//   }
+// };
+
+export const getFollowedSellers = async () => {
+  try{
+      const followedSellers = await prisma.follow_sellers.findMany();
+      return { success: true, data: followedSellers };
+  }catch(error){
+      console.error("Error fetching followedSellers:", error);
+      return { success: false, error };
   }
-};
+}
 
 export const followSellerController = {
   async store(req: NextApiRequest, res: NextApiResponse) {

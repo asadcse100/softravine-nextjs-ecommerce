@@ -22,7 +22,7 @@ import { Button } from "@/app/admin/components/ui/button"
 async function getData(): Promise<Products[]> {
   const apiUrl = process.env.NEXT_PUBLIC_API_URL || '';
   try {
-    const response = await fetch(`${apiUrl}/server/api/routes/admin/auctionProduct`);
+    const response = await fetch(`${apiUrl}/server/api/routes/admin/products/admin`);
     
     if (!response.ok) {
       throw new Error('Failed to fetch');
@@ -42,7 +42,7 @@ export default async function DemoPage() {
   return (
     <div className="min-h-screen mx-auto max-w-screen-2xl mt-2 p-4 py-4 md:p-6 2xl:p-10 bg-slate-100 dark:bg-slate-900">
       <div className="mb-3 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
-        <Breadcrumb pageName="All Product" />
+        <Breadcrumb pageName="Inhouse Product" />
         <Link href="/admin/pages/product/addnew">
           <Button variant="outline" className="flex flex-col ml-auto dark:text-slate-300">
             + Add New

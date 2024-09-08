@@ -3,26 +3,36 @@ import { NextApiRequest, NextApiResponse } from 'next';
 
 const prisma = new PrismaClient();
 
-export async function getAllWholesaleProducts(req: NextApiRequest, res: NextApiResponse) {
-  const { user_id, type, search } = req.query;
+// export async function getAllWholesaleProducts(req: NextApiRequest, res: NextApiResponse) {
+//   const { user_id, type, search } = req.query;
 
-  try {
-    let products = await prisma.product.findMany({
-      where: {
-        wholesaleProduct: true,
-        ...(user_id && { userId: Number(user_id) }),
-        ...(search && { name: { contains: search as string, mode: 'insensitive' } }),
-      },
-      orderBy: type
-        ? {
-            [type.split(",")[0]]: type.split(",")[1] as 'asc' | 'desc',
-          }
-        : { createdAt: 'desc' },
-    });
+//   try {
+//     let products = await prisma.product.findMany({
+//       where: {
+//         wholesaleProduct: true,
+//         ...(user_id && { userId: Number(user_id) }),
+//         ...(search && { name: { contains: search as string, mode: 'insensitive' } }),
+//       },
+//       orderBy: type
+//         ? {
+//             [type.split(",")[0]]: type.split(",")[1] as 'asc' | 'desc',
+//           }
+//         : { createdAt: 'desc' },
+//     });
 
-    return res.status(200).json(products);
-  } catch (error) {
-    return res.status(500).json({ error: 'Internal server error' });
+//     return res.status(200).json(products);
+//   } catch (error) {
+//     return res.status(500).json({ error: 'Internal server error' });
+//   }
+// }
+
+export const getAllWholesaleProducts = async () => {
+  try{
+      const product = await prisma.products.findMany();
+      return { success: true, data: product };
+  }catch(error){
+      console.error("Error fetching product:", error);
+      return { success: false, error };
   }
 }
 

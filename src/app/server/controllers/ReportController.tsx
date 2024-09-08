@@ -5,30 +5,40 @@ import { PrismaClient } from '@prisma/client';
 
 const prisma = new PrismaClient();
 
-export async function getStockReport(req: NextApiRequest, res: NextApiResponse) {
-    try {
-      let sort_by = null;
-      const { category_id } = req.query;
-      let products;
+// export async function getStockReport(req: NextApiRequest, res: NextApiResponse) {
+//     try {
+//       let sort_by = null;
+//       const { category_id } = req.query;
+//       let products;
   
-      if (category_id) {
-        sort_by = Number(category_id);
-        products = await prisma.product.findMany({
-          where: { category_id: sort_by },
-          orderBy: { created_at: 'desc' },
-        });
-      } else {
-        products = await prisma.product.findMany({
-          orderBy: { created_at: 'desc' },
-        });
-      }
+//       if (category_id) {
+//         sort_by = Number(category_id);
+//         products = await prisma.product.findMany({
+//           where: { category_id: sort_by },
+//           orderBy: { created_at: 'desc' },
+//         });
+//       } else {
+//         products = await prisma.product.findMany({
+//           orderBy: { created_at: 'desc' },
+//         });
+//       }
   
-      res.status(200).json({ products, sort_by });
-    } catch (error) {
-      console.error('Error:', error);
-      res.status(500).json({ error: 'Internal server error' });
-    }
+//       res.status(200).json({ products, sort_by });
+//     } catch (error) {
+//       console.error('Error:', error);
+//       res.status(500).json({ error: 'Internal server error' });
+//     }
+//   }
+
+export const getStockReport = async () => {
+  try{
+      const product = await prisma.products.findMany();
+      return { success: true, data: product };
+  }catch(error){
+      console.error("Error fetching product:", error);
+      return { success: false, error };
   }
+}
 
   export async function getInHouseSaleReport(req: NextApiRequest, res: NextApiResponse) {
     try {

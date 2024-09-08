@@ -6,34 +6,44 @@ import bcrypt from 'bcryptjs';
 
 const prisma = new PrismaClient();
 
-export async function getSellers(req: NextApiRequest, res: NextApiResponse) {
-  const { search, approved_status } = req.query;
+// export async function getSellers(req: NextApiRequest, res: NextApiResponse) {
+//   const { search, approved_status } = req.query;
 
-  try {
-    let sellers = await prisma.shop.findMany({
-      where: {
-        user: {
-          user_type: 'seller',
-          AND: [
-            {
-              OR: [
-                { name: { contains: search } },
-                { email: { contains: search } }
-              ]
-            }
-          ]
-        },
-        verification_status: approved_status
-      },
-      include: {
-        user: true // Include user details
-      }
-    });
+//   try {
+//     let sellers = await prisma.shop.findMany({
+//       where: {
+//         user: {
+//           user_type: 'seller',
+//           AND: [
+//             {
+//               OR: [
+//                 { name: { contains: search } },
+//                 { email: { contains: search } }
+//               ]
+//             }
+//           ]
+//         },
+//         verification_status: approved_status
+//       },
+//       include: {
+//         user: true // Include user details
+//       }
+//     });
 
-    res.status(200).json(sellers);
-  } catch (error) {
-    console.error('Error:', error);
-    res.status(500).json({ error: 'Internal server error' });
+//     res.status(200).json(sellers);
+//   } catch (error) {
+//     console.error('Error:', error);
+//     res.status(500).json({ error: 'Internal server error' });
+//   }
+// }
+
+export const getSellers = async () => {
+  try{
+      const shop = await prisma.shops.findMany();
+      return { success: true, data: shop };
+  }catch(error){
+      console.error("Error fetching shop:", error);
+      return { success: false, error };
   }
 }
 

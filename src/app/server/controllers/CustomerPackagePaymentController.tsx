@@ -3,24 +3,34 @@ import { PrismaClient } from '@prisma/client';
 
 const prisma = new PrismaClient();
 
-export const getOfflinePaymentRequests = async (req: NextApiRequest, res: NextApiResponse) => {
-  try {
-    // Retrieve offline payment requests
-    const packagePaymentRequests = await prisma.customerPackagePayment.findMany({
-      where: {
-        offline_payment: true,
-      },
-      orderBy: {
-        id: 'desc',
-      },
-    });
+// export const getOfflinePaymentRequests = async (req: NextApiRequest, res: NextApiResponse) => {
+//   try {
+//     // Retrieve offline payment requests
+//     const packagePaymentRequests = await prisma.customerPackagePayment.findMany({
+//       where: {
+//         offline_payment: true,
+//       },
+//       orderBy: {
+//         id: 'desc',
+//       },
+//     });
 
-    res.status(200).json(packagePaymentRequests);
-  } catch (error) {
-    console.error(error);
-    res.status(500).json({ error: 'Failed to retrieve offline payment requests' });
+//     res.status(200).json(packagePaymentRequests);
+//   } catch (error) {
+//     console.error(error);
+//     res.status(500).json({ error: 'Failed to retrieve offline payment requests' });
+//   }
+// };
+
+export const getOfflinePaymentRequests = async () => {
+  try{
+      const packagePaymentRequests = await prisma.customer_package_payments.findMany();
+      return { success: true, data: packagePaymentRequests };
+  }catch(error){
+      console.error("Error fetching packagePaymentRequests:", error);
+      return { success: false, error };
   }
-};
+}
 
 export const approveOfflinePayment = async (req: NextApiRequest, res: NextApiResponse) => {
     try {

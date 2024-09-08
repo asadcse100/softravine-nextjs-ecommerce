@@ -3,39 +3,49 @@ import { PrismaClient } from '@prisma/client';
 
 const prisma = new PrismaClient();
 
-export const getUserProducts = async (req: NextApiRequest, res: NextApiResponse) => {
-  try {
-    const userId = YOUR_USER_ID; // Replace YOUR_USER_ID with actual user ID
+// export const getUserProducts = async (req: NextApiRequest, res: NextApiResponse) => {
+//   try {
+//     const userId = YOUR_USER_ID; // Replace YOUR_USER_ID with actual user ID
 
-    // Check if classified product is enabled
-    const classifiedProductEnabled = await prisma.setting.findUnique({
-      where: {
-        key: 'classified_product',
-      },
-    });
+//     // Check if classified product is enabled
+//     const classifiedProductEnabled = await prisma.setting.findUnique({
+//       where: {
+//         key: 'classified_product',
+//       },
+//     });
 
-    // If classified product is not enabled, redirect to dashboard
-    if (!classifiedProductEnabled || classifiedProductEnabled.value !== '1') {
-      res.redirect('/dashboard');
-      return;
-    }
+//     // If classified product is not enabled, redirect to dashboard
+//     if (!classifiedProductEnabled || classifiedProductEnabled.value !== '1') {
+//       res.redirect('/dashboard');
+//       return;
+//     }
 
-    // Retrieve user's products
-    const products = await prisma.customerProduct.findMany({
-      where: {
-        user_id: userId,
-      },
-      orderBy: {
-        created_at: 'desc',
-      },
-    });
+//     // Retrieve user's products
+//     const products = await prisma.customerProduct.findMany({
+//       where: {
+//         user_id: userId,
+//       },
+//       orderBy: {
+//         created_at: 'desc',
+//       },
+//     });
 
-    res.status(200).json(products);
-  } catch (error) {
-    console.error(error);
-    res.status(500).json({ error: 'Failed to retrieve user products' });
+//     res.status(200).json(products);
+//   } catch (error) {
+//     console.error(error);
+//     res.status(500).json({ error: 'Failed to retrieve user products' });
+//   }
+// };
+
+export const getUserProducts = async () => {
+  try{
+      const products = await prisma.products.findMany();
+      return { success: true, data: products };
+  }catch(error){
+      console.error("Error fetching products:", error);
+      return { success: false, error };
   }
-};
+}
 
 export const getCustomerProducts = async (req: NextApiRequest, res: NextApiResponse) => {
     try {

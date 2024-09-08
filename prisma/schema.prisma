@@ -532,10 +532,8 @@ model flash_deals {
 
 /// The underlying table does not contain a valid unique identifier and can therefore currently not be handled by Prisma Client.
 model follow_sellers {
-  user_id BigInt
-  shop_id BigInt
-
-  @@ignore
+  user_id Int @id
+  shop_id Int
 }
 
 model home_categories {
@@ -1197,7 +1195,7 @@ model uploads {
   deleted_at         DateTime? @db.Timestamp(0)
 }
 
-model user {
+model users {
   id                           Int       @id @default(autoincrement()) @db.UnsignedInt
   referred_by                  Int?
   provider                     String?   @db.VarChar(255)

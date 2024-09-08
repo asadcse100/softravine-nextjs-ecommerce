@@ -7,9 +7,9 @@ const prisma = new PrismaClient();
 
 export const getPurchaseHistory = async (userId: number) => {
     try {
-        const orders = await prisma.order.findMany({
+        const orders = await prisma.orders.findMany({
             where: { user_id: userId },
-            include: { orderDetails: true },
+            include: { order_details: true },
             orderBy: { code: 'desc' }
         });
         

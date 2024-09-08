@@ -4,17 +4,27 @@ import { PrismaClient } from '@prisma/client';
 const prisma = new PrismaClient();
 
 // export const getSellerWithdrawRequests = async () => {
-export async function getSellerWithdrawRequests(req: NextApiRequest, res: NextApiResponse) {
-    try {
-        const sellerWithdrawRequests = await prisma.sellerWithdrawRequest.findMany({
-            orderBy: { createdAt: 'desc' },
-        });
-        return sellerWithdrawRequests;
-    } catch (error) {
-        console.error(error);
-        throw new Error('Failed to fetch seller withdraw requests');
-    }
-};
+// export async function getSellerWithdrawRequests(req: NextApiRequest, res: NextApiResponse) {
+//     try {
+//         const sellerWithdrawRequests = await prisma.sellerWithdrawRequest.findMany({
+//             orderBy: { createdAt: 'desc' },
+//         });
+//         return sellerWithdrawRequests;
+//     } catch (error) {
+//         console.error(error);
+//         throw new Error('Failed to fetch seller withdraw requests');
+//     }
+// };
+
+export const getSellerWithdrawRequests = async () => {
+  try{
+      const sellerWithdrawRequest = await prisma.seller_withdraw_requests.findMany();
+      return { success: true, data: sellerWithdrawRequest };
+  }catch(error){
+      console.error("Error fetching sellerWithdrawRequest:", error);
+      return { success: false, error };
+  }
+}
 
 export const storeWithdrawRequest = async (req: NextApiRequest, res: NextApiResponse) => {
     const { amount, message } = req.body;
