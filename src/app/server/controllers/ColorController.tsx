@@ -4,21 +4,12 @@ import { PrismaClient } from '@prisma/client';
 const prisma = new PrismaClient();
 
 // export async function getAttributes() {
-export const getAttributes = async () => {
-  // const attributes = await prisma.attribute.findMany({
-  //   include: { attributeValues: true },
-  //   orderBy: { createdAt: 'desc' },
-  // });
-  // return attributes;
-
-
-  // const where = search ? { name: { contains: search, mode: 'insensitive' } } : {};
-
+export const getColors = async () => {
   try {
-    const attributes = await prisma.attributes.findMany();
-    return { success: true, data: attributes };
+    const colors = await prisma.colors.findMany();
+    return { success: true, data: colors };
   } catch (error) {
-    console.error("Error fetching attributes:", error);
+    console.error("Error fetching colors:", error);
     return { success: false, error };
   }
 }

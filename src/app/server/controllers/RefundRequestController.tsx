@@ -5,6 +5,36 @@ import { PrismaClient } from '@prisma/client';
 
 const prisma = new PrismaClient();
 
+export const getRefundRequest = async () => {
+    try{
+        const texes = await prisma.refund_requests.findMany();
+        return { success: true, data: texes };
+    }catch(error){
+        console.error("Error fetching texes:", error);
+        return { success: false, error };
+    }
+}
+
+export const getRefundApproved = async () => {
+    try{
+        const texes = await prisma.refund_requests.findMany();
+        return { success: true, data: texes };
+    }catch(error){
+        console.error("Error fetching texes:", error);
+        return { success: false, error };
+    }
+}
+
+export const getRejectedRefund = async () => {
+    try{
+        const texes = await prisma.refund_requests.findMany();
+        return { success: true, data: texes };
+    }catch(error){
+        console.error("Error fetching texes:", error);
+        return { success: false, error };
+    }
+}
+
 export const requestStore = async (req: NextApiRequest, res: NextApiResponse) => {
     try {
         const { id } = req.query;

@@ -424,42 +424,79 @@ export const getUserPurchaseHistory = async (req: NextApiRequest, res: NextApiRe
   }
 };
 
+// export const getAuctionProductOrders = async () => {
+//   const { payment_status, delivery_status, search, date } = req.query;
+
+//   const filters: any = {
+//     orderDetails: {
+//       some: {
+//         product: {
+//           auctionProduct: true
+//         }
+//       }
+//     }
+//   };
+
+//   if (payment_status) filters.paymentStatus = payment_status as string;
+//   if (delivery_status) filters.deliveryStatus = delivery_status as string;
+//   if (search) filters.code = { contains: search as string };
+//   if (date) {
+//     const [startDate, endDate] = (date as string).split(' to ');
+//     filters.createdAt = {
+//       gte: new Date(startDate),
+//       lte: new Date(endDate)
+//     };
+//   }
+
+//   try {
+//     const orders = await prisma.orders.findMany({
+//       where: filters,
+//       orderBy: {
+//         code: 'desc'
+//       },
+//       include: {
+//         orderDetails: {
+//           include: {
+//             product: true
+//           }
+//         }
+//       }
+//     });
+//     return { success: true, data: orders };
+//   } catch (error) {
+//     console.error("Error fetching orders:", error);
+//     return { success: false, error };
+//   }
+// };
+
 export const getAuctionProductOrders = async () => {
-  const { payment_status, delivery_status, search, date } = req.query;
+  // const { payment_status, delivery_status, search, date } = req.query;
 
-  const filters: any = {
-    orderDetails: {
-      some: {
-        product: {
-          auctionProduct: true
-        }
-      }
-    }
-  };
+  // const filters: any = {
+  //   orderDetails: {
+  //     some: {
+  //       product: {
+  //         auctionProduct: true
+  //       }
+  //     }
+  //   }
+  // };
 
-  if (payment_status) filters.paymentStatus = payment_status as string;
-  if (delivery_status) filters.deliveryStatus = delivery_status as string;
-  if (search) filters.code = { contains: search as string };
-  if (date) {
-    const [startDate, endDate] = (date as string).split(' to ');
-    filters.createdAt = {
-      gte: new Date(startDate),
-      lte: new Date(endDate)
-    };
-  }
+  // if (payment_status) filters.paymentStatus = payment_status as string;
+  // if (delivery_status) filters.deliveryStatus = delivery_status as string;
+  // if (search) filters.code = { contains: search as string };
+  // if (date) {
+  //   const [startDate, endDate] = (date as string).split(' to ');
+  //   filters.createdAt = {
+  //     gte: new Date(startDate),
+  //     lte: new Date(endDate)
+  //   };
+  // }
 
   try {
     const orders = await prisma.orders.findMany({
-      where: filters,
       orderBy: {
         code: 'desc'
-      },
-      include: {
-        orderDetails: {
-          include: {
-            product: true
-          }
-        }
       }
     });
     return { success: true, data: orders };

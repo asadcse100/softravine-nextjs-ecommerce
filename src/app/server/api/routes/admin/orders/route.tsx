@@ -1,8 +1,8 @@
 import { NextResponse } from "next/server";
-import { storeOrder } from '@/app/server/controllers/OrderController';
+import { getAllOrders } from '@/app/server/controllers/OrderController';
 
 export async function GET() {
-  const result = await storeOrder();
+  const result = await getAllOrders();
   try{
       const users = result.data;
       return NextResponse.json(users);

@@ -12,7 +12,6 @@ export const getTaxes = async () => {
     }
 }
 
-
 export const store = async (req: NextApiRequest, res: NextApiResponse) => {
     try {
         const { name } = req.body;

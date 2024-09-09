@@ -6,7 +6,7 @@ import { ColumnDef } from "@tanstack/react-table";
 // You can use a Zod schema here if you want.
 export type Products = {
   id: string;
-  view: string;
+  reason: string;
   order_code: number;
   seller_name: string;
   image: string;
@@ -18,7 +18,7 @@ export type Products = {
 
 export const columns: ColumnDef<Products>[] = [   
   {
-    accessorKey: "view",
+    accessorKey: "reason",
     header: "Reject Reason",
   },
   {

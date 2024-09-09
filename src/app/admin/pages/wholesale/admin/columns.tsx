@@ -31,6 +31,13 @@ export type Products = {
   featured: string;
 };
 
+function truncateString(str: string, num: number): string {
+  if (str.length <= num) {
+    return str;
+  }
+  return str.slice(0, num) + "...";
+}
+
 export const columns: ColumnDef<Products>[] = [
   {
     id: "select",
@@ -78,8 +85,12 @@ export const columns: ColumnDef<Products>[] = [
     },
   },
   {
-    accessorKey: "product_name",
-    header: "Product Name",
+    accessorKey: "name",
+    header: () => <div className="text-right">Product Name</div>,
+    cell: ({ row }) => {
+      const name:string = row.getValue("name");
+      return <div className="text-right font-medium">{truncateString(name, 8)}</div>;
+    },
   },
   {
     accessorKey: "added_by",
@@ -91,14 +102,14 @@ export const columns: ColumnDef<Products>[] = [
 
   },
   {
-    accessorKey: "price",
+    accessorKey: "unit_price",
     header: () => <div className="text-right">Price</div>,
     cell: ({ row }) => {
-      const price = parseFloat(row.getValue("price"));
+      const unit_price = parseFloat(row.getValue("unit_price"));
       const formatted = new Intl.NumberFormat("en-US", {
         style: "currency",
         currency: "USD",
-      }).format(price);
+      }).format(unit_price);
 
       return <div className="text-right font-medium">{formatted}</div>;
     },
