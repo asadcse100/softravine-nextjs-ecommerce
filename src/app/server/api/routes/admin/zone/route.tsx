@@ -1,13 +1,13 @@
 import { NextResponse } from "next/server";
-import { store } from '@/app/server/controllers/ZoneController';
+import { getZones } from '@/app/server/controllers/ZoneController';
 
 export async function GET() {
-  const result = await store();
+  const result = await getZones();
   try{
-      const zones = result.data;
-      return NextResponse.json(zones);
+      const getZones = result.data;
+      return NextResponse.json(getZones);
   }catch(error){
-      console.error("Error fetching zones:", error);
-      return NextResponse.json({ error: "Failed to fetch Zones" }, { status: 500 });
+      console.error("Error fetching getZones:", error);
+      return NextResponse.json({ error: "Failed to fetch getZones" }, { status: 500 });
   }
 }

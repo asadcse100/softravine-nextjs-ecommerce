@@ -18,7 +18,7 @@ import Input from "@/shared/Input/Input";
 import Select from "@/shared/Select/Select";
 import { Switch } from "@/app/admin/components/ui/switch";
 
-const formSchema = z.object({
+const formSchema1 = z.object({
   delivery_boy_payment_type: z.string().min(10, {
     message: "Product Name must be at least 10 characters.",
   }),
@@ -28,6 +28,9 @@ const formSchema = z.object({
   delivery_boy_mail_notification: z.string().min(10, {
     message: "Product Name must be at least 10 characters.",
   }),
+});
+
+const formSchema2 = z.object({
   delivery_boy_otp_notification: z.string().min(10, {
     message: "Product Name must be at least 10 characters.",
   }),
@@ -39,19 +42,23 @@ const formSchema = z.object({
 export default function Addnew() {
   // ...
   // 1. Define your form.
-  const form = useForm<z.infer<typeof formSchema>>({
-    resolver: zodResolver(formSchema),
+  const form = useForm<z.infer<typeof formSchema1>>({
+    resolver: zodResolver(formSchema1),
     defaultValues: {
       delivery_boy_payment_type: "",
       delivery_boy_salary: "",
-      delivery_boy_commission: "",
       delivery_boy_mail_notification: "",
-      delivery_boy_otp_notification: "",
     },
   });
 
   // 2. Define a submit handler.
-  function onSubmit(values: z.infer<typeof formSchema>) {
+  function onSubmit1(values: z.infer<typeof formSchema1>) {
+    // Do something with the form values.
+    // ✅ This will be type-safe and validated.
+    console.log(values);
+  }
+  // 2. Define a submit handler.
+  function onSubmit2(values: z.infer<typeof formSchema2>) {
     // Do something with the form values.
     // ✅ This will be type-safe and validated.
     console.log(values);
@@ -62,7 +69,7 @@ export default function Addnew() {
   return (
     <div className="min-h-screen mx-auto max-w-screen-2xl mt-2 p-4 py-4 md:p-6 2xl:p-10 bg-slate-100 dark:bg-slate-900">
       <Form {...form}>
-        <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
+        <form onSubmit={form.handleSubmit(onSubmit1)} className="space-y-8">
           <div className="mx-auto max-w-screen-2xl">
             <div className="mb-3 flex flex-row items-center justify-between gap-3 sm:flex-row sm:items-center sm:justify-between">
               <Breadcrumb pageName="Delivery Boy Configuration" />
@@ -167,6 +174,16 @@ export default function Addnew() {
                     </div>
                   </div>
                 </div>
+
+              </div>
+            </div>
+          </div>
+        </form>
+
+        <form onSubmit={form.handleSubmit(onSubmit2)} className="space-y-8">
+          <div className="mx-auto max-w-screen-2xl">
+            <div className="grid gap-4 md:grid-cols-1 lg:grid-cols-2 sm:grid-cols-1">
+              <div className="flex flex-col gap-4">
                 <div className="px-6 rounded-sm border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark">
                   <div className="border-b border-stroke px-6.5 py-4 dark:border-strokedark">
                     <h3 className="font-medium text-black dark:text-white">
@@ -215,6 +232,7 @@ export default function Addnew() {
                     </div>
                   </div>
                 </div>
+
               </div>
             </div>
           </div>

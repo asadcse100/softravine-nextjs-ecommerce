@@ -4,9 +4,7 @@ import { createAuctionProduct, getAllProducts } from '@/app/server/controllers/P
 export async function GET() {
   const result = await getAllProducts();
   try{
-      const products = result.data;
-      console.log(products);
-      
+      const products = result.data;      
       return NextResponse.json(products);
   }catch(error){
       console.error("Error fetching products:", error);

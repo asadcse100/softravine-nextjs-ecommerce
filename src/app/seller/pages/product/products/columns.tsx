@@ -28,6 +28,13 @@ export type Products = {
   featured: string;
 };
 
+function truncateString(str: string, num: number): string {
+  if (str.length <= num) {
+    return str;
+  }
+  return str.slice(0, num) + "...";
+}
+
 export const columns: ColumnDef<Products>[] = [
   {
     id: "select",
@@ -76,7 +83,11 @@ export const columns: ColumnDef<Products>[] = [
   },
   {
     accessorKey: "name",
-    header: "Name",
+    header: () => <div className="text-right">Product Name</div>,
+    cell: ({ row }) => {
+      const name:string = row.getValue("name");
+      return <div className="text-right font-medium">{truncateString(name, 8)}</div>;
+    },
   },
   {
     accessorKey: "current_qty",

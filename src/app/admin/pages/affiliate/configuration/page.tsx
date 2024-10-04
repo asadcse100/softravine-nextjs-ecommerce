@@ -35,13 +35,14 @@ const leadershipFormSchema = z.object({
 });
 
 const referralFormSchema = z.object({
-  referrals: z.array(z.string().nonempty())
+  referrals: z.array(z.string())
 });
 
 const formSchema = z.object({
-  amount: z.string().min(10, {
-    message: "Product Name must be at least 10 characters.",
+  amount: z.string().min(3, {
+    message: "Product Name must be at least 3 characters.",
   }),
+  validation_time: z.string(),
 });
 
 export default function Addnew() {

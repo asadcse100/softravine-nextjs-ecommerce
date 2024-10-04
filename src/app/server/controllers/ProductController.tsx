@@ -8,6 +8,17 @@ import { getSession } from 'next-auth/react';
 
 const prisma = new PrismaClient();
 
+export const getSellerProductsById = async () => {
+  try{
+      const products = await prisma.products.findMany();
+      return { success: true, data: products };
+  }catch(error){
+      console.error("Error fetching products:", error);
+      return { success: false, error };
+  }
+}
+
+
 export const createAuctionProduct = async (req: NextApiRequest, res: NextApiResponse) => {
   const {
     name,
@@ -322,49 +333,60 @@ export const updatePublished = async (req: NextApiRequest, res: NextApiResponse)
 // };
 // 
 
-export const getAllProducts = async (search: string | null = '', page: number = 1) => {
-  const pageSize = 15; // Number of products per page
-  const skip = (page - 1) * pageSize;
 
-  try {
-    // let whereClause = { auction_product: 1 }; // Only fetch auction products
-
-    // // If there's a search term, add it to the where clause
-    // if (search) {
-    //   whereClause = {
-    //     ...whereClause,
-    //     name: {
-    //       contains: search,  // Search by product name
-    //       mode: "insensitive",  // Case-insensitive search
-    //     },
-    //   };
-    // }
-
-    const products = await prisma.products.findMany({
-    //   where: whereClause,
-      orderBy: { created_at: 'desc' },
-      skip,
-      take: pageSize,
-    });
-
-    // const totalProducts = await prisma.products.count({
-    // //   where: whereClause,
-    // });
-
-    return {
-      success: true,
-      data: products,
-      pagination: {
-        currentPage: page,
-        // totalPages: Math.ceil(totalProducts / pageSize),
-      },
-      sort_search: search,
-    };
-  } catch (error) {
-    console.error("Error fetching auction products:", error);
-    return { success: false, error: error.message };
+export const getAllProducts = async () => {
+  try{
+      const products = await prisma.products.findMany();
+      return { success: true, data: products };
+  }catch(error){
+      console.error("Error fetching products:", error);
+      return { success: false, error };
   }
-};
+}
+
+// export const getAllProducts = async (search: string | null = '', page: number = 1) => {
+//   const pageSize = 15; // Number of products per page
+//   const skip = (page - 1) * pageSize;
+
+//   try {
+//     // let whereClause = { auction_product: 1 }; // Only fetch auction products
+
+//     // // If there's a search term, add it to the where clause
+//     // if (search) {
+//     //   whereClause = {
+//     //     ...whereClause,
+//     //     name: {
+//     //       contains: search,  // Search by product name
+//     //       mode: "insensitive",  // Case-insensitive search
+//     //     },
+//     //   };
+//     // }
+
+//     const products = await prisma.products.findMany({
+//     //   where: whereClause,
+//       orderBy: { created_at: 'desc' },
+//       skip,
+//       take: pageSize,
+//     });
+
+//     // const totalProducts = await prisma.products.count({
+//     // //   where: whereClause,
+//     // });
+
+//     return {
+//       success: true,
+//       data: products,
+//       pagination: {
+//         currentPage: page,
+//         // totalPages: Math.ceil(totalProducts / pageSize),
+//       },
+//       sort_search: search,
+//     };
+//   } catch (error) {
+//     console.error("Error fetching products:", error);
+//     return { success: false, error: error.message };
+//   }
+// };
 
 export const getAuctionProductDetails = async (req: NextApiRequest, res: NextApiResponse) => {
   const { slug } = req.query;

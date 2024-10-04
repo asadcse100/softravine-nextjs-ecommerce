@@ -22,7 +22,7 @@ import { Button } from "@/app/seller/components/ui/button"
 async function getData(): Promise<Products[]> {
   const apiUrl = process.env.NEXT_PUBLIC_API_URL || '';
   try {
-    const response = await fetch(`${apiUrl}/server/api/routes/seller/auctionProduct`);
+    const response = await fetch(`${apiUrl}/server/api/routes/seller/products/seller_digital`);
     
     if (!response.ok) {
       throw new Error('Failed to fetch');

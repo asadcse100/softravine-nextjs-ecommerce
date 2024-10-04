@@ -17,14 +17,17 @@ import {
 import Input from "@/shared/Input/Input";
 
 const formSchema = z.object({
-  point: z.string().min(10, {
-    message: "Product Name must be at least 10 characters.",
+  point: z.string().min(1, {
+    message: "Required field!.",
   }),
-  min_price: z.string().min(10, {
-    message: "Product Name must be at least 10 characters.",
+  min_price: z.number().min(1, {
+    message: "Required field!.",
   }),
-  point: z.string().min(10, {
-    message: "Product Name must be at least 10 characters.",
+  max_price: z.number().min(1, {
+    message: "Required field!.",
+  }),
+  all_product_point: z.number().min(1, {
+    message: "Required field!.",
   }),
 });
 
@@ -34,9 +37,6 @@ export default function Addnew() {
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      point: "",
-      min_price: "",
-      max_price: "",
       point: "",
     },
   });
@@ -170,7 +170,7 @@ export default function Addnew() {
                       <div className="flex flex-col gap-5.5 p-6.5">
                         <FormField
                           control={form.control}
-                          name="point"
+                          name="all_product_point"
                           render={({ field }) => (
                             <FormItem>
                               <div className="grid grid-cols-1 md:grid-cols-12">

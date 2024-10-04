@@ -16,24 +16,34 @@ interface FlashDealRequest {
     lang: string;
   }
 
-export const getFlashDeals = async (search: string | undefined) => {
-    const where = search ? {
-      title: {
-        contains: search,
-        mode: 'insensitive',
-      },
-    } : {};
+// export const getFlashDeals = async () => {
+//   let search: string | undefined;
+//     const where = search ? {
+//       title: {
+//         contains: search,
+//         mode: 'insensitive',
+//       },
+//     } : {};
   
-    const flashDeals = await prisma.flash_deals.findMany({
-      where,
-      orderBy: {
-        created_at: 'desc',
-      },
-    });
+//     const flashDeals = await prisma.flash_deals.findMany({
+//       where,
+//       orderBy: {
+//         created_at: 'desc',
+//       },
+//     });
   
-    return flashDeals;
-  };
+//     return flashDeals;
+//   };
 
+export const getFlashDeals = async () => {
+  try{
+      const flash_deals = await prisma.flash_deals.findMany();
+      return { success: true, data: flash_deals };
+  }catch(error){
+      console.error("Error fetching flash_deals:", error);
+      return { success: false, error };
+  }
+}
 
   export const createFlashDeal = async (req: FlashDealRequest) => {
     const { title, text_color, date_range, background_color, banner, products } = req;

@@ -41,7 +41,7 @@ const prisma = new PrismaClient();
 //   }
 // };
 
-export const getCurrencyList = async () => {
+export const getCustomerList = async () => {
   try{
       const customers = await prisma.users.findMany();
       return { success: true, data: customers };

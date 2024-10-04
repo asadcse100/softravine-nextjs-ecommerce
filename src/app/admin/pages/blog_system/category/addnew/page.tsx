@@ -17,8 +17,8 @@ import {
 import Input from "@/shared/Input/Input";
 import Breadcrumb from "@/app/admin/components/Breadcrumbs/Breadcrumb"
 const formSchema = z.object({
-  category_name: z.string().min(10, {
-    message: "Product Name must be at least 10 characters.",
+  category_name: z.string().min(3, {
+    message: "Product Name must be at least 3 characters.",
   }),
 });
 

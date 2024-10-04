@@ -17,8 +17,8 @@ import {
 import Input from "@/shared/Input/Input";
 
 const formSchema = z.object({
-  value: z.string().min(10, {
-    message: "Product Name must be at least 10 characters.",
+  value: z.string().min(1, {
+    message: "Requrid field!.",
   }),
 });
 

@@ -10,7 +10,7 @@ export type Products = {
   seller: string;
   seller_phone: string;
   amount: number;
-  payment_detail: string;
+  payment_details: string;
 };
 
 export const columns: ColumnDef<Products>[] = [
@@ -40,7 +40,7 @@ export const columns: ColumnDef<Products>[] = [
     },
   },
   {
-    accessorKey: "payment_detail",
-    header: "Payment Detail",
+    accessorKey: "payment_details",
+    header: "Payment Details",
   },
 ];

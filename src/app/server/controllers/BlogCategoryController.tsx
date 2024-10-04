@@ -3,16 +3,26 @@ import { PrismaClient } from '@prisma/client';
 
 const prisma = new PrismaClient();
 
-export async function getBlogCategories(search: string | null = null) {
-  if (search) {
-    return prisma.blogCategory.findMany({
-      where: { categoryName: { contains: search, mode: 'insensitive' } },
-      orderBy: { categoryName: 'asc' },
-    });
-  } else {
-    return prisma.blogCategory.findMany({
-      orderBy: { categoryName: 'asc' },
-    });
+// export async function getBlogCategories(search: string | null = null) {
+//   if (search) {
+//     return prisma.blog_categories.findMany({
+//       where: { category_name: { contains: search, mode: 'insensitive' } },
+//       orderBy: { category_name: 'asc' },
+//     });
+//   } else {
+//     return prisma.blog_categories.findMany({
+//       orderBy: { category_name: 'asc' },
+//     });
+//   }
+// }
+
+export const getBlogCategories = async () => {
+  try {
+    const blog_categories = await prisma.blog_categories.findMany();    
+    return { success: true, data: blog_categories };
+  } catch (error) {
+    console.error("Error fetching blog_categories:", error);
+    return { success: false, error };
   }
 }
 

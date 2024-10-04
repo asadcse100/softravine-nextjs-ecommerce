@@ -44,131 +44,47 @@ const languages = [
 ] as const
 
 const formSchema = z.object({
-  product_name: z.string().min(10, {
-    message: "Product Name must be at least 10 characters.",
+  product_name: z.string().min(4, {
+    message: "Product Name must be at least 4 characters.",
   }),
-  brand: z.string().min(3, {
-    message: "Brand must be at least 3 characters.",
+  brand: z.string().min(1, {
+    message: "Brand must be required!",
   }),
-  unit: z.string().min(3, {
-    message: "Unit must be at least 3 characters.",
+  unit: z.string().min(1, {
+    message: "Unit must be required!",
   }),
-  weight: z.string().min(3, {
-    message: "Weight must be at least 3 characters.",
-  }),
-  minimum_purchase_qty: z.string().min(3, {
-    message: "Minimum Purchase Qty must be at least 3 characters.",
+  minimum_purchase_qty: z.string().min(1, {
+    message: "Minimum purchase required!",
   }),
   tag: z.string().min(3, {
-    message: "Tag Purchase Qty must be at least 3 characters.",
+    message: "Tag required!",
   }),
-  barcode: z.string().min(3, {
-    message: "Barcode Purchase Qty must be at least 3 characters.",
+  thumbnail_image: z.string().min(1, {
+    message: "thumbnail image required!",
   }),
-  thumbnail_image: z.string().min(3, {
-    message: "thumbnail_image Purchase Qty must be at least 3 characters.",
+  gallery_images: z.string().min(1, {
+    message: "gallery images required!",
   }),
-  gallery_images: z.string().min(3, {
-    message: "gallery_images Purchase Qty must be at least 3 characters.",
+  unit_price: z.string().min(1, {
+    message: "Unit price required!",
   }),
-  video_provider: z.string().min(3, {
-    message: "Video Provider Purchase Qty must be at least 3 characters.",
+  reseller_unit_price: z.string().min(1, {
+    message: "Reseller unit price required!",
   }),
-  video_link: z.string().min(3, {
-    message: "Video Link Purchase Qty must be at least 3 characters.",
+  quantity: z.string().min(1, {
+    message: "Quantity required!",
   }),
-  color: z.string({
-    required_error: "Please select a color.",
+  product_description: z.string().min(1, {
+    message: "Product description required!",
   }),
-  attribute: z.string({
-    required_error: "Please select a attribute.",
+  main_category: z.string().min(1, {
+    message: "Please select a main category.",
   }),
-  unit_price: z.string({
-    required_error: "Please select a unit_price.",
+  sub_category: z.string().min(1, {
+    message: "Please select a sub category.",
   }),
-  discount_date_range: z.string({
-    required_error: "Please select a discount_date_range.",
-  }),
-  discount: z.string({
-    required_error: "Please select a discount.",
-  }),
-  flat_percent: z.string({
-    required_error: "Please select a flat_percent.",
-  }),
-  reseller_unit_price: z.string({
-    required_error: "Please select a reseller unit price.",
-  }),
-  reseller_discount_date_range: z.string({
-    required_error: "Please select a discount_date_range.",
-  }),
-  reseller_discount: z.string({
-    required_error: "Please select a reseller_discount.",
-  }),
-  reseller_flat_percent: z.string({
-    required_error: "Please select a reseller_flat_percent.",
-  }),
-  quantity: z.string({
-    required_error: "Please select a quantity.",
-  }),
-  sku: z.string({
-    required_error: "Please select a sku.",
-  }),
-  external_link: z.string({
-    required_error: "Please select a external_link.",
-  }),
-  external_link_button: z.string({
-    required_error: "Please select a external_link_button.",
-  }),
-  product_description: z.string({
-    required_error: "Please select a product_description.",
-  }),
-  pdf_specification: z.string({
-    required_error: "Please select a pdf_specification.",
-  }),
-  meta_title: z.string({
-    required_error: "Please select a meta_title.",
-  }),
-  meta_description: z.string({
-    required_error: "Please select a meta_description.",
-  }),
-  meta_image: z.string({
-    required_error: "Please select a meta_image.",
-  }),
-  main_category: z.string({
-    required_error: "Please select a main_category.",
-  }),
-  sub_category: z.string({
-    required_error: "Please select a sub_category.",
-  }),
-  free_shippling: z.string({
-    required_error: "Please select a free_shippling.",
-  }),
-  flat_rate: z.string({
-    required_error: "Please select a flat_rate.",
-  }),
-  qty_multi: z.string({
-    required_error: "Please select a qty_multi.",
-  }),
-  show_stock_quantity: z.string({
-    required_error: "Please select a show_stock_quantity.",
-  }),
-  show_stock_with_tax: z.string({
-    required_error: "Please select a show_stock_with_tax.",
-  }),
-  hide_stock: z.string({
-    required_error: "Please select a hide_stock.",
-  }),
-  case_on_delivery: z.string({
-    required_error: "Please select a case_on_delivery.",
-  }),
-  shipping_day: z.string({
-    required_error: "Please select a shipping_day.",
-  }),
-  vat_tax: z.string({
-    required_error: "Please select a vat_tax.",
-  }),
-  languages: z.string({
-    required_error: "Please select a language.",
+  shipping_day: z.string().min(1, {
+    message: "Shipping day required!",
   }),
 });
 
@@ -183,43 +99,17 @@ export default function Addnew() {
       product_name: "",
       brand: "",
       unit: "",
-      weight: "",
       minimum_purchase_qty: "",
       tag: "",
-      barcode: "",
       thumbnail_image: "",
       gallery_images: "",
-      video_provider: "",
-      video_link: "",
-      color: "",
-      attribute: "",
       unit_price: "",
-      discount_date_range: "",
-      discount: "",
-      flat_percent: "",
       reseller_unit_price: "",
-      reseller_discount_date_range: "",
-      reseller_discount: "",
-      reseller_flat_percent: "",
       quantity: "",
-      sku: "",
-      external_link: "",
-      external_link_button: "",
       product_description: "",
-      pdf_specification: "",
-      meta_title: "",
-      meta_description: "",
-      meta_image: "",
       main_category: "",
       sub_category: "",
-      free_shippling: "",
-      qty_multi: "",
-      show_stock_quantity: "",
-      show_stock_with_tax: "",
-      hide_stock: "",
-      case_on_delivery: "",
       shipping_day: "",
-      vat_tax: "",
     },
   });
 
@@ -735,7 +625,7 @@ export default function Addnew() {
                                   <FormControl>
                                     <Input
                                       className={inputClass}
-                                      placeholder="Tags"
+                                      placeholder="discount date range"
                                       {...field}
                                     />
                                   </FormControl>

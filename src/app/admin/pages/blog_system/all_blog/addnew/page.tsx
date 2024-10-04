@@ -28,30 +28,18 @@ const formSchema = z.object({
   title: z.string().min(10, {
     message: "Title must be at least 10 characters.",
   }),
-  category_id: z.string().min(10, {
-    message: "Product Name must be at least 10 characters.",
-  }),
-  slug: z.string().min(5, {
-    message: "Product Name must be at least 10 characters.",
-  }),
-  banner: z.string().min(5, {
-    message: "Product Name must be at least 10 characters.",
-  }),
+  category_id: z.number(),
+  slug: z.string(),
+  banner: z.number(),
   short_description: z.string().min(5, {
-    message: "Product Name must be at least 10 characters.",
+    message: "Product Short description must be at least 10 characters.",
   }),
-  description: z.string().min(5, {
-    message: "Product Name must be at least 10 characters.",
+  description: z.string().min(100, {
+    message: "Product description must be at least 100 characters.",
   }),
-  meta_title: z.string().min(5, {
-    message: "Product Name must be at least 10 characters.",
-  }),
-  meta_img: z.string().min(5, {
-    message: "Product Name must be at least 10 characters.",
-  }),
-  meta_description: z.string().min(5, {
-    message: "Product Name must be at least 10 characters.",
-  }),
+  meta_title: z.string(),
+  meta_img: z.string(),
+  meta_description: z.string(),
 });
 
 export default function Addnew() {
@@ -61,9 +49,7 @@ export default function Addnew() {
     resolver: zodResolver(formSchema),
     defaultValues: {
       title: "",
-      category_id: "",
       slug: "",
-      banner: "",
       short_description: "",
       description: "",
       meta_title: "",
@@ -134,7 +120,7 @@ export default function Addnew() {
                                 <FormControl>
                                   <Select
                                     onValueChange={field.onChange}
-                                    defaultValue={field.value}
+                                    // defaultValue={field.value}
                                   >
                                     <FormControl>
                                       <SelectTrigger>
@@ -142,16 +128,9 @@ export default function Addnew() {
                                       </SelectTrigger>
                                     </FormControl>
                                     <SelectContent>
-                                      <SelectItem value="Apple">Apple</SelectItem>
-                                      <SelectItem value="m2@example.com">Pran</SelectItem>
-                                      <SelectItem value="m22@example.com">Squre</SelectItem>
-                                      <SelectItem value="m3@example.com">ACI</SelectItem>
-                                      <SelectItem value="m4@example.com">SoftRavine</SelectItem>
-                                      <SelectItem value="m5@example.com">Samsung</SelectItem>
-                                      <SelectItem value="m6@example.com">LG</SelectItem>
-                                      <SelectItem value="m7@example.com">Logitech</SelectItem>
-                                      <SelectItem value="m8@example.com">A4tech</SelectItem>
-                                      <SelectItem value="m9@example.com">HP</SelectItem>
+                                      <SelectItem value="1">Apple</SelectItem>
+                                      <SelectItem value="2">Pran</SelectItem>
+                                      <SelectItem value="3">Squre</SelectItem>
                                     </SelectContent>
                                   </Select>
                                 </FormControl>

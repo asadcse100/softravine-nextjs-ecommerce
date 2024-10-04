@@ -16,7 +16,9 @@ import { Button } from "@/app/admin/components/ui/button"
 async function getData(): Promise<Products[]> {
   const apiUrl = process.env.NEXT_PUBLIC_API_URL || '';
   try {
-    const response = await fetch(`${apiUrl}/server/api/routes/admin/auctionProduct`);
+    const response = await fetch(`${apiUrl}/server/api/routes/admin/blogs/blogCategories`);
+    
+    console.log(response);
     
     if (!response.ok) {
       throw new Error('Failed to fetch');

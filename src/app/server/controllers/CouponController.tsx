@@ -26,7 +26,7 @@ const prisma = new PrismaClient();
 
 export const index = async () => {
   try{
-      const admin = await prisma.user.findMany();
+      const admin = await prisma.coupons.findMany();
       return { success: true, data: admin };
   }catch(error){
       console.error("Error fetching admin:", error);

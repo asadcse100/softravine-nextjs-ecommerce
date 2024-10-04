@@ -1,10 +1,46 @@
-import { NextResponse } from "next/server";
-import bcrypt from 'bcrypt';
-import { getSession } from 'next-auth/client';
-
 import { PrismaClient } from '@prisma/client';
 
 const prisma = new PrismaClient();
+
+export const getAffiliateUsers = async () => {
+  try{
+      const affiliate_users = await prisma.affiliate_users.findMany();
+      return { success: true, data: affiliate_users };
+  }catch(error){
+      console.error("Error fetching affiliate_users:", error);
+      return { success: false, error };
+  }
+}
+
+export const getReferralUsers = async () => {
+  try{
+      const getReferralUsers = await prisma.affiliate_users.findMany();
+      return { success: true, data: getReferralUsers };
+  }catch(error){
+      console.error("Error fetching getReferralUsers:", error);
+      return { success: false, error };
+  }
+}
+
+export const getWithdrawRequestUsers = async () => {
+  try{
+      const getWithdrawRequestUsers = await prisma.affiliate_payments.findMany();
+      return { success: true, data: getWithdrawRequestUsers };
+  }catch(error){
+      console.error("Error fetching getWithdrawRequestUsers:", error);
+      return { success: false, error };
+  }
+}
+
+export const getLogs = async () => {
+  try{
+      const getLogs = await prisma.affiliate_logs.findMany();
+      return { success: true, data: getLogs };
+  }catch(error){
+      console.error("Error fetching getLogs:", error);
+      return { success: false, error };
+  }
+}
 
 export const affiliateOptionStore = async (req: NextRequest) => {
   const { type, percentage, amount, amount_type, status } = await req.json();

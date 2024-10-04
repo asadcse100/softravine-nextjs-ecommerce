@@ -5,6 +5,16 @@ import { NextApiRequest, NextApiResponse } from 'next';
 const prisma = new PrismaClient();
 
 
+export const getZones = async () => {
+    try{
+        const getZones = await prisma.zones.findMany();
+        return { success: true, data: getZones };
+    }catch(error){
+        console.error("Error fetching getZones:", error);
+        return { success: false, error };
+    }
+}
+
 //   export async store(req: NextApiRequest, res: NextApiResponse) {
 export async function store(req: NextApiRequest, res: NextApiResponse) {
     try {

@@ -18,18 +18,14 @@ import Input from "@/shared/Input/Input";
 import Textarea from "@/shared/Textarea/Textarea";
 
 const formSchema = z.object({
-  name: z.string().min(10, {
-    message: "Name must be at least 10 characters.",
+  name: z.string().min(1, {
+    message: "Name must be at least 1 characters.",
   }),
-  logo: z.string().min(10, {
-    message: "logo must be at least 10 characters.",
+  logo: z.string().min(1, {
+    message: "Logo is required",
   }),
-  meta_title: z.string().min(10, {
-    message: "meta_title must be at least 10 characters.",
-  }),
-  meta_description: z.string().min(10, {
-    message: "meta_description must be at least 10 characters.",
-  }),
+  meta_title: z.string(),
+  meta_description: z.string(),
 });
 
 export default function Addnew() {
@@ -40,8 +36,6 @@ export default function Addnew() {
     defaultValues: {
       name: "",
       logo: "",
-      meta_title: "",
-      meta_description: "",
     },
   });
 

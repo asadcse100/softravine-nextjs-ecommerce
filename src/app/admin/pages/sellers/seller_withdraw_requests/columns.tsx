@@ -22,7 +22,7 @@ export type Products = {
   date: string;
   seller: string;
   total_amount_to_pay: number;
-  request_amount: number;
+  amount: number;
   message: string;
   status: string;
 };
@@ -95,14 +95,14 @@ export const columns: ColumnDef<Products>[] = [
     },
   },
   {
-    accessorKey: "request_amount",
+    accessorKey: "amount",
     header: () => <div className="text-right">Request Amount</div>,
     cell: ({ row }) => {
-      const request_amount = parseFloat(row.getValue("request_amount"));
+      const amount = parseFloat(row.getValue("amount"));
       const formatted = new Intl.NumberFormat("en-US", {
         style: "currency",
         currency: "USD",
-      }).format(request_amount);
+      }).format(amount);
 
       return <div className="text-right font-medium">{formatted}</div>;
     },

@@ -37,31 +37,31 @@ const prisma = new PrismaClient();
 //   }
 // };
 
-export const getUserProducts = async () => {
+export const getCustomerProducts = async () => {
   try{
-      const products = await prisma.products.findMany();
-      return { success: true, data: products };
+      const customer_products = await prisma.customer_products.findMany();
+      return { success: true, data: customer_products };
   }catch(error){
-      console.error("Error fetching products:", error);
+      console.error("Error fetching customer_products:", error);
       return { success: false, error };
   }
 }
 
-export const getCustomerProducts = async (req: NextApiRequest, res: NextApiResponse) => {
-    try {
-      // Retrieve customer products
-      const products = await prisma.customerProduct.findMany({
-        orderBy: {
-          created_at: 'desc',
-        },
-      });
+// export const getCustomerProducts = async (req: NextApiRequest, res: NextApiResponse) => {
+//     try {
+//       // Retrieve customer products
+//       const products = await prisma.customer_products.findMany({
+//         orderBy: {
+//           created_at: 'desc',
+//         },
+//       });
   
-      res.status(200).json(products);
-    } catch (error) {
-      console.error(error);
-      res.status(500).json({ error: 'Failed to retrieve customer products' });
-    }
-  };
+//       res.status(200).json(products);
+//     } catch (error) {
+//       console.error(error);
+//       res.status(500).json({ error: 'Failed to retrieve customer products' });
+//     }
+//   };
 
   export const storeCustomerProduct = async (req: NextApiRequest, res: NextApiResponse) => {
     try {

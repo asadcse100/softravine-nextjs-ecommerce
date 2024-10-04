@@ -25,20 +25,20 @@ import {
 import { toast } from "@/app/admin/components/ui/use-toast";
 
 const formSchema = z.object({
-  name: z.string().min(10, {
-    message: "Employe Name must be at least 10 characters.",
+  name: z.string().min(4, {
+    message: "Employe Name must be at least 4 characters.",
   }),
-  email: z.string().min(10, {
-    message: "Employe email must be at least 10 characters.",
+  email: z.string().min(4, {
+    message: "Employe email must be at least 4 characters.",
   }),
-  mobile: z.string().min(10, {
-    message: "Employe mobile must be at least 10 characters.",
+  mobile: z.string().min(11, {
+    message: "Employe mobile must be at least 11 characters.",
   }),
-  password: z.string().min(10, {
-    message: "Employe password must be at least 10 characters.",
+  password: z.string().min(4, {
+    message: "Employe password must be at least 4 characters.",
   }),
-  role_id: z.string().min(10, {
-    message: "Employe role_id must be at least 10 characters.",
+  role_id: z.string().min(1, {
+    message: "Please select role",
   }),
 });
 

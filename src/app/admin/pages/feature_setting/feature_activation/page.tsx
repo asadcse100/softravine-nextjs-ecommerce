@@ -18,8 +18,8 @@ import Input from "@/shared/Input/Input";
 import { Switch } from "@/app/admin/components/ui/switch";
 
 const formSchema = z.object({
-  product_name: z.string().min(10, {
-    message: "Product Name must be at least 10 characters.",
+  product_name: z.string().min(1, {
+    message: "",
   }),
 });
 

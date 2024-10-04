@@ -3,20 +3,14 @@ import * as React from "react"
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
-import { Check, ChevronsUpDown } from "lucide-react";
-import { cn } from "@/app/admin/utils";
-import { useState, useEffect, useRef } from 'react';
 import { Button } from "@/app/admin/components/ui/button";
 import {
   Form,
   FormControl,
-  FormDescription,
   FormField,
   FormItem,
-  FormLabel,
   FormMessage,
 } from "@/app/admin/components/ui/form";
-import Breadcrumb from "@/app/admin/components/Breadcrumbs/Breadcrumb"
 import {
   Select,
   SelectContent,
@@ -25,10 +19,7 @@ import {
   SelectValue,
 } from "@/app/admin/components/ui/select";
 
-import { toast } from "@/app/admin/components/ui/use-toast";
-
 import Input from "@/shared/Input/Input";
-import { Switch } from "@/app/admin/components/ui/switch";
 
 const formSchema = z.object({
   product_name: z.string().min(10, {

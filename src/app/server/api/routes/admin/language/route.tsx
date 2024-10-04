@@ -2,7 +2,7 @@ import { NextResponse } from "next/server";
 import { changeLanguage, getLanguages } from '@/app/server/controllers/LanguageController';
 
 export async function GET() {
-    const result = await changeLanguage();
+    const result = await getLanguages();
     try{
         const languages = result.data;
         return NextResponse.json(languages);

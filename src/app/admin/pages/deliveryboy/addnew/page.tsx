@@ -25,32 +25,32 @@ import Input from "@/shared/Input/Input";
 import Textarea from "@/shared/Textarea/Textarea";
 
 const formSchema = z.object({
-  name: z.string().min(10, {
-    message: "Product Name must be at least 10 characters.",
+  name: z.string().min(4, {
+    message: "Delivery Boy Name must be at least 4 characters.",
   }),
-  email: z.string().min(10, {
-    message: "Product Name must be at least 10 characters.",
+  email: z.string().min(4, {
+    message: "Email must be at least 4 characters.",
   }),
-  phone: z.string().min(10, {
-    message: "Product Name must be at least 10 characters.",
+  phone: z.string().min(11, {
+    message: "Phone must be at least 11 characters.",
   }),
-  password: z.string().min(10, {
-    message: "Product Name must be at least 10 characters.",
+  password: z.string().min(4, {
+    message: "Password must be at least 4 characters.",
   }),
-  country_id: z.string().min(10, {
-    message: "Product Name must be at least 10 characters.",
+  country_id: z.string().min(1, {
+    message: "Must be select country",
   }),
-  state_id: z.string().min(10, {
-    message: "Product Name must be at least 10 characters.",
+  state_id: z.string().min(1, {
+    message: "Must be select state",
   }),
-  city_id: z.string().min(10, {
-    message: "Product Name must be at least 10 characters.",
+  city_id: z.string().min(1, {
+    message: "Must be select city",
   }),
-  avatar_original: z.string().min(10, {
-    message: "Product Name must be at least 10 characters.",
+  avatar_original: z.string().min(1, {
+    message: "Please Upload a image of delivery boy",
   }),
   address: z.string().min(10, {
-    message: "Product Name must be at least 10 characters.",
+    message: "Please give address of Delivery Boy",
   }),
 });
 

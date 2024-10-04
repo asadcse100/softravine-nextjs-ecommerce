@@ -19,47 +19,45 @@ import Select from "@/shared/Select/Select";
 import { Switch } from "@/app/admin/components/ui/switch";
 
 const formSchema = z.object({
-  AWS_ACCESS_KEY_ID: z.string().min(10, {
-    message: "Product Name must be at least 10 characters.",
+  AWS_ACCESS_KEY_ID: z.string().min(1, {
+    message: "aws access key id required!",
   }),
-  AWS_SECRET_ACCESS_KEY: z.string().min(10, {
-    message: "Product Name must be at least 10 characters.",
+  AWS_SECRET_ACCESS_KEY: z.string().min(1, {
+    message: "aws secret key required!",
   }),
-  AWS_DEFAULT_REGION: z.string().min(10, {
-    message: "Product Name must be at least 10 characters.",
+  AWS_DEFAULT_REGION: z.string().min(1, {
+    message: "aws default region required!",
   }),
-  AWS_BUCKET: z.string().min(10, {
-    message: "Product Name must be at least 10 characters.",
+  AWS_BUCKET: z.string().min(1, {
+    message: "aws bucket required!",
   }),
-  AWS_URL: z.string().min(10, {
-    message: "Product Name must be at least 10 characters.",
+  AWS_URL: z.string().min(1, {
+    message: "aws url required!",
   }),
-  BACKBLAZE_ACCESS_KEY_ID: z.string().min(10, {
-    message: "Product Name must be at least 10 characters.",
+  BACKBLAZE_ACCESS_KEY_ID: z.string().min(1, {
+    message: "backblaze access key id required!",
   }),
-  BACKBLAZE_SECRET_ACCESS_KEY: z.string().min(10, {
-    message: "Product Name must be at least 10 characters.",
+  BACKBLAZE_SECRET_ACCESS_KEY: z.string().min(1, {
+    message: "backblaze secret access key required!",
   }),
-  BACKBLAZE_DEFAULT_REGION: z.string().min(10, {
-    message: "Product Name must be at least 10 characters.",
+  BACKBLAZE_DEFAULT_REGION: z.string().min(1, {
+    message: "backblaze secret access key required!",
   }),
-  BACKBLAZE_BUCKET: z.string().min(10, {
-    message: "Product Name must be at least 10 characters.",
+  BACKBLAZE_BUCKET: z.string().min(1, {
+    message: "backblaze bucket required!",
   }),
-  BACKBLAZE_ENDPOINT: z.string().min(10, {
-    message: "Product Name must be at least 10 characters.",
+  BACKBLAZE_ENDPOINT: z.string().min(1, {
+    message: "backblaze endpoint required!",
   }),
-  BACKBLAZE_URL: z.string().min(10, {
-    message: "Product Name must be at least 10 characters.",
+  BACKBLAZE_URL: z.string().min(1, {
+    message: "backblaze url required!",
   }),
-  FILESYSTEM_DRIVER: z.string().min(10, {
-    message: "Product Name must be at least 10 characters.",
+  FILESYSTEM_DRIVER: z.string().min(1, {
+    message: "backblaze bucket required!",
   }),
 });
 
 export default function Addnew() {
-  // ...
-  // 1. Define your form.
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {

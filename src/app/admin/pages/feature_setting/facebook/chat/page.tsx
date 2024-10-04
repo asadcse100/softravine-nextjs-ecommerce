@@ -18,11 +18,8 @@ import Input from "@/shared/Input/Input";
 import { Switch } from "@/app/admin/components/ui/switch";
 
 const formSchema = z.object({
-  facebook_chat: z.string().min(10, {
-    message: "Product Name must be at least 10 characters.",
-  }),
   FACEBOOK_PAGE_ID: z.string().min(10, {
-    message: "Product Name must be at least 10 characters.",
+    message: "Please give facebook page id.",
   }),
 });
 
@@ -32,7 +29,6 @@ export default function Addnew() {
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      facebook_chat: "",
       FACEBOOK_PAGE_ID: "",
     },
   });

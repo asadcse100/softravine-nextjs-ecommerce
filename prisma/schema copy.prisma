@@ -1,0 +1,1549 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model addons {
+  id                Int       @id @default(autoincrement())
+  name              String?   @db.VarChar(255)
+  unique_identifier String?   @db.VarChar(255)
+  version           String?   @db.VarChar(255)
+  activated         Int       @default(1)
+  image             String?   @db.VarChar(1000)
+  purchase_code     String?   @db.VarChar(255)
+  created_at        DateTime? @default(now()) @db.Timestamp(0)
+  updated_at        DateTime  @default(now()) @db.Timestamp(0)
+}
+
+model addresses {
+  id          Int        @id @default(autoincrement())
+  user_id     BigInt
+  address     String?    @db.VarChar(255)
+  country_id  Int?
+  state_id    Int
+  city_id     Int?
+  longitude   Float?     @db.Float
+  latitude    Float?     @db.Float
+  postal_code String?    @db.VarChar(255)
+  phone       String?    @db.VarChar(255)
+  set_default Int        @default(0)
+  created_at  DateTime   @default(now()) @db.Timestamp(0)
+  updated_at  DateTime   @default(now()) @db.Timestamp(0)
+
+  // users       users      @relation(fields: [user_id], references: [id])
+  users       users      @relation(fields: [user_id], references: [id], onDelete: Cascade)
+  countries   countries? @relation(fields: [country_id], references: [id])
+  states      states?    @relation(fields: [state_id], references: [id])
+  cities      cities?    @relation(fields: [city_id], references: [id])
+  carts       carts[]
+}
+
+model affiliate_configs {
+  id         Int      @id @default(autoincrement())
+  type       String?  @db.VarChar(1000)
+  value      String?  @db.Text
+  created_at DateTime @default(now()) @db.Timestamp(0)
+  updated_at DateTime @default(now()) @db.Timestamp(0)
+}
+
+model affiliate_logs {
+  id               Int           @id @default(autoincrement())
+  user_id          BigInt
+  guest_id         Int?
+  referred_by_user Int
+  amount           Float
+  order_id         BigInt
+  order_detail_id  BigInt
+  affiliate_type   String        @db.VarChar(255)
+  status           Int           @default(0) @db.TinyInt
+  created_at       DateTime      @default(now()) @db.Timestamp(0)
+  updated_at       DateTime      @default(now()) @db.Timestamp(0)
+  users            users         @relation(fields: [user_id], references: [id])
+  orders           orders        @relation(fields: [order_id], references: [id])
+  order_details    order_details @relation(fields: [order_detail_id], references: [id])
+}
+
+model affiliate_options {
+  id         Int      @id @default(autoincrement())
+  type       String?  @db.VarChar(255)
+  details    String?  @db.LongText
+  percentage Float    @default(0)
+  status     Int      @default(1)
+  created_at DateTime @default(now()) @db.Timestamp(0)
+  updated_at DateTime @default(now()) @db.Timestamp(0)
+}
+
+model affiliate_payments {
+  id                Int             @id @default(autoincrement())
+  affiliate_user_id Int
+  amount            Float
+  payment_method    String          @db.VarChar(255)
+  payment_details   String?         @db.LongText
+  created_at        DateTime        @default(now()) @db.Timestamp(0)
+  updated_at        DateTime        @default(now()) @db.Timestamp(0)
+  affiliate_users   affiliate_users @relation(fields: [affiliate_user_id], references: [id])
+}
+
+model affiliate_stats {
+  id                Int             @id @default(autoincrement())
+  affiliate_user_id Int
+  no_of_click       Int             @default(0)
+  no_of_order_item  Int             @default(0)
+  no_of_delivered   Int             @default(0)
+  no_of_cancel      Int             @default(0)
+  created_at        DateTime        @default(now()) @db.Timestamp(0)
+  updated_at        DateTime        @default(now()) @db.Timestamp(0)
+  affiliate_users   affiliate_users @relation(fields: [affiliate_user_id], references: [id])
+}
+
+model affiliate_users {
+  id                 Int                  @id @default(autoincrement())
+  paypal_email       String?              @db.VarChar(255)
+  bank_information   String?              @db.Text
+  user_id            Int
+  informations       String?              @db.Text
+  balance            Float                @default(0.00)
+  status             Int                  @default(0)
+  created_at         DateTime             @default(now()) @db.Timestamp(0)
+  updated_at         DateTime             @default(now()) @db.Timestamp(0)
+  affiliate_payments affiliate_payments[]
+  affiliate_stats    affiliate_stats[]
+}
+
+model affiliate_withdraw_requests {
+  id         Int      @id @default(autoincrement())
+  user_id    BigInt
+  amount     Float
+  status     Int
+  created_at DateTime @default(now()) @db.Timestamp(0)
+  updated_at DateTime @default(now()) @db.Timestamp(0)
+  users      users    @relation(fields: [user_id], references: [id])
+}
+
+model app_translations {
+  id         Int      @id @default(autoincrement())
+  lang       String?  @db.VarChar(10)
+  lang_key   String?  @db.VarChar(255)
+  lang_value String?  @db.VarChar(255)
+  created_at DateTime @default(now()) @db.Timestamp(0)
+  updated_at DateTime @default(now()) @db.Timestamp(0)
+}
+
+model attribute_category {
+  id           Int        @id @default(autoincrement())
+  category_id  Int
+  attribute_id Int
+  created_at   DateTime   @default(now()) @db.Timestamp(0)
+  updated_at   DateTime   @default(now()) @db.Timestamp(0)
+  categories   categories @relation(fields: [category_id], references: [id])
+  attributes   attributes @relation(fields: [attribute_id], references: [id])
+}
+
+model attribute_translations {
+  id           Int        @id @default(autoincrement())
+  attribute_id Int
+  name         String     @db.VarChar(50)
+  lang         String     @db.VarChar(100)
+  created_at   DateTime   @default(now()) @db.Timestamp(0)
+  updated_at   DateTime   @default(now()) @db.Timestamp(0)
+  attributes   attributes @relation(fields: [attribute_id], references: [id])
+}
+
+model attribute_values {
+  id                 Int                  @id @default(autoincrement())
+  attribute_id       Int
+  value              String               @db.VarChar(255)
+  color_code         String?              @db.VarChar(100)
+  created_at         DateTime             @default(now()) @db.Timestamp(0)
+  updated_at         DateTime             @default(now()) @db.Timestamp(0)
+  attributes         attributes           @relation(fields: [attribute_id], references: [id])
+  size_chart_details size_chart_details[]
+}
+
+model attributes {
+  id                     Int                      @id @default(autoincrement())
+  name                   String?                  @db.VarChar(255)
+  created_at             DateTime                 @default(now()) @db.Timestamp(0)
+  updated_at             DateTime                 @default(now()) @db.Timestamp(0)
+  attribute_category     attribute_category[]
+  attribute_translations attribute_translations[]
+  attribute_values       attribute_values[]
+}
+
+model auction_product_bids {
+  id         Int       @id @default(autoincrement())
+  product_id BigInt    @db.UnsignedBigInt
+  user_id    BigInt    @db.UnsignedBigInt
+  amount     Float
+  created_at DateTime? @default(now()) @db.Timestamp(0)
+  updated_at DateTime? @default(now()) @db.Timestamp(0)
+  products   products  @relation(fields: [product_id], references: [id])
+  users      users     @relation(fields: [user_id], references: [id])
+}
+
+model blog_categories {
+  id            Int       @id @default(autoincrement())
+  category_name String    @db.VarChar(255)
+  slug          String    @db.VarChar(255)
+  created_at    DateTime? @db.Timestamp(0)
+  updated_at    DateTime? @db.Timestamp(0)
+  deleted_at    DateTime? @db.Timestamp(0)
+  blogs         blogs[]
+}
+
+model blogs {
+  id                Int             @id @default(autoincrement())
+  category_id       Int
+  title             String          @db.VarChar(255)
+  slug              String          @db.VarChar(255)
+  short_description String?         @db.Text
+  description       String?         @db.LongText
+  banner            Int?
+  meta_title        String?         @db.VarChar(255)
+  meta_img          Int?
+  meta_description  String?         @db.Text
+  meta_keywords     String?         @db.Text
+  status            Int             @default(1)
+  created_at        DateTime?       @db.Timestamp(0)
+  updated_at        DateTime?       @db.Timestamp(0)
+  deleted_at        DateTime?       @db.Timestamp(0)
+  blog_categories   blog_categories @relation(fields: [category_id], references: [id])
+}
+
+model brand_translations {
+  id         Int      @id @default(autoincrement())
+  brand_id   Int
+  name       String   @db.VarChar(50)
+  lang       String   @db.VarChar(100)
+  created_at DateTime @default(now()) @db.Timestamp(0)
+  updated_at DateTime @default(now()) @db.Timestamp(0)
+  brands     brands   @relation(fields: [brand_id], references: [id])
+}
+
+model brands {
+  id                 Int                  @id @default(autoincrement())
+  name               String               @db.VarChar(50)
+  logo               String?              @db.VarChar(100)
+  top                Int                  @default(0)
+  slug               String?              @db.VarChar(255)
+  meta_title         String?              @db.VarChar(255)
+  meta_description   String?              @db.Text
+  created_at         DateTime             @default(now()) @db.Timestamp(0)
+  updated_at         DateTime             @default(now()) @db.Timestamp(0)
+  brand_translations brand_translations[]
+  customer_products  customer_products[]
+  products           products[]
+}
+
+model business_settings {
+  id         Int       @id @default(autoincrement())
+  type       String    @db.VarChar(30)
+  value      String?   @db.LongText
+  lang       String?   @db.VarChar(30)
+  created_at DateTime  @default(now()) @db.Timestamp(0)
+  updated_at DateTime? @default(now()) @db.Timestamp(0)
+}
+
+model carrier_range_prices {
+  id               Int            @id @default(autoincrement())
+  carrier_id       Int
+  carrier_range_id Int
+  zone_id          Int
+  price            Float
+  created_at       DateTime       @default(now()) @db.Timestamp(0)
+  updated_at       DateTime       @default(now()) @db.Timestamp(0)
+  carriers         carriers       @relation(fields: [carrier_id], references: [id])
+  carrier_ranges   carrier_ranges @relation(fields: [carrier_range_id], references: [id])
+  zones            zones          @relation(fields: [zone_id], references: [id])
+}
+
+model carrier_ranges {
+  id                   Int                    @id @default(autoincrement())
+  carrier_id           Int
+  billing_type         String                 @db.VarChar(20)
+  delimiter1           Float
+  delimiter2           Float
+  created_at           DateTime               @default(now()) @db.Timestamp(0)
+  updated_at           DateTime               @default(now()) @db.Timestamp(0)
+  carriers             carriers               @relation(fields: [carrier_id], references: [id])
+  carrier_range_prices carrier_range_prices[]
+}
+
+model carriers {
+  id                   Int                    @id @default(autoincrement())
+  name                 String                 @db.VarChar(255)
+  logo                 Int?
+  transit_time         String                 @db.VarChar(255)
+  free_shipping        Boolean                @default(false)
+  status               Boolean                @default(true)
+  created_at           DateTime               @default(now()) @db.Timestamp(0)
+  updated_at           DateTime               @default(now()) @db.Timestamp(0)
+  carrier_ranges       carrier_ranges[]
+  carrier_range_prices carrier_range_prices[]
+  orders               orders[]
+}
+
+model carts {
+  id                    Int       @id @default(autoincrement()) @db.UnsignedInt
+  owner_id              Int?
+  user_id               BigInt
+  temp_user_id          String?   @db.VarChar(255)
+  address_id            Int       @default(0)
+  product_id            BigInt
+  variation             String?   @db.Text
+  price                 Float?    @default(0.00)
+  tax                   Float?    @default(0.00)
+  shipping_cost         Float     @default(0.00)
+  shipping_type         String    @default("") @db.VarChar(30)
+  pickup_point          Int?
+  carrier_id            Int?
+  discount              Float     @default(0.00)
+  product_referral_code String?   @db.VarChar(255)
+  coupon_code           String?   @db.VarChar(255)
+  coupon_applied        Int       @default(0) @db.TinyInt
+  quantity              Int       @default(0)
+  created_at            DateTime? @default(now()) @db.Timestamp(0)
+  updated_at            DateTime? @default(now()) @db.Timestamp(0)
+
+users                 users     @relation(fields: [user_id], references: [id], onDelete: Cascade)
+  addresses             addresses @relation(fields: [address_id], references: [id])
+  products              products  @relation(fields: [product_id], references: [id])
+}
+
+model categories {
+  id                    Int                     @id @default(autoincrement())
+  parent_id             Int                     @default(0)
+  product_id            BigInt                  @default(0)
+  level                 Int                     @default(0)
+  name                  String                  @db.VarChar(50)
+  order_level           Int                     @default(0)
+  commision_rate        Float                   @default(0.00)
+  banner                String?                 @db.VarChar(100)
+  icon                  String?                 @db.VarChar(100)
+  cover_image           String?                 @db.VarChar(100)
+  featured              Int                     @default(0)
+  top                   Int                     @default(0)
+  digital               Int                     @default(0)
+  slug                  String?                 @db.VarChar(255)
+  meta_title            String?                 @db.VarChar(255)
+  meta_description      String?                 @db.Text
+  created_at            DateTime                @default(now()) @db.Timestamp(0)
+  updated_at            DateTime?               @default(now()) @db.Timestamp(0)
+  attribute_category    attribute_category[]
+  products              products                @relation(fields: [product_id], references: [id])
+  category_translations category_translations[]
+  customer_products     customer_products[]
+  home_categories       home_categories[]
+  product_categories    product_categories[]
+  size_charts           size_charts?
+
+  @@index([slug], map: "slug")
+}
+
+model category_translations {
+  id          Int        @id @default(autoincrement())
+  category_id Int
+  name        String     @db.VarChar(50)
+  lang        String     @db.VarChar(100)
+  created_at  DateTime   @default(now()) @db.Timestamp(0)
+  updated_at  DateTime   @default(now()) @db.Timestamp(0)
+  categories  categories @relation(fields: [category_id], references: [id])
+}
+
+model cities {
+  id                Int                 @id @default(autoincrement())
+  name              String              @db.VarChar(255)
+  state_id          Int
+  cost              Float               @default(0.00)
+  status            Int                 @default(1)
+  created_at        DateTime            @default(now()) @db.Timestamp(0)
+  updated_at        DateTime            @default(now()) @db.Timestamp(0)
+  deleted_at        DateTime?           @db.Timestamp(0)
+  states            states              @relation(fields: [state_id], references: [id])
+  addresses         addresses[]
+  city_translations city_translations[]
+}
+
+model city_translations {
+  id         Int      @id @default(autoincrement())
+  city_id    Int
+  name       String   @db.VarChar(255)
+  lang       String   @db.VarChar(10)
+  created_at DateTime @default(now()) @db.Timestamp(0)
+  updated_at DateTime @default(now()) @db.Timestamp(0)
+  cities     cities   @relation(fields: [city_id], references: [id])
+}
+
+model colors {
+  id         Int      @id @default(autoincrement())
+  name       String?  @db.VarChar(30)
+  code       String?  @db.VarChar(10)
+  created_at DateTime @default(now()) @db.Timestamp(0)
+  updated_at DateTime @default(now()) @db.Timestamp(0)
+}
+
+model combined_orders {
+  id               Int      @id @default(autoincrement())
+  user_id          BigInt
+  shipping_address String?  @db.Text
+  grand_total      Float    @default(0.00)
+  created_at       DateTime @default(now()) @db.Timestamp(0)
+  updated_at       DateTime @default(now()) @db.Timestamp(0)
+  users            users    @relation(fields: [user_id], references: [id])
+  orders           orders[]
+}
+
+model commission_histories {
+  id               Int           @id @default(autoincrement())
+  order_id         BigInt
+  order_detail_id  BigInt
+  seller_id        Int
+  admin_commission Float
+  seller_earning   Float
+  created_at       DateTime      @default(now()) @db.Timestamp(0)
+  updated_at       DateTime      @default(now()) @db.Timestamp(0)
+  orders           orders        @relation(fields: [order_id], references: [id])
+  order_details    order_details @relation(fields: [order_detail_id], references: [id])
+  sellers          sellers       @relation(fields: [seller_id], references: [id])
+}
+
+model conversations {
+  id              Int        @id @default(autoincrement())
+  sender_id       BigInt
+  receiver_id     BigInt
+  title           String?    @db.VarChar(1000)
+  sender_viewed   Int        @default(1)
+  receiver_viewed Int        @default(0)
+  created_at      DateTime   @default(now()) @db.Timestamp(0)
+  updated_at      DateTime   @default(now()) @db.Timestamp(0)
+  senders         users      @relation(fields: [sender_id], references: [id])
+  messages        messages[]
+}
+
+model countries {
+  id         Int         @id @default(autoincrement())
+  code       String      @default("") @db.VarChar(2)
+  name       String      @default("") @db.VarChar(100)
+  zone_id    Int         @default(0)
+  status     Int         @default(1)
+  created_at DateTime?   @default(now()) @db.Timestamp(0)
+  updated_at DateTime?   @db.Timestamp(0)
+  deleted_at DateTime?   @db.Timestamp(0)
+  addresses  addresses[]
+  states     states[]
+}
+
+model coupon_usages {
+  id         Int      @id @default(autoincrement())
+  user_id    BigInt
+  coupon_id  Int
+  created_at DateTime @default(now()) @db.Timestamp(0)
+  updated_at DateTime @default(now()) @db.Timestamp(0)
+  users      users    @relation(fields: [user_id], references: [id])
+  coupons    coupons  @relation(fields: [coupon_id], references: [id])
+}
+
+model coupons {
+  id            Int             @id @default(autoincrement())
+  user_id       BigInt
+  type          String          @db.VarChar(255)
+  code          String          @db.VarChar(255)
+  details       String          @db.LongText
+  discount      Float
+  discount_type String          @db.VarChar(100)
+  start_date    Int?
+  end_date      Int?
+  status        Boolean         @default(true)
+  created_at    DateTime        @default(now()) @db.Timestamp(0)
+  updated_at    DateTime        @default(now()) @db.Timestamp(0)
+  users         users           @relation(fields: [user_id], references: [id])
+  coupon_usages coupon_usages[]
+  user_coupons  user_coupons[]
+}
+
+model currencies {
+  id            Int      @id @default(autoincrement())
+  name          String   @db.VarChar(255)
+  symbol        String   @db.VarChar(255)
+  exchange_rate Float
+  status        Int      @default(0)
+  code          String?  @db.VarChar(20)
+  created_at    DateTime @default(now()) @db.Timestamp(0)
+  updated_at    DateTime @default(now()) @db.Timestamp(0)
+}
+
+/// This model or at least one of its fields has comments in the database, and requires an additional setup for migrations: Read more: https://pris.ly/d/database-comment
+model customer_package_payments {
+  id                  Int               @id @default(autoincrement())
+  user_id             BigInt
+  customer_package_id Int
+  payment_method      String            @db.VarChar(255)
+  payment_details     String            @db.LongText
+  approval            Int
+  offline_payment     Int
+  reciept             String            @db.VarChar(150)
+  created_at          DateTime          @default(now()) @db.Timestamp(0)
+  updated_at          DateTime          @default(now()) @db.Timestamp(0)
+  users               users             @relation(fields: [user_id], references: [id])
+  customer_packages   customer_packages @relation(fields: [customer_package_id], references: [id])
+}
+
+model customer_package_translations {
+  id                  Int               @id @default(autoincrement())
+  customer_package_id Int
+  name                String            @db.VarChar(50)
+  lang                String            @db.VarChar(100)
+  created_at          DateTime          @default(now()) @db.Timestamp(0)
+  updated_at          DateTime          @default(now()) @db.Timestamp(0)
+  customer_packages   customer_packages @relation(fields: [customer_package_id], references: [id])
+}
+
+model customer_packages {
+  id                            Int                             @id @default(autoincrement())
+  name                          String?                         @db.VarChar(255)
+  amount                        Float?
+  product_upload                Int?
+  logo                          String?                         @db.VarChar(150)
+  created_at                    DateTime?                       @db.Timestamp(0)
+  updated_at                    DateTime?                       @db.Timestamp(0)
+  customer_package_payments     customer_package_payments[]
+  customer_package_translations customer_package_translations[]
+  proxypay_payments             proxypay_payments[]
+}
+
+model customer_product_translations {
+  id                  Int               @id @default(autoincrement())
+  customer_product_id Int
+  name                String?           @db.VarChar(200)
+  unit                String?           @db.VarChar(20)
+  description         String?           @db.LongText
+  lang                String            @db.VarChar(100)
+  created_at          DateTime          @default(now()) @db.Timestamp(0)
+  updated_at          DateTime          @default(now()) @db.Timestamp(0)
+  customer_products   customer_products @relation(fields: [customer_product_id], references: [id])
+}
+
+model customer_products {
+  id                            Int                             @id @default(autoincrement())
+  name                          String?                         @db.VarChar(255)
+  published                     Int                             @default(0)
+  status                        Int                             @default(0)
+  added_by                      String?                         @db.VarChar(50)
+  user_id                       BigInt
+  category_id                   Int
+  subcategory_id                Int?
+  subsubcategory_id             Int?
+  brand_id                      Int
+  photos                        String?                         @db.VarChar(255)
+  thumbnail_img                 String?                         @db.VarChar(150)
+  conditon                      String?                         @db.VarChar(50)
+  location                      String?                         @db.Text
+  video_provider                String?                         @db.VarChar(100)
+  video_link                    String?                         @db.VarChar(200)
+  unit                          String?                         @db.VarChar(200)
+  tags                          String?                         @db.VarChar(255)
+  description                   String?                         @db.MediumText
+  unit_price                    Float?                          @default(0.00)
+  meta_title                    String?                         @db.VarChar(200)
+  meta_description              String?                         @db.VarChar(500)
+  meta_img                      String?                         @db.VarChar(150)
+  pdf                           String?                         @db.VarChar(200)
+  slug                          String?                         @db.VarChar(200)
+  created_at                    DateTime                        @default(now()) @db.Timestamp(0)
+  updated_at                    DateTime                        @default(now()) @db.Timestamp(0)
+  users                         users                           @relation(fields: [user_id], references: [id])
+  categories                    categories                      @relation(fields: [category_id], references: [id])
+  brands                        brands                          @relation(fields: [brand_id], references: [id])
+  customer_product_translations customer_product_translations[]
+}
+
+model delivery_boys {
+  id                 Int                  @id @default(autoincrement())
+  user_id            BigInt
+  total_collection   Float?               @default(0.00)
+  total_earning      Float?               @default(0.00)
+  monthly_salary     Float?               @default(0.00)
+  order_commission   Float?               @default(0.00)
+  created_at         DateTime             @default(now()) @db.Timestamp(0)
+  updated_at         DateTime             @default(now()) @db.Timestamp(0)
+  users              users                @relation(fields: [user_id], references: [id])
+  delivery_histories delivery_histories[]
+  orders             orders[]
+}
+
+model delivery_boy_collections {
+  id                Int      @id @default(autoincrement())
+  user_id           BigInt
+  collection_amount Float?   @default(0.00)
+  created_at        DateTime @default(now()) @db.Timestamp(0)
+  updated_at        DateTime @default(now()) @db.Timestamp(0)
+  users             users    @relation(fields: [user_id], references: [id])
+}
+
+model delivery_boy_payments {
+  id         Int      @id @default(autoincrement())
+  user_id    BigInt
+  payment    Float?   @default(0.00)
+  created_at DateTime @default(now()) @db.Timestamp(0)
+  updated_at DateTime @default(now()) @db.Timestamp(0)
+  users      users    @relation(fields: [user_id], references: [id])
+}
+
+model delivery_histories {
+  id              Int           @id @default(autoincrement())
+  delivery_boy_id Int
+  order_id        BigInt
+  delivery_status String?       @db.VarChar(255)
+  payment_type    String?       @db.VarChar(255)
+  earning         Float?        @default(0.00)
+  collection      Float?        @default(0.00)
+  created_at      DateTime      @default(now()) @db.Timestamp(0)
+  updated_at      DateTime      @default(now()) @db.Timestamp(0)
+  delivery_boys   delivery_boys @relation(fields: [delivery_boy_id], references: [id])
+  orders          orders        @relation(fields: [order_id], references: [id])
+}
+
+model firebase_notifications {
+  id           Int      @id @default(autoincrement())
+  title        String?  @db.VarChar(255)
+  text         String?  @db.Text
+  item_type    String   @db.VarChar(255)
+  item_type_id BigInt
+  receiver_id  BigInt
+  is_read      Boolean  @default(false)
+  created_at   DateTime @default(now()) @db.Timestamp(0)
+  updated_at   DateTime @default(now()) @db.Timestamp(0)
+  item_types   products @relation(fields: [item_type_id], references: [id])
+  receivers    users    @relation(fields: [receiver_id], references: [id])
+}
+
+model flash_deal_products {
+  id            Int         @id @default(autoincrement())
+  flash_deal_id Int
+  product_id    BigInt
+  discount      Float?      @default(0.00)
+  discount_type String?     @db.VarChar(20)
+  created_at    DateTime    @default(now()) @db.Timestamp(0)
+  updated_at    DateTime    @default(now()) @db.Timestamp(0)
+  flash_deals   flash_deals @relation(fields: [flash_deal_id], references: [id])
+  products      products    @relation(fields: [product_id], references: [id])
+}
+
+model flash_deal_translations {
+  id            Int         @id @default(autoincrement())
+  flash_deal_id Int
+  title         String      @db.VarChar(50)
+  lang          String      @db.VarChar(100)
+  created_at    DateTime    @default(now()) @db.Timestamp(0)
+  updated_at    DateTime    @default(now()) @db.Timestamp(0)
+  flash_deals   flash_deals @relation(fields: [flash_deal_id], references: [id])
+}
+
+model flash_deals {
+  id                      Int                       @id @default(autoincrement())
+  title                   String?                   @db.VarChar(255)
+  start_date              Int?
+  end_date                Int?
+  status                  Int                       @default(0)
+  featured                Int                       @default(0)
+  background_color        String?                   @db.VarChar(255)
+  text_color              String?                   @db.VarChar(255)
+  banner                  String?                   @db.VarChar(255)
+  slug                    String?                   @db.VarChar(255)
+  created_at              DateTime?                 @default(now()) @db.Timestamp(0)
+  updated_at              DateTime                  @default(now()) @db.Timestamp(0)
+  flash_deal_products     flash_deal_products[]
+  flash_deal_translations flash_deal_translations[]
+}
+
+/// The underlying table does not contain a valid unique identifier and can therefore currently not be handled by Prisma Client.
+model follow_sellers {
+  user_id BigInt @id
+  shop_id Int
+  users   users  @relation(fields: [user_id], references: [id])
+  shops   shops  @relation(fields: [shop_id], references: [id])
+}
+
+model home_categories {
+  id               Int        @id @default(autoincrement())
+  category_id      Int
+  subsubcategories String?    @db.VarChar(1000)
+  status           Int        @default(1)
+  created_at       DateTime   @default(now()) @db.Timestamp(0)
+  updated_at       DateTime   @default(now()) @db.Timestamp(0)
+  categories       categories @relation(fields: [category_id], references: [id])
+}
+
+model languages {
+  id            Int      @id @default(autoincrement())
+  name          String   @db.VarChar(100)
+  code          String   @db.VarChar(100)
+  app_lang_code String?  @default("en") @db.VarChar(255)
+  rtl           Int      @default(0)
+  status        Boolean  @default(true)
+  created_at    DateTime @default(now()) @db.Timestamp(0)
+  updated_at    DateTime @default(now()) @db.Timestamp(0)
+}
+
+model manual_payment_methods {
+  id          Int      @id @default(autoincrement())
+  type        String?  @db.VarChar(255)
+  heading     String?  @db.VarChar(255)
+  description String?  @db.Text
+  bank_info   String?  @db.Text
+  photo       String?  @db.VarChar(255)
+  created_at  DateTime @default(now()) @db.Timestamp(0)
+  updated_at  DateTime @default(now()) @db.Timestamp(0)
+}
+
+model measurement_points {
+  id                 Int                  @id @default(autoincrement())
+  name               String
+  created_at         DateTime             @default(now()) @db.Timestamp(0)
+  updated_at         DateTime             @default(now()) @db.Timestamp(0)
+  size_chart_details size_chart_details[]
+}
+
+model messages {
+  id              Int           @id @default(autoincrement())
+  conversation_id Int
+  user_id         BigInt
+  message         String?       @db.Text
+  created_at      DateTime      @default(now()) @db.Timestamp(0)
+  updated_at      DateTime      @default(now()) @db.Timestamp(0)
+  conversations   conversations @relation(fields: [conversation_id], references: [id])
+  users           users         @relation(fields: [user_id], references: [id])
+}
+
+model model_has_permissions {
+  permission_id BigInt      @db.UnsignedBigInt
+  model_type    String
+  model_id      BigInt      @db.UnsignedBigInt
+  permissions   permissions @relation(fields: [permission_id], references: [id], onDelete: Cascade, onUpdate: Restrict, map: "model_has_permissions_permission_id_foreign")
+
+  @@id([permission_id, model_id, model_type])
+  @@index([model_id, model_type], map: "model_has_permissions_model_id_model_type_index")
+}
+
+model model_has_roles {
+  role_id    BigInt @db.UnsignedBigInt
+  model_type String
+  model_id   BigInt @db.UnsignedBigInt
+  roles      roles  @relation(fields: [role_id], references: [id], onDelete: Cascade, onUpdate: Restrict, map: "model_has_roles_role_id_foreign")
+
+  @@id([role_id, model_id, model_type])
+  @@index([model_id, model_type], map: "model_has_roles_model_id_model_type_index")
+}
+
+model notifications {
+  id              String    @id @db.Char(36)
+  type            String
+  notifiable_type String
+  notifiable_id   BigInt    @db.UnsignedBigInt
+  data            String    @db.Text
+  read_at         DateTime? @db.Timestamp(0)
+  created_at      DateTime? @db.Timestamp(0)
+  updated_at      DateTime? @db.Timestamp(0)
+  notifiables     users     @relation(fields: [notifiable_id], references: [id])
+
+  @@index([notifiable_type, notifiable_id], map: "notifications_notifiable_type_notifiable_id_index")
+}
+
+model order_details {
+  id                    BigInt                 @id @default(autoincrement())
+  order_id              BigInt
+  seller_id             Int
+  product_id            BigInt
+  variation             String?                @db.LongText
+  price                 Float?
+  tax                   Float                  @default(0.00)
+  shipping_cost         Float                  @default(0.00)
+  quantity              Int?
+  payment_status        String                 @default("unpaid") @db.VarChar(10)
+  delivery_status       String?                @default("pending") @db.VarChar(20)
+  shipping_type         String?                @db.VarChar(255)
+  pickup_point_id       Int
+  product_referral_code String?                @db.VarChar(255)
+  earn_point            Float                  @default(0.00)
+  created_at            DateTime               @default(now()) @db.Timestamp(0)
+  updated_at            DateTime               @default(now()) @db.Timestamp(0)
+  orders                orders                 @relation(fields: [order_id], references: [id])
+  sellers               sellers                @relation(fields: [seller_id], references: [id])
+  products              products               @relation(fields: [product_id], references: [id])
+  pickup_points         pickup_points          @relation(fields: [pickup_point_id], references: [id])
+  affiliate_logs        affiliate_logs[]
+  commission_histories  commission_histories[]
+  refund_requests       refund_requests[]
+}
+
+model orders {
+  id                    BigInt          @id @default(autoincrement())
+  combined_order_id     Int
+  user_id               BigInt
+  guest_id              Int?
+  seller_id             Int
+  assign_delivery_boy   Int
+  shipping_address      String?         @db.LongText
+  additional_info       String?         @db.LongText
+  shipping_type         String          @db.VarChar(50)
+  order_from            String          @default("web") @db.VarChar(20)
+  pickup_point_id       Int             @default(0)
+  carrier_id            Int
+  delivery_status       String?         @default("pending") @db.VarChar(20)
+  payment_type          String?         @db.VarChar(20)
+  manual_payment        Int             @default(0)
+  manual_payment_data   String?         @db.Text
+  payment_status        String?         @default("unpaid") @db.VarChar(20)
+  payment_details       String?         @db.LongText
+  grand_total           Float?
+  coupon_discount       Float           @default(0.00)
+  code                  String?         @db.MediumText
+  tracking_code         String?         @db.VarChar(255)
+  date                  Int
+  viewed                Int             @default(0)
+  delivery_viewed       Int             @default(1)
+  payment_status_viewed Int?            @default(1)
+  commission_calculated Int             @default(0)
+  created_at            DateTime        @default(now()) @db.Timestamp(0)
+  updated_at            DateTime        @default(now()) @db.Timestamp(0)
+  combined_orders       combined_orders @relation(fields: [combined_order_id], references: [id])
+  users                 users           @relation(fields: [user_id], references: [id])
+  sellers               sellers         @relation(fields: [seller_id], references: [id])
+  assign_delivery_boys  delivery_boys   @relation(fields: [assign_delivery_boy], references: [id])
+  pickup_points         pickup_points   @relation(fields: [pickup_point_id], references: [id])
+  carriers              carriers        @relation(fields: [carrier_id], references: [id])
+
+  affiliate_logs       affiliate_logs[]
+  commission_histories commission_histories[]
+  delivery_histories   delivery_histories[]
+  order_details        order_details[]
+  proxypay_payments    proxypay_payments[]
+  refund_requests      refund_requests[]
+}
+
+model page_translations {
+  id         Int      @id @default(autoincrement())
+  page_id    Int
+  title      String   @db.VarChar(255)
+  content    String   @db.LongText
+  lang       String   @db.VarChar(100)
+  created_at DateTime @default(now()) @db.Timestamp(0)
+  updated_at DateTime @default(now()) @db.Timestamp(0)
+  pages      pages    @relation(fields: [page_id], references: [id])
+}
+
+model pages {
+  id                Int                 @id @default(autoincrement())
+  type              String              @db.VarChar(50)
+  title             String?             @db.VarChar(255)
+  slug              String?             @db.VarChar(255)
+  content           String?             @db.LongText
+  meta_title        String?             @db.Text
+  meta_description  String?             @db.VarChar(1000)
+  keywords          String?             @db.VarChar(1000)
+  meta_image        String?             @db.VarChar(255)
+  created_at        DateTime            @default(now()) @db.Timestamp(0)
+  updated_at        DateTime            @default(now()) @db.Timestamp(0)
+  page_translations page_translations[]
+}
+
+/// The underlying table does not contain a valid unique identifier and can therefore currently not be handled by Prisma Client.
+model password_resets {
+  id         Int      @id @default(autoincrement())
+  email      String   @db.VarChar(255)
+  token      String   @db.VarChar(255)
+  created_at DateTime @default(now()) @db.Timestamp(0)
+  updated_at DateTime @default(now()) @db.Timestamp(0)
+
+  @@index([email], map: "password_resets_email_index")
+}
+
+model payku_payments {
+  transaction_id        String             @unique(map: "payku_payments_transaction_id_unique")
+  start                 DateTime           @db.Date
+  end                   DateTime           @db.Date
+  media                 String
+  transaction_key       String?            @db.VarChar(255)
+  payment_key           String?            @db.VarChar(255)
+  verification_key      String
+  authorization_code    String
+  last_4_digits         Int?               @db.UnsignedInt
+  installments          String?
+  card_type             String?
+  additional_parameters String?
+  currency              String
+  created_at            DateTime?          @db.Timestamp(0)
+  updated_at            DateTime?          @db.Timestamp(0)
+  payku_transactions    payku_transactions @relation(fields: [transaction_id], references: [id], onUpdate: Restrict, map: "payku_payments_transaction_id_foreign")
+}
+
+model payku_transactions {
+  id             String          @unique(map: "payku_transactions_id_unique")
+  status         String?
+  order          String?         @unique(map: "payku_transactions_order_unique")
+  email          String?
+  subject        String?
+  url            String?         @db.Text
+  amount         Int?            @db.UnsignedInt
+  notified_at    DateTime?       @db.DateTime(0)
+  created_at     DateTime?       @db.Timestamp(0)
+  updated_at     DateTime?       @db.Timestamp(0)
+  payku_payments payku_payments?
+}
+
+model payments {
+  id              Int      @id @default(autoincrement())
+  seller_id       Int
+  amount          Float    @default(0.00)
+  payment_details String?  @db.LongText
+  payment_method  String?  @db.VarChar(255)
+  txn_code        String?  @db.VarChar(100)
+  created_at      DateTime @default(now()) @db.Timestamp(0)
+  updated_at      DateTime @default(now()) @db.Timestamp(0)
+  sellers         sellers  @relation(fields: [seller_id], references: [id])
+}
+
+model permissions {
+  id                    BigInt                  @id @default(autoincrement()) @db.UnsignedBigInt
+  name                  String
+  section               String?                 @db.VarChar(50)
+  guard_name            String
+  created_at            DateTime?               @default(now()) @db.Timestamp(0)
+  updated_at            DateTime?               @db.Timestamp(0)
+  model_has_permissions model_has_permissions[]
+  role_has_permissions  role_has_permissions[]
+}
+
+model personal_access_tokens {
+  id             BigInt    @id @default(autoincrement()) @db.UnsignedBigInt
+  tokenable_type String
+  tokenable_id   BigInt    @db.UnsignedBigInt
+  name           String
+  token          String    @unique(map: "personal_access_tokens_token_unique") @db.VarChar(64)
+  abilities      String?   @db.Text
+  last_used_at   DateTime? @db.Timestamp(0)
+  created_at     DateTime? @db.Timestamp(0)
+  updated_at     DateTime? @db.Timestamp(0)
+  tokenables     users     @relation(fields: [tokenable_id], references: [id])
+
+  @@index([tokenable_type, tokenable_id], map: "personal_access_tokens_tokenable_type_tokenable_id_index")
+}
+
+model pickup_point_translations {
+  id              Int           @id @default(autoincrement())
+  pickup_point_id Int
+  name            String        @db.VarChar(50)
+  address         String        @db.Text
+  lang            String        @db.VarChar(100)
+  created_at      DateTime      @default(now()) @db.Timestamp(0)
+  updated_at      DateTime      @default(now()) @db.Timestamp(0)
+  pickup_points   pickup_points @relation(fields: [pickup_point_id], references: [id])
+}
+
+model pickup_points {
+  id                        Int                         @id @default(autoincrement())
+  staff_id                  BigInt
+  name                      String                      @db.VarChar(255)
+  address                   String                      @db.MediumText
+  phone                     String                      @db.VarChar(15)
+  pick_up_status            Int?
+  cash_on_pickup_status     Int?
+  created_at                DateTime                    @default(now()) @db.Timestamp(0)
+  updated_at                DateTime                    @default(now()) @db.Timestamp(0)
+  staffs                    users                       @relation(fields: [staff_id], references: [id])
+  orders                    orders[]
+  order_details             order_details[]
+  pickup_point_translations pickup_point_translations[]
+}
+
+model product_queries {
+  id          BigInt    @id @default(autoincrement()) @db.UnsignedBigInt
+  customer_id BigInt
+  seller_id   Int
+  product_id  BigInt
+  question    String    @db.LongText
+  reply       String?   @db.LongText
+  created_at  DateTime? @db.Timestamp(0)
+  updated_at  DateTime? @db.Timestamp(0)
+  customers   users     @relation(fields: [customer_id], references: [id])
+  sellers     sellers   @relation(fields: [seller_id], references: [id])
+  products    products  @relation(fields: [product_id], references: [id])
+}
+
+model product_stocks {
+  id         Int       @id @default(autoincrement())
+  product_id BigInt
+  variant    String    @db.VarChar(255)
+  sku        String?   @db.VarChar(255)
+  price      Float     @default(0.00)
+  qty        Int       @default(0)
+  image      Int?
+  created_at DateTime  @default(now()) @db.Timestamp(0)
+  updated_at DateTime  @default(now()) @db.Timestamp(0)
+  products   products  @relation(fields: [product_id], references: [id])
+  wallets    wallets[]
+}
+
+model product_taxes {
+  id         Int      @id @default(autoincrement())
+  product_id BigInt
+  tax_id     Int
+  tax        Float
+  tax_type   String   @db.VarChar(10)
+  created_at DateTime @default(now()) @db.Timestamp(0)
+  updated_at DateTime @default(now()) @db.Timestamp(0)
+  products   products @relation(fields: [product_id], references: [id])
+  taxes      taxes    @relation(fields: [tax_id], references: [id])
+}
+
+model product_translations {
+  id          BigInt   @id @default(autoincrement())
+  product_id  BigInt
+  name        String?  @db.VarChar(200)
+  unit        String?  @db.VarChar(20)
+  description String?  @db.LongText
+  lang        String   @db.VarChar(100)
+  created_at  DateTime @default(now()) @db.Timestamp(0)
+  updated_at  DateTime @default(now()) @db.Timestamp(0)
+  products    products @relation(fields: [product_id], references: [id])
+}
+
+/// This model or at least one of its fields has comments in the database, and requires an additional setup for migrations: Read more: https://pris.ly/d/database-comments
+model products {
+  id                     BigInt                   @id @default(autoincrement())
+  name                   String                   @db.VarChar(200)
+  added_by               String                   @default("admin") @db.VarChar(6)
+  user_id                BigInt
+  category_id            Int
+  brand_id               Int
+  photos                 String?                  @db.VarChar(2000)
+  thumbnail_img          String?                  @db.VarChar(100)
+  video_provider         String?                  @db.VarChar(20)
+  video_link             String?                  @db.VarChar(100)
+  tags                   String?                  @db.VarChar(500)
+  description            String?                  @db.LongText
+  unit_price             Float
+  purchase_price         Float?
+  variant_product        Int                      @default(0)
+  attributes             String                   @default("[]") @db.VarChar(1000)
+  choice_options         String?                  @db.MediumText
+  colors                 String?                  @db.MediumText
+  variations             String?                  @db.Text
+  todays_deal            Int                      @default(0)
+  published              Int                      @default(1)
+  approved               Boolean                  @default(true)
+  stock_visibility_state String                   @default("quantity") @db.VarChar(10)
+  cash_on_delivery       Boolean                  @default(false)
+  featured               Int                      @default(0)
+  seller_featured        Int                      @default(0)
+  current_stock          Int                      @default(0)
+  unit                   String?                  @db.VarChar(20)
+  weight                 Float                    @default(0.00)
+  min_qty                Int                      @default(1)
+  low_stock_quantity     Int?
+  discount               Float?
+  discount_type          String?                  @db.VarChar(10)
+  discount_start_date    Int?
+  discount_end_date      Int?
+  starting_bid           Float?                   @default(0.00)
+  auction_start_date     Int?
+  auction_end_date       Int?
+  tax                    Float?
+  tax_type               String?                  @db.VarChar(10)
+  shipping_type          String?                  @default("flat_rate") @db.VarChar(20)
+  shipping_cost          Float                    @default(0.00)
+  is_quantity_multiplied Boolean                  @default(false)
+  est_shipping_days      Int?
+  num_of_sale            Int                      @default(0)
+  meta_title             String?                  @db.MediumText
+  meta_description       String?                  @db.LongText
+  meta_img               String?                  @db.VarChar(255)
+  pdf                    String?                  @db.VarChar(255)
+  slug                   String                   @db.MediumText
+  refundable             Int                      @default(0)
+  rating                 Float                    @default(0.00)
+  barcode                String?                  @db.VarChar(255)
+  digital                Int                      @default(0)
+  auction_product        Int                      @default(0)
+  file_name              String?                  @db.VarChar(255)
+  file_path              String?                  @db.VarChar(255)
+  external_link          String?                  @db.VarChar(500)
+  external_link_btn      String?                  @default("Buy Now") @db.VarChar(255)
+  wholesale_product      Int                      @default(0)
+  created_at             DateTime                 @default(now()) @db.Timestamp(0)
+  updated_at             DateTime                 @default(now()) @db.Timestamp(0)
+  auction_product_bids   auction_product_bids[]
+  carts                  carts[]
+  categories             categories[]
+  firebase_notifications firebase_notifications[]
+  flash_deal_products    flash_deal_products[]
+  order_details          order_details[]
+  users                  users                    @relation(fields: [user_id], references: [id])
+  brands                 brands                   @relation(fields: [brand_id], references: [id])
+  product_categories     product_categories[]
+  product_queries        product_queries[]
+  product_stocks         product_stocks[]
+  product_taxes          product_taxes[]
+  product_translations   product_translations[]
+  reviews                reviews[]
+  wishlists              wishlists[]
+
+  @@index([created_at], map: "created_at")
+  @@index([name], map: "name")
+  @@index([tags(length: 255)], map: "tags")
+  @@index([unit_price], map: "unit_price")
+}
+
+model product_categories {
+  id          Int        @id @default(autoincrement())
+  product_id  BigInt
+  category_id Int
+  products    products   @relation(fields: [product_id], references: [id])
+  categories  categories @relation(fields: [category_id], references: [id])
+}
+
+model proxypay_payments {
+  id           Int               @id @default(autoincrement())
+  payment_type String            @db.VarChar(20)
+  reference_id String            @db.VarChar(20)
+  order_id     BigInt
+  package_id   Int
+  user_id      BigInt
+  amount       Float             @default(0.00)
+  created_at   DateTime          @default(now()) @db.Timestamp(0)
+  updated_at   DateTime          @default(now()) @db.Timestamp(0)
+  orders       orders            @relation(fields: [order_id], references: [id])
+  packages     customer_packages @relation(fields: [package_id], references: [id])
+  users        users             @relation(fields: [user_id], references: [id])
+}
+
+model refund_requests {
+  id              Int           @id @default(autoincrement())
+  user_id         BigInt
+  order_id        BigInt
+  order_detail_id BigInt
+  seller_id       Int
+  seller_approval Int           @default(0)
+  admin_approval  Int           @default(0)
+  refund_amount   Float         @default(0.00)
+  reason          String?       @db.LongText
+  admin_seen      Int
+  refund_status   Int           @default(0)
+  reject_reason   String?       @db.LongText
+  created_at      DateTime      @default(now()) @db.Timestamp(0)
+  updated_at      DateTime      @default(now()) @db.Timestamp(0)
+  users           users         @relation(fields: [user_id], references: [id])
+  orders          orders        @relation(fields: [order_id], references: [id])
+  order_details   order_details @relation(fields: [order_detail_id], references: [id])
+  sellers         sellers       @relation(fields: [seller_id], references: [id])
+}
+
+model reviews {
+  id         Int      @id @default(autoincrement())
+  product_id BigInt
+  user_id    BigInt
+  rating     Int      @default(0)
+  comment    String   @db.MediumText
+  photos     String?
+  status     Int      @default(1)
+  viewed     Int      @default(0)
+  created_at DateTime @default(now()) @db.Timestamp(0)
+  updated_at DateTime @default(now()) @db.Timestamp(0)
+  products   products @relation(fields: [product_id], references: [id])
+  users      users    @relation(fields: [user_id], references: [id])
+}
+
+model role_has_permissions {
+  permission_id BigInt      @db.UnsignedBigInt
+  role_id       BigInt      @db.UnsignedBigInt
+  permissions   permissions @relation(fields: [permission_id], references: [id], onDelete: Cascade, onUpdate: Restrict, map: "role_has_permissions_permission_id_foreign")
+  roles         roles       @relation(fields: [role_id], references: [id], onDelete: Cascade, onUpdate: Restrict, map: "role_has_permissions_role_id_foreign")
+
+  @@id([permission_id, role_id])
+  @@index([role_id], map: "role_has_permissions_role_id_foreign")
+}
+
+model role_translations {
+  id         BigInt   @id @default(autoincrement())
+  role_id    BigInt
+  name       String   @db.VarChar(50)
+  lang       String   @db.VarChar(100)
+  created_at DateTime @default(now()) @db.Timestamp(0)
+  updated_at DateTime @default(now()) @db.Timestamp(0)
+  roles      roles    @relation(fields: [role_id], references: [id])
+}
+
+model roles {
+  id                   BigInt                 @id @default(autoincrement()) @db.UnsignedBigInt
+  name                 String
+  guard_name           String
+  created_at           DateTime?              @db.Timestamp(0)
+  updated_at           DateTime?              @db.Timestamp(0)
+  model_has_roles      model_has_roles[]
+  role_has_permissions role_has_permissions[]
+  role_translations    role_translations[]
+  staff                staff[]
+
+  @@unique([name, guard_name], map: "roles_name_guard_name_unique")
+}
+
+model searches {
+  id         Int      @id @default(autoincrement())
+  query      String   @db.VarChar(1000)
+  count      Int      @default(1)
+  created_at DateTime @default(now()) @db.Timestamp(0)
+  updated_at DateTime @default(now()) @db.Timestamp(0)
+}
+
+model seller_withdraw_requests {
+  id         Int      @id @default(autoincrement())
+  user_id    BigInt
+  amount     Float?
+  message    String?  @db.LongText
+  status     Int?
+  viewed     Int?
+  created_at DateTime @default(now()) @db.Timestamp(0)
+  updated_at DateTime @default(now()) @db.Timestamp(0)
+  users      users    @relation(fields: [user_id], references: [id])
+}
+
+model sellers {
+  id                      Int                    @id @default(autoincrement())
+  user_id                 BigInt                 @unique(map: "user_id")
+  rating                  Float                  @default(0.00)
+  num_of_reviews          Int                    @default(0)
+  num_of_sale             Int                    @default(0)
+  verification_status     Int                    @default(0)
+  verification_info       String?                @db.LongText
+  cash_on_delivery_status Int                    @default(0)
+  admin_to_pay            Float                  @default(0.00)
+  bank_name               String?                @db.VarChar(255)
+  bank_acc_name           String?                @db.VarChar(200)
+  bank_acc_no             String?                @db.VarChar(50)
+  bank_routing_no         Int?
+  bank_payment_status     Int                    @default(0)
+  created_at              DateTime               @default(now()) @db.Timestamp(0)
+  updated_at              DateTime               @default(now()) @db.Timestamp(0)
+  users                   users                  @relation(fields: [user_id], references: [id])
+  commission_histories    commission_histories[]
+  orders                  orders[]
+  order_details           order_details[]
+  payments                payments[]
+  product_queries         product_queries[]
+  refund_requests         refund_requests[]
+}
+
+model shops {
+  id                        Int              @id @default(autoincrement())
+  user_id                   BigInt
+  name                      String?          @db.VarChar(200)
+  logo                      String?          @db.VarChar(255)
+  sliders                   String?          @db.LongText
+  top_banner                String?
+  banner_full_width_1       String?
+  banners_half_width        String?
+  banner_full_width_2       String?
+  phone                     String?          @db.VarChar(255)
+  address                   String?          @db.VarChar(500)
+  rating                    Float            @default(0.00)
+  num_of_reviews            Int              @default(0)
+  num_of_sale               Int              @default(0)
+  seller_package_id         Int?
+  product_upload_limit      Int              @default(0)
+  package_invalid_at        DateTime?        @db.Date
+  verification_status       Int              @default(0)
+  verification_info         String?          @db.LongText
+  cash_on_delivery_status   Int              @default(0)
+  admin_to_pay              Float            @default(0.00)
+  facebook                  String?          @db.VarChar(255)
+  instagram                 String?          @db.VarChar(255)
+  google                    String?          @db.VarChar(255)
+  twitter                   String?          @db.VarChar(255)
+  youtube                   String?          @db.VarChar(255)
+  slug                      String?          @db.VarChar(255)
+  meta_title                String?          @db.VarChar(255)
+  meta_description          String?          @db.Text
+  pick_up_point_id          String?          @db.Text
+  shipping_cost             Float            @default(0.00)
+  delivery_pickup_latitude  Float?           @db.Float
+  delivery_pickup_longitude Float?           @db.Float
+  bank_name                 String?          @db.VarChar(255)
+  bank_acc_name             String?          @db.VarChar(200)
+  bank_acc_no               String?          @db.VarChar(50)
+  bank_routing_no           Int?
+  bank_payment_status       Int              @default(0)
+  created_at                DateTime         @default(now()) @db.Timestamp(0)
+  updated_at                DateTime?        @default(now()) @db.Timestamp(0)
+  users                     users            @relation(fields: [user_id], references: [id])
+  follow_sellers            follow_sellers[]
+}
+
+model size_chart_details {
+  id                   Int                @id @default(autoincrement()) @db.UnsignedInt
+  size_chart_id        Int
+  measurement_point_id Int
+  attribute_value_id   Int
+  inch_value           String?
+  cen_value            String?
+  created_at           DateTime           @default(now()) @db.Timestamp(0)
+  updated_at           DateTime           @default(now()) @db.Timestamp(0)
+  size_charts          size_charts        @relation(fields: [size_chart_id], references: [id])
+  measurement_points   measurement_points @relation(fields: [measurement_point_id], references: [id])
+  attribute_values     attribute_values   @relation(fields: [attribute_value_id], references: [id])
+}
+
+model size_charts {
+  id                 Int                  @id @default(autoincrement()) @db.UnsignedInt
+  name               String               @db.VarChar(255)
+  category_id        Int                  @unique(map: "category_id")
+  fit_type           String?
+  stretch_type       String?
+  photos             String?
+  description        String?              @db.Text
+  measurement_points String               @db.VarChar(255)
+  size_options       String               @db.VarChar(255)
+  measurement_option String?
+  created_at         DateTime             @default(now()) @db.Timestamp(0)
+  updated_at         DateTime             @default(now()) @db.Timestamp(0)
+  categories         categories           @relation(fields: [category_id], references: [id])
+  size_chart_details size_chart_details[]
+}
+
+model staff {
+  id         Int      @id @default(autoincrement())
+  user_id    BigInt
+  role_id    BigInt
+  created_at DateTime @default(now()) @db.Timestamp(0)
+  updated_at DateTime @default(now()) @db.Timestamp(0)
+  users      users    @relation(fields: [user_id], references: [id])
+  roles      roles    @relation(fields: [role_id], references: [id])
+}
+
+model states {
+  id         Int         @id @default(autoincrement())
+  name       String      @db.VarChar(255)
+  country_id Int
+  status     Int         @default(0)
+  created_at DateTime    @default(now()) @db.Timestamp(0)
+  updated_at DateTime    @default(now()) @db.Timestamp(0)
+  deleted_at DateTime?   @db.Timestamp(0)
+  countries  countries   @relation(fields: [country_id], references: [id])
+  addresses  addresses[]
+  cities     cities[]
+}
+
+model subscribers {
+  id         Int       @id @default(autoincrement())
+  email      String    @unique(map: "email") @db.VarChar(50)
+  created_at DateTime? @default(now()) @db.Timestamp(0)
+  updated_at DateTime  @default(now()) @db.Timestamp(0)
+}
+
+/// This model or at least one of its fields has comments in the database, and requires an additional setup for migrations: Read more: https://pris.ly/d/database-comments
+model taxes {
+  id            Int             @id @default(autoincrement())
+  name          String          @db.VarChar(255)
+  tax_status    Boolean         @default(true)
+  created_at    DateTime?       @default(now()) @db.Timestamp(0)
+  updated_at    DateTime        @default(now()) @db.Timestamp(0)
+  product_taxes product_taxes[]
+}
+
+model ticket_replies {
+  id         Int      @id @default(autoincrement())
+  ticket_id  Int
+  user_id    BigInt
+  reply      String   @db.LongText
+  files      String?  @db.LongText
+  created_at DateTime @default(now()) @db.Timestamp(0)
+  updated_at DateTime @default(now()) @db.Timestamp(0)
+  tickets    tickets  @relation(fields: [ticket_id], references: [id])
+  users      users    @relation(fields: [user_id], references: [id])
+}
+
+model tickets {
+  id             Int              @id @default(autoincrement())
+  code           BigInt
+  user_id        BigInt
+  subject        String           @db.VarChar(255)
+  details        String?          @db.LongText
+  files          String?          @db.LongText
+  status         String           @default("pending") @db.VarChar(10)
+  viewed         Int              @default(0)
+  client_viewed  Int              @default(0)
+  created_at     DateTime         @default(now()) @db.Timestamp(0)
+  updated_at     DateTime         @default(now()) @db.Timestamp(0)
+  users          users            @relation(fields: [user_id], references: [id])
+  ticket_replies ticket_replies[]
+}
+
+model transactions {
+  id                 Int      @id @default(autoincrement())
+  user_id            BigInt
+  gateway            String?  @db.VarChar(255)
+  payment_type       String?  @db.VarChar(255)
+  additional_content String?  @db.Text
+  mpesa_request      String?  @db.VarChar(255)
+  mpesa_receipt      String?  @db.VarChar(255)
+  status             Int      @default(0)
+  created_at         DateTime @default(now()) @db.Timestamp(0)
+  updated_at         DateTime @default(now()) @db.Timestamp(0)
+  users              users    @relation(fields: [user_id], references: [id])
+}
+
+model translations {
+  id         Int      @id @default(autoincrement())
+  lang       String?  @db.VarChar(10)
+  lang_key   String?  @db.Text
+  lang_value String?  @db.Text
+  created_at DateTime @default(now()) @db.Timestamp(0)
+  updated_at DateTime @default(now()) @db.Timestamp(0)
+}
+
+model uploads {
+  id                 Int       @id @default(autoincrement())
+  file_original_name String?   @db.VarChar(255)
+  file_name          String?   @db.VarChar(255)
+  user_id            BigInt
+  file_size          Int?
+  extension          String?   @db.VarChar(10)
+  type               String?   @db.VarChar(15)
+  external_link      String?   @db.VarChar(500)
+  created_at         DateTime  @default(now()) @db.Timestamp(0)
+  updated_at         DateTime  @default(now()) @db.Timestamp(0)
+  deleted_at         DateTime? @db.Timestamp(0)
+  users              users     @relation(fields: [user_id], references: [id])
+}
+
+model users {
+  id                           BigInt                        @id @default(autoincrement())
+  referred_by                  Int?
+  provider                     String?                       @db.VarChar(255)
+  provider_id                  String?                       @db.VarChar(50)
+  refresh_token                String?                       @db.Text
+  access_token                 String?                       @db.LongText
+  user_type                    String                        @default("customer") @db.VarChar(20)
+  name                         String
+  email                        String?                       @unique(map: "users_email_unique")
+  email_verified_at            DateTime?                     @db.Timestamp(0)
+  verification_code            String?                       @db.Text
+  new_email_verificiation_code String?                       @db.Text
+  password                     String?
+  remember_token               String?                       @db.VarChar(100)
+  device_token                 String?                       @db.VarChar(255)
+  avatar                       String?                       @db.VarChar(256)
+  avatar_original              String?                       @db.VarChar(256)
+  address                      String?                       @db.VarChar(300)
+  country                      String?                       @db.VarChar(30)
+  state                        String?                       @db.VarChar(30)
+  city                         String?                       @db.VarChar(30)
+  postal_code                  String?                       @db.VarChar(20)
+  phone                        String?                       @db.VarChar(20)
+  balance                      Float                         @default(0.00)
+  banned                       Int                           @default(0) @db.TinyInt
+  referral_code                String?                       @db.VarChar(255)
+  customer_package_id          Int?
+  remaining_uploads            Int?                          @default(0)
+  created_at                   DateTime?                     @db.Timestamp(0)
+  updated_at                   DateTime?                     @db.Timestamp(0)
+  
+  addresses                    addresses[]
+  affiliate_logs               affiliate_logs[]
+  affiliate_withdraw_requests  affiliate_withdraw_requests[]
+  auction_product_bids         auction_product_bids[]
+  carts                        carts[]
+  combined_orders              combined_orders[]
+  conversations                conversations[]
+  coupons                      coupons[]
+  coupon_usages                coupon_usages[]
+  customer_package_payments    customer_package_payments[]
+  customer_products            customer_products[]
+  delivery_boys                delivery_boys[]
+  delivery_boy_collections     delivery_boy_collections[]
+  delivery_boy_payments        delivery_boy_payments[]
+  firebase_notifications       firebase_notifications[]
+  follow_sellers               follow_sellers[]
+  messages                     messages[]
+  notifications                notifications[]
+  orders                       orders[]
+  personal_access_tokens       personal_access_tokens[]
+  pickup_points                pickup_points[]
+  products                     products[]
+  product_queries              product_queries[]
+  proxypay_payments            proxypay_payments[]
+  refund_requests              refund_requests[]
+  reviews                      reviews[]
+  sellers                      sellers?
+  seller_withdraw_requests     seller_withdraw_requests[]
+  shops                        shops[]
+  staff                        staff[]
+  tickets                      tickets[]
+  ticket_replies               ticket_replies[]
+  transactions                 transactions[]
+  uploads                      uploads[]
+  wallets                      wallets[]
+  wishlists                    wishlists[]
+}
+
+/// The underlying table does not contain a valid unique identifier and can therefore currently not be handled by Prisma Client.
+model user_coupons {
+  user_id         Int     @id @default(autoincrement())
+  coupon_id       Int
+  coupon_code     String  @db.VarChar(255)
+  min_buy         Float
+  validation_days Int
+  discount        Float
+  discount_type   String  @db.VarChar(20)
+  expiry_date     Int
+  coupons         coupons @relation(fields: [coupon_id], references: [id])
+}
+
+model wallets {
+  id               Int            @id @default(autoincrement())
+  user_id          BigInt
+  product_stock_id Int
+  amount           Float
+  payment_method   String?        @db.VarChar(255)
+  payment_details  String?        @db.LongText
+  approval         Int            @default(0)
+  offline_payment  Int            @default(0)
+  reciept          String?        @db.VarChar(150)
+  created_at       DateTime       @default(now()) @db.Timestamp(0)
+  updated_at       DateTime       @default(now()) @db.Timestamp(0)
+  users            users          @relation(fields: [user_id], references: [id])
+  product_stocks   product_stocks @relation(fields: [product_stock_id], references: [id])
+}
+
+model wholesale_prices {
+  id               Int      @id @default(autoincrement())
+  product_stock_id Int
+  min_qty          Int      @default(0)
+  max_qty          Int      @default(0)
+  price            Float    @default(0.00)
+  created_at       DateTime @default(now()) @db.Timestamp(0)
+  updated_at       DateTime @default(now()) @db.Timestamp(0)
+}
+
+model wishlists {
+  id         Int       @id @default(autoincrement())
+  user_id    BigInt
+  product_id BigInt
+  created_at DateTime? @default(now()) @db.Timestamp(0)
+  updated_at DateTime  @default(now()) @db.Timestamp(0)
+  users      users     @relation(fields: [user_id], references: [id])
+  products   products  @relation(fields: [product_id], references: [id])
+}
+
+/// This model or at least one of its fields has comments in the database, and requires an additional setup for migrations: Read more: https://pris.ly/d/database-comments
+model zones {
+  id                   Int                    @id @default(autoincrement())
+  name                 String                 @db.VarChar(255)
+  status               Boolean
+  created_at           DateTime               @default(now()) @db.Timestamp(0)
+  updated_at           DateTime               @default(now()) @db.Timestamp(0)
+  carrier_range_prices carrier_range_prices[]
+}
