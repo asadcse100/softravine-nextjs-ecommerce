@@ -27,35 +27,50 @@ import Input from "@/shared/Input/Input";
 import { Switch } from "@/app/admin/components/ui/switch";
 
 const formSchema = z.object({
-  name: z.string().min(10, {
-    message: "Product Name must be at least 10 characters.",
+  name: z.string().min(4, {
+    message: "Product Name must be at least 4 characters.",
   }),
-  brand_id: z.string().min(3, {
-    message: "Brand must be at least 3 characters.",
+  brand_id: z.string().min(1, {
+    message: "Select Brand",
   }),
-  unit: z.string().min(3, {
-    message: "Unit must be at least 3 characters.",
+  unit: z.string().min(1, {
+    message: "Unit required!",
   }),
-  min_qty: z.string().min(3, {
-    message: "Minimum Purchase Qty must be at least 3 characters.",
+  min_qty: z.string().min(1, {
+    message: "Minimum Purchase Qty required!",
   }),
-  tag: z.string().min(3, {
-    message: "Tag Purchase Qty must be at least 3 characters.",
+  tag: z.string().min(1, {
+    message: "Tag required!",
   }),
-  barcode: z.string().min(3, {
-    message: "Barcode Purchase Qty must be at least 3 characters.",
+  thumbnail_img: z.string().min(1, {
+    message: "Thumbnail image required!",
   }),
-  thumbnail_img: z.string().min(3, {
-    message: "thumbnail_img Purchase Qty must be at least 3 characters.",
+  photos: z.string().min(1, {
+    message: "Gallery Images required!",
   }),
-  photos: z.string().min(3, {
-    message: "photos Purchase Qty must be at least 3 characters.",
+  color: z.string().min(1, {
+    message: "Select Color",
   }),
-  video_provider: z.string().min(3, {
-    message: "Video Provider Purchase Qty must be at least 3 characters.",
+  attribute: z.string().min(1, {
+    message: "Select attribute",
   }),
-  video_link: z.string().min(3, {
-    message: "Video Link Purchase Qty must be at least 3 characters.",
+  unit_price: z.string().min(1, {
+    message: "Unit price required!",
+  }),
+  resller_unit_price: z.string().min(1, {
+    message: "Resller Unit price required!",
+  }),
+  quantity: z.string().min(1, {
+    message: "Quantity required!",
+  }),
+  product_description: z.string().min(1, {
+    message: "Product Description required!",
+  }),
+  main_category: z.string().min(1, {
+    message: "Select main category",
+  }),
+  sub_category: z.string().min(1, {
+    message: "Select sub category",
   }),
 });
 
@@ -70,18 +85,21 @@ export default function Addnew() {
       unit: "",
       min_qty: "",
       tag: "",
-      barcode: "",
       thumbnail_img: "",
       photos: "",
-      video_provider: "",
-      video_link: "",
+      color: "",
+      attribute: "",
+      unit_price: "",
+      resller_unit_price: "",
+      quantity: "",
+      product_description: "",
+      main_category: "",
+      sub_category: "",
     },
   });
 
   // 2. Define a submit handler.
   function onSubmit(values: z.infer<typeof formSchema>) {
-    // Do something with the form values.
-    // ✅ This will be type-safe and validated.
     console.log(values);
   }
 
@@ -616,7 +634,7 @@ export default function Addnew() {
                       <div className="flex flex-col gap-5.5 p-6.5">
                         <FormField
                           control={form.control}
-                          name="unit_price"
+                          name="resller_unit_price"
                           render={({ field }) => (
                             <FormItem>
                               <div className="grid grid-cols-1 md:grid-cols-12">

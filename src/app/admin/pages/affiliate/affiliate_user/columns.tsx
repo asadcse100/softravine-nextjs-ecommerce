@@ -20,12 +20,12 @@ import Link from "next/link";
 // You can use a Zod schema here if you want.
 export type Products = {
   id: string;
-  name: string;
+  user_id: string;
   phone: string;
   email: string;
   verification_info: string;
-  approval: string;
-  due_amount: number;
+  status: string;
+  balance: number;
 };
 
 export const columns: ColumnDef<Products>[] = [
@@ -74,7 +74,7 @@ export const columns: ColumnDef<Products>[] = [
     },
   },
   {
-    accessorKey: "name",
+    accessorKey: "user_id",
     header: "Name",
   },
   {
@@ -90,19 +90,20 @@ export const columns: ColumnDef<Products>[] = [
     header: "Verification Info",
   },
   {
-    accessorKey: "approval",
+    accessorKey: "status",
     header: "Approval",
     cell: ({ row }) => (
       <div className="flex items-center space-x-12">
-        <Switch />
+        <Switch 
+        />
       </div>
     ),
   },
   {
-    accessorKey: "due_amount",
+    accessorKey: "balance",
     header: () => <div className="text-right">Due Amount</div>,
     cell: ({ row }) => {
-      const due_amount = parseFloat(row.getValue("due_amount"));
+      const due_amount = parseFloat(row.getValue("balance"));
       const formatted = new Intl.NumberFormat("en-US", {
         style: "currency",
         currency: "USD",

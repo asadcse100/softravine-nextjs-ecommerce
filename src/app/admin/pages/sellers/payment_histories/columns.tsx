@@ -7,7 +7,7 @@ import { ColumnDef } from "@tanstack/react-table";
 export type Products = {
   id: string;
   date: string;
-  seller: string;
+  seller_id: string;
   seller_phone: string;
   amount: number;
   payment_details: string;
@@ -19,7 +19,7 @@ export const columns: ColumnDef<Products>[] = [
     header: "Date",
   },
   {
-    accessorKey: "seller",
+    accessorKey: "seller_id",
     header: "Seller",
   },
   {

@@ -20,7 +20,7 @@ import Link from "next/link";
 export type Products = {
   id: string;
   date: string;
-  seller: string;
+  user_id: string;
   total_amount_to_pay: number;
   amount: number;
   message: string;
@@ -78,7 +78,7 @@ export const columns: ColumnDef<Products>[] = [
     header: "Date",
   },
   {
-    accessorKey: "seller",
+    accessorKey: "user_id",
     header: "Seller",
   },
   {

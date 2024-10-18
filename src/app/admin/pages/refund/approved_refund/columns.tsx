@@ -6,11 +6,11 @@ import { ColumnDef } from "@tanstack/react-table";
 // You can use a Zod schema here if you want.
 export type Products = {
   id: string;
-  order_code: number;
-  seller_name: string;
+  order_id: number;
+  seller_id: string;
   image: string;
   product: string;
-  price: number;
+  refund_amount: number;
   seller_approval: string;
   admin_approval: string;
   refund_status: string;
@@ -18,11 +18,11 @@ export type Products = {
 
 export const columns: ColumnDef<Products>[] = [
   {
-    accessorKey: "order_code",
+    accessorKey: "order_id",
     header: "Order Code",
   },
   {
-    accessorKey: "seller_name",
+    accessorKey: "seller_id",
     header: "Seller Name",
   },
   {
@@ -30,10 +30,10 @@ export const columns: ColumnDef<Products>[] = [
     header: "Product",
   },
   {
-    accessorKey: "price",
+    accessorKey: "refund_amount",
     header: () => <div className="text-right">Price</div>,
     cell: ({ row }) => {
-      const price = parseFloat(row.getValue("price"));
+      const price = parseFloat(row.getValue("refund_amount"));
       const formatted = new Intl.NumberFormat("en-US", {
         style: "currency",
         currency: "USD",

@@ -26,14 +26,17 @@ import {
 } from "@/app/admin/components/ui/select";
 
 const formSchema = z.object({
-  type: z.string().min(10, {
-    message: "Product Name must be at least 10 characters.",
+  type: z.string().min(1, {
+    message: "Select Manual Payment Type",
   }),
-  heading: z.string().min(10, {
-    message: "Product Name must be at least 10 characters.",
+  heading: z.string().min(3, {
+    message: "Product Name must be at least 3 characters.",
   }),
-  photo: z.string().min(10, {
-    message: "Product Name must be at least 10 characters.",
+  photo: z.string().min(1, {
+    message: "Checkout Thumbnail required!",
+  }),
+  description: z.string().min(1, {
+    message: "Payment Instruction required!",
   }),
 });
 
@@ -46,6 +49,7 @@ export default function Addnew() {
       type: "",
       heading: "",
       photo: "",
+      description: "",
     },
   });
 

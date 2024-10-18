@@ -1,8 +1,8 @@
 import { NextResponse } from "next/server";
-import { createAuctionProduct, getAllProducts } from '@/app/server/controllers/ProductController';
+import { createAuctionProduct, getDigitalProducts } from '@/app/server/controllers/ProductController';
 
 export async function GET() {
-  const result = await getAllProducts();
+  const result = await getDigitalProducts();
   try{
       const products = result.data;
       console.log(products);

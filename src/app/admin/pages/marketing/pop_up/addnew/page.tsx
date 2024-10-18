@@ -18,23 +18,23 @@ import Input from "@/shared/Input/Input";
 import Textarea from "@/shared/Textarea/Textarea";
 
 const formSchema = z.object({
-  title: z.string().min(10, {
-    message: "Product Name must be at least 10 characters.",
+  title: z.string().min(4, {
+    message: "Popup title must be at least 4 characters.",
   }),
-  summary: z.string().min(10, {
-    message: "Product Name must be at least 10 characters.",
+  summary: z.string().min(50, {
+    message: "Summary must be at least 50 characters.",
   }),
-  banner: z.string().min(10, {
-    message: "Product Name must be at least 10 characters.",
+  banner: z.string().min(1, {
+    message: "Pop Up Image required!",
   }),
-  btn_text: z.string().min(10, {
-    message: "Product Name must be at least 10 characters.",
+  btn_text: z.string().min(3, {
+    message: "Button Text must be at least 3 characters.",
   }),
-  btn_background_color: z.string().min(10, {
-    message: "Product Name must be at least 10 characters.",
+  btn_background_color: z.string().min(1, {
+    message: "Select Button Color",
   }),
-  btn_link: z.string().min(10, {
-    message: "Product Name must be at least 10 characters.",
+  btn_link: z.string().min(1, {
+    message: "Give a link or #.",
   }),
 });
 

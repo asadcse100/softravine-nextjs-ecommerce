@@ -18,32 +18,8 @@ import Input from "@/shared/Input/Input";
 import { Switch } from "@/app/admin/components/ui/switch";
 
 const formSchema = z.object({
-  header_logo: z.string().min(10, {
-    message: "header_logo must be at least 10 characters.",
-  }),
-  show_language_switcher: z.string().min(10, {
-    message: "show_language_switcher must be at least 10 characters.",
-  }),
-  show_currency_switcher: z.string().min(10, {
-    message: "show_currency_switcher must be at least 10 characters.",
-  }),
-  header_stikcy: z.string().min(10, {
-    message: "header_stikcy must be at least 10 characters.",
-  }),
-  topbar_banner: z.string().min(10, {
-    message: "topbar_banner must be at least 10 characters.",
-  }),
-  topbar_banner_link: z.string().min(10, {
-    message: "topbar_banner_link must be at least 10 characters.",
-  }),
-  helpline_number: z.string().min(10, {
-    message: "helpline_number must be at least 10 characters.",
-  }),
-  header_menu_labels: z.string().min(10, {
-    message: "header_menu_labels must be at least 10 characters.",
-  }),
-  header_menu_links: z.string().min(10, {
-    message: "header_menu_links must be at least 10 characters.",
+  header_logo: z.string().min(3, {
+    message: "header logo must be at least 3 characters.",
   }),
 });
 
@@ -54,14 +30,6 @@ export default function Addnew() {
     resolver: zodResolver(formSchema),
     defaultValues: {
       header_logo: "",
-      show_language_switcher: "",
-      show_currency_switcher: "",
-      header_stikcy: "",
-      topbar_banner: "",
-      topbar_banner_link: "",
-      helpline_number: "",
-      header_menu_labels: "",
-      header_menu_links: "",
     },
   });
 

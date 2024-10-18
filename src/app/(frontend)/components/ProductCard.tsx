@@ -114,7 +114,7 @@ const ProductCard: FC<ProductCardProps> = ({
                 className="font-medium text-primary-6000 dark:text-primary-500 "
                 onClick={(e) => {
                   e.preventDefault();
-                  router.push("/frontend/pages/cart");
+                  router.push("/(frontend)/pages/cart");
                 }}
               >
                 View cart

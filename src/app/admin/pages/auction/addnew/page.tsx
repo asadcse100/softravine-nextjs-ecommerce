@@ -31,39 +31,37 @@ import {
 import Textarea from "@/shared/Textarea/Textarea";
 
 const formSchema = z.object({
-  product_name: z.string().min(10, {
-    message: "Product Name must be at least 10 characters.",
+  product_name: z.string().min(4, {
+    message: "Product Name must be at least 4 characters.",
   }),
-  brand: z.string().min(3, {
-    message: "Brand must be at least 3 characters.",
+  brand: z.string().min(1, {
+    message: "Select Brand",
   }),
-  unit: z.string().min(3, {
-    message: "Unit must be at least 3 characters.",
+  unit: z.string().min(1, {
+    message: "Unit required!",
   }),
-  weight: z.string().min(3, {
-    message: "Weight must be at least 3 characters.",
+  minimum_purchase_qty: z.string().min(1, {
+    message: "Minimum Purchase Qty required!",
   }),
-  minimum_purchase_qty: z.string().min(3, {
-    message: "Minimum Purchase Qty must be at least 3 characters.",
-  }),
-  tag: z.string().min(3, {
-    message: "Tag Purchase Qty must be at least 3 characters.",
-  }),
-  barcode: z.string().min(3, {
-    message: "Barcode Purchase Qty must be at least 3 characters.",
+  tag: z.string().min(1, {
+    message: "Tag Purchase Qty required!",
   }),
   thumbnail_image: z.string().min(3, {
-    message: "thumbnail_image Purchase Qty must be at least 3 characters.",
+    message: "thumbnail image required!",
   }),
   gallery_images: z.string().min(3, {
-    message: "gallery_images Purchase Qty must be at least 3 characters.",
+    message: "gallery images required!",
   }),
-  video_provider: z.string().min(3, {
-    message: "Video Provider Purchase Qty must be at least 3 characters.",
+  stating_bidding_price: z.string().min(3, {
+    message: "stating bidding price required!",
   }),
-  video_link: z.string().min(3, {
-    message: "Video Link Purchase Qty must be at least 3 characters.",
+  main_category: z.string().min(3, {
+    message: "Select Main category",
   }),
+  sub_category: z.string().min(3, {
+    message: "Select Sub category",
+  }),
+
 });
 
 export default function Addnew() {
@@ -75,14 +73,13 @@ export default function Addnew() {
       product_name: "",
       brand: "",
       unit: "",
-      weight: "",
       minimum_purchase_qty: "",
       tag: "",
-      barcode: "",
       thumbnail_image: "",
       gallery_images: "",
-      video_provider: "",
-      video_link: "",
+      stating_bidding_price: "",
+      main_category: "",
+      sub_category: "",
     },
   });
 
@@ -399,7 +396,7 @@ export default function Addnew() {
                       <div className="flex flex-col gap-5.5 p-6.5">
                         <FormField
                           control={form.control}
-                          name="color"
+                          name="stating_bidding_price"
                           render={({ field }) => (
                             <FormItem>
                               <div className="grid grid-cols-1 md:grid-cols-12">

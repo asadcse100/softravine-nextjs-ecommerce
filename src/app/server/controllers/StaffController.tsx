@@ -1,5 +1,4 @@
 // controllers/staffController.ts
-import { NextApiRequest, NextApiResponse } from 'next';
 import { PrismaClient } from '@prisma/client';
 import bcrypt from 'bcrypt';
 
@@ -14,13 +13,30 @@ const prisma = new PrismaClient();
 //   }
 // };
 
+// export const getStaffs = async () => {
+//   try{
+//       const staffs = await prisma.users.findMany();
+//       return { success: true, data: staffs };
+//   }catch(error){
+//       console.error("Error fetching staffs:", error);
+//       return { success: false, error };
+//   }
+// }
+
 export const getStaffs = async () => {
-  try{
-      const staffs = await prisma.users.findMany();
-      return { success: true, data: staffs };
-  }catch(error){
-      console.error("Error fetching staffs:", error);
-      return { success: false, error };
+  try {
+    const staffs = await prisma.users.findMany();
+    
+    // Convert BigInt fields to strings
+    const serializedStaffs = staffs.map(staff => ({
+      ...staff,
+      id: staff.id.toString(), // Assuming id is the BigInt field
+    }));
+
+    return { success: true, data: serializedStaffs };
+  } catch (error) {
+    console.error("Error fetching staffs:", error);
+    return { success: false, error };
   }
 }
 

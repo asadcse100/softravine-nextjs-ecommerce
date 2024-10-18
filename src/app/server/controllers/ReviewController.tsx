@@ -1,6 +1,5 @@
 // controllers/ReviewController.ts
 
-import { NextApiRequest, NextApiResponse } from 'next';
 import { PrismaClient } from '@prisma/client';
 
 const prisma = new PrismaClient();
@@ -32,7 +31,13 @@ const prisma = new PrismaClient();
 export const getReviews = async () => {
   try{
       const reviews = await prisma.reviews.findMany();
-      return { success: true, data: reviews };
+          // Convert BigInt fields to strings
+    const serializedReviews = reviews.map(review => ({
+      ...review,
+      product_id: review.product_id.toString(), // Assuming id is the BigInt field
+      user_id: review.user_id.toString(), // Assuming id is the BigInt field
+    }));
+      return { success: true, data: serializedReviews };
   }catch(error){
       console.error("Error fetching reviews:", error);
       return { success: false, error };

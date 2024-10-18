@@ -18,9 +18,9 @@ import {
 // You can use a Zod schema here if you want.
 export type Products = {
   id: string;
-  delivery_boy: string;
-  collected_amount: number;
-  create_at: string;
+  user_id: string;
+  collection_amount: number;
+  created_at: string;
 };
 
 export const columns: ColumnDef<Products>[] = [
@@ -76,15 +76,15 @@ export const columns: ColumnDef<Products>[] = [
     },
   },
   {
-    accessorKey: "delivery_boy",
+    accessorKey: "user_id",
     header: "Delivery Boy",
   },
   {
-    accessorKey: "collected_amount",
+    accessorKey: "collection_amount",
     header: "Collected Amount",
   },
   {
-    accessorKey: "create_at",
+    accessorKey: "created_at",
     header: "Create At",
   },
   

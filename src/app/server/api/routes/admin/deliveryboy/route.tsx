@@ -1,13 +1,15 @@
 import { NextResponse } from "next/server";
-import { getColors } from '@/app/server/controllers/ColorController';
+import { getDeliveryBoys } from '@/app/server/controllers/DeliveryBoyController';
 
 export async function GET() {
-  const result = await getColors();
+  const result = await getDeliveryBoys();
   try{
-      const colors = result.data;
-      return NextResponse.json(colors);
+      const delivery_boys = result.data;
+      console.log(delivery_boys);
+      
+      return NextResponse.json(delivery_boys);
   }catch(error){
-      console.error("Error fetching colors:", error);
-      return NextResponse.json({ error: "Failed to fetch colors" }, { status: 500 });
+      console.error("Error fetching Delivery Boys:", error);
+      return NextResponse.json({ error: "Failed to fetch Delivery Boys" }, { status: 500 });
   }
 }

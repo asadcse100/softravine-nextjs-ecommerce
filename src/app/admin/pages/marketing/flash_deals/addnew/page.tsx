@@ -25,17 +25,17 @@ import {
 } from "@/app/admin/components/ui/select";
 
 const formSchema = z.object({
-  title: z.string().min(10, {
-    message: "Product Name must be at least 10 characters.",
+  title: z.string().min(4, {
+    message: "Flash deal title must be at least 4 characters.",
   }),
-  banner: z.string().min(10, {
-    message: "Product Name must be at least 10 characters.",
+  banner: z.string().min(1, {
+    message: "Banner required!",
   }),
-  date_range: z.string().min(10, {
-    message: "Product Name must be at least 10 characters.",
+  date_range: z.string().min(1, {
+    message: "Select date and time",
   }),
-  products: z.string().min(10, {
-    message: "Product Name must be at least 10 characters.",
+  products: z.string().min(1, {
+    message: "Select Products",
   }),
 });
 

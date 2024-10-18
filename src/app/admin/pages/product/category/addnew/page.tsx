@@ -18,8 +18,8 @@ import Input from "@/shared/Input/Input";
 import Textarea from "@/shared/Textarea/Textarea";
 
 const formSchema = z.object({
-  name: z.string().min(10, {
-    message: "Name must be at least 10 characters.",
+  name: z.string().min(3, {
+    message: "Category name must be at least 3 characters.",
   }),
   type: z.string().min(10, {
     message: "type must be at least 10 characters.",
@@ -27,8 +27,8 @@ const formSchema = z.object({
   parent_id: z.string().min(10, {
     message: "parent_id must be at least 10 characters.",
   }),
-  order_level: z.string().min(10, {
-    message: "order_level must be at least 10 characters.",
+  order_level: z.string().min(1, {
+    message: "Order level must be at least 1 characters.",
   }),
   banner: z.string().min(10, {
     message: "banner must be at least 10 characters.",

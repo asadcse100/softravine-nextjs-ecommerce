@@ -20,7 +20,7 @@ import Link from "next/link";
 // You can use a Zod schema here if you want.
 export type Products = {
   id: string;
-  product_name: string;
+  name: string;
   added_by: string;
   num_of_sale: number;
   price: number;
@@ -78,7 +78,7 @@ export const columns: ColumnDef<Products>[] = [
     },
   },
   {
-    accessorKey: "product_name",
+    accessorKey: "name",
     header: "Product Name",
   },
   {

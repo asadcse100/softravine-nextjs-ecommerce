@@ -1,6 +1,5 @@
 // controllers/StaffRoleController.ts
 
-import { NextApiRequest, NextApiResponse } from 'next';
 import { PrismaClient } from '@prisma/client';
 
 const prisma = new PrismaClient();
@@ -25,7 +24,14 @@ const prisma = new PrismaClient();
 export const index = async () => {
   try{
       const roles = await prisma.roles.findMany();
-      return { success: true, data: roles };
+      
+      // Convert BigInt fields to strings
+      const serializedRoles = roles.map(role => ({
+        ...role,
+        id: role.id.toString(), // Assuming id is the BigInt field
+      }));
+
+      return { success: true, data: serializedRoles };
   }catch(error){
       console.error("Error fetching roles:", error);
       return { success: false, error };

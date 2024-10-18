@@ -18,11 +18,11 @@ import Input from "@/shared/Input/Input";
 import { Switch } from "@/app/admin/components/ui/switch";
 
 const formSchema = z.object({
-  vendor_commission: z.string().min(10, {
-    message: "Seller vendor_commission must be at least 10 characters.",
+  vendor_commission: z.string().min(1, {
+    message: "Seller vendor commission required!",
   }),
-  minimum_seller_amount_withdraw: z.string().min(10, {
-    message: "Seller minimum_seller_amount_withdraw must be at least 10 characters.",
+  minimum_seller_amount_withdraw: z.string().min(1, {
+    message: "Seller minimum seller amount withdraw required!",
   }),
 });
 
@@ -39,8 +39,6 @@ export default function Addnew() {
 
   // 2. Define a submit handler.
   function onSubmit(values: z.infer<typeof formSchema>) {
-    // Do something with the form values.
-    // ✅ This will be type-safe and validated.
     console.log(values);
   }
 

@@ -27,29 +27,29 @@ import {
 
 
 const formSchema = z.object({
-  name: z.string().min(10, {
-    message: "Product Name must be at least 10 characters.",
+  name: z.string().min(1, {
+    message: "Chart Name must be required!",
   }),
-  category_id: z.string().min(10, {
-    message: "Product category_id must be at least 10 characters.",
+  category_id: z.string().min(1, {
+    message: "Select Product category",
   }),
-  photos: z.string().min(10, {
-    message: "Product photos must be at least 10 characters.",
+  photos: z.string().min(1, {
+    message: "Upload photos",
   }),
-  description: z.string().min(10, {
-    message: "Product description must be at least 10 characters.",
+  // description: z.string().min(10, {
+  //   message: "Product description must be at least 10 characters.",
+  // }),
+  fit_type: z.string().min(1, {
+    message: "Select fit type",
   }),
-  fit_type: z.string().min(10, {
-    message: "Product fit_type must be at least 10 characters.",
+  stretch_type: z.string().min(1, {
+    message: "Select stretch type",
   }),
-  stretch_type: z.string().min(10, {
-    message: "Product stretch_type must be at least 10 characters.",
+  measurement_points: z.string().min(1, {
+    message: "Select measurement points",
   }),
-  measurement_points: z.string().min(10, {
-    message: "Product measurement_points must be at least 10 characters.",
-  }),
-  size_options: z.string().min(10, {
-    message: "Product size_options must be at least 10 characters.",
+  size_options: z.string().min(1, {
+    message: "Select size options",
   }),
 });
 
@@ -62,7 +62,7 @@ export default function Addnew() {
       name: "",
       category_id: "",
       photos: "",
-      description: "",
+      // description: "",
       fit_type: "",
       stretch_type: "",
       measurement_points: "",

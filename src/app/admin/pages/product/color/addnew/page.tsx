@@ -18,11 +18,11 @@ import {
 import Input from "@/shared/Input/Input";
 
 const formSchema = z.object({
-  name: z.string().min(10, {
-    message: "Name must be at least 10 characters.",
+  name: z.string().min(1, {
+    message: "Color Name must be required!",
   }),
-  code: z.string().min(10, {
-    message: "Color Code must be at least 10 characters.",
+  code: z.string().min(1, {
+    message: "Color Code must be required!",
   }),
 });
 

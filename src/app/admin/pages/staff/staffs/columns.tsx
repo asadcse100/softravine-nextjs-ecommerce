@@ -17,7 +17,7 @@ import Link from "next/link";
 
 // This type is used to define the shape of our data.
 // You can use a Zod schema here if you want.
-export type Products = {
+export type Staff = {
   id: string;
   name: string;
   email: string;
@@ -25,7 +25,7 @@ export type Products = {
   role: string;
 };
 
-export const columns: ColumnDef<Products>[] = [
+export const columns: ColumnDef<Staff>[] = [
   {
     id: "select",
     header: ({ table }) => (

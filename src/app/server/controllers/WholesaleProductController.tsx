@@ -28,8 +28,14 @@ const prisma = new PrismaClient();
 
 export const getAllWholesaleProducts = async () => {
   try {
-    const product = await prisma.products.findMany();
-    return { success: true, data: product };
+    const products = await prisma.products.findMany();
+    // Convert BigInt fields to strings
+    const serializedWholesaleProducts = products.map(product => ({
+      ...product,
+      id: product.id.toString(), // Assuming id is the BigInt field
+      user_id: product.user_id.toString(), // Assuming id is the BigInt field
+    }));
+    return { success: true, data: serializedWholesaleProducts };
   } catch (error) {
     console.error("Error fetching product:", error);
     return { success: false, error };
@@ -38,8 +44,14 @@ export const getAllWholesaleProducts = async () => {
 
 export const getInHouseWholesaleProducts = async () => {
   try {
-    const product = await prisma.products.findMany();
-    return { success: true, data: product };
+    const products = await prisma.products.findMany();
+    // Convert BigInt fields to strings
+    const serializedWholesaleProducts = products.map(product => ({
+      ...product,
+      id: product.id.toString(), // Assuming id is the BigInt field
+      user_id: product.user_id.toString(), // Assuming id is the BigInt field
+    }));
+    return { success: true, data: serializedWholesaleProducts };
   } catch (error) {
     console.error("Error fetching product:", error);
     return { success: false, error };
@@ -73,8 +85,14 @@ export const getInHouseWholesaleProducts = async () => {
 
 export const getSellerWholesaleProducts = async () => {
   try {
-    const product = await prisma.products.findMany();
-    return { success: true, data: product };
+    const products = await prisma.products.findMany();
+    // Convert BigInt fields to strings
+    const serializedWholesaleProducts = products.map(product => ({
+      ...product,
+      id: product.id.toString(), // Assuming id is the BigInt field
+      user_id: product.user_id.toString(), // Assuming id is the BigInt field
+    }));
+    return { success: true, data: serializedWholesaleProducts };
   } catch (error) {
     console.error("Error fetching product:", error);
     return { success: false, error };

@@ -1,13 +1,13 @@
 import { NextResponse } from "next/server";
-import { createAuctionProduct, getAllProducts } from '@/app/server/controllers/ProductController';
+import { createAuctionProduct, getInhouseProducts } from '@/app/server/controllers/ProductController';
 
 export async function GET() {
-  const result = await getAllProducts();
+  const result = await getInhouseProducts();
   try{
       const products = result.data;      
       return NextResponse.json(products);
   }catch(error){
       console.error("Error fetching products:", error);
-      return NextResponse.json({ error: "Failed to fetch Auction Product" }, { status: 500 });
+      return NextResponse.json({ error: "Failed to fetch Inhouse Product" }, { status: 500 });
   }
 }

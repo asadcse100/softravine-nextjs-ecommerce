@@ -17,36 +17,40 @@ const prisma = new PrismaClient();
 // };
 
 export const getSellerWithdrawRequests = async () => {
-  try{
-      const sellerWithdrawRequest = await prisma.seller_withdraw_requests.findMany();
-      return { success: true, data: sellerWithdrawRequest };
-  }catch(error){
-      console.error("Error fetching sellerWithdrawRequest:", error);
-      return { success: false, error };
+  try {
+    const sellerWithdrawRequests = await prisma.seller_withdraw_requests.findMany();
+    // Convert BigInt fields to strings
+    const serializedSellerWithdrawRequest = sellerWithdrawRequests.map(sellerWithdrawRequest => ({
+      ...sellerWithdrawRequest,
+      user_id: sellerWithdrawRequest.user_id.toString(), // Assuming id is the BigInt field
+    }));
+    return { success: true, data: serializedSellerWithdrawRequest };
+  } catch (error) {
+    return { success: false, error };
   }
 }
 
 export const storeWithdrawRequest = async (req: NextApiRequest, res: NextApiResponse) => {
-    const { amount, message } = req.body;
-    
-    if (!req.user || !req.user.shopId) {
-      return res.status(401).json({ error: 'Unauthorized' });
-    }
-  
-    try {
-      const withdrawRequest = await prisma.sellerWithdrawRequest.create({
-        data: {
-          userId: req.user.shopId,
-          amount: parseFloat(amount),
-          message: message,
-          status: '0',
-          viewed: false
-        }
-      });
-  
-      res.status(200).json({ message: 'Request has been sent successfully', data: withdrawRequest });
-    } catch (error) {
-      res.status(500).json({ error: 'Something went wrong' });
-    }
-  };
+  const { amount, message } = req.body;
+
+  if (!req.user || !req.user.shopId) {
+    return res.status(401).json({ error: 'Unauthorized' });
+  }
+
+  try {
+    const withdrawRequest = await prisma.sellerWithdrawRequest.create({
+      data: {
+        userId: req.user.shopId,
+        amount: parseFloat(amount),
+        message: message,
+        status: '0',
+        viewed: false
+      }
+    });
+
+    res.status(200).json({ message: 'Request has been sent successfully', data: withdrawRequest });
+  } catch (error) {
+    res.status(500).json({ error: 'Something went wrong' });
+  }
+};
 

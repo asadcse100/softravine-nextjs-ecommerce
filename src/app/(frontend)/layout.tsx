@@ -9,6 +9,9 @@ import SubSiteHeader from "@/app/(frontend)/SubSiteHeader";
 import CommonClient from "../CommonClient";
 import Chat from "@/shared/Chat/Chat";
 
+import type { Metadata } from 'next'
+
+
 const poppins = Poppins({
   subsets: ["latin"],
   display: "swap",

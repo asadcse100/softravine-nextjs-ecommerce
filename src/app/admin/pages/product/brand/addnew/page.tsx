@@ -19,10 +19,10 @@ import Textarea from "@/shared/Textarea/Textarea";
 
 const formSchema = z.object({
   name: z.string().min(1, {
-    message: "Name must be at least 1 characters.",
+    message: "Name must be required!",
   }),
   logo: z.string().min(1, {
-    message: "Logo is required",
+    message: "Logo is required!",
   }),
   meta_title: z.string(),
   meta_description: z.string(),

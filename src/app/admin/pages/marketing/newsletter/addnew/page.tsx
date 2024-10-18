@@ -26,17 +26,17 @@ import {
 } from "@/app/admin/components/ui/select";
 
 const formSchema = z.object({
-  user_emails: z.string().min(10, {
-    message: "Product Name must be at least 10 characters.",
+  user_emails: z.string().min(4, {
+    message: "Employe Name must be at least 4 characters.",
   }),
-  subscriber_emails: z.string().min(10, {
-    message: "Product Name must be at least 10 characters.",
+  subscriber_emails: z.string().min(1, {
+    message: "Select users.",
   }),
   subject: z.string().min(10, {
-    message: "Product Name must be at least 10 characters.",
+    message: "Newsletter subject required!",
   }),
   content: z.string().min(10, {
-    message: "Product Name must be at least 10 characters.",
+    message: "Newsletter descripion required!",
   }),
 });
 

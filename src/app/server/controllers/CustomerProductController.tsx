@@ -37,12 +37,29 @@ const prisma = new PrismaClient();
 //   }
 // };
 
+// export const getCustomerProducts = async () => {
+//   try{
+//       const customer_products = await prisma.customer_products.findMany();
+//       return { success: true, data: customer_products };
+//   }catch(error){
+//       console.error("Error fetching customer_products:", error);
+//       return { success: false, error };
+//   }
+// }
+
+
 export const getCustomerProducts = async () => {
   try{
-      const customer_products = await prisma.customer_products.findMany();
-      return { success: true, data: customer_products };
+      const products = await prisma.products.findMany();
+          // Convert BigInt fields to strings
+    const serializedProducts = products.map(product => ({
+      ...product,
+      id: product.id.toString(), // Assuming id is the BigInt field
+      user_id: product.user_id.toString(), // Assuming id is the BigInt field
+    }));
+      return { success: true, data: serializedProducts };
   }catch(error){
-      console.error("Error fetching customer_products:", error);
+      console.error("Error fetching products:", error);
       return { success: false, error };
   }
 }

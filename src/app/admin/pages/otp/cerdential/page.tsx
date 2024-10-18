@@ -24,98 +24,98 @@ import {
 } from "@/app/admin/components/ui/select";
 
 const formSchema = z.object({
-  NEXMO_KEY: z.string().min(10, {
-    message: "Product Name must be at least 10 characters.",
+  NEXMO_KEY: z.string().min(1, {
+    message: "NEXMO KEY required!",
   }),
-  NEXMO_SECRET: z.string().min(10, {
-    message: "Product Name must be at least 10 characters.",
+  NEXMO_SECRET: z.string().min(1, {
+    message: "NEXMO SECRET required!",
   }),
-  NEXMO_SENDER_ID: z.string().min(10, {
-    message: "Product Name must be at least 10 characters.",
+  NEXMO_SENDER_ID: z.string().min(1, {
+    message: "NEXMO SENDER ID required!",
   }),
-  TWILIO_SID: z.string().min(10, {
-    message: "Product Name must be at least 10 characters.",
+  TWILIO_SID: z.string().min(1, {
+    message: "TWILIO SID required!",
   }),
-  TWILIO_AUTH_TOKEN: z.string().min(10, {
-    message: "Product Name must be at least 10 characters.",
+  TWILIO_AUTH_TOKEN: z.string().min(1, {
+    message: "TWILIO AUTH TOKEN required!",
   }),
-  VALID_TWILLO_NUMBER: z.string().min(10, {
-    message: "Product Name must be at least 10 characters.",
+  VALID_TWILLO_NUMBER: z.string().min(1, {
+    message: "VALID TWILIO NUMBER required!",
   }),
-  TWILLO_TYPE: z.string().min(10, {
-    message: "Product Name must be at least 10 characters.",
+  TWILLO_TYPE: z.string().min(1, {
+    message: "Select TWILIO TYPE",
   }),
-  SSL_SMS_API_TOKEN: z.string().min(10, {
-    message: "Product Name must be at least 10 characters.",
+  SSL_SMS_API_TOKEN: z.string().min(1, {
+    message: "SSL SMS API TOKEN required!",
   }),
-  SSL_SMS_SID: z.string().min(10, {
-    message: "Product Name must be at least 10 characters.",
+  SSL_SMS_SID: z.string().min(1, {
+    message: "SSL SMS SID required!",
   }),
-  SSL_SMS_URL: z.string().min(10, {
-    message: "Product Name must be at least 10 characters.",
+  SSL_SMS_URL: z.string().min(1, {
+    message: "SSL SMS URL required!",
   }),
-  AUTH_KEY: z.string().min(10, {
-    message: "Product Name must be at least 10 characters.",
+  AUTH_KEY: z.string().min(1, {
+    message: "AUTH KEY required!",
   }),
-  ENTITY_ID: z.string().min(10, {
-    message: "Product Name must be at least 10 characters.",
+  ENTITY_ID: z.string().min(1, {
+    message: "ENTITY ID required!",
   }),
-  ROUTE: z.string().min(10, {
-    message: "Product Name must be at least 10 characters.",
+  ROUTE: z.string().min(1, {
+    message: "Select ROUTE",
   }),
-  LANGUAGE: z.string().min(10, {
-    message: "Product Name must be at least 10 characters.",
+  LANGUAGE: z.string().min(1, {
+    message: "Select Language",
   }),
-  SENDER_ID: z.string().min(10, {
-    message: "Product Name must be at least 10 characters.",
+  SENDER_ID: z.string().min(1, {
+    message: "SENDER ID required!",
   }),
-  MIMO_USERNAME: z.string().min(10, {
-    message: "Product Name must be at least 10 characters.",
+  MIMO_USERNAME: z.string().min(1, {
+    message: "MIMO USERNAME required!",
   }),
-  MIMO_PASSWORD: z.string().min(10, {
-    message: "Product Name must be at least 10 characters.",
+  MIMO_PASSWORD: z.string().min(1, {
+    message: "MIMO PASSWORD required!",
   }),
-  MIMO_SENDER_ID: z.string().min(10, {
-    message: "Product Name must be at least 10 characters.",
+  MIMO_SENDER_ID: z.string().min(1, {
+    message: "MIMO SENDER ID required!",
   }),
-  MIM_USER_NAME: z.string().min(10, {
-    message: "Product Name must be at least 10 characters.",
+  MIM_USER_NAME: z.string().min(1, {
+    message: "MIMSMS User Name required!",
   }),
-  MIM_API_KEY: z.string().min(10, {
-    message: "Product Name must be at least 10 characters.",
+  MIM_API_KEY: z.string().min(1, {
+    message: "MIMSMS API KEY required!",
   }),
-  MIM_SENDER_ID: z.string().min(10, {
-    message: "Product Name must be at least 10 characters.",
+  MIM_SENDER_ID: z.string().min(1, {
+    message: "SENDER ID required!",
   }),
-  MSEGAT_API_KEY: z.string().min(10, {
-    message: "Product Name must be at least 10 characters.",
+  MSEGAT_API_KEY: z.string().min(1, {
+    message: "MSEGAT API KEY required!",
   }),
-  MSEGAT_USERNAME: z.string().min(10, {
-    message: "Product Name must be at least 10 characters.",
+  MSEGAT_USERNAME: z.string().min(1, {
+    message: "MSEGAT USERNAME required!",
   }),
-  MSEGAT_USER_SENDER: z.string().min(10, {
-    message: "Product Name must be at least 10 characters.",
+  MSEGAT_USER_SENDER: z.string().min(1, {
+    message: "MSEGAT_USER_SENDER required!",
   }),
-  ZENDER_SITEURL: z.string().min(10, {
-    message: "Product Name must be at least 10 characters.",
+  ZENDER_SITEURL: z.string().min(1, {
+    message: "ZENDER_SITEURL required!",
   }),
-  ZENDER_APIKEY: z.string().min(10, {
-    message: "Product Name must be at least 10 characters.",
+  ZENDER_APIKEY: z.string().min(1, {
+    message: "ZENDER_APIKEY required!",
   }),
-  ZENDER_SERVICE: z.string().min(10, {
-    message: "Product Name must be at least 10 characters.",
+  ZENDER_SERVICE: z.string().min(1, {
+    message: "Select ZENDER_SERVICE",
   }),
-  ZENDER_WHATSAPP: z.string().min(10, {
-    message: "Product Name must be at least 10 characters.",
+  ZENDER_WHATSAPP: z.string().min(1, {
+    message: "ZENDER WHATSAPP required!",
   }),
-  ZENDER_DEVICE: z.string().min(10, {
-    message: "Product Name must be at least 10 characters.",
+  ZENDER_DEVICE: z.string().min(1, {
+    message: "ZENDER DEVICE required!",
   }),
-  ZENDER_GATEWAY: z.string().min(10, {
-    message: "Product Name must be at least 10 characters.",
+  ZENDER_GATEWAY: z.string().min(1, {
+    message: "ZENDER GATEWAY required!",
   }),
-  ZENDER_SIM: z.string().min(10, {
-    message: "Product Name must be at least 10 characters.",
+  ZENDER_SIM: z.string().min(1, {
+    message: "ZENDER SIM required!",
   }),
 });
 

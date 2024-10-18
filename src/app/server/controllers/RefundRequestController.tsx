@@ -1,35 +1,54 @@
 // controllers/RefundRequestController.ts
-
-import { NextApiRequest, NextApiResponse } from 'next';
 import { PrismaClient } from '@prisma/client';
 
 const prisma = new PrismaClient();
 
 export const getRefundRequest = async () => {
-    try{
-        const texes = await prisma.refund_requests.findMany();
-        return { success: true, data: texes };
-    }catch(error){
-        console.error("Error fetching texes:", error);
+    try {
+        const refund_requests = await prisma.refund_requests.findMany();
+        // Convert BigInt fields to strings
+        const serializedRefund_requests = refund_requests.map(refund_request => ({
+            ...refund_request,
+            user_id: refund_request.user_id.toString(), // Assuming id is the BigInt field
+            order_id: refund_request.order_id.toString(), // Assuming id is the BigInt field
+            order_detail_id: refund_request.order_detail_id.toString(), // Assuming id is the BigInt field
+        }));
+        return { success: true, data: serializedRefund_requests };
+    } catch (error) {
+        console.error("Error fetching Refund Request:", error);
         return { success: false, error };
     }
 }
 
 export const getRefundApproved = async () => {
-    try{
-        const texes = await prisma.refund_requests.findMany();
-        return { success: true, data: texes };
-    }catch(error){
-        console.error("Error fetching texes:", error);
+    try {
+        const refund_approved = await prisma.refund_requests.findMany();
+        // Convert BigInt fields to strings
+        const serializedRefund_approved = refund_approved.map(refund_approved => ({
+            ...refund_approved,
+            user_id: refund_approved.user_id.toString(), // Assuming id is the BigInt field
+            order_id: refund_approved.order_id.toString(), // Assuming id is the BigInt field
+            order_detail_id: refund_approved.order_detail_id.toString(), // Assuming id is the BigInt field
+        }));
+        return { success: true, data: serializedRefund_approved };
+    } catch (error) {
+        console.error("Error fetching Refund Approved:", error);
         return { success: false, error };
     }
 }
 
 export const getRejectedRefund = async () => {
-    try{
-        const texes = await prisma.refund_requests.findMany();
-        return { success: true, data: texes };
-    }catch(error){
+    try {
+        const rejectedRefund = await prisma.refund_requests.findMany();
+        // Convert BigInt fields to strings
+        const serializedRejectedRefund = rejectedRefund.map(rejectedRefund => ({
+            ...rejectedRefund,
+            user_id: rejectedRefund.user_id.toString(), // Assuming id is the BigInt field
+            order_id: rejectedRefund.order_id.toString(), // Assuming id is the BigInt field
+            order_detail_id: rejectedRefund.order_detail_id.toString(), // Assuming id is the BigInt field
+        }));
+        return { success: true, data: serializedRejectedRefund };
+    } catch (error) {
         console.error("Error fetching texes:", error);
         return { success: false, error };
     }

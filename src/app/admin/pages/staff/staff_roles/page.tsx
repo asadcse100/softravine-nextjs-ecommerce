@@ -16,7 +16,7 @@ import Link from "next/link"
 async function getData(): Promise<Products[]> {
   const apiUrl = process.env.NEXT_PUBLIC_API_URL || '';
   try {
-    const response = await fetch(`${apiUrl}/server/api/routes/admin/auctionProduct`);
+    const response = await fetch(`${apiUrl}/server/api/routes/admin/roles`);
     
     if (!response.ok) {
       throw new Error('Failed to fetch');

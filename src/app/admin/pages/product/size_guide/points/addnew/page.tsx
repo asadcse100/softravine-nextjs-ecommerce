@@ -19,8 +19,8 @@ import Select from "@/shared/Select/Select";
 import Textarea from "@/shared/Textarea/Textarea";
 
 const formSchema = z.object({
-  name: z.string().min(10, {
-    message: "Product Name must be at least 10 characters.",
+  name: z.string().min(1, {
+    message: "Measurement Point Name required!",
   }),
 });
 
