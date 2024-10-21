@@ -20,7 +20,7 @@ import Breadcrumb from "@/app/admin/components/Breadcrumbs/Breadcrumb"
 async function getData(): Promise<Products[]> {
   const apiUrl = process.env.NEXT_PUBLIC_API_URL || '';
   try {
-    const response = await fetch(`${apiUrl}/server/api/routes/admin/auctionProduct`);
+    const response = await fetch(`${apiUrl}/server/api/routes/admin/offline_payment/offline_wallet_recharge`);
     
     if (!response.ok) {
       throw new Error('Failed to fetch');

@@ -28,7 +28,6 @@ export const getDeliveryBoysPaymentHistories = async () => {
     }));
     return { success: true, data: serializedBoysPaymentHistories };
   } catch (error) {
-    console.error("Error fetching delivery boys:", error);
     return { success: false, error };
   }
 }

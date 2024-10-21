@@ -20,7 +20,7 @@ import Link from "next/link";
 export type Products = {
   id: string;
   name: string;
-  bid_starting_amount: number;
+  starting_bid: number;
   auction_start_date: string;
   auction_end_date: string;
   total_bid: number;
@@ -77,14 +77,14 @@ export const columns: ColumnDef<Products>[] = [
     header: "Name",
   },
   {
-    accessorKey: "bid_starting_amount",
+    accessorKey: "starting_bid",
     header: () => <div className="text-right">Bid Starting Amount</div>,
     cell: ({ row }) => {
-      const bid_starting_amount = parseFloat(row.getValue("bid_starting_amount"));
+      const starting_bid = parseFloat(row.getValue("starting_bid"));
       const formatted = new Intl.NumberFormat("en-US", {
         style: "currency",
         currency: "USD",
-      }).format(bid_starting_amount);
+      }).format(starting_bid);
 
       return <div className="text-right font-medium">{formatted}</div>;
     },

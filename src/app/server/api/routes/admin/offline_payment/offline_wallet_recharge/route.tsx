@@ -7,7 +7,6 @@ export async function GET() {
       const manualPayments = result.data;
       return NextResponse.json(manualPayments);
   }catch(error){
-      console.error("Error fetching manualPayments:", error);
       return NextResponse.json({ error: "Failed to fetch Manual Payments" }, { status: 500 });
   }
 }

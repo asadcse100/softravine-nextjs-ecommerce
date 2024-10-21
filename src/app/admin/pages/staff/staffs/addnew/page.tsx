@@ -1,8 +1,9 @@
 "use client";
-
+import * as React from "react"
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
+import { useEffect, useState } from "react"
 import Breadcrumb from "@/app/admin/components/Breadcrumbs/Breadcrumb"
 import { Button } from "@/app/admin/components/ui/button";
 import {
@@ -65,6 +66,30 @@ export default function Addnew() {
       ),
     });
   }
+
+  const [roles, setRoles] = useState<{ id: string; name: string }[]>([]) // Adjust the type according to your data structure
+
+  // Fetch data from an API
+  useEffect(() => {
+    const fetchRoles = async () => {
+      const apiUrl = process.env.NEXT_PUBLIC_API_URL || ''
+      try {
+        const response = await fetch(`${apiUrl}/server/api/routes/admin/roles`) // Replace with your API endpoint
+        const data = await response.json()
+
+        // Check if the response has the 'roles' property and it's an array
+        if (data && Array.isArray(data)) {
+          setRoles(data)
+        } else {
+          console.error('Unexpected data format:', data)
+        }
+      } catch (error) {
+        console.error('Error fetching roles:', error)
+      }
+    }
+
+    fetchRoles()
+  }, [])
 
   const inputClass = "bg-zinc-50 border border-slate-300 text-slate-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-slate-900 dark:border-slate-800 dark:placeholder-slate-700 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500";
 
@@ -204,16 +229,12 @@ export default function Addnew() {
                                       </SelectTrigger>
                                     </FormControl>
                                     <SelectContent>
-                                      <SelectItem value="m@example.com">m@example.com</SelectItem>
-                                      <SelectItem value="m2@example.com">m@example.com</SelectItem>
-                                      <SelectItem value="m22@example.com">m@example.com</SelectItem>
-                                      <SelectItem value="m3@example.com">m@example.com</SelectItem>
-                                      <SelectItem value="m4@example.com">m@example.com</SelectItem>
-                                      <SelectItem value="m5@example.com">m@example.com</SelectItem>
-                                      <SelectItem value="m6@example.com">m@example.com</SelectItem>
-                                      <SelectItem value="m7@example.com">m@example.com</SelectItem>
-                                      <SelectItem value="m8@example.com">m@example.com</SelectItem>
-                                      <SelectItem value="m9@example.com">m@example.com</SelectItem>
+                                      {roles.map((role) => (
+                                        <SelectItem key={role.id} value={role.name}>
+                                          {role.name}
+                                        </SelectItem>
+                                      ))}
+
                                     </SelectContent>
                                   </Select>
                                 </FormControl>

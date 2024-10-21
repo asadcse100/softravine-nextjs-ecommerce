@@ -21,8 +21,8 @@ import Link from "next/link";
 export type Products = {
   id: string;
   name: string;
-  current_qty: number;
-  price: number;
+  current_stock: number;
+  unit_price: number;
   approval: string;
   published: string;
   featured: string;
@@ -90,14 +90,14 @@ export const columns: ColumnDef<Products>[] = [
     },
   },
   {
-    accessorKey: "current_qty",
+    accessorKey: "current_stock",
     header: "Current Qty",
   },
   {
-    accessorKey: "price",
+    accessorKey: "unit_price",
     header: () => <div className="text-right">Price</div>,
     cell: ({ row }) => {
-      const price = parseFloat(row.getValue("price"));
+      const price = parseFloat(row.getValue("unit_price"));
       const formatted = new Intl.NumberFormat("en-US", {
         style: "currency",
         currency: "USD",

@@ -24,6 +24,38 @@ export const getAllAuctionProducts = async () => {
   }
 }
 
+export const getSellerAllAuctionProducts = async () => {
+  try {
+    const products = await prisma.products.findMany();
+    // Convert BigInt fields to strings
+    const serializedProducts = products.map(product => ({
+      ...product,
+      id: product.id.toString(), // Assuming id is the BigInt field
+      user_id: product.user_id.toString(), // Assuming id is the BigInt field
+    }));
+    return { success: true, data: serializedProducts };
+  } catch (error) {
+    console.error("Error fetching products:", error);
+    return { success: false, error };
+  }
+}
+
+export const getSellerAuctionProductOrders = async () => {
+  try {
+    const orders = await prisma.orders.findMany();
+    // Convert BigInt fields to strings
+    const serializedorders = orders.map(product => ({
+      ...product,
+      id: product.id.toString(), // Assuming id is the BigInt field
+      user_id: product.user_id.toString(), // Assuming id is the BigInt field
+    }));
+    return { success: true, data: serializedorders };
+  } catch (error) {
+    console.error("Error fetching orders:", error);
+    return { success: false, error };
+  }
+}
+
 
 export const createAuctionProduct = async (req: NextApiRequest, res: NextApiResponse) => {
   const {

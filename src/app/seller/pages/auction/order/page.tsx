@@ -21,7 +21,7 @@ import { DataTable } from "./data-table"
 async function getData(): Promise<Products[]> {
   const apiUrl = process.env.NEXT_PUBLIC_API_URL || '';
   try {
-    const response = await fetch(`${apiUrl}/server/api/routes/seller/auctionProduct`);
+    const response = await fetch(`${apiUrl}/server/api/routes/seller/auctionProduct/orders`);
     
     if (!response.ok) {
       throw new Error('Failed to fetch');

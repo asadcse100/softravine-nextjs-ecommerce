@@ -14,12 +14,12 @@ import { DataTable } from "./data-table"
 //       view: "View",
 //     },
 //   ]
-// }
+// 
 
 async function getData(): Promise<Products[]> {
   const apiUrl = process.env.NEXT_PUBLIC_API_URL || '';
   try {
-    const response = await fetch(`${apiUrl}/server/api/routes/customer/auctionProduct`);
+    const response = await fetch(`${apiUrl}/server/api/routes/customer/support-ticket`);
     
     if (!response.ok) {
       throw new Error('Failed to fetch');

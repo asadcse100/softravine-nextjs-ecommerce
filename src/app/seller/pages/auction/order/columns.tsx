@@ -21,7 +21,7 @@ export type Products = {
   id: string;
   order_code: number;
   customer: string;
-  amount: number;
+  grand_total: number;
   delivery_status: string;
   payment_method: string;
   payment_status: string;
@@ -60,10 +60,10 @@ export const columns: ColumnDef<Products>[] = [
     header: "Customer",
   },
   {
-    accessorKey: "amount",
+    accessorKey: "grand_total",
     header: () => <div className="text-right">Amount</div>,
     cell: ({ row }) => {
-      const amount = parseFloat(row.getValue("amount"));
+      const amount = parseFloat(row.getValue("grand_total"));
       const formatted = new Intl.NumberFormat("en-US", {
         style: "currency",
         currency: "USD",

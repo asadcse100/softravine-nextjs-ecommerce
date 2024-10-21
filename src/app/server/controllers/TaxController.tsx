@@ -4,10 +4,9 @@ const prisma = new PrismaClient();
 
 export const getTaxes = async () => {
     try{
-        const texes = await prisma.product_taxes.findMany();
+        const texes = await prisma.taxes.findMany();
         return { success: true, data: texes };
     }catch(error){
-        console.error("Error fetching texes:", error);
         return { success: false, error };
     }
 }

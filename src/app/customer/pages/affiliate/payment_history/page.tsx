@@ -18,7 +18,7 @@ import CardDataStats from "@/app/seller/components/CardDataStats";
 async function getData(): Promise<Products[]> {
   const apiUrl = process.env.NEXT_PUBLIC_API_URL || '';
   try {
-    const response = await fetch(`${apiUrl}/server/api/routes/customer/auctionProduct`);
+    const response = await fetch(`${apiUrl}/server/api/routes/customer/affiliate-payment-history`);
     
     if (!response.ok) {
       throw new Error('Failed to fetch');

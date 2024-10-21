@@ -4,10 +4,9 @@ import { getReferralUsers } from '@/app/server/controllers/AffiliateController';
 export async function GET() {
   const result = await getReferralUsers();
   try{
-      const attributes = result.data;
-      return NextResponse.json(attributes);
+      const referral_user = result.data;
+      return NextResponse.json(referral_user);
   }catch(error){
-      console.error("Error fetching attributes:", error);
-      return NextResponse.json({ error: "Failed to fetch attributes" }, { status: 500 });
+      return NextResponse.json({ error: "Failed to fetch referral user" }, { status: 500 });
   }
 }

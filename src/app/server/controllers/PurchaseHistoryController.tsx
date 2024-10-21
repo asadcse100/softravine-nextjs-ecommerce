@@ -5,20 +5,36 @@ import { PrismaClient } from '@prisma/client';
 
 const prisma = new PrismaClient();
 
-export const getPurchaseHistory = async (userId: number) => {
+// export const getPurchaseHistory = async (userId: number) => {
+//     try {
+//         const orders = await prisma.orders.findMany({
+//             where: { user_id: userId },
+//             include: { order_details: true },
+//             orderBy: { code: 'desc' }
+//         });
+
+//         return orders;
+//     } catch (error) {
+//         console.error(error);
+//         throw new Error('Error fetching purchase history');
+//     }
+// };
+
+export const getPurchaseHistories = async () => {
     try {
-        const orders = await prisma.orders.findMany({
-            where: { user_id: userId },
-            include: { order_details: true },
-            orderBy: { code: 'desc' }
-        });
-        
-        return orders;
+        const purchaseHistories = await prisma.orders.findMany();
+        // Convert BigInt fields to strings
+        const serializedPurchaseHistories = purchaseHistories.map(purchaseHistorie => ({
+            ...purchaseHistorie,
+            id: purchaseHistorie.id.toString(), // Assuming id is the BigInt field
+            user_id: purchaseHistorie.user_id.toString(), // Assuming id is the BigInt field
+        }));
+        return { success: true, data: serializedPurchaseHistories };
     } catch (error) {
-        console.error(error);
-        throw new Error('Error fetching purchase history');
+        console.error("Error fetching Purchase Histories:", error);
+        return { success: false, error };
     }
-};
+}
 
 
 export const getDigitalPurchaseHistory = async (userId: number, page: number) => {
@@ -46,7 +62,7 @@ export const getDigitalPurchaseHistory = async (userId: number, page: number) =>
             take: 15,
             skip: (page - 1) * 15
         });
-        
+
         return orders;
     } catch (error) {
         console.error(error);

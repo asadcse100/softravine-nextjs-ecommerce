@@ -7,7 +7,6 @@ export async function GET() {
       const getCities = result.data;
       return NextResponse.json(getCities);
   }catch(error){
-      console.error("Error fetching getCities:", error);
-      return NextResponse.json({ error: "Failed to fetch getCities" }, { status: 500 });
+      return NextResponse.json({ error: "Failed to fetch Cities" }, { status: 500 });
   }
 }

@@ -30,173 +30,193 @@ const prisma = new PrismaClient();
 // }
 
 export const index = async () => {
-  try{
-      const wallet = await prisma.wallets.findMany();
-      return { success: true, data: wallet };
-  }catch(error){
-      console.error("Error fetching wallet:", error);
-      return { success: false, error };
+  try {
+    const wallets = await prisma.wallets.findMany();
+    // Convert BigInt fields to strings
+    const serializedWallet = wallets.map(wallet => ({
+      ...wallet,
+      user_id: wallet.user_id.toString(), // Assuming id is the BigInt field
+    }));
+    return { success: true, data: serializedWallet };
+  } catch (error) {
+    console.error("Error fetching wallet:", error);
+    return { success: false, error };
+  }
+}
+
+export const customerWallet = async () => {
+  try {
+    const wallets = await prisma.wallets.findMany();
+    // Convert BigInt fields to strings
+    const serializedWallet = wallets.map(wallet => ({
+      ...wallet,
+      user_id: wallet.user_id.toString(), // Assuming id is the BigInt field
+    }));
+    return { success: true, data: serializedWallet };
+  } catch (error) {
+    console.error("Error fetching wallet:", error);
+    return { success: false, error };
   }
 }
 
 // export default async function recharge(req: NextApiRequest, res: NextApiResponse) {
-    export const recharge = async (req: NextApiRequest, res: NextApiResponse) => {
-    try {
-      const { amount, payment_option } = req.body;
-  
-      // Store recharge data in session for payment processing
-      req.session.payment_type = 'wallet_payment';
-      req.session.payment_data = {
+export const recharge = async (req: NextApiRequest, res: NextApiResponse) => {
+  try {
+    const { amount, payment_option } = req.body;
+
+    // Store recharge data in session for payment processing
+    req.session.payment_type = 'wallet_payment';
+    req.session.payment_data = {
+      amount,
+      payment_method: payment_option,
+    };
+
+    // Form the controller class name based on payment option
+    const controllerClassName = payment_option.split('_').map(word => word.charAt(0).toUpperCase() + word.slice(1)).join('') + 'Controller';
+
+    // Check if the controller class exists
+    const PaymentController = require(`../Payment/${controllerClassName}`).default;
+    if (PaymentController) {
+      return PaymentController.pay(req, res); // Assuming pay method handles payment processing
+    } else {
+      throw new Error('Payment controller not found');
+    }
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: 'Internal Server Error' });
+  }
+}
+
+export async function walletPaymentDone(req: NextApiRequest, res: NextApiResponse) {
+  const session = await getSession({ req });
+  if (!session) {
+    return res.status(401).json({ error: 'Unauthorized' });
+  }
+
+  const { amount, paymentMethod, paymentDetails } = req.body;
+
+  try {
+    const user = await prisma.user.findUnique({
+      where: { email: session.user.email }
+    });
+
+    if (!user) {
+      return res.status(404).json({ error: 'User not found' });
+    }
+
+    const updatedUser = await prisma.user.update({
+      where: { id: user.id },
+      data: { balance: user.balance + amount }
+    });
+
+    const wallet = await prisma.wallet.create({
+      data: {
+        userId: user.id,
         amount,
-        payment_method: payment_option,
-      };
-  
-      // Form the controller class name based on payment option
-      const controllerClassName = payment_option.split('_').map(word => word.charAt(0).toUpperCase() + word.slice(1)).join('') + 'Controller';
-  
-      // Check if the controller class exists
-      const PaymentController = require(`../Payment/${controllerClassName}`).default;
-      if (PaymentController) {
-        return PaymentController.pay(req, res); // Assuming pay method handles payment processing
-      } else {
-        throw new Error('Payment controller not found');
+        paymentMethod,
+        paymentDetails
       }
-    } catch (error) {
-      console.error(error);
-      res.status(500).json({ error: 'Internal Server Error' });
-    }
+    });
+
+    // Clear session data equivalent
+    // This might not be directly applicable in Next.js; instead, manage the session as needed
+    // Example: req.session.paymentData = null;
+    // Example: req.session.paymentType = null;
+
+    return res.status(200).json({ message: 'Recharge completed', user: updatedUser, wallet });
+  } catch (error) {
+    return res.status(500).json({ error: 'Internal server error' });
+  }
+}
+
+
+export async function offlineRecharge(req: NextApiRequest, res: NextApiResponse) {
+  const session = await getSession({ req });
+  if (!session) {
+    return res.status(401).json({ error: 'Unauthorized' });
   }
 
-  export async function walletPaymentDone(req: NextApiRequest, res: NextApiResponse) {
-    const session = await getSession({ req });
-    if (!session) {
-      return res.status(401).json({ error: 'Unauthorized' });
+  const { amount, paymentOption, trxId, photo } = req.body;
+
+  try {
+    const user = await prisma.user.findUnique({
+      where: { email: session.user.email }
+    });
+
+    if (!user) {
+      return res.status(404).json({ error: 'User not found' });
     }
-  
-    const { amount, paymentMethod, paymentDetails } = req.body;
-  
-    try {
-      const user = await prisma.user.findUnique({
-        where: { email: session.user.email }
-      });
-  
-      if (!user) {
-        return res.status(404).json({ error: 'User not found' });
+
+    const wallet = await prisma.wallet.create({
+      data: {
+        userId: user.id,
+        amount,
+        paymentMethod: paymentOption,
+        paymentDetails: trxId,
+        approval: false,
+        offlinePayment: true,
+        receipt: photo
       }
-  
-      const updatedUser = await prisma.user.update({
+    });
+
+    return res.status(200).json({ message: 'Offline Recharge has been done. Please wait for response.', wallet });
+  } catch (error) {
+    return res.status(500).json({ error: 'Internal server error' });
+  }
+}
+
+export async function getOfflineRechargeRequests(req: NextApiRequest, res: NextApiResponse) {
+  try {
+    const wallets = await prisma.wallet.findMany({
+      where: { offlinePayment: true },
+      include: { user: true } // Include related user data if needed
+    });
+
+    return res.status(200).json(wallets);
+  } catch (error) {
+    return res.status(500).json({ error: 'Internal server error' });
+  }
+}
+
+
+export async function updateApproved(req: NextApiRequest, res: NextApiResponse) {
+  const { id, status } = req.body;
+
+  try {
+    const wallet = await prisma.wallet.findUnique({
+      where: { id: Number(id) },
+      include: { user: true },
+    });
+
+    if (!wallet) {
+      return res.status(404).json({ error: 'Wallet not found' });
+    }
+
+    const user = wallet.user;
+
+    if (status === 1) {
+      await prisma.user.update({
         where: { id: user.id },
-        data: { balance: user.balance + amount }
+        data: { balance: user.balance + wallet.amount },
       });
-  
-      const wallet = await prisma.wallet.create({
-        data: {
-          userId: user.id,
-          amount,
-          paymentMethod,
-          paymentDetails
-        }
+    } else {
+      await prisma.user.update({
+        where: { id: user.id },
+        data: { balance: user.balance - wallet.amount },
       });
-  
-      // Clear session data equivalent
-      // This might not be directly applicable in Next.js; instead, manage the session as needed
-      // Example: req.session.paymentData = null;
-      // Example: req.session.paymentType = null;
-  
-      return res.status(200).json({ message: 'Recharge completed', user: updatedUser, wallet });
-    } catch (error) {
-      return res.status(500).json({ error: 'Internal server error' });
     }
+
+    const updatedWallet = await prisma.wallet.update({
+      where: { id: Number(id) },
+      data: { approval: status },
+    });
+
+    if (updatedWallet) {
+      return res.status(200).json({ success: true });
+    }
+
+    return res.status(500).json({ success: false });
+  } catch (error) {
+    return res.status(500).json({ error: 'Internal server error' });
   }
-
-
-  export async function offlineRecharge(req: NextApiRequest, res: NextApiResponse) {
-    const session = await getSession({ req });
-    if (!session) {
-      return res.status(401).json({ error: 'Unauthorized' });
-    }
-  
-    const { amount, paymentOption, trxId, photo } = req.body;
-  
-    try {
-      const user = await prisma.user.findUnique({
-        where: { email: session.user.email }
-      });
-  
-      if (!user) {
-        return res.status(404).json({ error: 'User not found' });
-      }
-  
-      const wallet = await prisma.wallet.create({
-        data: {
-          userId: user.id,
-          amount,
-          paymentMethod: paymentOption,
-          paymentDetails: trxId,
-          approval: false,
-          offlinePayment: true,
-          receipt: photo
-        }
-      });
-  
-      return res.status(200).json({ message: 'Offline Recharge has been done. Please wait for response.', wallet });
-    } catch (error) {
-      return res.status(500).json({ error: 'Internal server error' });
-    }
-  }
-
-  export async function getOfflineRechargeRequests(req: NextApiRequest, res: NextApiResponse) {
-    try {
-      const wallets = await prisma.wallet.findMany({
-        where: { offlinePayment: true },
-        include: { user: true } // Include related user data if needed
-      });
-  
-      return res.status(200).json(wallets);
-    } catch (error) {
-      return res.status(500).json({ error: 'Internal server error' });
-    }
-  }
-
-
-  export async function updateApproved(req: NextApiRequest, res: NextApiResponse) {
-    const { id, status } = req.body;
-  
-    try {
-      const wallet = await prisma.wallet.findUnique({
-        where: { id: Number(id) },
-        include: { user: true },
-      });
-  
-      if (!wallet) {
-        return res.status(404).json({ error: 'Wallet not found' });
-      }
-  
-      const user = wallet.user;
-  
-      if (status === 1) {
-        await prisma.user.update({
-          where: { id: user.id },
-          data: { balance: user.balance + wallet.amount },
-        });
-      } else {
-        await prisma.user.update({
-          where: { id: user.id },
-          data: { balance: user.balance - wallet.amount },
-        });
-      }
-  
-      const updatedWallet = await prisma.wallet.update({
-        where: { id: Number(id) },
-        data: { approval: status },
-      });
-  
-      if (updatedWallet) {
-        return res.status(200).json({ success: true });
-      }
-  
-      return res.status(500).json({ success: false });
-    } catch (error) {
-      return res.status(500).json({ error: 'Internal server error' });
-    }
-  }
+}

@@ -324,7 +324,7 @@ export const SIDENAV_ITEMS:SideNavItem[] = [
             { title: 'Currency', path: '/admin/pages/feature_setting/currency' },
             { title: 'VAT & TAX', path: '/admin/pages/feature_setting/vatntax' },
             { title: 'Pickup Point', path: '/admin/pages/feature_setting/pickup_point' },
-            { title: 'Add Pickup Point', path: '/admin/pages/feature_setting/pickup_point/addnew' },
+            // { title: 'Add Pickup Point', path: '/admin/pages/feature_setting/pickup_point/addnew' },
             { title: 'SMTP', path: '/admin/pages/feature_setting/smtp' },
             { title: 'Payment Methods', path: '/admin/pages/feature_setting/payment_method' },
             { title: 'Order Configuration', path: '/admin/pages/feature_setting/order' },

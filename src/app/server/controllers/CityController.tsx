@@ -36,7 +36,7 @@ const prisma = new PrismaClient()
 
 export const getCities = async () => {
   try{
-      const cities = await prisma.product_taxes.findMany();
+      const cities = await prisma.cities.findMany();
       return { success: true, data: cities };
   }catch(error){
       console.error("Error fetching cities:", error);

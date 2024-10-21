@@ -22,7 +22,7 @@ export type Products = {
   id: string;
   name: string;
   category: string;
-  price: number;
+  unit_price: number;
   approval: string;
   published: string;
   featured: string;
@@ -83,10 +83,10 @@ export const columns: ColumnDef<Products>[] = [
     header: "Category",
   },
   {
-    accessorKey: "price",
+    accessorKey: "unit_price",
     header: () => <div className="text-right">Price</div>,
     cell: ({ row }) => {
-      const price = parseFloat(row.getValue("price"));
+      const price = parseFloat(row.getValue("unit_price"));
       const formatted = new Intl.NumberFormat("en-US", {
         style: "currency",
         currency: "USD",

@@ -3,42 +3,75 @@ import { PrismaClient } from '@prisma/client';
 const prisma = new PrismaClient();
 
 export const getAffiliateUsers = async () => {
-  try{
-      const affiliate_users = await prisma.affiliate_users.findMany();
-      return { success: true, data: affiliate_users };
-  }catch(error){
-      console.error("Error fetching affiliate_users:", error);
-      return { success: false, error };
+  try {
+    const affiliate_users = await prisma.affiliate_users.findMany();
+    return { success: true, data: affiliate_users };
+  } catch (error) {
+    return { success: false, error };
+  }
+}
+
+export const customerWithdrawRequest = async () => {
+  try {
+    const customerWithdrawRequest = await prisma.affiliate_withdraw_requests.findMany();
+    return { success: true, data: customerWithdrawRequest };
+  } catch (error) {
+    return { success: false, error };
+  }
+}
+
+export const customerPaymentHistories = async () => {
+  try {
+    const customerPaymentHistories = await prisma.affiliate_payments.findMany();
+    return { success: true, data: customerPaymentHistories };
+  } catch (error) {
+    return { success: false, error };
   }
 }
 
 export const getReferralUsers = async () => {
-  try{
-      const getReferralUsers = await prisma.affiliate_users.findMany();
-      return { success: true, data: getReferralUsers };
-  }catch(error){
-      console.error("Error fetching getReferralUsers:", error);
-      return { success: false, error };
+  try {
+    const getReferralUsers = await prisma.users.findMany();
+    // Convert BigInt fields to strings
+    const serializedBoysPaymentHistories = getReferralUsers.map(referralUser => ({
+      ...referralUser,
+      id: referralUser.id.toString(), // Assuming id is the BigInt field
+    }));
+    return { success: true, data: serializedBoysPaymentHistories };
+  } catch (error) {
+    return { success: false, error };
   }
 }
 
 export const getWithdrawRequestUsers = async () => {
-  try{
-      const getWithdrawRequestUsers = await prisma.affiliate_payments.findMany();
-      return { success: true, data: getWithdrawRequestUsers };
-  }catch(error){
-      console.error("Error fetching getWithdrawRequestUsers:", error);
-      return { success: false, error };
+  try {
+    const withdrawRequest = await prisma.affiliate_withdraw_requests.findMany();
+    // Convert BigInt fields to strings
+    const serializedWithdrawRequest = withdrawRequest.map(withdrawRequest => ({
+      ...withdrawRequest,
+      user_id: withdrawRequest.user_id.toString(), // Assuming id is the BigInt field
+    }));
+    return { success: true, data: serializedWithdrawRequest };
+  } catch (error) {
+    console.error("Error fetching getWithdrawRequestUsers:", error);
+    return { success: false, error };
   }
 }
 
 export const getLogs = async () => {
-  try{
-      const getLogs = await prisma.affiliate_logs.findMany();
-      return { success: true, data: getLogs };
-  }catch(error){
-      console.error("Error fetching getLogs:", error);
-      return { success: false, error };
+  try {
+    const logs = await prisma.affiliate_logs.findMany();
+    // Convert BigInt fields to strings
+    const serializedLogs = logs.map(log => ({
+      ...log,
+      user_id: log.user_id.toString(), // Assuming id is the BigInt field
+      order_id: log.order_id.toString(), // Assuming id is the BigInt field
+      order_detail_id: log.order_detail_id.toString(), // Assuming id is the BigInt field
+    }));
+    return { success: true, data: serializedLogs };
+  } catch (error) {
+    console.error("Error fetching getLogs:", error);
+    return { success: false, error };
   }
 }
 

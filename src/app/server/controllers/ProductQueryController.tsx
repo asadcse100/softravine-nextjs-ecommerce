@@ -4,33 +4,50 @@ import { PrismaClient } from '@prisma/client';
 
 const prisma = new PrismaClient();
 
+
 export const getProductQueries = async () => {
     try {
-        const admin = await prisma.users.findFirst({
-            where: {
-                user_type: 'admin'
-            },
-            select: {
-                id: true
-            }
-        });
-
-        const queries = await prisma.product_queries.findMany({
-            where: {
-                seller_id: admin?.id
-            },
-            orderBy: {
-                created_at: 'desc'
-            },
-            take: 20
-        });
-
-        return queries;
+        const product_queries = await prisma.product_queries.findMany();
+        // Convert BigInt fields to strings
+        const serializedProductQuerie = product_queries.map(product_querie => ({
+            ...product_querie,
+            id: product_querie.id.toString(), // Assuming id is the BigInt field
+            customer_id: product_querie.customer_id.toString(), // Assuming id is the BigInt field
+            product_id: product_querie.product_id.toString(), // Assuming id is the BigInt field
+        }));
+        return { success: true, data: serializedProductQuerie };
     } catch (error) {
-        console.error(error);
-        throw new Error('Error fetching product queries');
+        return { success: false, error };
     }
 };
+
+// export const getProductQueries = async () => {
+//     try {
+//         const admin = await prisma.users.findFirst({
+//             where: {
+//                 user_type: 'admin'
+//             },
+//             select: {
+//                 id: true
+//             }
+//         });
+
+//         const queries = await prisma.product_queries.findMany({
+//             where: {
+//                 seller_id: admin?.id
+//             },
+//             orderBy: {
+//                 created_at: 'desc'
+//             },
+//             take: 20
+//         });
+
+//         return queries;
+//     } catch (error) {
+//         console.error(error);
+//         throw new Error('Error fetching product queries');
+//     }
+// };
 
 export const createProductQuery = async (req: NextApiRequest, res: NextApiResponse) => {
     try {

@@ -8,13 +8,19 @@ import { getSession } from 'next-auth/react';
 
 const prisma = new PrismaClient();
 
-export const getSellerProductsById = async () => {
-  try{
-      const products = await prisma.products.findMany();
-      return { success: true, data: products };
-  }catch(error){
-      console.error("Error fetching products:", error);
-      return { success: false, error };
+export const getSellerProducts = async () => {
+  try {
+    const products = await prisma.products.findMany();
+    // Convert BigInt fields to strings
+    const serializedProducts = products.map(product => ({
+      ...product,
+      id: product.id.toString(), // Assuming id is the BigInt field
+      user_id: product.user_id.toString(), // Assuming id is the BigInt field
+    }));
+    return { success: true, data: serializedProducts };
+  } catch (error) {
+    console.error("Error fetching products:", error);
+    return { success: false, error };
   }
 }
 
@@ -335,82 +341,82 @@ export const updatePublished = async (req: NextApiRequest, res: NextApiResponse)
 
 
 export const getAllProducts = async () => {
-  try{
-      const products = await prisma.products.findMany();
-          // Convert BigInt fields to strings
+  try {
+    const products = await prisma.products.findMany();
+    // Convert BigInt fields to strings
     const serializedProducts = products.map(product => ({
       ...product,
       id: product.id.toString(), // Assuming id is the BigInt field
       user_id: product.user_id.toString(), // Assuming id is the BigInt field
     }));
-      return { success: true, data: serializedProducts };
-  }catch(error){
-      console.error("Error fetching products:", error);
-      return { success: false, error };
+    return { success: true, data: serializedProducts };
+  } catch (error) {
+    console.error("Error fetching products:", error);
+    return { success: false, error };
   }
 }
 
 export const getInhouseProducts = async () => {
-  try{
-      const products = await prisma.products.findMany();
-          // Convert BigInt fields to strings
+  try {
+    const products = await prisma.products.findMany();
+    // Convert BigInt fields to strings
     const serializedProducts = products.map(product => ({
       ...product,
       id: product.id.toString(), // Assuming id is the BigInt field
       user_id: product.user_id.toString(), // Assuming id is the BigInt field
     }));
-      return { success: true, data: serializedProducts };
-  }catch(error){
-      console.error("Error fetching products:", error);
-      return { success: false, error };
+    return { success: true, data: serializedProducts };
+  } catch (error) {
+    console.error("Error fetching products:", error);
+    return { success: false, error };
   }
 }
 
 export const getDigitalProducts = async () => {
-  try{
-      const products = await prisma.products.findMany();
-          // Convert BigInt fields to strings
+  try {
+    const products = await prisma.products.findMany();
+    // Convert BigInt fields to strings
     const serializedProducts = products.map(product => ({
       ...product,
       id: product.id.toString(), // Assuming id is the BigInt field
       user_id: product.user_id.toString(), // Assuming id is the BigInt field
     }));
-      return { success: true, data: serializedProducts };
-  }catch(error){
-      console.error("Error fetching products:", error);
-      return { success: false, error };
+    return { success: true, data: serializedProducts };
+  } catch (error) {
+    console.error("Error fetching products:", error);
+    return { success: false, error };
   }
 }
 
 export const getSellerPhysicalProducts = async () => {
-  try{
-      const products = await prisma.products.findMany();
-          // Convert BigInt fields to strings
+  try {
+    const products = await prisma.products.findMany();
+    // Convert BigInt fields to strings
     const serializedProducts = products.map(product => ({
       ...product,
       id: product.id.toString(), // Assuming id is the BigInt field
       user_id: product.user_id.toString(), // Assuming id is the BigInt field
     }));
-      return { success: true, data: serializedProducts };
-  }catch(error){
-      console.error("Error fetching products:", error);
-      return { success: false, error };
+    return { success: true, data: serializedProducts };
+  } catch (error) {
+    console.error("Error fetching products:", error);
+    return { success: false, error };
   }
 }
 
 export const getSellerDigitalProducts = async () => {
-  try{
-      const products = await prisma.products.findMany();
-          // Convert BigInt fields to strings
+  try {
+    const products = await prisma.products.findMany();
+    // Convert BigInt fields to strings
     const serializedProducts = products.map(product => ({
       ...product,
       id: product.id.toString(), // Assuming id is the BigInt field
       user_id: product.user_id.toString(), // Assuming id is the BigInt field
     }));
-      return { success: true, data: serializedProducts };
-  }catch(error){
-      console.error("Error fetching products:", error);
-      return { success: false, error };
+    return { success: true, data: serializedProducts };
+  } catch (error) {
+    console.error("Error fetching products:", error);
+    return { success: false, error };
   }
 }
 

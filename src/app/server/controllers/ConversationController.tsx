@@ -1,6 +1,6 @@
 import { NextApiRequest, NextApiResponse } from 'next';
 import { PrismaClient } from '@prisma/client';
-import { getSession } from 'next-auth/client';
+// import { getSession } from 'next-auth/client';
 import { sendEmail } from '../utils/mail';
 
 const prisma = new PrismaClient();
@@ -8,6 +8,20 @@ const prisma = new PrismaClient();
 // const sendMessageToSeller = async (conversation, message, userType) => {
 //   // Implement your message sending logic here
 // };
+
+export const ticketReplies = async () => {
+  try {
+    const ticketReplies = await prisma.ticket_replies.findMany();
+    // Convert BigInt fields to strings
+    const serializedTicketReplies = ticketReplies.map(ticketReplie => ({
+      ...ticketReplie,
+      user_id: ticketReplie.user_id.toString(), // Assuming id is the BigInt field
+    }));
+    return { success: true, data: serializedTicketReplies };
+  } catch (error) {
+    return { success: false, error };
+  }
+}
 
 export const store = async (req: NextApiRequest, res: NextApiResponse) => {
   const session = await getSession({ req });

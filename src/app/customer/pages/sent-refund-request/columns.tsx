@@ -22,7 +22,7 @@ export type Products = {
   date: string;
   order_id: string;
   product: string;
-  amount: number;
+  refund_amount: number;
   status: string;
   reason: string;
   approval: string;
@@ -43,10 +43,10 @@ export const columns: ColumnDef<Products>[] = [
     header: "Product",
   },
   {
-    accessorKey: "amount",
+    accessorKey: "refund_amount",
     header: () => <div className="text-right">Amount</div>,
     cell: ({ row }) => {
-      const amount = parseFloat(row.getValue("amount"));
+      const amount = parseFloat(row.getValue("refund_amount"));
       const formatted = new Intl.NumberFormat("en-US", {
         style: "currency",
         currency: "USD",

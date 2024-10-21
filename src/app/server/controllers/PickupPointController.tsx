@@ -41,14 +41,19 @@ const prisma = new PrismaClient();
 // }
 
 export const getPickupPoints = async () => {
-    try{
+    try {
         const pickupPoints = await prisma.pickup_points.findMany();
-        return { success: true, data: pickupPoints };
-    }catch(error){
+        // Convert BigInt fields to strings
+        const serializedPickupPoint = pickupPoints.map(pickupPoint => ({
+            ...pickupPoint,
+            staff_id: pickupPoint.staff_id.toString(), // Assuming id is the BigInt field
+        }));
+        return { success: true, data: serializedPickupPoint };
+    } catch (error) {
         console.error("Error fetching pickupPoints:", error);
         return { success: false, error };
     }
-  }
+}
 
 export const createPickupPoint = async (req: NextApiRequest, res: NextApiResponse) => {
     const { name, address, phone, pickUpStatus, staffId } = req.body;
@@ -83,7 +88,7 @@ export const updatePickupPoint = async (req: NextApiRequest, res: NextApiRespons
 
     try {
         const defaultLang = process.env.DEFAULT_LANGUAGE || 'en';
-        
+
         const pickupPoint = await prisma.pickupPoint.update({
             where: { id: Number(id) },
             data: {
