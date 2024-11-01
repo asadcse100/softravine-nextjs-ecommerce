@@ -1,4 +1,4 @@
-import { NextApiRequest, NextApiResponse } from 'next';
+
 import { PrismaClient } from '@prisma/client';
 
 // import formidable from 'formidable';
@@ -6,6 +6,22 @@ import fs from 'fs';
 import path from 'path';
 
 const prisma = new PrismaClient();
+
+
+export const selectCode = async () => {
+  try{
+      const languages = await prisma.languages.findMany({
+        select: {
+          code: true,
+        },
+      });
+      return { success: true, data: languages };
+
+  }catch(error){
+      console.error("Error fetching customer:", error);
+      return { success: false, error };
+  }
+}
 
 // export const changeLanguage = async (req: NextApiRequest, res: NextApiResponse) => {
 //   try {

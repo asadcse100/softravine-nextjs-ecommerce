@@ -1,5 +1,6 @@
 "use client";
-
+import * as React from "react"
+import { useState, useEffect } from 'react';
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
@@ -79,8 +80,31 @@ export default function Addnew() {
     console.log(values);
   }
 
-  const inputClass = "bg-zinc-50 border border-slate-300 text-slate-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-slate-900 dark:border-slate-800 dark:placeholder-slate-700 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500";
 
+  const [countries, setcountries] = useState<{ id: string; name: string }[]>([]) // Adjust the type according to your data structure
+  // Fetch data from an API
+  useEffect(() => {
+    const fetchcountries = async () => {
+      const apiUrl = process.env.NEXT_PUBLIC_API_URL || ''
+      try {
+        const response = await fetch(`${apiUrl}/server/api/routes/admin/deliveryboy/select/countries`) // Replace with your API endpoint
+        const data = await response.json()
+
+        // Check if the response has the 'roles' property and it's an array
+        if (data && Array.isArray(data)) {
+          setcountries(data)
+        } else {
+          console.error('Unexpected data format:', data)
+        }
+      } catch (error) {
+        console.error('Error fetching Brand:', error)
+      }
+    }
+
+    fetchcountries()
+  }, [])
+
+  const inputClass = "bg-zinc-50 border border-slate-300 text-slate-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-slate-900 dark:border-slate-800 dark:placeholder-slate-700 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500";
   return (
     <div className="min-h-screen mx-auto max-w-screen-2xl mt-2 p-4 py-4 md:p-6 2xl:p-10 bg-slate-100 dark:bg-slate-900">
       <Form {...form}>
@@ -217,16 +241,11 @@ export default function Addnew() {
                                       </SelectTrigger>
                                     </FormControl>
                                     <SelectContent>
-                                      <SelectItem value="Apple">Apple</SelectItem>
-                                      <SelectItem value="m2@example.com">Pran</SelectItem>
-                                      <SelectItem value="m22@example.com">Squre</SelectItem>
-                                      <SelectItem value="m3@example.com">ACI</SelectItem>
-                                      <SelectItem value="m4@example.com">SoftRavine</SelectItem>
-                                      <SelectItem value="m5@example.com">Samsung</SelectItem>
-                                      <SelectItem value="m6@example.com">LG</SelectItem>
-                                      <SelectItem value="m7@example.com">Logitech</SelectItem>
-                                      <SelectItem value="m8@example.com">A4tech</SelectItem>
-                                      <SelectItem value="m9@example.com">HP</SelectItem>
+                                      {countries.map((country) => (
+                                        <SelectItem key={country.id} value={country.name}>
+                                          {country.name}
+                                        </SelectItem>
+                                      ))}
                                     </SelectContent>
                                   </Select>
                                 </FormControl>
@@ -328,19 +347,19 @@ export default function Addnew() {
                         render={({ field }) => (
                           <FormItem>
                             <div className="grid grid-cols-1 md:grid-cols-12">
-                                <div className="col-span-3 mt-2">
-                                  <FormLabel>Image</FormLabel>
-                                </div>
-                                <div className="col-span-8">
-                                  <FormControl>
-                                    <Input type="file"
-                                      className={inputClass}
-                                      placeholder="Image"
-                                      {...field}
-                                    />
-                                  </FormControl>
-                                </div>
+                              <div className="col-span-3 mt-2">
+                                <FormLabel>Image</FormLabel>
                               </div>
+                              <div className="col-span-8">
+                                <FormControl>
+                                  <Input type="file"
+                                    className={inputClass}
+                                    placeholder="Image"
+                                    {...field}
+                                  />
+                                </FormControl>
+                              </div>
+                            </div>
                             <FormMessage />
                           </FormItem>
                         )}

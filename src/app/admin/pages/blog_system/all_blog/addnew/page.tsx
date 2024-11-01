@@ -1,5 +1,6 @@
 "use client";
-
+import * as React from "react"
+import { useState, useEffect } from 'react';
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
@@ -65,6 +66,29 @@ export default function Addnew() {
     console.log(values);
   }
 
+  const [categories, setcategories] = useState<{ id: string; name: string }[]>([]) // Adjust the type according to your data structure
+  // Fetch data from an API
+  useEffect(() => {
+    const fetchcategories = async () => {
+      const apiUrl = process.env.NEXT_PUBLIC_API_URL || ''
+      try {
+        const response = await fetch(`${apiUrl}/server/api/routes/admin/blogs/select/categories`) // Replace with your API endpoint
+        const data = await response.json()
+
+        // Check if the response has the 'roles' property and it's an array
+        if (data && Array.isArray(data)) {
+          setcategories(data)
+        } else {
+          console.error('Unexpected data format:', data)
+        }
+      } catch (error) {
+        console.error('Error fetching Brand:', error)
+      }
+    }
+
+    fetchcategories()
+  }, [])
+
   const inputClass = "bg-zinc-50 border border-slate-300 text-slate-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-slate-900 dark:border-slate-800 dark:placeholder-slate-700 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500";
 
   return (
@@ -128,9 +152,11 @@ export default function Addnew() {
                                       </SelectTrigger>
                                     </FormControl>
                                     <SelectContent>
-                                      <SelectItem value="1">Apple</SelectItem>
-                                      <SelectItem value="2">Pran</SelectItem>
-                                      <SelectItem value="3">Squre</SelectItem>
+                                      {categories.map((category) => (
+                                        <SelectItem key={category.id} value={category.category_name}>
+                                          {category.category_name}
+                                        </SelectItem>
+                                      ))}
                                     </SelectContent>
                                   </Select>
                                 </FormControl>

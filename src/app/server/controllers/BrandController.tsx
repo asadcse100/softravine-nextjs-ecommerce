@@ -3,6 +3,22 @@ import { PrismaClient } from '@prisma/client';
 
 const prisma = new PrismaClient();
 
+
+export const selectBrands = async () => {
+  try{
+      const brands = await prisma.brands.findMany({
+        select: {
+            name: true,
+        },
+    });
+    return { success: true, data: brands };
+
+  }catch(error){
+      console.error("Error fetching brands:", error);
+      return { success: false, error };
+  }
+}
+
 export const getAllBrands = async (search: string | null) => {
   const where = search ? { name: { contains: search, mode: 'insensitive' } } : {};
 

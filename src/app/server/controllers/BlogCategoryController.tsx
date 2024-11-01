@@ -1,56 +1,68 @@
-// controllers/blogCategoryController.ts
 import { PrismaClient } from '@prisma/client';
-
 const prisma = new PrismaClient();
-
-// export async function getBlogCategories(search: string | null = null) {
-//   if (search) {
-//     return prisma.blog_categories.findMany({
-//       where: { category_name: { contains: search, mode: 'insensitive' } },
-//       orderBy: { category_name: 'asc' },
-//     });
-//   } else {
-//     return prisma.blog_categories.findMany({
-//       orderBy: { category_name: 'asc' },
-//     });
-//   }
-// }
 
 export const getBlogCategories = async () => {
   try {
-    const blog_categories = await prisma.blog_categories.findMany();    
-    return { success: true, data: blog_categories };
+    const blogCategories = await prisma.blog_categories.findMany();
+    return { success: true, data: blogCategories };
   } catch (error) {
-    console.error("Error fetching blog_categories:", error);
+    console.error("Error fetching blog categories:", error);
     return { success: false, error };
   }
-}
+};
 
-export async function createBlogCategory(categoryName: string) {
-  const slug = categoryName.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '');
+export const createBlogCategory = async (category_name: string) => {
+  try {
+    // Generate a slug by converting the category name to lowercase and formatting it
+    const slug = category_name
+      .toLowerCase()
+      .replace(/[^a-z0-9]+/g, '-')
+      .replace(/(^-|-$)/g, '');
 
-  return prisma.blogCategory.create({
-    data: {
-      categoryName,
-      slug,
-    },
-  });
-}
+    // Use the current date as-is if `created_at` is a Date type in Prisma
+    const created_at = new Date();
 
-export async function updateBlogCategory(id: number, categoryName: string) {
-    const slug = categoryName.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '');
-  
-    return prisma.blogCategory.update({
+    // Create a new category in the database
+    const newCategory = await prisma.blog_categories.create({
+      data: {
+        category_name,
+        slug,
+        created_at,
+      },
+    });
+
+    return { success: true, data: newCategory };
+  } catch (error) {
+    console.error("Error creating new category:", error);
+    return { success: false, error };
+  }
+};
+
+export const updateBlogCategory = async (id: number, category_name: string) => {
+  try {
+    const slug = category_name.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '');
+    const updatedCategory = await prisma.blog_categories.update({
       where: { id },
       data: {
-        categoryName,
+        category_name,
         slug,
       },
     });
+    return { success: true, data: updatedCategory };
+  } catch (error) {
+    console.error("Error updating category:", error);
+    return { success: false, error };
   }
+};
 
-  export async function deleteBlogCategory(id: number) {
-    return prisma.blogCategory.delete({
+export const deleteBlogCategory = async (id: number) => {
+  try {
+    const deletedCategory = await prisma.blog_categories.delete({
       where: { id },
     });
+    return { success: true, data: deletedCategory };
+  } catch (error) {
+    console.error("Error deleting category:", error);
+    return { success: false, error };
   }
+};

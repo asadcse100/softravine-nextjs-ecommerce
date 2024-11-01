@@ -74,7 +74,7 @@ export default function Addnew() {
     const fetchRoles = async () => {
       const apiUrl = process.env.NEXT_PUBLIC_API_URL || ''
       try {
-        const response = await fetch(`${apiUrl}/server/api/routes/admin/roles`) // Replace with your API endpoint
+        const response = await fetch(`${apiUrl}/server/api/routes/admin/staffs/roles`) // Replace with your API endpoint
         const data = await response.json()
 
         // Check if the response has the 'roles' property and it's an array

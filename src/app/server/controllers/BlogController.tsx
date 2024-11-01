@@ -1,7 +1,21 @@
 
 import { PrismaClient } from '@prisma/client';
-
 const prisma = new PrismaClient();
+
+
+export const selectCategories = async () => {
+  try{
+      const blog_categories = await prisma.blog_categories.findMany({
+        select: {
+          category_name: true,
+        },
+    });
+    return { success: true, data: blog_categories };
+
+  }catch(error){
+      return { success: false, error };
+  }
+}
 
 export async function getBlogs(search: string | null = null) {
   const where = search

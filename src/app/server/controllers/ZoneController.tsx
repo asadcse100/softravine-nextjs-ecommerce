@@ -4,6 +4,19 @@ import { NextApiRequest, NextApiResponse } from 'next';
 
 const prisma = new PrismaClient();
 
+export const selectCountries = async () => {
+    try{
+      const countries = await prisma.countries.findMany({
+        select: {
+          name: true,
+        },
+      });
+        return { success: true, data: countries };
+    }catch(error){
+        console.error("Error fetching product:", error);
+        return { success: false, error };
+    }
+  }
 
 export const getZones = async () => {
     try{

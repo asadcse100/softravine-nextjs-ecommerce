@@ -1,9 +1,23 @@
-import { NextApiRequest, NextApiResponse } from 'next';
 import { createInvoicePDF } from '../../utils/pdf';
 import { parseExcelFile } from '../../utils/excel';
 import { PrismaClient } from '@prisma/client';
 
 const prisma = new PrismaClient();
+
+export const selectCategories = async () => {
+  try{
+      const categories = await prisma.categories.findMany({
+        select: {
+          name: true,
+        },
+      });
+      return { success: true, data: categories };
+
+  }catch(error){
+      console.error("Error fetching customer:", error);
+      return { success: false, error };
+  }
+}
 
 export default async function ProductBulkUploadController(
   req: NextApiRequest,

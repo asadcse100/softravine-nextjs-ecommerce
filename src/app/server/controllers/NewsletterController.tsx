@@ -10,6 +10,20 @@ interface EmailData {
     content: string;
 }
 
+export const selectEmail = async () => {
+    try {
+        const emails = await prisma.users.findMany({
+            select: {
+                email: true,
+            },
+        });
+        return { success: true, data: emails };
+    } catch (error) {
+        console.error("Error fetching product:", error);
+        return { success: false, error };
+    }
+}
+
 export async function sendEmail(emailData: EmailData) {
     const transporter = nodemailer.createTransport({
         host: process.env.SMTP_HOST,

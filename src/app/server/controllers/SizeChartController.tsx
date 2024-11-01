@@ -3,6 +3,21 @@ import { PrismaClient } from '@prisma/client';
 
 const prisma = new PrismaClient();
 
+export const selectFitType = async () => {
+  try {
+    const categories = await prisma.categories.findMany({
+      select: {
+        name: true,
+      },
+    });
+    return { success: true, data: categories };
+
+  } catch (error) {
+    console.error("Error fetching categorys:", error);
+    return { success: false, error };
+  }
+}
+
 export const getSizeCharts = async () => {
   try {
     const size_chart = await prisma.size_charts.findMany();

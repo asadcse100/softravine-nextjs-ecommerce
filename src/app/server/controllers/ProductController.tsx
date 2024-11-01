@@ -8,6 +8,20 @@ import { getSession } from 'next-auth/react';
 
 const prisma = new PrismaClient();
 
+export const selectProducts = async () => {
+  try{
+    const products = await prisma.products.findMany({
+      select: {
+        name: true,
+      },
+    });
+      return { success: true, data: products };
+  }catch(error){
+      console.error("Error fetching product:", error);
+      return { success: false, error };
+  }
+}
+
 export const getSellerProducts = async () => {
   try {
     const products = await prisma.products.findMany();

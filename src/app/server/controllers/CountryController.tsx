@@ -3,6 +3,21 @@ import { PrismaClient } from '@prisma/client';
 
 const prisma = new PrismaClient();
 
+export const selectCountries = async () => {
+  try{
+      const countries = await prisma.countries.findMany({
+        select: {
+          name: true,
+        },
+      });
+      return { success: true, data: countries };
+
+  }catch(error){
+      console.error("Error fetching customer:", error);
+      return { success: false, error };
+  }
+}
+
 // export const index = async (req: NextApiRequest, res: NextApiResponse) => {
 //   export const index = async () => {
 //   const { sort_country } = req.query;

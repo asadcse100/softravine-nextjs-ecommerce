@@ -4,21 +4,6 @@ import { DataTable } from "./data-table"
 import Link from "next/link"
 import { Button } from "@/app/seller/components/ui/button"
 
-// async function getData(): Promise<Products[]> {
-//   // Fetch data from your API here.
-//   return [
-//     {
-//       id: "728ed52f",
-//       name: "Apple",
-//       current_qty: 30,
-//       price: 40,
-//       approval: "Approved",
-//       published: "yes",
-//       featured: "yes",
-//     },
-//   ]
-// }
-
 async function getData(): Promise<Products[]> {
   const apiUrl = process.env.NEXT_PUBLIC_API_URL || '';
   try {

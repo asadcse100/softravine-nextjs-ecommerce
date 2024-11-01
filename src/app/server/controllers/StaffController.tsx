@@ -23,6 +23,22 @@ const prisma = new PrismaClient();
 //   }
 // }
 
+
+export const roles = async () => {
+  try{
+      const roles = await prisma.roles.findMany({
+        select: {
+          name: true,
+        },
+      });
+      return { success: true, data: roles };
+
+  }catch(error){
+      console.error("Error fetching roles:", error);
+      return { success: false, error };
+  }
+}
+
 export const getStaffs = async () => {
   try {
     const staffs = await prisma.users.findMany();
