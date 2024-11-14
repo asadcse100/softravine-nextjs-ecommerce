@@ -35,7 +35,7 @@ export const getAllBrands = async (search: string | null) => {
 }
 
 export async function createBrand(name: string, metaTitle: string, metaDescription: string, slug: string | null, logo: string | null) {
-  const brand = await prisma.brand.create({
+  const brand = await prisma.brands.create({
     data: {
       name,
       slug: slug || `${name.replace(/\s+/g, '-').replace(/[^A-Za-z0-9\-]/g, '')}-${Math.random().toString(36).substring(7)}`,
@@ -45,7 +45,7 @@ export async function createBrand(name: string, metaTitle: string, metaDescripti
     },
   });
 
-  await prisma.brandTranslation.create({
+  await prisma.brand_translations.create({
     data: {
       lang: process.env.DEFAULT_LANGUAGE || 'en',
       name,
@@ -57,7 +57,7 @@ export async function createBrand(name: string, metaTitle: string, metaDescripti
 }
 
 export async function updateBrand(id: number, name: string, metaTitle: string, metaDescription: string, slug: string | null, logo: string | null, lang: string) {
-  const brand = await prisma.brand.update({
+  const brand = await prisma.brands.update({
     where: { id },
     data: {
       name,
@@ -80,11 +80,11 @@ export async function updateBrand(id: number, name: string, metaTitle: string, m
 
 export async function deleteBrand(id: number) {
   // Delete products associated with the brand
-  await prisma.product.deleteMany({ where: { brandId: id } });
+  await prisma.products.deleteMany({ where: { brand_id: id } });
 
   // Delete brand translations
-  await prisma.brandTranslation.deleteMany({ where: { brandId: id } });
+  await prisma.brand_translations.deleteMany({ where: { brand_id: id } });
 
   // Delete the brand
-  await prisma.brand.delete({ where: { id } });
+  await prisma.brands.delete({ where: { id } });
 }

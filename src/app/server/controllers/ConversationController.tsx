@@ -69,8 +69,8 @@ export const store = async (req: NextApiRequest, res: NextApiResponse) => {
 };
 
 const sendMessageToSeller = async (conversation: Conversation, message: Message, userType: string) => {
-    const sender = await prisma.user.findUnique({ where: { id: conversation.senderId } });
-    const receiver = await prisma.user.findUnique({ where: { id: conversation.receiverId } });
+    const sender = await prisma.users.findUnique({ where: { id: conversation.senderId } });
+    const receiver = await prisma.users.findUnique({ where: { id: conversation.receiverId } });
   
     if (!sender || !receiver) {
       throw new Error('Sender or Receiver not found');
@@ -116,12 +116,12 @@ const sendMessageToSeller = async (conversation: Conversation, message: Message,
       const conversationId = parseInt(id as string, 10);
   
       // Find and delete all messages related to the conversation
-      await prisma.message.deleteMany({
-        where: { conversationId },
+      await prisma.messages.deleteMany({
+        where: { conversation_id },
       });
   
       // Delete the conversation
-      const deletedConversation = await prisma.conversation.delete({
+      const deletedConversation = await prisma.conversations.delete({
         where: { id: conversationId },
       });
   

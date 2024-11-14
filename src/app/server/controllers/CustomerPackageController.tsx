@@ -30,7 +30,7 @@ export const createCustomerPackage = async (req: NextApiRequest, res: NextApiRes
       const { name, amount, product_upload, logo } = req.body;
   
       // Create the customer package
-      const customerPackage = await prisma.customerPackage.create({
+      const customerPackage = await prisma.customer_packages.create({
         data: {
           name,
           amount,
@@ -58,7 +58,7 @@ export const createCustomerPackage = async (req: NextApiRequest, res: NextApiRes
       const { name, amount, product_upload, logo, lang } = req.body;
   
       // Find the customer package by ID
-      const customerPackage = await prisma.customerPackage.findUnique({
+      const customerPackage = await prisma.customer_packages.findUnique({
         where: {
           id: Number(id),
         },
@@ -77,7 +77,7 @@ export const createCustomerPackage = async (req: NextApiRequest, res: NextApiRes
       customerPackage.logo = logo;
   
       // Save the changes
-      await prisma.customerPackage.update({
+      await prisma.customer_packages.update({
         where: {
           id: Number(id),
         },
@@ -119,14 +119,14 @@ export const createCustomerPackage = async (req: NextApiRequest, res: NextApiRes
       const { id } = req.query;
   
       // Delete customer package translations
-      await prisma.customerPackageTranslation.deleteMany({
+      await prisma.customer_package_translations.deleteMany({
         where: {
-          customerPackageId: Number(id),
+          customer_package_id: Number(id),
         },
       });
   
       // Delete customer package
-      await prisma.customerPackage.delete({
+      await prisma.customer_packages.delete({
         where: {
           id: Number(id),
         },
@@ -153,7 +153,7 @@ export const createCustomerPackage = async (req: NextApiRequest, res: NextApiRes
       req.session.payment_data = paymentData;
   
       // Retrieve customer package details
-      const customerPackage = await prisma.customerPackage.findUnique({
+      const customerPackage = await prisma.customer_packages.findUnique({
         where: {
           id: customer_package_id,
         },
@@ -161,12 +161,12 @@ export const createCustomerPackage = async (req: NextApiRequest, res: NextApiRes
   
       // Handle free package
       if (customerPackage.amount === 0) {
-        const user = await prisma.user.findUnique({
+        const user = await prisma.users.findUnique({
           where: {
-            id: req.user.id,
+            id: req.users.id,
           },
         });
-        if (user.customer_package_id !== customerPackage.id) {
+        if (users.customer_package_id !== customerPackage.id) {
           return purchasePaymentDone(req, res, null);
         } else {
           return res.status(400).json({ error: 'You cannot purchase this package anymore' });
@@ -189,14 +189,14 @@ export const createCustomerPackage = async (req: NextApiRequest, res: NextApiRes
   export const purchasePaymentDone = async (req: NextApiRequest, res: NextApiResponse) => {
     try {
       const paymentData = req.session.payment_data;
-      const user = await prisma.user.findUnique({
+      const user = await prisma.users.findUnique({
         where: {
-          id: req.user.id,
+          id: req.users.id,
         },
       });
   
       // Update user's customer package and remaining uploads
-      await prisma.user.update({
+      await prisma.users.update({
         where: {
           id: user.id,
         },
@@ -220,14 +220,14 @@ export const createCustomerPackage = async (req: NextApiRequest, res: NextApiRes
       const { package_id, payment_option, trx_id, photo } = req.body;
   
       // Create a new customer package payment entry
-      await prisma.customerPackagePayment.create({
+      await prisma.customer_package_payments.create({
         data: {
-          user: {
+          users: {
             connect: {
-              id: req.user.id,
+              id: req.users.id,
             },
           },
-          customer_package: {
+          customer_packages: {
             connect: {
               id: package_id,
             },
@@ -235,7 +235,7 @@ export const createCustomerPackage = async (req: NextApiRequest, res: NextApiRes
           payment_method: payment_option,
           payment_details: trx_id,
           approval: 0,
-          offline_payment: true,
+          offline_payments: true,
           reciept: photo || '',
         },
       });

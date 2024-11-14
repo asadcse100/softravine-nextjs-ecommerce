@@ -2,7 +2,8 @@
 import * as React from "react"
 import { useState, useEffect } from 'react';
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useForm } from "react-hook-form";
+import { useForm, SubmitHandler } from "react-hook-form";
+import { toast } from "react-hot-toast";
 import { z } from "zod";
 import Breadcrumb from "@/app/admin/components/Breadcrumbs/Breadcrumb"
 import { Button } from "@/app/admin/components/ui/button";
@@ -33,7 +34,7 @@ const formSchema = z.object({
   slug: z.string(),
   banner: z.number(),
   short_description: z.string().min(5, {
-    message: "Product Short description must be at least 10 characters.",
+    message: "Product Short description must be at least 5 characters.",
   }),
   description: z.string().min(100, {
     message: "Product description must be at least 100 characters.",
@@ -60,11 +61,32 @@ export default function Addnew() {
   });
 
   // 2. Define a submit handler.
-  function onSubmit(values: z.infer<typeof formSchema>) {
-    // Do something with the form values.
-    // ✅ This will be type-safe and validated.
-    console.log(values);
-  }
+  const onSubmit: SubmitHandler<FormData> = async (values) => {
+    const apiUrl = process.env.NEXT_PUBLIC_API_URL || '';
+
+    try {
+      const response = await fetch(`${apiUrl}/server/api/routes/admin/blogs/blogCategories`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(values),
+      });
+
+      if (!response.ok) {
+        throw new Error('Failed to add category. Please try again.');
+      }
+
+      const result = await response.json();
+      toast.success(result.message || "Category added successfully!");
+
+      if (isMounted) {
+        router.push("/admin/pages/blog_system/category");
+      }
+    } catch (error) {
+      toast.error("Error adding category: " + (error as Error).message);
+    }
+  };
 
   const [categories, setcategories] = useState<{ id: string; name: string }[]>([]) // Adjust the type according to your data structure
   // Fetch data from an API

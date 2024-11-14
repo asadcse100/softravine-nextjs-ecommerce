@@ -7,7 +7,7 @@ export const getPolicyByName = async (req: NextApiRequest, res: NextApiResponse)
     const { type } = req.query;
 
     try {
-        const policy = await prisma.policy.findFirst({
+        const policy = await prisma.policys.findFirst({
             where: { name: String(type) },
         });
 
@@ -25,7 +25,7 @@ export const upsertPolicy = async (req: NextApiRequest, res: NextApiResponse) =>
     const { name, content } = req.body;
 
     try {
-        const policy = await prisma.policy.upsert({
+        const policy = await prisma.policys.upsert({
             where: { name },
             update: { content },
             create: { name, content },

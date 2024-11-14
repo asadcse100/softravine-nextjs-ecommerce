@@ -11,9 +11,9 @@ export const getData = async (req: NextApiRequest, res: NextApiResponse) => {
       const lang = getSystemLanguage() ? getSystemLanguage().code : null;
 
       // Fetch featured categories from Prisma
-      const featuredCategories = await prisma.category.findMany({
+      const featuredCategories = await prisma.categories.findMany({
         where: {
-          featured: true,
+          featureds: true,
         },
         include: {
           bannerImage: true, // Assuming you have a relation set up in Prisma schema
@@ -37,7 +37,7 @@ const getSystemLanguage = () => {
 export const loadTodaysDealSection = async (req: NextApiRequest, res: NextApiResponse) => {
     try {
       // Fetch today's deal products from Prisma
-      const todaysDealProducts = await prisma.product.findMany({
+      const todaysDealProducts = await prisma.products.findMany({
         where: {
           todaysDeal: true,
         },
@@ -53,7 +53,7 @@ export const loadTodaysDealSection = async (req: NextApiRequest, res: NextApiRes
   export const loadNewestProductSection = async (req: NextApiRequest, res: NextApiResponse) => {
     try {
       // Fetch newest products from Prisma
-      const newestProducts = await prisma.product.findMany({
+      const newestProducts = await prisma.products.findMany({
         orderBy: {
           createdAt: 'desc',
         },
@@ -76,7 +76,7 @@ export const loadTodaysDealSection = async (req: NextApiRequest, res: NextApiRes
         return res.status(401).json({ message: 'Unauthorized' });
       }
   
-      const user = await prisma.user.findUnique({
+      const user = await prisma.users.findUnique({
         where: {
           email: session.user?.email ?? undefined,
         },

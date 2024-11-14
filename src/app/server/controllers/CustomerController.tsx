@@ -82,10 +82,10 @@ export const createUserAndCustomer = async (req: NextApiRequest, res: NextApiRes
     }
 
     // Check if the email and phone are unique
-    const existingUserWithEmail = await prisma.user.findFirst({
+    const existingUserWithEmail = await prisma.users.findFirst({
       where: { email },
     });
-    const existingUserWithPhone = await prisma.user.findFirst({
+    const existingUserWithPhone = await prisma.users.findFirst({
       where: { phone },
     });
 
@@ -94,7 +94,7 @@ export const createUserAndCustomer = async (req: NextApiRequest, res: NextApiRes
     }
 
     // Create the user
-    const user = await prisma.user.create({
+    const user = await prisma.users.create({
       data: {
         name,
         email,
@@ -103,7 +103,7 @@ export const createUserAndCustomer = async (req: NextApiRequest, res: NextApiRes
     });
 
     // Create the associated customer
-    await prisma.customer.create({
+    await prisma.users.create({
       data: {
         user_id: user.id,
       },
@@ -112,9 +112,9 @@ export const createUserAndCustomer = async (req: NextApiRequest, res: NextApiRes
     // Build HTML response
     let html = '';
     html += '<option value="">'.concat('Walk In Customer', '</option>');
-    const customers = await prisma.customer.findMany();
+    const customers = await prisma.users.findMany();
     customers.forEach((customer) => {
-      if (customer.user) {
+      if (customer.user_id) {
         html += '<option value="'.concat(customer.user.id, '" data-contact="').concat(customer.user.email, '">').concat(customer.user.name, '</option>');
       }
     });
@@ -132,14 +132,14 @@ export const deleteCustomer = async (req: NextApiRequest, res: NextApiResponse) 
     const { id } = req.query;
 
     // Delete associated customer products
-    await prisma.customerProduct.deleteMany({
+    await prisma.customer_products.deleteMany({
       where: {
-        customerId: Number(id),
+        customer_id: Number(id),
       },
     });
 
     // Delete the customer
-    await prisma.user.delete({
+    await prisma.users.delete({
       where: {
         id: Number(id),
       },
@@ -158,14 +158,14 @@ export const bulkDeleteCustomers = async (req: NextApiRequest, res: NextApiRespo
 
     for (const id of ids) {
       // Delete associated customer products
-      await prisma.customerProduct.deleteMany({
+      await prisma.customer_products.deleteMany({
         where: {
-          customerId: Number(id),
+          customer_id: Number(id),
         },
       });
 
       // Delete the customer
-      await prisma.user.delete({
+      await prisma.users.delete({
         where: {
           id: Number(id),
         },
@@ -184,7 +184,7 @@ export const loginUserById = async (req: NextApiRequest, res: NextApiResponse) =
     const { id } = req.query;
 
     // Find the user by their ID
-    const user = await prisma.user.findUnique({
+    const user = await prisma.users.findUnique({
       where: {
         id: Number(id),
       },
@@ -195,7 +195,7 @@ export const loginUserById = async (req: NextApiRequest, res: NextApiResponse) =
     }
 
     // Log in the user
-    req.session.user = user;
+    req.sessions.user = user;
 
     res.status(200).json({ success: 'User logged in successfully' });
   } catch (error) {
@@ -209,7 +209,7 @@ export const toggleUserBanStatus = async (req: NextApiRequest, res: NextApiRespo
     const { id } = req.query;
 
     // Find the user by their ID
-    const user = await prisma.user.findUnique({
+    const user = await prisma.users.findUnique({
       where: {
         id: Number(id),
       },
@@ -222,7 +222,7 @@ export const toggleUserBanStatus = async (req: NextApiRequest, res: NextApiRespo
     // Toggle the user's banned status
     user.banned = !user.banned;
 
-    await prisma.user.update({
+    await prisma.users.update({
       where: {
         id: Number(id),
       },

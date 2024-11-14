@@ -54,7 +54,7 @@ export const getFlashDeals = async () => {
     
     const slug = `${slugify(title)}-${randomString(5)}`;
   
-    const flashDeal = await prisma.flashDeal.create({
+    const flashDeal = await prisma.flash_deals.create({
       data: {
         title,
         textColor: text_color,
@@ -67,7 +67,7 @@ export const getFlashDeals = async () => {
     });
   
     for (const productId of products) {
-      await prisma.flashDealProduct.create({
+      await prisma.flash_deal_products.create({
         data: {
           flashDealId: flashDeal.id,
           productId: productId,
@@ -77,7 +77,7 @@ export const getFlashDeals = async () => {
       const discountKey = `discount_${productId}`;
       const discountTypeKey = `discount_type_${productId}`;
   
-      await prisma.product.update({
+      await prisma.products.update({
         where: { id: productId },
         data: {
           discount: parseFloat(req[discountKey]),
@@ -111,14 +111,14 @@ export const getFlashDeals = async () => {
   export const updateFlashDeal = async (req: FlashDealRequest) => {
     const { id, title, text_color, date_range, background_color, banner, products, lang } = req;
   
-    const flashDeal = await prisma.flashDeal.findUnique({ where: { id } });
+    const flashDeal = await prisma.flash_deals.findUnique({ where: { id } });
     if (!flashDeal) throw new Error('Flash Deal not found');
   
     const dateVar = date_range.split(" to ");
     const startDate = Math.floor(new Date(dateVar[0]).getTime() / 1000);
     const endDate = Math.floor(new Date(dateVar[1]).getTime() / 1000);
   
-    const updatedFlashDeal = await prisma.flashDeal.update({
+    const updatedFlashDeal = await prisma.flash_deals.update({
       where: { id },
       data: {
         textColor: text_color,
@@ -133,20 +133,20 @@ export const getFlashDeals = async () => {
       },
     });
   
-    await prisma.flashDealProduct.deleteMany({ where: { flashDealId: id } });
+    await prisma.flash_deal_products.deleteMany({ where: { flash_deal_id: id } });
   
     for (const productId of products) {
-      await prisma.flashDealProduct.create({
+      await prisma.flash_deal_products.create({
         data: {
-          flashDealId: id,
-          productId,
+          flash_deal_id: id,
+          product_id,
         },
       });
   
       const discountKey = `discount_${productId}`;
       const discountTypeKey = `discount_type_${productId}`;
   
-      await prisma.product.update({
+      await prisma.products.update({
         where: { id: productId },
         data: {
           discount: parseFloat(req[discountKey]),
@@ -157,9 +157,9 @@ export const getFlashDeals = async () => {
       });
     }
   
-    await prisma.flashDealTranslation.upsert({
+    await prisma.flash_deal_translations.upsert({
       where: {
-        lang_flashDealId: {
+        lang_flash_deal_id: {
           lang,
           flashDealId: id,
         },
@@ -170,7 +170,7 @@ export const getFlashDeals = async () => {
       create: {
         lang,
         title,
-        flashDealId: id,
+        flash_deal_id: id,
       },
     });
   
@@ -179,21 +179,21 @@ export const getFlashDeals = async () => {
 
 
   export const deleteFlashDeal = async (id: number) => {
-    const flashDeal = await prisma.flashDeal.findUnique({ where: { id } });
+    const flashDeal = await prisma.flash_deals.findUnique({ where: { id } });
     if (!flashDeal) throw new Error('Flash Deal not found');
   
-    await prisma.flashDealProduct.deleteMany({ where: { flashDealId: id } });
-    await prisma.flashDealTranslation.deleteMany({ where: { flashDealId: id } });
-    await prisma.flashDeal.delete({ where: { id } });
+    await prisma.flash_deal_products.deleteMany({ where: { flash_deal_id: id } });
+    await prisma.flash_deal_translations.deleteMany({ where: { flash_deal_id: id } });
+    await prisma.flash_deals.delete({ where: { id } });
   
     return 'Flash Deal has been deleted successfully';
   };
 
   export const updateFlashDealStatus = async (id: number, status: number) => {
-    const flashDeal = await prisma.flashDeal.findUnique({ where: { id } });
+    const flashDeal = await prisma.flash_deals.findUnique({ where: { id } });
     if (!flashDeal) throw new Error('Flash Deal not found');
   
-    const updatedFlashDeal = await prisma.flashDeal.update({
+    const updatedFlashDeal = await prisma.flash_deals.update({
       where: { id },
       data: { status },
     });
@@ -202,12 +202,12 @@ export const getFlashDeals = async () => {
   };
 
   export const updateFlashDealFeatured = async (id: number, featured: number) => {
-    await prisma.flashDeal.updateMany({
+    await prisma.flash_deals.updateMany({
       where: { featured: 1 },
       data: { featured: 0 },
     });
   
-    const updatedFlashDeal = await prisma.flashDeal.update({
+    const updatedFlashDeal = await prisma.flash_deals.update({
       where: { id },
       data: { featured },
     });

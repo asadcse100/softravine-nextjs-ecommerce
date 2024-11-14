@@ -104,11 +104,11 @@ export const getCustomerProducts = async () => {
       } = req.body;
   
       // Save customer product
-      const customerProduct = await prisma.customerProduct.create({
+      const customerProduct = await prisma.customer_products.create({
         data: {
           name,
           added_by,
-          user_id: req.user.id,
+          user_id: req.users.id,
           category_id,
           brand_id,
           condition,
@@ -130,9 +130,9 @@ export const getCustomerProducts = async () => {
       });
   
       // Update user's remaining uploads
-      await prisma.user.update({
+      await prisma.users.update({
         where: {
-          id: req.user.id,
+          id: req.users.id,
         },
         data: {
           remaining_uploads: {

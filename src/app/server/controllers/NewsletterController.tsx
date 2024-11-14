@@ -46,8 +46,8 @@ export async function sendEmail(emailData: EmailData) {
 }
 
 export async function getUsersAndSubscribers() {
-    const users = await prisma.user.findMany();
-    const subscribers = await prisma.subscriber.findMany();
+    const users = await prisma.users.findMany();
+    const subscribers = await prisma.subscribers.findMany();
     return { users, subscribers };
 }
 

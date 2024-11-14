@@ -47,13 +47,13 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 
                 // Check version compatibility
                 if (config.minimum_item_version <= 1.0) { // Assuming the current version is 1.0
-                    const existingPlugin = await prisma.plugin.findFirst({
+                    const existingPlugin = await prisma.plugins.findFirst({
                         where: { unique_identifier: config.unique_identifier },
                     });
 
                     if (!existingPlugin) {
                         // Plugin installation
-                        await prisma.plugin.create({
+                        await prisma.plugins.create({
                             data: {
                                 name: config.name,
                                 unique_identifier: config.unique_identifier,
@@ -69,7 +69,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
                         res.status(200).json({ message: 'Plugin installed successfully' });
                     } else {
                         // Plugin update
-                        await prisma.plugin.update({
+                        await prisma.plugins.update({
                             where: { id: existingPlugin.id },
                             data: {
                                 version: config.version,

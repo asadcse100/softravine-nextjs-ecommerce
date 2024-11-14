@@ -41,27 +41,27 @@ export const placeBid = async (req: NextApiRequest, res: NextApiResponse) => {
     return res.status(401).json({ error: 'Unauthorized' });
   }
 
-  const userId = session.user.id;
+  const user_id = session.users.id;
   const { product_id, amount } = req.body;
 
   try {
-    let bid = await prisma.auctionProductBid.findFirst({
+    let bid = await prisma.auction_product_bids.findFirst({
       where: {
-        productId: product_id,
-        userId: userId
+        product_id: product_id,
+        user_id: user_id
       }
     });
 
     if (!bid) {
-      bid = await prisma.auctionProductBid.create({
+      bid = await prisma.auction_product_bids.create({
         data: {
-          userId: userId,
-          productId: product_id,
+          user_id: user_id,
+          product_id: product_id,
           amount: amount
         }
       });
     } else {
-      bid = await prisma.auctionProductBid.update({
+      bid = await prisma.auction_product_bids.update({
         where: {
           id: bid.id
         },
@@ -82,12 +82,12 @@ export const showProductWithBids = async (req: NextApiRequest, res: NextApiRespo
   const { id } = req.query;
 
   try {
-    const product = await prisma.product.findUnique({
+    const product = await prisma.products.findUnique({
       where: { id: parseInt(id as string) },
       include: {
-        auctionProductBids: {
+        auction_product_bids: {
           orderBy: {
-            createdAt: 'desc'
+            created_at: 'desc'
           }
         }
       }
@@ -97,7 +97,7 @@ export const showProductWithBids = async (req: NextApiRequest, res: NextApiRespo
       return res.status(404).json({ error: 'Product not found' });
     }
 
-    res.status(200).json({ product, bids: product.auctionProductBids });
+    res.status(200).json({ product, bids: product.auction_product_bids });
   } catch (error) {
     res.status(500).json({ error: 'Internal server error' });
   }

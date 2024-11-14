@@ -1,7 +1,8 @@
 "use client";
 
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useForm } from "react-hook-form";
+import { useForm, SubmitHandler } from "react-hook-form";
+import { toast } from "react-hot-toast";
 import { z } from "zod";
 import Breadcrumb from "@/app/admin/components/Breadcrumbs/Breadcrumb"
 import { Button } from "@/app/admin/components/ui/button";
@@ -42,11 +43,33 @@ export default function Addnew() {
   });
 
   // 2. Define a submit handler.
-  function onSubmit(values: z.infer<typeof formSchema>) {
-    // Do something with the form values.
-    // ✅ This will be type-safe and validated.
-    console.log(values);
+ async function onSubmit(values: z.infer<typeof formSchema>) {
+    const apiUrl = process.env.NEXT_PUBLIC_API_URL || '';
+    
+    try {
+      const response = await fetch(`${apiUrl}/server/api/routes/admin/blogs/blogCategories`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(values),
+      });
+  
+      // Check if the response is successful
+      if (!response.ok) {
+        throw new Error('Failed to add category');
+      }
+  
+      const result = await response.json();
+      toast.success(result.message || "Category added successfully!");
+  
+      // Redirect to another page after success
+      window.location.href = `${apiUrl}/admin/pages/blog_system/category`;
+    } catch (error) {
+      toast.error("Error adding category: " + (error as Error).message);
+    }
   }
+
 
   const inputClass = "bg-zinc-50 border border-slate-300 text-slate-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-slate-900 dark:border-slate-800 dark:placeholder-slate-700 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500";
 

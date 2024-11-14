@@ -1,7 +1,8 @@
 "use client";
 
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useForm } from "react-hook-form";
+import { useForm, SubmitHandler } from "react-hook-form";
+import { toast } from "react-hot-toast";
 import { z } from "zod";
 import Breadcrumb from "@/app/admin/components/Breadcrumbs/Breadcrumb"
 import { Button } from "@/app/admin/components/ui/button";
@@ -18,8 +19,8 @@ import Input from "@/shared/Input/Input";
 import { Switch } from "@/app/admin/components/ui/switch";
 
 const formSchema = z.object({
-  permissions: z.string().min(10, {
-    message: "permissions must be at least 10 characters.",
+  permissions: z.string().min(2, {
+    message: "permissions must be at least 2 characters.",
   }),
 });
 

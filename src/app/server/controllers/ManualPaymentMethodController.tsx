@@ -39,7 +39,7 @@ export const storeManualPaymentMethod = async (req: NextApiRequest, res: NextApi
         bankInfo = JSON.stringify(banksInformations);
       }
   
-      const manualPaymentMethod = await prisma.manualPaymentMethod.create({
+      const manualPaymentMethod = await prisma.manual_payment_methods.create({
         data: {
           type,
           photo,
@@ -75,7 +75,7 @@ export const storeManualPaymentMethod = async (req: NextApiRequest, res: NextApi
         bankInfo = JSON.stringify(banksInformations);
       }
   
-      const manualPaymentMethod = await prisma.manualPaymentMethod.update({
+      const manualPaymentMethod = await prisma.manual_payment_methods.update({
         where: { id: Number(id) },
         data: {
           type,
@@ -97,7 +97,7 @@ export const storeManualPaymentMethod = async (req: NextApiRequest, res: NextApi
     const { id } = req.query;
   
     try {
-      const deletedManualPaymentMethod = await prisma.manualPaymentMethod.delete({
+      const deletedManualPaymentMethod = await prisma.manual_payment_methods.delete({
         where: { id: Number(id) },
       });
   
@@ -117,7 +117,7 @@ export const storeManualPaymentMethod = async (req: NextApiRequest, res: NextApi
     }
   
     try {
-      const order = await prisma.order.findUnique({ where: { id: Number(order_id) } });
+      const order = await prisma.orders.findUnique({ where: { id: Number(order_id) } });
   
       if (!order) {
         res.status(404).json({ error: 'Order not found' });
@@ -131,13 +131,13 @@ export const storeManualPaymentMethod = async (req: NextApiRequest, res: NextApi
         photo,
       };
   
-      const updatedOrder = await prisma.order.update({
+      const updatedOrder = await prisma.orders.update({
         where: { id: Number(order_id) },
         data: {
           manual_payment_data: JSON.stringify(manualPaymentData),
           payment_type: payment_option,
           payment_status: 'Submitted',
-          manual_payment: true,
+          manual_payments: true,
         },
       });
   

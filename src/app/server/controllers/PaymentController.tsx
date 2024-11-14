@@ -51,7 +51,7 @@ export async function showUserPayments(req: NextApiRequest, res: NextApiResponse
     const decryptedId = decrypt(id as string);
 
     // Find the user by decrypted ID
-    const user = await prisma.user.findUnique({
+    const user = await prisma.users.findUnique({
       where: { id: Number(decryptedId) },
     });
 
@@ -60,9 +60,9 @@ export async function showUserPayments(req: NextApiRequest, res: NextApiResponse
     }
 
     // Get the payment history for the user
-    const payments = await prisma.payment.findMany({
-      where: { sellerId: user.id },
-      orderBy: { createdAt: 'desc' },
+    const payments = await prisma.payments.findMany({
+      where: { seller_id: user.id },
+      orderBy: { created_at: 'desc' },
     });
 
     if (payments.length > 0) {

@@ -15,7 +15,7 @@ export default async function payToSeller(req: NextApiRequest, res: NextApiRespo
             return res.status(200).json({ success: true, message: 'Seller payment done' });
         } else {
             try {
-                const shop = await prisma.shop.findUnique({
+                const shop = await prisma.shops.findUnique({
                     where: { id: parseInt(data.shop_id) },
                 });
 
@@ -23,16 +23,16 @@ export default async function payToSeller(req: NextApiRequest, res: NextApiRespo
                     return res.status(404).json({ success: false, message: 'Shop not found' });
                 }
 
-                const updatedShop = await prisma.shop.update({
+                const updatedShop = await prisma.shops.update({
                     where: { id: parseInt(data.shop_id) },
                     data: { admin_to_pay: shop.admin_to_pay + parseFloat(data.amount) },
                 });
 
-                await prisma.payment.create({
+                await prisma.payments.create({
                     data: {
-                        sellerId: updatedShop.userId,
+                        seller_id: updatedShop.user_id,
                         amount: parseFloat(data.amount),
-                        paymentMethod: 'Seller paid to admin',
+                        payment_method: 'Seller paid to admin',
                         txnCode: data.txn_code ?? null,
                         paymentDetails: null,
                     },
@@ -50,7 +50,7 @@ export default async function payToSeller(req: NextApiRequest, res: NextApiRespo
 
 async function sellerPaymentDone(payment_data: any, payment_details: any) {
     try {
-        const shop = await prisma.shop.findUnique({
+        const shop = await prisma.shops.findUnique({
             where: { id: parseInt(payment_data.shop_id) },
         });
 
@@ -58,14 +58,14 @@ async function sellerPaymentDone(payment_data: any, payment_details: any) {
             throw new Error('Shop not found');
         }
 
-        await prisma.shop.update({
+        await prisma.shops.update({
             where: { id: parseInt(payment_data.shop_id) },
             data: { admin_to_pay: shop.admin_to_pay - parseFloat(payment_data.amount) },
         });
 
-        await prisma.payment.create({
+        await prisma.payments.create({
             data: {
-                sellerId: shop.userId,
+                seller_id: shop.user_id,
                 amount: parseFloat(payment_data.amount),
                 paymentMethod: payment_data.payment_method,
                 txnCode: payment_data.txn_code,
@@ -95,7 +95,7 @@ export async function calculateCommission(order: any) {
     if (order.payment_type === 'cash_on_delivery') {
         for (const orderDetail of order.orderDetails) {
             orderDetail.payment_status = 'paid';
-            await prisma.orderDetail.update({
+            await prisma.order_details.update({
                 where: { id: orderDetail.id },
                 data: { payment_status: 'paid' },
             });
@@ -110,8 +110,8 @@ export async function calculateCommission(order: any) {
             }
 
             if (orderDetail.product.user.user_type === 'seller') {
-                const seller = await prisma.shop.findUnique({
-                    where: { userId: orderDetail.product.user.id },
+                const seller = await prisma.shops.findUnique({
+                    where: { user_id: orderDetail.product.user.id },
                 });
 
                 const admin_commission = (orderDetail.price * commission_percentage) / 100;
@@ -125,7 +125,7 @@ export async function calculateCommission(order: any) {
                     seller.admin_to_pay -= admin_commission;
                 }
 
-                await prisma.shop.update({
+                await prisma.shops.update({
                     where: { id: seller.id },
                     data: { admin_to_pay: seller.admin_to_pay },
                 });
@@ -144,7 +144,7 @@ export async function calculateCommission(order: any) {
     } else {
         for (const orderDetail of order.orderDetails) {
             orderDetail.payment_status = 'paid';
-            await prisma.orderDetail.update({
+            await prisma.order_details.update({
                 where: { id: orderDetail.id },
                 data: { payment_status: 'paid' },
             });
@@ -174,12 +174,12 @@ export async function calculateCommission(order: any) {
                     seller.admin_to_pay += seller_earning;
                 }
 
-                await prisma.shop.update({
+                await prisma.shops.update({
                     where: { id: seller.id },
                     data: { admin_to_pay: seller.admin_to_pay },
                 });
 
-                await prisma.commissionHistory.create({
+                await prisma.commission_histories.create({
                     data: {
                         order_id: order.id,
                         order_detail_id: orderDetail.id,
@@ -191,11 +191,11 @@ export async function calculateCommission(order: any) {
             }
         }
         if (order.shop !== null) {
-            const seller = await prisma.shop.findUnique({
-                where: { userId: order.shop.user.id },
+            const seller = await prisma.shops.findUnique({
+                where: { user_id: order.shop.user.id },
             });
             seller.admin_to_pay -= order.coupon_discount;
-            await prisma.shop.update({
+            await prisma.shops.update({
                 where: { id: seller.id },
                 data: { admin_to_pay: seller.admin_to_pay },
             });

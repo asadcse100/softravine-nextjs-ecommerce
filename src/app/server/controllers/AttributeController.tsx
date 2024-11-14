@@ -3,16 +3,7 @@ import { PrismaClient } from '@prisma/client';
 
 const prisma = new PrismaClient();
 
-// export async function getAttributes() {
 export const getAttributes = async () => {
-  // const attributes = await prisma.attribute.findMany({
-  //   include: { attributeValues: true },
-  //   orderBy: { createdAt: 'desc' },
-  // });
-  // return attributes;
-
-
-  // const where = search ? { name: { contains: search, mode: 'insensitive' } } : {};
 
   try {
     const attributes = await prisma.attributes.findMany();
@@ -41,7 +32,7 @@ export async function createAttribute(name: string, lang: string = 'en') {
 
 
   export async function updateAttribute(id: number, name: string, lang: string = 'en') {
-    const attribute = await prisma.attribute.update({
+    const attribute = await prisma.attributes.update({
       where: { id },
       data: {
         name,

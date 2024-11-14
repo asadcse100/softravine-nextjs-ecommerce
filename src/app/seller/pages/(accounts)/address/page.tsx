@@ -1,7 +1,8 @@
 "use client";
 
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useForm } from "react-hook-form";
+import { useForm, SubmitHandler } from "react-hook-form";
+import { toast } from "react-hot-toast";
 import { z } from "zod";
 
 import Label from "@/app/seller/components/Label/Label";

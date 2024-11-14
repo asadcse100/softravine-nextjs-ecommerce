@@ -38,7 +38,7 @@ export const getDigitalProducts = async (search: string | undefined) => {
     const { name, unit_price, category_ids, tax_id, tax, tax_type, unit, description } = request;
   
     // Store Product
-    const product = await prisma.product.create({
+    const product = await prisma.products.create({
       data: {
         name,
         addedBy: 'admin',
@@ -47,7 +47,7 @@ export const getDigitalProducts = async (search: string | undefined) => {
     });
   
     // Attach categories
-    await prisma.product.update({
+    await prisma.products.update({
       where: { id: product.id },
       data: {
         categories: {
@@ -57,9 +57,9 @@ export const getDigitalProducts = async (search: string | undefined) => {
     });
   
     // Store Product Stock
-    await prisma.productStock.create({
+    await prisma.product_stocks.create({
       data: {
-        unitPrice: unit_price,
+        unit_prices: unit_price,
         currentStock: 0,
         productId: product.id,
       },
@@ -67,7 +67,7 @@ export const getDigitalProducts = async (search: string | undefined) => {
   
     // Store VAT & Tax
     if (tax_id) {
-      await prisma.productTax.create({
+      await prisma.product_taxs.create({
         data: {
           taxId: tax_id,
           tax: tax!,
@@ -78,13 +78,13 @@ export const getDigitalProducts = async (search: string | undefined) => {
     }
   
     // Store Product Translation
-    await prisma.productTranslation.create({
+    await prisma.product_translations.create({
       data: {
         lang: process.env.DEFAULT_LANGUAGE || 'en',
         name,
         unit,
         description,
-        productId: product.id,
+        product_id: product.id,
       },
     });
   
@@ -95,11 +95,11 @@ export const getDigitalProducts = async (search: string | undefined) => {
     const { name, unit_price, category_ids, tax_id, tax, tax_type, unit, description, lang } = request;
   
     // Find product
-    const product = await prisma.product.findUnique({
+    const product = await prisma.products.findUnique({
       where: { id },
       include: {
-        productStocks: true,
-        productTaxes: true,
+        product_stocks: true,
+        product_taxes: true,
       },
     });
   
@@ -108,7 +108,7 @@ export const getDigitalProducts = async (search: string | undefined) => {
     }
   
     // Update Product
-    const updatedProduct = await prisma.product.update({
+    const updatedProduct = await prisma.products.update({
       where: { id },
       data: {
         name,
@@ -116,12 +116,12 @@ export const getDigitalProducts = async (search: string | undefined) => {
     });
   
     // Delete existing stocks
-    await prisma.productStock.deleteMany({
+    await prisma.product_stocks.deleteMany({
       where: { productId: id },
     });
   
     // Attach categories
-    await prisma.product.update({
+    await prisma.products.update({
       where: { id },
       data: {
         categories: {
@@ -131,22 +131,22 @@ export const getDigitalProducts = async (search: string | undefined) => {
     });
   
     // Store Product Stock
-    await prisma.productStock.create({
+    await prisma.product_stocks.create({
       data: {
-        unitPrice: unit_price,
+        unit_prices: unit_price,
         currentStock: 0,
         productId: id,
       },
     });
   
     // Delete existing tax records
-    await prisma.productTax.deleteMany({
+    await prisma.product_taxs.deleteMany({
       where: { productId: id },
     });
   
     // Store VAT & Tax
     if (tax_id) {
-      await prisma.productTax.create({
+      await prisma.product_taxs.create({
         data: {
           taxId: tax_id,
           tax: tax!,
@@ -157,9 +157,9 @@ export const getDigitalProducts = async (search: string | undefined) => {
     }
   
     // Update or Create Product Translation
-    await prisma.productTranslation.upsert({
+    await prisma.product_translations.upsert({
       where: {
-        productId_lang: {
+        product_id_langs: {
           productId: id,
           lang,
         },
@@ -173,7 +173,7 @@ export const getDigitalProducts = async (search: string | undefined) => {
         name,
         unit,
         description,
-        productId: id,
+        product_id: id,
       },
     });
   
@@ -183,7 +183,7 @@ export const getDigitalProducts = async (search: string | undefined) => {
 
 export const deleteProduct = async (id: number) => {
   // Delete the product
-  await prisma.product.delete({
+  await prisma.products.delete({
     where: { id },
   });
 };

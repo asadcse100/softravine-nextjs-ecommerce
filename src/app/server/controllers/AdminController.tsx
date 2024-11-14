@@ -25,7 +25,7 @@ interface Stock {
 
 export async function adminDashboard(req: NextRequest) {
   try {
-    const rootCategories: Category[] = await prisma.category.findMany({
+    const rootCategories: Category[] = await prisma.categories.findMany({
       where: {
         level: 0
       }
@@ -42,7 +42,7 @@ export async function adminDashboard(req: NextRequest) {
 
 async function getCachedGraphData(rootCategories: Category[]) {
   try {
-    const cachedData = await prisma.cache.findUnique({
+    const cachedData = await prisma.caches.findUnique({
       where: {
         id: 'cached_graph_data'
       }
@@ -58,7 +58,7 @@ async function getCachedGraphData(rootCategories: Category[]) {
         const categoryIds = await getCategoryIds(category.id);
         categoryIds.push(category.id);
 
-        const products: Product[] = await prisma.product.findMany({
+        const products: Product[] = await prisma.products.findMany({
           where: {
             category_id: { in: categoryIds }
           },
@@ -98,7 +98,7 @@ async function getCachedGraphData(rootCategories: Category[]) {
 }
 
 async function getCategoryIds(categoryId: number): Promise<number[]> {
-  const categories = await prisma.category.findMany({
+  const categories = await prisma.categories.findMany({
     where: {
       parent_id: categoryId
     },

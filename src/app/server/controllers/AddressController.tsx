@@ -3,6 +3,7 @@ import { createAddress, getAddressById, updateAddress, deleteAddress } from '../
 import { AddressData } from '../types/Address';
 import type { NextRequest } from 'next/server';
 
+
 export const handleCreateAddress = async (req: NextRequest) => {
   try {
     const body = await req.json();

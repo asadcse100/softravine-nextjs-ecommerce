@@ -11,7 +11,7 @@ export const addToCompare = async (req: NextApiRequest, res: NextApiResponse) =>
   }
 
   // Fetch the compare list from the database
-  const compareList = await prisma.compare.findMany({
+  const compareList = await prisma.compares.findMany({
     where: { userId },
     orderBy: { createdAt: 'asc' }
   });
@@ -19,20 +19,20 @@ export const addToCompare = async (req: NextApiRequest, res: NextApiResponse) =>
   if (compareList.length >= 3) {
     // If there are already 3 items, remove the oldest one
     const oldestItem = compareList[0];
-    await prisma.compare.delete({
+    await prisma.compares.delete({
       where: { id: oldestItem.id }
     });
   }
 
   // Add the new item to the compare list
-  await prisma.compare.create({
+  await prisma.compares.create({
     data: {
       productId,
       userId
     }
   });
 
-  const updatedCompareList = await prisma.compare.findMany({
+  const updatedCompareList = await prisma.compares.findMany({
     where: { userId },
     orderBy: { createdAt: 'asc' }
   });
@@ -43,7 +43,7 @@ export const addToCompare = async (req: NextApiRequest, res: NextApiResponse) =>
 
 export const getCategories = async (req: NextApiRequest, res: NextApiResponse) => {
     try {
-      const categories = await prisma.category.findMany();
+      const categories = await prisma.categories.findMany();
       res.status(200).json(categories);
     } catch (error) {
       res.status(500).json({ error: 'Failed to fetch categories' });

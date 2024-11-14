@@ -10,7 +10,7 @@ export async function storePage(req: NextApiRequest, res: NextApiResponse) {
     const { title, slug, content, meta_title, meta_description, keywords, meta_image } = req.body;
 
     // Check if the slug is unique
-    const existingPage = await prisma.page.findFirst({
+    const existingPage = await prisma.pages.findFirst({
       where: {
         slug: slug,
       },
@@ -21,7 +21,7 @@ export async function storePage(req: NextApiRequest, res: NextApiResponse) {
     }
 
     // Create a new page
-    const page = await prisma.page.create({
+    const page = await prisma.pages.create({
       data: {
         title: title,
         slug: slug,
@@ -39,7 +39,7 @@ export async function storePage(req: NextApiRequest, res: NextApiResponse) {
 
     // Create or update translation for the default language
     const defaultLanguage = process.env.DEFAULT_LANGUAGE; // Assuming you have a DEFAULT_LANGUAGE environment variable
-    let pageTranslation = await prisma.pageTranslation.findFirst({
+    let pageTranslation = await prisma.page_translations.findFirst({
       where: {
         lang: defaultLanguage,
         pageId: page.id,
@@ -47,7 +47,7 @@ export async function storePage(req: NextApiRequest, res: NextApiResponse) {
     });
 
     if (!pageTranslation) {
-      pageTranslation = await prisma.pageTranslation.create({
+      pageTranslation = await prisma.page_translations.create({
         data: {
           lang: defaultLanguage,
           title: title,
@@ -60,7 +60,7 @@ export async function storePage(req: NextApiRequest, res: NextApiResponse) {
         },
       });
     } else {
-      await prisma.pageTranslation.update({
+      await prisma.page_translations.update({
         where: {
           id: pageTranslation.id,
         },
@@ -86,7 +86,7 @@ export async function updatePage(req: NextApiRequest, res: NextApiResponse) {
       const { title, slug, content, meta_title, meta_description, keywords, meta_image, lang } = req.body;
   
       // Find the page by ID
-      const page = await prisma.page.findUnique({
+      const page = await prisma.pages.findUnique({
         where: {
           id: parseInt(id as string),
         },
@@ -101,7 +101,7 @@ export async function updatePage(req: NextApiRequest, res: NextApiResponse) {
   
       // Check if the new slug is unique
       if (
-        !(await prisma.page.findFirst({
+        !(await prisma.pages.findFirst({
           where: {
             id: {
               not: parseInt(id as string),
@@ -131,7 +131,7 @@ export async function updatePage(req: NextApiRequest, res: NextApiResponse) {
         });
   
         // Create or update translation for the specified language
-        let pageTranslation = await prisma.pageTranslation.findFirst({
+        let pageTranslation = await prisma.page_translations.findFirst({
           where: {
             lang: lang,
             pageId: parseInt(id as string),
@@ -139,7 +139,7 @@ export async function updatePage(req: NextApiRequest, res: NextApiResponse) {
         });
   
         if (!pageTranslation) {
-          pageTranslation = await prisma.pageTranslation.create({
+          pageTranslation = await prisma.page_translations.create({
             data: {
               lang: lang,
               title: title,
@@ -152,7 +152,7 @@ export async function updatePage(req: NextApiRequest, res: NextApiResponse) {
             },
           });
         } else {
-          await prisma.pageTranslation.update({
+          await prisma.page_translations.update({
             where: {
               id: pageTranslation.id,
             },
@@ -179,7 +179,7 @@ export async function updatePage(req: NextApiRequest, res: NextApiResponse) {
       const { id } = req.query;
   
       // Find the page by ID
-      const page = await prisma.page.findUnique({
+      const page = await prisma.pages.findUnique({
         where: {
           id: parseInt(id as string),
         },
@@ -193,14 +193,14 @@ export async function updatePage(req: NextApiRequest, res: NextApiResponse) {
       }
   
       // Delete all translations related to the page
-      await prisma.pageTranslation.deleteMany({
+      await prisma.page_translations.deleteMany({
         where: {
           pageId: parseInt(id as string),
         },
       });
   
       // Delete the page
-      await prisma.page.delete({
+      await prisma.pages.delete({
         where: {
           id: parseInt(id as string),
         },
@@ -220,7 +220,7 @@ export async function updatePage(req: NextApiRequest, res: NextApiResponse) {
       const { slug } = req.query;
   
       // Find the page by slug
-      const page = await prisma.page.findUnique({
+      const page = await prisma.pages.findUnique({
         where: {
           slug: slug as string,
         },
@@ -243,7 +243,7 @@ export async function updatePage(req: NextApiRequest, res: NextApiResponse) {
       const { slug } = req.query;
   
       // Find the page by slug
-      const page = await prisma.page.findUnique({
+      const page = await prisma.pages.findUnique({
         where: {
           slug: slug as string,
         },

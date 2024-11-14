@@ -6,7 +6,7 @@ const prisma = new PrismaClient();
 
 export const index = async (req: NextApiRequest, res: NextApiResponse) => {
     try {
-        const customers = await prisma.user.findMany({
+        const customers = await prisma.users.findMany({
             where: {
                 user_type: 'customer',
                 email_verified_at: { not: null }

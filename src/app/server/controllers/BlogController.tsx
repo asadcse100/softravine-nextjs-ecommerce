@@ -2,7 +2,6 @@
 import { PrismaClient } from '@prisma/client';
 const prisma = new PrismaClient();
 
-
 export const selectCategories = async () => {
   try{
       const blog_categories = await prisma.blog_categories.findMany({
@@ -31,7 +30,7 @@ export async function getBlogs(search: string | null = null) {
 export async function createBlogPost(data: any) {
   const slug = data.title.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '');
 
-  return prisma.blog.create({
+  return prisma.blogs.create({
     data: {
       category: { connect: { id: data.category_id } },
       title: data.title,
@@ -50,7 +49,7 @@ export async function createBlogPost(data: any) {
 export async function updateBlogPost(id: number, data: any) {
   const slug = data.title.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '');
 
-  return prisma.blog.update({
+  return prisma.blogs.update({
     where: { id },
     data: {
       category: { connect: { id: data.category_id } },
@@ -68,7 +67,7 @@ export async function updateBlogPost(id: number, data: any) {
 }
 
 export async function changeBlogPostStatus(id: number, status: string) {
-  return prisma.blog.update({
+  return prisma.blogs.update({
     where: { id },
     data: { status },
   });
@@ -90,64 +89,15 @@ export const getAllBlogs = async () => {
   }
 }
 
-// export async function getAllBlogs(selectedCategories: string[], search: string | null): Promise<Blog[]> {
-//   const where: {
-//     status: boolean;
-//     AND?: Array<
-//       | {
-//           OR: Array<{ title?: { contains: string; mode: 'insensitive' }; short_description?: { contains: string; mode: 'insensitive' } }>;
-//         }
-//       | { category_id: { in: number[] } }
-//     >;
-//   } = {
-//     status: true,
-//     AND: [],
-//   };
-
-//   if (search) {
-//     where.AND?.push({
-//       OR: [
-//         { title: { contains: search, mode: 'insensitive' } },
-//         { short_description: { contains: search, mode: 'insensitive' } },
-//       ],
-//     });
-//   }
-
-//   if (selectedCategories.length > 0) {
-//     const blog_categories: Array<{ id: number }> = await prisma.blog_categories.findMany({
-//       where: { slug: { in: selectedCategories } },
-//       select: { id: true },
-//     });
-
-//     const categoryIds = blog_categories.map(category => category.id);
-
-//     if (categoryIds.length > 0) {
-//       where.AND?.push({ category_id: { in: categoryIds } });
-//     }
-//   }
-
-//   if (where.AND?.length === 0) {
-//     delete where.AND;
-//   }
-
-//   const blogs = await prisma.blogs.findMany({
-//     where,
-//     orderBy: { created_at: 'desc' },
-//     include: { category: true },
-//   });
-
-//   return blogs;
-// }
-
 export async function getBlogDetails(slug: string) {
-  return prisma.blog.findUnique({
+  return prisma.blogs.findUnique({
     where: { slug },
     include: { /* Include any related models if needed */ },
   });
 }
 
 export async function getRecentBlogs() {
-  return prisma.blog.findMany({
+  return prisma.blogs.findMany({
     where: { status: true },
     orderBy: { created_at: 'desc' },
     take: 9,

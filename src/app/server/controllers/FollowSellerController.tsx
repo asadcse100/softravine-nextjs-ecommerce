@@ -44,22 +44,22 @@ export const followSellerController = {
   async store(req: NextApiRequest, res: NextApiResponse) {
     try {
       // Assuming user is attached to the request
-      const userId = req.user.id;
+      const userId = req.users.id;
       const { id: shopId } = req.body;
 
       if (!userId) {
         return res.status(401).json({ message: 'You need to login as a customer to follow this seller' });
       }
 
-      const followedSeller = await prisma.followSeller.findFirst({
+      const followedSeller = await prisma.follow_sellers.findFirst({
         where: {
-          userId,
-          shopId,
+          user_id,
+          shop_id,
         },
       });
 
       if (!followedSeller) {
-        await prisma.followSeller.create({
+        await prisma.follow_seller.create({
           data: {
             userId,
             shopId,
@@ -76,14 +76,14 @@ export const followSellerController = {
 
   async remove(req: NextApiRequest, res: NextApiResponse) {
     try {
-      const userId = req.user.id; // Assuming you have middleware to attach user to request
+      const userId = req.users.id; // Assuming you have middleware to attach user to request
       const { id: shopId } = req.body;
 
       if (!userId) {
         return res.status(401).json({ message: 'Unauthorized' });
       }
 
-      const followedSeller = await prisma.followSeller.findFirst({
+      const followedSeller = await prisma.follow_seller.findFirst({
         where: {
           userId,
           shopId,

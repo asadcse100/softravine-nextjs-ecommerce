@@ -1,7 +1,8 @@
 "use client";
 import * as React from "react"
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useForm } from "react-hook-form";
+import { useForm, SubmitHandler } from "react-hook-form";
+import { toast } from "react-hot-toast";
 import { z } from "zod";
 import { useState, useEffect, useRef } from 'react';
 import axios from 'axios';
@@ -83,17 +84,33 @@ export default function Addnew() {
     },
   });
 
-  // 2. Define a submit handler.
-  async function onSubmit(values: z.infer<typeof formSchema>) {
-    try {
-      const response = await axios.post('/api/routes/admin/createAuction', values);
-      console.log(response.data);
-    } catch (error) {
-      console.error('Error creating auction:', error);
-    }
+  const onSubmit: SubmitHandler<FormData> = async (values) => {
 
-    console.log(values);
-  }
+    const apiUrl = process.env.NEXT_PUBLIC_API_URL || '';
+    
+    try {
+      const response = await fetch(`${apiUrl}/server/api/routes/admin/blogs/blogCategories`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(values),
+      });
+  
+      // Check if the response is successful
+      if (!response.ok) {
+        throw new Error('Failed to add category');
+      }
+  
+      const result = await response.json();
+      toast.success(result.message || "Category added successfully!");
+  
+      // Redirect to another page after success
+      window.location.href = `${apiUrl}/admin/pages/blog_system/category`;
+    } catch (error) {
+      toast.error("Error adding category: " + (error as Error).message);
+    }
+  };
 
   const [brands, setBrands] = useState<{ id: string; name: string }[]>([]) // Adjust the type according to your data structure
   // Fetch data from an API

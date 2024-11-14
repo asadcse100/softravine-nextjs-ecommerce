@@ -47,7 +47,7 @@ export const updateCurrency = async (req: NextApiRequest, res: NextApiResponse) 
     try {
       const { id, name, symbol, code, exchange_rate, status } = req.body;
   
-      const updatedCurrency = await prisma.currency.update({
+      const updatedCurrency = await prisma.currencies.update({
         where: { id: Number(id) },
         data: {
           name,
@@ -72,7 +72,7 @@ export const updateCurrency = async (req: NextApiRequest, res: NextApiResponse) 
     try {
       const { name, symbol, code, exchange_rate } = req.body;
   
-      const newCurrency = await prisma.currency.create({
+      const newCurrency = await prisma.currencies.create({
         data: {
           name,
           symbol,
@@ -96,7 +96,7 @@ export const updateCurrency = async (req: NextApiRequest, res: NextApiResponse) 
     try {
       const { id, status } = req.body;
   
-      const currency = await prisma.currency.findUnique({
+      const currency = await prisma.currencies.findUnique({
         where: { id: Number(id) },
       });
   
@@ -108,7 +108,7 @@ export const updateCurrency = async (req: NextApiRequest, res: NextApiResponse) 
         return res.status(400).json({ error: 'Cannot deactivate system default currency' });
       }
   
-      const updatedCurrency = await prisma.currency.update({
+      const updatedCurrency = await prisma.currencies.update({
         where: { id: Number(id) },
         data: {
           status: status,

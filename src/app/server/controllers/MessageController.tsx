@@ -7,7 +7,7 @@ const prisma = new PrismaClient();
 export async function createMessage(data: { conversation_id: number, message: string, user_id: number }) {
     const { conversation_id, message, user_id } = data;
 
-    const newMessage = await prisma.message.create({
+    const newMessage = await prisma.messages.create({
         data: {
             conversation_id,
             user_id,
@@ -15,7 +15,7 @@ export async function createMessage(data: { conversation_id: number, message: st
         },
     });
 
-    const conversation = await prisma.conversation.findUnique({
+    const conversation = await prisma.conversations.findUnique({
         where: { id: conversation_id },
     });
 
@@ -24,12 +24,12 @@ export async function createMessage(data: { conversation_id: number, message: st
     }
 
     if (conversation.sender_id === user_id) {
-        await prisma.conversation.update({
+        await prisma.conversations.update({
             where: { id: conversation_id },
-            data: { receiver_viewed: true },
+            data: { receiver_vieweds: true },
         });
     } else if (conversation.receiver_id === user_id) {
-        await prisma.conversation.update({
+        await prisma.conversations.update({
             where: { id: conversation_id },
             data: { sender_viewed: true },
         });

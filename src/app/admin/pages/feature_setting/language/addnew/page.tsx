@@ -2,7 +2,8 @@
 import * as React from "react"
 import { useState, useEffect } from 'react';
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useForm } from "react-hook-form";
+import { useForm, SubmitHandler } from "react-hook-form";
+import { toast } from "react-hot-toast";
 import { z } from "zod";
 import Breadcrumb from "@/app/admin/components/Breadcrumbs/Breadcrumb"
 import { Button } from "@/app/admin/components/ui/button";
@@ -25,14 +26,14 @@ import {
 } from "@/app/admin/components/ui/select";
 
 const formSchema = z.object({
-  name: z.string().min(10, {
-    message: "Product Name must be at least 10 characters.",
+  name: z.string().min(2, {
+    message: "Product Name must be at least 2 characters.",
   }),
-  code: z.string().min(10, {
-    message: "Product Name must be at least 10 characters.",
+  code: z.string().min(2, {
+    message: "Product Name must be at least 2 characters.",
   }),
-  app_lang_code: z.string().min(10, {
-    message: "Product Name must be at least 10 characters.",
+  app_lang_code: z.string().min(2, {
+    message: "Product Name must be at least 2 characters.",
   }),
 });
 

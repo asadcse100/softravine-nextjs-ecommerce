@@ -22,7 +22,7 @@ export async function createCarrier(carrierData: any) {
 
   const freeShipping = shipping_type ? true : false;
 
-  const carrier = await prisma.carrier.create({
+  const carrier = await prisma.carriers.create({
     data: {
       name: carrier_name,
       transit_time,
@@ -65,14 +65,14 @@ export async function updateCarrier(id: number, carrierData: any) {
   const freeShipping = shipping_type ? true : false;
 
   // Find the existing carrier
-  const existingCarrier = await prisma.carrier.findUnique({ where: { id } });
+  const existingCarrier = await prisma.carriers.findUnique({ where: { id } });
 
   if (!existingCarrier) {
     throw new Error('Carrier not found');
   }
 
   // Update the carrier
-  const updatedCarrier = await prisma.carrier.update({
+  const updatedCarrier = await prisma.carriers.update({
     where: { id },
     data: {
       name: carrier_name,
@@ -96,9 +96,9 @@ export async function updateCarrier(id: number, carrierData: any) {
   // Add new ranges and prices if it's not free shipping
   if (!freeShipping) {
     for (let i = 0; i < delimiter1.length; i++) {
-      const newCarrierRange = await prisma.carrierRange.create({
+      const newCarrierRange = await prisma.carrier_ranges.create({
         data: {
-          carrierId: id,
+          carrier_id: id,
           billing_type,
           delimiter1: delimiter1[i],
           delimiter2: delimiter2[i],
@@ -120,32 +120,32 @@ export async function updateCarrier(id: number, carrierData: any) {
 
 export async function deleteCarrier(id: number) {
   // Find the existing carrier
-  const existingCarrier = await prisma.carrier.findUnique({ where: { id } });
+  const existingCarrier = await prisma.carriers.findUnique({ where: { id } });
 
   if (!existingCarrier) {
     throw new Error('Carrier not found');
   }
 
   // Delete carrier ranges and prices
-  await prisma.carrierRange.deleteMany({ where: { carrierId: id } });
-  await prisma.carrierRangePrice.deleteMany({ where: { carrierId: id } });
+  await prisma.carrier_ranges.deleteMany({ where: { carrier_id: id } });
+  await prisma.carrier_range_prices.deleteMany({ where: { carrierId: id } });
 
   // Delete the carrier
-  await prisma.carrier.delete({ where: { id } });
+  await prisma.carriers.delete({ where: { id } });
 
   return;
 }
 
 export async function updateCarrierStatus(id: number, status: boolean) {
   // Find the existing carrier
-  const existingCarrier = await prisma.carrier.findUnique({ where: { id } });
+  const existingCarrier = await prisma.carriers.findUnique({ where: { id } });
 
   if (!existingCarrier) {
     throw new Error('Carrier not found');
   }
 
   // Update the status
-  const updatedCarrier = await prisma.carrier.update({
+  const updatedCarrier = await prisma.carriers.update({
     where: { id },
     data: { status }
   });

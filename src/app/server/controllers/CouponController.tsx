@@ -41,7 +41,7 @@ export const index = async () => {
 
 export const store = async (req: NextApiRequest, res: NextApiResponse) => {
   try {
-    const admin = await prisma.user.findFirst({
+    const admin = await prisma.users.findFirst({
       where: { user_type: 'admin' },
     });
 
@@ -51,11 +51,11 @@ export const store = async (req: NextApiRequest, res: NextApiResponse) => {
 
     const { code, discount } = req.body;
 
-    const newCoupon = await prisma.coupon.create({
+    const newCoupon = await prisma.coupons.create({
       data: {
         code,
         discount: parseFloat(discount),
-        userId: admin.id,
+        user_id: admin.id,
       },
     });
 
@@ -74,7 +74,7 @@ export const update = async (req: NextApiRequest, res: NextApiResponse) => {
     const { id } = req.query;
     const { code, discount } = req.body;
 
-    const updatedCoupon = await prisma.coupon.update({
+    const updatedCoupon = await prisma.coupons.update({
       where: { id: Number(id) },
       data: {
         code,
@@ -96,7 +96,7 @@ export const destroy = async (req: NextApiRequest, res: NextApiResponse) => {
   try {
     const { id } = req.query;
 
-    await prisma.coupon.delete({
+    await prisma.coupons.delete({
       where: { id: Number(id) },
     });
 
@@ -112,7 +112,7 @@ export const getCouponForm = async (req: NextApiRequest, res: NextApiResponse) =
 
     if (coupon_type === 'product_base') {
       // Retrieve products from the database
-      const admin = await prisma.user.findFirst({
+      const admin = await prisma.users.findFirst({
         where: { user_type: 'admin' },
       });
 
@@ -120,7 +120,7 @@ export const getCouponForm = async (req: NextApiRequest, res: NextApiResponse) =
         return res.status(404).json({ error: 'Admin user not found' });
       }
 
-      const products = await prisma.product.findMany({
+      const products = await prisma.products.findMany({
         where: { userId: admin.id },
       });
 
@@ -141,7 +141,7 @@ export const getCouponFormEdit = async (req: NextApiRequest, res: NextApiRespons
 
     if (coupon_type === 'product_base') {
       // Retrieve coupon and products from the database
-      const admin = await prisma.user.findFirst({
+      const admin = await prisma.users.findFirst({
         where: { user_type: 'admin' },
       });
 
@@ -149,7 +149,7 @@ export const getCouponFormEdit = async (req: NextApiRequest, res: NextApiRespons
         return res.status(404).json({ error: 'Admin user not found' });
       }
 
-      const coupon = await prisma.coupon.findUnique({
+      const coupon = await prisma.coupons.findUnique({
         where: { id: Number(id) },
       });
 
@@ -157,14 +157,14 @@ export const getCouponFormEdit = async (req: NextApiRequest, res: NextApiRespons
         return res.status(404).json({ error: 'Coupon not found' });
       }
 
-      const products = await prisma.product.findMany({
-        where: { userId: admin.id },
+      const products = await prisma.products.findMany({
+        where: { user_id: admin.id },
       });
 
       res.status(200).json({ coupon, products });
     } else if (coupon_type === 'cart_base') {
       // Retrieve coupon from the database
-      const coupon = await prisma.coupon.findUnique({
+      const coupon = await prisma.coupons.findUnique({
         where: { id: Number(id) },
       });
 

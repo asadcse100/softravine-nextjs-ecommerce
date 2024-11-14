@@ -9,7 +9,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
   if (req.method === 'PUT') {
     try {
       const { name } = req.body;
-      const updatedAttributeValue = await prisma.attributeValue.update({
+      const updatedAttributeValue = await prisma.attribute_values.update({
         where: { id: attributeId },
         data: { name }
       });

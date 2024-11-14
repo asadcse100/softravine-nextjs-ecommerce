@@ -37,20 +37,20 @@ export const approveOfflinePayment = async (req: NextApiRequest, res: NextApiRes
       const { id, status } = req.body;
   
       // Retrieve the package payment and its details
-      const packagePayment = await prisma.customerPackagePayment.findUnique({
+      const packagePayment = await prisma.customer_package_payments.findUnique({
         where: {
           id: parseInt(id),
         },
         include: {
-          customer_package: true,
-          user: true,
+          customer_packages: true,
+          users: true,
         },
       });
   
       // Update approval status of the package payment
-      const updatedPackagePayment = await prisma.customerPackagePayment.update({
+      const updatedPackagePayment = await prisma.customer_package_payments.update({
         where: {
-          id: packagePayment.id,
+          id: package_payments.id,
         },
         data: {
           approval: status,
@@ -59,14 +59,14 @@ export const approveOfflinePayment = async (req: NextApiRequest, res: NextApiRes
   
       // Update user's package and remaining uploads if payment is approved
       if (status === 1) {
-        await prisma.user.update({
+        await prisma.users.update({
           where: {
-            id: packagePayment.user.id,
+            id: package_payments.user.id,
           },
           data: {
-            customer_package_id: packagePayment.customer_package_id,
+            customer_package_id: package_payments.customer_package_id,
             remaining_uploads: {
-              increment: packagePayment.customer_package.product_upload,
+              increment: package_payments.customer_package.product_upload,
             },
           },
         });

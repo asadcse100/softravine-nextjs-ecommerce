@@ -1,10 +1,11 @@
 "use client";
 import * as React from "react"
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useForm } from "react-hook-form";
+import { useForm, SubmitHandler } from "react-hook-form";
+import { toast } from "react-hot-toast";
 import { z } from "zod";
 import { useState, useEffect, useRef } from 'react';
-import axios from 'axios';
+
 
 import { Button } from "@/app/admin/components/ui/button";
 import {
@@ -85,14 +86,12 @@ export default function Addnew() {
 
   // 2. Define a submit handler.
   async function onSubmit(values: z.infer<typeof formSchema>) {
-    try {
-      const response = await axios.post('/api/routes/admin/createAuction', values);
-      console.log(response.data);
-    } catch (error) {
-      console.error('Error creating auction:', error);
-    }
-
-    console.log(values);
+    // try {
+    //   const response = await axios.post('/api/routes/admin/createAuction', values);
+    //   console.log(response.data);
+    // } catch (error) {
+    //   console.error('Error creating auction:', error);
+    // }
   }
 
   const [brands, setBrands] = useState<{ id: string; name: string }[]>([]) // Adjust the type according to your data structure
