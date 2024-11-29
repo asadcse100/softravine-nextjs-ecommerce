@@ -8,6 +8,39 @@ import { getSession } from 'next-auth/react';
 
 const prisma = new PrismaClient();
 
+
+type AuctionProductData = {
+  name: string;
+  addedBy: string;
+  categoryId: number;
+  brandId: number;
+  barcode: string;
+  startingBid: number;
+  refundable: boolean;
+  photos: string[];
+  thumbnailImg: string;
+  tags: string[];
+  description: string;
+  videoProvider: string;
+  videoLink: string;
+  auctionDateRange: [string, string]; // Start and end date in ISO format
+  shippingType: string;
+  estShippingDays: number;
+  earnPoint: number;
+  shippingCost: number;
+  isQuantityMultiplied: boolean;
+  metaTitle?: string;
+  metaDescription?: string;
+  metaImg?: string;
+  pdf?: string;
+  cashOnDelivery: boolean;
+  todaysDeal: boolean;
+  sku: string;
+  tax_id?: number[];
+  tax?: number[];
+  tax_type?: string[];
+};
+
 export const getAllAuctionProducts = async () => {
   try {
     const products = await prisma.products.findMany();
@@ -24,128 +57,79 @@ export const getAllAuctionProducts = async () => {
   }
 }
 
-export const getSellerAllAuctionProducts = async () => {
+export async function createAuctionProduct(data: AuctionProductData) {
   try {
-    const products = await prisma.products.findMany();
-    // Convert BigInt fields to strings
-    const serializedProducts = products.map(product => ({
-      ...product,
-      id: product.id.toString(), // Assuming id is the BigInt field
-      user_id: product.user_id.toString(), // Assuming id is the BigInt field
-    }));
-    return { success: true, data: serializedProducts };
-  } catch (error) {
-    console.error("Error fetching products:", error);
-    return { success: false, error };
-  }
-}
-
-export const getSellerAuctionProductOrders = async () => {
-  try {
-    const orders = await prisma.orders.findMany();
-    // Convert BigInt fields to strings
-    const serializedorders = orders.map(product => ({
-      ...product,
-      id: product.id.toString(), // Assuming id is the BigInt field
-      user_id: product.user_id.toString(), // Assuming id is the BigInt field
-    }));
-    return { success: true, data: serializedorders };
-  } catch (error) {
-    console.error("Error fetching orders:", error);
-    return { success: false, error };
-  }
-}
-
-
-export const createAuctionProduct = async (req: NextApiRequest, res: NextApiResponse) => {
-  const {
-    name,
-    addedBy,
-    categoryId,
-    brandId,
-    barcode,
-    startingBid,
-    refundable,
-    photos,
-    thumbnailImg,
-    tags,
-    description,
-    videoProvider,
-    videoLink,
-    auctionDateRange,
-    shippingType,
-    estShippingDays,
-    earnPoint,
-    shippingCost,
-    isQuantityMultiplied,
-    metaTitle,
-    metaDescription,
-    metaImg,
-    pdf,
-    cashOnDelivery,
-    todaysDeal,
-    sku,
-    tax_id,
-    tax,
-    tax_type
-  } = req.body;
-
-  try {
-    const user = await prisma.users.findFirst({ where: { user_type: 'admin' } });
-    if (!user) return res.status(404).json({ error: 'Admin user not found' });
-
-    const product = await prisma.products.create({
-      data: {
-        name,
-        added_by,
-        user_id: user.id,
-        auction_product: true,
-        category_id,
-        brand_id,
-        barcode,
-        startingBid,
-        refundable: refundable || false,
-        photos,
-        thumbnailImg,
-        tags,
-        description,
-        videoProvider,
-        videoLink,
-        auctionStartDate: auctionDateRange ? new Date(auctionDateRange[0]) : null,
-        auctionEndDate: auctionDateRange ? new Date(auctionDateRange[1]) : null,
-        shippingType,
-        estShippingDays,
-        earnPoint,
-        shippingCost,
-        isQuantityMultiplied: !!isQuantityMultiplied,
-        metaTitle: metaTitle || name,
-        metaDescription: metaDescription || description,
-        metaImg: metaImg || thumbnailImg,
-        pdf,
-        cashOnDelivery: !!cashOnDelivery,
-        todaysDeal: !!todaysDeal,
-        slug: slugify(name)
-      }
+    // Find the admin user
+    const adminUser = await prisma.users.findFirst({
+      where: { user_type: 'admin' },
     });
 
-    if (tax_id) {
-      for (let i = 0; i < tax_id.length; i++) {
-        await prisma.productTax.create({
-          data: {
-            productId: product.id,
-            taxId: tax_id[i],
-            tax: tax[i],
-            taxType: tax_type[i]
-          }
-        });
-      }
+    if (!adminUser) {
+      return { success: false, error: 'Admin user not found' };
     }
 
-    res.status(201).json({ message: 'Product has been inserted successfully', product });
+    // Generate slug
+    const slug = slugify(data.name, { lower: true, strict: true });
+
+    // Insert the product into the database
+    const product = await prisma.products.create({
+      data: {
+        name: data.name,
+        added_by: data.addedBy,
+        user_id: adminUser.id,
+        auction_product: 1,
+        category_id: data.categoryId,
+        brand_id: data.brandId,
+        barcode: data.barcode,
+        startingBid: data.startingBid,
+        // refundable: data.refundable || 0,
+        refundable: 1 || 0,
+        photos: data.photos,
+        thumbnailImg: data.thumbnailImg,
+        tags: data.tags,
+        description: data.description,
+        videoProvider: data.videoProvider,
+        videoLink: data.videoLink,
+        auctionStartDate: data.auctionDateRange
+          ? new Date(data.auctionDateRange[0])
+          : null,
+        auctionEndDate: data.auctionDateRange
+          ? new Date(data.auctionDateRange[1])
+          : null,
+        shippingType: data.shippingType,
+        estShippingDays: data.estShippingDays,
+        shippingCost: data.shippingCost,
+        earnPoint: data.earnPoint,
+        isQuantityMultiplied: data.isQuantityMultiplied || false,
+        metaTitle: data.metaTitle || data.name,
+        metaDescription: data.metaDescription || data.description,
+        metaImg: data.metaImg || data.thumbnailImg,
+        pdf: data.pdf,
+        cashOnDelivery: data.cashOnDelivery || false,
+        todaysDeal: data.todaysDeal || false,
+        slug,
+      },
+    });
+
+    // Insert associated tax data if provided
+    if (data.tax_id && data.tax && data.tax_type) {
+      const taxData = data.tax_id.map((taxId, index) => ({
+        productId: product.id,
+        taxId,
+        tax: data.tax[index],
+        taxType: data.tax_type[index],
+      }));
+
+      await prisma.productTax.createMany({ data: taxData });
+    }
+
+    return { success: true, data: product };
   } catch (error) {
-    res.status(500).json({ error: 'An error occurred while creating the product' });
+    console.error('Error creating auction product:', error);
+    return { success: false, error: error.message };
   }
-};
+}
+
 
 
 export const updateAuctionProduct = async (req: NextApiRequest, res: NextApiResponse) => {

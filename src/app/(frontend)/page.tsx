@@ -55,7 +55,7 @@ function PageHome() {
 
         {/* <SectionPromo2 /> */}
 
-        <SectionSliderLargeProduct cardStyle="style2" />
+        {/* <SectionSliderLargeProduct cardStyle="style2" /> */}
 
         <SectionSliderCategories />
 

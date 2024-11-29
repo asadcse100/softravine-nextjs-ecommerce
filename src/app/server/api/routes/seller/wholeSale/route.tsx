@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server";
-import { createSellerProduct, getSellerProducts } from '@/app/server/controllers/ProductController';
+import { createSellerWholeSaleProduct, getSellerProducts } from '@/app/server/controllers/ProductController';
 
 export async function GET() {
   const result = await getSellerProducts();
@@ -16,7 +16,7 @@ export async function GET() {
 export async function POST(req: Request) {
   try {
     const body = await req.json();
-    const result = await createSellerProduct(body);
+    const result = await createSellerWholeSaleProduct(body);
 
     if (result.success) {
       return NextResponse.json(

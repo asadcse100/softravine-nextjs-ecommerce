@@ -2,6 +2,18 @@
 import { PrismaClient } from '@prisma/client';
 const prisma = new PrismaClient();
 
+type BlogPostData = {
+  title: string;
+  category_id: string;
+  banner: any;
+  short_description: string;
+  description: string;
+  meta_title?: string;
+  meta_img?: any;
+  meta_description?: string;
+  meta_keywords?: string;
+};
+
 export const selectCategories = async () => {
   try{
       const blog_categories = await prisma.blog_categories.findMany({
@@ -27,24 +39,40 @@ export async function getBlogs(search: string | null = null) {
   });
 }
 
-export async function createBlogPost(data: any) {
-  const slug = data.title.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '');
-
-  return prisma.blogs.create({
-    data: {
-      category: { connect: { id: data.category_id } },
-      title: data.title,
-      banner: data.banner,
-      slug,
-      short_description: data.short_description,
-      description: data.description,
-      meta_title: data.meta_title,
-      meta_img: data.meta_img,
-      meta_description: data.meta_description,
-      meta_keywords: data.meta_keywords,
-    },
-  });
+// Utility function to generate slugs
+function generateSlug(input: string): string {
+  return input
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, "-")
+    .replace(/(^-|-$)/g, "");
 }
+
+export async function createBlogPost(data: BlogPostData) {
+  try {
+    const slug = generateSlug(data.title);
+
+    const newPost = await prisma.blogs.create({
+      data: {
+        category_id: 1,
+        title: data.title,
+        banner: data.banner,
+        slug,
+        short_description: data.short_description,
+        description: data.description,
+        meta_title: data.meta_title,
+        meta_img: data.meta_img,
+        meta_description: data.meta_description,
+        meta_keywords: data.meta_keywords,
+      },
+    });
+
+    return { success: true, data: newPost };
+  } catch (error) {
+    console.error("Error creating blog post:", error);
+    return { success: false, error };
+  }
+}
+
 
 export async function updateBlogPost(id: number, data: any) {
   const slug = data.title.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '');
@@ -81,7 +109,8 @@ export async function deleteBlogPost(id: number) {
 
 export const getAllBlogs = async () => {
   try {
-    const blogs = await prisma.blogs.findMany();    
+    const blogs = await prisma.blogs.findMany();
+    
     return { success: true, data: blogs };
   } catch (error) {
     console.error("Error fetching blogs:", error);

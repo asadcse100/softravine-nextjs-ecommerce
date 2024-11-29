@@ -13,7 +13,6 @@ import {
 } from "@heroicons/react/24/outline";
 import IconDiscount from "@/app/(frontend)/components/IconDiscount";
 import Prices from "@/app/(frontend)/components/Prices";
-import toast from "react-hot-toast";
 import detail1JPG from "@/images/products/detail1.jpg";
 import detail2JPG from "@/images/products/detail2.jpg";
 import detail3JPG from "@/images/products/detail3.jpg";

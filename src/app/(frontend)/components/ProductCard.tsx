@@ -9,7 +9,6 @@ import { StarIcon } from "@heroicons/react/24/solid";
 import ButtonPrimary from "@/shared/Button/ButtonPrimary";
 import ButtonSecondary from "@/shared/Button/ButtonSecondary";
 import BagIcon from "./BagIcon";
-import toast from "react-hot-toast";
 import { Transition } from "@/app/(frontend)/headlessui";
 import ModalQuickView from "./ModalQuickView";
 import ProductStatus from "./ProductStatus";

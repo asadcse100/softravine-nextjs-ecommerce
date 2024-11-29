@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server";
-import { getSizePoints } from '@/app/server/controllers/SizeChartController';
+import { getSizePoints} from '@/app/server/controllers/SizeChartController';
 
 export async function GET() {
   const result = await getSizePoints();

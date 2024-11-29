@@ -7,7 +7,6 @@ export async function GET() {
     const blogcategories = result.data;
     return NextResponse.json(blogcategories);
   } catch (error) {
-    console.error("Error fetching blog categories:", error);
     return NextResponse.json(
       { error: "Failed to fetch blog categories" },
       { status: 500 }

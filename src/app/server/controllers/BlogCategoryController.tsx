@@ -3,7 +3,11 @@ const prisma = new PrismaClient();
 
 export const getBlogCategories = async () => {
   try {
-    const blogCategories = await prisma.blog_categories.findMany();
+    const blogCategories = await prisma.blog_categories.findMany({
+      orderBy: {
+        created_at: "desc", // Replace 'created_at' with your column name
+      },
+    });
     return { success: true, data: blogCategories };
   } catch (error) {
     console.error("Error fetching blog categories:", error);

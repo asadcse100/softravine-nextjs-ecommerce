@@ -18,7 +18,7 @@ import Link from "next/link";
 
 // This type is used to define the shape of our data.
 // You can use a Zod schema here if you want.
-export type Products = {
+export type Blogs = {
   id: string;
   title: string;
   category: string;
@@ -26,7 +26,15 @@ export type Products = {
   status: string;
 };
 
-export const columns: ColumnDef<Products>[] = [
+// Helper function for truncating the description
+const truncateDescription = (text: string, wordLimit: number): string => {
+  const words = text.split(" ");
+  return words.length > wordLimit
+    ? words.slice(0, wordLimit).join(" ") + "..."
+    : text;
+};
+
+export const columns: ColumnDef<Blogs>[] = [
   {
     id: "select",
     header: ({ table }) => (
@@ -74,6 +82,9 @@ export const columns: ColumnDef<Products>[] = [
   {
     accessorKey: "title",
     header: "Title",
+    cell: ({ row }) => (
+      <div>{truncateDescription(row.original.title, 10)}</div>
+    ),
   },
   {
     accessorKey: "category",
@@ -82,6 +93,9 @@ export const columns: ColumnDef<Products>[] = [
   {
     accessorKey: "short_description",
     header: "Short Description",
+    cell: ({ row }) => (
+      <div>{truncateDescription(row.original.short_description, 20)}</div>
+    ),
   },
   {
     accessorKey: "status",

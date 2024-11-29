@@ -80,7 +80,7 @@ export const getCustomerProducts = async () => {
 //     }
 //   };
 
-  export const storeCustomerProduct = async (req: NextApiRequest, res: NextApiResponse) => {
+  export const createCustomerProduct = async (req: NextApiRequest, res: NextApiResponse) => {
     try {
       const {
         name,

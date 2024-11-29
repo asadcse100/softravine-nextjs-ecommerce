@@ -1,10 +1,10 @@
 "use client";
-import { useRouter } from 'next/router';
+
+import { useRouter } from "next/navigation"; // Correct import for client-side navigation in Next.js 13+
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { z } from "zod";
 import { toast } from "react-hot-toast";
-import { useEffect, useState } from 'react';
 import { Button } from "@/app/admin/components/ui/button";
 import {
   Form,
@@ -27,14 +27,9 @@ const formSchema = z.object({
 type FormData = z.infer<typeof formSchema>;
 
 export default function AddNewCategory() {
-  const [isMounted, setIsMounted] = useState(false);
   const router = useRouter();
 
-  // Check if component is mounted
-  useEffect(() => {
-    setIsMounted(true);
-  }, []);
-
+  // Initialize form handling
   const form = useForm<FormData>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -43,34 +38,36 @@ export default function AddNewCategory() {
   });
 
   const onSubmit: SubmitHandler<FormData> = async (values) => {
-    const apiUrl = process.env.NEXT_PUBLIC_API_URL || '';
+    const apiUrl = process.env.NEXT_PUBLIC_API_URL;
+
+    if (!apiUrl) {
+      toast.error("API URL is not configured.");
+      return;
+    }
 
     try {
       const response = await fetch(`${apiUrl}/server/api/routes/admin/blogs/blogCategories`, {
-        method: 'POST',
+        method: "POST",
         headers: {
-          'Content-Type': 'application/json',
+          "Content-Type": "application/json",
         },
         body: JSON.stringify(values),
       });
 
       if (!response.ok) {
-        throw new Error('Failed to add category. Please try again.');
+        const errorData = await response.json();
+        throw new Error(errorData.message || "Failed to add category. Please try again.");
       }
 
       const result = await response.json();
       toast.success(result.message || "Category added successfully!");
 
-      if (isMounted) {
-        router.push("/admin/pages/blog_system/category");
-      }
+      // Use router.push to navigate after successful submission
+      router.push("/admin/pages/blog_system/category");
     } catch (error) {
       toast.error("Error adding category: " + (error as Error).message);
     }
   };
-
-  // Render only if mounted to avoid NextRouter errors
-  if (!isMounted) return null;
 
   return (
     <div className="min-h-screen mx-auto max-w-screen-2xl mt-2 p-4 py-4 md:p-6 2xl:p-10 bg-slate-100 dark:bg-slate-900">
