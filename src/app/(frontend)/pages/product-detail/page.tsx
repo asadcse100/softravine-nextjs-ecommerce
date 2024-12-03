@@ -15,7 +15,6 @@ import {
 import IconDiscount from "@/app/(frontend)/components/IconDiscount";
 import Prices from "@/app/(frontend)/components/Prices";
 import PricesDiscount from "@/app/(frontend)/components/PricesDiscount";
-import toast from "react-hot-toast";
 import SectionSliderProductCard from "@/app/(frontend)/components/SectionSliderProductCard";
 import detail1JPG from "@/images/products/detail1.jpg";
 import detail2JPG from "@/images/products/detail2.jpg";

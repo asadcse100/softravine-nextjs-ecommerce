@@ -2,7 +2,6 @@
 
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm, SubmitHandler } from "react-hook-form";
-import { toast } from "react-hot-toast";
 import { z } from "zod";
 import Breadcrumb from "@/app/admin/components/Breadcrumbs/Breadcrumb"
 import { Button } from "@/app/admin/components/ui/button";
@@ -63,7 +62,7 @@ export default function Addnew() {
     console.log(values);
   }
 
-  const inputClass = "bg-zinc-50 border border-slate-300 text-slate-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-slate-900 dark:border-slate-800 dark:placeholder-slate-700 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500";
+  const inputClass = "bg-zinc-50 border border-slate-300 text-slate-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-slate-900 dark:border-slate-700 dark:placeholder-slate-700 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500";
 
   return (
     <div className="min-h-screen mx-auto max-w-screen-2xl mt-2 p-4 py-4 md:p-6 2xl:p-10 bg-slate-100 dark:bg-slate-900">
@@ -89,23 +88,29 @@ export default function Addnew() {
                           name="CACHE_DRIVER"
                           render={({ field }) => (
                             <FormItem>
-                              <FormLabel>CACHE_DRIVER</FormLabel>
-                              <FormControl>
-                                <Select
-                                  onValueChange={field.onChange}
-                                  defaultValue={field.value}
-                                >
+                              <div className="grid grid-cols-1 md:grid-cols-12">
+                                <div className="col-span-3 mt-2">
+                                  <FormLabel>CACHE_DRIVER</FormLabel>
+                                </div>
+                                <div className="col-span-8">
                                   <FormControl>
-                                    <SelectTrigger>
-                                      <SelectValue placeholder="Select CACHE_DRIVER" />
-                                    </SelectTrigger>
+                                    <Select
+                                      onValueChange={field.onChange}
+                                      defaultValue={field.value}
+                                    >
+                                      <FormControl>
+                                        <SelectTrigger>
+                                          <SelectValue placeholder="Select CACHE_DRIVER" />
+                                        </SelectTrigger>
+                                      </FormControl>
+                                      <SelectContent>
+                                        <SelectItem value="Apple">File</SelectItem>
+                                        <SelectItem value="m2@example.com">Redis</SelectItem>
+                                      </SelectContent>
+                                    </Select>
                                   </FormControl>
-                                  <SelectContent>
-                                    <SelectItem value="Apple">File</SelectItem>
-                                    <SelectItem value="m2@example.com">Redis</SelectItem>
-                                  </SelectContent>
-                                </Select>
-                              </FormControl>
+                                </div>
+                              </div>
                               <FormMessage />
                             </FormItem>
                           )}
@@ -117,24 +122,30 @@ export default function Addnew() {
                           name="SESSION_DRIVER"
                           render={({ field }) => (
                             <FormItem>
-                              <FormLabel>SESSION_DRIVER</FormLabel>
-                              <FormControl>
-                                <Select
-                                  onValueChange={field.onChange}
-                                  defaultValue={field.value}
-                                >
+                              <div className="grid grid-cols-1 md:grid-cols-12">
+                                <div className="col-span-3 mt-2">
+                                  <FormLabel>SESSION_DRIVER</FormLabel>
+                                </div>
+                                <div className="col-span-8">
                                   <FormControl>
-                                    <SelectTrigger>
-                                      <SelectValue placeholder="Select SESSION_DRIVER" />
-                                    </SelectTrigger>
+                                    <Select
+                                      onValueChange={field.onChange}
+                                      defaultValue={field.value}
+                                    >
+                                      <FormControl>
+                                        <SelectTrigger>
+                                          <SelectValue placeholder="Select SESSION_DRIVER" />
+                                        </SelectTrigger>
+                                      </FormControl>
+                                      <SelectContent>
+                                        <SelectItem value="Apple">File</SelectItem>
+                                        <SelectItem value="m2@example.com">Redis</SelectItem>
+                                      </SelectContent>
+                                    </Select>
                                   </FormControl>
-                                  <SelectContent>
-                                    <SelectItem value="Apple">File</SelectItem>
-                                    <SelectItem value="m2@example.com">Redis</SelectItem>
-                                  </SelectContent>
-                                </Select>
-                              </FormControl>
-                              <FormMessage />
+                                  <FormMessage />
+                                </div>
+                              </div>
                             </FormItem>
                           )}
                         />
@@ -168,14 +179,20 @@ export default function Addnew() {
                           name="REDIS_HOST"
                           render={({ field }) => (
                             <FormItem>
-                              <FormLabel>REDIS_HOST</FormLabel>
-                              <FormControl>
-                                <Input
-                                  className={inputClass}
-                                  placeholder="127.0.0.1"
-                                  {...field}
-                                />
-                              </FormControl>
+                              <div className="grid grid-cols-1 md:grid-cols-12">
+                                <div className="col-span-3 mt-2">
+                                  <FormLabel>REDIS_HOST</FormLabel>
+                                </div>
+                                <div className="col-span-8">
+                                  <FormControl>
+                                    <Input
+                                      className={inputClass}
+                                      placeholder="127.0.0.1"
+                                      {...field}
+                                    />
+                                  </FormControl>
+                                </div>
+                              </div>
                               <FormMessage />
                             </FormItem>
                           )}
@@ -187,14 +204,20 @@ export default function Addnew() {
                           name="REDIS_PASSWORD"
                           render={({ field }) => (
                             <FormItem>
-                              <FormLabel>REDIS_PASSWORD</FormLabel>
-                              <FormControl>
-                                <Input
-                                  className={inputClass}
-                                  placeholder="REDIS_PASSWORD"
-                                  {...field}
-                                />
-                              </FormControl>
+                              <div className="grid grid-cols-1 md:grid-cols-12">
+                                <div className="col-span-3 mt-2">
+                                  <FormLabel>REDIS_PASSWORD</FormLabel>
+                                </div>
+                                <div className="col-span-8">
+                                  <FormControl>
+                                    <Input
+                                      className={inputClass}
+                                      placeholder="REDIS_PASSWORD"
+                                      {...field}
+                                    />
+                                  </FormControl>
+                                </div>
+                              </div>
                               <FormMessage />
                             </FormItem>
                           )}
@@ -206,14 +229,20 @@ export default function Addnew() {
                           name="REDIS_PORT"
                           render={({ field }) => (
                             <FormItem>
-                              <FormLabel>REDIS_PORT</FormLabel>
-                              <FormControl>
-                                <Input
-                                  className={inputClass}
-                                  placeholder="6379"
-                                  {...field}
-                                />
-                              </FormControl>
+                              <div className="grid grid-cols-1 md:grid-cols-12">
+                                <div className="col-span-3 mt-2">
+                                  <FormLabel>REDIS_PORT</FormLabel>
+                                </div>
+                                <div className="col-span-8">
+                                  <FormControl>
+                                    <Input
+                                      className={inputClass}
+                                      placeholder="6379"
+                                      {...field}
+                                    />
+                                  </FormControl>
+                                </div>
+                              </div>
                               <FormMessage />
                             </FormItem>
                           )}

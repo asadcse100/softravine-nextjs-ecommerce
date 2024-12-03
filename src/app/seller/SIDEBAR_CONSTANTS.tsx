@@ -16,6 +16,7 @@ import {
     BsArrowLeftRight,
     BsShop,
     BsCashStack,
+    BsBlockquoteLeft,
     BsFileEarmarkPostFill,
 } from "react-icons/bs";
 import { SideNavItem } from "@/../types/types";
@@ -118,6 +119,11 @@ export const SIDENAV_ITEMS: SideNavItem[] = [
         title: 'Shop Setting',
         path: '/seller/pages/shop_setting',
         icon: <BsShop size={20} />
+    },
+    {
+        title: 'Blogs',
+        path: '/seller/pages/blog_system/all_blog',
+        icon: <BsBlockquoteLeft size={20} />
     },
     {
         title: 'Conversations',

@@ -2,7 +2,6 @@
 
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm, SubmitHandler } from "react-hook-form";
-import { toast } from "react-hot-toast";
 import { z } from "zod";
 import Breadcrumb from "@/app/admin/components/Breadcrumbs/Breadcrumb"
 import { Button } from "@/app/admin/components/ui/button";
@@ -16,6 +15,7 @@ import {
   FormMessage,
 } from "@/app/admin/components/ui/form";
 import Input from "@/shared/Input/Input";
+import { Switch } from "@/app/admin/components/ui/switch";
 
 const formSchema = z.object({
   shipping_type: z.string().min(10, {
@@ -48,7 +48,7 @@ export default function Addnew() {
     console.log(values);
   }
 
-  const inputClass = "bg-zinc-50 border border-slate-300 text-slate-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-slate-900 dark:border-slate-800 dark:placeholder-slate-700 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500";
+  const inputClass = "bg-zinc-50 border border-slate-300 text-slate-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-slate-900 dark:border-slate-700 dark:placeholder-slate-700 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500";
 
   return (
     <div className="min-h-screen mx-auto max-w-screen-2xl mt-2 p-4 py-4 md:p-6 2xl:p-10 bg-slate-100 dark:bg-slate-900">
@@ -73,14 +73,16 @@ export default function Addnew() {
                         name="shipping_type"
                         render={({ field }) => (
                           <FormItem>
-                            <FormLabel> Product Wise Shipping Cost</FormLabel>
-                            <FormControl>
-                              {/* <Input
-                                className={inputClass}
-                                placeholder="Facebook Chat"
-                                {...field}
-                              /> */}
-                            </FormControl>
+                            <div className="grid grid-cols-1 md:grid-cols-12">
+                              <div className="col-span-6">
+                                <FormLabel>Product Wise Shipping Cost</FormLabel>
+                              </div>
+                              <div className="col-span-6">
+                                <FormControl>
+                                  <Switch />
+                                </FormControl>
+                              </div>
+                            </div>
                             <FormMessage />
                           </FormItem>
                         )}
@@ -92,14 +94,16 @@ export default function Addnew() {
                         name="shipping_type"
                         render={({ field }) => (
                           <FormItem>
-                            <FormLabel> Flat Rate Shipping Cost</FormLabel>
-                            <FormControl>
-                              {/* <Input
-                                className={inputClass}
-                                placeholder="Facebook Chat"
-                                {...field}
-                              /> */}
-                            </FormControl>
+                            <div className="grid grid-cols-1 md:grid-cols-12">
+                              <div className="col-span-6">
+                                <FormLabel>Flat Rate Shipping Cost</FormLabel>
+                              </div>
+                              <div className="col-span-6">
+                                <FormControl>
+                                  <Switch />
+                                </FormControl>
+                              </div>
+                            </div>
                             <FormMessage />
                           </FormItem>
                         )}
@@ -111,17 +115,16 @@ export default function Addnew() {
                         name="shipping_type"
                         render={({ field }) => (
                           <FormItem>
-                            <FormLabel>
-                              {" "}
-                              Seller Wise Flat Shipping Cost
-                            </FormLabel>
-                            <FormControl>
-                              {/* <Input
-                                className={inputClass}
-                                placeholder="Facebook Chat"
-                                {...field}
-                              /> */}
-                            </FormControl>
+                            <div className="grid grid-cols-1 md:grid-cols-12">
+                              <div className="col-span-6">
+                                <FormLabel>Seller Wise Flat Shipping Cost</FormLabel>
+                              </div>
+                              <div className="col-span-6">
+                                <FormControl>
+                                  <Switch />
+                                </FormControl>
+                              </div>
+                            </div>
                             <FormMessage />
                           </FormItem>
                         )}
@@ -133,14 +136,16 @@ export default function Addnew() {
                         name="shipping_type"
                         render={({ field }) => (
                           <FormItem>
-                            <FormLabel> Area Wise Flat Shipping Cost</FormLabel>
-                            <FormControl>
-                              {/* <Input
-                                className={inputClass}
-                                placeholder="Facebook Chat"
-                                {...field}
-                              /> */}
-                            </FormControl>
+                            <div className="grid grid-cols-1 md:grid-cols-12">
+                              <div className="col-span-6">
+                                <FormLabel>Area Wise Flat Shipping Cost</FormLabel>
+                              </div>
+                              <div className="col-span-6">
+                                <FormControl>
+                                  <Switch />
+                                </FormControl>
+                              </div>
+                            </div>
                             <FormMessage />
                           </FormItem>
                         )}
@@ -152,14 +157,16 @@ export default function Addnew() {
                         name="shipping_type"
                         render={({ field }) => (
                           <FormItem>
-                            <FormLabel> Carrier Wise Shipping Cost</FormLabel>
-                            <FormControl>
-                              {/* <Input
-                                className={inputClass}
-                                placeholder="Facebook Chat"
-                                {...field}
-                              /> */}
-                            </FormControl>
+                            <div className="grid grid-cols-1 md:grid-cols-12">
+                              <div className="col-span-6">
+                                <FormLabel>Carrier Wise Shipping Cost</FormLabel>
+                              </div>
+                              <div className="col-span-6">
+                                <FormControl>
+                                  <Switch />
+                                </FormControl>
+                              </div>
+                            </div>
                             <FormMessage />
                           </FormItem>
                         )}
@@ -235,14 +242,20 @@ export default function Addnew() {
                         name="flat_rate_shipping_cost"
                         render={({ field }) => (
                           <FormItem>
-                            <FormLabel> Cost</FormLabel>
-                            <FormControl>
-                              <Input
-                                className={inputClass}
-                                placeholder="120"
-                                {...field}
-                              />
-                            </FormControl>
+                            <div className="grid grid-cols-1 md:grid-cols-12">
+                              <div className="col-span-3 mt-2">
+                                <FormLabel>Cost</FormLabel>
+                              </div>
+                              <div className="col-span-8">
+                                <FormControl>
+                                  <Input
+                                    className={inputClass}
+                                    placeholder="123"
+                                    {...field}
+                                  />
+                                </FormControl>
+                              </div>
+                            </div>
                             <FormMessage />
                           </FormItem>
                         )}
@@ -293,14 +306,20 @@ export default function Addnew() {
                         name="shipping_cost_admin"
                         render={({ field }) => (
                           <FormItem>
-                            <FormLabel> Cost</FormLabel>
-                            <FormControl>
-                              <Input
-                                className={inputClass}
-                                placeholder="120"
-                                {...field}
-                              />
-                            </FormControl>
+                            <div className="grid grid-cols-1 md:grid-cols-12">
+                              <div className="col-span-3 mt-2">
+                                <FormLabel>Cost</FormLabel>
+                              </div>
+                              <div className="col-span-8">
+                                <FormControl>
+                                  <Input
+                                    className={inputClass}
+                                    placeholder="123"
+                                    {...field}
+                                  />
+                                </FormControl>
+                              </div>
+                            </div>
                             <FormMessage />
                           </FormItem>
                         )}

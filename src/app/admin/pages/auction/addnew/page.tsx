@@ -2,7 +2,6 @@
 import * as React from "react"
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm, SubmitHandler } from "react-hook-form";
-import { toast } from "react-hot-toast";
 import { z } from "zod";
 import { useState, useEffect, useRef } from 'react';
 import axios from 'axios';
@@ -137,6 +136,7 @@ export default function Addnew() {
 
   const [categories, setCategories] = useState<{ id: string; name: string }[]>([]) // Adjust the type according to your data structure
   // Fetch data from an API
+
   useEffect(() => {
     const fetchCategories = async () => {
       const apiUrl = process.env.NEXT_PUBLIC_API_URL || ''
@@ -158,7 +158,7 @@ export default function Addnew() {
     fetchCategories()
   }, [])
 
-  const inputClass = "bg-zinc-50 border border-slate-300 text-slate-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-slate-900 dark:border-slate-800 dark:placeholder-slate-700 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500";
+  const inputClass = "bg-zinc-50 border border-slate-300 text-slate-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-slate-900 dark:border-slate-700 dark:placeholder-slate-700 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500";
 
   return (
     <div className="min-h-screen mx-auto max-w-screen-2xl mt-2 p-4 py-4 md:p-6 2xl:p-10 bg-slate-100 dark:bg-slate-900">
@@ -172,7 +172,7 @@ export default function Addnew() {
 
             <div className="grid grid-cols-1 lg:grid-cols-12">
 
-              <div className="col-span-8">
+              <div className="col-span-7">
                 <div className="p-2">
                   <div className="px-6 rounded-sm border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark">
                     <div className="border-b border-stroke px-6.5 py-4 dark:border-strokedark">
@@ -655,7 +655,7 @@ export default function Addnew() {
 
               </div>
 
-              <div className="col-span-4">
+              <div className="col-span-5">
                 <div className="p-2">
                   <div className="px-6 rounded-sm border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark">
                     <div className="border-b border-stroke px-6.5 py-4 dark:border-strokedark">

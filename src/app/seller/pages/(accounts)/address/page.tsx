@@ -2,7 +2,6 @@
 
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm, SubmitHandler } from "react-hook-form";
-import { toast } from "react-hot-toast";
 import { z } from "zod";
 
 import Label from "@/app/seller/components/Label/Label";
@@ -64,139 +63,144 @@ export default function Addnew() {
     console.log(values);
   }
 
+  const inputClass = "bg-zinc-50 border border-slate-300 text-slate-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-slate-900 dark:border-slate-700 dark:placeholder-slate-700 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500";
+
   return (
     <div className={`nc-AccountPage `}>
-            <Form {...form}>
+      <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
-          
-      <div className="space-y-5 sm:space-y-5 bg-white dark:bg-slate-700 p-5 rounded-xl">
-        {/* HEADING */}
-        <h2 className="text-2xl sm:text-3xl font-semibold dark:text-slate-300">
-          Full Address
-        </h2>
-        <div className="flex flex-col md:flex-row">
 
-          <div className="flex-grow mt-10 md:mt-0 md:pl-16 max-w-3xl space-y-6">
+          <div className="space-y-5 sm:space-y-5 bg-white dark:bg-boxdark p-5 rounded-xl">
+            {/* HEADING */}
+            <h2 className="text-2xl sm:text-3xl font-semibold dark:text-slate-300">
+              Full Address
+            </h2>
+            <div className="flex flex-col md:flex-row">
 
-          <div className="flex flex-col gap-5.5 p-6.5 dark:text-slate-500">
-              <FormField
-                  control={form.control}
-                  name="subscriber_emails[]"
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel>Division</FormLabel>
-                      <FormControl>
-                      <Select
-                        onValueChange={field.onChange}
-                        defaultValue={field.value}
-                      >
-                        <FormControl>
-                          <SelectTrigger>
-                            <SelectValue placeholder="Select Emails" />
-                          </SelectTrigger>
-                        </FormControl>
-                        <SelectContent>
-                          <SelectItem value="Apple">Apple</SelectItem>
-                          <SelectItem value="m2@example.com">Pran</SelectItem>
-                          <SelectItem value="m22@example.com">Squre</SelectItem>
-                          <SelectItem value="m3@example.com">ACI</SelectItem>
-                          <SelectItem value="m4@example.com">SoftRavine</SelectItem>
-                          <SelectItem value="m5@example.com">Samsung</SelectItem>
-                          <SelectItem value="m6@example.com">LG</SelectItem>
-                          <SelectItem value="m7@example.com">Logitech</SelectItem>
-                          <SelectItem value="m8@example.com">A4tech</SelectItem>
-                          <SelectItem value="m9@example.com">HP</SelectItem>
-                        </SelectContent>
-                      </Select>
-                      </FormControl>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
+              <div className="flex-grow mt-10 md:mt-0 md:pl-16 max-w-3xl space-y-6">
+
+                <div className="flex flex-col gap-5.5 p-6.5 dark:text-slate-500">
+                  
+                  <FormField
+                    control={form.control}
+                    name="code"
+                    render={({ field }) => (
+                      <FormItem>
+                        <div className="grid grid-cols-1 md:grid-cols-12">
+                          <div className="col-span-3 mt-3">
+                            <FormLabel>Division</FormLabel>
+                          </div>
+                          <div className="col-span-8">
+                            <FormControl>
+                              <Select
+                                onValueChange={field.onChange}
+                                defaultValue={field.value}
+                              >
+                                <FormControl className={inputClass}>
+                                  <SelectTrigger>
+                                    <SelectValue placeholder="Select Division" />
+                                  </SelectTrigger>
+                                </FormControl>
+                                <SelectContent>
+                                  <SelectItem value="Apple">Apple</SelectItem>
+                                  <SelectItem value="m2@example.com">Pran</SelectItem>
+                                  <SelectItem value="m22@example.com">Squre</SelectItem>
+                                  <SelectItem value="m3@example.com">ACI</SelectItem>
+                                </SelectContent>
+                              </Select>
+                            </FormControl>
+                          </div>
+                        </div>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
                 </div>
 
-              <div className="flex flex-col gap-5.5 p-6.5 dark:text-slate-500">
-              <FormField
-                  control={form.control}
-                  name="subscriber_emails[]"
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel>Zila</FormLabel>
-                      <FormControl>
-                      <Select
-                        onValueChange={field.onChange}
-                        defaultValue={field.value}
-                      >
-                        <FormControl>
-                          <SelectTrigger>
-                            <SelectValue placeholder="Select Emails" />
-                          </SelectTrigger>
-                        </FormControl>
-                        <SelectContent>
-                          <SelectItem value="Apple">Apple</SelectItem>
-                          <SelectItem value="m2@example.com">Pran</SelectItem>
-                          <SelectItem value="m22@example.com">Squre</SelectItem>
-                          <SelectItem value="m3@example.com">ACI</SelectItem>
-                          <SelectItem value="m4@example.com">SoftRavine</SelectItem>
-                          <SelectItem value="m5@example.com">Samsung</SelectItem>
-                          <SelectItem value="m6@example.com">LG</SelectItem>
-                          <SelectItem value="m7@example.com">Logitech</SelectItem>
-                          <SelectItem value="m8@example.com">A4tech</SelectItem>
-                          <SelectItem value="m9@example.com">HP</SelectItem>
-                        </SelectContent>
-                      </Select>
-                      </FormControl>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
-              </div>
+                <div className="flex flex-col gap-5.5 p-6.5 dark:text-slate-500">
+                  
+                  <FormField
+                    control={form.control}
+                    name="code"
+                    render={({ field }) => (
+                      <FormItem>
+                        <div className="grid grid-cols-1 md:grid-cols-12">
+                          <div className="col-span-3 mt-3">
+                            <FormLabel>Zila</FormLabel>
+                          </div>
+                          <div className="col-span-8">
+                            <FormControl>
+                              <Select
+                                onValueChange={field.onChange}
+                                defaultValue={field.value}
+                              >
+                                <FormControl className={inputClass}>
+                                  <SelectTrigger>
+                                    <SelectValue placeholder="Select Zila" />
+                                  </SelectTrigger>
+                                </FormControl>
+                                <SelectContent>
+                                  <SelectItem value="Apple">Apple</SelectItem>
+                                  <SelectItem value="m2@example.com">Pran</SelectItem>
+                                  <SelectItem value="m22@example.com">Squre</SelectItem>
+                                  <SelectItem value="m3@example.com">ACI</SelectItem>
+                                </SelectContent>
+                              </Select>
+                            </FormControl>
+                          </div>
+                        </div>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+                </div>
 
-            <div className="flex flex-col gap-5.5 p-6.5 dark:text-slate-500">
-              <FormField
-                  control={form.control}
-                  name="subscriber_emails[]"
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel>UpZila</FormLabel>
-                      <FormControl>
-                      <Select
-                        onValueChange={field.onChange}
-                        defaultValue={field.value}
-                      >
-                        <FormControl>
-                          <SelectTrigger>
-                            <SelectValue placeholder="Select UpZila" />
-                          </SelectTrigger>
-                        </FormControl>
-                        <SelectContent>
-                          <SelectItem value="Apple">Apple</SelectItem>
-                          <SelectItem value="m2@example.com">Pran</SelectItem>
-                          <SelectItem value="m22@example.com">Squre</SelectItem>
-                          <SelectItem value="m3@example.com">ACI</SelectItem>
-                          <SelectItem value="m4@example.com">SoftRavine</SelectItem>
-                          <SelectItem value="m5@example.com">Samsung</SelectItem>
-                          <SelectItem value="m6@example.com">LG</SelectItem>
-                          <SelectItem value="m7@example.com">Logitech</SelectItem>
-                          <SelectItem value="m8@example.com">A4tech</SelectItem>
-                          <SelectItem value="m9@example.com">HP</SelectItem>
-                        </SelectContent>
-                      </Select>
-                      </FormControl>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
-              </div>
+                <div className="flex flex-col gap-5.5 p-6.5 dark:text-slate-500">
+                 
+                  <FormField
+                    control={form.control}
+                    name="code"
+                    render={({ field }) => (
+                      <FormItem>
+                        <div className="grid grid-cols-1 md:grid-cols-12">
+                          <div className="col-span-3 mt-3">
+                            <FormLabel>UpZila</FormLabel>
+                          </div>
+                          <div className="col-span-8">
+                            <FormControl>
+                              <Select
+                                onValueChange={field.onChange}
+                                defaultValue={field.value}
+                              >
+                                <FormControl className={inputClass}>
+                                  <SelectTrigger>
+                                    <SelectValue placeholder="Select UpZila" />
+                                  </SelectTrigger>
+                                </FormControl>
+                                <SelectContent>
+                                  <SelectItem value="Apple">Apple</SelectItem>
+                                  <SelectItem value="m2@example.com">Pran</SelectItem>
+                                  <SelectItem value="m22@example.com">Squre</SelectItem>
+                                  <SelectItem value="m3@example.com">ACI</SelectItem>
+                                </SelectContent>
+                              </Select>
+                            </FormControl>
+                          </div>
+                        </div>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+                </div>
 
-            <div className="pt-2">
-              <ButtonPrimary>Save</ButtonPrimary>
+                <div className="pt-2">
+                  <ButtonPrimary>Save</ButtonPrimary>
+                </div>
+              </div>
             </div>
           </div>
-        </div>
-      </div>
-      
-      </form>
+
+        </form>
       </Form>
     </div>
   );

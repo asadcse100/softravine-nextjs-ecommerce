@@ -39,7 +39,7 @@ export default async function DemoPage() {
     <div className="min-h-screen mx-auto max-w-screen-2xl mt-2 p-4 py-4 md:p-6 2xl:p-10 bg-slate-100 dark:bg-slate-900">
       <div className="mb-3 flex flex-row items-center justify-between gap-3 sm:flex-row sm:items-center sm:justify-between">
         <Breadcrumb pageName="All SMS Template" />
-        <Link href="#">
+        <Link href="/admin/pages/otp/sms_template/addnew">
           <Button variant="outline" className="flex flex-col ml-auto dark:text-slate-300">
             + Add New
           </Button>
