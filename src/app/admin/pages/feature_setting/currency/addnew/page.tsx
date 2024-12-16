@@ -24,6 +24,7 @@ import {
 } from "@/app/admin/components/ui/select";
 import Input from "@/shared/Input/Input";
 import Textarea from "@/shared/Textarea/Textarea";
+import { showErrorToast, showSuccessToast } from "@/app/admin/components/Toast";
 
 const formSchema = z.object({
   name: z.string().min(4, {
@@ -74,12 +75,46 @@ export default function Addnew() {
   });
 
   // 2. Define a submit handler.
-  function onSubmit(values: z.infer<typeof formSchema>) {
-    // Do something with the form values.
-    // ✅ This will be type-safe and validated.
-    console.log(values);
-  }
+  // function onSubmit(values: z.infer<typeof formSchema>) {
+  //   // Do something with the form values.
+  //   // ✅ This will be type-safe and validated.
+  //   console.log(values);
+  // }
 
+  const [isLoading, setIsLoading] = useState(false);
+
+  const onSubmit: SubmitHandler<z.infer<typeof formSchema>> = async (values) => {
+    const apiUrl = process.env.NEXT_PUBLIC_API_URL || "";
+
+    if (!apiUrl) {
+      showErrorToast("API URL is not configured.");
+      return;
+    }
+
+    setIsLoading(true);
+
+    try {
+      const response = await fetch(`${apiUrl}/server/api/routes/admin/feature_setting/currency`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(values),
+      });
+
+      if (!response.ok) {
+        throw new Error("Failed to add currency. Please try again.");
+      }
+
+      const result = await response.json();
+
+      showSuccessToast(result.message || "currency added successfully!");
+      // router.push("/admin/pages/blog_system/currency");
+      window.location.href = `${apiUrl}/admin/pages/blog_system/currency`;
+    } catch (error) {
+      showErrorToast("Error adding currency: " + (error instanceof Error ? error.message : "Unknown error"));
+    }
+  };
 
   const [countries, setcountries] = useState<{ id: string; name: string }[]>([]) // Adjust the type according to your data structure
   // Fetch data from an API
@@ -116,7 +151,7 @@ export default function Addnew() {
                 <div className="px-6 rounded-sm border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark">
                   <div className="border-b border-stroke px-6.5 py-4 dark:border-strokedark">
                     <h3 className="font-medium text-black dark:text-white">
-                    System Default Currency
+                      System Default Currency
                     </h3>
                   </div>
                   <div className="py-6">
@@ -169,12 +204,12 @@ export default function Addnew() {
                   </div>
                 </div>
               </form>
-              
+
               <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
                 <div className="px-6 rounded-sm border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark">
                   <div className="border-b border-stroke px-6.5 py-4 dark:border-strokedark">
                     <h3 className="font-medium text-black dark:text-white">
-                    Set Currency Formats
+                      Set Currency Formats
                     </h3>
                   </div>
                   <div className="py-6">
@@ -294,12 +329,20 @@ export default function Addnew() {
                     </div>
 
                     <div className="grid mt-4 justify-items-end">
-                      <Button
+                      {/* <Button
                         className="dark:text-slate-200"
                         variant="outline"
                         type="submit"
                       >
                         Save
+                      </Button> */}
+                      <Button
+                        className="dark:text-slate-200"
+                        variant="outline"
+                        type="submit"
+                        disabled={isLoading}
+                      >
+                        {isLoading ? "Submitting..." : "Submit"}
                       </Button>
                     </div>
                   </div>

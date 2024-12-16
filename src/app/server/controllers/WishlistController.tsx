@@ -1,9 +1,13 @@
-// pages/api/wishlist/index.ts
-import type { NextApiRequest, NextApiResponse } from 'next';
 import { getSession } from 'next-auth/client';
 import { PrismaClient } from '@prisma/client';
-
 const prisma = new PrismaClient();
+
+type createOrUpdateData = {
+    id: number | null;
+    user_id: number;
+    product_id: number;
+    created_at?: string;
+};
 
 // export default async (req: NextApiRequest, res: NextApiResponse) => {
 // export async function wishlists(req: NextApiRequest, res: NextApiResponse) {

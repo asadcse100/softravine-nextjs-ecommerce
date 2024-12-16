@@ -1,9 +1,13 @@
-// src/server/controllers/orderController.ts
-import { NextApiRequest, NextApiResponse } from 'next';
 import PDF from 'pdfkit';
 import { PrismaClient } from '@prisma/client';
-
 const prisma = new PrismaClient();
+
+type createOrUpdateData = {
+  id: number | null;
+  type: string;
+  value: string;
+};
+
 
 export const downloadInvoice = async (req: NextApiRequest, res: NextApiResponse) => {
   try {

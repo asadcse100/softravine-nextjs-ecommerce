@@ -1,6 +1,44 @@
 import React from "react";
 import ButtonPrimary from "@/shared/Button/ButtonPrimary";
 import Breadcrumb from "@/app/seller/components/Breadcrumbs/Breadcrumb"
+import { z } from "zod";
+import { useForm, SubmitHandler } from "react-hook-form";
+import { showErrorToast, showSuccessToast} from "@/app/admin/components/Toast";
+
+const formSchema = z.object({
+  product_name: z.string().min(10, {
+    message: "Product Name must be at least 10 characters.",
+  }),
+  brand: z.string().min(3, {
+    message: "Brand must be at least 3 characters.",
+  }),
+});
+
+const onSubmit: SubmitHandler<z.infer<typeof formSchema>> = async (values) => {
+  const apiUrl = process.env.NEXT_PUBLIC_API_URL || "";
+
+  try {
+    const response = await fetch(`${apiUrl}/server/api/routes/admin/blogs/blogCategories`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(values),
+    });
+
+    if (!response.ok) {
+      throw new Error("Failed to money withdraw. Please try again.");
+    }
+
+    const result = await response.json();
+
+    showSuccessToast(result.message || "withdraw successfully!");
+    // router.push("/admin/pages/blog_system/category");
+    window.location.href = `${apiUrl}/admin/pages/blog_system/withdraw`;
+  } catch (error) {
+    showErrorToast("Error withdraw: " + (error instanceof Error ? error.message : "Unknown error"));
+  }
+};
 
 const AccountBilling = () => {
   return (

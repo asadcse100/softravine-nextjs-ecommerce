@@ -1,28 +1,33 @@
 // controllers/ZoneController.ts
 import { PrismaClient } from '@prisma/client';
-import { NextApiRequest, NextApiResponse } from 'next';
-
 const prisma = new PrismaClient();
 
+type createOrUpdateData = {
+    id: number | null;
+    name: string;
+    status: number;
+    created_at?: string;
+};
+
 export const selectCountries = async () => {
-    try{
-      const countries = await prisma.countries.findMany({
-        select: {
-          name: true,
-        },
-      });
+    try {
+        const countries = await prisma.countries.findMany({
+            select: {
+                name: true,
+            },
+        });
         return { success: true, data: countries };
-    }catch(error){
+    } catch (error) {
         console.error("Error fetching product:", error);
         return { success: false, error };
     }
-  }
+}
 
 export const getZones = async () => {
-    try{
+    try {
         const getZones = await prisma.zones.findMany();
         return { success: true, data: getZones };
-    }catch(error){
+    } catch (error) {
         console.error("Error fetching getZones:", error);
         return { success: false, error };
     }
@@ -77,22 +82,22 @@ export async function update(req: NextApiRequest, res: NextApiResponse) {
 }
 
 // async destroy(req: NextApiRequest, res: NextApiResponse) {
-    export async function destroy(req: NextApiRequest, res: NextApiResponse) {
+export async function destroy(req: NextApiRequest, res: NextApiResponse) {
     try {
-      const { id } = req.query;
+        const { id } = req.query;
 
-      // Disconnect countries associated with the zone
-      await prisma.country.updateMany({
-        where: { zoneId: Number(id) },
-        data: { zoneId: 0 },
-      });
+        // Disconnect countries associated with the zone
+        await prisma.country.updateMany({
+            where: { zoneId: Number(id) },
+            data: { zoneId: 0 },
+        });
 
-      // Delete the zone
-      await prisma.zone.delete({ where: { id: Number(id) } });
+        // Delete the zone
+        await prisma.zone.delete({ where: { id: Number(id) } });
 
-      res.status(204).end();
+        res.status(204).end();
     } catch (error) {
-      console.error(error);
-      res.status(500).json({ message: 'Internal Server Error' });
+        console.error(error);
+        res.status(500).json({ message: 'Internal Server Error' });
     }
-  }
+}

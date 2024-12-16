@@ -4,9 +4,11 @@ import { Route } from "@/routers/types";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import React from "react";
+import { useForm, SubmitHandler } from "react-hook-form";
 import { FC } from "react";
 import NcImage from "@/shared/NcImage/NcImage";
 import MR from "@/images/MR.png";
+import { showErrorToast, showSuccessToast} from "@/app/admin/components/Toast";
 
 export interface CommonLayoutProps {
   children?: React.ReactNode;
@@ -55,6 +57,33 @@ const pages: {
     link: "#", 
   },
 ];
+
+const onSubmit: SubmitHandler<z.infer<typeof formSchema>> = async (values) => {
+  const apiUrl = process.env.NEXT_PUBLIC_API_URL || "";
+
+  try {
+    const response = await fetch(`${apiUrl}/server/api/routes/admin/blogs/blogCategories`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(values),
+    });
+
+    if (!response.ok) {
+      throw new Error("Failed to add tuition. Please try again.");
+    }
+
+    const result = await response.json();
+
+    showSuccessToast(result.message || "tuition added successfully!");
+    // router.push("/admin/pages/blog_system/tuition");
+    window.location.href = `${apiUrl}/admin/pages/blog_system/tuition`;
+  } catch (error) {
+    showErrorToast("Error adding tuition: " + (error instanceof Error ? error.message : "Unknown error"));
+  }
+};
+
 
 const CommonLayout: FC<CommonLayoutProps> = ({ children }) => {
   const pathname = usePathname();

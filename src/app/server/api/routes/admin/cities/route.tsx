@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server";
-import { getCities, createCity } from '@/app/server/controllers/CityController';
+import { getCities, createOrUpdateCity } from '@/app/server/controllers/CityController';
 
 export async function GET() {
   const result = await getCities();
@@ -14,7 +14,7 @@ export async function GET() {
 export async function POST(req: Request) {
   try {
     const body = await req.json();
-    const result = await createCity(body);
+    const result = await createOrUpdateCity(body);
 
     if (result.success) {
       return NextResponse.json(

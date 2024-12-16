@@ -1,5 +1,5 @@
 "use client";
-
+import { useState } from "react";
 import { useRouter } from "next/navigation"; // Correct import for client-side navigation in Next.js 13+
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm, SubmitHandler } from "react-hook-form";
@@ -14,6 +14,14 @@ import {
   FormMessage,
 } from "@/app/admin/components/ui/form";
 import Input from "@/shared/Input/Input";
+import { toast } from "@/app/admin/components/ui/use-toast";
+import { showErrorToast, showSuccessToast } from "@/app/admin/components/Toast";
+
+// Define the Category interface
+interface Category {
+  id: string;   // The ID type, adjust based on your database schema
+  name: string;  // The name of the category
+}
 
 // Define the schema for form validation using Zod
 const formSchema = z.object({
@@ -28,6 +36,7 @@ type FormData = z.infer<typeof formSchema>;
 export default function AddNewCategory() {
   const router = useRouter();
 
+  const [categories, setCategories] = useState<Category[]>([]);
   // Initialize form handling
   const form = useForm<FormData>({
     resolver: zodResolver(formSchema),
@@ -36,13 +45,17 @@ export default function AddNewCategory() {
     },
   });
 
-  const onSubmit: SubmitHandler<FormData> = async (values) => {
-    const apiUrl = process.env.NEXT_PUBLIC_API_URL;
+  const [isLoading, setIsLoading] = useState(false);
+
+  const onSubmit: SubmitHandler<z.infer<typeof formSchema>> = async (values) => {
+    const apiUrl = process.env.NEXT_PUBLIC_API_URL || "";
 
     if (!apiUrl) {
-      toast.error("API URL is not configured.");
+      showErrorToast("API URL is not configured.");
       return;
     }
+
+    setIsLoading(true);
 
     try {
       const response = await fetch(`${apiUrl}/server/api/routes/admin/blogs/blogCategories`, {
@@ -59,12 +72,16 @@ export default function AddNewCategory() {
       }
 
       const result = await response.json();
-      toast.success(result.message || "Category added successfully!");
 
-      // Use router.push to navigate after successful submission
+      // setCategories((prevCategories) => [
+      //   ...prevCategories,
+      //   result.newCategory, // Assuming result.newCategory contains the added category data
+      // ]);
+
+      showSuccessToast(result.message || "Category added successfully!");
       router.push("/admin/pages/blog_system/category");
     } catch (error) {
-      toast.error("Error adding category: " + (error as Error).message);
+      showErrorToast("Error adding category: " + (error instanceof Error ? error.message : "Unknown error"));
     }
   };
 
@@ -97,7 +114,7 @@ export default function AddNewCategory() {
                               <div className="col-span-8">
                                 <FormControl>
                                   <Input
-                                    className="bg-zinc-50 border border-slate-300 text-slate-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-slate-900 dark:border-slate-800 dark:placeholder-slate-700 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                                    className={inputClass}
                                     placeholder="Category Name"
                                     {...field}
                                   />
@@ -110,13 +127,21 @@ export default function AddNewCategory() {
                       />
                     </div>
                     <div className="grid mt-4 justify-items-end">
-                      <Button
+                      {/* <Button
                         className="dark:text-slate-200"
                         variant="outline"
                         type="submit"
                         disabled={form.formState.isSubmitting}
                       >
                         Save
+                      </Button> */}
+                      <Button
+                        className="dark:text-slate-200"
+                        variant="outline"
+                        type="submit"
+                        disabled={isLoading}
+                      >
+                        {isLoading ? "Submitting..." : "Submit"}
                       </Button>
                     </div>
                   </div>

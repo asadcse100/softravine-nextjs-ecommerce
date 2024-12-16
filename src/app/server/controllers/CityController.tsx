@@ -4,6 +4,14 @@ import { NextApiRequest, NextApiResponse } from 'next'
 
 const prisma = new PrismaClient()
 
+type createOrUpdateData = {
+  id: number | null;
+  state_id: number;
+  cost: number;
+  status: number;
+  name: string;
+};
+
 // export const getCities = async (req: NextApiRequest, res: NextApiResponse) => {
 //   try {
 //     const { sort_city, sort_state } = req.query
@@ -35,6 +43,16 @@ const prisma = new PrismaClient()
 // }
 
 export const getCities = async () => {
+  try{
+      const cities = await prisma.cities.findMany();
+      return { success: true, data: cities };
+  }catch(error){
+      console.error("Error fetching cities:", error);
+      return { success: false, error };
+  }
+}
+
+export const createOrUpdateCity = async () => {
   try{
       const cities = await prisma.cities.findMany();
       return { success: true, data: cities };

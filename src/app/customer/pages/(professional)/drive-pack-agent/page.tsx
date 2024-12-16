@@ -3,7 +3,8 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
-
+import { showErrorToast, showSuccessToast} from "@/app/admin/components/Toast";
+import { useForm, SubmitHandler } from "react-hook-form";
 import {
   Form,
   FormControl,
@@ -54,11 +55,37 @@ const AccountPass = () => {
   });
 
   // 2. Define a submit handler.
-  function onSubmit(values: z.infer<typeof formSchema>) {
-    // Do something with the form values.
-    // ✅ This will be type-safe and validated.
-    console.log(values);
-  }
+  // function onSubmit(values: z.infer<typeof formSchema>) {
+  //   // Do something with the form values.
+  //   // ✅ This will be type-safe and validated.
+  //   console.log(values);
+  // }
+
+  const onSubmit: SubmitHandler<z.infer<typeof formSchema>> = async (values) => {
+    const apiUrl = process.env.NEXT_PUBLIC_API_URL || "";
+
+    try {
+      const response = await fetch(`${apiUrl}/server/api/routes/admin/blogs/blogCategories`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(values),
+      });
+
+      if (!response.ok) {
+        throw new Error("Failed to drive pack. Please try again.");
+      }
+
+      const result = await response.json();
+
+      showSuccessToast(result.message || "drive pack successfully!");
+      // router.push("/admin/pages/blog_system/catdrive packegory");
+      window.location.href = `${apiUrl}/admin/pages/blog_system/productbid`;
+    } catch (error) {
+      showErrorToast("Error adding drive pack: " + (error instanceof Error ? error.message : "Unknown error"));
+    }
+  };
 
   return (
     <div className="space-y-5 sm:space-y-5 bg-white dark:bg-slate-700 p-5 rounded-xl">

@@ -2,7 +2,8 @@
 
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm, SubmitHandler } from "react-hook-form";
-import { toast } from "react-hot-toast";
+import { showErrorToast, showSuccessToast} from "@/app/admin/components/Toast";
+
 import { z } from "zod";
 
 import {
@@ -56,12 +57,39 @@ const AccountPass = () => {
   });
 
   // 2. Define a submit handler.
-  function onSubmit(values: z.infer<typeof formSchema>) {
-    // Do something with the form values.
-    // ✅ This will be type-safe and validated.
-    console.log(values);
-  }
+  // function onSubmit(values: z.infer<typeof formSchema>) {
+  //   // Do something with the form values.
+  //   // ✅ This will be type-safe and validated.
+  //   console.log(values);
+  // }
 
+  const onSubmit: SubmitHandler<z.infer<typeof formSchema>> = async (values) => {
+    const apiUrl = process.env.NEXT_PUBLIC_API_URL || "";
+
+    try {
+      const response = await fetch(`${apiUrl}/server/api/routes/admin/blogs/blogCategories`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(values),
+      });
+
+      if (!response.ok) {
+        throw new Error("Failed to add localoutlet. Please try again.");
+      }
+
+      const result = await response.json();
+
+      showSuccessToast(result.message || "localoutlet added successfully!");
+      // router.push("/admin/pages/blog_system/localoutlet");
+      window.location.href = `${apiUrl}/admin/pages/blog_system/localoutlet`;
+    } catch (error) {
+      showErrorToast("Error adding localoutlet: " + (error instanceof Error ? error.message : "Unknown error"));
+    }
+  };
+
+  
   return (
     <div className="space-y-5 sm:space-y-5 bg-white dark:bg-slate-700 p-5 rounded-xl">
       <Form {...form}>

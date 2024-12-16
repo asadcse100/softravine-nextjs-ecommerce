@@ -1,6 +1,12 @@
 import { PrismaClient } from '@prisma/client';
 const prisma = new PrismaClient();
 
+type createOrUpdateData = {
+  id: number | null;
+  category_name: string;
+  created_at?: string;
+};
+
 export const getBlogCategories = async () => {
   try {
     const blogCategories = await prisma.blog_categories.findMany({
@@ -15,32 +21,44 @@ export const getBlogCategories = async () => {
   }
 };
 
-export const createBlogCategory = async (category_name: string) => {
+export async function createOrUpdateBlogCategory(data: createOrUpdateData) {
   try {
-    // Generate a slug by converting the category name to lowercase and formatting it
-    const slug = category_name
+    // Validate that category_name exists
+    if (!data.category_name) {
+      throw new Error("Category name is required");
+    }
+
+    // Generate a slug
+    const slug = data.category_name
       .toLowerCase()
       .replace(/[^a-z0-9]+/g, '-')
       .replace(/(^-|-$)/g, '');
 
-    // Use the current date as-is if `created_at` is a Date type in Prisma
-    const created_at = new Date();
+    // Use the provided `created_at` or fallback to the current date
+    const created_at = data.created_at ? new Date(data.created_at) : new Date();
 
-    // Create a new category in the database
-    const newCategory = await prisma.blog_categories.create({
-      data: {
-        category_name,
-        slug,
-        created_at,
+    // Perform the upsert operation
+    const newCategory = await prisma.blog_categories.upsert({
+      where: { id: data.id || 0, slug: slug }, // Replace `0` with a non-zero ID if necessary
+      update: {
+        category_name: data.category_name,
+        slug: slug,
+        updated_at: created_at,
+      },
+      create: {
+        category_name: data.category_name,
+        slug: slug,
+        created_at: created_at,
       },
     });
 
     return { success: true, data: newCategory };
   } catch (error) {
-    console.error("Error creating new category:", error);
-    return { success: false, error };
+    console.error("Error creating or updating blog category:", error);
+    return { success: false, error: error.message || "An unexpected error occurred" };
   }
-};
+}
+
 
 export const updateBlogCategory = async (id: number, category_name: string) => {
   try {

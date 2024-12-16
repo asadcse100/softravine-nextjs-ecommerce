@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server";
-import { getCategories, createCategory } from '@/app/server/controllers/CategoryController';
+import { getCategories, createOrUpdateCategory } from '@/app/server/controllers/CategoryController';
 
 export async function GET() {
   const result = await getCategories();
@@ -15,7 +15,7 @@ export async function GET() {
 export async function POST(req: Request) {
   try {
     const body = await req.json();
-    const result = await createCategory(body);
+    const result = await createOrUpdateCategory(body);
 
     if (result.success) {
       return NextResponse.json(

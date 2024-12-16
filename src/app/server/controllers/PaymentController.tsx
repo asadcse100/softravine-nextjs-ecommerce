@@ -1,10 +1,16 @@
-// controllers/userController.ts
-
-import { NextApiRequest, NextApiResponse } from 'next';
 import { PrismaClient } from '@prisma/client';
 import crypto from 'crypto';
-
 const prisma = new PrismaClient();
+
+type createOrUpdateData = {
+  id: number | null;
+  seller_id: number;
+  amount: number;
+  payment_details: string;
+  payment_method: string;
+  txn_code: string;
+  created_at: number;
+};
 
 // Utility function to decrypt the ID
 function decrypt(text: string): string {
@@ -19,15 +25,15 @@ function decrypt(text: string): string {
 //       const { page = 1, pageSize = 15 } = req.query;
 //       const pageNum = parseInt(page as string, 10);
 //       const pageSizeNum = parseInt(pageSize as string, 10);
-  
+
 //       const payments = await prisma.payment.findMany({
 //         orderBy: { createdAt: 'desc' },
 //         skip: (pageNum - 1) * pageSizeNum,
 //         take: pageSizeNum,
 //       });
-  
+
 //       const totalPayments = await prisma.payment.count();
-  
+
 //       return res.status(200).json({ payments, totalPayments, page: pageNum, pageSize: pageSizeNum });
 //     } catch (error) {
 //       console.error(error);
@@ -36,12 +42,12 @@ function decrypt(text: string): string {
 //   }
 
 export const getPaymentHistories = async () => {
-  try{
-      const payments = await prisma.payments.findMany();
-      return { success: true, data: payments };
-  }catch(error){
-      console.error("Error fetching payments:", error);
-      return { success: false, error };
+  try {
+    const payments = await prisma.payments.findMany();
+    return { success: true, data: payments };
+  } catch (error) {
+    console.error("Error fetching payments:", error);
+    return { success: false, error };
   }
 }
 

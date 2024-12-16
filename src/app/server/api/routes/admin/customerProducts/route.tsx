@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server";
-import { getCustomerProducts, createCustomerProduct } from '@/app/server/controllers/CustomerProductController';
+import { getCustomerProducts, createOrUpdateCustomerProduct } from '@/app/server/controllers/CustomerProductController';
 
 export async function GET() {
   const result = await getCustomerProducts();
@@ -15,7 +15,7 @@ export async function GET() {
 export async function POST(req: Request) {
   try {
     const body = await req.json();
-    const result = await createCustomerProduct(body);
+    const result = await createOrUpdateCustomerProduct(body);
 
     if (result.success) {
       return NextResponse.json(

@@ -2,11 +2,61 @@ import { PrismaClient } from '@prisma/client';
 
 const prisma = new PrismaClient();
 
+type createOrUpdateData = {
+  id: number | null;
+  user_id: number;
+  guest_id: number;
+  affiliate_user_id: number;
+  referred_by_user: number;
+  amount: number;
+  order_id: number;
+  order_detail_id: number;
+  status: number;
+  affiliate_type: string;
+  payment_method: string;
+  payment_details: string;
+  type: string;
+  value: string;
+  details?: string;
+  percentage?: number;
+  no_of_click: number;
+  no_of_order_item: number;
+  no_of_delivered: number;
+  no_of_cancel: number;
+  paypal_email?: string;
+  bank_information?: string;
+  informations?: string;
+  balance: number;
+  created_at?: string;
+};
+
 export const getAffiliateUsers = async () => {
   try {
     const affiliate_users = await prisma.affiliate_users.findMany();
     return { success: true, data: affiliate_users };
   } catch (error) {
+    return { success: false, error };
+  }
+}
+
+export async function createOrUpdateAffiliateConfiguration(data: createOrUpdateData) {
+  try {
+    const newPost = await prisma.affiliate_configs.upsert({
+      where: { id: data.id ?? 0 }, // Fallback to 0 if `data.id` is null
+      update: {
+        type: data.type,
+        value: data.value,
+      },
+      create: {
+        id: data.id ?? undefined, // Ensure `id` is included only if provided
+        type: data.type,
+        value: data.value,
+      }
+    });
+
+    return { success: true, data: newPost };
+  } catch (error) {
+    console.error("Error creating blog post:", error);
     return { success: false, error };
   }
 }

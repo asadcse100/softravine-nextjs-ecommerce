@@ -1,9 +1,17 @@
 // services/newsletterService.ts
 import { PrismaClient } from '@prisma/client';
 import nodemailer from 'nodemailer';
-
 const prisma = new PrismaClient();
 
+type createOrUpdateData = {
+    id: number | null;
+    type: string;
+    notifiable_type: string;
+    notifiable_id: string;
+    data: string;
+    read_at: string;
+    created_at?: string;
+};
 interface EmailData {
     to: string;
     subject: string;

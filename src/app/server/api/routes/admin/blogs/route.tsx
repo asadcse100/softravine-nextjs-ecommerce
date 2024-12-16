@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server";
-import { getAllBlogs, createBlogPost } from '@/app/server/controllers/BlogController';
+import { getAllBlogs, createOrUpdateBlogPost } from '@/app/server/controllers/BlogController';
 
 export async function GET() {
   const result = await getAllBlogs();
@@ -14,7 +14,7 @@ export async function GET() {
 export async function POST(req: Request) {
   try {
     const body = await req.json();
-    const result = await createBlogPost(body);
+    const result = await createOrUpdateBlogPost(body);
 
     if (result.success) {
       return NextResponse.json(

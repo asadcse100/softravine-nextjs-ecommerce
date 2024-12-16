@@ -3,6 +3,20 @@ import { PrismaClient } from '@prisma/client';
 
 const prisma = new PrismaClient();
 
+type createOrUpdateData = {
+  id: number | null;
+  user_id: number;
+  type: string;
+  code: string;
+  details: string;
+  discount: string;
+  discount_type: string;
+  start_date: number;
+  end_date: number;
+  status: number;
+  created_at?: string;
+};
+
 // export const index = async (req: NextApiRequest, res: NextApiResponse) => {
 //   try {
 //     const admin = await prisma.user.findFirst({

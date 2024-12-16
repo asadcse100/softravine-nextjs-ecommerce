@@ -1,8 +1,11 @@
-// controllers/UserController.ts
-
-import { NextApiRequest, NextApiResponse } from 'next';
 import { PrismaClient } from '@prisma/client';
 import { hash } from 'bcrypt';
+
+type createOrUpdateData = {
+    id: number | null;
+    type: string;
+    value: string;
+};
 
 const prisma = new PrismaClient();
 
@@ -33,10 +36,10 @@ const prisma = new PrismaClient();
 // };
 
 export const updateUser = async () => {
-    try{
+    try {
         const user = await prisma.users.findMany();
         return { success: true, data: user };
-    }catch(error){
+    } catch (error) {
         console.error("Error fetching user:", error);
         return { success: false, error };
     }

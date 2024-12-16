@@ -43,7 +43,6 @@ export default function AccountPass() {
       name: "",
       brand_id: "",
       unit: "",
-      weight: "",
       min_qty: "",
       tag: "",
       barcode: "",
@@ -63,7 +62,7 @@ export default function AccountPass() {
   const inputClass = "bg-zinc-50 border border-slate-300 text-slate-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-slate-900 dark:border-slate-700 dark:placeholder-slate-700 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500";
 
   return (
-    <div className="space-y-10 sm:space-y-12 bg-white dark:bg-slate-800 p-5 rounded-xl">
+    <div className="space-y-10 sm:space-y-12 bg-white dark:bg-slate-700 p-5 rounded-xl">
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
           <div className=" max-w-xl space-y-2">

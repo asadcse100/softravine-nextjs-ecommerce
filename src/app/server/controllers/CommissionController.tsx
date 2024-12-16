@@ -3,7 +3,13 @@ import { PrismaClient } from '@prisma/client';
 
 const prisma = new PrismaClient();
 
-export default async function payToSeller(req: NextApiRequest, res: NextApiResponse) {
+type createOrUpdateData = {
+    id: number | null;
+    type: string;
+    value: string;
+};
+
+export async function payToSeller(data: createOrUpdateData) {
     if (req.method === 'POST') {
         const data = req.body;
         if (!data) {
@@ -99,7 +105,7 @@ export async function calculateCommission(order: any) {
                 where: { id: orderDetail.id },
                 data: { payment_status: 'paid' },
             });
-            
+
             let commission_percentage = 0;
             if (getSetting('vendor_commission_activation')) {
                 if (getSetting('category_wise_commission')) {
@@ -148,7 +154,7 @@ export async function calculateCommission(order: any) {
                 where: { id: orderDetail.id },
                 data: { payment_status: 'paid' },
             });
-            
+
             let commission_percentage = 0;
             if (getSetting('vendor_commission_activation')) {
                 if (getSetting('category_wise_commission')) {

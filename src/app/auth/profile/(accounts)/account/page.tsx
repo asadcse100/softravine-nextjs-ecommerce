@@ -7,7 +7,7 @@ import Input from "@/shared/Input/Input";
 import Textarea from "@/shared/Textarea/Textarea";
 import { avatarImgs } from "@/contains/fakeData";
 import Image from "next/image";
-
+import { useRouter } from "next/navigation";
 
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm, SubmitHandler } from "react-hook-form";
@@ -31,6 +31,7 @@ import {
   SelectValue,
 } from "@/app/admin/components/ui/select";
 import Breadcrumb from "@/app/seller/components/Breadcrumbs/Breadcrumb";
+import { showErrorToast, showSuccessToast } from "@/app/admin/components/Toast";
 
 const formSchema = z.object({
   code: z.string().min(10, {
@@ -53,7 +54,9 @@ const formSchema = z.object({
   }),
 });
 
-const AccountPage = () => {
+export default function AccountPage() {
+  // const AccountPage = () => {
+  const router = useRouter();
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -68,13 +71,40 @@ const AccountPage = () => {
   });
 
   // 2. Define a submit handler.
-  function onSubmit(values: z.infer<typeof formSchema>) {
-    // Do something with the form values.
-    // ✅ This will be type-safe and validated.
-    console.log(values);
+  // function onSubmit(values: z.infer<typeof formSchema>) {
+  const onSubmit: SubmitHandler<FormData> = async (values) => {
+    const apiUrl = process.env.NEXT_PUBLIC_API_URL;
+
+    if (!apiUrl) {
+      showErrorToast("API URL is not configured.");
+      return;
+    }
+
+    try {
+      const response = await fetch(`${apiUrl}/server/api/routes/admin/blogs/blogCategories`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(values),
+      });
+
+      if (!response.ok) {
+        const errorData = await response.json();
+        throw new Error(errorData.message || "Failed to add account. Please try again.");
+      }
+
+      const result = await response.json();
+
+      showSuccessToast(result.message || "account added successfully!");
+      router.push("/admin/pages/account");
+    } catch (error) {
+      showErrorToast("Error adding account: " + (error instanceof Error ? error.message : "Unknown error"));
+    }
   }
 
   const inputClass = "bg-zinc-50 border border-slate-300 text-slate-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-slate-900 dark:border-slate-700 dark:placeholder-slate-700 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500";
+  const selectClass = "dark:bg-slate-900 dark:border-slate-700 dark:placeholder-slate-700 dark:text-mute dark:focus:ring-blue-500 dark:focus:border-blue-500";
 
   return (
     <div className="{`nc-AccountPage `}">
@@ -121,12 +151,8 @@ const AccountPage = () => {
                   />
                 </div>
               </div>
-              <div className="flex-grow mt-10 md:mt-0 md:pl-16 max-w-3xl space-y-6">
-                {/* <div>
-              <Label className="dark:text-slate-400">Full name</Label>
-              <Input className="mt-1.5" placeholder="Enrico Cole" />
-            </div> */}
 
+              <div className="flex-grow mt-10 md:mt-0 md:pl-16 max-w-3xl space-y-3">
                 <FormField
                   control={form.control}
                   name="code"
@@ -305,4 +331,4 @@ const AccountPage = () => {
   );
 };
 
-export default AccountPage;
+// export default AccountPage;

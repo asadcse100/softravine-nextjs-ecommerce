@@ -3,6 +3,18 @@ import { PrismaClient } from '@prisma/client';
 
 const prisma = new PrismaClient();
 
+type createOrUpdateData = {
+  id: number | null;
+  user_id: number;
+  customer_package_id: number;
+  payment_method: string;
+  payment_details: string;
+  approval: number;
+  offline_payment: number;
+  reciept: string;
+  created_at: string;
+};
+
 // export const getOfflinePaymentRequests = async (req: NextApiRequest, res: NextApiResponse) => {
 //   try {
 //     // Retrieve offline payment requests

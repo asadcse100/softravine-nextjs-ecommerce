@@ -1,12 +1,18 @@
 import { PrismaClient } from '@prisma/client';
-
 const prisma = new PrismaClient();
 
+type createOrUpdateData = {
+    id: number | null;
+    name: string;
+    tax_status: number;
+    created_at?: string;
+};
+
 export const getTaxes = async () => {
-    try{
+    try {
         const texes = await prisma.taxes.findMany();
         return { success: true, data: texes };
-    }catch(error){
+    } catch (error) {
         return { success: false, error };
     }
 }
@@ -67,33 +73,33 @@ export const destroy = async (req: NextApiRequest, res: NextApiResponse) => {
 }
 
 // export default async function changeTaxStatus(req: NextApiRequest, res: NextApiResponse) {
-    export const changeTaxStatus = async (req: NextApiRequest, res: NextApiResponse) => {
+export const changeTaxStatus = async (req: NextApiRequest, res: NextApiResponse) => {
     try {
-      const { id } = req.body;
-  
-      const tax = await prisma.tax.findUnique({
-        where: {
-          id: parseInt(id as string),
-        },
-      });
-  
-      if (!tax) {
-        res.status(404).json({ error: 'Tax not found' });
-        return;
-      }
-  
-      const updatedTax = await prisma.tax.update({
-        where: {
-          id: parseInt(id as string),
-        },
-        data: {
-          tax_status: tax.tax_status === 1 ? 0 : 1,
-        },
-      });
-  
-      res.status(200).json(updatedTax.tax_status);
+        const { id } = req.body;
+
+        const tax = await prisma.tax.findUnique({
+            where: {
+                id: parseInt(id as string),
+            },
+        });
+
+        if (!tax) {
+            res.status(404).json({ error: 'Tax not found' });
+            return;
+        }
+
+        const updatedTax = await prisma.tax.update({
+            where: {
+                id: parseInt(id as string),
+            },
+            data: {
+                tax_status: tax.tax_status === 1 ? 0 : 1,
+            },
+        });
+
+        res.status(200).json(updatedTax.tax_status);
     } catch (error) {
-      console.error(error);
-      res.status(500).json({ error: 'Internal Server Error' });
+        console.error(error);
+        res.status(500).json({ error: 'Internal Server Error' });
     }
-  }
+}

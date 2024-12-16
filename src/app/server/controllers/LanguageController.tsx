@@ -1,12 +1,19 @@
 
 import { PrismaClient } from '@prisma/client';
-
 // import formidable from 'formidable';
 import fs from 'fs';
 import path from 'path';
-
 const prisma = new PrismaClient();
 
+type createOrUpdateData = {
+  id: number | null;
+  name: string;
+  code: string;
+  app_lang_code: string;
+  rtl: number;
+  status: number;
+  created_at?: string;
+};
 
 export const selectCode = async () => {
   try{

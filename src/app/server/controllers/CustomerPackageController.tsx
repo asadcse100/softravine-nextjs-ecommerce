@@ -1,7 +1,16 @@
-import { NextApiRequest, NextApiResponse } from 'next';
+
 import { PrismaClient } from '@prisma/client';
 
 const prisma = new PrismaClient();
+
+type createOrUpdateData = {
+  id: number | null;
+  name: string;
+  amount: number;
+  product_upload: number;
+  logo: number;
+  created_at?: string;
+};
 
 // export const getAllCustomerPackages = async (req: NextApiRequest, res: NextApiResponse) => {
 //   try {
@@ -25,7 +34,7 @@ export const getAllCustomerPackages = async () => {
   }
 }
 
-export const createCustomerPackage = async (req: NextApiRequest, res: NextApiResponse) => {
+export const createOrUpdateCustomerPackage = async () => {
     try {
       const { name, amount, product_upload, logo } = req.body;
   
@@ -52,67 +61,67 @@ export const createCustomerPackage = async (req: NextApiRequest, res: NextApiRes
     }
   };
 
-  export const updateCustomerPackage = async (req: NextApiRequest, res: NextApiResponse) => {
-    try {
-      const { id } = req.query;
-      const { name, amount, product_upload, logo, lang } = req.body;
+  // export const updateCustomerPackage = async (req: NextApiRequest, res: NextApiResponse) => {
+  //   try {
+  //     const { id } = req.query;
+  //     const { name, amount, product_upload, logo, lang } = req.body;
   
-      // Find the customer package by ID
-      const customerPackage = await prisma.customer_packages.findUnique({
-        where: {
-          id: Number(id),
-        },
-      });
+  //     // Find the customer package by ID
+  //     const customerPackage = await prisma.customer_packages.findUnique({
+  //       where: {
+  //         id: Number(id),
+  //       },
+  //     });
   
-      if (!customerPackage) {
-        return res.status(404).json({ error: 'Customer package not found' });
-      }
+  //     if (!customerPackage) {
+  //       return res.status(404).json({ error: 'Customer package not found' });
+  //     }
   
-      // Update customer package fields
-      if (lang === process.env.DEFAULT_LANGUAGE) {
-        customerPackage.name = name;
-      }
-      customerPackage.amount = amount;
-      customerPackage.product_upload = product_upload;
-      customerPackage.logo = logo;
+  //     // Update customer package fields
+  //     if (lang === process.env.DEFAULT_LANGUAGE) {
+  //       customerPackage.name = name;
+  //     }
+  //     customerPackage.amount = amount;
+  //     customerPackage.product_upload = product_upload;
+  //     customerPackage.logo = logo;
   
-      // Save the changes
-      await prisma.customer_packages.update({
-        where: {
-          id: Number(id),
-        },
-        data: {
-          name: customerPackage.name,
-          amount: customerPackage.amount,
-          product_upload: customerPackage.product_upload,
-          logo: customerPackage.logo,
-          translations: {
-            upsert: {
-              where: {
-                lang_customerPackage_id: {
-                  lang,
-                  customerPackage_id: Number(id),
-                },
-              },
-              update: {
-                name: customerPackage.name,
-              },
-              create: {
-                lang,
-                name: customerPackage.name,
-                customerPackage_id: customerPackage.id,
-              },
-            },
-          },
-        },
-      });
+  //     // Save the changes
+  //     await prisma.customer_packages.update({
+  //       where: {
+  //         id: Number(id),
+  //       },
+  //       data: {
+  //         name: customerPackage.name,
+  //         amount: customerPackage.amount,
+  //         product_upload: customerPackage.product_upload,
+  //         logo: customerPackage.logo,
+  //         translations: {
+  //           upsert: {
+  //             where: {
+  //               lang_customerPackage_id: {
+  //                 lang,
+  //                 customerPackage_id: Number(id),
+  //               },
+  //             },
+  //             update: {
+  //               name: customerPackage.name,
+  //             },
+  //             create: {
+  //               lang,
+  //               name: customerPackage.name,
+  //               customerPackage_id: customerPackage.id,
+  //             },
+  //           },
+  //         },
+  //       },
+  //     });
   
-      res.status(200).json({ success: 'Package has been updated successfully' });
-    } catch (error) {
-      console.error(error);
-      res.status(500).json({ error: 'Failed to update package' });
-    }
-  };
+  //     res.status(200).json({ success: 'Package has been updated successfully' });
+  //   } catch (error) {
+  //     console.error(error);
+  //     res.status(500).json({ error: 'Failed to update package' });
+  //   }
+  // };
 
   export const deleteCustomerPackage = async (req: NextApiRequest, res: NextApiResponse) => {
     try {

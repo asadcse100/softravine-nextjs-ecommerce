@@ -17,12 +17,12 @@ import Link from "next/link";
 
 // This type is used to define the shape of our data.
 // You can use a Zod schema here if you want.
-export type Products = {
+export type Category = {
   id: string;
   category_name: string;
 };
 
-export const columns: ColumnDef<Products>[] = [
+export const columns: ColumnDef<Category>[] = [
   {
     id: "select",
     header: ({ table }) => (
@@ -49,7 +49,7 @@ export const columns: ColumnDef<Products>[] = [
     header: "Action",
     id: "actions",
     cell: ({ row }) => {
-      const payment = row.original;
+      const product = row.original;
 
       return (
         <DropdownMenu>
@@ -60,7 +60,7 @@ export const columns: ColumnDef<Products>[] = [
             </Button>
           </DropdownMenuTrigger>
           <DropdownMenuContent className="dark:bg-slate-700 dark:text-slate-200 bg-slate-100" align="start">
-            <DropdownMenuItem className="dark:hover:bg-slate-500 hover:bg-slate-300"><Link href="/">Edit</Link></DropdownMenuItem>
+            <DropdownMenuItem className="dark:hover:bg-slate-500 hover:bg-slate-300"><Link href={`/admin/pages/blog_system/category/edit/${product.id}`}>Edit</Link></DropdownMenuItem>
             <DropdownMenuItem className="dark:hover:bg-slate-500 hover:bg-slate-300"><Link href="/">Delete</Link></DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>

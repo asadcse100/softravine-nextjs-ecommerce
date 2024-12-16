@@ -3,6 +3,16 @@ import { PrismaClient } from '@prisma/client';
 
 const prisma = new PrismaClient();
 
+type createOrUpdateData = {
+  id: number | null;
+  name: string;
+  logo: number;
+  transit_time: string;
+  free_shipping: number;
+  status: number;
+  created_at?: string;
+};
+
 // export async function getAllCarriers() {
 //   return prisma.carrier.findMany();
 // }
@@ -17,7 +27,7 @@ export const getAllCarriers = async () => {
   }
 }
 
-export async function createCarrier(carrierData: any) {
+export async function createOrUpdateCarrier(carrierData: any) {
   const { carrier_name, transit_time, logo, shipping_type, delimiter1, delimiter2, billing_type, zones, carrier_price } = carrierData;
 
   const freeShipping = shipping_type ? true : false;

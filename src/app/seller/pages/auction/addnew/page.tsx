@@ -2,7 +2,6 @@
 import * as React from "react"
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm, SubmitHandler } from "react-hook-form";
-import { toast } from "react-hot-toast";
 import { z } from "zod";
 import { useState, useEffect, useRef } from 'react';
 
@@ -28,7 +27,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/app/admin/components/ui/select";
-
+import { showErrorToast, showSuccessToast } from "@/app/admin/components/Toast";
 import Textarea from "@/shared/Textarea/Textarea";
 
 const formSchema = z.object({
@@ -65,6 +64,7 @@ const formSchema = z.object({
 
 });
 
+
 export default function Addnew() {
   // ...
   // 1. Define your form.
@@ -85,14 +85,49 @@ export default function Addnew() {
   });
 
   // 2. Define a submit handler.
-  async function onSubmit(values: z.infer<typeof formSchema>) {
-    // try {
-    //   const response = await axios.post('/api/routes/admin/createAuction', values);
-    //   console.log(response.data);
-    // } catch (error) {
-    //   console.error('Error creating auction:', error);
-    // }
-  }
+  // async function onSubmit(values: z.infer<typeof formSchema>) {
+  //   // try {
+  //   //   const response = await axios.post('/api/routes/admin/createAuction', values);
+  //   //   console.log(response.data);
+  //   // } catch (error) {
+  //   //   console.error('Error creating auction:', error);
+  //   // }
+  // }
+
+  const [isLoading, setIsLoading] = useState(false);
+
+  const onSubmit: SubmitHandler<z.infer<typeof formSchema>> = async (values) => {
+    const apiUrl = process.env.NEXT_PUBLIC_API_URL || "";
+
+    if (!apiUrl) {
+      showErrorToast("API URL is not configured.");
+      return;
+    }
+
+    setIsLoading(true);
+
+    try {
+      const response = await fetch(`${apiUrl}/server/api/routes/admin/blogs/blogCategories`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(values),
+      });
+
+      if (!response.ok) {
+        throw new Error("Failed to add auction product. Please try again.");
+      }
+
+      const result = await response.json();
+
+      showSuccessToast(result.message || "auction product added successfully!");
+      // router.push("/admin/pages/blog_system/auction product");
+      window.location.href = `${apiUrl}/admin/pages/blog_system/auction product`;
+    } catch (error) {
+      showErrorToast("Error adding auction product: " + (error instanceof Error ? error.message : "Unknown error"));
+    }
+  };
 
   const [brands, setBrands] = useState<{ id: string; name: string }[]>([]) // Adjust the type according to your data structure
   // Fetch data from an API
@@ -210,12 +245,12 @@ export default function Addnew() {
                                         </SelectTrigger>
                                       </FormControl>
                                       <SelectContent>
-                                      {brands.map((brand) => (
-                                        <SelectItem key={brand.id} value={brand.name}>
-                                          {brand.name}
-                                        </SelectItem>
-                                      ))}
-                                    </SelectContent>
+                                        {brands.map((brand) => (
+                                          <SelectItem key={brand.id} value={brand.name}>
+                                            {brand.name}
+                                          </SelectItem>
+                                        ))}
+                                      </SelectContent>
                                     </Select>
                                   </FormControl>
                                 </div>
@@ -668,12 +703,12 @@ export default function Addnew() {
                                         </SelectTrigger>
                                       </FormControl>
                                       <SelectContent>
-                                      {categories.map((category) => (
-                                        <SelectItem key={category.id} value={category.name}>
-                                          {category.name}
-                                        </SelectItem>
-                                      ))}
-                                    </SelectContent>
+                                        {categories.map((category) => (
+                                          <SelectItem key={category.id} value={category.name}>
+                                            {category.name}
+                                          </SelectItem>
+                                        ))}
+                                      </SelectContent>
                                     </Select>
                                   </FormControl>
                                 </div>
@@ -1001,12 +1036,20 @@ export default function Addnew() {
             </div>
           </div>
           <div className="grid justify-items-end">
-            <Button
+            {/* <Button
               className="dark:text-slate-200"
               variant="outline"
               type="submit"
             >
               Submit Product
+            </Button> */}
+            <Button
+              className="dark:text-slate-200"
+              variant="outline"
+              type="submit"
+              disabled={isLoading}
+            >
+              {isLoading ? "Submitting..." : "Submit"}
             </Button>
           </div>
         </form>

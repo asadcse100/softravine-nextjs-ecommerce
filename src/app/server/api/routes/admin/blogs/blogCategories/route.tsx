@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server";
-import { getBlogCategories, createBlogCategory } from '@/app/server/controllers/BlogCategoryController';
+import { getBlogCategories, createOrUpdateBlogCategory } from '@/app/server/controllers/BlogCategoryController';
 
 export async function GET() {
   try {
@@ -15,9 +15,10 @@ export async function GET() {
 }
 
 export async function POST(req: Request) {
+  
   try {
     const body = await req.json();
-    const result = await createBlogCategory(body.category_name);
+    const result = await createOrUpdateBlogCategory(body);
 
     if (result.success) {
       return NextResponse.json(

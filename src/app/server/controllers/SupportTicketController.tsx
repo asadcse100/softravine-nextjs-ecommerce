@@ -1,9 +1,15 @@
-// controllers/ticketController.ts
-import { NextApiRequest, NextApiResponse } from 'next';
 import { PrismaClient } from '@prisma/client';
 import nodemailer from 'nodemailer';
-
 const prisma = new PrismaClient();
+
+type createOrUpdateData = {
+  id: number | null;
+  ticket_id: number;
+  user_id: number;
+  reply: string;
+  files?: string;
+  created_at?: string;
+};
 
 // export const getUserTickets = async (req: NextApiRequest, res: NextApiResponse) => {
 //   const userId = req.query.userId as string;
@@ -27,7 +33,7 @@ export const customerTickets = async () => {
     const serializedTicket = tickets.map(ticket => ({
       ...ticket,
       user_id: ticket.user_id.toString(), // Assuming id is the BigInt field
-      code: ticket.	code.toString(), // Assuming id is the BigInt field
+      code: ticket.code.toString(), // Assuming id is the BigInt field
     }));
     return { success: true, data: serializedTicket };
   } catch (error) {
@@ -42,7 +48,7 @@ export const getUserTickets = async () => {
     const serializedTicket = tickets.map(ticket => ({
       ...ticket,
       user_id: ticket.user_id.toString(), // Assuming id is the BigInt field
-      code: ticket.	code.toString(), // Assuming id is the BigInt field
+      code: ticket.code.toString(), // Assuming id is the BigInt field
     }));
     return { success: true, data: serializedTicket };
   } catch (error) {

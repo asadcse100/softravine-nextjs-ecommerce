@@ -1,8 +1,15 @@
 // services/messageService.ts
 import { PrismaClient } from '@prisma/client';
 import { getSession } from 'next-auth/react';
-
 const prisma = new PrismaClient();
+
+type createOrUpdateData = {
+    id: number | null;
+    conversation_id: number;
+    user_id: number;
+    message: string;
+    created_at?: string;
+};
 
 export async function createMessage(data: { conversation_id: number, message: string, user_id: number }) {
     const { conversation_id, message, user_id } = data;

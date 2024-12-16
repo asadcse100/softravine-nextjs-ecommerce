@@ -1,12 +1,16 @@
-import { NextApiRequest, NextApiResponse } from 'next';
 import { getSession } from 'next-auth/react';
 import { PrismaClient } from '@prisma/client';
 import { getProductWithDetails } from '@/app/server/utils/productHelpers';
 import bcrypt from 'bcrypt';
-
 const prisma = new PrismaClient();
 
-export const getData = async (req: NextApiRequest, res: NextApiResponse) => {
+type createOrUpdateData = {
+  id: number | null;
+  type: string;
+  value: string;
+};
+
+export const getData = async (data: createOrUpdateData) => {
     try {
       const lang = getSystemLanguage() ? getSystemLanguage().code : null;
 

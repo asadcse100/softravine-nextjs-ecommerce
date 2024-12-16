@@ -5,9 +5,15 @@ import { sendEmail } from '../utils/mail';
 
 const prisma = new PrismaClient();
 
-// const sendMessageToSeller = async (conversation, message, userType) => {
-//   // Implement your message sending logic here
-// };
+type createOrUpdateData = {
+  id: number | null;
+  sender_id: number;
+  receiver_id: number;
+  title: string;
+  sender_viewed: number;
+  receiver_viewed: number;
+  created_at?: string;
+};
 
 export const ticketReplies = async () => {
   try {

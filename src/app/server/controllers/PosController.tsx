@@ -1,8 +1,12 @@
-import { NextApiRequest, NextApiResponse } from 'next';
 import { PrismaClient } from '@prisma/client';
 import nodemailer from 'nodemailer';
-
 const prisma = new PrismaClient();
+
+type createOrUpdateData = {
+    id: number | null;
+    type: string;
+    value: string;
+};
 
 export const index = async (req: NextApiRequest, res: NextApiResponse) => {
     try {

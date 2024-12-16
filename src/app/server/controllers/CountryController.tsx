@@ -1,7 +1,15 @@
 
 import { PrismaClient } from '@prisma/client';
-
 const prisma = new PrismaClient();
+
+type createOrUpdateData = {
+  id: number | null;
+  zone_id: number;
+  code: string;
+  name: string;
+  status: number;
+  created_at?: string;
+};
 
 export const selectCountries = async () => {
   try{
@@ -45,7 +53,7 @@ export const selectCountries = async () => {
 //   }
 // };
 
-export const index = async () => {
+export const getCountries = async () => {
   try{
       const countryQueries = await prisma.countries.findMany();
       return { success: true, data: countryQueries };
@@ -55,7 +63,7 @@ export const index = async () => {
   }
 }
 
-export const updateStatus = async (req: NextApiRequest, res: NextApiResponse) => {
+export const createOrUpdateCountry = async () => {
     const { id, status } = req.body;
   
     try {

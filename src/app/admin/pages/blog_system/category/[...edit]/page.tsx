@@ -1,10 +1,9 @@
 "use client";
-import { useRouter } from 'next/router';
+import { useState, useEffect } from "react";
+import { useRouter, useSearchParams } from "next/navigation";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { z } from "zod";
-import { toast } from "react-hot-toast";
-import { useEffect, useState } from 'react';
 import { Button } from "@/app/admin/components/ui/button";
 import {
   Form,
@@ -15,30 +14,24 @@ import {
   FormMessage,
 } from "@/app/admin/components/ui/form";
 import Input from "@/shared/Input/Input";
-// If Breadcrumb is not used, you can remove this import
-// import Breadcrumb from "@/app/admin/components/Breadcrumbs/Breadcrumb";
+import { showErrorToast, showSuccessToast } from "@/app/admin/components/Toast";
 
-// Define the schema for form validation using Zod
+// Validation schema
 const formSchema = z.object({
   category_name: z.string().min(3, {
     message: "Blog Category Name must be at least 3 characters.",
   }),
 });
 
-// Define TypeScript type for form data
 type FormData = z.infer<typeof formSchema>;
 
-export default function Addnew() {
-
+export default function EditCategory() {
   const router = useRouter();
-  const [isMounted, setIsMounted] = useState(false);
+  const searchParams = useSearchParams();
+  const categoryId = searchParams.get("id");
 
-  // Set the component as mounted on the client side
-  useEffect(() => {
-    setIsMounted(true);
-  }, []);
-  
-  // Initialize the form with react-hook-form
+  const [isLoading, setIsLoading] = useState(false);
+
   const form = useForm<FormData>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -46,34 +39,79 @@ export default function Addnew() {
     },
   });
 
+  // Fetch category data when component mounts
+  useEffect(() => {
+    const fetchCategory = async () => {
+      const apiUrl = process.env.NEXT_PUBLIC_API_URL || "";
+      if (!apiUrl || !categoryId) {
+        showErrorToast("Invalid category or API URL not configured.");
+        return;
+      }
+
+      try {
+        const response = await fetch(
+          `${apiUrl}/server/api/routes/admin/blogs/blogCategories/${categoryId}`
+        );
+
+        if (!response.ok) {
+          throw new Error("Failed to fetch category details.");
+        }
+
+        const data = await response.json();
+        form.reset({
+          category_name: data.name, // Populate form with fetched data
+        });
+      } catch (error) {
+        showErrorToast(
+          "Error fetching category: " + (error instanceof Error ? error.message : "Unknown error")
+        );
+      }
+    };
+
+    if (categoryId) fetchCategory();
+  }, [categoryId, form]);
 
   const onSubmit: SubmitHandler<FormData> = async (values) => {
+    const apiUrl = process.env.NEXT_PUBLIC_API_URL || "";
 
-    const apiUrl = process.env.NEXT_PUBLIC_API_URL || '';
-    
+    if (!apiUrl || !categoryId) {
+      showErrorToast("Invalid category or API URL not configured.");
+      return;
+    }
+
+    setIsLoading(true);
+
     try {
-      const response = await fetch(`${apiUrl}/server/api/routes/admin/blogs/blogCategories`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(values),
-      });
-  
-      // Check if the response is successful
+      const response = await fetch(
+        `${apiUrl}/server/api/routes/admin/blogs/blogCategories/${categoryId}`,
+        {
+          method: "PUT",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(values),
+        }
+      );
+
       if (!response.ok) {
-        throw new Error('Failed to add category');
+        const errorData = await response.json();
+        throw new Error(errorData.message || "Failed to update category.");
       }
-  
+
       const result = await response.json();
-      toast.success(result.message || "Category added successfully!");
-  
-      // Redirect to another page after success
-      router.push(`${apiUrl}/admin/pages/blog_system/category`);
+      showSuccessToast(result.message || "Category updated successfully!");
+      router.push("/admin/pages/blog_system/category");
     } catch (error) {
-      toast.error("Error adding category: " + (error as Error).message);
+      showErrorToast(
+        "Error updating category: " + (error instanceof Error ? error.message : "Unknown error")
+      );
+    } finally {
+      setIsLoading(false);
     }
   };
+
+  const inputClass =
+    "bg-zinc-50 border border-slate-300 text-slate-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-slate-900 dark:border-slate-700 dark:placeholder-slate-700 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500";
 
   return (
     <div className="min-h-screen mx-auto max-w-screen-2xl mt-2 p-4 py-4 md:p-6 2xl:p-10 bg-slate-100 dark:bg-slate-900">
@@ -85,7 +123,7 @@ export default function Addnew() {
                 <div className="px-6 rounded-sm border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark">
                   <div className="border-b border-stroke px-6.5 py-4 dark:border-strokedark">
                     <h3 className="font-medium text-black dark:text-white">
-                      Blog Category Information
+                      Edit Blog Category
                     </h3>
                   </div>
                   <div className="py-6">
@@ -102,8 +140,7 @@ export default function Addnew() {
                               <div className="col-span-8">
                                 <FormControl>
                                   <Input
-                                    className="bg-zinc-50 border border-slate-300 text-slate-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-slate-900 dark:border-slate-800 dark:placeholder-slate-700 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                                    placeholder="Category Name"
+                                    className={inputClass}
                                     {...field}
                                   />
                                 </FormControl>
@@ -119,9 +156,9 @@ export default function Addnew() {
                         className="dark:text-slate-200"
                         variant="outline"
                         type="submit"
-                        disabled={form.formState.isSubmitting}
+                        disabled={isLoading}
                       >
-                        Save
+                        {isLoading ? "Updating..." : "Update"}
                       </Button>
                     </div>
                   </div>
@@ -131,7 +168,6 @@ export default function Addnew() {
           </div>
         </form>
       </Form>
-      {/* <toast.Toaster /> */}
     </div>
   );
 }

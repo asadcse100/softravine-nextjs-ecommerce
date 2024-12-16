@@ -1,7 +1,16 @@
 // controllers/attributeController.ts
 import { PrismaClient } from '@prisma/client';
-
 const prisma = new PrismaClient();
+
+type createOrUpdateData = {
+  id: number | null;
+  size_chart_id: number;
+  measurement_point_id: number;
+  attribute_value_id: number;
+  inch_value: string;
+  cen_value: string;
+  created_at?: string;
+};
 
 export const selectFitType = async () => {
   try {

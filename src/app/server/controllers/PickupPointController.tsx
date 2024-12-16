@@ -1,9 +1,16 @@
-// controllers/pickupPointController.ts
-
-import { NextApiRequest, NextApiResponse } from 'next';
 import { PrismaClient } from '@prisma/client';
-
 const prisma = new PrismaClient();
+
+type createOrUpdateData = {
+    id: number | null;
+    staff_id: number;
+    name: string;
+    address: string;
+    phone: string;
+    pick_up_status: number;
+    cash_on_pickup_status: number;
+    created_at: string;
+};
 
 // export async function getPickupPoints(req: NextApiRequest, res: NextApiResponse) {
 //   try {

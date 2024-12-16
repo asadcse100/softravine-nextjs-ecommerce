@@ -29,6 +29,7 @@ import Textarea from "@/shared/Textarea/Textarea";
 import { useEditor, EditorContent } from "@tiptap/react";
 import StarterKit from "@tiptap/starter-kit";
 import Image from "@tiptap/extension-image";
+import { showErrorToast, showSuccessToast } from "@/app/admin/components/Toast";
 
 const formSchema = z.object({
   title: z.string().min(10, { message: "Title must be at least 10 characters." }),
@@ -76,7 +77,7 @@ export default function AddNew() {
     fetchCategories();
   }, []);
 
-  
+
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -91,8 +92,41 @@ export default function AddNew() {
     },
   });
 
+  // const onSubmit: SubmitHandler<z.infer<typeof formSchema>> = async (values) => {
+  //   const apiUrl = process.env.NEXT_PUBLIC_API_URL || "";
+
+  //   try {
+  //     const response = await fetch(`${apiUrl}/server/api/routes/admin/blogs/blogCategories`, {
+  //       method: "POST",
+  //       headers: {
+  //         "Content-Type": "application/json",
+  //       },
+  //       body: JSON.stringify(values),
+  //     });
+
+  //     if (!response.ok) {
+  //       throw new Error("Failed to add category. Please try again.");
+  //     }
+
+  //     const result = await response.json();
+  //     toast.success(result.message || "Category added successfully!");
+  //     router.push("/admin/pages/blog_system/category");
+  //   } catch (error) {
+  //     toast.error("Error adding category: " + (error as Error).message);
+  //   }
+  // };
+
+  const [isLoading, setIsLoading] = useState(false);
+
   const onSubmit: SubmitHandler<z.infer<typeof formSchema>> = async (values) => {
     const apiUrl = process.env.NEXT_PUBLIC_API_URL || "";
+
+    if (!apiUrl) {
+      showErrorToast("API URL is not configured.");
+      return;
+    }
+
+    setIsLoading(true);
 
     try {
       const response = await fetch(`${apiUrl}/server/api/routes/admin/blogs/blogCategories`, {
@@ -104,14 +138,16 @@ export default function AddNew() {
       });
 
       if (!response.ok) {
-        throw new Error("Failed to add category. Please try again.");
+        throw new Error("Failed to add blog. Please try again.");
       }
 
       const result = await response.json();
-      toast.success(result.message || "Category added successfully!");
-      router.push("/admin/pages/blog_system/category");
+
+      showSuccessToast(result.message || "blog added successfully!");
+      // router.push("/admin/pages/blog_system/blog");
+      window.location.href = `${apiUrl}/admin/pages/blog_system/blog`;
     } catch (error) {
-      toast.error("Error adding category: " + (error as Error).message);
+      showErrorToast("Error adding blog: " + (error instanceof Error ? error.message : "Unknown error"));
     }
   };
 
@@ -276,11 +312,19 @@ export default function AddNew() {
           </div>
 
           <div className="flex justify-end gap-4">
-            <Button variant="outline" type="submit">
+            {/* <Button variant="outline" type="submit">
               Save as Draft
             </Button>
             <Button variant="solid" onClick={handleEditorContentChange} type="submit">
               Publish
+            </Button> */}
+            <Button
+              className="dark:text-slate-200"
+              variant="outline"
+              type="submit"
+              disabled={isLoading}
+            >
+              {isLoading ? "Submitting..." : "Submit"}
             </Button>
           </div>
         </form>

@@ -1,8 +1,19 @@
 import { PrismaClient } from '@prisma/client';
-import { NextApiRequest, NextApiResponse } from 'next';
 import { getSession } from 'next-auth/react';
-
 const prisma = new PrismaClient();
+
+type createOrUpdateData = {
+  id: number | null;
+  user_id: number;
+  product_stock_id: number;
+  amount: number;
+  payment_method?: string;
+  payment_details?: string;
+  approval: number;
+  offline_payment: number;
+  reciept?: string;
+  created_at?: string;
+};
 
 // export default async function index(req: NextApiRequest, res: NextApiResponse) {
 // export const index = async (req: NextApiRequest, res: NextApiResponse) => {

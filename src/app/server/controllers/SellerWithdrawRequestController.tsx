@@ -1,7 +1,15 @@
-import { NextApiRequest, NextApiResponse } from 'next';
 import { PrismaClient } from '@prisma/client';
-
 const prisma = new PrismaClient();
+
+type createOrUpdateData = {
+  id: number | null;
+  user_id: number;
+  amount: number;
+  message	: string;
+  status: number;
+  viewed: number;
+  created_at?: string;
+};
 
 // export const getSellerWithdrawRequests = async () => {
 // export async function getSellerWithdrawRequests(req: NextApiRequest, res: NextApiResponse) {

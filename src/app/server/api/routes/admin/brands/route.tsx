@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server";
-import { getAllBrands, createBrand } from '@/app/server/controllers/BrandController';
+import { getAllBrands, createOrUpdateBrand } from '@/app/server/controllers/BrandController';
 
 export async function GET() {
   const result = await getAllBrands(null);
@@ -15,7 +15,7 @@ export async function GET() {
 export async function POST(req: Request) {
   try {
     const body = await req.json();
-    const result = await createBrand(body);
+    const result = await createOrUpdateBrand(body);
 
     if (result.success) {
       return NextResponse.json(

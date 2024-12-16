@@ -1,5 +1,5 @@
 "use client";
-
+import { useState } from "react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { z } from "zod";
@@ -15,6 +15,7 @@ import {
   FormMessage,
 } from "@/app/admin/components/ui/form";
 import Input from "@/shared/Input/Input";
+import { showErrorToast, showSuccessToast } from "@/app/admin/components/Toast";
 
 const formSchema = z.object({
   value: z.string().min(1, {
@@ -32,31 +33,39 @@ export default function Addnew() {
     },
   });
 
-  const onSubmit: SubmitHandler<FormData> = async (values) => {
+  const [isLoading, setIsLoading] = useState(false);
 
-    const apiUrl = process.env.NEXT_PUBLIC_API_URL || '';
-    
+  const onSubmit: SubmitHandler<z.infer<typeof formSchema>> = async (values) => {
+    const apiUrl = process.env.NEXT_PUBLIC_API_URL || "";
+
+    if (!apiUrl) {
+      showErrorToast("API URL is not configured.");
+      return;
+    }
+
+    setIsLoading(true);
+
     try {
-      const response = await fetch(`${apiUrl}/server/api/routes/admin/blogs/blogCategories`, {
+      const response = await fetch(`${apiUrl}/server/api/routes/admin/club_point/configuration`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify(values),
       });
-  
+
       // Check if the response is successful
       if (!response.ok) {
-        throw new Error('Failed to add category');
+        throw new Error('Failed to add club point configuration');
       }
-  
+
       const result = await response.json();
-      toast.success(result.message || "Category added successfully!");
-  
-      // Redirect to another page after success
-      window.location.href = `${apiUrl}/admin/pages/blog_system/category`;
+
+      showSuccessToast(result.message || "club point configuration added successfully!");
+      // router.push("/admin/pages/blog_system/club point configuration");
+      window.location.href = `${apiUrl}/admin/pages/blog_system/club point configuration`;
     } catch (error) {
-      toast.error("Error adding category: " + (error as Error).message);
+      showErrorToast("Error adding club point configuration: " + (error instanceof Error ? error.message : "Unknown error"));
     }
   };
 
@@ -109,12 +118,20 @@ export default function Addnew() {
                       using club point addon.
                     </p>
                     <div className="grid mt-4 justify-items-end">
-                      <Button
+                      {/* <Button
                         className="dark:text-slate-200"
                         variant="outline"
                         type="submit"
                       >
                         Save
+                      </Button> */}
+                      <Button
+                        className="dark:text-slate-200"
+                        variant="outline"
+                        type="submit"
+                        disabled={isLoading}
+                      >
+                        {isLoading ? "Submitting..." : "Submit"}
                       </Button>
                     </div>
                   </div>

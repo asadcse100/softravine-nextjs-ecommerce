@@ -1,9 +1,12 @@
 import { CheckIcon } from "@heroicons/react/24/solid";
 import React, { FC } from "react";
+import { z } from "zod";
 import ButtonPrimary from "@/shared/Button/ButtonPrimary";
 import ButtonSecondary from "@/shared/Button/ButtonSecondary";
 import Breadcrumb from "@/app/seller/components/Breadcrumbs/Breadcrumb"
-
+import { useForm, SubmitHandler } from "react-hook-form";
+import { showErrorToast, showSuccessToast} from "@/app/admin/components/Toast";
+import { useState, useEffect } from 'react';
 export interface PricingItem {
   isPopular: boolean;
   name: string;
@@ -12,6 +15,17 @@ export interface PricingItem {
   per: string;
   features: string[];
 }
+
+
+const formSchema = z.object({
+  product_name: z.string().min(10, {
+    message: "Product Name must be at least 10 characters.",
+  }),
+  brand: z.string().min(3, {
+    message: "Brand must be at least 3 characters.",
+  }),
+});
+
 
 const pricings: PricingItem[] = [
   {
@@ -49,6 +63,41 @@ const pricings: PricingItem[] = [
     desc: ` Literally you probably haven't heard of them jean shorts.`,
   },
 ];
+
+const [isLoading, setIsLoading] = useState(false);
+
+const onSubmit: SubmitHandler<z.infer<typeof formSchema>> = async (values) => {
+  const apiUrl = process.env.NEXT_PUBLIC_API_URL || "";
+  
+  if (!apiUrl) {
+    showErrorToast("API URL is not configured.");
+    return;
+  }
+
+  setIsLoading(true);
+
+  try {
+    const response = await fetch(`${apiUrl}/server/api/routes/admin/blogs/blogCategories`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(values),
+    });
+
+    if (!response.ok) {
+      throw new Error("Failed to add package purchase. Please try again.");
+    }
+
+    const result = await response.json();
+
+    showSuccessToast(result.message || "package purchase added successfully!");
+    // router.push("/admin/pages/blog_system/package purchase");
+    window.location.href = `${apiUrl}/admin/pages/blog_system/package purchase`;
+  } catch (error) {
+    showErrorToast("Error adding package purchase: " + (error instanceof Error ? error.message : "Unknown error"));
+  }
+};
 
 const PageSubcription = ({}) => {
   const renderPricingItem = (pricing: PricingItem, index: number) => {

@@ -133,6 +133,114 @@ model app_translations {
   updated_at DateTime @default(now()) @db.Timestamp(0)
 }
 
+model mobile_recharges {
+  id          BigInt   @id @default(autoincrement())
+  user_id     BigInt
+  operator_id Int
+  number      String?  @db.VarChar(100)
+  amount      Float
+  created_at  DateTime @default(now()) @db.Timestamp(0)
+  updated_at  DateTime @default(now()) @db.Timestamp(0)
+
+  operators operators @relation(fields: [operator_id], references: [id])
+}
+
+model air_ticket_categories {
+  id          Int           @id @default(autoincrement())
+  name        String?       @db.VarChar(50)
+  created_at  DateTime      @default(now()) @db.Timestamp(0)
+  updated_at  DateTime      @default(now()) @db.Timestamp(0)
+  air_tickets air_tickets[]
+}
+
+model air_tickets {
+  id                    Int                   @id @default(autoincrement())
+  user_id               BigInt
+  ticket_category_id    Int
+  where_to              String?               @db.VarChar(100)
+  travel_date           DateTime
+  return_date           DateTime
+  passenger_number      String?               @db.VarChar(100)
+  created_at            DateTime              @default(now()) @db.Timestamp(0)
+  updated_at            DateTime              @default(now()) @db.Timestamp(0)
+  air_ticket_categories air_ticket_categories @relation(fields: [ticket_category_id], references: [id])
+}
+
+model operators {
+  id               Int                @id @default(autoincrement())
+  name             String?            @db.VarChar(100)
+  logo             String?            @db.VarChar(255)
+  created_at       DateTime           @default(now()) @db.Timestamp(0)
+  updated_at       DateTime           @default(now()) @db.Timestamp(0)
+  drive_offers     drive_offers[]
+  mobile_recharges mobile_recharges[]
+}
+
+model drive_offers {
+  id          Int      @id @default(autoincrement())
+  user_id     BigInt
+  operator_id Int
+  package_id  Int
+  title       String?  @db.VarChar(100)
+  description String?  @db.VarChar(255)
+  created_at  DateTime @default(now()) @db.Timestamp(0)
+  updated_at  DateTime @default(now()) @db.Timestamp(0)
+
+  operators operators @relation(fields: [operator_id], references: [id])
+}
+
+model news_papers {
+  id         Int      @id @default(autoincrement())
+  user_id    BigInt
+  name       String?  @db.VarChar(100)
+  logo       String?  @db.VarChar(255)
+  status     String?  @db.VarChar(1)
+  created_at DateTime @default(now()) @db.Timestamp(0)
+  updated_at DateTime @default(now()) @db.Timestamp(0)
+}
+
+model live_tvs {
+  id         Int      @id @default(autoincrement())
+  user_id    BigInt
+  name       String?  @db.VarChar(100)
+  logo       String?  @db.VarChar(255)
+  status     String?  @db.VarChar(1)
+  created_at DateTime @default(now()) @db.Timestamp(0)
+  updated_at DateTime @default(now()) @db.Timestamp(0)
+}
+
+model blood_groups {
+  id          Int           @id @default(autoincrement())
+  name        String?       @db.VarChar(100)
+  created_at  DateTime      @default(now()) @db.Timestamp(0)
+  updated_at  DateTime      @default(now()) @db.Timestamp(0)
+  blood_banks blood_banks[]
+}
+
+model blood_banks {
+  id               Int          @id @default(autoincrement())
+  user_id          BigInt
+  blood_group_id   Int
+  name             String?      @db.VarChar(100)
+  phone            String?      @db.VarChar(100)
+  blood_donat_date DateTime
+  created_at       DateTime     @default(now()) @db.Timestamp(0)
+  updated_at       DateTime     @default(now()) @db.Timestamp(0)
+  blood_groups     blood_groups @relation(fields: [blood_group_id], references: [id])
+}
+
+model online_doctors {
+  id           Int      @id @default(autoincrement())
+  user_id      BigInt
+  name         String?  @db.VarChar(100)
+  doctor_photo String?  @db.VarChar(100)
+  designation  String?  @db.VarChar(100)
+  phone        String?  @db.VarChar(100)
+  status       String?  @db.VarChar(1)
+  created_at   DateTime @default(now()) @db.Timestamp(0)
+  updated_at   DateTime @default(now()) @db.Timestamp(0)
+}
+
 model attribute_category {
   id           Int        @id @default(autoincrement())
   category_id  Int
@@ -870,7 +978,7 @@ model payku_payments {
   payment_key           String?            @db.VarChar(255)
   verification_key      String
   authorization_code    String
-  last_4_digits         Int?              
+  last_4_digits         Int?
   installments          String?
   card_type             String?
   additional_parameters String?
@@ -887,7 +995,7 @@ model payku_transactions {
   email          String?
   subject        String?
   url            String?         @db.Text
-  amount         Int?           
+  amount         Int?
   notified_at    DateTime?       @db.DateTime(0)
   created_at     DateTime?       @db.Timestamp(0)
   updated_at     DateTime?       @db.Timestamp(0)

@@ -1,7 +1,22 @@
 // controllers/RefundRequestController.ts
 import { PrismaClient } from '@prisma/client';
-
 const prisma = new PrismaClient();
+
+type createOrUpdateData = {
+    id: number | null;
+    user_id: number;
+    order_id: number;
+    order_detail_id: number;
+    seller_id: number;
+    seller_approval: number;
+    admin_approval: number;
+    refund_amount: number;
+    reason: string;
+    admin_seen: number;
+    refund_status: number;
+    reject_reason: string;
+    created_at?: string;
+};
 
 export const getRefundRequest = async () => {
     try {

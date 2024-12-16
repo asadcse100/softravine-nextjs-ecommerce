@@ -1,7 +1,11 @@
 import { PrismaClient } from '@prisma/client';
-import { NextApiRequest, NextApiResponse } from 'next';
-
 const prisma = new PrismaClient();
+
+type createOrUpdateData = {
+    id: number | null;
+    type: string;
+    value: string;
+};
 
 export const getPolicyByName = async (req: NextApiRequest, res: NextApiResponse) => {
     const { type } = req.query;

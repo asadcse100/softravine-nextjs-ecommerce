@@ -2,9 +2,11 @@
 import * as React from "react"
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm, SubmitHandler } from "react-hook-form";
+import { useRouter } from "next/navigation";
 import { z } from "zod";
 import { useState, useEffect, useRef } from 'react';
 import axios from 'axios';
+import { showErrorToast, showSuccessToast } from "@/app/admin/components/Toast";
 
 import { Button } from "@/app/admin/components/ui/button";
 import {
@@ -83,31 +85,39 @@ export default function Addnew() {
     },
   });
 
-  const onSubmit: SubmitHandler<FormData> = async (values) => {
+  const [isLoading, setIsLoading] = useState(false);
 
-    const apiUrl = process.env.NEXT_PUBLIC_API_URL || '';
-    
+  const onSubmit: SubmitHandler<z.infer<typeof formSchema>> = async (values) => {
+    const apiUrl = process.env.NEXT_PUBLIC_API_URL || "";
+
+    if (!apiUrl) {
+      showErrorToast("API URL is not configured.");
+      return;
+    }
+
+    setIsLoading(true);
+
     try {
-      const response = await fetch(`${apiUrl}/server/api/routes/admin/blogs/blogCategories`, {
+      const response = await fetch(`${apiUrl}/server/api/routes/admin/auctionProduct`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify(values),
       });
-  
+
       // Check if the response is successful
       if (!response.ok) {
-        throw new Error('Failed to add category');
+        throw new Error('Failed to add auction product');
       }
-  
+
       const result = await response.json();
-      toast.success(result.message || "Category added successfully!");
-  
+      showSuccessToast(result.message || "auction product added successfully!");
+
       // Redirect to another page after success
-      window.location.href = `${apiUrl}/admin/pages/blog_system/category`;
+      window.location.href = `${apiUrl}/admin/pages/blog_system/auction product`;
     } catch (error) {
-      toast.error("Error adding category: " + (error as Error).message);
+      showErrorToast("Error adding auction product: " + (error instanceof Error ? error.message : "Unknown error"));
     }
   };
 
@@ -228,12 +238,12 @@ export default function Addnew() {
                                         </SelectTrigger>
                                       </FormControl>
                                       <SelectContent>
-                                      {brands.map((brand) => (
-                                        <SelectItem key={brand.id} value={brand.name}>
-                                          {brand.name}
-                                        </SelectItem>
-                                      ))}
-                                    </SelectContent>
+                                        {brands.map((brand) => (
+                                          <SelectItem key={brand.id} value={brand.name}>
+                                            {brand.name}
+                                          </SelectItem>
+                                        ))}
+                                      </SelectContent>
                                     </Select>
                                   </FormControl>
                                 </div>
@@ -686,12 +696,12 @@ export default function Addnew() {
                                         </SelectTrigger>
                                       </FormControl>
                                       <SelectContent>
-                                      {categories.map((category) => (
-                                        <SelectItem key={category.id} value={category.name}>
-                                          {category.name}
-                                        </SelectItem>
-                                      ))}
-                                    </SelectContent>
+                                        {categories.map((category) => (
+                                          <SelectItem key={category.id} value={category.name}>
+                                            {category.name}
+                                          </SelectItem>
+                                        ))}
+                                      </SelectContent>
                                     </Select>
                                   </FormControl>
                                 </div>
@@ -1019,12 +1029,20 @@ export default function Addnew() {
             </div>
           </div>
           <div className="grid justify-items-end">
-            <Button
+            {/* <Button
               className="dark:text-slate-200"
               variant="outline"
               type="submit"
             >
               Submit Product
+            </Button> */}
+            <Button
+              className="dark:text-slate-200"
+              variant="outline"
+              type="submit"
+              disabled={isLoading}
+            >
+              {isLoading ? "Submitting..." : "Submit"}
             </Button>
           </div>
         </form>

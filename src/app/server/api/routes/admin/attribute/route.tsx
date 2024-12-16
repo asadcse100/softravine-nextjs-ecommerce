@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server";
-import { getAttributes, createAttribute } from '@/app/server/controllers/AttributeController';
+import { getAttributes, createOrUpdateAttribute } from '@/app/server/controllers/AttributeController';
 
 export async function GET() {
   const result = await getAttributes();
@@ -15,7 +15,7 @@ export async function GET() {
 export async function POST(req: Request) {
   try {
     const body = await req.json();
-    const result = await createAttribute(body);
+    const result = await createOrUpdateAttribute(body);
 
     if (result.success) {
       return NextResponse.json(

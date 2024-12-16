@@ -16,6 +16,8 @@ import {
 } from "@/app/admin/components/ui/form";
 import Input from "@/shared/Input/Input";
 import { Switch } from "@/app/admin/components/ui/switch";
+import { showErrorToast, showSuccessToast } from "@/app/admin/components/Toast";
+import { useState, useEffect } from 'react';
 
 const formSchema = z.object({
   shipping_type: z.string().min(10, {
@@ -42,11 +44,46 @@ export default function Addnew() {
   });
 
   // 2. Define a submit handler.
-  function onSubmit(values: z.infer<typeof formSchema>) {
-    // Do something with the form values.
-    // ✅ This will be type-safe and validated.
-    console.log(values);
-  }
+  // function onSubmit(values: z.infer<typeof formSchema>) {
+  //   // Do something with the form values.
+  //   // ✅ This will be type-safe and validated.
+  //   console.log(values);
+  // }
+
+  const [isLoading, setIsLoading] = useState(false);
+
+  const onSubmit: SubmitHandler<z.infer<typeof formSchema>> = async (values) => {
+    const apiUrl = process.env.NEXT_PUBLIC_API_URL || "";
+
+    if (!apiUrl) {
+      showErrorToast("API URL is not configured.");
+      return;
+    }
+
+    setIsLoading(true);
+
+    try {
+      const response = await fetch(`${apiUrl}/server/api/routes/admin/feature_setting/shipping/shipping_configuration`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(values),
+      });
+
+      if (!response.ok) {
+        throw new Error("Failed to add shipping configuration. Please try again.");
+      }
+
+      const result = await response.json();
+
+      showSuccessToast(result.message || "shipping configuration added successfully!");
+      // router.push("/admin/pages/blog_system/shipping configuration");
+      window.location.href = `${apiUrl}/admin/pages/blog_system/shipping configuration`;
+    } catch (error) {
+      showErrorToast("Error adding shipping configuration: " + (error instanceof Error ? error.message : "Unknown error"));
+    }
+  };
 
   const inputClass = "bg-zinc-50 border border-slate-300 text-slate-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-slate-900 dark:border-slate-700 dark:placeholder-slate-700 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500";
 
@@ -262,12 +299,20 @@ export default function Addnew() {
                       />
                     </div>
                     <div className="grid mt-3 justify-items-end">
-                      <Button
+                      {/* <Button
                         className="dark:text-slate-200"
                         variant="outline"
                         type="submit"
                       >
                         Save
+                      </Button> */}
+                      <Button
+                        className="dark:text-slate-200"
+                        variant="outline"
+                        type="submit"
+                        disabled={isLoading}
+                      >
+                        {isLoading ? "Submitting..." : "Submit"}
                       </Button>
                     </div>
                   </div>

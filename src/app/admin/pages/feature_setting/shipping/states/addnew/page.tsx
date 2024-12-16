@@ -3,7 +3,8 @@ import * as React from "react"
 import { useState, useEffect } from 'react';
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm, SubmitHandler } from "react-hook-form";
-import { toast } from "react-hot-toast";
+import { showErrorToast, showSuccessToast } from "@/app/admin/components/Toast";
+
 import { z } from "zod";
 import Breadcrumb from "@/app/admin/components/Breadcrumbs/Breadcrumb"
 import { Button } from "@/app/admin/components/ui/button";
@@ -46,11 +47,46 @@ export default function Addnew() {
   });
 
   // 2. Define a submit handler.
-  function onSubmit(values: z.infer<typeof formSchema>) {
-    // Do something with the form values.
-    // ✅ This will be type-safe and validated.
-    console.log(values);
-  }
+  // function onSubmit(values: z.infer<typeof formSchema>) {
+  //   // Do something with the form values.
+  //   // ✅ This will be type-safe and validated.
+  //   console.log(values);
+  // }
+
+  const [isLoading, setIsLoading] = useState(false);
+
+  const onSubmit: SubmitHandler<z.infer<typeof formSchema>> = async (values) => {
+    const apiUrl = process.env.NEXT_PUBLIC_API_URL || "";
+
+    if (!apiUrl) {
+      showErrorToast("API URL is not configured.");
+      return;
+    }
+
+    setIsLoading(true);
+
+    try {
+      const response = await fetch(`${apiUrl}/server/api/routes/admin/feature_setting/shipping/state`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(values),
+      });
+
+      if (!response.ok) {
+        throw new Error("Failed to add state. Please try again.");
+      }
+
+      const result = await response.json();
+
+      showSuccessToast(result.message || "state added successfully!");
+      // router.push("/admin/pages/blog_system/state");
+      window.location.href = `${apiUrl}/admin/pages/blog_system/state`;
+    } catch (error) {
+      showErrorToast("Error adding state: " + (error instanceof Error ? error.message : "Unknown error"));
+    }
+  };
 
   const [countries, setcountries] = useState<{ id: string; name: string }[]>([]) // Adjust the type according to your data structure
   // Fetch data from an API
@@ -154,12 +190,20 @@ export default function Addnew() {
                       />
                     </div>
                     <div className="grid mt-3 justify-items-end">
-                      <Button
+                      {/* <Button
                         className="dark:text-slate-200"
                         variant="outline"
                         type="submit"
                       >
                         Save
+                      </Button> */}
+                      <Button
+                        className="dark:text-slate-200"
+                        variant="outline"
+                        type="submit"
+                        disabled={isLoading}
+                      >
+                        {isLoading ? "Submitting..." : "Submit"}
                       </Button>
                     </div>
                   </div>

@@ -4,6 +4,11 @@ import type { NextRequest } from 'next/server';
 
 const prisma = new PrismaClient();
 
+type createOrUpdateData = {
+  id: number | null;
+  user_id: number;
+};
+
 interface Category {
   id: number;
   level: number;

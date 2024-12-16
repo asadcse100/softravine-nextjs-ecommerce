@@ -1,12 +1,21 @@
-import { NextApiRequest, NextApiResponse } from 'next';
 import { PrismaClient } from '@prisma/client';
 import { createReadStream, mkdirSync, existsSync, unlinkSync } from 'fs';
 import { promisify } from 'util';
 import { pipeline } from 'stream';
 import { join } from 'path';
 import { parse } from 'json5';
-
 const prisma = new PrismaClient();
+
+type createOrUpdateData = {
+    id: number | null;
+    name: string;
+    unique_identifier: string;
+    version: string;
+    activated: number;
+    image: string;
+    purchase_code: string;
+    created_at?: string;
+};
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
     if (req.method === 'POST') {

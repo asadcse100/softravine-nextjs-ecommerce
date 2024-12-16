@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server";
-import { getDeliveryBoys, createDeliveryBoy } from '@/app/server/controllers/DeliveryBoyController';
+import { getDeliveryBoys, createOrUpdateDeliveryBoy } from '@/app/server/controllers/DeliveryBoyController';
 
 export async function GET() {
   const result = await getDeliveryBoys();
@@ -15,7 +15,7 @@ export async function GET() {
 export async function POST(req: Request) {
   try {
     const body = await req.json();
-    const result = await createDeliveryBoy(body);
+    const result = await createOrUpdateDeliveryBoy(body);
 
     if (result.success) {
       return NextResponse.json(

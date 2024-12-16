@@ -1,7 +1,16 @@
 // services/notificationService.ts
 import { PrismaClient } from '@prisma/client';
-
 const prisma = new PrismaClient();
+
+type createOrUpdateData = {
+    id: number | null;
+    type: string;
+    notifiable_type: string;
+    notifiable_id: string;
+    data: string;
+    read_at: string;
+    created_at?: string;
+};
 
 export async function getUserNotifications(userId: number, userType: string, page: number, perPage: number) {
     const notifications = await prisma.notifications.findMany({

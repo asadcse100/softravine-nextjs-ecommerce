@@ -1,9 +1,10 @@
 "use client";
 
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useForm, Controller } from "react-hook-form";
+import { useForm, Controller, SubmitHandler } from "react-hook-form";
 import { z } from "zod";
 import { useState } from 'react';
+import { useRouter } from "next/navigation";
 import { Button } from "@/app/admin/components/ui/button";
 import {
   Form,
@@ -17,7 +18,9 @@ import {
 import Input from "@/shared/Input/Input";
 import Select from "@/shared/Select/Select";
 import { Switch } from "@/app/admin/components/ui/switch";
-import Breadcrumb from "@/app/admin/components/Breadcrumbs/Breadcrumb"
+import Breadcrumb from "@/app/admin/components/Breadcrumbs/Breadcrumb";
+import { showErrorToast, showSuccessToast } from "@/app/admin/components/Toast";
+
 const leadershipFormSchema = z.object({
   leaderships: z.array(
     z.object({
@@ -46,7 +49,8 @@ const formSchema = z.object({
 });
 
 export default function Addnew() {
-  // ...
+  const router = useRouter();
+
   const [leadershipFields, setLeadershipFields] = useState([
     {
       leadership_name: "",
@@ -104,7 +108,6 @@ export default function Addnew() {
     setReferralFields(newFields);
   };
 
-
   const onSubmitLeadership = (values: z.infer<typeof leadershipFormSchema>) => {
     console.log("Leadership Form Values:", values);
   };
@@ -120,13 +123,44 @@ export default function Addnew() {
     },
   });
 
-  // 2. Define a submit handler.
-  function onSubmit(values: z.infer<typeof formSchema>) {
-    // Do something with the form values.
-    // ✅ This will be type-safe and validated.
-    console.log(values);
-  }
+  const [isLoading, setIsLoading] = useState(false);
+  // function onSubmit(values: z.infer<typeof formSchema>) {
+  const onSubmit: SubmitHandler<FormData> = async (values) => {
+    const apiUrl = process.env.NEXT_PUBLIC_API_URL;
+    if (!apiUrl) {
+      showErrorToast("API URL is not configured.");
+      return;
+    }
 
+    setIsLoading(true);
+
+    if (!apiUrl) {
+      showErrorToast("API URL is not configured.");
+      return;
+    }
+
+    try {
+      const response = await fetch(`${apiUrl}/server/api/routes/admin/affiliate/configuration`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(values),
+      });
+
+      if (!response.ok) {
+        const errorData = await response.json();
+        throw new Error(errorData.message || "Failed to add affiliate configuration. Please try again.");
+      }
+
+      const result = await response.json();
+
+      showSuccessToast(result.message || "affiliate configuration added successfully!");
+      router.push("/admin/pages/affiliate/configuration");
+    } catch (error) {
+      showErrorToast("Error adding affiliate configuration: " + (error instanceof Error ? error.message : "Unknown error"));
+    }
+  }
 
   const inputClass = "bg-zinc-50 border border-slate-300 text-slate-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-slate-900 dark:border-slate-700 dark:placeholder-slate-700 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500";
 
@@ -536,9 +570,14 @@ export default function Addnew() {
                           className="dark:text-slate-200"
                           variant="outline"
                           type="submit"
+                          disabled={isLoading}
                         >
-                          Save
+                          {isLoading ? "Submitting..." : "Submit"}
                         </Button>
+
+                        <button type="submit" disabled={isLoading}>
+                          {isLoading ? "Submitting..." : "Submit"}
+                        </button>
                       </div>
                     </div>
                   </form>

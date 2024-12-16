@@ -3,6 +3,12 @@ import { PrismaClient } from '@prisma/client';
 
 const prisma = new PrismaClient();
 
+type createOrUpdateData = {
+  id: number | null;
+  type: string;
+  value: string;
+};
+
 export const addToCompare = async (req: NextApiRequest, res: NextApiResponse) => {
   const { productId, userId } = req.body;
 

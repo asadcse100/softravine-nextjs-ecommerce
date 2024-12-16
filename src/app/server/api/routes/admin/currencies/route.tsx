@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server";
-import { getCurrencyList, createCurrency } from '@/app/server/controllers/CurrencyController';
+import { getCurrencyList, createOrUpdateCurrency } from '@/app/server/controllers/CurrencyController';
 
 export async function GET() {
   const result = await getCurrencyList();
@@ -15,7 +15,7 @@ export async function GET() {
 export async function POST(req: Request) {
   try {
     const body = await req.json();
-    const result = await createCurrency(body);
+    const result = await createOrUpdateCurrency(body);
 
     if (result.success) {
       return NextResponse.json(

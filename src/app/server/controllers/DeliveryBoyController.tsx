@@ -1,9 +1,33 @@
 // controllers/attributeController.ts
 import { PrismaClient } from '@prisma/client';
-
 const prisma = new PrismaClient();
 
+type createOrUpdateData = {
+  id: number | null;
+  user_id: number;
+  total_collection: number;
+  total_earning: number;
+  monthly_salary: number;
+  order_commission: number;
+  created_at?: string;
+};
+
 export const getDeliveryBoys = async () => {
+  try {
+    const delivery_boys = await prisma.delivery_boys.findMany();
+    // Convert BigInt fields to strings
+    const serializedWholesaleProducts = delivery_boys.map(delivery_boy => ({
+      ...delivery_boy,
+      user_id: delivery_boy.user_id.toString(), // Assuming id is the BigInt field
+    }));
+    return { success: true, data: delivery_boys };
+  } catch (error) {
+    console.error("Error fetching delivery boys:", error);
+    return { success: false, error };
+  }
+}
+
+export const createOrUpdateDeliveryBoy = async () => {
   try {
     const delivery_boys = await prisma.delivery_boys.findMany();
     // Convert BigInt fields to strings

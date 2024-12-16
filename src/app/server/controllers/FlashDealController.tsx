@@ -1,9 +1,16 @@
 // controllers/flashDealController.ts
 import { PrismaClient } from '@prisma/client';
 import { slugify, randomString } from '@/app/server/utils/FlashDeal';
-
 const prisma = new PrismaClient();
 
+type createOrUpdateData = {
+  id: number | null;
+  flash_deal_id: number;
+  product_id: number;
+  discount: number;
+  discount_type: string;
+  created_at?: string;
+};
 interface FlashDealRequest {
     id: number;
     title: string;

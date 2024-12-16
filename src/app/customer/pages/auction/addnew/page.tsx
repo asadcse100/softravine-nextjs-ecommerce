@@ -2,7 +2,8 @@
 
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm, SubmitHandler } from "react-hook-form";
-import { toast } from "react-hot-toast";
+import { showErrorToast, showSuccessToast } from "@/app/admin/components/Toast";
+import { useState, useEffect } from 'react';
 import { z } from "zod";
 
 import { Button } from "@/app/seller/components/ui/button";
@@ -27,30 +28,6 @@ const formSchema = z.object({
   unit: z.string().min(3, {
     message: "Unit must be at least 3 characters.",
   }),
-  weight: z.string().min(3, {
-    message: "Weight must be at least 3 characters.",
-  }),
-  minimum_purchase_qty: z.string().min(3, {
-    message: "Minimum Purchase Qty must be at least 3 characters.",
-  }),
-  tag: z.string().min(3, {
-    message: "Tag Purchase Qty must be at least 3 characters.",
-  }),
-  barcode: z.string().min(3, {
-    message: "Barcode Purchase Qty must be at least 3 characters.",
-  }),
-  thumbnail_image: z.string().min(3, {
-    message: "thumbnail_image Purchase Qty must be at least 3 characters.",
-  }),
-  gallery_images: z.string().min(3, {
-    message: "gallery_images Purchase Qty must be at least 3 characters.",
-  }),
-  video_provider: z.string().min(3, {
-    message: "Video Provider Purchase Qty must be at least 3 characters.",
-  }),
-  video_link: z.string().min(3, {
-    message: "Video Link Purchase Qty must be at least 3 characters.",
-  }),
 });
 
 export default function Addnew() {
@@ -74,11 +51,46 @@ export default function Addnew() {
   });
 
   // 2. Define a submit handler.
-  function onSubmit(values: z.infer<typeof formSchema>) {
-    // Do something with the form values.
-    // ✅ This will be type-safe and validated.
-    console.log(values);
-  }
+  // function onSubmit(values: z.infer<typeof formSchema>) {
+  //   // Do something with the form values.
+  //   // ✅ This will be type-safe and validated.
+  //   console.log(values);
+  // }
+
+  const [isLoading, setIsLoading] = useState(false);
+
+  const onSubmit: SubmitHandler<z.infer<typeof formSchema>> = async (values) => {
+    const apiUrl = process.env.NEXT_PUBLIC_API_URL || "";
+
+    if (!apiUrl) {
+      showErrorToast("API URL is not configured.");
+      return;
+    }
+
+    setIsLoading(true);
+
+    try {
+      const response = await fetch(`${apiUrl}/server/api/routes/admin/blogs/blogCategories`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(values),
+      });
+
+      if (!response.ok) {
+        throw new Error("Failed to product bid. Please try again.");
+      }
+
+      const result = await response.json();
+
+      showSuccessToast(result.message || "product bid successfully!");
+      // router.push("/admin/pages/blog_system/catproduct bidegory");
+      window.location.href = `${apiUrl}/admin/pages/blog_system/productbid`;
+    } catch (error) {
+      showErrorToast("Error adding product bid: " + (error instanceof Error ? error.message : "Unknown error"));
+    }
+  };
 
   const inputClass = "bg-zinc-50 border border-slate-300 text-slate-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-slate-900 dark:border-slate-700 dark:placeholder-slate-700 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500";
 
@@ -88,7 +100,7 @@ export default function Addnew() {
         <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
           <div className="mx-auto max-w-screen-2xl">
             <div className="grid gap-4 md:grid-cols-1 lg:grid-cols-2 sm:grid-cols-1">
-              
+
               <div className="flex flex-col gap-4">
                 <div className="px-6 rounded-sm border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark">
                   <div className="border-b border-stroke px-6.5 py-4 dark:border-strokedark">
@@ -234,881 +246,889 @@ export default function Addnew() {
                 </div>
               </div>
 
-            <div className="grid grid-cols-1 gap-4 md:grid-cols-1 sm:grid-cols-2">
-              <div className="flex flex-col gap-4">
-                <div className="px-6 rounded-sm border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark">
-                  <div className="border-b border-stroke px-6.5 py-4 dark:border-strokedark">
-                    <h3 className="font-medium text-black dark:text-white">
-                      Product Images
-                    </h3>
-                  </div>
-                  <div className="py-6">
-                    <div className="flex flex-col gap-5.5 p-6.5">
-                      <FormField
-                        control={form.control}
-                        name="gallery_images"
-                        render={({ field }) => (
-                          <FormItem>
-                            <FormLabel>Gallery Images</FormLabel>
-                            <FormControl>
-                              <Input
-                                className={inputClass}
-                                placeholder="Gallery Images"
-                                {...field}
-                              />
-                            </FormControl>
-                            <FormMessage />
-                          </FormItem>
-                        )}
-                      />
+              <div className="grid grid-cols-1 gap-4 md:grid-cols-1 sm:grid-cols-2">
+                <div className="flex flex-col gap-4">
+                  <div className="px-6 rounded-sm border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark">
+                    <div className="border-b border-stroke px-6.5 py-4 dark:border-strokedark">
+                      <h3 className="font-medium text-black dark:text-white">
+                        Product Images
+                      </h3>
                     </div>
-                    <div className="mt-3 flex flex-col gap-5.5 p-6.5">
-                      <FormField
-                        control={form.control}
-                        name="thumbnail_image"
-                        render={({ field }) => (
-                          <FormItem>
-                            <FormLabel>Thumbnail Image</FormLabel>
-                            <FormControl>
-                              <Input
-                                className={inputClass}
-                                placeholder="Thumbnail Image"
-                                {...field}
-                              />
-                            </FormControl>
-                            <FormMessage />
-                          </FormItem>
-                        )}
-                      />
+                    <div className="py-6">
+                      <div className="flex flex-col gap-5.5 p-6.5">
+                        <FormField
+                          control={form.control}
+                          name="gallery_images"
+                          render={({ field }) => (
+                            <FormItem>
+                              <FormLabel>Gallery Images</FormLabel>
+                              <FormControl>
+                                <Input
+                                  className={inputClass}
+                                  placeholder="Gallery Images"
+                                  {...field}
+                                />
+                              </FormControl>
+                              <FormMessage />
+                            </FormItem>
+                          )}
+                        />
+                      </div>
+                      <div className="mt-3 flex flex-col gap-5.5 p-6.5">
+                        <FormField
+                          control={form.control}
+                          name="thumbnail_image"
+                          render={({ field }) => (
+                            <FormItem>
+                              <FormLabel>Thumbnail Image</FormLabel>
+                              <FormControl>
+                                <Input
+                                  className={inputClass}
+                                  placeholder="Thumbnail Image"
+                                  {...field}
+                                />
+                              </FormControl>
+                              <FormMessage />
+                            </FormItem>
+                          )}
+                        />
+                      </div>
                     </div>
                   </div>
                 </div>
               </div>
-            </div>
 
 
-            <div className="grid grid-cols-1 gap-4 md:grid-cols-1 sm:grid-cols-2">
-              <div className="flex flex-col gap-4">
-                <div className="px-6 rounded-sm border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark">
-                  <div className="border-b border-stroke px-6.5 py-4 dark:border-strokedark">
-                    <h3 className="font-medium text-black dark:text-white">
-                    Product Videos
-                    </h3>
-                  </div>
-                  <div className="py-6">
-                    <div className="flex flex-col gap-5.5 p-6.5">
-                      <FormField
-                        control={form.control}
-                        name="video_provider"
-                        render={({ field }) => (
-                          <FormItem>
-                            <FormLabel>Video Provider</FormLabel>
-                            <FormControl>
-                              <Input
-                                className={inputClass}
-                                placeholder="Video Provider"
-                                {...field}
-                              />
-                            </FormControl>
-                            <FormMessage />
-                          </FormItem>
-                        )}
-                      />
+              <div className="grid grid-cols-1 gap-4 md:grid-cols-1 sm:grid-cols-2">
+                <div className="flex flex-col gap-4">
+                  <div className="px-6 rounded-sm border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark">
+                    <div className="border-b border-stroke px-6.5 py-4 dark:border-strokedark">
+                      <h3 className="font-medium text-black dark:text-white">
+                        Product Videos
+                      </h3>
                     </div>
-                    <div className="mt-3 flex flex-col gap-5.5 p-6.5">
-                      <FormField
-                        control={form.control}
-                        name="video_link"
-                        render={({ field }) => (
-                          <FormItem>
-                            <FormLabel>Video Link</FormLabel>
-                            <FormControl>
-                              <Input
-                                className={inputClass}
-                                placeholder="Video Link"
-                                {...field}
-                              />
-                            </FormControl>
-                            <FormMessage />
-                          </FormItem>
-                        )}
-                      />
+                    <div className="py-6">
+                      <div className="flex flex-col gap-5.5 p-6.5">
+                        <FormField
+                          control={form.control}
+                          name="video_provider"
+                          render={({ field }) => (
+                            <FormItem>
+                              <FormLabel>Video Provider</FormLabel>
+                              <FormControl>
+                                <Input
+                                  className={inputClass}
+                                  placeholder="Video Provider"
+                                  {...field}
+                                />
+                              </FormControl>
+                              <FormMessage />
+                            </FormItem>
+                          )}
+                        />
+                      </div>
+                      <div className="mt-3 flex flex-col gap-5.5 p-6.5">
+                        <FormField
+                          control={form.control}
+                          name="video_link"
+                          render={({ field }) => (
+                            <FormItem>
+                              <FormLabel>Video Link</FormLabel>
+                              <FormControl>
+                                <Input
+                                  className={inputClass}
+                                  placeholder="Video Link"
+                                  {...field}
+                                />
+                              </FormControl>
+                              <FormMessage />
+                            </FormItem>
+                          )}
+                        />
+                      </div>
                     </div>
                   </div>
                 </div>
               </div>
-            </div>
 
-            <div className="grid grid-cols-1 gap-4 md:grid-cols-1 sm:grid-cols-2">
-              <div className="flex flex-col gap-4">
-                <div className="px-6 rounded-sm border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark">
-                  <div className="border-b border-stroke px-6.5 py-4 dark:border-strokedark">
-                    <h3 className="font-medium text-black dark:text-white">
-                    Product Variation
-                    </h3>
-                  </div>
-                  <div className="py-6">
-                    <div className="flex flex-col gap-5.5 p-6.5">
-                      <FormField
-                        control={form.control}
-                        name="color"
-                        render={({ field }) => (
-                          <FormItem>
-                            <FormLabel>Colors</FormLabel>
-                            <FormControl>
-                              <Input
-                                className={inputClass}
-                                placeholder="Select Color"
-                                {...field}
-                              />
-                            </FormControl>
-                            <FormMessage />
-                          </FormItem>
-                        )}
-                      />
+              <div className="grid grid-cols-1 gap-4 md:grid-cols-1 sm:grid-cols-2">
+                <div className="flex flex-col gap-4">
+                  <div className="px-6 rounded-sm border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark">
+                    <div className="border-b border-stroke px-6.5 py-4 dark:border-strokedark">
+                      <h3 className="font-medium text-black dark:text-white">
+                        Product Variation
+                      </h3>
                     </div>
-                    <div className="mt-3 flex flex-col gap-5.5 p-6.5">
-                      <FormField
-                        control={form.control}
-                        name="attribute"
-                        render={({ field }) => (
-                          <FormItem>
-                            <FormLabel>Attributes</FormLabel>
-                            <FormControl>
-                              <Input
-                                className={inputClass}
-                                placeholder="Attributes"
-                                {...field}
-                              />
-                            </FormControl>
-                            <FormMessage />
-                          </FormItem>
-                        )}
-                      />
+                    <div className="py-6">
+                      <div className="flex flex-col gap-5.5 p-6.5">
+                        <FormField
+                          control={form.control}
+                          name="color"
+                          render={({ field }) => (
+                            <FormItem>
+                              <FormLabel>Colors</FormLabel>
+                              <FormControl>
+                                <Input
+                                  className={inputClass}
+                                  placeholder="Select Color"
+                                  {...field}
+                                />
+                              </FormControl>
+                              <FormMessage />
+                            </FormItem>
+                          )}
+                        />
+                      </div>
+                      <div className="mt-3 flex flex-col gap-5.5 p-6.5">
+                        <FormField
+                          control={form.control}
+                          name="attribute"
+                          render={({ field }) => (
+                            <FormItem>
+                              <FormLabel>Attributes</FormLabel>
+                              <FormControl>
+                                <Input
+                                  className={inputClass}
+                                  placeholder="Attributes"
+                                  {...field}
+                                />
+                              </FormControl>
+                              <FormMessage />
+                            </FormItem>
+                          )}
+                        />
+                      </div>
                     </div>
                   </div>
                 </div>
               </div>
-            </div>
 
-            <div className="grid grid-cols-1 gap-4 md:grid-cols-1 sm:grid-cols-2">
-              <div className="flex flex-col gap-4">
-                <div className="px-6 rounded-sm border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark">
-                  <div className="border-b border-stroke px-6.5 py-4 dark:border-strokedark">
-                    <h3 className="font-medium text-black dark:text-white">
-                    Product price
-                    </h3>
-                  </div>
-                  <div className="py-6">
-                    <div className="flex flex-col gap-5.5 p-6.5">
-                      <FormField
-                        control={form.control}
-                        name="unit_price"
-                        render={({ field }) => (
-                          <FormItem>
-                            <FormLabel>Regular Unit Price</FormLabel>
-                            <FormControl>
-                              <Input
-                                className={inputClass}
-                                placeholder="Unit Price"
-                                {...field}
-                              />
-                            </FormControl>
-                            <FormMessage />
-                          </FormItem>
-                        )}
-                      />
+              <div className="grid grid-cols-1 gap-4 md:grid-cols-1 sm:grid-cols-2">
+                <div className="flex flex-col gap-4">
+                  <div className="px-6 rounded-sm border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark">
+                    <div className="border-b border-stroke px-6.5 py-4 dark:border-strokedark">
+                      <h3 className="font-medium text-black dark:text-white">
+                        Product price
+                      </h3>
                     </div>
-                    <div className="mt-3 flex flex-col gap-5.5 p-6.5">
-                      <FormField
-                        control={form.control}
-                        name="discount_date_range"
-                        render={({ field }) => (
-                          <FormItem>
-                            <FormLabel>Discount Date Range</FormLabel>
-                            <FormControl>
-                              <Input
-                                className={inputClass}
-                                placeholder="Discount Date Range"
-                                {...field}
-                              />
-                            </FormControl>
-                            <FormMessage />
-                          </FormItem>
-                        )}
-                      />
-                    </div>
-                    <div className="mt-3 flex flex-col gap-5.5 p-6.5">
-                      <FormField
-                        control={form.control}
-                        name="discount"
-                        render={({ field }) => (
-                          <FormItem>
-                            <FormLabel>Discount</FormLabel>
-                            <FormControl>
-                              <Input
-                                className={inputClass}
-                                placeholder="Discount"
-                                {...field}
-                              />
-                            </FormControl>
-                            <FormMessage />
-                          </FormItem>
-                        )}
-                      />
-                    </div>
-                    <div className="mt-3 flex flex-col gap-5.5 p-6.5">
-                      <FormField
-                        control={form.control}
-                        name="flat_percent"
-                        render={({ field }) => (
-                          <FormItem>
-                            <FormControl>
-                              <Input
-                                className={inputClass}
-                                placeholder="flat_percent"
-                                {...field}
-                              />
-                            </FormControl>
-                            <FormMessage />
-                          </FormItem>
-                        )}
-                      />
+                    <div className="py-6">
+                      <div className="flex flex-col gap-5.5 p-6.5">
+                        <FormField
+                          control={form.control}
+                          name="unit_price"
+                          render={({ field }) => (
+                            <FormItem>
+                              <FormLabel>Regular Unit Price</FormLabel>
+                              <FormControl>
+                                <Input
+                                  className={inputClass}
+                                  placeholder="Unit Price"
+                                  {...field}
+                                />
+                              </FormControl>
+                              <FormMessage />
+                            </FormItem>
+                          )}
+                        />
+                      </div>
+                      <div className="mt-3 flex flex-col gap-5.5 p-6.5">
+                        <FormField
+                          control={form.control}
+                          name="discount_date_range"
+                          render={({ field }) => (
+                            <FormItem>
+                              <FormLabel>Discount Date Range</FormLabel>
+                              <FormControl>
+                                <Input
+                                  className={inputClass}
+                                  placeholder="Discount Date Range"
+                                  {...field}
+                                />
+                              </FormControl>
+                              <FormMessage />
+                            </FormItem>
+                          )}
+                        />
+                      </div>
+                      <div className="mt-3 flex flex-col gap-5.5 p-6.5">
+                        <FormField
+                          control={form.control}
+                          name="discount"
+                          render={({ field }) => (
+                            <FormItem>
+                              <FormLabel>Discount</FormLabel>
+                              <FormControl>
+                                <Input
+                                  className={inputClass}
+                                  placeholder="Discount"
+                                  {...field}
+                                />
+                              </FormControl>
+                              <FormMessage />
+                            </FormItem>
+                          )}
+                        />
+                      </div>
+                      <div className="mt-3 flex flex-col gap-5.5 p-6.5">
+                        <FormField
+                          control={form.control}
+                          name="flat_percent"
+                          render={({ field }) => (
+                            <FormItem>
+                              <FormControl>
+                                <Input
+                                  className={inputClass}
+                                  placeholder="flat_percent"
+                                  {...field}
+                                />
+                              </FormControl>
+                              <FormMessage />
+                            </FormItem>
+                          )}
+                        />
+                      </div>
                     </div>
                   </div>
                 </div>
               </div>
-            </div>
 
-            <div className="grid grid-cols-1 gap-4 md:grid-cols-1 sm:grid-cols-2">
-              <div className="flex flex-col gap-4">
-                <div className="px-6 rounded-sm border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark">
-                  <div className="border-b border-stroke px-6.5 py-4 dark:border-strokedark">
-                    <h3 className="font-medium text-black dark:text-white">
-                    Reseller Product price
-                    </h3>
-                  </div>
-                  <div className="py-6">
-                    <div className="flex flex-col gap-5.5 p-6.5">
-                      <FormField
-                        control={form.control}
-                        name="unit_price"
-                        render={({ field }) => (
-                          <FormItem>
-                            <FormLabel>Reseller Unit Price</FormLabel>
-                            <FormControl>
-                              <Input
-                                className={inputClass}
-                                placeholder="Unit Price"
-                                {...field}
-                              />
-                            </FormControl>
-                            <FormMessage />
-                          </FormItem>
-                        )}
-                      />
+              <div className="grid grid-cols-1 gap-4 md:grid-cols-1 sm:grid-cols-2">
+                <div className="flex flex-col gap-4">
+                  <div className="px-6 rounded-sm border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark">
+                    <div className="border-b border-stroke px-6.5 py-4 dark:border-strokedark">
+                      <h3 className="font-medium text-black dark:text-white">
+                        Reseller Product price
+                      </h3>
                     </div>
- 
-                    <div className="mt-3 flex flex-col gap-5.5 p-6.5">
-                      <FormField
-                        control={form.control}
-                        name="discount_date_range"
-                        render={({ field }) => (
-                          <FormItem>
-                            <FormLabel>Discount Date Range</FormLabel>
-                            <FormControl>
-                              <Input
-                                className={inputClass}
-                                placeholder="Discount Date Range"
-                                {...field}
-                              />
-                            </FormControl>
-                            <FormMessage />
-                          </FormItem>
-                        )}
-                      />
-                    </div>
-                    <div className="mt-3 flex flex-col gap-5.5 p-6.5">
-                      <FormField
-                        control={form.control}
-                        name="discount"
-                        render={({ field }) => (
-                          <FormItem>
-                            <FormLabel>Discount</FormLabel>
-                            <FormControl>
-                              <Input
-                                className={inputClass}
-                                placeholder="Discount"
-                                {...field}
-                              />
-                            </FormControl>
-                            <FormMessage />
-                          </FormItem>
-                        )}
-                      />
-                    </div>
-                    <div className="mt-3 flex flex-col gap-5.5 p-6.5">
-                      <FormField
-                        control={form.control}
-                        name="flat_percent"
-                        render={({ field }) => (
-                          <FormItem>
-                            <FormControl>
-                              <Input
-                                className={inputClass}
-                                placeholder="flat_percent"
-                                {...field}
-                              />
-                            </FormControl>
-                            <FormMessage />
-                          </FormItem>
-                        )}
-                      />
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
+                    <div className="py-6">
+                      <div className="flex flex-col gap-5.5 p-6.5">
+                        <FormField
+                          control={form.control}
+                          name="unit_price"
+                          render={({ field }) => (
+                            <FormItem>
+                              <FormLabel>Reseller Unit Price</FormLabel>
+                              <FormControl>
+                                <Input
+                                  className={inputClass}
+                                  placeholder="Unit Price"
+                                  {...field}
+                                />
+                              </FormControl>
+                              <FormMessage />
+                            </FormItem>
+                          )}
+                        />
+                      </div>
 
-            <div className="grid grid-cols-1 gap-4 md:grid-cols-1 sm:grid-cols-2">
-              <div className="flex flex-col gap-4">
-                <div className="px-6 rounded-sm border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark">
-                  <div className="border-b border-stroke px-6.5 py-4 dark:border-strokedark">
-                    <h3 className="font-medium text-black dark:text-white">
-                    Product stock
-                    </h3>
+                      <div className="mt-3 flex flex-col gap-5.5 p-6.5">
+                        <FormField
+                          control={form.control}
+                          name="discount_date_range"
+                          render={({ field }) => (
+                            <FormItem>
+                              <FormLabel>Discount Date Range</FormLabel>
+                              <FormControl>
+                                <Input
+                                  className={inputClass}
+                                  placeholder="Discount Date Range"
+                                  {...field}
+                                />
+                              </FormControl>
+                              <FormMessage />
+                            </FormItem>
+                          )}
+                        />
+                      </div>
+                      <div className="mt-3 flex flex-col gap-5.5 p-6.5">
+                        <FormField
+                          control={form.control}
+                          name="discount"
+                          render={({ field }) => (
+                            <FormItem>
+                              <FormLabel>Discount</FormLabel>
+                              <FormControl>
+                                <Input
+                                  className={inputClass}
+                                  placeholder="Discount"
+                                  {...field}
+                                />
+                              </FormControl>
+                              <FormMessage />
+                            </FormItem>
+                          )}
+                        />
+                      </div>
+                      <div className="mt-3 flex flex-col gap-5.5 p-6.5">
+                        <FormField
+                          control={form.control}
+                          name="flat_percent"
+                          render={({ field }) => (
+                            <FormItem>
+                              <FormControl>
+                                <Input
+                                  className={inputClass}
+                                  placeholder="flat_percent"
+                                  {...field}
+                                />
+                              </FormControl>
+                              <FormMessage />
+                            </FormItem>
+                          )}
+                        />
+                      </div>
+                    </div>
                   </div>
-                  <div className="py-6">
-                    <div className="mt-3 flex flex-col gap-5.5 p-6.5">
-                      <FormField
-                        control={form.control}
-                        name="quantity"
-                        render={({ field }) => (
-                          <FormItem>
-                            <FormLabel>Quantity</FormLabel>
-                            <FormControl>
-                              <Input
-                                className={inputClass}
-                                placeholder="quantity"
-                                {...field}
-                              />
-                            </FormControl>
-                            <FormMessage />
-                          </FormItem>
-                        )}
-                      />
-                    </div>
-                    <div className="mt-3 flex flex-col gap-5.5 p-6.5">
-                      <FormField
-                        control={form.control}
-                        name="sku"
-                        render={({ field }) => (
-                          <FormItem>
-                            <FormLabel>SKU</FormLabel>
-                            <FormControl>
-                              <Input
-                                className={inputClass}
-                                placeholder="sku"
-                                {...field}
-                              />
-                            </FormControl>
-                            <FormMessage />
-                          </FormItem>
-                        )}
-                      />
-                    </div>
-                    <div className="mt-3 flex flex-col gap-5.5 p-6.5">
-                      <FormField
-                        control={form.control}
-                        name="external_link"
-                        render={({ field }) => (
-                          <FormItem>
-                            <FormLabel>External Link</FormLabel>
-                            <FormControl>
-                              <Input
-                                className={inputClass}
-                                placeholder="External Link"
-                                {...field}
-                              />
-                            </FormControl>
-                            <FormMessage />
-                          </FormItem>
-                        )}
-                      />
-                    </div>
-                    <div className="mt-3 flex flex-col gap-5.5 p-6.5">
-                      <FormField
-                        control={form.control}
-                        name="external_link_button"
-                        render={({ field }) => (
-                          <FormItem>
-                            <FormLabel>External Link Button</FormLabel>
-                            <FormControl>
-                              <Input
-                                className={inputClass}
-                                placeholder="External Link Button"
-                                {...field}
-                              />
-                            </FormControl>
-                            <FormMessage />
-                          </FormItem>
-                        )}
-                      />
-                    </div>
+                </div>
+              </div>
 
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div className="grid grid-cols-1 gap-4 md:grid-cols-1 sm:grid-cols-2">
-              <div className="flex flex-col gap-4">
-                <div className="px-6 rounded-sm border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark">
-                  <div className="border-b border-stroke px-6.5 py-4 dark:border-strokedark">
-                    <h3 className="font-medium text-black dark:text-white">
-                    Product Description
-                    </h3>
-                  </div>
-                  <div className="py-6">
-                    <div className="mt-3 flex flex-col gap-5.5 p-6.5">
-                      <FormField
-                        control={form.control}
-                        name="product_description"
-                        render={({ field }) => (
-                          <FormItem>
-                            <FormLabel>Description</FormLabel>
-                            <FormControl>
-                              <Input
-                                className={inputClass}
-                                placeholder="product_description"
-                                {...field}
-                              />
-                            </FormControl>
-                            <FormMessage />
-                          </FormItem>
-                        )}
-                      />
+              <div className="grid grid-cols-1 gap-4 md:grid-cols-1 sm:grid-cols-2">
+                <div className="flex flex-col gap-4">
+                  <div className="px-6 rounded-sm border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark">
+                    <div className="border-b border-stroke px-6.5 py-4 dark:border-strokedark">
+                      <h3 className="font-medium text-black dark:text-white">
+                        Product stock
+                      </h3>
+                    </div>
+                    <div className="py-6">
+                      <div className="mt-3 flex flex-col gap-5.5 p-6.5">
+                        <FormField
+                          control={form.control}
+                          name="quantity"
+                          render={({ field }) => (
+                            <FormItem>
+                              <FormLabel>Quantity</FormLabel>
+                              <FormControl>
+                                <Input
+                                  className={inputClass}
+                                  placeholder="quantity"
+                                  {...field}
+                                />
+                              </FormControl>
+                              <FormMessage />
+                            </FormItem>
+                          )}
+                        />
+                      </div>
+                      <div className="mt-3 flex flex-col gap-5.5 p-6.5">
+                        <FormField
+                          control={form.control}
+                          name="sku"
+                          render={({ field }) => (
+                            <FormItem>
+                              <FormLabel>SKU</FormLabel>
+                              <FormControl>
+                                <Input
+                                  className={inputClass}
+                                  placeholder="sku"
+                                  {...field}
+                                />
+                              </FormControl>
+                              <FormMessage />
+                            </FormItem>
+                          )}
+                        />
+                      </div>
+                      <div className="mt-3 flex flex-col gap-5.5 p-6.5">
+                        <FormField
+                          control={form.control}
+                          name="external_link"
+                          render={({ field }) => (
+                            <FormItem>
+                              <FormLabel>External Link</FormLabel>
+                              <FormControl>
+                                <Input
+                                  className={inputClass}
+                                  placeholder="External Link"
+                                  {...field}
+                                />
+                              </FormControl>
+                              <FormMessage />
+                            </FormItem>
+                          )}
+                        />
+                      </div>
+                      <div className="mt-3 flex flex-col gap-5.5 p-6.5">
+                        <FormField
+                          control={form.control}
+                          name="external_link_button"
+                          render={({ field }) => (
+                            <FormItem>
+                              <FormLabel>External Link Button</FormLabel>
+                              <FormControl>
+                                <Input
+                                  className={inputClass}
+                                  placeholder="External Link Button"
+                                  {...field}
+                                />
+                              </FormControl>
+                              <FormMessage />
+                            </FormItem>
+                          )}
+                        />
+                      </div>
+
                     </div>
                   </div>
                 </div>
               </div>
-            </div>
-            <div className="grid grid-cols-1 gap-4 md:grid-cols-1 sm:grid-cols-2">
-              <div className="flex flex-col gap-4">
-                <div className="px-6 rounded-sm border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark">
-                  <div className="border-b border-stroke px-6.5 py-4 dark:border-strokedark">
-                    <h3 className="font-medium text-black dark:text-white">
-                    PDF Specification
-                    </h3>
-                  </div>
-                  <div className="py-6">
-                    <div className="mt-3 flex flex-col gap-5.5 p-6.5">
-                      <FormField
-                        control={form.control}
-                        name="pdf_specification"
-                        render={({ field }) => (
-                          <FormItem>
-                            <FormLabel>PDF Specification</FormLabel>
-                            <FormControl>
-                              <Input
-                                className={inputClass}
-                                placeholder="pdf_specification"
-                                {...field}
-                              />
-                            </FormControl>
-                            <FormMessage />
-                          </FormItem>
-                        )}
-                      />
+              <div className="grid grid-cols-1 gap-4 md:grid-cols-1 sm:grid-cols-2">
+                <div className="flex flex-col gap-4">
+                  <div className="px-6 rounded-sm border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark">
+                    <div className="border-b border-stroke px-6.5 py-4 dark:border-strokedark">
+                      <h3 className="font-medium text-black dark:text-white">
+                        Product Description
+                      </h3>
+                    </div>
+                    <div className="py-6">
+                      <div className="mt-3 flex flex-col gap-5.5 p-6.5">
+                        <FormField
+                          control={form.control}
+                          name="product_description"
+                          render={({ field }) => (
+                            <FormItem>
+                              <FormLabel>Description</FormLabel>
+                              <FormControl>
+                                <Input
+                                  className={inputClass}
+                                  placeholder="product_description"
+                                  {...field}
+                                />
+                              </FormControl>
+                              <FormMessage />
+                            </FormItem>
+                          )}
+                        />
+                      </div>
                     </div>
                   </div>
                 </div>
               </div>
-            </div>
-            <div className="grid grid-cols-1 gap-4 md:grid-cols-1 sm:grid-cols-2">
-              <div className="flex flex-col gap-4">
-                <div className="px-6 rounded-sm border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark">
-                  <div className="border-b border-stroke px-6.5 py-4 dark:border-strokedark">
-                    <h3 className="font-medium text-black dark:text-white">
-                    SEO Section
-                    </h3>
-                  </div>
-                  <div className="py-6">
-                    <div className="mt-3 flex flex-col gap-5.5 p-6.5">
-                      <FormField
-                        control={form.control}
-                        name="meta_title"
-                        render={({ field }) => (
-                          <FormItem>
-                            <FormLabel>Meta Title</FormLabel>
-                            <FormControl>
-                              <Input
-                                className={inputClass}
-                                placeholder="meta_title"
-                                {...field}
-                              />
-                            </FormControl>
-                            <FormMessage />
-                          </FormItem>
-                        )}
-                      />
+              <div className="grid grid-cols-1 gap-4 md:grid-cols-1 sm:grid-cols-2">
+                <div className="flex flex-col gap-4">
+                  <div className="px-6 rounded-sm border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark">
+                    <div className="border-b border-stroke px-6.5 py-4 dark:border-strokedark">
+                      <h3 className="font-medium text-black dark:text-white">
+                        PDF Specification
+                      </h3>
                     </div>
-                    <div className="mt-3 flex flex-col gap-5.5 p-6.5">
-                      <FormField
-                        control={form.control}
-                        name="meta_description"
-                        render={({ field }) => (
-                          <FormItem>
-                            <FormLabel>Meta Description</FormLabel>
-                            <FormControl>
-                              <Input
-                                className={inputClass}
-                                placeholder="meta_description"
-                                {...field}
-                              />
-                            </FormControl>
-                            <FormMessage />
-                          </FormItem>
-                        )}
-                      />
-                    </div>
-                    <div className="mt-3 flex flex-col gap-5.5 p-6.5">
-                      <FormField
-                        control={form.control}
-                        name="meta_image"
-                        render={({ field }) => (
-                          <FormItem>
-                            <FormLabel>Meta Imgae</FormLabel>
-                            <FormControl>
-                              <Input
-                                className={inputClass}
-                                placeholder="meta_image"
-                                {...field}
-                              />
-                            </FormControl>
-                            <FormMessage />
-                          </FormItem>
-                        )}
-                      />
+                    <div className="py-6">
+                      <div className="mt-3 flex flex-col gap-5.5 p-6.5">
+                        <FormField
+                          control={form.control}
+                          name="pdf_specification"
+                          render={({ field }) => (
+                            <FormItem>
+                              <FormLabel>PDF Specification</FormLabel>
+                              <FormControl>
+                                <Input
+                                  className={inputClass}
+                                  placeholder="pdf_specification"
+                                  {...field}
+                                />
+                              </FormControl>
+                              <FormMessage />
+                            </FormItem>
+                          )}
+                        />
+                      </div>
                     </div>
                   </div>
                 </div>
               </div>
-            </div>
-            <div className="grid grid-cols-1 gap-4 md:grid-cols-1 sm:grid-cols-2">
-              <div className="flex flex-col gap-4">
-                <div className="px-6 rounded-sm border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark">
-                  <div className="border-b border-stroke px-6.5 py-4 dark:border-strokedark">
-                    <h3 className="font-medium text-black dark:text-white">
-                    Product Ceategory
-                    </h3>
-                  </div>
-                  <div className="py-6">
-                    <div className="mt-3 flex flex-col gap-5.5 p-6.5">
-                      <FormField
-                        control={form.control}
-                        name="main_category"
-                        render={({ field }) => (
-                          <FormItem>
-                            <FormLabel>Main Category</FormLabel>
-                            <FormControl>
-                              <Input
-                                className={inputClass}
-                                placeholder=""
-                                {...field}
-                              />
-                            </FormControl>
-                            <FormMessage />
-                          </FormItem>
-                        )}
-                      />
+              <div className="grid grid-cols-1 gap-4 md:grid-cols-1 sm:grid-cols-2">
+                <div className="flex flex-col gap-4">
+                  <div className="px-6 rounded-sm border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark">
+                    <div className="border-b border-stroke px-6.5 py-4 dark:border-strokedark">
+                      <h3 className="font-medium text-black dark:text-white">
+                        SEO Section
+                      </h3>
                     </div>
-                    <div className="mt-3 flex flex-col gap-5.5 p-6.5">
-                      <FormField
-                        control={form.control}
-                        name="sub_category"
-                        render={({ field }) => (
-                          <FormItem>
-                            <FormLabel>Sub Category</FormLabel>
-                            <FormControl>
-                              <Input
-                                className={inputClass}
-                                placeholder=""
-                                {...field}
-                              />
-                            </FormControl>
-                            <FormMessage />
-                          </FormItem>
-                        )}
-                      />
+                    <div className="py-6">
+                      <div className="mt-3 flex flex-col gap-5.5 p-6.5">
+                        <FormField
+                          control={form.control}
+                          name="meta_title"
+                          render={({ field }) => (
+                            <FormItem>
+                              <FormLabel>Meta Title</FormLabel>
+                              <FormControl>
+                                <Input
+                                  className={inputClass}
+                                  placeholder="meta_title"
+                                  {...field}
+                                />
+                              </FormControl>
+                              <FormMessage />
+                            </FormItem>
+                          )}
+                        />
+                      </div>
+                      <div className="mt-3 flex flex-col gap-5.5 p-6.5">
+                        <FormField
+                          control={form.control}
+                          name="meta_description"
+                          render={({ field }) => (
+                            <FormItem>
+                              <FormLabel>Meta Description</FormLabel>
+                              <FormControl>
+                                <Input
+                                  className={inputClass}
+                                  placeholder="meta_description"
+                                  {...field}
+                                />
+                              </FormControl>
+                              <FormMessage />
+                            </FormItem>
+                          )}
+                        />
+                      </div>
+                      <div className="mt-3 flex flex-col gap-5.5 p-6.5">
+                        <FormField
+                          control={form.control}
+                          name="meta_image"
+                          render={({ field }) => (
+                            <FormItem>
+                              <FormLabel>Meta Imgae</FormLabel>
+                              <FormControl>
+                                <Input
+                                  className={inputClass}
+                                  placeholder="meta_image"
+                                  {...field}
+                                />
+                              </FormControl>
+                              <FormMessage />
+                            </FormItem>
+                          )}
+                        />
+                      </div>
                     </div>
                   </div>
                 </div>
               </div>
-            </div>
-            <div className="grid grid-cols-1 gap-4 md:grid-cols-1 sm:grid-cols-2">
-              <div className="flex flex-col gap-4">
-                <div className="px-6 rounded-sm border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark">
-                  <div className="border-b border-stroke px-6.5 py-4 dark:border-strokedark">
-                    <h3 className="font-medium text-black dark:text-white">
-                    Shipping Configuration
-                    </h3>
-                  </div>
-                  <div className="py-6">
-                    <div className="mt-3 flex flex-col gap-5.5 p-6.5">
-                      <FormField
-                        control={form.control}
-                        name="free_shippling"
-                        render={({ field }) => (
-                          <FormItem>
-                            <FormLabel>Free Shipping</FormLabel>
-                            <FormControl>
-                              {/* <Input
-                                className={inputClass}
-                                placeholder=""
-                                {...field}
-                              /> */}
-                            </FormControl>
-                            <FormMessage />
-                          </FormItem>
-                        )}
-                      />
+              <div className="grid grid-cols-1 gap-4 md:grid-cols-1 sm:grid-cols-2">
+                <div className="flex flex-col gap-4">
+                  <div className="px-6 rounded-sm border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark">
+                    <div className="border-b border-stroke px-6.5 py-4 dark:border-strokedark">
+                      <h3 className="font-medium text-black dark:text-white">
+                        Product Ceategory
+                      </h3>
                     </div>
-                    <div className="mt-3 flex flex-col gap-5.5 p-6.5">
-                      <FormField
-                        control={form.control}
-                        name="flat_rate"
-                        render={({ field }) => (
-                          <FormItem>
-                            <FormLabel>Flat Rate</FormLabel>
-                            <FormControl>
-                              {/* <Input
+                    <div className="py-6">
+                      <div className="mt-3 flex flex-col gap-5.5 p-6.5">
+                        <FormField
+                          control={form.control}
+                          name="main_category"
+                          render={({ field }) => (
+                            <FormItem>
+                              <FormLabel>Main Category</FormLabel>
+                              <FormControl>
+                                <Input
+                                  className={inputClass}
+                                  placeholder=""
+                                  {...field}
+                                />
+                              </FormControl>
+                              <FormMessage />
+                            </FormItem>
+                          )}
+                        />
+                      </div>
+                      <div className="mt-3 flex flex-col gap-5.5 p-6.5">
+                        <FormField
+                          control={form.control}
+                          name="sub_category"
+                          render={({ field }) => (
+                            <FormItem>
+                              <FormLabel>Sub Category</FormLabel>
+                              <FormControl>
+                                <Input
+                                  className={inputClass}
+                                  placeholder=""
+                                  {...field}
+                                />
+                              </FormControl>
+                              <FormMessage />
+                            </FormItem>
+                          )}
+                        />
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div className="grid grid-cols-1 gap-4 md:grid-cols-1 sm:grid-cols-2">
+                <div className="flex flex-col gap-4">
+                  <div className="px-6 rounded-sm border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark">
+                    <div className="border-b border-stroke px-6.5 py-4 dark:border-strokedark">
+                      <h3 className="font-medium text-black dark:text-white">
+                        Shipping Configuration
+                      </h3>
+                    </div>
+                    <div className="py-6">
+                      <div className="mt-3 flex flex-col gap-5.5 p-6.5">
+                        <FormField
+                          control={form.control}
+                          name="free_shippling"
+                          render={({ field }) => (
+                            <FormItem>
+                              <FormLabel>Free Shipping</FormLabel>
+                              <FormControl>
+                                {/* <Input
                                 className={inputClass}
                                 placeholder=""
                                 {...field}
                               /> */}
-                            </FormControl>
-                            <FormMessage />
-                          </FormItem>
-                        )}
-                      />
-                    </div>
-                    <div className="mt-3 flex flex-col gap-5.5 p-6.5">
-                      <FormField
-                        control={form.control}
-                        name="qty_multi"
-                        render={({ field }) => (
-                          <FormItem>
-                            <FormLabel>Is Product Quantity Multiply</FormLabel>
-                            <FormControl>
-                              {/* <Input
-                                className={inputClass}
-                                placeholder="meta_image"
-                                {...field}
-                              /> */}
-                            </FormControl>
-                            <FormMessage />
-                          </FormItem>
-                        )}
-                      />
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div className="grid grid-cols-1 gap-4 md:grid-cols-1 sm:grid-cols-2">
-              <div className="flex flex-col gap-4">
-                <div className="px-6 rounded-sm border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark">
-                  <div className="border-b border-stroke px-6.5 py-4 dark:border-strokedark">
-                    <h3 className="font-medium text-black dark:text-white">
-                    Stock Visibility
-                    </h3>
-                  </div>
-                  <div className="py-6">
-                    <div className="mt-3 flex flex-col gap-5.5 p-6.5">
-                      <FormField
-                        control={form.control}
-                        name="show_stock_quantity"
-                        render={({ field }) => (
-                          <FormItem>
-                            <FormLabel>Show Stock quantity</FormLabel>
-                            <FormControl>
-                              {/* <Input
+                              </FormControl>
+                              <FormMessage />
+                            </FormItem>
+                          )}
+                        />
+                      </div>
+                      <div className="mt-3 flex flex-col gap-5.5 p-6.5">
+                        <FormField
+                          control={form.control}
+                          name="flat_rate"
+                          render={({ field }) => (
+                            <FormItem>
+                              <FormLabel>Flat Rate</FormLabel>
+                              <FormControl>
+                                {/* <Input
                                 className={inputClass}
                                 placeholder=""
                                 {...field}
                               /> */}
-                            </FormControl>
-                            <FormMessage />
-                          </FormItem>
-                        )}
-                      />
-                    </div>
-                    <div className="mt-3 flex flex-col gap-5.5 p-6.5">
-                      <FormField
-                        control={form.control}
-                        name=""
-                        render={({ field }) => (
-                          <FormItem>
-                            <FormLabel>Show Stock With Text Only</FormLabel>
-                            <FormControl>
-                              {/* <Input
-                                className={inputClass}
-                                placeholder=""
-                                {...field}
-                              /> */}
-                            </FormControl>
-                            <FormMessage />
-                          </FormItem>
-                        )}
-                      />
-                    </div>
-                    <div className="mt-3 flex flex-col gap-5.5 p-6.5">
-                      <FormField
-                        control={form.control}
-                        name=""
-                        render={({ field }) => (
-                          <FormItem>
-                            <FormLabel>Hide Stock</FormLabel>
-                            <FormControl>
-                              {/* <Input
+                              </FormControl>
+                              <FormMessage />
+                            </FormItem>
+                          )}
+                        />
+                      </div>
+                      <div className="mt-3 flex flex-col gap-5.5 p-6.5">
+                        <FormField
+                          control={form.control}
+                          name="qty_multi"
+                          render={({ field }) => (
+                            <FormItem>
+                              <FormLabel>Is Product Quantity Multiply</FormLabel>
+                              <FormControl>
+                                {/* <Input
                                 className={inputClass}
                                 placeholder="meta_image"
                                 {...field}
                               /> */}
-                            </FormControl>
-                            <FormMessage />
-                          </FormItem>
-                        )}
-                      />
+                              </FormControl>
+                              <FormMessage />
+                            </FormItem>
+                          )}
+                        />
+                      </div>
                     </div>
                   </div>
                 </div>
               </div>
-            </div>
-            <div className="grid grid-cols-1 gap-4 md:grid-cols-1 sm:grid-cols-2">
-              <div className="flex flex-col gap-4">
-                <div className="px-6 rounded-sm border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark">
-                  <div className="border-b border-stroke px-6.5 py-4 dark:border-strokedark">
-                    <h3 className="font-medium text-black dark:text-white">
-                    Case On Delivery
-                    </h3>
-                  </div>
-                  <div className="py-6">
-                    <div className="mt-3 flex flex-col gap-5.5 p-6.5">
-                      <FormField
-                        control={form.control}
-                        name="show_stock_quantity"
-                        render={({ field }) => (
-                          <FormItem>
-                            <FormLabel>Status</FormLabel>
-                            <FormControl>
-                              {/* <Input
+              <div className="grid grid-cols-1 gap-4 md:grid-cols-1 sm:grid-cols-2">
+                <div className="flex flex-col gap-4">
+                  <div className="px-6 rounded-sm border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark">
+                    <div className="border-b border-stroke px-6.5 py-4 dark:border-strokedark">
+                      <h3 className="font-medium text-black dark:text-white">
+                        Stock Visibility
+                      </h3>
+                    </div>
+                    <div className="py-6">
+                      <div className="mt-3 flex flex-col gap-5.5 p-6.5">
+                        <FormField
+                          control={form.control}
+                          name="show_stock_quantity"
+                          render={({ field }) => (
+                            <FormItem>
+                              <FormLabel>Show Stock quantity</FormLabel>
+                              <FormControl>
+                                {/* <Input
                                 className={inputClass}
                                 placeholder=""
                                 {...field}
                               /> */}
-                            </FormControl>
-                            <FormMessage />
-                          </FormItem>
-                        )}
-                      />
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div className="grid grid-cols-1 gap-4 md:grid-cols-1 sm:grid-cols-2">
-              <div className="flex flex-col gap-4">
-                <div className="px-6 rounded-sm border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark">
-                  <div className="border-b border-stroke px-6.5 py-4 dark:border-strokedark">
-                    <h3 className="font-medium text-black dark:text-white">
-                    Estimate Shipping Time
-                    </h3>
-                  </div>
-                  <div className="py-6">
-                    <div className="mt-3 flex flex-col gap-5.5 p-6.5">
-                      <FormField
-                        control={form.control}
-                        name="shipping_day"
-                        render={({ field }) => (
-                          <FormItem>
-                            <FormLabel>Shipping Days</FormLabel>
-                            <FormControl>
-                              <Input
-                                className={inputClass}
-                                placeholder=""
-                                {...field}
-                              />
-                            </FormControl>
-                            <FormMessage />
-                          </FormItem>
-                        )}
-                      />
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div className="grid grid-cols-1 gap-4 md:grid-cols-1 sm:grid-cols-2">
-              <div className="flex flex-col gap-4">
-                <div className="px-6 rounded-sm border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark">
-                  <div className="border-b border-stroke px-6.5 py-4 dark:border-strokedark">
-                    <h3 className="font-medium text-black dark:text-white">
-                    Vat & Tax
-                    </h3>
-                  </div>
-                  <div className="py-6">
-                    <div className="mt-3 flex flex-col gap-5.5 p-6.5">
-                      <FormField
-                        control={form.control}
-                        name="tax"
-                        render={({ field }) => (
-                          <FormItem>
-                            <FormLabel>TAX</FormLabel>
-                            <FormControl>
-                              <Input
-                                className={inputClass}
-                                placeholder=""
-                                {...field}
-                              />
-                            </FormControl>
-                            <FormMessage />
-                          </FormItem>
-                        )}
-                      />
-                      <FormField
-                        control={form.control}
-                        name=""
-                        render={({ field }) => (
-                          <FormItem>
-                            <FormControl>
-                              {/* <Input
+                              </FormControl>
+                              <FormMessage />
+                            </FormItem>
+                          )}
+                        />
+                      </div>
+                      <div className="mt-3 flex flex-col gap-5.5 p-6.5">
+                        <FormField
+                          control={form.control}
+                          name=""
+                          render={({ field }) => (
+                            <FormItem>
+                              <FormLabel>Show Stock With Text Only</FormLabel>
+                              <FormControl>
+                                {/* <Input
                                 className={inputClass}
                                 placeholder=""
                                 {...field}
                               /> */}
-                            </FormControl>
-                            <FormMessage />
-                          </FormItem>
-                        )}
-                      />
+                              </FormControl>
+                              <FormMessage />
+                            </FormItem>
+                          )}
+                        />
+                      </div>
+                      <div className="mt-3 flex flex-col gap-5.5 p-6.5">
+                        <FormField
+                          control={form.control}
+                          name=""
+                          render={({ field }) => (
+                            <FormItem>
+                              <FormLabel>Hide Stock</FormLabel>
+                              <FormControl>
+                                {/* <Input
+                                className={inputClass}
+                                placeholder="meta_image"
+                                {...field}
+                              /> */}
+                              </FormControl>
+                              <FormMessage />
+                            </FormItem>
+                          )}
+                        />
+                      </div>
                     </div>
                   </div>
                 </div>
               </div>
-            </div>
+              <div className="grid grid-cols-1 gap-4 md:grid-cols-1 sm:grid-cols-2">
+                <div className="flex flex-col gap-4">
+                  <div className="px-6 rounded-sm border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark">
+                    <div className="border-b border-stroke px-6.5 py-4 dark:border-strokedark">
+                      <h3 className="font-medium text-black dark:text-white">
+                        Case On Delivery
+                      </h3>
+                    </div>
+                    <div className="py-6">
+                      <div className="mt-3 flex flex-col gap-5.5 p-6.5">
+                        <FormField
+                          control={form.control}
+                          name="show_stock_quantity"
+                          render={({ field }) => (
+                            <FormItem>
+                              <FormLabel>Status</FormLabel>
+                              <FormControl>
+                                {/* <Input
+                                className={inputClass}
+                                placeholder=""
+                                {...field}
+                              /> */}
+                              </FormControl>
+                              <FormMessage />
+                            </FormItem>
+                          )}
+                        />
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div className="grid grid-cols-1 gap-4 md:grid-cols-1 sm:grid-cols-2">
+                <div className="flex flex-col gap-4">
+                  <div className="px-6 rounded-sm border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark">
+                    <div className="border-b border-stroke px-6.5 py-4 dark:border-strokedark">
+                      <h3 className="font-medium text-black dark:text-white">
+                        Estimate Shipping Time
+                      </h3>
+                    </div>
+                    <div className="py-6">
+                      <div className="mt-3 flex flex-col gap-5.5 p-6.5">
+                        <FormField
+                          control={form.control}
+                          name="shipping_day"
+                          render={({ field }) => (
+                            <FormItem>
+                              <FormLabel>Shipping Days</FormLabel>
+                              <FormControl>
+                                <Input
+                                  className={inputClass}
+                                  placeholder=""
+                                  {...field}
+                                />
+                              </FormControl>
+                              <FormMessage />
+                            </FormItem>
+                          )}
+                        />
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div className="grid grid-cols-1 gap-4 md:grid-cols-1 sm:grid-cols-2">
+                <div className="flex flex-col gap-4">
+                  <div className="px-6 rounded-sm border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark">
+                    <div className="border-b border-stroke px-6.5 py-4 dark:border-strokedark">
+                      <h3 className="font-medium text-black dark:text-white">
+                        Vat & Tax
+                      </h3>
+                    </div>
+                    <div className="py-6">
+                      <div className="mt-3 flex flex-col gap-5.5 p-6.5">
+                        <FormField
+                          control={form.control}
+                          name="tax"
+                          render={({ field }) => (
+                            <FormItem>
+                              <FormLabel>TAX</FormLabel>
+                              <FormControl>
+                                <Input
+                                  className={inputClass}
+                                  placeholder=""
+                                  {...field}
+                                />
+                              </FormControl>
+                              <FormMessage />
+                            </FormItem>
+                          )}
+                        />
+                        <FormField
+                          control={form.control}
+                          name=""
+                          render={({ field }) => (
+                            <FormItem>
+                              <FormControl>
+                                {/* <Input
+                                className={inputClass}
+                                placeholder=""
+                                {...field}
+                              /> */}
+                              </FormControl>
+                              <FormMessage />
+                            </FormItem>
+                          )}
+                        />
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
 
-          </div>
+            </div>
           </div>
           <div className="grid justify-items-end">
-              <Button
+            {/* <Button
                 className="dark:text-slate-200"
                 variant="outline"
                 type="submit"
               >
                 Submit Product
-              </Button>
-            </div>
+              </Button> */}
+            <Button
+              className="dark:text-slate-200"
+              variant="outline"
+              type="submit"
+              disabled={isLoading}
+            >
+              {isLoading ? "Submitting..." : "Submit"}
+            </Button>
+          </div>
         </form>
       </Form>
     </div>

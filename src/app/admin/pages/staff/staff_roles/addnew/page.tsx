@@ -16,7 +16,8 @@ import {
 } from "@/app/admin/components/ui/form";
 import Input from "@/shared/Input/Input";
 import { Switch } from "@/app/admin/components/ui/switch";
-
+import { showErrorToast, showSuccessToast } from "@/app/admin/components/Toast";
+import { useState, useEffect } from 'react';
 const formSchema = z.object({
   permissions: z.string().min(2, {
     message: "permissions must be at least 2 characters.",
@@ -34,11 +35,46 @@ export default function Addnew() {
   });
 
   // 2. Define a submit handler.
-  function onSubmit(values: z.infer<typeof formSchema>) {
-    // Do something with the form values.
-    // ✅ This will be type-safe and validated.
-    console.log(values);
-  }
+  // function onSubmit(values: z.infer<typeof formSchema>) {
+  //   // Do something with the form values.
+  //   // ✅ This will be type-safe and validated.
+  //   console.log(values);
+  // }
+
+  const [isLoading, setIsLoading] = useState(false);
+
+  const onSubmit: SubmitHandler<z.infer<typeof formSchema>> = async (values) => {
+    const apiUrl = process.env.NEXT_PUBLIC_API_URL || "";
+
+    if (!apiUrl) {
+      showErrorToast("API URL is not configured.");
+      return;
+    }
+
+    setIsLoading(true);
+
+    try {
+      const response = await fetch(`${apiUrl}/server/api/routes/admin/staff/staff_roles`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(values),
+      });
+
+      if (!response.ok) {
+        throw new Error("Failed to add staff role. Please try again.");
+      }
+
+      const result = await response.json();
+
+      showSuccessToast(result.message || "staff role added successfully!");
+      // router.push("/admin/pages/blog_system/staff role");
+      window.location.href = `${apiUrl}/admin/pages/staff/staff_roles`;
+    } catch (error) {
+      showErrorToast("Error adding staff role: " + (error instanceof Error ? error.message : "Unknown error"));
+    }
+  };
 
   const inputClass = "bg-zinc-50 border border-slate-300 text-slate-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-slate-900 dark:border-slate-700 dark:placeholder-slate-700 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500";
 
@@ -3525,7 +3561,7 @@ export default function Addnew() {
                       render={({ field }) => (
                         <FormItem>
                           <FormLabel className="mt-2">
-                          Send Bulk SMS
+                            Send Bulk SMS
                           </FormLabel>
                           <Switch />
                           <FormMessage />
@@ -3538,7 +3574,7 @@ export default function Addnew() {
               <div className="px-6 rounded-sm border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark">
                 <div className="border-b border-stroke px-6.5 py-4 dark:border-strokedark">
                   <h3 className="font-medium text-black dark:text-white">
-                  Seller Subscription
+                    Seller Subscription
                   </h3>
                 </div>
                 <div className="grid gap-4 xl:grid-cols-8 lg:grid-cols-6 md:grid-cols-4 sm:grid-cols-2 py-6">
@@ -3549,7 +3585,7 @@ export default function Addnew() {
                       render={({ field }) => (
                         <FormItem>
                           <FormLabel className="mt-2">
-                          View All Seller Packages
+                            View All Seller Packages
                           </FormLabel>
                           <Switch />
                           <FormMessage />
@@ -3577,7 +3613,7 @@ export default function Addnew() {
                       render={({ field }) => (
                         <FormItem>
                           <FormLabel className="mt-2">
-                          Edit Seller Package
+                            Edit Seller Package
                           </FormLabel>
                           <Switch />
                           <FormMessage />
@@ -3592,7 +3628,7 @@ export default function Addnew() {
                       render={({ field }) => (
                         <FormItem>
                           <FormLabel className="mt-2">
-                          Delete Seller Package
+                            Delete Seller Package
                           </FormLabel>
                           <Switch />
                           <FormMessage />
@@ -3605,7 +3641,7 @@ export default function Addnew() {
               <div className="px-6 rounded-sm border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark">
                 <div className="border-b border-stroke px-6.5 py-4 dark:border-strokedark">
                   <h3 className="font-medium text-black dark:text-white">
-                  Size Guide
+                    Size Guide
                   </h3>
                 </div>
                 <div className="grid gap-4 xl:grid-cols-8 lg:grid-cols-6 md:grid-cols-4 sm:grid-cols-2 py-6">
@@ -3616,7 +3652,7 @@ export default function Addnew() {
                       render={({ field }) => (
                         <FormItem>
                           <FormLabel className="mt-2">
-                          View Size Charts
+                            View Size Charts
                           </FormLabel>
                           <Switch />
                           <FormMessage />
@@ -3644,7 +3680,7 @@ export default function Addnew() {
                       render={({ field }) => (
                         <FormItem>
                           <FormLabel className="mt-2">
-                          Edit Size Charts
+                            Edit Size Charts
                           </FormLabel>
                           <Switch />
                           <FormMessage />
@@ -3659,7 +3695,7 @@ export default function Addnew() {
                       render={({ field }) => (
                         <FormItem>
                           <FormLabel className="mt-2">
-                          Delete Size Charts
+                            Delete Size Charts
                           </FormLabel>
                           <Switch />
                           <FormMessage />
@@ -3674,7 +3710,7 @@ export default function Addnew() {
                       render={({ field }) => (
                         <FormItem>
                           <FormLabel className="mt-2">
-                          View Measurement Points
+                            View Measurement Points
                           </FormLabel>
                           <Switch />
                           <FormMessage />
@@ -3689,7 +3725,7 @@ export default function Addnew() {
                       render={({ field }) => (
                         <FormItem>
                           <FormLabel className="mt-2">
-                          Add Measurement Points
+                            Add Measurement Points
                           </FormLabel>
                           <Switch />
                           <FormMessage />
@@ -3704,7 +3740,7 @@ export default function Addnew() {
                       render={({ field }) => (
                         <FormItem>
                           <FormLabel className="mt-2">
-                          Edit Measurement Points
+                            Edit Measurement Points
                           </FormLabel>
                           <Switch />
                           <FormMessage />
@@ -3719,7 +3755,7 @@ export default function Addnew() {
                       render={({ field }) => (
                         <FormItem>
                           <FormLabel className="mt-2">
-                          Delete Measurement Points
+                            Delete Measurement Points
                           </FormLabel>
                           <Switch />
                           <FormMessage />
@@ -3731,12 +3767,20 @@ export default function Addnew() {
               </div>
 
               <div className="grid mt-4 justify-items-end">
-                <Button
+                {/* <Button
                   className="dark:text-slate-200"
                   variant="outline"
                   type="submit"
                 >
                   Save
+                </Button> */}
+                <Button
+                  className="dark:text-slate-200"
+                  variant="outline"
+                  type="submit"
+                  disabled={isLoading}
+                >
+                  {isLoading ? "Submitting..." : "Submit"}
                 </Button>
               </div>
             </div>

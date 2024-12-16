@@ -1,8 +1,8 @@
 import { NextResponse } from "next/server";
-import { index, updateStatus, createCountry } from '@/app/server/controllers/CountryController';
+import { getCountries, createOrUpdateCountry } from '@/app/server/controllers/CountryController';
 
 export async function GET() {
-  const result = await index();
+  const result = await getCountries();
   try{
       const countries = result.data;
       return NextResponse.json(countries);
@@ -15,7 +15,7 @@ export async function GET() {
 export async function POST(req: Request) {
   try {
     const body = await req.json();
-    const result = await createCountry(body);
+    const result = await createOrUpdateCountry(body);
 
     if (result.success) {
       return NextResponse.json(

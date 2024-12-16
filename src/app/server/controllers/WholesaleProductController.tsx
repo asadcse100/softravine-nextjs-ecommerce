@@ -1,7 +1,15 @@
 import { PrismaClient } from '@prisma/client';
-import { NextApiRequest, NextApiResponse } from 'next';
-
 const prisma = new PrismaClient();
+
+type createOrUpdateData = {
+  id: number | null;
+  product_stock_id: number;
+  min_qty: number;
+  max_qty: number;
+  price: number;
+  created_at: string;
+};
+
 
 // export async function getAllWholesaleProducts(req: NextApiRequest, res: NextApiResponse) {
 //   const { user_id, type, search } = req.query;

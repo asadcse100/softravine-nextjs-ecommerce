@@ -1,10 +1,24 @@
-// controllers/ShopController.ts
-
-import { NextApiRequest, NextApiResponse } from 'next';
 import { PrismaClient } from '@prisma/client';
 // import bcrypt from 'bcryptjs';
-
 const prisma = new PrismaClient();
+
+type createOrUpdateData = {
+  id: number | null;
+  user_id: number;
+  rating: number;
+  num_of_reviews: number;
+  num_of_sale: number;
+  verification_status: number;
+  verification_info: string;
+  cash_on_delivery_status: number;
+  admin_to_pay: number;
+  bank_name: string;
+  bank_acc_name: string;
+  bank_acc_no: string;
+  bank_routing_no: number;
+  bank_payment_status: number;
+  created_at?: string;
+};
 
 // export async function getSellers(req: NextApiRequest, res: NextApiResponse) {
 //   const { search, approved_status } = req.query;

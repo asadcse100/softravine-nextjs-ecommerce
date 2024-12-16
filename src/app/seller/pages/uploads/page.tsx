@@ -1,8 +1,57 @@
 import React from "react";
+import { useState, useEffect } from 'react';
 import ButtonPrimary from "@/shared/Button/ButtonPrimary";
 import Breadcrumb from "@/app/seller/components/Breadcrumbs/Breadcrumb"
+import { z } from "zod";
+import { useForm, SubmitHandler } from "react-hook-form";
+import { showErrorToast, showSuccessToast} from "@/app/admin/components/Toast";
+
+const formSchema = z.object({
+  name: z.string().min(4, {
+    message: "Product Name must be at least 4 characters.",
+  }),
+  brand_id: z.string().min(1, {
+    message: "Select Brand",
+  }),
+});
 
 const AccountBilling = () => {
+
+  const [isLoading, setIsLoading] = useState(false);
+
+  const onSubmit: SubmitHandler<z.infer<typeof formSchema>> = async (values) => {
+    const apiUrl = process.env.NEXT_PUBLIC_API_URL || "";
+    
+    if (!apiUrl) {
+      showErrorToast("API URL is not configured.");
+      return;
+    }
+  
+    setIsLoading(true);
+
+    try {
+      const response = await fetch(`${apiUrl}/server/api/routes/admin/blogs/blogCategories`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(values),
+      });
+
+      if (!response.ok) {
+        throw new Error("Failed to add Upload File. Please try again.");
+      }
+
+      const result = await response.json();
+
+      showSuccessToast(result.message || "Upload File added successfully!");
+      // router.push("/admin/pages/blog_system/Upload File");
+      window.location.href = `${apiUrl}/admin/pages/blog_system/Upload File`;
+    } catch (error) {
+      showErrorToast("Error adding Upload File: " + (error instanceof Error ? error.message : "Unknown error"));
+    }
+  };
+  
   return (
     <div className="space-y-10 sm:space-y-12 bg-white dark:bg-gray-700 p-5 rounded-xl">
       {/* HEADING */}

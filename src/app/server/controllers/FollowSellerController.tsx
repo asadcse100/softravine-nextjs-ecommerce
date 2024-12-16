@@ -1,8 +1,12 @@
-// controllers/followedSellersController.ts
-import { NextApiRequest, NextApiResponse } from 'next';
-import { PrismaClient } from '@prisma/client';
 
+import { PrismaClient } from '@prisma/client';
 const prisma = new PrismaClient();
+
+type createOrUpdateData = {
+  id: number | null;
+  user_id: number;
+  shop_id: number;
+};
 
 // export const getFollowedSellers = async (req: NextApiRequest, res: NextApiResponse) => {
 //   try {

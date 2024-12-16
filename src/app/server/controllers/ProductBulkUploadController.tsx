@@ -1,12 +1,17 @@
 // controllers/ProductController.ts
 
 import { PrismaClient } from '@prisma/client';
-import { NextApiRequest, NextApiResponse } from 'next';
 import { getSession } from 'next-auth/react';
 import PDFDocument from 'pdfkit';
 import multer from 'multer';
 import ProductsImport from './ProductsImport';
 import Excel from 'exceljs';
+
+type createOrUpdateData = {
+    id: number | null;
+    type: string;
+    value: string;
+};
 
 const prisma = new PrismaClient();
 

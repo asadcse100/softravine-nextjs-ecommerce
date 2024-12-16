@@ -5,14 +5,24 @@ import { createCategory } from '../models/Category';
 
 const prisma = new PrismaClient();
 
-// export async function getCategories(search?: string) {
-//   const categories = await prisma.category.findMany({
-//     where: search ? { name: { contains: search, mode: 'insensitive' } } : {},
-//     orderBy: { orderLevel: 'desc' },
-//   });
-
-//   return categories;
-// }
+type createOrUpdateData = {
+  id: number | null;
+  parent_id: number;
+  level: number;
+  name: string;
+  order_level: number;
+  commision_rate: number;
+  banner: string;
+  icon: string;
+  cover_image: string;
+  featured: number;
+  top: number;
+  digital: number;
+  slug: string;
+  meta_title: string;
+  meta_description: string;
+  created_at?: string;
+};
 
 export const selectCategories = async () => {
       try{
@@ -39,7 +49,7 @@ export const getCategories = async () => {
   }
 }
 
-export default async function store(req: NextApiRequest, res: NextApiResponse) {
+export default async function createOrUpdateCategory() {
     if (req.method === 'POST') {
       try {
         const categoryData = req.body;

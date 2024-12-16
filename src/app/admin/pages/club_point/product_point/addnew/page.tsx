@@ -15,6 +15,8 @@ import {
   FormMessage,
 } from "@/app/admin/components/ui/form";
 import Input from "@/shared/Input/Input";
+import { showErrorToast, showSuccessToast } from "@/app/admin/components/Toast";
+import { useState, useEffect } from 'react';
 
 const formSchema = z.object({
   point: z.string().min(1, {
@@ -41,31 +43,39 @@ export default function Addnew() {
     },
   });
 
-  // 2. Define a submit handler.
- async function onSubmit(values: z.infer<typeof formSchema>) {
-    const apiUrl = process.env.NEXT_PUBLIC_API_URL || '';
-    
+  const [isLoading, setIsLoading] = useState(false);
+
+  const onSubmit: SubmitHandler<z.infer<typeof formSchema>> = async (values) => {
+    const apiUrl = process.env.NEXT_PUBLIC_API_URL || "";
+
+    if (!apiUrl) {
+      showErrorToast("API URL is not configured.");
+      return;
+    }
+
+    setIsLoading(true);
+
     try {
-      const response = await fetch(`${apiUrl}/server/api/routes/admin/blogs/blogCategories`, {
+      const response = await fetch(`${apiUrl}/server/api/routes/admin/club_point/product_point`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify(values),
       });
-  
+
       // Check if the response is successful
       if (!response.ok) {
-        throw new Error('Failed to add category');
+        throw new Error('Failed to add product point');
       }
-  
+
       const result = await response.json();
-      toast.success(result.message || "Category added successfully!");
-  
-      // Redirect to another page after success
-      window.location.href = `${apiUrl}/admin/pages/blog_system/category`;
+
+      showSuccessToast(result.message || "product point added successfully!");
+      // router.push("/admin/pages/blog_system/product point");
+      window.location.href = `${apiUrl}/admin/pages/blog_system/product point`;
     } catch (error) {
-      toast.error("Error adding category: " + (error as Error).message);
+      showErrorToast("Error adding product point: " + (error instanceof Error ? error.message : "Unknown error"));
     }
   }
 
@@ -214,12 +224,20 @@ export default function Addnew() {
                         />
                       </div>
                       <div className="grid mt-4 justify-items-end">
-                        <Button
+                        {/* <Button
                           className="dark:text-slate-200"
                           variant="outline"
                           type="submit"
                         >
                           Save
+                        </Button> */}
+                        <Button
+                          className="dark:text-slate-200"
+                          variant="outline"
+                          type="submit"
+                          disabled={isLoading}
+                        >
+                          {isLoading ? "Submitting..." : "Submit"}
                         </Button>
                       </div>
                     </div>

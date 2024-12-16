@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server";
-import { createAuctionProduct, getAllAuctionProducts } from '@/app/server/controllers/AuctionProductController';
+import { createOrUpdateAuctionProduct, getAllAuctionProducts } from '@/app/server/controllers/AuctionProductController';
 
 export async function GET() {
   const result = await getAllAuctionProducts();
@@ -15,7 +15,7 @@ export async function GET() {
 export async function POST(req: Request) {
   try {
     const body = await req.json();
-    const result = await createAuctionProduct(body);
+    const result = await createOrUpdateAuctionProduct(body);
 
     if (result.success) {
       return NextResponse.json(

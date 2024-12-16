@@ -1,7 +1,35 @@
-import { NextApiRequest, NextApiResponse } from 'next';
-import { PrismaClient } from '@prisma/client';
 
+import { PrismaClient } from '@prisma/client';
 const prisma = new PrismaClient();
+
+type createOrUpdateData = {
+  id: number | null;
+  name: string;
+  published: number;
+  user_id: number;
+  category_id: number;
+  subcategory_id: number;
+  subsubcategory_id: number;
+  brand_id: number;
+  status: number;
+  added_by: string;
+  photos: string;
+  thumbnail_img: string;
+  conditon: string;
+  location: string;
+  video_provider: string;
+  video_link: string;
+  unit: string;
+  tags: string[];
+  description: string;
+  unit_price: number;
+  meta_title: string;
+  meta_description: string;
+  meta_img: string;
+  pdf: string;
+  slug: string;
+  created_at?: string;
+};
 
 // export const getUserProducts = async (req: NextApiRequest, res: NextApiResponse) => {
 //   try {
@@ -80,7 +108,7 @@ export const getCustomerProducts = async () => {
 //     }
 //   };
 
-  export const createCustomerProduct = async (req: NextApiRequest, res: NextApiResponse) => {
+  export const createOrUpdateCustomerProduct = async () => {
     try {
       const {
         name,

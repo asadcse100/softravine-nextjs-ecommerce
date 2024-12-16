@@ -3,6 +3,13 @@ import { PrismaClient } from '@prisma/client';
 
 const prisma = new PrismaClient();
 
+type createOrUpdateData = {
+  id: number | null;
+  name: string;
+  code: string;
+  created_at?: string;
+};
+
 // export async function getAttributes() {
 export const getColors = async () => {
   try {
@@ -14,7 +21,7 @@ export const getColors = async () => {
   }
 }
 
-export async function createAttribute(name: string, lang: string = 'en') {
+export async function createOrUpdateColor(data: createOrUpdateData) {
     const attribute = await prisma.attributes.create({
       data: {
         name,

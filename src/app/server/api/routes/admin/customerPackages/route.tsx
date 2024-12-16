@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server";
-import { getAllCustomerPackages, createCustomerPackage } from '@/app/server/controllers/CustomerPackageController';
+import { getAllCustomerPackages, createOrUpdateCustomerPackage } from '@/app/server/controllers/CustomerPackageController';
 
 export async function GET() {
   const result = await getAllCustomerPackages();
@@ -15,7 +15,7 @@ export async function GET() {
 export async function POST(req: Request) {
   try {
     const body = await req.json();
-    const result = await createCustomerPackage(body);
+    const result = await createOrUpdateCustomerPackage(body);
 
     if (result.success) {
       return NextResponse.json(

@@ -17,6 +17,8 @@ import {
 import Input from "@/shared/Input/Input";
 import Select from "@/shared/Select/Select";
 import { Switch } from "@/app/admin/components/ui/switch";
+import { showErrorToast, showSuccessToast } from "@/app/admin/components/Toast";
+import { useState, useEffect } from 'react';
 
 const formSchema1 = z.object({
   delivery_boy_payment_type: z.string().min(10, {
@@ -51,18 +53,79 @@ export default function Addnew() {
     },
   });
 
+  const [isLoading, setIsLoading] = useState(false);
+
+  const onSubmit: SubmitHandler<z.infer<typeof formSchema1>> = async (values) => {
+    const apiUrl = process.env.NEXT_PUBLIC_API_URL || "";
+
+    if (!apiUrl) {
+      showErrorToast("API URL is not configured.");
+      return;
+    }
+
+    setIsLoading(true);
+
+    try {
+      const response = await fetch(`${apiUrl}/server/api/routes/admin/deiliveryboy/configuration`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(values),
+      });
+
+      if (!response.ok) {
+        throw new Error("Failed to add deliveryboy configuration. Please try again.");
+      }
+
+      const result = await response.json();
+
+      showSuccessToast(result.message || "deliveryboy configuration added successfully!");
+      // router.push("/admin/pages/blog_system/deliveryboy configuration");
+      window.location.href = `${apiUrl}/admin/pages/blog_system/deliveryboy configuration`;
+    } catch (error) {
+      showErrorToast("Error adding deliveryboy configuration: " + (error instanceof Error ? error.message : "Unknown error"));
+    }
+  };
+
+  const onSubmit2: SubmitHandler<z.infer<typeof formSchema1>> = async (values) => {
+    const apiUrl = process.env.NEXT_PUBLIC_API_URL || "";
+
+    try {
+      const response = await fetch(`${apiUrl}/server/api/routes/admin/blogs/blogCategories`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(values),
+      });
+
+      if (!response.ok) {
+        throw new Error("Failed to add category. Please try again.");
+      }
+
+      const result = await response.json();
+
+      showSuccessToast(result.message || "Category added successfully!");
+      // router.push("/admin/pages/blog_system/category");
+      window.location.href = `${apiUrl}/admin/pages/blog_system/category`;
+    } catch (error) {
+      showErrorToast("Error adding category: " + (error instanceof Error ? error.message : "Unknown error"));
+    }
+  };
+
   // 2. Define a submit handler.
-  function onSubmit1(values: z.infer<typeof formSchema1>) {
-    // Do something with the form values.
-    // ✅ This will be type-safe and validated.
-    console.log(values);
-  }
+  // function onSubmit1(values: z.infer<typeof formSchema1>) {
+  //   // Do something with the form values.
+  //   // ✅ This will be type-safe and validated.
+  //   console.log(values);
+  // }
   // 2. Define a submit handler.
-  function onSubmit2(values: z.infer<typeof formSchema2>) {
-    // Do something with the form values.
-    // ✅ This will be type-safe and validated.
-    console.log(values);
-  }
+  // function onSubmit2(values: z.infer<typeof formSchema2>) {
+  //   // Do something with the form values.
+  //   // ✅ This will be type-safe and validated.
+  //   console.log(values);
+  // }
 
   const inputClass = "bg-zinc-50 border border-slate-300 text-slate-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-slate-900 dark:border-slate-700 dark:placeholder-slate-700 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500";
 
@@ -220,12 +283,20 @@ export default function Addnew() {
                       />
                     </div>
                     <div className="grid mt-4 justify-items-end">
-                      <Button
+                      {/* <Button
                         className="dark:text-slate-200"
                         variant="outline"
                         type="submit"
                       >
                         Update
+                      </Button> */}
+                      <Button
+                        className="dark:text-slate-200"
+                        variant="outline"
+                        type="submit"
+                        disabled={isLoading}
+                      >
+                        {isLoading ? "Submitting..." : "Submit"}
                       </Button>
                     </div>
                   </div>

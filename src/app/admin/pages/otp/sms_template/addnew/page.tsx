@@ -24,6 +24,7 @@ import {
 } from "@/app/admin/components/ui/select";
 import Input from "@/shared/Input/Input";
 import Textarea from "@/shared/Textarea/Textarea";
+import { showErrorToast, showSuccessToast } from "@/app/admin/components/Toast";
 
 const formSchema = z.object({
   name: z.string().min(4, {
@@ -53,12 +54,46 @@ export default function Addnew() {
   });
 
   // 2. Define a submit handler.
-  function onSubmit(values: z.infer<typeof formSchema>) {
-    // Do something with the form values.
-    // ✅ This will be type-safe and validated.
-    console.log(values);
-  }
+  // function onSubmit(values: z.infer<typeof formSchema>) {
+  //   // Do something with the form values.
+  //   // ✅ This will be type-safe and validated.
+  //   console.log(values);
+  // }
 
+  const [isLoading, setIsLoading] = useState(false);
+
+  const onSubmit: SubmitHandler<z.infer<typeof formSchema>> = async (values) => {
+    const apiUrl = process.env.NEXT_PUBLIC_API_URL || "";
+
+    if (!apiUrl) {
+      showErrorToast("API URL is not configured.");
+      return;
+    }
+
+    setIsLoading(true);
+
+    try {
+      const response = await fetch(`${apiUrl}/server/api/routes/admin/otp/sms_template`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(values),
+      });
+
+      if (!response.ok) {
+        throw new Error("Failed to add sms template. Please try again.");
+      }
+
+      const result = await response.json();
+
+      showSuccessToast(result.message || "sms template added successfully!");
+      // router.push("/admin/pages/blog_system/sms template");
+      window.location.href = `${apiUrl}/admin/pages/blog_system/sms template`;
+    } catch (error) {
+      showErrorToast("Error adding sms template: " + (error instanceof Error ? error.message : "Unknown error"));
+    }
+  };
 
   const [countries, setcountries] = useState<{ id: string; name: string }[]>([]) // Adjust the type according to your data structure
   // Fetch data from an API
@@ -361,12 +396,20 @@ export default function Addnew() {
                       />
                     </div>
                     <div className="grid mt-4 justify-items-end">
-                      <Button
+                      {/* <Button
                         className="dark:text-slate-200"
                         variant="outline"
                         type="submit"
                       >
                         Save
+                      </Button> */}
+                      <Button
+                        className="dark:text-slate-200"
+                        variant="outline"
+                        type="submit"
+                        disabled={isLoading}
+                      >
+                        {isLoading ? "Submitting..." : "Submit"}
                       </Button>
                     </div>
                   </div>

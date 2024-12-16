@@ -1,7 +1,17 @@
-import { NextApiRequest, NextApiResponse } from 'next';
+
 import { PrismaClient } from '@prisma/client';
 
 const prisma = new PrismaClient();
+
+type createOrUpdateData = {
+  id: number | null;
+  name: string;
+  symbol: string;
+  exchange_rate: number;
+  status: number;
+  code: string;
+  created_at?: string;
+};
 
 // export const getCurrencyList = async (req: NextApiRequest, res: NextApiResponse) => {
 //   try {
@@ -43,7 +53,7 @@ export const getCurrencyList = async () => {
   }
 }
 
-export const updateCurrency = async (req: NextApiRequest, res: NextApiResponse) => {
+export const createOrUpdateCurrency = async () => {
     try {
       const { id, name, symbol, code, exchange_rate, status } = req.body;
   
@@ -68,31 +78,31 @@ export const updateCurrency = async (req: NextApiRequest, res: NextApiResponse) 
     }
   };
 
-  export const createCurrency = async (req: NextApiRequest, res: NextApiResponse) => {
-    try {
-      const { name, symbol, code, exchange_rate } = req.body;
+  // export const createCurrency = async (req: NextApiRequest, res: NextApiResponse) => {
+  //   try {
+  //     const { name, symbol, code, exchange_rate } = req.body;
   
-      const newCurrency = await prisma.currencies.create({
-        data: {
-          name,
-          symbol,
-          code,
-          exchange_rate: parseFloat(exchange_rate),
-          status: '0',
-        },
-      });
+  //     const newCurrency = await prisma.currencies.create({
+  //       data: {
+  //         name,
+  //         symbol,
+  //         code,
+  //         exchange_rate: parseFloat(exchange_rate),
+  //         status: '0',
+  //       },
+  //     });
   
-      if (newCurrency) {
-        res.status(200).json({ success: 'Currency created successfully' });
-      } else {
-        res.status(400).json({ error: 'Failed to create currency' });
-      }
-    } catch (error) {
-      res.status(500).json({ error: 'Failed to create currency' });
-    }
-  };
+  //     if (newCurrency) {
+  //       res.status(200).json({ success: 'Currency created successfully' });
+  //     } else {
+  //       res.status(400).json({ error: 'Failed to create currency' });
+  //     }
+  //   } catch (error) {
+  //     res.status(500).json({ error: 'Failed to create currency' });
+  //   }
+  // };
 
-  export const updateCurrencyStatus = async (req: NextApiRequest, res: NextApiResponse) => {
+  export const updateCurrencyStatus = async () => {
     try {
       const { id, status } = req.body;
   

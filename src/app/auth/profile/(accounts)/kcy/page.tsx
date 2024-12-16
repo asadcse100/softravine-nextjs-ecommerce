@@ -3,11 +3,16 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { z } from "zod";
+import { showErrorToast, showSuccessToast} from "@/app/admin/components/Toast";
 
 import Label from "@/app/seller/components/Label/Label";
 import React, { FC } from "react";
 import ButtonPrimary from "@/shared/Button/ButtonPrimary";
 import Input from "@/shared/Input/Input";
+import Textarea from "@/shared/Textarea/Textarea";
+import { avatarImgs } from "@/contains/fakeData";
+import Image from "next/image";
+
 import {
   Form,
   FormControl,
@@ -17,6 +22,7 @@ import {
   FormLabel,
   FormMessage,
 } from "@/app/seller/components/ui/form";
+
 import {
   Select,
   SelectContent,
@@ -40,7 +46,8 @@ const formSchema = z.object({
   }),
 });
 
-export default function Addnew() {
+const AccountKCYPage = () => {
+
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -52,9 +59,35 @@ export default function Addnew() {
   });
 
   // 2. Define a submit handler.
-  function onSubmit(values: z.infer<typeof formSchema>) {
-    console.log(values);
-  }
+  // function onSubmit(values: z.infer<typeof formSchema>) {
+  //   console.log(values);
+  // }
+
+  const onSubmit: SubmitHandler<z.infer<typeof formSchema>> = async (values) => {
+    const apiUrl = process.env.NEXT_PUBLIC_API_URL || "";
+
+    try {
+      const response = await fetch(`${apiUrl}/server/api/routes/admin/blogs/blogCategories`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(values),
+      });
+
+      if (!response.ok) {
+        throw new Error("Failed to added kcy. Please try again.");
+      }
+
+      const result = await response.json();
+
+      showSuccessToast(result.message || "added kcy successfully!");
+      // router.push("/admin/pages/blog_system/catadded kcyegory");
+      window.location.href = `${apiUrl}/admin/pages/blog_system/productbid`;
+    } catch (error) {
+      showErrorToast("Error adding added kcy: " + (error instanceof Error ? error.message : "Unknown error"));
+    }
+  };
 
   const inputClass = "bg-zinc-50 border border-slate-300 text-slate-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-slate-900 dark:border-slate-700 dark:placeholder-slate-700 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500";
 
@@ -62,11 +95,10 @@ export default function Addnew() {
     <div className={`nc-AccountPage `}>
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
-
           <div className="space-y-5 sm:space-y-5 bg-white dark:bg-boxdark p-5 rounded-xl">
             {/* HEADING */}
             <h2 className="text-2xl sm:text-3xl font-semibold dark:text-slate-300">
-              Personal infomation
+              KCY
             </h2>
             <div className="flex flex-col md:flex-row">
 
@@ -79,16 +111,10 @@ export default function Addnew() {
                     <FormItem>
                       <div className="grid grid-cols-1 md:grid-cols-12">
                         <div className="col-span-3 mt-3">
-                          <FormLabel>Father Name</FormLabel>
+                          <FormLabel>NID front Part</FormLabel>
                         </div>
                         <div className="col-span-8">
-                          <FormControl>
-                            <Input
-                              className={inputClass}
-                              placeholder="Father Name"
-                              {...field}
-                            />
-                          </FormControl>
+                          <Input className={inputClass} type="file" />
                         </div>
                       </div>
                       <FormMessage />
@@ -103,81 +129,16 @@ export default function Addnew() {
                     <FormItem>
                       <div className="grid grid-cols-1 md:grid-cols-12">
                         <div className="col-span-3 mt-3">
-                          <FormLabel>Mother Name</FormLabel>
+                          <FormLabel>NID back Part</FormLabel>
                         </div>
                         <div className="col-span-8">
-                          <FormControl>
-                            <Input
-                              className={inputClass}
-                              placeholder="Mother Name"
-                              {...field}
-                            />
-                          </FormControl>
+                          <Input className={inputClass} type="file" />
                         </div>
                       </div>
                       <FormMessage />
                     </FormItem>
                   )}
                 />
-
-                <FormField
-                  control={form.control}
-                  name="code"
-                  render={({ field }) => (
-                    <FormItem>
-                      <div className="grid grid-cols-1 md:grid-cols-12">
-                        <div className="col-span-3 mt-3">
-                          <FormLabel>Date of birth</FormLabel>
-                        </div>
-                        <div className="col-span-8">
-                          <FormControl>
-                            <Input
-                              type="date"
-                              className={inputClass}
-                              placeholder="Date of birth"
-                              {...field}
-                            />
-                          </FormControl>
-                        </div>
-                      </div>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
-
-                <FormField
-                  control={form.control}
-                  name="code"
-                  render={({ field }) => (
-                    <FormItem>
-                      <div className="grid grid-cols-1 md:grid-cols-12">
-                        <div className="col-span-3 mt-3">
-                          <FormLabel>Gender</FormLabel>
-                        </div>
-                        <div className="col-span-8">
-                          <FormControl className={inputClass}>
-                            <Select
-                              onValueChange={field.onChange}
-                              defaultValue={field.value}
-                            >
-                              <SelectTrigger>
-                                <SelectValue placeholder="Select Gender" />
-                              </SelectTrigger>
-                              <SelectContent>
-                                <SelectItem value="Apple">Male</SelectItem>
-                                <SelectItem value="m2@example.com">Female</SelectItem>
-                                <SelectItem value="m22@example.com">Other</SelectItem>
-                              </SelectContent>
-                            </Select>
-                          </FormControl>
-                        </div>
-                      </div>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
-
-                {/* </div> */}
 
                 <div className="pt-2">
                   <ButtonPrimary>Save</ButtonPrimary>
@@ -185,10 +146,10 @@ export default function Addnew() {
               </div>
             </div>
           </div>
-
         </form>
       </Form>
     </div>
   );
 };
 
+export default AccountKCYPage;

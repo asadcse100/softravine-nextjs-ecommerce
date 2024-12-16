@@ -3,6 +3,15 @@ import { PrismaClient } from '@prisma/client';
 
 const prisma = new PrismaClient();
 
+type createOrUpdateData = {
+  id: number | null;
+  name: string;
+  logo: string;
+  top: number;
+  meta_title: string;
+  meta_description: string;
+  created_at?: string;
+};
 
 export const selectBrands = async () => {
   try{
@@ -34,7 +43,7 @@ export const getAllBrands = async (search: string | null) => {
   }
 }
 
-export async function createBrand(name: string, metaTitle: string, metaDescription: string, slug: string | null, logo: string | null) {
+export async function createOrUpdateBrand(name: string, metaTitle: string, metaDescription: string, slug: string | null, logo: string | null) {
   const brand = await prisma.brands.create({
     data: {
       name,

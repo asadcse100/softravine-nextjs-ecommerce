@@ -18,6 +18,7 @@ import React from "react";
 import ButtonPrimary from "@/shared/Button/ButtonPrimary";
 import Input from "@/shared/Input/Input";
 import Select from "@/shared/Select/Select";
+import { showErrorToast, showSuccessToast} from "@/app/admin/components/Toast";
 
 const formSchema = z.object({
   code: z.string().min(10, {
@@ -55,11 +56,37 @@ const AccountPass = () => {
   });
 
   // 2. Define a submit handler.
-  function onSubmit(values: z.infer<typeof formSchema>) {
-    // Do something with the form values.
-    // ✅ This will be type-safe and validated.
-    console.log(values);
-  }
+  // function onSubmit(values: z.infer<typeof formSchema>) {
+  //   // Do something with the form values.
+  //   // ✅ This will be type-safe and validated.
+  //   console.log(values);
+  // }
+
+  const onSubmit: SubmitHandler<z.infer<typeof formSchema>> = async (values) => {
+    const apiUrl = process.env.NEXT_PUBLIC_API_URL || "";
+
+    try {
+      const response = await fetch(`${apiUrl}/server/api/routes/admin/blogs/blogCategories`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(values),
+      });
+
+      if (!response.ok) {
+        throw new Error("Failed to add drive pack. Please try again.");
+      }
+
+      const result = await response.json();
+
+      showSuccessToast(result.message || "drive pack added successfully!");
+      // router.push("/admin/pages/blog_system/drive pack");
+      window.location.href = `${apiUrl}/admin/pages/blog_system/drive pack`;
+    } catch (error) {
+      showErrorToast("Error adding drive pack: " + (error instanceof Error ? error.message : "Unknown error"));
+    }
+  };
 
   return (
     <div className="space-y-5 sm:space-y-5 bg-white dark:bg-slate-700 p-5 rounded-xl">

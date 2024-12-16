@@ -7,6 +7,7 @@ import { ReactNode } from "react";
 import { FC } from "react";
 import NcImage from "@/shared/NcImage/NcImage";
 import MR from "@/images/MR.png";
+import { showErrorToast, showSuccessToast} from "@/app/admin/components/Toast";
 
 export interface CommonLayoutProps {
   children?: ReactNode;
@@ -55,6 +56,32 @@ const pages: {
     link: "#", 
   },
 ];
+
+const onSubmit: SubmitHandler<z.infer<typeof formSchema>> = async (values) => {
+  const apiUrl = process.env.NEXT_PUBLIC_API_URL || "";
+
+  try {
+    const response = await fetch(`${apiUrl}/server/api/routes/admin/blogs/blogCategories`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(values),
+    });
+
+    if (!response.ok) {
+      throw new Error("Failed to add doctor. Please try again.");
+    }
+
+    const result = await response.json();
+
+    showSuccessToast(result.message || "doctor added successfully!");
+    // router.push("/admin/pages/blog_system/doctor");
+    window.location.href = `${apiUrl}/admin/pages/blog_system/doctor`;
+  } catch (error) {
+    showErrorToast("Error adding doctor: " + (error instanceof Error ? error.message : "Unknown error"));
+  }
+};
 
 const CommonLayout: FC<CommonLayoutProps> = ({ children }) => {
   const pathname = usePathname();

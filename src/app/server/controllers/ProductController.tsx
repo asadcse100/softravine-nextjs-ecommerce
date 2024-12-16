@@ -5,20 +5,85 @@ import { slugify } from '@/app/server/utils/slugify';  // Utility function for g
 import { Product } from '@/app/server/types/product';
 import { parseISO, differenceInDays } from 'date-fns';
 import { getSession } from 'next-auth/react';
-
 const prisma = new PrismaClient();
 
+type createOrUpdateData = {
+  id: number | null;
+  user_id: number;
+  category_id: number;
+  brand_id: number;
+  added_by: string;
+  name: string;
+  photos: string[];
+  thumbnail_img: string;
+  video_provider: string;
+  video_link: string;
+  tags: string[];
+  description: string;
+  unit_price: number;
+  purchase_price: number;
+  variant_product: number;
+  attributes: string;
+  choice_options: string;
+  colors: string;
+  variations: string;
+  todays_deal: number;
+  published: number;
+  approved: number;
+  stock_visibility_state: string;
+  cash_on_delivery: number;
+  featured: number;
+  seller_featured: number;
+  current_stock: number;
+  unit: string;
+  weight: number;
+  min_qty: number;
+  low_stock_quantity: number;
+  discount: number;
+  discount_type: string;
+  discount_start_date: number;
+  discount_end_date: number;
+  starting_bid: number;
+  auction_start_date: number;
+  auction_end_date: number;
+  tax_type?: string[];
+  shipping_type: string;
+  shipping_cost: number;
+  is_quantity_multiplied: number;
+  est_shipping_days: number;
+  num_of_sale: number;
+  meta_title: string;
+  meta_description: string;
+  meta_img: string;
+  pdf: string;
+  slug: string;
+  refundable: number;
+  rating: number;
+  barcode: string;
+  digital: number;
+  auction_product: number;
+  file_name: string;
+  file_path: string;
+  external_link: string;
+  external_link_btn: string;
+  wholesale_product: number;
+  tax_id?: number[];
+  tax?: number[];
+  created_at: string;
+  auctionDateRange: [string, string];
+};
+
 export const selectProducts = async () => {
-  try{
+  try {
     const products = await prisma.products.findMany({
       select: {
         name: true,
       },
     });
-      return { success: true, data: products };
-  }catch(error){
-      console.error("Error fetching product:", error);
-      return { success: false, error };
+    return { success: true, data: products };
+  } catch (error) {
+    console.error("Error fetching product:", error);
+    return { success: false, error };
   }
 }
 

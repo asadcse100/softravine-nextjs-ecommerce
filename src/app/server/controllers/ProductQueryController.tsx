@@ -1,9 +1,15 @@
-// controllers/ProductQueryController.ts
-import { NextApiRequest, NextApiResponse } from 'next';
 import { PrismaClient } from '@prisma/client';
-
 const prisma = new PrismaClient();
 
+type createOrUpdateData = {
+    id: number | null;
+    customer_id: number;
+    seller_id: number;
+    product_id: number;
+    question: string;
+    reply: string;
+    created_at?: string;
+};
 
 export const getProductQueries = async () => {
     try {

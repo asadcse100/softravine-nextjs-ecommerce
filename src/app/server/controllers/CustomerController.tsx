@@ -1,8 +1,39 @@
-import { NextApiRequest, NextApiResponse } from 'next';
+
 import { PrismaClient } from '@prisma/client';
 
 const prisma = new PrismaClient();
 
+type createOrUpdateData = {
+  id: number | null;
+  customer_package_id: number;
+  referred_by: number;
+  provider: string;
+  provider_id: string;
+  refresh_token: string;
+  access_token: string;
+  user_type: string;
+  name: string;
+  email: string;
+  email_verified_at?: string;
+  verification_code: string;
+  new_email_verificiation_code: string;
+  password: string;
+  remember_token: string;
+  device_token: string;
+  avatar: string;
+  avatar_original: string;
+  address: string;
+  country: string;
+  state: string;
+  city: string;
+  postal_code: string;
+  phone: string;
+  balance: number;
+  banned: number;
+  referral_code: string;
+  remaining_uploads: number;
+  created_at: string;
+};
 
 export const selectCustomers = async () => {
   try{

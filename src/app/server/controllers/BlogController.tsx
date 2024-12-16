@@ -2,16 +2,18 @@
 import { PrismaClient } from '@prisma/client';
 const prisma = new PrismaClient();
 
-type BlogPostData = {
+type createOrUpdateData = {
   title: string;
-  category_id: string;
-  banner: any;
+  category_id: number;
+  banner: number;
   short_description: string;
   description: string;
   meta_title?: string;
   meta_img?: any;
   meta_description?: string;
   meta_keywords?: string;
+  status: number;
+  created_at: string;
 };
 
 export const selectCategories = async () => {
@@ -47,7 +49,7 @@ function generateSlug(input: string): string {
     .replace(/(^-|-$)/g, "");
 }
 
-export async function createBlogPost(data: BlogPostData) {
+export async function createOrUpdateBlogPost(data: createOrUpdateData) {
   try {
     const slug = generateSlug(data.title);
 
@@ -72,7 +74,6 @@ export async function createBlogPost(data: BlogPostData) {
     return { success: false, error };
   }
 }
-
 
 export async function updateBlogPost(id: number, data: any) {
   const slug = data.title.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '');

@@ -59,6 +59,7 @@ export const SIDENAV_ITEMS:SideNavItem[] = [
             {title: 'Live TV', path: '/admin/pages/my_bis_option/live_tv'},
             {title: 'Blood Bank', path: '/admin/pages/my_bis_option/blood_bank'},
             {title: 'Online Doctor', path: '/admin/pages/my_bis_option/online_doctor'},
+            {title: 'Configuration', path: '/admin/pages/my_bis_option/configuration'},
         ],
     },
     {

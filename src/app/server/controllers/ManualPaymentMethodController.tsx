@@ -1,6 +1,15 @@
 import { PrismaClient } from '@prisma/client';
-
 const prisma = new PrismaClient();
+
+type createOrUpdateData = {
+  id: number | null;
+  type: string;
+  heading: string;
+  description: string;
+  bank_info: string;
+  photo: string;
+  created_at?: string;
+};
 
 // export const getManualPaymentMethods = async (req: NextApiRequest, res: NextApiResponse) => {
 //   try {

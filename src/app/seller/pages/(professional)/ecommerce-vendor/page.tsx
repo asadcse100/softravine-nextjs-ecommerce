@@ -5,9 +5,20 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import React from "react";
 import { FC } from "react";
+import { z } from "zod";
 import NcImage from "@/shared/NcImage/NcImage";
 import MR from "@/images/MR.png";
+import { useForm, SubmitHandler } from "react-hook-form";
+import { showErrorToast, showSuccessToast} from "@/app/admin/components/Toast";
 
+const formSchema = z.object({
+  code: z.string().min(10, {
+    message: "code must be at least 10 characters.",
+  }),
+  product_ids: z.string().min(10, {
+    message: "product_ids must be at least 10 characters.",
+  }),
+});
 export interface CommonLayoutProps {
   children?: React.ReactNode;
 }
@@ -55,6 +66,32 @@ const pages: {
     link: "/frontend", 
   },
 ];
+
+const onSubmit: SubmitHandler<z.infer<typeof formSchema>> = async (values) => {
+  const apiUrl = process.env.NEXT_PUBLIC_API_URL || "";
+
+  try {
+    const response = await fetch(`${apiUrl}/server/api/routes/admin/blogs/blogCategories`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(values),
+    });
+
+    if (!response.ok) {
+      throw new Error("Failed to add ecommerce. Please try again.");
+    }
+
+    const result = await response.json();
+
+    showSuccessToast(result.message || "ecommerce added successfully!");
+    // router.push("/admin/pages/blog_system/ecommerce");
+    window.location.href = `${apiUrl}/admin/pages/blog_system/ecommerce`;
+  } catch (error) {
+    showErrorToast("Error adding ecommerce: " + (error instanceof Error ? error.message : "Unknown error"));
+  }
+};
 
 const CommonLayout: FC<CommonLayoutProps> = ({ children }) => {
   const pathname = usePathname();
