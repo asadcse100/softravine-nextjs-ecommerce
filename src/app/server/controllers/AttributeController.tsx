@@ -22,20 +22,6 @@ export const getAttributes = async () => {
 export async function createOrUpdateAttribute(data: createOrUpdateData) {
   try {
 
-    // const attribute = await prisma.attributes.create({
-    //   data: {
-    //     name,
-    //     translations: {
-    //       create: {
-    //         lang,
-    //         name,
-    //       },
-    //     },
-    //   },
-    // });
-
-    // return attribute;
-
     const created_at = data.created_at ? new Date(data.created_at) : new Date();
 
     const newPost = await prisma.attributes.upsert({
@@ -57,23 +43,3 @@ export async function createOrUpdateAttribute(data: createOrUpdateData) {
     return { success: false, error };
   }
 }
-
-
-// export async function updateAttribute(id: number, name: string, lang: string = 'en') {
-//   const attribute = await prisma.attributes.update({
-//     where: { id },
-//     data: {
-//       name,
-//       translations: {
-//         upsert: {
-//           where: { lang_attributeId: { lang, attributeId: id } },
-//           update: { name },
-//           create: { lang, name, attribute: { connect: { id } } },
-//         },
-//       },
-//     },
-//     include: { translations: true },
-//   });
-
-//   return attribute;
-// }

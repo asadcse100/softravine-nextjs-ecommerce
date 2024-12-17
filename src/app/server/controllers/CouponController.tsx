@@ -9,11 +9,11 @@ type createOrUpdateData = {
   type: string;
   code: string;
   details: string;
-  discount: string;
+  discount: number;
   discount_type: string;
   start_date: number;
   end_date: number;
-  status: number;
+  status: boolean;
   created_at?: string;
 };
 
@@ -53,58 +53,98 @@ export const index = async () => {
   }
 }
 
-export const store = async (req: NextApiRequest, res: NextApiResponse) => {
+// export const store = async (req: NextApiRequest, res: NextApiResponse) => {
+//   try {
+//     const admin = await prisma.users.findFirst({
+//       where: { user_type: 'admin' },
+//     });
+
+//     if (!admin) {
+//       return res.status(404).json({ error: 'Admin user not found' });
+//     }
+
+//     const { code, discount } = req.body;
+
+//     const newCoupon = await prisma.coupons.create({
+//       data: {
+//         code,
+//         discount: parseFloat(discount),
+//         user_id: admin.id,
+//       },
+//     });
+
+//     if (newCoupon) {
+//       res.status(200).json({ success: 'Coupon has been saved successfully' });
+//     } else {
+//       res.status(400).json({ error: 'Failed to create coupon' });
+//     }
+//   } catch (error) {
+//     res.status(500).json({ error: 'Failed to create coupon' });
+//   }
+// };
+
+export async function createOrUpdateCountry(data: createOrUpdateData) {
   try {
-    const admin = await prisma.users.findFirst({
-      where: { user_type: 'admin' },
-    });
 
-    if (!admin) {
-      return res.status(404).json({ error: 'Admin user not found' });
-    }
+    const created_at = data.created_at ? new Date(data.created_at) : new Date();
 
-    const { code, discount } = req.body;
-
-    const newCoupon = await prisma.coupons.create({
-      data: {
-        code,
-        discount: parseFloat(discount),
-        user_id: admin.id,
+    const newPost = await prisma.coupons.upsert({
+      where: { id: data.id ?? 0 }, // Fallback to 0 if `data.id` is null
+      update: {
+        user_id: data.user_id,
+        type: data.type,
+        code: data.code,
+        details: data.details,
+        discount: data.discount,
+        discount_type: data.discount_type,
+        start_date: data.start_date,
+        end_date: data.end_date,
+        status: data.status,
+        updated_at: data.created_at,
       },
+      create: {
+        user_id: data.user_id,
+        type: data.type,
+        code: data.code,
+        details: data.details,
+        discount: data.discount,
+        discount_type: data.discount_type,
+        start_date: data.start_date,
+        end_date: data.end_date,
+        status: data.status,
+        created_at: data.created_at,
+      }
     });
 
-    if (newCoupon) {
-      res.status(200).json({ success: 'Coupon has been saved successfully' });
-    } else {
-      res.status(400).json({ error: 'Failed to create coupon' });
-    }
+    return { success: true, data: newPost };
   } catch (error) {
-    res.status(500).json({ error: 'Failed to create coupon' });
+    console.error("Error creating blog post:", error);
+    return { success: false, error };
   }
 };
 
-export const update = async (req: NextApiRequest, res: NextApiResponse) => {
-  try {
-    const { id } = req.query;
-    const { code, discount } = req.body;
+// export const update = async (req: NextApiRequest, res: NextApiResponse) => {
+//   try {
+//     const { id } = req.query;
+//     const { code, discount } = req.body;
 
-    const updatedCoupon = await prisma.coupons.update({
-      where: { id: Number(id) },
-      data: {
-        code,
-        discount: parseFloat(discount),
-      },
-    });
+//     const updatedCoupon = await prisma.coupons.update({
+//       where: { id: Number(id) },
+//       data: {
+//         code,
+//         discount: parseFloat(discount),
+//       },
+//     });
 
-    if (updatedCoupon) {
-      res.status(200).json({ success: 'Coupon has been updated successfully' });
-    } else {
-      res.status(400).json({ error: 'Failed to update coupon' });
-    }
-  } catch (error) {
-    res.status(500).json({ error: 'Failed to update coupon' });
-  }
-};
+//     if (updatedCoupon) {
+//       res.status(200).json({ success: 'Coupon has been updated successfully' });
+//     } else {
+//       res.status(400).json({ error: 'Failed to update coupon' });
+//     }
+//   } catch (error) {
+//     res.status(500).json({ error: 'Failed to update coupon' });
+//   }
+// };
 
 export const destroy = async (req: NextApiRequest, res: NextApiResponse) => {
   try {
@@ -135,7 +175,7 @@ export const getCouponForm = async (req: NextApiRequest, res: NextApiResponse) =
       }
 
       const products = await prisma.products.findMany({
-        where: { userId: admin.id },
+        where: { user_id: admin.id },
       });
 
       res.status(200).json({ products });

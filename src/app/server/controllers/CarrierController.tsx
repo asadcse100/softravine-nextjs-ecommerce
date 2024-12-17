@@ -138,7 +138,7 @@ export async function deleteCarrier(id: number) {
 
   // Delete carrier ranges and prices
   await prisma.carrier_ranges.deleteMany({ where: { carrier_id: id } });
-  await prisma.carrier_range_prices.deleteMany({ where: { carrierId: id } });
+  await prisma.carrier_range_prices.deleteMany({ where: { carrier_id: id } });
 
   // Delete the carrier
   await prisma.carriers.delete({ where: { id } });

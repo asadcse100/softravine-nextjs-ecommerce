@@ -64,8 +64,8 @@ export const getFlashDeals = async () => {
     const flashDeal = await prisma.flash_deals.create({
       data: {
         title,
-        textColor: text_color,
-        startDate,
+        text_color: text_color,
+        start_date,
         endDate,
         backgroundColor: background_color,
         slug,

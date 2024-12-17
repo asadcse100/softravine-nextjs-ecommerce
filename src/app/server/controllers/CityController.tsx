@@ -1,7 +1,5 @@
 // controllers/CityController.ts
 import { PrismaClient } from '@prisma/client'
-import { NextApiRequest, NextApiResponse } from 'next'
-
 const prisma = new PrismaClient()
 
 type createOrUpdateData = {
@@ -10,6 +8,7 @@ type createOrUpdateData = {
   cost: number;
   status: number;
   name: string;
+  created_at?: string;
 };
 
 // export const getCities = async (req: NextApiRequest, res: NextApiResponse) => {
@@ -43,21 +42,51 @@ type createOrUpdateData = {
 // }
 
 export const getCities = async () => {
-  try{
-      const cities = await prisma.cities.findMany();
-      return { success: true, data: cities };
-  }catch(error){
-      console.error("Error fetching cities:", error);
-      return { success: false, error };
+  try {
+    const cities = await prisma.cities.findMany();
+    return { success: true, data: cities };
+  } catch (error) {
+    console.error("Error fetching cities:", error);
+    return { success: false, error };
   }
 }
 
-export const createOrUpdateCity = async () => {
-  try{
-      const cities = await prisma.cities.findMany();
-      return { success: true, data: cities };
-  }catch(error){
-      console.error("Error fetching cities:", error);
-      return { success: false, error };
+// export const createOrUpdateCity = async () => {
+//   try{
+//       const cities = await prisma.cities.findMany();
+//       return { success: true, data: cities };
+//   }catch(error){
+//       console.error("Error fetching cities:", error);
+//       return { success: false, error };
+//   }
+// }
+
+export async function createOrUpdateBrand(data: createOrUpdateData) {
+  try {
+    // Use the provided `created_at` or fallback to the current date
+    const created_at = data.created_at ? new Date(data.created_at) : new Date();
+    // Perform the upsert operation
+    const newCategory = await prisma.cities.upsert({
+      where: { id: data.id || 0 }, // Replace `0` with a non-zero ID if necessary
+      update: {
+        name: data.name,
+        state_id: data.state_id,
+        cost: data.cost,
+        status: data.status,
+        updated_at: created_at,
+      },
+      create: {
+        name: data.name,
+        state_id: data.state_id,
+        cost: data.cost,
+        status: data.status,
+        created_at: created_at,
+      },
+    });
+
+    return { success: true, data: newCategory };
+  } catch (error) {
+    console.error("Error creating or updating blog category:", error);
+    return { success: false, message: "An unexpected error occurred" };
   }
 }

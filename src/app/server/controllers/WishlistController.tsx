@@ -34,49 +34,75 @@ export const wishlists = async () => {
     }
 }
 
-export async function store(req: NextApiRequest, res: NextApiResponse) {
-    const { id } = req.body;
-    const userId = req.cookies.userId; // Assuming userId is stored in cookies
+// export async function store(req: NextApiRequest, res: NextApiResponse) {
+//     const { id } = req.body;
+//     const userId = req.cookies.userId; // Assuming userId is stored in cookies
 
+//     try {
+//         if (userId) {
+//             const wishlist = await prisma.wishlist.findFirst({
+//                 where: {
+//                     user_id: Number(userId),
+//                     product_id: Number(id)
+//                 }
+//             });
+
+//             if (!wishlist) {
+//                 await prisma.wishlist.create({
+//                     data: {
+//                         user_id: Number(userId),
+//                         product_id: Number(id)
+//                     }
+//                 });
+//             }
+//             res.status(200).json({ message: 'Wishlist updated successfully' });
+//         } else {
+//             res.status(403).json({ error: 'User not authenticated' });
+//         }
+//     } catch (error) {
+//         console.error('Error updating wishlist:', error);
+//         res.status(500).json({ error: 'Internal server error' });
+//     }
+// }
+
+export async function createOrUpdateTax(data: createOrUpdateData) {
     try {
-        if (userId) {
-            const wishlist = await prisma.wishlist.findFirst({
-                where: {
-                    user_id: Number(userId),
-                    product_id: Number(id)
-                }
-            });
 
-            if (!wishlist) {
-                await prisma.wishlist.create({
-                    data: {
-                        user_id: Number(userId),
-                        product_id: Number(id)
-                    }
-                });
+        const created_at = data.created_at ? new Date(data.created_at) : new Date();
+
+        const newPost = await prisma.wishlists.upsert({
+            where: { id: data.id ?? 0 }, // Fallback to 0 if `data.id` is null
+            update: {
+                user_id: data.user_id,
+                product_id: data.product_id,
+                updated_at: data.created_at,
+            },
+            create: {
+                user_id: data.user_id,
+                product_id: data.product_id,
+                created_at: data.created_at,
             }
-            res.status(200).json({ message: 'Wishlist updated successfully' });
-        } else {
-            res.status(403).json({ error: 'User not authenticated' });
-        }
-    } catch (error) {
-        console.error('Error updating wishlist:', error);
-        res.status(500).json({ error: 'Internal server error' });
-    }
-}
+        });
 
-export async function remove(req: NextApiRequest, res: NextApiResponse) {
+        return { success: true, data: newPost };
+    } catch (error) {
+        console.error("Error creating blog post:", error);
+        return { success: false, error };
+    }
+};
+
+export async function remove() {
     const { id } = req.body;
 
     try {
-        const wishlist = await prisma.wishlist.findUnique({
+        const wishlist = await prisma.wishlists.findUnique({
             where: {
                 id: Number(id)
             }
         });
 
         if (wishlist) {
-            await prisma.wishlist.delete({
+            await prisma.wishlists.delete({
                 where: {
                     id: Number(id)
                 }

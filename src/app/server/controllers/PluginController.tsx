@@ -17,7 +17,7 @@ type createOrUpdateData = {
     created_at?: string;
 };
 
-export default async function handler(req: NextApiRequest, res: NextApiResponse) {
+export default async function handler() {
     if (req.method === 'POST') {
         const {
             DEMO_MODE,

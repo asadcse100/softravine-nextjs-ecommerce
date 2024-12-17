@@ -103,35 +103,36 @@ export const getRejectedRefund = async () => {
     }
 }
 
-export const requestStore = async (req: NextApiRequest, res: NextApiResponse) => {
+export const requestStore = async () => {
     try {
         const { id } = req.query;
-        const orderDetail = await prisma.orderDetail.findFirst({
+        const orderDetail = await prisma.order_details.findFirst({
             where: { id: Number(id) },
-            include: { order: true }
+            include: { orders: true }
         });
 
         if (!orderDetail) {
             throw new Error('Order detail not found');
         }
 
-        const refund = await prisma.refundRequest.create({
+        const refund = await prisma.refund_requests.create({
             data: {
-                user_id: orderDetail.order.user_id,
+                user_id: orderDetail.orders.user_id,
                 order_id: orderDetail.order_id,
                 order_detail_id: orderDetail.id,
                 seller_id: orderDetail.seller_id,
-                seller_approval: false,
+                seller_approvals: false,
                 reason: req.body.reason,
-                admin_approval: false,
-                admin_seen: false,
+                admin_approvals: false,
+                admin_seens: false,
                 refund_amount: orderDetail.price + orderDetail.tax,
                 refund_status: false
             }
         });
 
         if (refund) {
-            return res.status(200).json({ success: true, message: 'Refund request sent successfully' });
+            // return res.status(200).json({ success: true, message: 'Refund request sent successfully' });
+            return { success: true, data: refund };
         } else {
             return res.status(500).json({ success: false, message: 'Something went wrong' });
         }
@@ -141,11 +142,11 @@ export const requestStore = async (req: NextApiRequest, res: NextApiResponse) =>
     }
 };
 
-export const vendorIndex = async (req: NextApiRequest, res: NextApiResponse) => {
+export const vendorIndex = async () => {
     try {
-        const refunds = await prisma.refundRequest.findMany({
+        const refunds = await prisma.refund_requests.findMany({
             where: { seller_id: Number(req.query.seller_id) },
-            orderBy: { createdAt: 'desc' }
+            orderBy: { created_at: 'desc' }
         });
 
         return res.status(200).json({ refunds });
@@ -155,9 +156,9 @@ export const vendorIndex = async (req: NextApiRequest, res: NextApiResponse) => 
     }
 };
 
-export const customerIndex = async (req: NextApiRequest, res: NextApiResponse) => {
+export const customerIndex = async () => {
     try {
-        const refunds = await prisma.refundRequest.findMany({
+        const refunds = await prisma.refund_requests.findMany({
             where: { user_id: Number(req.query.user_id) },
             orderBy: { createdAt: 'desc' }
         });
@@ -170,18 +171,18 @@ export const customerIndex = async (req: NextApiRequest, res: NextApiResponse) =
 };
 
 
-export const refundTimeUpdate = async (req: NextApiRequest, res: NextApiResponse) => {
+export const refundTimeUpdate = async (data: createOrUpdateData) => {
     try {
         const { type, value } = req.body;
 
-        let businessSetting = await prisma.businessSetting.findUnique({ where: { type } });
+        let businessSetting = await prisma.business_settings.findUnique({ where: { type } });
         if (businessSetting) {
-            await prisma.businessSetting.update({
+            await prisma.business_settings.update({
                 where: { type },
                 data: { value },
             });
         } else {
-            await prisma.businessSetting.create({
+            await prisma.business_settings.create({
                 data: { type, value },
             });
         }
@@ -203,18 +204,18 @@ export const refundTimeUpdate = async (req: NextApiRequest, res: NextApiResponse
 };
 
 
-export const refundStickerUpdate = async (req: NextApiRequest, res: NextApiResponse) => {
+export const refundStickerUpdate = async (data: createOrUpdateData) => {
     try {
         const { type, logo } = req.body;
 
-        let businessSetting = await prisma.businessSetting.findUnique({ where: { type } });
+        let businessSetting = await prisma.business_settings.findUnique({ where: { type } });
         if (businessSetting) {
-            await prisma.businessSetting.update({
+            await prisma.business_settings.update({
                 where: { type },
                 data: { value: logo },
             });
         } else {
-            await prisma.businessSetting.create({
+            await prisma.business_settings.create({
                 data: { type, value: logo },
             });
         }
@@ -235,11 +236,11 @@ export const refundStickerUpdate = async (req: NextApiRequest, res: NextApiRespo
     }
 };
 
-export const adminIndex = async (_req: NextApiRequest, res: NextApiResponse) => {
+export const adminIndex = async (_data: createOrUpdateData) => {
     try {
-        const refunds = await prisma.refundRequest.findMany({
+        const refunds = await prisma.refund_requests.findMany({
             where: { refund_status: 0 },
-            orderBy: { createdAt: 'desc' },
+            orderBy: { created_at: 'desc' },
         });
         return res.status(200).json(refunds);
     } catch (error) {
@@ -248,11 +249,11 @@ export const adminIndex = async (_req: NextApiRequest, res: NextApiResponse) => 
     }
 };
 
-export const paidIndex = async (_req: NextApiRequest, res: NextApiResponse) => {
+export const paidIndex = async (_data: createOrUpdateData) => {
     try {
-        const refunds = await prisma.refundRequest.findMany({
+        const refunds = await prisma.refund_requests.findMany({
             where: { refund_status: 1 },
-            orderBy: { createdAt: 'desc' },
+            orderBy: { created_at: 'desc' },
         });
         return res.status(200).json(refunds);
     } catch (error) {
@@ -262,11 +263,11 @@ export const paidIndex = async (_req: NextApiRequest, res: NextApiResponse) => {
 };
 
 
-export const rejectedIndex = async (_req: NextApiRequest, res: NextApiResponse) => {
+export const rejectedIndex = async (_data: createOrUpdateData) => {
     try {
-        const refunds = await prisma.refundRequest.findMany({
+        const refunds = await prisma.refund_requests.findMany({
             where: { refund_status: 2 },
-            orderBy: { createdAt: 'desc' },
+            orderBy: { created_at: 'desc' },
         });
         return res.status(200).json(refunds);
     } catch (error) {
@@ -276,10 +277,10 @@ export const rejectedIndex = async (_req: NextApiRequest, res: NextApiResponse) 
 };
 
 
-export const requestApprovalVendor = async (req: NextApiRequest, res: NextApiResponse) => {
+export const requestApprovalVendor = async (data: createOrUpdateData) => {
     try {
         const { el } = req.body;
-        const refund = await prisma.refundRequest.update({
+        const refund = await prisma.refund_requests.update({
             where: { id: parseInt(el) },
             data: {
                 seller_approval: 1,
@@ -294,10 +295,10 @@ export const requestApprovalVendor = async (req: NextApiRequest, res: NextApiRes
 };
 
 
-export const refundPay = async (req: NextApiRequest, res: NextApiResponse) => {
+export const refundPay = async (data: createOrUpdateData) => {
     try {
         const { el } = req.body;
-        const refund = await prisma.refundRequest.update({
+        const refund = await prisma.refund_requests.update({
             where: { id: parseInt(el) },
             data: {
                 seller_approval: 1,
@@ -305,18 +306,18 @@ export const refundPay = async (req: NextApiRequest, res: NextApiResponse) => {
                 refund_status: 1,
             },
             include: {
-                user: true,
+                users: true,
             },
         });
         if (refund.seller_approval === 1) {
-            const seller = await prisma.shop.findFirst({ where: { user_id: refund.seller_id } });
+            const seller = await prisma.shops.findFirst({ where: { user_id: refund.seller_id } });
             if (seller) {
-                await prisma.shop.update({
+                await prisma.shops.update({
                     where: { id: seller.id },
                     data: { admin_to_pay: { decrement: refund.refund_amount } },
                 });
             }
-            await prisma.wallet.create({
+            await prisma.wallets.create({
                 data: {
                     user_id: refund.user_id,
                     amount: refund.refund_amount,
@@ -324,7 +325,7 @@ export const refundPay = async (req: NextApiRequest, res: NextApiResponse) => {
                     payment_details: 'Product Money Refund',
                 },
             });
-            await prisma.user.update({
+            await prisma.users.update({
                 where: { id: refund.user_id },
                 data: { balance: { increment: refund.refund_amount } },
             });
@@ -337,7 +338,7 @@ export const refundPay = async (req: NextApiRequest, res: NextApiResponse) => {
 };
 
 
-export const rejectRefundRequest = async (req: NextApiRequest, res: NextApiResponse) => {
+export const rejectRefundRequest = async (data: createOrUpdateData) => {
     try {
         const { refund_id, reject_reason } = req.body;
         const refund = await prisma.refundRequest.update({

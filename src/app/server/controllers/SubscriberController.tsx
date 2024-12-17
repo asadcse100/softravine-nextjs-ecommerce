@@ -29,16 +29,16 @@ export const getSubscribers = async () => {
   }
 }
 
-export const subscribeUser = async (req: NextApiRequest, res: NextApiResponse) => {
+export const subscribeUser = async () => {
   const { email } = req.body;
 
   try {
-    const existingSubscriber = await prisma.subscriber.findFirst({
+    const existingSubscriber = await prisma.subscribers.findFirst({
       where: { email },
     });
 
     if (!existingSubscriber) {
-      await prisma.subscriber.create({
+      await prisma.subscribers.create({
         data: {
           email,
         },
@@ -53,11 +53,11 @@ export const subscribeUser = async (req: NextApiRequest, res: NextApiResponse) =
   }
 };
 
-export const deleteSubscriber = async (req: NextApiRequest, res: NextApiResponse) => {
+export const deleteSubscriber = async () => {
   const { id } = req.query;
 
   try {
-    await prisma.subscriber.delete({
+    await prisma.subscribers.delete({
       where: { id: Number(id) },
     });
 

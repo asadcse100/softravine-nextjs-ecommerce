@@ -20,7 +20,7 @@ export const getData = async (data: createOrUpdateData) => {
           featureds: true,
         },
         include: {
-          bannerImage: true, // Assuming you have a relation set up in Prisma schema
+          banner_image: true, // Assuming you have a relation set up in Prisma schema
         },
       });
 
@@ -38,12 +38,12 @@ const getSystemLanguage = () => {
 };
 
 
-export const loadTodaysDealSection = async (req: NextApiRequest, res: NextApiResponse) => {
+export const loadTodaysDealSection = async (data: createOrUpdateData) => {
     try {
       // Fetch today's deal products from Prisma
       const todaysDealProducts = await prisma.products.findMany({
         where: {
-          todaysDeal: true,
+          todays_deal: true,
         },
       });
   
@@ -54,12 +54,12 @@ export const loadTodaysDealSection = async (req: NextApiRequest, res: NextApiRes
     }
   };
 
-  export const loadNewestProductSection = async (req: NextApiRequest, res: NextApiResponse) => {
+  export const loadNewestProductSection = async (data: createOrUpdateData) => {
     try {
       // Fetch newest products from Prisma
       const newestProducts = await prisma.products.findMany({
         orderBy: {
-          createdAt: 'desc',
+          created_at: 'desc',
         },
         take: 12,
       });
@@ -72,7 +72,7 @@ export const loadTodaysDealSection = async (req: NextApiRequest, res: NextApiRes
   };
 
 
-  export const handleDashboard = async (req: NextApiRequest, res: NextApiResponse) => {
+  export const handleDashboard = async (data: createOrUpdateData) => {
     try {
       const session = await getSession({ req });
   
@@ -116,7 +116,7 @@ export const loadTodaysDealSection = async (req: NextApiRequest, res: NextApiRes
   };
 
 
-  export const handleProfile = async (req: NextApiRequest, res: NextApiResponse) => {
+  export const handleProfile = async (data: createOrUpdateData) => {
     try {
       const session = await getSession({ req });
   
@@ -124,7 +124,7 @@ export const loadTodaysDealSection = async (req: NextApiRequest, res: NextApiRes
         return res.status(401).json({ message: 'Unauthorized' });
       }
   
-      const user = await prisma.user.findUnique({
+      const user = await prisma.users.findUnique({
         where: {
           email: session.user?.email ?? undefined,
         },
@@ -134,9 +134,9 @@ export const loadTodaysDealSection = async (req: NextApiRequest, res: NextApiRes
         return res.status(404).json({ message: 'User not found' });
       }
   
-      if (user.userType === 'seller') {
+      if (user.user_type === 'seller') {
         res.status(200).json({ redirect: '/seller/profile' });
-      } else if (user.userType === 'delivery_boy') {
+      } else if (user.user_type === 'delivery_boy') {
         res.status(200).json({ view: 'delivery_boy_profile' });
       } else {
         res.status(200).json({ view: 'user_profile' });
@@ -147,7 +147,7 @@ export const loadTodaysDealSection = async (req: NextApiRequest, res: NextApiRes
     }
   };
 
-  export const updateUserProfile = async (req: NextApiRequest, res: NextApiResponse) => {
+  export const updateUserProfile = async (data: createOrUpdateData) => {
     try {
       const session = await getSession({ req });
   
@@ -159,7 +159,7 @@ export const loadTodaysDealSection = async (req: NextApiRequest, res: NextApiRes
         return res.status(403).json({ message: 'Sorry! the action is not permitted in demo' });
       }
   
-      const user = await prisma.user.findUnique({
+      const user = await prisma.users.findUnique({
         where: {
           email: session.user?.email ?? undefined,
         },
@@ -181,7 +181,7 @@ export const loadTodaysDealSection = async (req: NextApiRequest, res: NextApiRes
         photo,
       } = req.body;
   
-      const updatedUser = await prisma.user.update({
+      const updatedUser = await prisma.users.update({
         where: { id: user.id },
         data: {
           name,
@@ -190,7 +190,7 @@ export const loadTodaysDealSection = async (req: NextApiRequest, res: NextApiRes
           city,
           postal_code,
           phone,
-          avatarOriginal: photo,
+          avatar_original: photo,
           ...(new_password && new_password === confirm_password
             ? { password: await bcrypt.hash(new_password, 10) }
             : {}),
@@ -204,11 +204,11 @@ export const loadTodaysDealSection = async (req: NextApiRequest, res: NextApiRes
     }
   };
 
-  export const getFlashDealDetails = async (req: NextApiRequest, res: NextApiResponse) => {
+  export const getFlashDealDetails = async (data: createOrUpdateData) => {
     try {
       const { slug } = req.query;
   
-      const flashDeal = await prisma.flashDeal.findUnique({
+      const flashDeal = await prisma.flash_deal.findUnique({
         where: { slug: String(slug) },
       });
   
@@ -224,7 +224,7 @@ export const loadTodaysDealSection = async (req: NextApiRequest, res: NextApiRes
   };
 
 
-  export const trackOrder = async (req: NextApiRequest, res: NextApiResponse) => {
+  export const trackOrder = async (data: createOrUpdateData) => {
     try {
       const { order_code } = req.query;
   
@@ -232,7 +232,7 @@ export const loadTodaysDealSection = async (req: NextApiRequest, res: NextApiRes
         return res.status(400).json({ message: 'Order code is required' });
       }
   
-      const order = await prisma.order.findUnique({
+      const order = await prisma.orders.findUnique({
         where: { code: String(order_code) },
       });
   
@@ -248,7 +248,7 @@ export const loadTodaysDealSection = async (req: NextApiRequest, res: NextApiRes
   };
 
 
-  export const getProductDetails = async (req: NextApiRequest, res: NextApiResponse) => {
+  export const getProductDetails = async (data: createOrUpdateData) => {
     try {
       const session = await getSession({ req });
       const { slug, product_referral_code } = req.query;
@@ -257,11 +257,11 @@ export const loadTodaysDealSection = async (req: NextApiRequest, res: NextApiRes
         return res.status(400).json({ message: 'Slug is required' });
       }
   
-      const product = await prisma.product.findFirst({
+      const product = await prisma.products.findFirst({
         where: { slug: String(slug), approved: true, auction_product: false },
         include: {
           reviews: true,
-          brand: true,
+          brands: true,
           stocks: true,
           user: { include: { shop: true } },
         },
@@ -281,15 +281,15 @@ export const loadTodaysDealSection = async (req: NextApiRequest, res: NextApiRes
         return res.status(404).json({ message: 'Wholesale addon is not activated' });
       }
   
-      const productQueries = await prisma.productQuery.findMany({
+      const productQueries = await prisma.product_queries.findMany({
         where: { product_id: product.id, customer_id: { not: session?.user?.id || 0 } },
         orderBy: { id: 'desc' },
         take: 3,
       });
-      const totalQueryCount = await prisma.productQuery.count({
+      const totalQueryCount = await prisma.product_queries.count({
         where: { product_id: product.id },
       });
-      const reviews = await prisma.review.findMany({
+      const reviews = await prisma.reviews.findMany({
         where: { product_id: product.id },
         orderBy: { id: 'desc' },
         take: 3,
@@ -298,11 +298,11 @@ export const loadTodaysDealSection = async (req: NextApiRequest, res: NextApiRes
       // Review status
       let reviewStatus = 0;
       if (session) {
-        const orderDetail = await prisma.orderDetail.findFirst({
+        const orderDetail = await prisma.order_details.findFirst({
           where: {
             product_id: product.id,
             delivery_status: 'delivered',
-            order: { user_id: session.user.id },
+            orders: { user_id: session.users.id },
           },
         });
         reviewStatus = orderDetail ? 1 : 0;
@@ -310,7 +310,7 @@ export const loadTodaysDealSection = async (req: NextApiRequest, res: NextApiRes
   
       // Handle affiliate referral code
       if (product_referral_code) {
-        const validationTime = await prisma.affiliateConfig.findFirst({
+        const validationTime = await prisma.affiliate_configs.findFirst({
           where: { type: 'validation_time' },
         });
         const cookieMinute = validationTime ? validationTime.value * 60 : 30 * 24 * 60;
@@ -344,7 +344,7 @@ export const loadTodaysDealSection = async (req: NextApiRequest, res: NextApiRes
   };
 
 
-  export const getShopDetails = async (req: NextApiRequest, res: NextApiResponse) => {
+  export const getShopDetails = async (data: createOrUpdateData) => {
     try {
       const { slug } = req.query;
   
@@ -352,7 +352,7 @@ export const loadTodaysDealSection = async (req: NextApiRequest, res: NextApiRes
         return res.status(403).json({ message: 'Vendor system is not activated' });
       }
   
-      const shop = await prisma.shop.findFirst({
+      const shop = await prisma.shops.findFirst({
         where: { slug: String(slug) },
         include: {
           user: true,
@@ -379,7 +379,7 @@ export const loadTodaysDealSection = async (req: NextApiRequest, res: NextApiRes
   };
 
 
-  export const filterShop = async (req: NextApiRequest, res: NextApiResponse) => {
+  export const filterShop = async (data: createOrUpdateData) => {
     try {
       const { slug, type } = req.query;
       const {
@@ -395,7 +395,7 @@ export const loadTodaysDealSection = async (req: NextApiRequest, res: NextApiRes
         return res.status(403).json({ message: 'Vendor system is not activated' });
       }
   
-      const shop = await prisma.shop.findFirst({
+      const shop = await prisma.shops.findFirst({
         where: { slug: String(slug) },
         include: {
           user: true,
@@ -418,7 +418,7 @@ export const loadTodaysDealSection = async (req: NextApiRequest, res: NextApiRes
         };
   
         if (brand) {
-          const brandData = await prisma.brand.findFirst({
+          const brandData = await prisma.brands.findFirst({
             where: { slug: String(brand) },
           });
           conditions.brandId = brandData ? brandData.id : null;
@@ -461,7 +461,7 @@ export const loadTodaysDealSection = async (req: NextApiRequest, res: NextApiRes
             break;
         }
   
-        const products = await prisma.product.findMany({
+        const products = await prisma.products.findMany({
           where: conditions,
           orderBy,
           take: 24,
@@ -478,17 +478,17 @@ export const loadTodaysDealSection = async (req: NextApiRequest, res: NextApiRes
   };
 
 
-  export const getAllCategories = async (req: NextApiRequest, res: NextApiResponse) => {
+  export const getAllCategories = async (data: createOrUpdateData) => {
     try {
-      const categories = await prisma.category.findMany({
+      const categories = await prisma.categories.findMany({
         where: {
-          parentId: 0,
+          parent_id: 0,
         },
         include: {
-          childrenCategories: true, // Assuming the relation is set up in Prisma schema
+          children_categories: true, // Assuming the relation is set up in Prisma schema
         },
         orderBy: {
-          orderLevel: 'desc',
+          order_level: 'desc',
         },
       });
   
@@ -500,9 +500,9 @@ export const loadTodaysDealSection = async (req: NextApiRequest, res: NextApiRes
   };
 
 
-  export const getAllBrands = async (req: NextApiRequest, res: NextApiResponse) => {
+  export const getAllBrands = async (data: createOrUpdateData) => {
     try {
-      const brands = await prisma.brand.findMany();
+      const brands = await prisma.brands.findMany();
       res.status(200).json({ brands });
     } catch (error) {
       console.error('Error:', error);
@@ -510,7 +510,7 @@ export const loadTodaysDealSection = async (req: NextApiRequest, res: NextApiRes
     }
   };
 
-  export const updateTop10Settings = async (req: NextApiRequest, res: NextApiResponse) => {
+  export const updateTop10Settings = async (data: createOrUpdateData) => {
     const { topCategories, topBrands } = req.body;
   
     if (process.env.DEMO_MODE === 'On') {
@@ -519,20 +519,20 @@ export const loadTodaysDealSection = async (req: NextApiRequest, res: NextApiRes
   
     try {
       // Update categories
-      const allCategories = await prisma.category.findMany();
+      const allCategories = await prisma.categories.findMany();
       for (const category of allCategories) {
         const isTop = Array.isArray(topCategories) && topCategories.includes(category.id);
-        await prisma.category.update({
+        await prisma.categories.update({
           where: { id: category.id },
           data: { top: isTop },
         });
       }
   
       // Update brands
-      const allBrands = await prisma.brand.findMany();
+      const allBrands = await prisma.brands.findMany();
       for (const brand of allBrands) {
         const isTop = Array.isArray(topBrands) && topBrands.includes(brand.id);
-        await prisma.brand.update({
+        await prisma.brands.update({
           where: { id: brand.id },
           data: { top: isTop },
         });
@@ -545,11 +545,11 @@ export const loadTodaysDealSection = async (req: NextApiRequest, res: NextApiRes
     }
   };
 
-  export const variantPrice = async (req: NextApiRequest, res: NextApiResponse) => {
+  export const variantPrice = async (data: createOrUpdateData) => {
     try {
       const { id, quantity, color, ...attributes } = req.body;
   
-      const product = await prisma.product.findUnique({
+      const product = await prisma.products.findUnique({
         where: { id: parseInt(id) },
         include: {
           stocks: true,
@@ -585,7 +585,7 @@ export const loadTodaysDealSection = async (req: NextApiRequest, res: NextApiRes
       let tax = 0;
   
       if (product.wholesale_product) {
-        const wholesalePrice = await prisma.wholesalePrice.findFirst({
+        const wholesalePrice = await prisma.wholesale_price.findFirst({
           where: {
             stockId: productStock.id,
             min_qty: { lte: quantity },
@@ -642,7 +642,7 @@ export const loadTodaysDealSection = async (req: NextApiRequest, res: NextApiRes
     }
   };
 
-  export const sellerPolicy = async (req: NextApiRequest, res: NextApiResponse) => {
+  export const sellerPolicy = async (data: createOrUpdateData) => {
     try {
       const page = await prisma.page.findFirst({
         where: { type: 'seller_policy_page' },
@@ -659,9 +659,9 @@ export const loadTodaysDealSection = async (req: NextApiRequest, res: NextApiRes
     }
   };
 
-  export const returnPolicy = async (req: NextApiRequest, res: NextApiResponse) => {
+  export const returnPolicy = async (data: createOrUpdateData) => {
     try {
-      const page = await prisma.page.findFirst({
+      const page = await prisma.pages.findFirst({
         where: { type: 'return_policy_page' },
       });
   
@@ -676,9 +676,9 @@ export const loadTodaysDealSection = async (req: NextApiRequest, res: NextApiRes
     }
   };
 
-  export const supportPolicy = async (req: NextApiRequest, res: NextApiResponse) => {
+  export const supportPolicy = async (data: createOrUpdateData) => {
     try {
-      const page = await prisma.page.findFirst({
+      const page = await prisma.pages.findFirst({
         where: { type: 'support_policy_page' },
       });
   
@@ -694,9 +694,9 @@ export const loadTodaysDealSection = async (req: NextApiRequest, res: NextApiRes
   };
 
 
-  export const termsConditions = async (req: NextApiRequest, res: NextApiResponse) => {
+  export const termsConditions = async (data: createOrUpdateData) => {
     try {
-      const page = await prisma.page.findFirst({
+      const page = await prisma.pages.findFirst({
         where: { type: 'terms_conditions_page' },
       });
   
@@ -711,9 +711,9 @@ export const loadTodaysDealSection = async (req: NextApiRequest, res: NextApiRes
     }
   };
 
-  export const privacyPolicy = async (req: NextApiRequest, res: NextApiResponse) => {
+  export const privacyPolicy = async (data: createOrUpdateData) => {
     try {
-      const page = await prisma.page.findFirst({
+      const page = await prisma.pages.findFirst({
         where: { type: 'privacy_policy_page' },
       });
   
@@ -728,9 +728,9 @@ export const loadTodaysDealSection = async (req: NextApiRequest, res: NextApiRes
     }
   };
 
-  export const getPickUpPoints = async (req: NextApiRequest, res: NextApiResponse) => {
+  export const getPickUpPoints = async (data: createOrUpdateData) => {
     try {
-      const pickUpPoints = await prisma.pickupPoint.findMany();
+      const pickUpPoints = await prisma.pickup_points.findMany();
   
       res.status(200).json({ pickUpPoints });
     } catch (error) {
@@ -739,10 +739,10 @@ export const loadTodaysDealSection = async (req: NextApiRequest, res: NextApiRes
     }
   };
 
-  export const getCategoryItems = async (req: NextApiRequest, res: NextApiResponse) => {
+  export const getCategoryItems = async (data: createOrUpdateData) => {
     try {
       const categoryId = parseInt(req.query.id as string);
-      const category = await prisma.category.findUnique({
+      const category = await prisma.categories.findUnique({
         where: { id: categoryId },
         include: { childrenCategories: true },
       });
@@ -758,9 +758,9 @@ export const loadTodaysDealSection = async (req: NextApiRequest, res: NextApiRes
     }
   };
 
-  export const getPremiumPackages = async (req: NextApiRequest, res: NextApiResponse) => {
+  export const getPremiumPackages = async (data: createOrUpdateData) => {
     try {
-      const customerPackages = await prisma.customerPackage.findMany();
+      const customerPackages = await prisma.customer_packages.findMany();
       res.status(200).json({ customerPackages });
     } catch (error) {
       console.error('Error:', error);
@@ -768,7 +768,7 @@ export const loadTodaysDealSection = async (req: NextApiRequest, res: NextApiRes
     }
   };
 
-  export const updateEmail = async (req: NextApiRequest, res: NextApiResponse) => {
+  export const updateEmail = async (data: createOrUpdateData) => {
     try {
       const { email } = req.body;
   
@@ -788,7 +788,7 @@ export const loadTodaysDealSection = async (req: NextApiRequest, res: NextApiRes
   };
 
 
-  export const sendEmailVerificationMail = async (req: NextApiRequest, res: NextApiResponse) => {
+  export const sendEmailVerificationMail = async (data: createOrUpdateData) => {
     try {
       const { email } = req.body;
   
@@ -796,7 +796,7 @@ export const loadTodaysDealSection = async (req: NextApiRequest, res: NextApiRes
       const verificationCode = generateVerificationCode();
   
       // Save verification code to the user record in the database
-      await prisma.user.update({
+      await prisma.users.update({
         where: { email },
         data: { newEmailVerificationCode: verificationCode },
       });
@@ -812,12 +812,12 @@ export const loadTodaysDealSection = async (req: NextApiRequest, res: NextApiRes
   };
 
 
-  export const emailChangeCallback = async (req: NextApiRequest, res: NextApiResponse) => {
+  export const emailChangeCallback = async (data: createOrUpdateData) => {
     try {
       const { newEmailVerificationCode, email } = req.query;
   
       // Find the user with the provided verification code
-      const user = await prisma.user.findFirst({
+      const user = await prisma.users.findFirst({
         where: {
           newEmailVerificationCode: newEmailVerificationCode as string,
         },
@@ -825,7 +825,7 @@ export const loadTodaysDealSection = async (req: NextApiRequest, res: NextApiRes
   
       if (user) {
         // Update the user's email and clear verification code
-        await prisma.user.update({
+        await prisma.users.update({
           where: { id: user.id },
           data: {
             email: email as string,
@@ -848,10 +848,10 @@ export const loadTodaysDealSection = async (req: NextApiRequest, res: NextApiRes
   };
 
 
-  export const getAllFlashDeals = async (req: NextApiRequest, res: NextApiResponse) => {
+  export const getAllFlashDeals = async (data: createOrUpdateData) => {
     try {
       const today = new Date();
-      const allFlashDeals = await prisma.flashDeal.findMany({
+      const allFlashDeals = await prisma.flash_deals.findMany({
         where: {
           status: 1,
           start_date: { lte: today },
@@ -868,9 +868,9 @@ export const loadTodaysDealSection = async (req: NextApiRequest, res: NextApiRes
   };
 
 
-  export const getTodaysDealProducts = async (req: NextApiRequest, res: NextApiResponse) => {
+  export const getTodaysDealProducts = async (data: createOrUpdateData) => {
     try {
-      const todaysDealProducts = await prisma.product.findMany({
+      const todaysDealProducts = await prisma.products.findMany({
         where: {
           todays_deal: true,
         },
@@ -886,18 +886,18 @@ export const loadTodaysDealSection = async (req: NextApiRequest, res: NextApiRes
     }
   };
 
-  export const getAllVerifiedSellers = async (req: NextApiRequest, res: NextApiResponse) => {
+  export const getAllVerifiedSellers = async (data: createOrUpdateData) => {
     try {
-      const verifiedSellers = await prisma.shop.findMany({
+      const verifiedSellers = await prisma.shops.findMany({
         where: {
-          user: {
+          users: {
             id: {
               in: verifiedSellersIdArray(), // Implement this function to get an array of verified seller IDs
             },
           },
         },
         include: {
-          user: true, // Include user details if needed
+          users: true, // Include user details if needed
         },
         take: 15,
         skip: req.query.page ? (parseInt(req.query.page.toString()) - 1) * 15 : 0,
@@ -916,9 +916,9 @@ export const loadTodaysDealSection = async (req: NextApiRequest, res: NextApiRes
   };
 
 
-  export const getAllCoupons = async (req: NextApiRequest, res: NextApiResponse) => {
+  export const getAllCoupons = async (data: createOrUpdateData) => {
     try {
-      const coupons = await prisma.coupon.findMany({
+      const coupons = await prisma.coupons.findMany({
         where: {
           start_date: {
             lte: new Date(),
@@ -937,9 +937,9 @@ export const loadTodaysDealSection = async (req: NextApiRequest, res: NextApiRes
     }
   };
 
-  export const getAllInHouseProducts = async (req: NextApiRequest, res: NextApiResponse) => {
+  export const getAllInHouseProducts = async (data: createOrUpdateData) => {
     try {
-      const products = await prisma.product.findMany({
+      const products = await prisma.products.findMany({
         where: {
           added_by: 'admin',
         },

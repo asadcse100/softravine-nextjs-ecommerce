@@ -8,7 +8,7 @@ type createOrUpdateData = {
     value: string;
 };
 
-export const index = async (req: NextApiRequest, res: NextApiResponse) => {
+export const index = async (data: createOrUpdateData) => {
     try {
         const customers = await prisma.users.findMany({
             where: {
@@ -20,7 +20,7 @@ export const index = async (req: NextApiRequest, res: NextApiResponse) => {
 
         const userType = req.headers.authorization ? 'admin' : 'seller';
 
-        if (userType === 'admin' || userType === 'staff') {
+        if (userType === 'admin' || user_type === 'staff') {
             res.render('pos/index', { customers });
         } else {
             const posActivationForSeller = true; // You need to replace this with your logic to determine POS activation for sellers
@@ -37,9 +37,9 @@ export const index = async (req: NextApiRequest, res: NextApiResponse) => {
 };
 
 
-export const search = async (req: NextApiRequest, res: NextApiResponse) => {
+export const search = async (data: createOrUpdateData) => {
     try {
-        let productsQuery = prisma.productStock.findMany({
+        let productsQuery = prisma.product_stocks.findMany({
             include: {
                 products: true,
             },
@@ -94,12 +94,12 @@ export const search = async (req: NextApiRequest, res: NextApiResponse) => {
     }
 };
 
-export const addToCart = async (req: NextApiRequest, res: NextApiResponse) => {
+export const addToCart = async (data: createOrUpdateData) => {
     const { stockId } = req.body;
-    const stock = await prisma.productStock.findUnique({
+    const stock = await prisma.product_stocks.findUnique({
         where: { id: stockId },
         include: {
-            product: {
+            products: {
                 include: { taxes: true }
             }
         }
@@ -109,7 +109,7 @@ export const addToCart = async (req: NextApiRequest, res: NextApiResponse) => {
         return res.status(404).json({ success: 0, message: "Stock not found" });
     }
 
-    const product = stock.product;
+    const product = stock.products;
 
     const data: any = {
         stockId: stockId,
@@ -173,7 +173,7 @@ export const addToCart = async (req: NextApiRequest, res: NextApiResponse) => {
 };
 
 
-export const updateQuantity = async (req: NextApiRequest, res: NextApiResponse) => {
+export const updateQuantity = async (data: createOrUpdateData) => {
     const { key, quantity } = req.body;
 
     let cart = req.session.cart || [];
@@ -188,7 +188,7 @@ export const updateQuantity = async (req: NextApiRequest, res: NextApiResponse) 
         return item;
     });
 
-    const product = await prisma.product.findUnique({
+    const product = await prisma.products.findUnique({
         where: { id: cart[key].id },
         include: { stocks: true }
     });
@@ -215,7 +215,7 @@ export const updateQuantity = async (req: NextApiRequest, res: NextApiResponse) 
 };
 
 
-export const removeFromCart = async (req: NextApiRequest, res: NextApiResponse) => {
+export const removeFromCart = async (data: createOrUpdateData) => {
     const { key } = req.body;
 
     if (req.session.cart) {
@@ -232,15 +232,15 @@ export const removeFromCart = async (req: NextApiRequest, res: NextApiResponse) 
 };
 
 
-export const setShippingAddress = async (req: NextApiRequest, res: NextApiResponse) => {
+export const setShippingAddress = async (data: createOrUpdateData) => {
     const { address_id, name, email, address, country_id, state_id, city_id, postal_code, phone } = req.body;
     let data: any = {};
 
     if (address_id) {
-        const addressRecord = await prisma.address.findUnique({
+        const addressRecord = await prisma.addresses.findUnique({
             where: { id: address_id },
             include: {
-                user: true,
+                users: true,
                 country: true,
                 state: true,
                 city: true,
@@ -287,7 +287,7 @@ export const setShippingAddress = async (req: NextApiRequest, res: NextApiRespon
     res.status(200).json({ success: 1, message: 'Shipping address set successfully', shipping_info: data });
 };
 
-export const orderStore = async (req: NextApiRequest, res: NextApiResponse) => {
+export const orderStore = async (data: createOrUpdateData) => {
     const session = req.session;
     const { user_id, payment_type, offline_trx_id, offline_payment_method, offline_payment_amount, offline_payment_proof } = req.body;
 
@@ -302,7 +302,7 @@ export const orderStore = async (req: NextApiRequest, res: NextApiResponse) => {
     }
 
     try {
-        const order = await prisma.order.create({
+        const order = await prisma.orders.create({
             data: {
                 guest_id: user_id ? null : Math.floor(100000 + Math.random() * 900000).toString(),
                 user_id: user_id || null,
@@ -336,8 +336,8 @@ export const orderStore = async (req: NextApiRequest, res: NextApiResponse) => {
         let tax = 0;
 
         for (const cartItem of session.cart) {
-            const productStock = await prisma.productStock.findUnique({ where: { id: cartItem.stock_id } });
-            const product = await prisma.product.findUnique({ where: { id: productStock.productId } });
+            const productStock = await prisma.product_stocks.findUnique({ where: { id: cartItem.stock_id } });
+            const product = await prisma.products.findUnique({ where: { id: productStock.productId } });
 
             subtotal += cartItem.price * cartItem.quantity;
             tax += cartItem.tax * cartItem.quantity;

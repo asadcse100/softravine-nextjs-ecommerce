@@ -7,7 +7,7 @@ type createOrUpdateData = {
     value: string;
 };
 
-export const getPolicyByName = async (req: NextApiRequest, res: NextApiResponse) => {
+export const getPolicyByName = async (data: createOrUpdateData) => {
     const { type } = req.query;
 
     try {
@@ -25,7 +25,7 @@ export const getPolicyByName = async (req: NextApiRequest, res: NextApiResponse)
     }
 };
 
-export const upsertPolicy = async (req: NextApiRequest, res: NextApiResponse) => {
+export const upsertPolicy = async (data: createOrUpdateData) => {
     const { name, content } = req.body;
 
     try {

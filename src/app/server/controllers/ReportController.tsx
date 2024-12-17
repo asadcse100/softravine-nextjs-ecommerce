@@ -7,7 +7,7 @@ type createOrUpdateData = {
   value: string;
 };
 
-// export async function getStockReport(req: NextApiRequest, res: NextApiResponse) {
+// export async function getStockReport(data: createOrUpdateData) {
 //     try {
 //       let sort_by = null;
 //       const { category_id } = req.query;
@@ -42,7 +42,7 @@ export const getStockReport = async () => {
   }
 }
 
-export async function getInHouseSaleReport(req: NextApiRequest, res: NextApiResponse) {
+export async function getInHouseSaleReport(data: createOrUpdateData) {
   try {
     let sort_by = null;
     const { category_id } = req.query;
@@ -50,12 +50,12 @@ export async function getInHouseSaleReport(req: NextApiRequest, res: NextApiResp
 
     if (category_id) {
       sort_by = Number(category_id);
-      products = await prisma.product.findMany({
+      products = await prisma.products.findMany({
         where: { category_id: sort_by, added_by: 'admin' },
         orderBy: { num_of_sale: 'desc' },
       });
     } else {
-      products = await prisma.product.findMany({
+      products = await prisma.products.findMany({
         where: { added_by: 'admin' },
         orderBy: { num_of_sale: 'desc' },
       });
@@ -68,7 +68,7 @@ export async function getInHouseSaleReport(req: NextApiRequest, res: NextApiResp
   }
 }
 
-export async function getSellerSaleReport(req: NextApiRequest, res: NextApiResponse) {
+export async function getSellerSaleReport(data: createOrUpdateData) {
   try {
     let sort_by = null;
     const { verification_status } = req.query;
@@ -81,12 +81,12 @@ export async function getSellerSaleReport(req: NextApiRequest, res: NextApiRespo
 
     if (verification_status) {
       sort_by = Number(verification_status);
-      sellers = await prisma.shop.findMany({
+      sellers = await prisma.shops.findMany({
         ...query,
         where: { verification_status: sort_by },
       });
     } else {
-      sellers = await prisma.shop.findMany(query);
+      sellers = await prisma.shops.findMany(query);
     }
 
     res.status(200).json({ sellers, sort_by });
@@ -97,7 +97,7 @@ export async function getSellerSaleReport(req: NextApiRequest, res: NextApiRespo
 }
 
 
-export async function getWishReport(req: NextApiRequest, res: NextApiResponse) {
+export async function getWishReport(data: createOrUpdateData) {
   try {
     let sort_by = null;
     const { category_id } = req.query;
@@ -109,12 +109,12 @@ export async function getWishReport(req: NextApiRequest, res: NextApiResponse) {
 
     if (category_id) {
       sort_by = Number(category_id);
-      products = await prisma.product.findMany({
+      products = await prisma.products.findMany({
         ...query,
         where: { category_id: sort_by },
       });
     } else {
-      products = await prisma.product.findMany(query);
+      products = await prisma.products.findMany(query);
     }
 
     res.status(200).json({ products, sort_by });
@@ -124,9 +124,9 @@ export async function getWishReport(req: NextApiRequest, res: NextApiResponse) {
   }
 }
 
-export async function getUserSearchReport(req: NextApiRequest, res: NextApiResponse) {
+export async function getUserSearchReport(data: createOrUpdateData) {
   try {
-    const searches = await prisma.search.findMany({
+    const searches = await prisma.searches.findMany({
       orderBy: { count: 'desc' },
     });
 
@@ -138,7 +138,7 @@ export async function getUserSearchReport(req: NextApiRequest, res: NextApiRespo
 }
 
 
-export async function getCommissionHistory(req: NextApiRequest, res: NextApiResponse) {
+export async function getCommissionHistory(data: createOrUpdateData) {
   try {
     let sellerId = null;
     let dateRange = null;
@@ -147,7 +147,7 @@ export async function getCommissionHistory(req: NextApiRequest, res: NextApiResp
       sellerId = parseInt(req.query.seller_id as string);
     }
 
-    let commissionHistory = prisma.commissionHistory.findMany({
+    let commissionHistory = prisma.commission_histories.findMany({
       orderBy: { created_at: 'desc' },
     });
 
@@ -169,7 +169,7 @@ export async function getCommissionHistory(req: NextApiRequest, res: NextApiResp
 }
 
 
-export async function getWalletTransactionHistory(req: NextApiRequest, res: NextApiResponse) {
+export async function getWalletTransactionHistory(data: createOrUpdateData) {
   try {
     let userId = null;
     let dateRange = null;
@@ -178,12 +178,12 @@ export async function getWalletTransactionHistory(req: NextApiRequest, res: Next
       userId = parseInt(req.query.user_id as string);
     }
 
-    const usersWithWallet = await prisma.wallet.findMany({
+    const usersWithWallet = await prisma.wallets.findMany({
       select: { user_id: true },
       distinct: ['user_id'],
     });
 
-    let walletHistory = await prisma.wallet.findMany({
+    let walletHistory = await prisma.wallets.findMany({
       orderBy: { created_at: 'desc' },
     });
 

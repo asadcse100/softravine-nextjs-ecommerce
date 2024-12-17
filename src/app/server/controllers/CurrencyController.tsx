@@ -53,30 +53,63 @@ export const getCurrencyList = async () => {
   }
 }
 
-export const createOrUpdateCurrency = async () => {
-    try {
-      const { id, name, symbol, code, exchange_rate, status } = req.body;
+// export const createOrUpdateCurrency = async () => {
+//     try {
+//       const { id, name, symbol, code, exchange_rate, status } = req.body;
   
-      const updatedCurrency = await prisma.currencies.update({
-        where: { id: Number(id) },
-        data: {
-          name,
-          symbol,
-          code,
-          exchange_rate: parseFloat(exchange_rate),
-          status,
-        },
-      });
+//       const updatedCurrency = await prisma.currencies.update({
+//         where: { id: Number(id) },
+//         data: {
+//           name,
+//           symbol,
+//           code,
+//           exchange_rate: parseFloat(exchange_rate),
+//           status,
+//         },
+//       });
   
-      if (updatedCurrency) {
-        res.status(200).json({ success: 'Currency updated successfully' });
-      } else {
-        res.status(400).json({ error: 'Failed to update currency' });
+//       if (updatedCurrency) {
+//         res.status(200).json({ success: 'Currency updated successfully' });
+//       } else {
+//         res.status(400).json({ error: 'Failed to update currency' });
+//       }
+//     } catch (error) {
+//       res.status(500).json({ error: 'Failed to update currency' });
+//     }
+//   };
+
+
+export async function createOrUpdateCurrency(data: createOrUpdateData) {
+  try {
+
+    const created_at = data.created_at ? new Date(data.created_at) : new Date();
+
+    const newPost = await prisma.currencies.upsert({
+      where: { id: data.id ?? 0 }, // Fallback to 0 if `data.id` is null
+      update: {
+        name: data.name,
+        symbol: data.symbol,
+        code: data.code,
+        exchange_rate: data.exchange_rate,
+        status: data.status,
+        updated_at: data.created_at,
+      },
+      create: {
+        name: data.name,
+        symbol: data.symbol,
+        code: data.code,
+        exchange_rate: data.exchange_rate,
+        status: data.status,
+        created_at: data.created_at,
       }
-    } catch (error) {
-      res.status(500).json({ error: 'Failed to update currency' });
-    }
-  };
+    });
+
+    return { success: true, data: newPost };
+  } catch (error) {
+    console.error("Error creating blog post:", error);
+    return { success: false, error };
+  }
+};
 
   // export const createCurrency = async (req: NextApiRequest, res: NextApiResponse) => {
   //   try {
@@ -102,9 +135,11 @@ export const createOrUpdateCurrency = async () => {
   //   }
   // };
 
-  export const updateCurrencyStatus = async () => {
+  export const updateCurrencyStatus = async (data: createOrUpdateData) => {
     try {
-      const { id, status } = req.body;
+      // const { id, status } = req.body;
+      const id = data.id;
+      const status = data.status;
   
       const currency = await prisma.currencies.findUnique({
         where: { id: Number(id) },

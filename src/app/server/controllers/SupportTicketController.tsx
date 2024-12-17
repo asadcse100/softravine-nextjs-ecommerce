@@ -11,7 +11,7 @@ type createOrUpdateData = {
   created_at?: string;
 };
 
-// export const getUserTickets = async (req: NextApiRequest, res: NextApiResponse) => {
+// export const getUserTickets = async () => {
 //   const userId = req.query.userId as string;
 
 //   try {
@@ -56,21 +56,21 @@ export const getUserTickets = async () => {
   }
 }
 
-export const getAdminTickets = async (req: NextApiRequest, res: NextApiResponse) => {
+export const getAdminTickets = async () => {
   const { search } = req.query;
 
   try {
     let tickets: Ticket[];
 
     if (search) {
-      tickets = await prisma.ticket.findMany({
+      tickets = await prisma.tickets.findMany({
         where: {
           code: { contains: search as string },
         },
         orderBy: { createdAt: 'desc' },
       });
     } else {
-      tickets = await prisma.ticket.findMany({
+      tickets = await prisma.tickets.findMany({
         orderBy: { createdAt: 'desc' },
       });
     }
@@ -81,14 +81,14 @@ export const getAdminTickets = async (req: NextApiRequest, res: NextApiResponse)
   }
 };
 
-export const createTicket = async (req: NextApiRequest, res: NextApiResponse) => {
-  const { subject, details, attachments, userId } = req.body;
+export const createTicket = async () => {
+  const { subject, details, attachments, userId } = reqs.body;
 
   try {
-    const ticket = await prisma.ticket.create({
+    const ticket = await prisma.tickets.create({
       data: {
         code: new Date().getTime() + userId,
-        user: { connect: { id: userId } },
+        users: { connect: { id: userId } },
         subject,
         details,
         files: attachments,
@@ -105,11 +105,11 @@ export const createTicket = async (req: NextApiRequest, res: NextApiResponse) =>
 };
 
 
-export const createTicketReply = async (req: NextApiRequest, res: NextApiResponse) => {
+export const createTicketReply = async () => {
   const { ticketId, reply, attachments, status, userId } = req.body;
 
   try {
-    const ticketReply = await prisma.ticketReply.create({
+    const ticketReply = await prisma.ticket_reply.create({
       data: {
         ticket: { connect: { id: ticketId } },
         user: { connect: { id: userId } },
@@ -118,9 +118,9 @@ export const createTicketReply = async (req: NextApiRequest, res: NextApiRespons
       },
     });
 
-    await prisma.ticket.update({
+    await prisma.tickets.update({
       where: { id: ticketId },
-      data: { clientViewed: false, status },
+      data: { client_viewed: false, status },
     });
 
     // Call function to send support reply email to user
@@ -143,7 +143,7 @@ const transporter = nodemailer.createTransport({
 });
 
 
-export const admin_store = async (req: NextApiRequest, res: NextApiResponse) => {
+export const admin_store = async () => {
   // Your ticket creation logic here
 
   // Call the email function
@@ -174,7 +174,7 @@ export const sendSupportReplyEmailToUser = async () => {
   const mailOptions = {
     from: process.env.MAIL_FROM_ADDRESS,
     to: ticket.user.email,
-    subject: `Support ticket Code is:- ${ticket.code}`,
+    subject: `Support ticket Code is:- ${tickets.code}`,
     html: `
         <p>Hi,</p>
         <p>A support reply has been sent for your ticket. Please check the details below:</p>

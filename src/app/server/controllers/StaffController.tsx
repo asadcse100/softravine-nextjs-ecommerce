@@ -69,92 +69,77 @@ export const getStaffs = async () => {
   }
 }
 
-export async function storeStaff(data: staffData) {
+// export async function storeStaff(data: staffData) {
 
-  const { name, email, mobile, password, role_id } = data;
+//   const { name, email, mobile, password, role_id } = data;
+
+//   try {
+//     const existingUser = await prisma.users.findUnique({ where: { email } });
+
+//     if (existingUser) {
+//       return error.status(400).json({ error: 'Email already used' });
+//     }
+
+//     const hashedPassword = await bcrypt.hash(password, 10);
+
+//     const user = await prisma.users.create({
+//       data: {
+//         name,
+//         email,
+//         phone: mobile,
+//         user_type: 'staff',
+//         password: hashedPassword,
+//       },
+//     });
+
+//     const role = await prisma.roles.findUnique({ where: { id: role_id } });
+//     if (!role) {
+//       return error.status(400).json({ error: 'Invalid role ID' });
+//     }
+
+//     await prisma.staff.create({
+//       data: {
+//         user_id: user.id,
+//         role_id: role_id,
+//       },
+//     });
+
+//     // Assuming a function to assign a role to a user
+//     await assignRole(user.id, role.name);
+
+//     success.status(200).json({ message: 'Staff has been inserted successfully' });
+//   } catch (error) {
+//     error.status(500).json({ error: 'Something went wrong.' });
+//   }
+// }
+
+
+export async function createOrUpdateStaff(data: createOrUpdateData) {
 
   try {
-    const existingUser = await prisma.users.findUnique({ where: { email } });
 
-    if (existingUser) {
-      return error.status(400).json({ error: 'Email already used' });
-    }
+    const created_at = data.created_at ? new Date(data.created_at) : new Date();
 
-    const hashedPassword = await bcrypt.hash(password, 10);
-
-    const user = await prisma.users.create({
-      data: {
-        name,
-        email,
-        phone: mobile,
-        user_type: 'staff',
-        password: hashedPassword,
+    const newPost = await prisma.staff.upsert({
+      where: { id: data.id ?? 0 }, // Fallback to 0 if `data.id` is null
+      update: {
+        user_id: data.user_id,
+        role_id: data.role_id,
+        updated_at: data.created_at,
       },
+      create: {
+        user_id: data.user_id,
+        role_id: data.role_id,
+        created_at: data.created_at,
+      }
     });
 
-    const role = await prisma.roles.findUnique({ where: { id: role_id } });
-    if (!role) {
-      return error.status(400).json({ error: 'Invalid role ID' });
-    }
-
-    await prisma.staff.create({
-      data: {
-        user_id: user.id,
-        role_id: role_id,
-      },
-    });
-
-    // Assuming a function to assign a role to a user
-    await assignRole(user.id, role.name);
-
-    success.status(200).json({ message: 'Staff has been inserted successfully' });
+    return { success: true, data: newPost };
   } catch (error) {
-    error.status(500).json({ error: 'Something went wrong.' });
+    console.error("Error creating blog post:", error);
+    return { success: false, error };
   }
 }
-
-// export const storeStaff = async (req: NextApiRequest, res: NextApiResponse) => {
-//     const { name, email, mobile, password, roleId } = req.body;
-
-//     try {
-//       const existingUser = await prisma.user.findUnique({ where: { email } });
-
-//       if (existingUser) {
-//         return res.status(400).json({ error: 'Email already used' });
-//       }
-
-//       const hashedPassword = await bcrypt.hash(password, 10);
-
-//       const user = await prisma.user.create({
-//         data: {
-//           name,
-//           email,
-//           phone: mobile,
-//           userType: 'staff',
-//           password: hashedPassword,
-//         },
-//       });
-
-//       const role = await prisma.role.findUnique({ where: { id: roleId } });
-//       if (!role) {
-//         return res.status(400).json({ error: 'Invalid role ID' });
-//       }
-
-//       await prisma.staff.create({
-//         data: {
-//           userId: user.id,
-//           roleId: roleId,
-//         },
-//       });
-
-//       // Assuming a function to assign a role to a user
-//       await assignRole(user.id, role.name);
-
-//       res.status(200).json({ message: 'Staff has been inserted successfully' });
-//     } catch (error) {
-//       res.status(500).json({ error: 'Something went wrong.' });
-//     }
-//   };
 
 // Dummy function to assign role to a user, replace with actual implementation
 
@@ -163,55 +148,55 @@ async function assignRole(userId: number, roleName: string) {
 }
 
 // export const updateStaff = async (req: NextApiRequest, res: NextApiResponse) => {
-export async function updateStaff(data: staffData) {
-  // const { id } = req.query;
-  // const { name, email, mobile, password, roleId } = req.body;
+// export async function updateStaff(data: staffData) {
+//   // const { id } = req.query;
+//   // const { name, email, mobile, password, roleId } = req.body;
 
-  const { name, email, mobile, password, role_id } = data;
+//   const { name, email, mobile, password, role_id } = data;
 
-  try {
-    const staff = await prisma.staff.findUnique({
-      where: { id: Number(id) },
-      include: { users: true },
-    });
+//   try {
+//     const staff = await prisma.staff.findUnique({
+//       where: { id: Number(id) },
+//       include: { users: true },
+//     });
 
-    if (!staff) {
-      return res.status(404).json({ error: 'Staff not found' });
-    }
+//     if (!staff) {
+//       return res.status(404).json({ error: 'Staff not found' });
+//     }
 
-    const userUpdateData: any = {
-      name,
-      email,
-      phone: mobile,
-    };
+//     const userUpdateData: any = {
+//       name,
+//       email,
+//       phone: mobile,
+//     };
 
-    if (password.length > 0) {
-      userUpdateData.password = await bcrypt.hash(password, 10);
-    }
+//     if (password.length > 0) {
+//       userUpdateData.password = await bcrypt.hash(password, 10);
+//     }
 
-    const user = await prisma.users.update({
-      where: { id: staff.user_id },
-      data: userUpdateData,
-    });
+//     const user = await prisma.users.update({
+//       where: { id: staff.user_id },
+//       data: userUpdateData,
+//     });
 
-    const staffUpdate = await prisma.staff.update({
-      where: { id: Number(id) },
-      data: { role_id: Number(role_id) },
-    });
+//     const staffUpdate = await prisma.staff.update({
+//       where: { id: Number(id) },
+//       data: { role_id: Number(role_id) },
+//     });
 
-    const role = await prisma.roles.findUnique({ where: { id: Number(role_id) } });
-    if (!role) {
-      return res.status(400).json({ error: 'Invalid role ID' });
-    }
+//     const role = await prisma.roles.findUnique({ where: { id: Number(role_id) } });
+//     if (!role) {
+//       return res.status(400).json({ error: 'Invalid role ID' });
+//     }
 
-    // Assuming a function to sync roles
-    await syncRoles(user.id, role.name);
+//     // Assuming a function to sync roles
+//     await syncRoles(user.id, role.name);
 
-    res.status(200).json({ message: 'Staff has been updated successfully' });
-  } catch (error) {
-    res.status(500).json({ error: 'Something went wrong' });
-  }
-};
+//     res.status(200).json({ message: 'Staff has been updated successfully' });
+//   } catch (error) {
+//     res.status(500).json({ error: 'Something went wrong' });
+//   }
+// };
 
 // Dummy function to sync roles, replace with actual implementation
 async function syncRoles(userId: number, roleName: string) {

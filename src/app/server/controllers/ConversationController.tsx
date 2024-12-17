@@ -1,4 +1,3 @@
-import { NextApiRequest, NextApiResponse } from 'next';
 import { PrismaClient } from '@prisma/client';
 // import { getSession } from 'next-auth/client';
 import { sendEmail } from '../utils/mail';
@@ -29,7 +28,7 @@ export const ticketReplies = async () => {
   }
 }
 
-export const store = async (req: NextApiRequest, res: NextApiResponse) => {
+export const store = async (data: createOrUpdateData) => {
   const session = await getSession({ req });
   if (!session) {
     return res.status(401).json({ error: 'Unauthorized' });
@@ -39,29 +38,29 @@ export const store = async (req: NextApiRequest, res: NextApiResponse) => {
   const { productId, title, message: messageContent } = req.body;
 
   try {
-    const product = await prisma.product.findUnique({
+    const product = await prisma.products.findUnique({
       where: { id: productId },
-      include: { user: true },
+      include: { users: true },
     });
 
     if (!product) {
       return res.status(404).json({ error: 'Product not found' });
     }
 
-    const userType = product.user.user_type;
+    const userType = product.users.user_type;
 
-    const conversation = await prisma.conversation.create({
+    const conversation = await prisma.conversations.create({
       data: {
-        senderId: userId,
-        receiverId: product.user.id,
+        sender_id: userId,
+        receiver_id: product.users.id,
         title,
       },
     });
 
-    const message = await prisma.message.create({
+    const message = await prisma.messages.create({
       data: {
-        conversationId: conversation.id,
-        userId,
+        conversation_id: conversation.id,
+        user_id,
         message: messageContent,
       },
     });
@@ -110,20 +109,21 @@ const sendMessageToSeller = async (conversation: Conversation, message: Message,
     }
   };
 
-  export const destroy = async (req: NextApiRequest, res: NextApiResponse) => {
+  export const destroy = async (data: createOrUpdateData) => {
     const session = await getSession({ req });
     if (!session) {
       return res.status(401).json({ error: 'Unauthorized' });
     }
   
-    const { id } = req.query;
+    // const { id } = req.query;
+    const id = data.id;
   
     try {
       const conversationId = parseInt(id as string, 10);
   
       // Find and delete all messages related to the conversation
       await prisma.messages.deleteMany({
-        where: { conversation_id },
+        where: { conversations_id },
       });
   
       // Delete the conversation

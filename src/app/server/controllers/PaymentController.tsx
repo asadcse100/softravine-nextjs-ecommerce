@@ -51,7 +51,7 @@ export const getPaymentHistories = async () => {
   }
 }
 
-export async function showUserPayments(req: NextApiRequest, res: NextApiResponse) {
+export async function showUserPayments(data: createOrUpdateData) {
   try {
     const { id } = req.query;
     const decryptedId = decrypt(id as string);

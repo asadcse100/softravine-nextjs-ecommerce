@@ -12,17 +12,17 @@ type createOrUpdateData = {
 };
 
 export const selectCountries = async () => {
-  try{
-      const countries = await prisma.countries.findMany({
-        select: {
-          name: true,
-        },
-      });
-      return { success: true, data: countries };
+  try {
+    const countries = await prisma.countries.findMany({
+      select: {
+        name: true,
+      },
+    });
+    return { success: true, data: countries };
 
-  }catch(error){
-      console.error("Error fetching customer:", error);
-      return { success: false, error };
+  } catch (error) {
+    console.error("Error fetching customer:", error);
+    return { success: false, error };
   }
 }
 
@@ -54,30 +54,60 @@ export const selectCountries = async () => {
 // };
 
 export const getCountries = async () => {
-  try{
-      const countryQueries = await prisma.countries.findMany();
-      return { success: true, data: countryQueries };
-  }catch(error){
-      console.error("Error fetching country Queries:", error);
-      return { success: false, error };
+  try {
+    const countryQueries = await prisma.countries.findMany();
+    return { success: true, data: countryQueries };
+  } catch (error) {
+    console.error("Error fetching country Queries:", error);
+    return { success: false, error };
   }
 }
 
-export const createOrUpdateCountry = async () => {
-    const { id, status } = req.body;
-  
-    try {
-      const country = await prisma.country.update({
-        where: { id: Number(id) },
-        data: { status },
-      });
-  
-      if (country) {
-        res.status(200).json({ success: 1 });
-      } else {
-        res.status(400).json({ success: 0 });
+// export const createOrUpdateCountry = async () => {
+//     const { id, status } = req.body;
+
+//     try {
+//       const country = await prisma.country.update({
+//         where: { id: Number(id) },
+//         data: { status },
+//       });
+
+//       if (country) {
+//         res.status(200).json({ success: 1 });
+//       } else {
+//         res.status(400).json({ success: 0 });
+//       }
+//     } catch (error) {
+//       res.status(500).json({ success: 0, error: 'Failed to update country status' });
+//     }
+//   };
+
+export async function createOrUpdateCountry(data: createOrUpdateData) {
+  try {
+
+    const created_at = data.created_at ? new Date(data.created_at) : new Date();
+
+    const newPost = await prisma.countries.upsert({
+      where: { id: data.id ?? 0 }, // Fallback to 0 if `data.id` is null
+      update: {
+        zone_id: data.zone_id,
+        code: data.code,
+        name: data.name,
+        status: data.status,
+        updated_at: data.created_at,
+      },
+      create: {
+        zone_id: data.zone_id,
+        code: data.code,
+        name: data.name,
+        status: data.status,
+        created_at: data.created_at,
       }
-    } catch (error) {
-      res.status(500).json({ success: 0, error: 'Failed to update country status' });
-    }
-  };
+    });
+
+    return { success: true, data: newPost };
+  } catch (error) {
+    console.error("Error creating blog post:", error);
+    return { success: false, error };
+  }
+};

@@ -10,7 +10,6 @@ type createOrUpdateData = {
   created_at: string;
 };
 
-
 // export async function getAllWholesaleProducts(req: NextApiRequest, res: NextApiResponse) {
 //   const { user_id, type, search } = req.query;
 
@@ -133,7 +132,7 @@ export const getSellerWholesaleProducts = async () => {
 //   }
 // }
 
-export async function getForSellerWholesaleProducts(req: NextApiRequest, res: NextApiResponse) {
+export async function getForSellerWholesaleProducts() {
   const session = await getSession({ req });
 
   if (!session) {
@@ -166,7 +165,7 @@ export async function getForSellerWholesaleProducts(req: NextApiRequest, res: Ne
 }
 
 
-export async function getCategories(req: NextApiRequest, res: NextApiResponse) {
+export async function getCategories() {
   try {
     const categories = await prisma.category.findMany({
       where: {
@@ -185,7 +184,7 @@ export async function getCategories(req: NextApiRequest, res: NextApiResponse) {
 }
 
 
-export async function getCategoriesForSeller(req: NextApiRequest, res: NextApiResponse) {
+export async function getCategoriesForSeller() {
   const session = await getSession({ req });
 
   if (!session) {
@@ -205,7 +204,7 @@ export async function getCategoriesForSeller(req: NextApiRequest, res: NextApiRe
       },
     });
 
-    const seller = await prisma.seller.findUnique({
+    const seller = await prisma.sellers.findUnique({
       where: { userId },
       include: { sellerPackage: true, user: { include: { products: true } } },
     });

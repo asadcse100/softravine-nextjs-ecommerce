@@ -1,6 +1,5 @@
 import { PrismaClient } from '@prisma/client';
 import { NextResponse } from "next/server";
-import { getProductById, updateProduct } from '../models/AuctionProduct';
 import { slugify } from '@/app/server/utils/slugify';  // Utility function for generating slugs
 import { Product } from '@/app/server/types/product';
 import { parseISO, differenceInDays } from 'date-fns';
@@ -14,11 +13,11 @@ type createOrUpdateData = {
   brand_id: number;
   added_by: string;
   name: string;
-  photos: string[];
+  photos: string;
   thumbnail_img: string;
   video_provider: string;
   video_link: string;
-  tags: string[];
+  tags: string;
   description: string;
   unit_price: number;
   purchase_price: number;
@@ -29,9 +28,9 @@ type createOrUpdateData = {
   variations: string;
   todays_deal: number;
   published: number;
-  approved: number;
+  approved: boolean;
   stock_visibility_state: string;
-  cash_on_delivery: number;
+  cash_on_delivery: boolean;
   featured: number;
   seller_featured: number;
   current_stock: number;
@@ -46,10 +45,10 @@ type createOrUpdateData = {
   starting_bid: number;
   auction_start_date: number;
   auction_end_date: number;
-  tax_type?: string[];
+  tax_type?: string;
   shipping_type: string;
   shipping_cost: number;
-  is_quantity_multiplied: number;
+  is_quantity_multiplied: boolean;
   est_shipping_days: number;
   num_of_sale: number;
   meta_title: string;
@@ -68,7 +67,7 @@ type createOrUpdateData = {
   external_link_btn: string;
   wholesale_product: number;
   tax_id?: number[];
-  tax?: number[];
+  tax?: number;
   created_at: string;
   auctionDateRange: [string, string];
 };
@@ -103,174 +102,327 @@ export const getSellerProducts = async () => {
   }
 }
 
+// Utility function to generate slugs
+function generateSlug(input: string): string {
+  return input
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, "-")
+    .replace(/(^-|-$)/g, "");
+}
 
-export const createAuctionProduct = async (req: NextApiRequest, res: NextApiResponse) => {
-  const {
-    name,
-    addedBy,
-    categoryId,
-    brandId,
-    barcode,
-    startingBid,
-    refundable,
-    photos,
-    thumbnailImg,
-    tags,
-    description,
-    videoProvider,
-    videoLink,
-    auctionDateRange,
-    shippingType,
-    estShippingDays,
-    earnPoint,
-    shippingCost,
-    isQuantityMultiplied,
-    metaTitle,
-    metaDescription,
-    metaImg,
-    pdf,
-    cashOnDelivery,
-    todaysDeal,
-    sku,
-    tax_id,
-    tax,
-    tax_type
-  } = req.body;
-
+export async function createOrUpdateProduct(data: createOrUpdateData) {
   try {
-    const user = await prisma.user.findFirst({ where: { userType: 'admin' } });
-    if (!user) return res.status(404).json({ error: 'Admin user not found' });
-
-    const product = await prisma.product.create({
-      data: {
-        name,
-        addedBy,
-        userId: user.id,
-        auctionProduct: true,
-        categoryId,
-        brandId,
-        barcode,
-        startingBid,
-        refundable: refundable || false,
-        photos,
-        thumbnailImg,
-        tags,
-        description,
-        videoProvider,
-        videoLink,
-        auctionStartDate: auctionDateRange ? new Date(auctionDateRange[0]) : null,
-        auctionEndDate: auctionDateRange ? new Date(auctionDateRange[1]) : null,
-        shippingType,
-        estShippingDays,
-        earnPoint,
-        shippingCost,
-        isQuantityMultiplied: !!isQuantityMultiplied,
-        metaTitle: metaTitle || name,
-        metaDescription: metaDescription || description,
-        metaImg: metaImg || thumbnailImg,
-        pdf,
-        cashOnDelivery: !!cashOnDelivery,
-        todaysDeal: !!todaysDeal,
-        slug: slugify(name)
-      }
+    // Generate a slug
+    const slug = generateSlug(data.name);
+    // Use the provided `created_at` or fallback to the current date
+    const created_at = data.created_at ? new Date(data.created_at) : new Date();
+    // Perform the upsert operation
+    const newCategory = await prisma.products.upsert({
+      where: { id: data.id || 0, slug: slug }, // Replace `0` with a non-zero ID if necessary
+      update: {
+        user_id: data.user_id,
+        category_id: data.category_id,
+        brand_id: data.brand_id,
+        name: data.name,
+        slug: slug,
+        added_by: data.added_by,
+        photos: data.photos,
+        thumbnail_img: data.thumbnail_img,
+        video_provider: data.video_provider,
+        video_link: data.video_link,
+        tags: data.tags,
+        unit_price: data.unit_price,
+        purchase_price: data.purchase_price,
+        description: data.description,
+        variant_product: data.variant_product,
+        attributes: data.attributes,
+        colors: data.colors,
+        variations: data.variations,
+        todays_deal: data.todays_deal,
+        published: data.published,
+        choice_options: data.choice_options,
+        approved: data.approved,
+        stock_visibility_state: data.stock_visibility_state,
+        cash_on_delivery: data.cash_on_delivery,
+        featured: data.featured,
+        seller_featured: data.seller_featured,
+        current_stock: data.current_stock,
+        unit: data.unit,
+        weight: data.weight,
+        min_qty: data.min_qty,
+        low_stock_quantity: data.low_stock_quantity,
+        discount: data.discount,
+        discount_type: data.discount_type,
+        discount_end_date: data.discount_end_date,
+        discount_start_date: data.discount_start_date,
+        starting_bid: data.starting_bid,
+        auction_start_date: data.auction_start_date,
+        auction_end_date: data.auction_end_date,
+        tax_type: data.tax_type,
+        shipping_type: data.shipping_type,
+        shipping_cost: data.shipping_cost,
+        is_quantity_multiplied: data.is_quantity_multiplied,
+        est_shipping_days: data.est_shipping_days,
+        num_of_sale: data.num_of_sale,
+        pdf: data.pdf,
+        refundable: data.refundable,
+        rating: data.rating,
+        barcode: data.barcode,
+        digital: data.digital,
+        auction_product: data.auction_product,
+        file_name: data.file_name,
+        file_path: data.file_path,
+        external_link: data.external_link,
+        external_link_btn: data.external_link_btn,
+        meta_title: data.meta_title,
+        wholesale_product: data.wholesale_product,
+        tax_id: data.tax_id,
+        tax: data.tax,
+        auctionDateRange: data.auctionDateRange,
+        meta_img: data.meta_img,
+        meta_description: data.meta_description,
+        updated_at: created_at,
+      },
+      create: {
+        user_id: data.user_id,
+        category_id: data.category_id,
+        brand_id: data.brand_id,
+        name: data.name,
+        slug: slug,
+        added_by: data.added_by,
+        photos: data.photos,
+        thumbnail_img: data.thumbnail_img,
+        video_provider: data.video_provider,
+        video_link: data.video_link,
+        tags: data.tags,
+        unit_price: data.unit_price,
+        purchase_price: data.purchase_price,
+        description: data.description,
+        variant_product: data.variant_product,
+        attributes: data.attributes,
+        colors: data.colors,
+        variations: data.variations,
+        todays_deal: data.todays_deal,
+        published: data.published,
+        choice_options: data.choice_options,
+        approved: data.approved,
+        stock_visibility_state: data.stock_visibility_state,
+        cash_on_delivery: data.cash_on_delivery,
+        featured: data.featured,
+        seller_featured: data.seller_featured,
+        current_stock: data.current_stock,
+        unit: data.unit,
+        weight: data.weight,
+        min_qty: data.min_qty,
+        low_stock_quantity: data.low_stock_quantity,
+        discount: data.discount,
+        discount_type: data.discount_type,
+        discount_end_date: data.discount_end_date,
+        discount_start_date: data.discount_start_date,
+        starting_bid: data.starting_bid,
+        auction_start_date: data.auction_start_date,
+        auction_end_date: data.auction_end_date,
+        tax_type: data.tax_type,
+        shipping_type: data.shipping_type,
+        shipping_cost: data.shipping_cost,
+        is_quantity_multiplied: data.is_quantity_multiplied,
+        est_shipping_days: data.est_shipping_days,
+        num_of_sale: data.num_of_sale,
+        pdf: data.pdf,
+        refundable: data.refundable,
+        rating: data.rating,
+        barcode: data.barcode,
+        digital: data.digital,
+        auction_product: data.auction_product,
+        file_name: data.file_name,
+        file_path: data.file_path,
+        external_link: data.external_link,
+        external_link_btn: data.external_link_btn,
+        meta_title: data.meta_title,
+        wholesale_product: data.wholesale_product,
+        tax_id: data.tax_id,
+        tax: data.tax,
+        auctionDateRange: data.auctionDateRange,
+        meta_img: data.meta_img,
+        meta_description: data.meta_description,
+        created_at: created_at,
+      },
     });
 
-    if (tax_id) {
-      for (let i = 0; i < tax_id.length; i++) {
-        await prisma.productTax.create({
-          data: {
-            productId: product.id,
-            taxId: tax_id[i],
-            tax: tax[i],
-            taxType: tax_type[i]
-          }
-        });
-      }
-    }
-
-    res.status(201).json({ message: 'Product has been inserted successfully', product });
+    return { success: true, data: newCategory };
   } catch (error) {
-    res.status(500).json({ error: 'An error occurred while creating the product' });
+    console.error("Error creating or updating blog category:", error);
+    return { success: false, error: error.message || "An unexpected error occurred" };
   }
-};
+}
+
+// export const createAuctionProduct = async (data: createOrUpdateData) => {
+//   const {
+//     name,
+//     addedBy,
+//     categoryId,
+//     brandId,
+//     barcode,
+//     startingBid,
+//     refundable,
+//     photos,
+//     thumbnailImg,
+//     tags,
+//     description,
+//     videoProvider,
+//     videoLink,
+//     auctionDateRange,
+//     shippingType,
+//     estShippingDays,
+//     earnPoint,
+//     shippingCost,
+//     isQuantityMultiplied,
+//     metaTitle,
+//     metaDescription,
+//     metaImg,
+//     pdf,
+//     cashOnDelivery,
+//     todaysDeal,
+//     sku,
+//     tax_id,
+//     tax,
+//     tax_type
+//   } = req.body;
+
+//   try {
+//     const user = await prisma.user.findFirst({ where: { userType: 'admin' } });
+//     if (!user) return res.status(404).json({ error: 'Admin user not found' });
+
+//     const product = await prisma.product.create({
+//       data: {
+//         name,
+//         addedBy,
+//         userId: user.id,
+//         auctionProduct: true,
+//         categoryId,
+//         brandId,
+//         barcode,
+//         startingBid,
+//         refundable: refundable || false,
+//         photos,
+//         thumbnailImg,
+//         tags,
+//         description,
+//         videoProvider,
+//         videoLink,
+//         auctionStartDate: auctionDateRange ? new Date(auctionDateRange[0]) : null,
+//         auctionEndDate: auctionDateRange ? new Date(auctionDateRange[1]) : null,
+//         shippingType,
+//         estShippingDays,
+//         earnPoint,
+//         shippingCost,
+//         isQuantityMultiplied: !!isQuantityMultiplied,
+//         metaTitle: metaTitle || name,
+//         metaDescription: metaDescription || description,
+//         metaImg: metaImg || thumbnailImg,
+//         pdf,
+//         cashOnDelivery: !!cashOnDelivery,
+//         todaysDeal: !!todaysDeal,
+//         slug: slugify(name)
+//       }
+//     });
+
+//     if (tax_id) {
+//       for (let i = 0; i < tax_id.length; i++) {
+//         await prisma.productTax.create({
+//           data: {
+//             productId: product.id,
+//             taxId: tax_id[i],
+//             tax: tax[i],
+//             taxType: tax_type[i]
+//           }
+//         });
+//       }
+//     }
+
+//     res.status(201).json({ message: 'Product has been inserted successfully', product });
+//   } catch (error) {
+//     res.status(500).json({ error: 'An error occurred while creating the product' });
+//   }
+// };
 
 
-export const updateAuctionProduct = async (req: NextApiRequest, res: NextApiResponse) => {
+// export const updateAuctionProduct = async () => {
+//   const { id } = req.query;
+//   const {
+//     categoryId, brandId, barcode, cashOnDelivery, isQuantityMultiplied,
+//     refundable, lang, name, unit, description, slug, photos, thumbnailImg,
+//     tags, videoProvider, videoLink, startingBid, auctionDateRange,
+//     shippingType, estShippingDays, earnPoint, flatShippingCost,
+//     shippingCost, metaTitle, metaDescription, metaImg, pdf, tax_id, tax,
+//     tax_type
+//   } = req.body as Product;
+
+//   try {
+//     const product = await prisma.products.update({
+//       where: { id: Number(id) },
+//       data: {
+//         categoryId,
+//         brandId,
+//         barcode,
+//         cashOnDelivery: cashOnDelivery || false,
+//         isQuantityMultiplied: isQuantityMultiplied || false,
+//         refundable: refundable || false,
+//         photos,
+//         thumbnailImg,
+//         tags: tags ? tags.join(',') : undefined,
+//         videoProvider,
+//         videoLink,
+//         startingBid: startingBid ? parseFloat(startingBid) : undefined,
+//         auctionStartDate: auctionDateRange ? new Date(auctionDateRange[0]) : undefined,
+//         auctionEndDate: auctionDateRange ? new Date(auctionDateRange[1]) : undefined,
+//         shippingType,
+//         estShippingDays,
+//         earnPoint: earnPoint ? parseInt(earnPoint) : undefined,
+//         shippingCost: shippingType === 'free' ? 0 : shippingType === 'flat_rate' ? flatShippingCost : JSON.stringify(shippingCost),
+//         metaTitle: metaTitle || name,
+//         metaDescription: metaDescription || description,
+//         metaImg: metaImg || thumbnailImg,
+//         pdf,
+//         colors: JSON.stringify([]),
+//         attributes: JSON.stringify([]),
+//         choiceOptions: JSON.stringify([])
+//       }
+//     });
+
+//     await prisma.productTranslation.upsert({
+//       where: { productId_lang: { productId: product.id, lang } },
+//       update: { name, unit, description },
+//       create: { productId: product.id, lang, name, unit, description }
+//     });
+
+//     await prisma.productTax.deleteMany({ where: { productId: product.id } });
+//     if (tax_id && tax && tax_type) {
+//       for (let i = 0; i < tax_id.length; i++) {
+//         await prisma.productTax.create({
+//           data: {
+//             productId: product.id,
+//             taxId: tax_id[i],
+//             tax: parseFloat(tax[i]),
+//             taxType: tax_type[i]
+//           }
+//         });
+//       }
+//     }
+
+//     res.status(200).json({ message: 'Product updated successfully' });
+//   } catch (error) {
+//     res.status(500).json({ error: 'Failed to update product' });
+//   } finally {
+//     await prisma.$disconnect();
+//   }
+// };
+
+export const deleteProduct = async (data: createOrUpdateData) => {
   const { id } = req.query;
-  const {
-    categoryId, brandId, barcode, cashOnDelivery, isQuantityMultiplied,
-    refundable, lang, name, unit, description, slug, photos, thumbnailImg,
-    tags, videoProvider, videoLink, startingBid, auctionDateRange,
-    shippingType, estShippingDays, earnPoint, flatShippingCost,
-    shippingCost, metaTitle, metaDescription, metaImg, pdf, tax_id, tax,
-    tax_type
-  } = req.body as Product;
 
   try {
-    const product = await prisma.product.update({
-      where: { id: Number(id) },
-      data: {
-        categoryId,
-        brandId,
-        barcode,
-        cashOnDelivery: cashOnDelivery || false,
-        isQuantityMultiplied: isQuantityMultiplied || false,
-        refundable: refundable || false,
-        photos,
-        thumbnailImg,
-        tags: tags ? tags.join(',') : undefined,
-        videoProvider,
-        videoLink,
-        startingBid: startingBid ? parseFloat(startingBid) : undefined,
-        auctionStartDate: auctionDateRange ? new Date(auctionDateRange[0]) : undefined,
-        auctionEndDate: auctionDateRange ? new Date(auctionDateRange[1]) : undefined,
-        shippingType,
-        estShippingDays,
-        earnPoint: earnPoint ? parseInt(earnPoint) : undefined,
-        shippingCost: shippingType === 'free' ? 0 : shippingType === 'flat_rate' ? flatShippingCost : JSON.stringify(shippingCost),
-        metaTitle: metaTitle || name,
-        metaDescription: metaDescription || description,
-        metaImg: metaImg || thumbnailImg,
-        pdf,
-        colors: JSON.stringify([]),
-        attributes: JSON.stringify([]),
-        choiceOptions: JSON.stringify([])
-      }
-    });
-
-    await prisma.productTranslation.upsert({
-      where: { productId_lang: { productId: product.id, lang } },
-      update: { name, unit, description },
-      create: { productId: product.id, lang, name, unit, description }
-    });
-
-    await prisma.productTax.deleteMany({ where: { productId: product.id } });
-    if (tax_id && tax && tax_type) {
-      for (let i = 0; i < tax_id.length; i++) {
-        await prisma.productTax.create({
-          data: {
-            productId: product.id,
-            taxId: tax_id[i],
-            tax: parseFloat(tax[i]),
-            taxType: tax_type[i]
-          }
-        });
-      }
-    }
-
-    res.status(200).json({ message: 'Product updated successfully' });
-  } catch (error) {
-    res.status(500).json({ error: 'Failed to update product' });
-  } finally {
-    await prisma.$disconnect();
-  }
-};
-
-export const deleteProduct = async (req: NextApiRequest, res: NextApiResponse) => {
-  const { id } = req.query;
-
-  try {
-    const product = await prisma.product.findUnique({
+    const product = await prisma.products.findUnique({
       where: { id: Number(id) },
       include: {
         product_translations: true,
@@ -283,8 +435,8 @@ export const deleteProduct = async (req: NextApiRequest, res: NextApiResponse) =
     }
 
     // Delete product translations
-    await prisma.productTranslation.deleteMany({
-      where: { productId: product.id },
+    await prisma.product_translations.deleteMany({
+      where: { product_id: product.id },
     });
 
     // Delete bids
@@ -293,13 +445,13 @@ export const deleteProduct = async (req: NextApiRequest, res: NextApiResponse) =
     });
 
     // Delete the product
-    await prisma.product.delete({
+    await prisma.products.delete({
       where: { id: product.id },
     });
 
     // Delete related items in the cart
-    await prisma.cart.deleteMany({
-      where: { productId: product.id },
+    await prisma.carts.deleteMany({
+      where: { product_id: product.id },
     });
 
     return res.status(200).json({ message: 'Product has been deleted successfully' });
@@ -311,16 +463,16 @@ export const deleteProduct = async (req: NextApiRequest, res: NextApiResponse) =
 };
 
 
-export const updatePublished = async (req: NextApiRequest, res: NextApiResponse) => {
+export const updatePublished = async (data: createOrUpdateData) => {
   const { id, status } = req.body;
 
   try {
-    const product = await prisma.product.findUnique({
+    const product = await prisma.products.findUnique({
       where: { id: Number(id) },
       include: {
-        user: {
+        users: {
           include: {
-            seller: true,
+            sellers: true,
           },
         },
       },
@@ -336,20 +488,20 @@ export const updatePublished = async (req: NextApiRequest, res: NextApiResponse)
       product.addedBy === 'seller' &&
       (await prisma.addon.findUnique({ where: { uniqueIdentifier: 'seller_subscription' } }))?.activated
     ) {
-      const seller = product.user.seller;
+      const seller = product.users.sellers;
       if (seller?.invalidAt && differenceInDays(new Date(), parseISO(seller.invalidAt)) <= 0) {
         return res.status(403).json({ message: 'Seller subscription invalid' });
       }
     }
 
-    await prisma.product.update({
+    await prisma.products.update({
       where: { id: product.id },
       data: { published: status },
     });
 
     return res.status(200).json({ message: 'Product status updated successfully' });
   } catch (error) {
-    return res.status(500).json({ message: 'Something went wrong', error: error.message });
+    return res.status(500).json({ message: 'Something went wrong' });
   } finally {
     await prisma.$disconnect();
   }
@@ -544,11 +696,11 @@ export const getSellerDigitalProducts = async () => {
 //   }
 // };
 
-export const getAuctionProductDetails = async (req: NextApiRequest, res: NextApiResponse) => {
+export const getAuctionProductDetails = async (data: createOrUpdateData) => {
   const { slug } = req.query;
 
   try {
-    const detailedProduct = await prisma.product.findUnique({
+    const detailedProduct = await prisma.products.findUnique({
       where: { slug: slug as string },
     });
 
@@ -564,7 +716,7 @@ export const getAuctionProductDetails = async (req: NextApiRequest, res: NextApi
   }
 };
 
-export const getUserPurchaseHistory = async (req: NextApiRequest, res: NextApiResponse) => {
+export const getUserPurchaseHistory = async (data: createOrUpdateData) => {
   const session = await getSession({ req });
 
   if (!session) {
@@ -574,17 +726,17 @@ export const getUserPurchaseHistory = async (req: NextApiRequest, res: NextApiRe
   const userId = session.user.id;
 
   try {
-    const orders = await prisma.orderDetails.findMany({
+    const orders = await prisma.order_details.findMany({
       where: {
-        order: {
-          userId: userId,
+        orders: {
+          user_id: userId,
         },
         product: {
           auctionProduct: true,
         },
       },
       orderBy: {
-        order: {
+        orders: {
           code: 'desc',
         },
       },
@@ -596,7 +748,7 @@ export const getUserPurchaseHistory = async (req: NextApiRequest, res: NextApiRe
 
     return res.status(200).json(orders);
   } catch (error) {
-    return res.status(500).json({ message: 'Something went wrong', error: error.message });
+    return res.status(500).json({ message: 'Something went wrong' });
   } finally {
     await prisma.$disconnect();
   }
@@ -633,9 +785,9 @@ export const getAuctionProductOrders = async () => {
         code: 'desc'
       },
       include: {
-        orderDetails: {
+        order_details: {
           include: {
-            product: true
+            products: true
           }
         }
       }
@@ -648,17 +800,17 @@ export const getAuctionProductOrders = async () => {
 };
 
 
-export const getAuctionOrderDetails = async (req: NextApiRequest, res: NextApiResponse) => {
+export const getAuctionOrderDetails = async (data: createOrUpdateData) => {
   const { id } = req.query;
 
   try {
     const decryptedId = parseInt(id as string); // Replace with your decryption logic if needed
-    const order = await prisma.order.findUnique({
+    const order = await prisma.orders.findUnique({
       where: { id: decryptedId },
       include: {
-        orderDetails: {
+        order_details: {
           include: {
-            product: true
+            products: true
           }
         }
       }
@@ -668,7 +820,7 @@ export const getAuctionOrderDetails = async (req: NextApiRequest, res: NextApiRe
       return res.status(404).json({ error: 'Order not found' });
     }
 
-    const orderShippingAddress = order.shippingAddress;
+    const orderShippingAddress = order.shipping_address;
     const deliveryBoys = await prisma.user.findMany({
       where: {
         city: orderShippingAddress.city,

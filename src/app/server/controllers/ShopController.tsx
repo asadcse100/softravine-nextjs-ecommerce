@@ -61,65 +61,104 @@ type createOrUpdateData = {
 //   }
 // };
 
-export const createSeller = async () => {
-  try {
-    const user = await prisma.users.findMany();
-    return { success: true, data: user };
-  } catch (error) {
-    console.error("Error fetching user:", error);
-    return { success: false, error };
-  }
+// export const createSeller = async () => {
+//   try {
+//     const user = await prisma.users.findMany();
+//     return { success: true, data: user };
+//   } catch (error) {
+//     console.error("Error fetching user:", error);
+//     return { success: false, error };
+//   }
+// }
+
+// export const storeSeller = async (req: NextApiRequest, res: NextApiResponse) => {
+//   const { name, email, password, shopName, address } = req.body;
+
+//   try {
+//     const hashedPassword = await bcrypt.hash(password, 10);
+
+//     const user = await prisma.users.create({
+//       data: {
+//         name,
+//         email,
+//         user_type: 'seller',
+//         password: hashedPassword,
+//       },
+//     });
+
+//     const shopSlug = shopName.replace(/\s+/g, '-').replace(/\//g, ' ');
+
+//     const shop = await prisma.shops.create({
+//       data: {
+//         user_id: user.id,
+//         name: shopName,
+//         address,
+//         slug: shopSlug,
+//       },
+//     });
+
+//     // Assuming a function to authenticate and login the user
+//     await loginUser(req, res, user);
+
+//     const emailVerificationSetting = await prisma.businessSetting.findUnique({
+//       where: { type: 'email_verification' },
+//     });
+
+//     if (emailVerificationSetting?.value == 0) {
+//       await prisma.user.update({
+//         where: { id: user.id },
+//         data: { emailVerifiedAt: new Date() },
+//       });
+//     } else {
+//       sendEmailVerification(user);
+//     }
+
+//     res.status(200).json({ message: 'Your Shop has been created successfully!', shop });
+//   } catch (error) {
+//     res.status(500).json({ error: 'Sorry! Something went wrong.' });
+//   }
+// };
+
+// Utility function to generate slugs
+function generateSlug(input: string): string {
+  return input
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, "-")
+    .replace(/(^-|-$)/g, "");
 }
 
-export const storeSeller = async (req: NextApiRequest, res: NextApiResponse) => {
-  const { name, email, password, shopName, address } = req.body;
-
+export async function createOrUpdateSeller(data: createOrUpdateData) {
   try {
-    const hashedPassword = await bcrypt.hash(password, 10);
+    // Generate a slug
+    const slug = generateSlug(data.name);
+    const created_at = data.created_at ? new Date(data.created_at) : new Date();
 
-    const user = await prisma.user.create({
-      data: {
-        name,
-        email,
-        userType: 'seller',
-        password: hashedPassword,
+    const newPost = await prisma.shops.upsert({
+      where: { id: data.id ?? 0 }, // Fallback to 0 if `data.id` is null
+      update: {
+        user_id: data.user_id,
+        name: data.name,
+        address: data.address,
+        slug: data.slug,
+        updated_at: data.created_at,
       },
+      create: {
+        user_id: data.user_id,
+        name: data.name,
+        address: data.address,
+        slug: data.slug,
+        created_at: data.created_at,
+      }
     });
 
-    const shopSlug = shopName.replace(/\s+/g, '-').replace(/\//g, ' ');
-
-    const shop = await prisma.shop.create({
-      data: {
-        userId: user.id,
-        name: shopName,
-        address,
-        slug: shopSlug,
-      },
-    });
-
-    // Assuming a function to authenticate and login the user
-    await loginUser(req, res, user);
-
-    const emailVerificationSetting = await prisma.businessSetting.findUnique({
-      where: { type: 'email_verification' },
-    });
-
-    if (emailVerificationSetting?.value == 0) {
-      await prisma.user.update({
-        where: { id: user.id },
-        data: { emailVerifiedAt: new Date() },
-      });
-    } else {
-      sendEmailVerification(user);
-    }
-
-    res.status(200).json({ message: 'Your Shop has been created successfully!', shop });
+    return { success: true, data: newPost };
   } catch (error) {
-    res.status(500).json({ error: 'Sorry! Something went wrong.' });
+    console.error("Error creating blog post:", error);
+    return { success: false, error };
   }
 };
 
 // Dummy login function, replace with actual authentication logic
-async function loginUser(req: NextApiRequest, res: NextApiResponse, user: any) {
+async function loginUser(data: createOrUpdateData) {
   // Login logic here, for example using NextAuth or a custom session
 }

@@ -1,5 +1,3 @@
-// controllers/StaffRoleController.ts
-
 import { PrismaClient } from '@prisma/client';
 const prisma = new PrismaClient();
 
@@ -7,6 +5,7 @@ type createOrUpdateData = {
   id: number | null;
   name: string;
   guard_name: string;
+  permissions: string;
   created_at?: string;
 };
 
@@ -44,12 +43,12 @@ export const index = async () => {
   }
 }
 
-export async function store(req: NextApiRequest, res: NextApiResponse) {
-  const { name, permissions } = req.body;
+export async function createOrUpdateRole(data: createOrUpdateData) {
+  const { name, permissions } = data;
 
   try {
     // Create role
-    const role = await prisma.role.create({
+    const role = await prisma.roles.create({
       data: {
         name,
       },
@@ -57,18 +56,18 @@ export async function store(req: NextApiRequest, res: NextApiResponse) {
 
     // Add permissions to the role
     for (const permission of permissions) {
-      await prisma.rolePermission.create({
+      await prisma.role_has_permissions.create({
         data: {
-          roleId: role.id,
-          permissionId: permission,
+          role_id: role.id,
+          permission_id: permission,
         },
       });
     }
 
     // Create or update role translation
-    await prisma.roleTranslation.upsert({
+    await prisma.role_translations.upsert({
       where: {
-        roleId_lang: {
+        role_id_lang: {
           roleId: role.id,
           lang: process.env.DEFAULT_LANGUAGE, // Assuming you have DEFAULT_LANGUAGE defined in your environment variables
         },
@@ -90,92 +89,92 @@ export async function store(req: NextApiRequest, res: NextApiResponse) {
   }
 }
 
-export async function update(req: NextApiRequest, res: NextApiResponse) {
-  const { id } = req.query;
-  const { name, permissions, lang } = req.body;
+// export async function update(req: NextApiRequest, res: NextApiResponse) {
+//   const { id } = req.query;
+//   const { name, permissions, lang } = req.body;
 
-  try {
-    // Find role by ID
-    const role = await prisma.role.findUnique({
-      where: {
-        id: Number(id),
-      },
-    });
+//   try {
+//     // Find role by ID
+//     const role = await prisma.role.findUnique({
+//       where: {
+//         id: Number(id),
+//       },
+//     });
 
-    // Update role name if the language matches the default language
-    if (lang === process.env.DEFAULT_LANGUAGE && role) {
-      await prisma.role.update({
-        where: {
-          id: Number(id),
-        },
-        data: {
-          name,
-        },
-      });
-    }
+//     // Update role name if the language matches the default language
+//     if (lang === process.env.DEFAULT_LANGUAGE && role) {
+//       await prisma.role.update({
+//         where: {
+//           id: Number(id),
+//         },
+//         data: {
+//           name,
+//         },
+//       });
+//     }
 
-    // Remove existing permissions for the role
-    await prisma.rolePermission.deleteMany({
-      where: {
-        roleId: Number(id),
-      },
-    });
+//     // Remove existing permissions for the role
+//     await prisma.rolePermission.deleteMany({
+//       where: {
+//         roleId: Number(id),
+//       },
+//     });
 
-    // Add new permissions to the role
-    for (const permission of permissions) {
-      await prisma.rolePermission.create({
-        data: {
-          roleId: Number(id),
-          permissionId: permission,
-        },
-      });
-    }
+//     // Add new permissions to the role
+//     for (const permission of permissions) {
+//       await prisma.rolePermission.create({
+//         data: {
+//           roleId: Number(id),
+//           permissionId: permission,
+//         },
+//       });
+//     }
 
-    // Create or update role translation
-    await prisma.roleTranslation.upsert({
-      where: {
-        roleId_lang: {
-          roleId: Number(id),
-          lang,
-        },
-      },
-      create: {
-        roleId: Number(id),
-        lang,
-        name,
-      },
-      update: {
-        name,
-      },
-    });
+//     // Create or update role translation
+//     await prisma.roleTranslation.upsert({
+//       where: {
+//         roleId_lang: {
+//           roleId: Number(id),
+//           lang,
+//         },
+//       },
+//       create: {
+//         roleId: Number(id),
+//         lang,
+//         name,
+//       },
+//       update: {
+//         name,
+//       },
+//     });
 
-    res.status(200).json({ message: 'Role has been updated successfully' });
-  } catch (error) {
-    console.error('Error:', error);
-    res.status(500).json({ error: 'Internal server error' });
-  }
-}
+//     res.status(200).json({ message: 'Role has been updated successfully' });
+//   } catch (error) {
+//     console.error('Error:', error);
+//     res.status(500).json({ error: 'Internal server error' });
+//   }
+// }
 
-export async function destroy(req: NextApiRequest, res: NextApiResponse) {
+export async function destroy() {
   const { id } = req.query;
 
   try {
     // Delete role translations
-    await prisma.roleTranslation.deleteMany({
+    await prisma.role_translations.deleteMany({
       where: {
-        roleId: Number(id),
+        role_id: Number(id),
       },
     });
 
     // Delete role permissions
-    await prisma.rolePermission.deleteMany({
+    await prisma.role_has_permissions.deleteMany({
       where: {
-        roleId: Number(id),
+        role_id: Number(id),
       },
     });
 
     // Delete role
-    await prisma.role.delete({
+    await prisma.roles.delete({
       where: {
         id: Number(id),
       },
@@ -189,12 +188,12 @@ export async function destroy(req: NextApiRequest, res: NextApiResponse) {
 }
 
 
-export async function addPermission(req: NextApiRequest, res: NextApiResponse) {
+export async function addPermission() {
   const { name, parent } = req.body;
 
   try {
     // Create a new permission
-    const permission = await prisma.permission.create({
+    const permission = await prisma.permissions.create({
       data: {
         name,
         section: parent,

@@ -78,7 +78,7 @@ export const followSellerController = {
     }
   },
 
-  async remove(req: NextApiRequest, res: NextApiResponse) {
+  async remove() {
     try {
       const userId = req.users.id; // Assuming you have middleware to attach user to request
       const { id: shopId } = req.body;

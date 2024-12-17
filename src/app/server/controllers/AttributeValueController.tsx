@@ -11,25 +11,6 @@ type createOrUpdateData = {
 };
 
 export async function createOrUpdateAttributeValue(data: createOrUpdateData) {
-// export default async function handler(data: createOrUpdateData) {
-  // const attributeId = parseInt(req.query.id as string);
-  
-  // if (req.method === 'PUT') {
-  //   try {
-  //     const { name } = req.body;
-  //     const updatedAttributeValue = await prisma.attribute_values.update({
-  //       where: { id: attributeId },
-  //       data: { name }
-  //     });
-      
-  //     res.status(200).json(updatedAttributeValue);
-  //   } catch (error) {
-  //     res.status(500).json({ error: 'Something went wrong' });
-  //   }
-  // } else {
-  //   res.status(405).json({ error: 'Method Not Allowed' });
-  // }
-
   try {
     const newPost = await prisma.attribute_values.upsert({
       where: { id: data.id ?? 0 }, // Fallback to 0 if `data.id` is null

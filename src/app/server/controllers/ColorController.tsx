@@ -21,38 +21,64 @@ export const getColors = async () => {
   }
 }
 
+// export async function createOrUpdateColor(data: createOrUpdateData) {
+//   const attribute = await prisma.attributes.create({
+//     data: {
+//       name,
+//       translations: {
+//         create: {
+//           lang,
+//           name,
+//         },
+//       },
+//     },
+//   });
+
+//   return attribute;
+// }
+
 export async function createOrUpdateColor(data: createOrUpdateData) {
-    const attribute = await prisma.attributes.create({
-      data: {
-        name,
-        translations: {
-          create: {
-            lang,
-            name,
-          },
-        },
+  try {
+    // Use the provided `created_at` or fallback to the current date
+    const created_at = data.created_at ? new Date(data.created_at) : new Date();
+    // Perform the upsert operation
+    const newCategory = await prisma.colors.upsert({
+      where: { id: data.id || 0 }, // Replace `0` with a non-zero ID if necessary
+      update: {
+        name: data.name,
+        code: data.code,
+        updated_at: created_at,
+      },
+      create: {
+        name: data.name,
+        code: data.code,
+        created_at: created_at,
       },
     });
-  
-    return attribute;
+
+    return { success: true, data: newCategory };
+  } catch (error) {
+    console.error("Error creating or updating colors:", error);
+    return { success: false, message: "An unexpected error occurred" };
   }
+}
 
 
-  export async function updateAttribute(id: number, name: string, lang: string = 'en') {
-    const attribute = await prisma.attributes.update({
-      where: { id },
-      data: {
-        name,
-        translations: {
-          upsert: {
-            where: { lang_attributeId: { lang, attributeId: id } },
-            update: { name },
-            create: { lang, name, attribute: { connect: { id } } },
-          },
+export async function updateAttribute(id: number, name: string, lang: string = 'en') {
+  const attribute = await prisma.attributes.update({
+    where: { id },
+    data: {
+      name,
+      translations: {
+        upsert: {
+          where: { lang_attributeId: { lang, attributeId: id } },
+          update: { name },
+          create: { lang, name, attribute: { connect: { id } } },
         },
       },
-      include: { translations: true },
-    });
-  
-    return attribute;
-  }
+    },
+    include: { translations: true },
+  });
+
+  return attribute;
+}

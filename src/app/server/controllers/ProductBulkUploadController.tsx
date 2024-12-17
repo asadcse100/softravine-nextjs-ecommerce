@@ -15,13 +15,13 @@ type createOrUpdateData = {
 
 const prisma = new PrismaClient();
 
-export const index = async (req: NextApiRequest, res: NextApiResponse) => {
+export const index = async (data: createOrUpdateData) => {
     const session = await getSession({ req });
     if (!session || !session.user) {
         return res.status(401).json({ success: 0, message: 'Unauthorized' });
     }
 
-    const user = await prisma.user.findUnique({
+    const user = await prisma.users.findUnique({
         where: { email: session.user.email },
         include: { shop: true }
     });
@@ -40,8 +40,8 @@ export const index = async (req: NextApiRequest, res: NextApiResponse) => {
     }
 };
 
-export const pdfDownloadCategory = async (req: NextApiRequest, res: NextApiResponse) => {
-    const categories = await prisma.category.findMany();
+export const pdfDownloadCategory = async (data: createOrUpdateData) => {
+    const categories = await prisma.categories.findMany();
 
     const doc = new PDFDocument();
 
@@ -71,8 +71,8 @@ export const pdfDownloadCategory = async (req: NextApiRequest, res: NextApiRespo
 };
 
 
-export const pdfDownloadBrand = async (req: NextApiRequest, res: NextApiResponse) => {
-    const brands = await prisma.brand.findMany();
+export const pdfDownloadBrand = async (data: createOrUpdateData) => {
+    const brands = await prisma.brands.findMany();
 
     const doc = new PDFDocument();
 
@@ -102,8 +102,8 @@ export const pdfDownloadBrand = async (req: NextApiRequest, res: NextApiResponse
 };
 
 
-export const pdfDownloadSeller = async (req: NextApiRequest, res: NextApiResponse) => {
-    const sellers = await prisma.user.findMany({
+export const pdfDownloadSeller = async (data: createOrUpdateData) => {
+    const sellers = await prisma.users.findMany({
         where: {
             user_type: 'seller'
         }
@@ -152,7 +152,7 @@ const storage = multer.diskStorage({
 // Initialize multer upload
 const upload = multer({ storage }).single('bulk_file');
 
-export const bulkUpload = async (req: NextApiRequest, res: NextApiResponse) => {
+export const bulkUpload = async (data: createOrUpdateData) => {
     upload(req, res, async (err) => {
         if (err instanceof multer.MulterError) {
             // A Multer error occurred when uploading

@@ -96,8 +96,7 @@ export const getOrderDetails = async (orderId: number) => {
     }
 };
 
-
-export const downloadProduct = async (req: NextApiRequest, res: NextApiResponse) => {
+export const downloadProduct = async (data: createOrUpdateData) => {
     try {
         const productId = Number(req.query.id);
         const userId = Number(req.headers.userid); // Assuming you're passing user ID in headers

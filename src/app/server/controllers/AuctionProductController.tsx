@@ -9,18 +9,18 @@ import { getSession } from 'next-auth/react';
 const prisma = new PrismaClient();
 
 
-type AuctionProductData = {
+type createOrUpdateData = {
   id: number | null;
   user_id: number;
   category_id: number;
   brand_id: number;
   added_by: string;
   name: string;
-  photos: string[];
+  photos: string;
   thumbnail_img: string;
   video_provider: string;
   video_link: string;
-  tags: string[];
+  tags?: string;
   description: string;
   unit_price: number;
   purchase_price: number;
@@ -29,11 +29,11 @@ type AuctionProductData = {
   choice_options: string;
   colors: string;
   variations: string;
-  todays_deal: number;
+  todays_deal: boolean;
   published: number;
   approved: number;
   stock_visibility_state: string;
-  cash_on_delivery: number;
+  cash_on_delivery: boolean;
   featured: number;
   seller_featured: number;
   current_stock: number;
@@ -51,7 +51,7 @@ type AuctionProductData = {
   tax_type?: string[];
   shipping_type: string;
   shipping_cost: number;
-  is_quantity_multiplied: number;
+  is_quantity_multiplied?: boolean;
   est_shipping_days: number;
   num_of_sale: number;
   meta_title: string;
@@ -91,7 +91,7 @@ export const getAllAuctionProducts = async () => {
   }
 }
 
-export async function createOrUpdateAuctionProduct(data: AuctionProductData) {
+export async function createOrUpdateAuctionProduct(data: createOrUpdateData) {
   try {
     // Find the admin user
     const adminUser = await prisma.users.findFirst({
@@ -102,59 +102,126 @@ export async function createOrUpdateAuctionProduct(data: AuctionProductData) {
       return { success: false, error: 'Admin user not found' };
     }
 
+    const created_at = data.created_at ? new Date(data.created_at) : new Date();
     // Generate slug
     const slug = slugify(data.name, { lower: true, strict: true });
 
     // Insert the product into the database
-    const product = await prisma.products.create({
-      data: {
+    // const product = await prisma.products.create({
+    //   data: {
+    //     name: data.name,
+    //     added_by: data.addedBy,
+    //     user_id: adminUser.id,
+    //     auction_product: 1,
+    //     category_id: data.categoryId,
+    //     brand_id: data.brandId,
+    //     barcode: data.barcode,
+    //     startingBid: data.startingBid,
+    //     // refundable: data.refundable || 0,
+    //     refundable: 1 || 0,
+    //     photos: data.photos,
+    //     thumbnailImg: data.thumbnailImg,
+    //     tags: data.tags,
+    //     description: data.description,
+    //     videoProvider: data.videoProvider,
+    //     videoLink: data.videoLink,
+    //     auctionStartDate: data.auctionDateRange
+    //       ? new Date(data.auctionDateRange[0])
+    //       : null,
+    //     auctionEndDate: data.auctionDateRange
+    //       ? new Date(data.auctionDateRange[1])
+    //       : null,
+    //     shippingType: data.shippingType,
+    //     estShippingDays: data.estShippingDays,
+    //     shippingCost: data.shippingCost,
+    //     earnPoint: data.earnPoint,
+    //     isQuantityMultiplied: data.isQuantityMultiplied || false,
+    //     metaTitle: data.metaTitle || data.name,
+    //     metaDescription: data.metaDescription || data.description,
+    //     metaImg: data.metaImg || data.thumbnailImg,
+    //     pdf: data.pdf,
+    //     cashOnDelivery: data.cashOnDelivery || false,
+    //     todaysDeal: data.todaysDeal || false,
+    //     slug,
+    //   },
+    // });
+
+    const newPost = await prisma.products.upsert({
+      where: { id: data.id ?? 0 }, // Fallback to 0 if `data.id` is null
+      update: {
         name: data.name,
-        added_by: data.addedBy,
-        user_id: adminUser.id,
-        auction_product: 1,
-        category_id: data.categoryId,
-        brand_id: data.brandId,
+        added_by: data.name,
+        user_id: data.user_id,
+        category_id: data.category_id,
+        brand_id: data.brand_id,
         barcode: data.barcode,
-        startingBid: data.startingBid,
-        // refundable: data.refundable || 0,
-        refundable: 1 || 0,
+        starting_bid: data.starting_bid,
+        auction_product: data.auction_product,
+        refundable: data.refundable,
         photos: data.photos,
-        thumbnailImg: data.thumbnailImg,
+        thumbnail_img: data.thumbnail_img,
         tags: data.tags,
         description: data.description,
-        videoProvider: data.videoProvider,
-        videoLink: data.videoLink,
-        auctionStartDate: data.auctionDateRange
-          ? new Date(data.auctionDateRange[0])
-          : null,
-        auctionEndDate: data.auctionDateRange
-          ? new Date(data.auctionDateRange[1])
-          : null,
-        shippingType: data.shippingType,
-        estShippingDays: data.estShippingDays,
-        shippingCost: data.shippingCost,
-        earnPoint: data.earnPoint,
-        isQuantityMultiplied: data.isQuantityMultiplied || false,
-        metaTitle: data.metaTitle || data.name,
-        metaDescription: data.metaDescription || data.description,
-        metaImg: data.metaImg || data.thumbnailImg,
+        video_provider: data.video_provider,
+        video_link: data.video_link,
+        auction_start_date: data.auction_start_date,
+        auction_end_date: data.auction_end_date,
+        shipping_type: data.shipping_type,
+        est_shipping_days: data.est_shipping_days,
+        shipping_cost: data.shipping_cost,
+        is_quantity_multiplied: data.is_quantity_multiplied,
+        meta_title: data.meta_title,
+        meta_description: data.meta_description || data.description,
+        meta_img: data.meta_img || data.thumbnail_img,
         pdf: data.pdf,
-        cashOnDelivery: data.cashOnDelivery || false,
-        todaysDeal: data.todaysDeal || false,
-        slug,
+        cash_on_delivery: data.cash_on_delivery || false,
+        todays_deal: data.todays_deal || false,
+        updated_at: data.created_at,
+        slug
       },
+      create: {
+        name: data.name,
+        added_by: data.name,
+        user_id: data.user_id,
+        category_id: data.category_id,
+        brand_id: data.brand_id,
+        barcode: data.barcode,
+        starting_bid: data.starting_bid,
+        auction_product: data.auction_product,
+        refundable: data.refundable,
+        photos: data.photos,
+        thumbnail_img: data.thumbnail_img,
+        tags: data.tags,
+        description: data.description,
+        video_provider: data.video_provider,
+        video_link: data.video_link,
+        auction_start_date: data.auction_start_date,
+        auction_end_date: data.auction_end_date,
+        shipping_type: data.shipping_type,
+        est_shipping_days: data.est_shipping_days,
+        shipping_cost: data.shipping_cost,
+        is_quantity_multiplied: data.is_quantity_multiplied,
+        meta_title: data.meta_title,
+        meta_description: data.meta_description || data.description,
+        meta_img: data.meta_img || data.thumbnail_img,
+        pdf: data.pdf,
+        cash_on_delivery: data.cash_on_delivery || false,
+        todays_deal: data.todays_deal || false,
+        created_at: data.created_at,
+        slug
+      }
     });
 
     // Insert associated tax data if provided
     if (data.tax_id && data.tax && data.tax_type) {
       const taxData = data.tax_id.map((taxId, index) => ({
-        productId: product.id,
+        productId: products.id,
         taxId,
         tax: data.tax[index],
         taxType: data.tax_type[index],
       }));
 
-      await prisma.productTax.createMany({ data: taxData });
+      await prisma.product_taxes.createMany({ data: taxData });
     }
 
     return { success: true, data: product };
@@ -166,82 +233,83 @@ export async function createOrUpdateAuctionProduct(data: AuctionProductData) {
 
 
 
-export const updateAuctionProduct = async (req: NextApiRequest, res: NextApiResponse) => {
-  const { id } = req.query;
-  const {
-    categoryId, brandId, barcode, cashOnDelivery, isQuantityMultiplied,
-    refundable, lang, name, unit, description, slug, photos, thumbnailImg,
-    tags, videoProvider, videoLink, startingBid, auctionDateRange,
-    shippingType, estShippingDays, earnPoint, flatShippingCost,
-    shippingCost, metaTitle, metaDescription, metaImg, pdf, tax_id, tax,
-    tax_type
-  } = req.body as Product;
+// export const updateAuctionProduct = async (data: createOrUpdateData) => {
+//   const { id } = req.query;
+//   const {
+//     categoryId, brandId, barcode, cashOnDelivery, isQuantityMultiplied,
+//     refundable, lang, name, unit, description, slug, photos, thumbnailImg,
+//     tags, videoProvider, videoLink, startingBid, auctionDateRange,
+//     shippingType, estShippingDays, earnPoint, flatShippingCost,
+//     shippingCost, metaTitle, metaDescription, metaImg, pdf, tax_id, tax,
+//     tax_type
+//   } = req.body as Product;
+
+//   try {
+//     const product = await prisma.products.update({
+//       where: { id: Number(id) },
+//       data: {
+//         categoryId,
+//         brandId,
+//         barcode,
+//         cashOnDelivery: cashOnDelivery || false,
+//         isQuantityMultiplied: isQuantityMultiplied || false,
+//         refundable: refundable || false,
+//         photos,
+//         thumbnailImg,
+//         tags: tags ? tags.join(',') : undefined,
+//         videoProvider,
+//         videoLink,
+//         startingBid: startingBid ? parseFloat(startingBid) : undefined,
+//         auctionStartDate: auctionDateRange ? new Date(auctionDateRange[0]) : undefined,
+//         auctionEndDate: auctionDateRange ? new Date(auctionDateRange[1]) : undefined,
+//         shippingType,
+//         estShippingDays,
+//         earnPoint: earnPoint ? parseInt(earnPoint) : undefined,
+//         shippingCost: shippingType === 'free' ? 0 : shippingType === 'flat_rate' ? flatShippingCost : JSON.stringify(shippingCost),
+//         metaTitle: metaTitle || name,
+//         metaDescription: metaDescription || description,
+//         metaImg: metaImg || thumbnailImg,
+//         pdf,
+//         colors: JSON.stringify([]),
+//         attributes: JSON.stringify([]),
+//         choiceOptions: JSON.stringify([])
+//       }
+//     });
+
+//     await prisma.productTranslation.upsert({
+//       where: { productId_lang: { productId: product.id, lang } },
+//       update: { name, unit, description },
+//       create: { productId: product.id, lang, name, unit, description }
+//     });
+
+//     await prisma.productTax.deleteMany({ where: { productId: product.id } });
+//     if (tax_id && tax && tax_type) {
+//       for (let i = 0; i < tax_id.length; i++) {
+//         await prisma.productTax.create({
+//           data: {
+//             productId: product.id,
+//             taxId: tax_id[i],
+//             tax: parseFloat(tax[i]),
+//             taxType: tax_type[i]
+//           }
+//         });
+//       }
+//     }
+
+//     res.status(200).json({ message: 'Product updated successfully' });
+//   } catch (error) {
+//     res.status(500).json({ error: 'Failed to update product' });
+//   } finally {
+//     await prisma.$disconnect();
+//   }
+// };
+
+export const deleteProduct = async (data: createOrUpdateData) => {
+  // const { id } = req.query;
+  const id = data.id;
 
   try {
-    const product = await prisma.products.update({
-      where: { id: Number(id) },
-      data: {
-        categoryId,
-        brandId,
-        barcode,
-        cashOnDelivery: cashOnDelivery || false,
-        isQuantityMultiplied: isQuantityMultiplied || false,
-        refundable: refundable || false,
-        photos,
-        thumbnailImg,
-        tags: tags ? tags.join(',') : undefined,
-        videoProvider,
-        videoLink,
-        startingBid: startingBid ? parseFloat(startingBid) : undefined,
-        auctionStartDate: auctionDateRange ? new Date(auctionDateRange[0]) : undefined,
-        auctionEndDate: auctionDateRange ? new Date(auctionDateRange[1]) : undefined,
-        shippingType,
-        estShippingDays,
-        earnPoint: earnPoint ? parseInt(earnPoint) : undefined,
-        shippingCost: shippingType === 'free' ? 0 : shippingType === 'flat_rate' ? flatShippingCost : JSON.stringify(shippingCost),
-        metaTitle: metaTitle || name,
-        metaDescription: metaDescription || description,
-        metaImg: metaImg || thumbnailImg,
-        pdf,
-        colors: JSON.stringify([]),
-        attributes: JSON.stringify([]),
-        choiceOptions: JSON.stringify([])
-      }
-    });
-
-    await prisma.productTranslation.upsert({
-      where: { productId_lang: { productId: product.id, lang } },
-      update: { name, unit, description },
-      create: { productId: product.id, lang, name, unit, description }
-    });
-
-    await prisma.productTax.deleteMany({ where: { productId: product.id } });
-    if (tax_id && tax && tax_type) {
-      for (let i = 0; i < tax_id.length; i++) {
-        await prisma.productTax.create({
-          data: {
-            productId: product.id,
-            taxId: tax_id[i],
-            tax: parseFloat(tax[i]),
-            taxType: tax_type[i]
-          }
-        });
-      }
-    }
-
-    res.status(200).json({ message: 'Product updated successfully' });
-  } catch (error) {
-    res.status(500).json({ error: 'Failed to update product' });
-  } finally {
-    await prisma.$disconnect();
-  }
-};
-
-export const deleteProduct = async (req: NextApiRequest, res: NextApiResponse) => {
-  const { id } = req.query;
-
-  try {
-    const product = await prisma.product.findUnique({
+    const product = await prisma.products.findUnique({
       where: { id: Number(id) },
       include: {
         product_translations: true,
@@ -254,23 +322,23 @@ export const deleteProduct = async (req: NextApiRequest, res: NextApiResponse) =
     }
 
     // Delete product translations
-    await prisma.productTranslation.deleteMany({
-      where: { productId: product.id },
+    await prisma.product_translations.deleteMany({
+      where: { product_id: product.id },
     });
 
     // Delete bids
-    await prisma.bid.deleteMany({
-      where: { productId: product.id },
+    await prisma.products.deleteMany({
+      where: { id: product.id },
     });
 
     // Delete the product
-    await prisma.product.delete({
+    await prisma.products.delete({
       where: { id: product.id },
     });
 
     // Delete related items in the cart
-    await prisma.cart.deleteMany({
-      where: { productId: product.id },
+    await prisma.carts.deleteMany({
+      where: { product_id: product.id },
     });
 
     return res.status(200).json({ message: 'Product has been deleted successfully' });
@@ -282,8 +350,10 @@ export const deleteProduct = async (req: NextApiRequest, res: NextApiResponse) =
 };
 
 
-export const updatePublished = async (req: NextApiRequest, res: NextApiResponse) => {
-  const { id, status } = req.body;
+export const updatePublished = async (data: createOrUpdateData) => {
+  // const { id, status } = req.body;
+  const id = data.id;
+  const status = data.status;
 
   try {
     const product = await prisma.products.findUnique({
@@ -291,7 +361,7 @@ export const updatePublished = async (req: NextApiRequest, res: NextApiResponse)
       include: {
         users: {
           include: {
-            seller: true,
+            sellers: true,
           },
         },
       },
@@ -307,13 +377,13 @@ export const updatePublished = async (req: NextApiRequest, res: NextApiResponse)
       product.addedBy === 'seller' &&
       (await prisma.addon.findUnique({ where: { uniqueIdentifier: 'seller_subscription' } }))?.activated
     ) {
-      const seller = product.user.seller;
+      const seller = product.users.sellers;
       if (seller?.invalidAt && differenceInDays(new Date(), parseISO(seller.invalidAt)) <= 0) {
         return res.status(403).json({ message: 'Seller subscription invalid' });
       }
     }
 
-    await prisma.product.update({
+    await prisma.products.update({
       where: { id: product.id },
       data: { published: status },
     });
@@ -433,11 +503,20 @@ export const updatePublished = async (req: NextApiRequest, res: NextApiResponse)
 //   }
 // };
 
-export const getAuctionProductDetails = async (req: NextApiRequest, res: NextApiResponse) => {
-  const { slug } = req.query;
+// Utility function to generate slugs
+function generateSlug(input: string): string {
+  return input
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, "-")
+    .replace(/(^-|-$)/g, "");
+}
+
+export const getAuctionProductDetails = async (data: createOrUpdateData) => {
+  // const { slug } = req.query;
+  const slug = generateSlug(data.name);
 
   try {
-    const detailedProduct = await prisma.product.findUnique({
+    const detailedProduct = await prisma.products.findUnique({
       where: { slug: slug as string },
     });
 
@@ -453,27 +532,27 @@ export const getAuctionProductDetails = async (req: NextApiRequest, res: NextApi
   }
 };
 
-export const getUserPurchaseHistory = async (req: NextApiRequest, res: NextApiResponse) => {
+export const getUserPurchaseHistory = async (data: createOrUpdateData) => {
   const session = await getSession({ req });
 
   if (!session) {
     return res.status(401).json({ message: 'Unauthorized' });
   }
 
-  const userId = session.user.id;
+  const userId = session.users.id;
 
   try {
-    const orders = await prisma.orderDetails.findMany({
+    const orders = await prisma.order_details.findMany({
       where: {
-        order: {
-          userId: userId,
+        orders: {
+          user_id: userId,
         },
-        product: {
-          auctionProduct: true,
+        products: {
+          auction_products: true,
         },
       },
       orderBy: {
-        order: {
+        orders: {
           code: 'desc',
         },
       },
@@ -574,17 +653,18 @@ export const getAuctionProductOrders = async () => {
 };
 
 
-export const getAuctionOrderDetails = async (req: NextApiRequest, res: NextApiResponse) => {
-  const { id } = req.query;
+export const getAuctionOrderDetails = async (data: createOrUpdateData) => {
+  // const { id } = req.query;
+  const id = data.id;
 
   try {
     const decryptedId = parseInt(id as string); // Replace with your decryption logic if needed
-    const order = await prisma.order.findUnique({
+    const order = await prisma.orders.findUnique({
       where: { id: decryptedId },
       include: {
-        orderDetails: {
+        order_details: {
           include: {
-            product: true
+            products: true
           }
         }
       }
@@ -594,15 +674,15 @@ export const getAuctionOrderDetails = async (req: NextApiRequest, res: NextApiRe
       return res.status(404).json({ error: 'Order not found' });
     }
 
-    const orderShippingAddress = order.shippingAddress;
-    const deliveryBoys = await prisma.user.findMany({
+    const orderShippingAddress = order.shipping_address;
+    const deliveryBoys = await prisma.users.findMany({
       where: {
-        city: orderShippingAddress.city,
-        userType: 'delivery_boy'
+        city: order_shipping_address.city,
+        user_type: 'delivery_boy'
       }
     });
 
-    await prisma.order.update({
+    await prisma.orders.update({
       where: { id: decryptedId },
       data: { viewed: true }
     });

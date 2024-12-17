@@ -1,4 +1,5 @@
 import { PrismaClient } from '@prisma/client';
+import type { NextRequest } from 'next/server';
 
 const prisma = new PrismaClient();
 
@@ -11,7 +12,7 @@ type createOrUpdateData = {
   amount: number;
   order_id: number;
   order_detail_id: number;
-  status: number;
+  status: boolean;
   affiliate_type: string;
   payment_method: string;
   payment_details: string;
@@ -40,17 +41,54 @@ export const getAffiliateUsers = async () => {
 }
 
 export async function createOrUpdateAffiliateConfiguration(data: createOrUpdateData) {
+  const created_at = data.created_at ? new Date(data.created_at) : new Date();
   try {
     const newPost = await prisma.affiliate_configs.upsert({
       where: { id: data.id ?? 0 }, // Fallback to 0 if `data.id` is null
       update: {
         type: data.type,
         value: data.value,
+        created_at: created_at,
       },
       create: {
         id: data.id ?? undefined, // Ensure `id` is included only if provided
         type: data.type,
         value: data.value,
+        created_at: created_at,
+      }
+    });
+
+    return { success: true, data: newPost };
+  } catch (error) {
+    console.error("Error creating blog post:", error);
+    return { success: false, error };
+  }
+}
+
+export async function createOrUpdateAffiliateLog(data: createOrUpdateData) {
+  const created_at = data.created_at ? new Date(data.created_at) : new Date();
+  try {
+    const newPost = await prisma.affiliate_logs.upsert({
+      where: { id: data.id ?? 0 }, // Fallback to 0 if `data.id` is null
+      update: {
+        user_id: data.user_id,
+        referred_by_user: data.referred_by_user,
+        order_id: data.order_id,
+        order_detail_id: data.order_detail_id,
+        amount: data.amount,
+        affiliate_type: data.affiliate_type,
+        status: data.status,
+        created_at: created_at,
+      },
+      create: {
+        user_id: data.user_id,
+        referred_by_user: data.referred_by_user,
+        order_id: data.order_id,
+        order_detail_id: data.order_detail_id,
+        amount: data.amount,
+        affiliate_type: data.affiliate_type,
+        status: data.status,
+        created_at: created_at,
       }
     });
 
@@ -108,100 +146,100 @@ export const getWithdrawRequestUsers = async () => {
   }
 }
 
-export const getLogs = async () => {
-  try {
-    const logs = await prisma.affiliate_logs.findMany();
-    // Convert BigInt fields to strings
-    const serializedLogs = logs.map(log => ({
-      ...log,
-      user_id: log.user_id.toString(), // Assuming id is the BigInt field
-      order_id: log.order_id.toString(), // Assuming id is the BigInt field
-      order_detail_id: log.order_detail_id.toString(), // Assuming id is the BigInt field
-    }));
-    return { success: true, data: serializedLogs };
-  } catch (error) {
-    console.error("Error fetching getLogs:", error);
-    return { success: false, error };
-  }
-}
+// export const getLogs = async () => {
+//   try {
+//     const logs = await prisma.affiliate_logs.findMany();
+//     // Convert BigInt fields to strings
+//     const serializedLogs = logs.map(log => ({
+//       ...log,
+//       user_id: log.user_id.toString(), // Assuming id is the BigInt field
+//       order_id: log.order_id.toString(), // Assuming id is the BigInt field
+//       order_detail_id: log.order_detail_id.toString(), // Assuming id is the BigInt field
+//     }));
+//     return { success: true, data: serializedLogs };
+//   } catch (error) {
+//     console.error("Error fetching getLogs:", error);
+//     return { success: false, error };
+//   }
+// }
 
-export const affiliateOptionStore = async (req: NextRequest) => {
-  const { type, percentage, amount, amount_type, status } = await req.json();
+// export const affiliateOptionStore = async (req: NextRequest) => {
+//   const { type, percentage, amount, amount_type, status } = await req.json();
 
-  let affiliateOption = await prisma.affiliateOption.findFirst({ where: { type } });
-  if (!affiliateOption) {
-    affiliateOption = await prisma.affiliateOption.create({
-      data: { type, details: {}, status: false },
-    });
-  }
+//   let affiliateOption = await prisma.affiliate_options.findFirst({ where: { type } });
+//   if (!affiliateOption) {
+//     affiliateOption = await prisma.affiliate_options.create({
+//       data: { type, details: {}, status: false },
+//     });
+//   }
 
-  let commissionDetails: any = {};
+//   let commissionDetails: any = {};
 
-  switch (type) {
-    case 'user_registration_first_purchase':
-      affiliateOption.percentage = percentage;
-      break;
+//   switch (type) {
+//     case 'user_registration_first_purchase':
+//       affiliateOption.percentage = percentage;
+//       break;
 
-    case 'product_sharing':
-      commissionDetails = { commission: amount, commission_type: amount_type };
-      break;
+//     case 'product_sharing':
+//       commissionDetails = { commission: amount, commission_type: amount_type };
+//       break;
 
-    case 'category_wise_affiliate':
-      commissionDetails = await Promise.all(
-        (await prisma.category.findMany()).map(async (category) => ({
-          category_id: req.body[`categories_id_${category.id}`],
-          commission: req.body[`commison_amounts_${category.id}`],
-          commission_type: req.body[`commison_types_${category.id}`],
-        }))
-      );
-      break;
+//     case 'category_wise_affiliate':
+//       commissionDetails = await Promise.all(
+//         (await prisma.category.findMany()).map(async (category) => ({
+//           category_id: req.body[`categories_id_${category.id}`],
+//           commission: req.body[`commison_amounts_${category.id}`],
+//           commission_type: req.body[`commison_types_${category.id}`],
+//         }))
+//       );
+//       break;
 
-    case 'max_affiliate_limit':
-      affiliateOption.percentage = percentage;
-      break;
+//     case 'max_affiliate_limit':
+//       affiliateOption.percentage = percentage;
+//       break;
 
-    default:
-      break;
-  }
+//     default:
+//       break;
+//   }
 
-  affiliateOption.details = commissionDetails;
+//   affiliateOption.details = commissionDetails;
 
-  if (status) {
-    affiliateOption.status = true;
-    if (type === 'product_sharing') {
-      await prisma.affiliateOption.updateMany({
-        where: { type: 'category_wise_affiliate' },
-        data: { status: false },
-      });
-    } else if (type === 'category_wise_affiliate') {
-      await prisma.affiliateOption.updateMany({
-        where: { type: 'product_sharing' },
-        data: { status: false },
-      });
-    }
-  } else {
-    affiliateOption.status = false;
-  }
+//   if (status) {
+//     affiliateOption.status = true;
+//     if (type === 'product_sharing') {
+//       await prisma.affiliateOption.updateMany({
+//         where: { type: 'category_wise_affiliate' },
+//         data: { status: false },
+//       });
+//     } else if (type === 'category_wise_affiliate') {
+//       await prisma.affiliateOption.updateMany({
+//         where: { type: 'product_sharing' },
+//         data: { status: false },
+//       });
+//     }
+//   } else {
+//     affiliateOption.status = false;
+//   }
 
-  await prisma.affiliateOption.update({
-    where: { id: affiliateOption.id },
-    data: affiliateOption,
-  });
+//   await prisma.affiliateOption.update({
+//     where: { id: affiliateOption.id },
+//     data: affiliateOption,
+//   });
 
-  return NextResponse.json({ message: "This has been updated successfully" });
-};
+//   return NextResponse.json({ message: "This has been updated successfully" });
+// };
 
 export const configStore = async (req: NextRequest) => {
   const { type } = await req.json();
 
   if (type === 'validation_time') {
-    let affiliateConfig = await prisma.affiliateConfig.findFirst({ where: { type } });
+    let affiliateConfig = await prisma.affiliate_configs.findFirst({ where: { type } });
     if (!affiliateConfig) {
-      affiliateConfig = await prisma.affiliateConfig.create({ data: { type, value: {} } });
+      affiliateConfig = await prisma.affiliate_configs.create({ data: { type, value: {} } });
     }
 
     affiliateConfig.value = req.body[type];
-    await prisma.affiliateConfig.update({ where: { id: affiliateConfig.id }, data: affiliateConfig });
+    await prisma.affiliate_configs.update({ where: { id: affiliateConfig.id }, data: affiliateConfig });
 
     return NextResponse.json({ message: "Validation time updated successfully" });
   } else {
@@ -223,13 +261,13 @@ export const configStore = async (req: NextRequest) => {
       form.push(item);
     }
 
-    let affiliateConfig = await prisma.affiliateConfig.findFirst({ where: { type: 'verification_form' } });
+    let affiliateConfig = await prisma.affiliate_configs.findFirst({ where: { type: 'verification_form' } });
     if (!affiliateConfig) {
-      affiliateConfig = await prisma.affiliateConfig.create({ data: { type: 'verification_form', value: {} } });
+      affiliateConfig = await prisma.affiliate_configs.create({ data: { type: 'verification_form', value: {} } });
     }
 
     affiliateConfig.value = JSON.stringify(form);
-    await prisma.affiliateConfig.update({ where: { id: affiliateConfig.id }, data: affiliateConfig });
+    await prisma.affiliate_configs.update({ where: { id: affiliateConfig.id }, data: affiliateConfig });
 
     return NextResponse.json({ message: "Verification form updated successfully" });
   }
@@ -239,7 +277,7 @@ export const storeAffiliateUser = async (req: NextRequest) => {
   const session = await getSession({ req });
 
   if (!session) {
-    const existingUser = await prisma.user.findUnique({ where: { email: req.body.email } });
+    const existingUser = await prisma.users.findUnique({ where: { email: req.body.email } });
     if (existingUser) {
       return NextResponse.json({ error: 'Email already exists!' }, { status: 400 });
     }
@@ -261,7 +299,7 @@ export const storeAffiliateUser = async (req: NextRequest) => {
     // You can implement authentication logic here, e.g., using NextAuth.js signIn
 
     if (process.env.EMAIL_VERIFICATION !== '1') {
-      await prisma.user.update({
+      await prisma.users.update({
         where: { id: user.id },
         data: { email_verified_at: new Date() },
       });
@@ -270,14 +308,14 @@ export const storeAffiliateUser = async (req: NextRequest) => {
     }
   }
 
-  const userId = session ? session.userId : user.id;
-  let affiliateUser = await prisma.affiliateUser.findUnique({ where: { userId } });
+  const userId = session ? session.userId : users.id;
+  let affiliateUser = await prisma.affiliate_users.findUnique({ where: { userId } });
 
   if (!affiliateUser) {
-    affiliateUser = await prisma.affiliateUser.create({ data: { userId, informations: [] } });
+    affiliateUser = await prisma.affiliate_users.create({ data: { userId, informations: [] } });
   }
 
-  const config = await prisma.affiliateConfig.findUnique({ where: { type: 'verification_form' } });
+  const config = await prisma.affiliate_users.findUnique({ where: { type: 'verification_form' } });
   const formData = JSON.parse(config.value);
   const data = formData.map((element: any, index: number) => {
     const item: any = {
@@ -299,7 +337,7 @@ export const storeAffiliateUser = async (req: NextRequest) => {
     return item;
   });
 
-  await prisma.affiliateUser.update({
+  await prisma.affiliate_users.update({
     where: { userId },
     data: { informations: JSON.stringify(data) },
   });

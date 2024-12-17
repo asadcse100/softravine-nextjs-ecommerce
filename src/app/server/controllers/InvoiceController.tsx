@@ -9,7 +9,7 @@ type createOrUpdateData = {
 };
 
 
-export const downloadInvoice = async (req: NextApiRequest, res: NextApiResponse) => {
+export const downloadInvoice = async (data: createOrUpdateData) => {
   try {
     const { id } = req.query;
     const order = await prisma.findById(id); // Replace with your actual method to find an order by ID

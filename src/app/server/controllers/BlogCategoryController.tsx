@@ -55,10 +55,9 @@ export async function createOrUpdateBlogCategory(data: createOrUpdateData) {
     return { success: true, data: newCategory };
   } catch (error) {
     console.error("Error creating or updating blog category:", error);
-    return { success: false, error: error.message || "An unexpected error occurred" };
+    return { success: false, message: "An unexpected error occurred" };
   }
 }
-
 
 export const updateBlogCategory = async (id: number, category_name: string) => {
   try {

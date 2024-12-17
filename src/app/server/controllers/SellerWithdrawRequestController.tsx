@@ -38,7 +38,7 @@ export const getSellerWithdrawRequests = async () => {
   }
 }
 
-export const storeWithdrawRequest = async (req: NextApiRequest, res: NextApiResponse) => {
+export const storeWithdrawRequest = async () => {
   const { amount, message } = req.body;
 
   if (!req.user || !req.user.shopId) {
@@ -46,7 +46,7 @@ export const storeWithdrawRequest = async (req: NextApiRequest, res: NextApiResp
   }
 
   try {
-    const withdrawRequest = await prisma.sellerWithdrawRequest.create({
+    const withdrawRequest = await prisma.seller_withdraw_requests.create({
       data: {
         userId: req.user.shopId,
         amount: parseFloat(amount),

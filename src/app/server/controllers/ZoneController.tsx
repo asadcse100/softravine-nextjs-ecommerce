@@ -5,7 +5,7 @@ const prisma = new PrismaClient();
 type createOrUpdateData = {
     id: number | null;
     name: string;
-    status: number;
+    status: boolean;
     created_at?: string;
 };
 
@@ -34,66 +34,92 @@ export const getZones = async () => {
 }
 
 //   export async store(req: NextApiRequest, res: NextApiResponse) {
-export async function store(req: NextApiRequest, res: NextApiResponse) {
-    try {
-        const { name, status, countryIds } = req.body;
+// export async function store() {
+//     try {
+//         const { name, status, countryIds } = req.body;
 
-        const zone = await prisma.zone.create({
-            data: {
-                name,
-                status,
-                countries: {
-                    connect: countryIds.map((id: number) => ({ id })),
-                },
-            },
-            include: { countries: true },
-        });
+//         const zone = await prisma.zone.create({
+//             data: {
+//                 name,
+//                 status,
+//                 countries: {
+//                     connect: countryIds.map((id: number) => ({ id })),
+//                 },
+//             },
+//             include: { countries: true },
+//         });
 
-        res.status(201).json(zone);
-    } catch (error) {
-        console.error(error);
-        res.status(500).json({ message: 'Internal Server Error' });
-    }
-}
+//         res.status(201).json(zone);
+//     } catch (error) {
+//         console.error(error);
+//         res.status(500).json({ message: 'Internal Server Error' });
+//     }
+// }
+
+export async function createOrUpdateZone(data: createOrUpdateData) {
+  try {
+
+    const created_at = data.created_at ? new Date(data.created_at) : new Date();
+
+    const newPost = await prisma.zones.upsert({
+      where: { id: data.id ?? 0 }, // Fallback to 0 if `data.id` is null
+      update: {
+        name: data.name,
+        status: data.status,
+        updated_at: data.created_at,
+      },
+      create: {
+        name: data.name,
+        status: data.status,
+        created_at: data.created_at,
+      }
+    });
+
+    return { success: true, data: newPost };
+  } catch (error) {
+    console.error("Error creating blog post:", error);
+    return { success: false, error };
+  }
+};
 
 // async update(req: NextApiRequest, res: NextApiResponse) {
-export async function update(req: NextApiRequest, res: NextApiResponse) {
-    try {
-        const { id } = req.query;
-        const { name, countryIds } = req.body;
+// export async function update(req: NextApiRequest, res: NextApiResponse) {
+//     try {
+//         const { id } = req.query;
+//         const { name, countryIds } = req.body;
 
-        const updatedZone = await prisma.zone.update({
-            where: { id: Number(id) },
-            data: {
-                name,
-                countries: {
-                    disconnect: true,
-                    connect: countryIds.map((countryId: number) => ({ id: countryId })),
-                },
-            },
-            include: { countries: true },
-        });
+//         const updatedZone = await prisma.zone.update({
+//             where: { id: Number(id) },
+//             data: {
+//                 name,
+//                 countries: {
+//                     disconnect: true,
+//                     connect: countryIds.map((countryId: number) => ({ id: countryId })),
+//                 },
+//             },
+//             include: { countries: true },
+//         });
 
-        res.status(200).json(updatedZone);
-    } catch (error) {
-        console.error(error);
-        res.status(500).json({ message: 'Internal Server Error' });
-    }
-}
+//         res.status(200).json(updatedZone);
+//     } catch (error) {
+//         console.error(error);
+//         res.status(500).json({ message: 'Internal Server Error' });
+//     }
+// }
 
 // async destroy(req: NextApiRequest, res: NextApiResponse) {
-export async function destroy(req: NextApiRequest, res: NextApiResponse) {
+export async function destroy() {
     try {
         const { id } = req.query;
 
         // Disconnect countries associated with the zone
-        await prisma.country.updateMany({
-            where: { zoneId: Number(id) },
-            data: { zoneId: 0 },
+        await prisma.countries.updateMany({
+            where: { zone_id: Number(id) },
+            data: { zone_id: 0 },
         });
 
         // Delete the zone
-        await prisma.zone.delete({ where: { id: Number(id) } });
+        await prisma.zones.delete({ where: { id: Number(id) } });
 
         res.status(204).end();
     } catch (error) {

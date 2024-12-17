@@ -27,20 +27,53 @@ export const getDeliveryBoys = async () => {
   }
 }
 
-export const createOrUpdateDeliveryBoy = async () => {
+// export const createOrUpdateDeliveryBoy = async () => {
+//   try {
+//     const delivery_boys = await prisma.delivery_boys.findMany();
+//     // Convert BigInt fields to strings
+//     const serializedWholesaleProducts = delivery_boys.map(delivery_boy => ({
+//       ...delivery_boy,
+//       user_id: delivery_boy.user_id.toString(), // Assuming id is the BigInt field
+//     }));
+//     return { success: true, data: delivery_boys };
+//   } catch (error) {
+//     console.error("Error fetching delivery boys:", error);
+//     return { success: false, error };
+//   }
+// }
+
+export async function createOrUpdateDeliveryBoy(data: createOrUpdateData) {
   try {
-    const delivery_boys = await prisma.delivery_boys.findMany();
-    // Convert BigInt fields to strings
-    const serializedWholesaleProducts = delivery_boys.map(delivery_boy => ({
-      ...delivery_boy,
-      user_id: delivery_boy.user_id.toString(), // Assuming id is the BigInt field
-    }));
-    return { success: true, data: delivery_boys };
+
+    const created_at = data.created_at ? new Date(data.created_at) : new Date();
+
+    const newPost = await prisma.delivery_boys.upsert({
+      where: { id: data.id ?? 0 }, // Fallback to 0 if `data.id` is null
+      update: {
+        user_id: data.user_id,
+        total_collection: data.total_collection,
+        total_earning: data.total_earning,
+        monthly_salary: data.monthly_salary,
+        order_commission: data.order_commission,
+        updated_at: data.created_at,
+      },
+      create: {
+        user_id: data.user_id,
+        total_collection: data.total_collection,
+        total_earning: data.total_earning,
+        monthly_salary: data.monthly_salary,
+        order_commission: data.order_commission,
+        created_at: data.created_at,
+      }
+    });
+
+    return { success: true, data: newPost };
   } catch (error) {
-    console.error("Error fetching delivery boys:", error);
+    console.error("Error creating Customer Package:", error);
     return { success: false, error };
   }
-}
+};
+
 
 export const getDeliveryBoysPaymentHistories = async () => {
   try {

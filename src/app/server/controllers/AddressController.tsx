@@ -1,5 +1,4 @@
 import { NextResponse } from "next/server";
-import { createAddress, getAddressById, updateAddress, deleteAddress } from '../models/Address';
 import { AddressData } from '../types/Address';
 import type { NextRequest } from 'next/server';
 import { PrismaClient } from '@prisma/client';
@@ -16,6 +15,7 @@ type createOrUpdateData = {
   latitude: number;
   postal_code: string;
   phone: string;
+  error: string;
   created_at?: string;
 };
 
@@ -81,7 +81,7 @@ export async function createOrUpdateAddress(data: createOrUpdateData) {
     return { success: true, data: address };
   } catch (error) {
     console.error("Error creating or updating blog category:", error);
-    return { success: false, error: error.message || "An unexpected error occurred" };
+    return { success: false, message: "An unexpected error occurred" };
   }
 }
 

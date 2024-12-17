@@ -66,171 +66,219 @@ export const getSellers = async () => {
   }
 }
 
-export async function createSeller(req: NextApiRequest, res: NextApiResponse) {
-  const { name, email, password } = req.body;
+// export async function createSeller(req: NextApiRequest, res: NextApiResponse) {
+//   const { name, email, password } = req.body;
 
-  try {
-    // Check if email already exists
-    const existingUser = await prisma.user.findFirst({
-      where: {
-        email,
-      },
-    });
+//   try {
+//     // Check if email already exists
+//     const existingUser = await prisma.user.findFirst({
+//       where: {
+//         email,
+//       },
+//     });
 
-    if (existingUser) {
-      return res.status(400).json({ error: 'Email already exists' });
+//     if (existingUser) {
+//       return res.status(400).json({ error: 'Email already exists' });
+//     }
+
+//     // Hash password
+//     const hashedPassword = await bcrypt.hash(password, 10);
+
+//     // Create user
+//     const user = await prisma.user.create({
+//       data: {
+//         name,
+//         email,
+//         user_type: 'seller',
+//         password: hashedPassword,
+//       },
+//     });
+
+//     // Create seller
+//     await prisma.seller.create({
+//       data: {
+//         user_id: user.id,
+//       },
+//     });
+
+//     // Create shop
+//     await prisma.shop.create({
+//       data: {
+//         user_id: user.id,
+//         slug: `demo-shop-${user.id}`,
+//       },
+//     });
+
+//     res.status(201).json({ message: 'Seller created successfully' });
+//   } catch (error) {
+//     console.error('Error:', error);
+//     res.status(500).json({ error: 'Internal server error' });
+//   }
+// }
+
+export async function createOrUpdateSeller(data: createOrUpdateData) {
+    try {
+
+      const created_at = data.created_at ? new Date(data.created_at) : new Date();
+
+      const newPost = await prisma.sellers.upsert({
+        where: { id: data.id ?? 0 }, // Fallback to 0 if `data.id` is null
+        update: {
+          user_id: data.user_id,
+          rating: data.rating,
+          num_of_reviews: data.num_of_reviews,
+          num_of_sale: data.num_of_sale,
+          verification_status: data.verification_status,
+          verification_info: data.verification_info,
+          cash_on_delivery_status: data.cash_on_delivery_status,
+          admin_to_pay: data.admin_to_pay,
+          bank_name: data.bank_name,
+          bank_acc_name: data.bank_acc_name,
+          bank_acc_no: data.bank_acc_no,
+          bank_routing_no: data.bank_routing_no,
+          bank_payment_status: data.bank_payment_status,
+          updated_at: data.created_at,
+        },
+        create: {
+          user_id: data.user_id,
+          rating: data.rating,
+          num_of_reviews: data.num_of_reviews,
+          num_of_sale: data.num_of_sale,
+          verification_status: data.verification_status,
+          verification_info: data.verification_info,
+          cash_on_delivery_status: data.cash_on_delivery_status,
+          admin_to_pay: data.admin_to_pay,
+          bank_name: data.bank_name,
+          bank_acc_name: data.bank_acc_name,
+          bank_acc_no: data.bank_acc_no,
+          bank_routing_no: data.bank_routing_no,
+          bank_payment_status: data.bank_payment_status,
+          created_at: data.created_at,
+        }
+      });
+
+      return { success: true, data: newPost };
+    } catch (error) {
+      console.error("Error creating blog post:", error);
+      return { success: false, error };
     }
-
-    // Hash password
-    const hashedPassword = await bcrypt.hash(password, 10);
-
-    // Create user
-    const user = await prisma.user.create({
-      data: {
-        name,
-        email,
-        user_type: 'seller',
-        password: hashedPassword,
-      },
-    });
-
-    // Create seller
-    await prisma.seller.create({
-      data: {
-        user_id: user.id,
-      },
-    });
-
-    // Create shop
-    await prisma.shop.create({
-      data: {
-        user_id: user.id,
-        slug: `demo-shop-${user.id}`,
-      },
-    });
-
-    res.status(201).json({ message: 'Seller created successfully' });
-  } catch (error) {
-    console.error('Error:', error);
-    res.status(500).json({ error: 'Internal server error' });
   }
-}
 
-export async function updateSeller(req: NextApiRequest, res: NextApiResponse) {
-  const { id } = req.query;
-  const { name, email, password } = req.body;
+// export async function updateSeller(req: NextApiRequest, res: NextApiResponse) {
+//   const { id } = req.query;
+//   const { name, email, password } = req.body;
 
-  try {
-    // Find shop by ID
-    const shop = await prisma.shop.findFirst({
+//   try {
+//     // Find shop by ID
+//     const shop = await prisma.shop.findFirst({
+//       where: {
+//         id: Number(id),
+//       },
+//       include: {
+//         user: true,
+//       },
+//     });
+
+//     if (!shop) {
+//       return res.status(404).json({ error: 'Shop not found' });
+//     }
+
+//     // Update user
+//     await prisma.user.update({
+//       where: {
+//         id: shop.user.id,
+//       },
+//       data: {
+//         name,
+//         email,
+//         ...(password && { password: await bcrypt.hash(password, 10) }),
+//       },
+//     });
+
+//     res.status(200).json({ message: 'Seller updated successfully' });
+//   } catch (error) {
+//     console.error('Error:', error);
+//     res.status(500).json({ error: 'Internal server error' });
+//   }
+// }
+
+
+export async function deleteSeller() {
+    const { id } = req.query;
+
+    try {
+      if (Array.isArray(id)) {
+        // Bulk delete
+        await Promise.all(
+          id.map(async (shopId) => {
+            await deleteShopAndUser(Number(shopId));
+          })
+        );
+      } else {
+        // Single delete
+        await deleteShopAndUser(Number(id));
+      }
+
+      res.status(200).json({ message: 'Sellers deleted successfully' });
+    } catch (error) {
+      console.error('Error:', error);
+      res.status(500).json({ error: 'Internal server error' });
+    }
+  }
+
+  async function deleteShopAndUser(shopId: number) {
+    const shop = await prisma.shops.findFirst({
       where: {
-        id: Number(id),
+        id: shopId,
       },
       include: {
-        user: true,
+        users: true,
+        products: true,
+        orders: {
+          include: {
+            orderDetails: true,
+          },
+        },
       },
     });
 
     if (!shop) {
-      return res.status(404).json({ error: 'Shop not found' });
+      return;
     }
 
-    // Update user
-    await prisma.user.update({
+    // Delete user's products
+    await prisma.products.deleteMany({
       where: {
-        id: shop.user.id,
-      },
-      data: {
-        name,
-        email,
-        ...(password && { password: await bcrypt.hash(password, 10) }),
+        user_id: shop.user_id,
       },
     });
 
-    res.status(200).json({ message: 'Seller updated successfully' });
-  } catch (error) {
-    console.error('Error:', error);
-    res.status(500).json({ error: 'Internal server error' });
-  }
-}
-
-
-export async function deleteSeller(req: NextApiRequest, res: NextApiResponse) {
-  const { id } = req.query;
-
-  try {
-    if (Array.isArray(id)) {
-      // Bulk delete
-      await Promise.all(
-        id.map(async (shopId) => {
-          await deleteShopAndUser(Number(shopId));
-        })
-      );
-    } else {
-      // Single delete
-      await deleteShopAndUser(Number(id));
-    }
-
-    res.status(200).json({ message: 'Sellers deleted successfully' });
-  } catch (error) {
-    console.error('Error:', error);
-    res.status(500).json({ error: 'Internal server error' });
-  }
-}
-
-async function deleteShopAndUser(shopId: number) {
-  const shop = await prisma.shop.findFirst({
-    where: {
-      id: shopId,
-    },
-    include: {
-      user: true,
-      products: true,
-      orders: {
-        include: {
-          orderDetails: true,
+    // Delete user's orders and order details
+    await prisma.order_details.deleteMany({
+      where: {
+        order_id: {
+          in: shop.orders.map((order) => order.id),
         },
       },
-    },
-  });
+    });
 
-  if (!shop) {
-    return;
-  }
-
-  // Delete user's products
-  await prisma.product.deleteMany({
-    where: {
-      userId: shop.userId,
-    },
-  });
-
-  // Delete user's orders and order details
-  await prisma.orderDetail.deleteMany({
-    where: {
-      orderId: {
-        in: shop.orders.map((order) => order.id),
+    await prisma.orders.deleteMany({
+      where: {
+        user_id: shop.user_id,
       },
-    },
-  });
+    });
 
-  await prisma.order.deleteMany({
-    where: {
-      userId: shop.userId,
-    },
-  });
+    // Delete user
+    await prisma.users.delete({
+      where: {
+        id: shop.user_id,
+      },
+    });
 
-  // Delete user
-  await prisma.user.delete({
-    where: {
-      id: shop.userId,
-    },
-  });
-
-  // Delete shop
-  await prisma.shop.delete({
-    where: {
-      id: shopId,
-    },
-  });
-}
+    // Delete shop
+    await prisma.shops.delete({
+      where: {
+        id: shopId,
+      },
+    });
+  }

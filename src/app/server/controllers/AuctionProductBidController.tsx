@@ -7,6 +7,8 @@ const prisma = new PrismaClient();
 type createOrUpdateData = {
   id: number | null;
   user_id: number;
+  product_id: number;
+  amount: number;
   category_id: number;
   brand_id: number;
   added_by: string;
@@ -71,7 +73,7 @@ type createOrUpdateData = {
 };
 
 // export const getMyBiddedProducts = async (req: NextApiRequest, res: NextApiResponse) => {
-  export const getMyBiddedProducts = async () => {
+  export const getMyBiddedProducts = async (data: createOrUpdateData) => {
   const session = await getSession({ req });
   if (!session) {
     // return res.status(401).json({ error: 'Unauthorized' });
@@ -79,15 +81,15 @@ type createOrUpdateData = {
     return { success: false, error };
   }
 
-  const userId = session.user.id;
+  const userId = session.users.id;
 
   try {
-    const bids = await prisma.auctionProductBid.findMany({
+    const bids = await prisma.auction_product_bids.findMany({
       where: { userId: userId },
       orderBy: { id: 'desc' },
       distinct: ['id'],
       include: {
-        product: true
+        products: true
       },
       take: 20 // For pagination purposes, you can adjust as needed
     });
@@ -100,8 +102,7 @@ type createOrUpdateData = {
   }
 };
 
-
-export const placeBid = async (req: NextApiRequest, res: NextApiResponse) => {
+export const placeBid = async (data: createOrUpdateData) => {
   const session = await getSession({ req });
   if (!session) {
     return res.status(401).json({ error: 'Unauthorized' });
@@ -144,7 +145,7 @@ export const placeBid = async (req: NextApiRequest, res: NextApiResponse) => {
 };
 
 
-export const showProductWithBids = async (req: NextApiRequest, res: NextApiResponse) => {
+export const showProductWithBids = async (data: createOrUpdateData) => {
   const { id } = req.query;
 
   try {

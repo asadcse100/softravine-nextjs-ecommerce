@@ -97,11 +97,11 @@ export async function getAllOrders(filters: OrderFilters, page: number, perPage:
 }
 
 
-export async function showOrder(req, res) {
+export async function showOrder(data: createOrUpdateData) {
   const { id } = req.query;
 
   try {
-    const order = await prisma.order.findUnique({
+    const order = await prisma.orders.findUnique({
       where: {
         id: parseInt(id),
       },
@@ -113,7 +113,7 @@ export async function showOrder(req, res) {
 
     const orderShippingAddress = JSON.parse(order.shippingAddress);
 
-    const deliveryBoys = await prisma.user.findMany({
+    const deliveryBoys = await prisma.users.findMany({
       where: {
         city: orderShippingAddress.city,
         userType: 'delivery_boy',
@@ -121,7 +121,7 @@ export async function showOrder(req, res) {
     });
 
     // Assuming you have logic to mark the order as viewed
-    await prisma.order.update({
+    await prisma.orders.update({
       where: {
         id: parseInt(id),
       },
@@ -137,12 +137,12 @@ export async function showOrder(req, res) {
   }
 }
 
-export async function storeOrder(req: NextApiRequest, res: NextApiResponse) {
+export async function storeOrder(data: createOrUpdateData) {
   const userId = req.body.userId; // Assuming you're sending the user ID with the request body
 
   try {
     // Fetch carts for the user
-    const carts = await prisma.cart.findMany({
+    const carts = await prisma.carts.findMany({
       where: {
         userId: userId,
       },
@@ -153,7 +153,7 @@ export async function storeOrder(req: NextApiRequest, res: NextApiResponse) {
     }
 
     // Fetch address details from the first cart item
-    const address = await prisma.address.findUnique({
+    const address = await prisma.addresses.findUnique({
       where: {
         id: carts[0].addressId,
       },
@@ -213,12 +213,12 @@ export async function storeOrder(req: NextApiRequest, res: NextApiResponse) {
 }
 
 
-export async function deleteOrder(req: NextApiRequest, res: NextApiResponse) {
+export async function deleteOrder(data: createOrUpdateData) {
   const orderId = req.query.id as string; // Assuming you're getting the order ID from the query parameters
 
   try {
     // Find the order
-    const order = await prisma.order.findUnique({
+    const order = await prisma.orders.findUnique({
       where: {
         id: parseInt(orderId),
       },
@@ -232,9 +232,9 @@ export async function deleteOrder(req: NextApiRequest, res: NextApiResponse) {
     }
 
     // Iterate over order details and update product stock
-    for (const orderDetail of order.orderDetails) {
+    for (const orderDetail of order.order_details) {
       try {
-        const productStock = await prisma.productStock.findFirst({
+        const productStock = await prisma.product_stocks.findFirst({
           where: {
             productId: orderDetail.productId,
             variant: orderDetail.variation,
@@ -243,7 +243,7 @@ export async function deleteOrder(req: NextApiRequest, res: NextApiResponse) {
 
         if (productStock) {
           // Update product stock quantity
-          await prisma.productStock.update({
+          await prisma.product_stocks.update({
             where: {
               id: productStock.id,
             },
@@ -257,7 +257,7 @@ export async function deleteOrder(req: NextApiRequest, res: NextApiResponse) {
       }
 
       // Delete order detail
-      await prisma.orderDetail.delete({
+      await prisma.order_details.delete({
         where: {
           id: orderDetail.id,
         },
@@ -265,7 +265,7 @@ export async function deleteOrder(req: NextApiRequest, res: NextApiResponse) {
     }
 
     // Delete the order
-    await prisma.order.delete({
+    await prisma.orders.delete({
       where: {
         id: parseInt(orderId),
       },
@@ -278,7 +278,7 @@ export async function deleteOrder(req: NextApiRequest, res: NextApiResponse) {
   }
 }
 
-export async function bulkDeleteOrders(req: NextApiRequest, res: NextApiResponse) {
+export async function bulkDeleteOrders(data: createOrUpdateData) {
   const orderIds = req.body.ids as number[]; // Assuming you're sending the order IDs in the request body
 
   try {
@@ -300,17 +300,17 @@ async function deleteOrderById(orderId: number) {
   // You can either call your existing deleteOrder function or implement the deletion logic directly
 }
 
-export async function getOrderDetails(req: NextApiRequest, res: NextApiResponse) {
+export async function getOrderDetails(data: createOrUpdateData) {
   const orderId = parseInt(req.query.order_id as string); // Assuming you're getting the order ID from the query parameters
 
   try {
     // Find the order details
-    const order = await prisma.order.findUnique({
+    const order = await prisma.orders.findUnique({
       where: {
         id: orderId,
       },
       include: {
-        orderDetails: true, // Include related orderDetails
+        order_details: true, // Include related orderDetails
       },
     });
 
@@ -328,19 +328,19 @@ export async function getOrderDetails(req: NextApiRequest, res: NextApiResponse)
   }
 }
 
-export async function updateDeliveryStatus(req: NextApiRequest, res: NextApiResponse) {
+export async function updateDeliveryStatus(data: createOrUpdateData) {
   const orderId = parseInt(req.body.order_id); // Assuming you're getting the order ID from the request body
   const status = req.body.status; // Assuming you're getting the new status from the request body
 
   try {
     // Find the order
-    const order = await prisma.order.findUnique({
+    const order = await prisma.orders.findUnique({
       where: {
         id: orderId,
       },
       include: {
-        orderDetails: true, // Include related orderDetails
-        user: true, // Include related user
+        order_details: true, // Include related orderDetails
+        users: true, // Include related user
       },
     });
 
@@ -349,29 +349,29 @@ export async function updateDeliveryStatus(req: NextApiRequest, res: NextApiResp
     }
 
     // Update the delivery status of the order
-    order.deliveryStatus = status;
-    await prisma.order.update({
+    order.delivery_status = status;
+    await prisma.orders.update({
       where: {
         id: orderId,
       },
       data: {
-        deliveryStatus: status,
+        delivery_status: status,
       },
     });
 
     // Handle cancellation refund to wallet
-    if (status === 'cancelled' && order.paymentType === 'wallet') {
-      const user = await prisma.user.findUnique({
+    if (status === 'cancelled' && order.payment_type === 'wallet') {
+      const user = await prisma.users.findUnique({
         where: {
           id: order.userId,
         },
       });
 
       if (user) {
-        user.balance += order.grandTotal;
-        await prisma.user.update({
+        user.balance += orders.grand_total;
+        await prisma.users.update({
           where: {
-            id: order.userId,
+            id: order.user_id,
           },
           data: {
             balance: user.balance,
@@ -381,14 +381,14 @@ export async function updateDeliveryStatus(req: NextApiRequest, res: NextApiResp
     }
 
     // Update delivery status for order details
-    for (const orderDetail of order.orderDetails) {
-      orderDetail.deliveryStatus = status;
-      await prisma.orderDetail.update({
+    for (const orderDetail of order.order_details) {
+      orderDetail.delivery_status = status;
+      await prisma.order_details.update({
         where: {
           id: orderDetail.id,
         },
         data: {
-          deliveryStatus: status,
+          delivery_status: status,
         },
       });
 
@@ -418,13 +418,13 @@ export async function updateDeliveryStatus(req: NextApiRequest, res: NextApiResp
   }
 }
 
-export async function updateTrackingCode(req: NextApiRequest, res: NextApiResponse) {
+export async function updateTrackingCode(data: createOrUpdateData) {
   const orderId = parseInt(req.body.order_id); // Assuming you're getting the order ID from the request body
   const trackingCode = req.body.tracking_code; // Assuming you're getting the tracking code from the request body
 
   try {
     // Find the order
-    const order = await prisma.order.findUnique({
+    const order = await prisma.orders.findUnique({
       where: {
         id: orderId,
       },
@@ -452,19 +452,19 @@ export async function updateTrackingCode(req: NextApiRequest, res: NextApiRespon
 }
 
 
-export async function updatePaymentStatus(req: NextApiRequest, res: NextApiResponse) {
+export async function updatePaymentStatus(data: createOrUpdateData) {
   const orderId = parseInt(req.body.order_id); // Assuming you're getting the order ID from the request body
   const status = req.body.status; // Assuming you're getting the new payment status from the request body
 
   try {
     // Find the order
-    const order = await prisma.order.findUnique({
+    const order = await prisma.orders.findUnique({
       where: {
         id: orderId,
       },
       include: {
-        orderDetails: true, // Include related orderDetails
-        user: true, // Include related user
+        order_details: true, // Include related orderDetails
+        users: true, // Include related user
       },
     });
 
@@ -473,35 +473,35 @@ export async function updatePaymentStatus(req: NextApiRequest, res: NextApiRespo
     }
 
     // Update the payment status of the order and order details
-    for (const orderDetail of order.orderDetails) {
-      orderDetail.paymentStatus = status;
-      await prisma.orderDetail.update({
+    for (const orderDetail of order.order_details) {
+      orderDetail.payment_status = status;
+      await prisma.order_details.update({
         where: {
           id: orderDetail.id,
         },
         data: {
-          paymentStatus: status,
+          payment_status: status,
         },
       });
     }
 
     // Calculate overall payment status for the order
     let overallPaymentStatus = 'paid';
-    for (const orderDetail of order.orderDetails) {
-      if (orderDetail.paymentStatus !== 'paid') {
+    for (const orderDetail of order.order_details) {
+      if (orderDetail.payment_status !== 'paid') {
         overallPaymentStatus = 'unpaid';
         break;
       }
     }
 
     // Update overall payment status of the order
-    await prisma.order.update({
+    await prisma.orders.update({
       where: {
         id: orderId,
       },
       data: {
-        paymentStatus: overallPaymentStatus,
-        paymentStatusViewed: '0', // Assuming you also update paymentStatusViewed
+        payment_status: overallPaymentStatus,
+        payment_status_viewed: '0', // Assuming you also update paymentStatusViewed
       },
     });
 
@@ -525,19 +525,19 @@ export async function updatePaymentStatus(req: NextApiRequest, res: NextApiRespo
 }
 
 
-export async function assignDeliveryBoy(req: NextApiRequest, res: NextApiResponse) {
+export async function assignDeliveryBoy(data: createOrUpdateData) {
   if (process.env.DELIVERY_BOY_ACTIVATED === 'true') {
     const orderId = parseInt(req.body.order_id); // Assuming you're getting the order ID from the request body
     const deliveryBoyId = parseInt(req.body.delivery_boy); // Assuming you're getting the delivery boy ID from the request body
 
     try {
       // Find the order
-      const order = await prisma.order.findUnique({
+      const order = await prisma.orders.findUnique({
         where: {
           id: orderId,
         },
         include: {
-          deliveryBoy: true, // Include related delivery boy
+          delivery_boy: true, // Include related delivery boy
         },
       });
 
@@ -546,7 +546,7 @@ export async function assignDeliveryBoy(req: NextApiRequest, res: NextApiRespons
       }
 
       // Update the assigned delivery boy and delivery history
-      await prisma.order.update({
+      await prisma.orders.update({
         where: {
           id: orderId,
         },
@@ -557,31 +557,31 @@ export async function assignDeliveryBoy(req: NextApiRequest, res: NextApiRespons
       });
 
       // Check if a delivery history exists for the order and delivery status
-      let deliveryHistory = await prisma.deliveryHistory.findFirst({
+      let deliveryHistory = await prisma.delivery_histories.findFirst({
         where: {
-          orderId: orderId,
-          deliveryStatus: order.deliveryStatus,
+          order_id: orderId,
+          delivery_status: order.delivery_status,
         },
       });
 
       if (!deliveryHistory) {
         // If no delivery history exists, create a new one
-        deliveryHistory = await prisma.deliveryHistory.create({
+        deliveryHistory = await prisma.delivery_histories.create({
           data: {
-            orderId: orderId,
-            deliveryStatus: order.deliveryStatus,
-            paymentType: order.paymentType,
-            deliveryBoyId: deliveryBoyId,
+            order_id: orderId,
+            delivery_status: order.delivery_status,
+            payment_type: order.payment_type,
+            delivery_boy_id: deliveryBoyId,
           },
         });
       } else {
         // If a delivery history already exists, update the delivery boy ID
-        await prisma.deliveryHistory.update({
+        await prisma.delivery_histories.update({
           where: {
             id: deliveryHistory.id,
           },
           data: {
-            deliveryBoyId: deliveryBoyId,
+            delivery_boy_id: deliveryBoyId,
           },
         });
       }

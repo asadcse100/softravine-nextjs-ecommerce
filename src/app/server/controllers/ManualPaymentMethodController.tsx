@@ -11,7 +11,7 @@ type createOrUpdateData = {
   created_at?: string;
 };
 
-// export const getManualPaymentMethods = async (req: NextApiRequest, res: NextApiResponse) => {
+// export const getManualPaymentMethods = async (data: createOrUpdateData) => {
 //   try {
 //     const manualPaymentMethods = await prisma.manualPaymentMethod.findMany();
 //     res.status(200).json(manualPaymentMethods);
@@ -31,7 +31,7 @@ export const getManualPaymentMethods = async () => {
   }
 }
 
-export const storeManualPaymentMethod = async (req: NextApiRequest, res: NextApiResponse) => {
+export const storeManualPaymentMethod = async (data: createOrUpdateData) => {
     const { type, photo, heading, description, bank_name, account_name, account_number, routing_number } = req.body;
   
     try {
@@ -66,7 +66,7 @@ export const storeManualPaymentMethod = async (req: NextApiRequest, res: NextApi
   };
 
 
-  export const updateManualPaymentMethod = async (req: NextApiRequest, res: NextApiResponse) => {
+  export const updateManualPaymentMethod = async (data: createOrUpdateData) => {
     const { id } = req.query;
     const { type, photo, heading, description, bank_name, account_name, account_number, routing_number } = req.body;
   
@@ -102,7 +102,7 @@ export const storeManualPaymentMethod = async (req: NextApiRequest, res: NextApi
     }
   };
 
-  export const deleteManualPaymentMethod = async (req: NextApiRequest, res: NextApiResponse) => {
+  export const deleteManualPaymentMethod = async (data: createOrUpdateData) => {
     const { id } = req.query;
   
     try {
@@ -117,7 +117,7 @@ export const storeManualPaymentMethod = async (req: NextApiRequest, res: NextApi
     }
   };
 
-  export const submitOfflinePayment = async (req: NextApiRequest, res: NextApiResponse) => {
+  export const submitOfflinePayment = async (data: createOrUpdateData) => {
     const { order_id, name, amount, trx_id, photo, payment_option } = req.body;
   
     if (!name || !amount || !trx_id) {

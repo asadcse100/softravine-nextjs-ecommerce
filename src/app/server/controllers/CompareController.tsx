@@ -1,4 +1,3 @@
-import { NextApiRequest, NextApiResponse } from 'next';
 import { PrismaClient } from '@prisma/client';
 
 const prisma = new PrismaClient();
@@ -9,7 +8,7 @@ type createOrUpdateData = {
   value: string;
 };
 
-export const addToCompare = async (req: NextApiRequest, res: NextApiResponse) => {
+export const addToCompare = async (data: createOrUpdateData) => {
   const { productId, userId } = req.body;
 
   if (!productId || !userId) {
@@ -47,7 +46,7 @@ export const addToCompare = async (req: NextApiRequest, res: NextApiResponse) =>
 };
 
 
-export const getCategories = async (req: NextApiRequest, res: NextApiResponse) => {
+export const getCategories = async (data: createOrUpdateData) => {
     try {
       const categories = await prisma.categories.findMany();
       res.status(200).json(categories);

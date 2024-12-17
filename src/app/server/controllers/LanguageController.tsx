@@ -10,23 +10,25 @@ type createOrUpdateData = {
   name: string;
   code: string;
   app_lang_code: string;
-  rtl: number;
-  status: number;
+  rtl: boolean;
+  status: boolean;
+  values: string;
+  lang_value: string;
   created_at?: string;
 };
 
 export const selectCode = async () => {
-  try{
-      const languages = await prisma.languages.findMany({
-        select: {
-          code: true,
-        },
-      });
-      return { success: true, data: languages };
+  try {
+    const languages = await prisma.languages.findMany({
+      select: {
+        code: true,
+      },
+    });
+    return { success: true, data: languages };
 
-  }catch(error){
-      console.error("Error fetching customer:", error);
-      return { success: false, error };
+  } catch (error) {
+    console.error("Error fetching customer:", error);
+    return { success: false, error };
   }
 }
 
@@ -94,137 +96,173 @@ export const getLanguages = async () => {
   }
 }
 
-export const storeLanguage = async (req: NextApiRequest, res: NextApiResponse) => {
+// export const storeLanguage = async (req: NextApiRequest, res: NextApiResponse) => {
+//   try {
+//     const { name, code, app_lang_code } = req.body;
+
+//     if (!name || !code || !app_lang_code) {
+//       return res.status(400).json({ message: 'All fields are required' });
+//     }
+
+//     const existingLanguage = await prisma.language.findUnique({
+//       where: { code: code }
+//     });
+
+//     if (existingLanguage) {
+//       return res.status(400).json({ message: 'This code is already used for another language' });
+//     }
+
+//     const newLanguage = await prisma.language.create({
+//       data: {
+//         name,
+//         code,
+//         app_lang_code
+//       }
+//     });
+
+//     // Invalidate cache (implement cache invalidation as needed)
+//     // Example: await invalidateCache('app.languages');
+
+//     res.status(201).json({ message: 'Language has been inserted successfully', language: newLanguage });
+//   } catch (error) {
+//     console.error(error);
+//     res.status(500).json({ message: 'Internal Server Error' });
+//   }
+// };
+
+export async function createOrUpdateLanguage(data: createOrUpdateData) {
   try {
-    const { name, code, app_lang_code } = req.body;
 
-    if (!name || !code || !app_lang_code) {
-      return res.status(400).json({ message: 'All fields are required' });
-    }
+    const created_at = data.created_at ? new Date(data.created_at) : new Date();
 
-    const existingLanguage = await prisma.language.findUnique({
-      where: { code: code }
-    });
-
-    if (existingLanguage) {
-      return res.status(400).json({ message: 'This code is already used for another language' });
-    }
-
-    const newLanguage = await prisma.language.create({
-      data: {
-        name,
-        code,
-        app_lang_code
+    const newPost = await prisma.languages.upsert({
+      where: { id: data.id ?? 0 }, // Fallback to 0 if `data.id` is null
+      update: {
+        name: data.name,
+        code: data.code,
+        app_lang_code: data.app_lang_code,
+        rtl: data.rtl,
+        status: data.status,
+        updated_at: data.created_at,
+      },
+      create: {
+        name: data.name,
+        code: data.code,
+        app_lang_code: data.app_lang_code,
+        rtl: data.rtl,
+        status: data.status,
+        created_at: data.created_at,
       }
     });
 
-    // Invalidate cache (implement cache invalidation as needed)
-    // Example: await invalidateCache('app.languages');
-
-    res.status(201).json({ message: 'Language has been inserted successfully', language: newLanguage });
+    return { success: true, data: newPost };
   } catch (error) {
-    console.error(error);
-    res.status(500).json({ message: 'Internal Server Error' });
+    console.error("Error creating Customer Package:", error);
+    return { success: false, error };
   }
 };
 
-export const updateLanguage = async (req: NextApiRequest, res: NextApiResponse) => {
-  const { id } = req.query;
-  const { name, code, app_lang_code } = req.body;
+// export const updateLanguage = async (req: NextApiRequest, res: NextApiResponse) => {
+//   const { id } = req.query;
+//   const { name, code, app_lang_code } = req.body;
 
-  if (!id || !name || !code || !app_lang_code) {
-    return res.status(400).json({ message: 'All fields are required' });
-  }
+//   if (!id || !name || !code || !app_lang_code) {
+//     return res.status(400).json({ message: 'All fields are required' });
+//   }
 
-  try {
-    const language = await prisma.language.findUnique({
-      where: { id: Number(id) },
-    });
+//   try {
+//     const language = await prisma.language.findUnique({
+//       where: { id: Number(id) },
+//     });
 
-    if (!language) {
-      return res.status(404).json({ message: 'Language not found' });
-    }
+//     if (!language) {
+//       return res.status(404).json({ message: 'Language not found' });
+//     }
 
-    const existingLanguage = await prisma.language.findFirst({
-      where: {
-        code: code,
-        id: { not: Number(id) },
-      },
-    });
+//     const existingLanguage = await prisma.language.findFirst({
+//       where: {
+//         code: code,
+//         id: { not: Number(id) },
+//       },
+//     });
 
-    if (existingLanguage) {
-      return res.status(400).json({ message: 'This code is already used for another language' });
-    }
+//     if (existingLanguage) {
+//       return res.status(400).json({ message: 'This code is already used for another language' });
+//     }
 
-    const defaultLanguageCode = process.env.DEFAULT_LANGUAGE || 'en';
+//     const defaultLanguageCode = process.env.DEFAULT_LANGUAGE || 'en';
 
-    if (language.code === defaultLanguageCode && language.code !== code) {
-      return res.status(400).json({ message: 'Default language code cannot be edited' });
-    }
+//     if (language.code === defaultLanguageCode && language.code !== code) {
+//       return res.status(400).json({ message: 'Default language code cannot be edited' });
+//     }
 
-    if (language.code === 'en' && code !== 'en') {
-      return res.status(400).json({ message: 'English language code cannot be edited' });
-    }
+//     if (language.code === 'en' && code !== 'en') {
+//       return res.status(400).json({ message: 'English language code cannot be edited' });
+//     }
 
-    const updatedLanguage = await prisma.language.update({
-      where: { id: Number(id) },
-      data: {
-        name,
-        code,
-        app_lang_code,
-      },
-    });
+//     const updatedLanguage = await prisma.language.update({
+//       where: { id: Number(id) },
+//       data: {
+//         name,
+//         code,
+//         app_lang_code,
+//       },
+//     });
 
-    // Invalidate cache (implement cache invalidation as needed)
-    // Example: await invalidateCache('app.languages');
+//     // Invalidate cache (implement cache invalidation as needed)
+//     // Example: await invalidateCache('app.languages');
 
-    res.status(200).json({ message: 'Language has been updated successfully', language: updatedLanguage });
-  } catch (error) {
-    console.error(error);
-    res.status(500).json({ message: 'Internal Server Error' });
-  }
-};
+//     res.status(200).json({ message: 'Language has been updated successfully', language: updatedLanguage });
+//   } catch (error) {
+//     console.error(error);
+//     res.status(500).json({ message: 'Internal Server Error' });
+//   }
+// };
 
-export const keyValueStore = async (req: NextApiRequest, res: NextApiResponse) => {
-  const { id, values } = req.body;
+// export const keyValueStore = async () => {
+export async function keyValueStore(data: createOrUpdateData) {
+  // const { id, values } = req.body;
+  const id = data.id;
+  const values = data.values;
 
   if (!id || !values || typeof values !== 'object') {
-    return res.status(400).json({ message: 'Invalid input' });
+    return { success: false, message: 'Invalid input' };
   }
 
   try {
-    const language = await prisma.language.findUnique({
+    const language = await prisma.languages.findUnique({
       where: { id: Number(id) },
     });
 
     if (!language) {
-      return res.status(404).json({ message: 'Language not found' });
+      // return res.status(404).json({ message: 'Language not found' });
+      return { success: false, message: 'Language not found' };
     }
 
     for (const [key, value] of Object.entries(values)) {
-      const translation = await prisma.translation.findFirst({
+      const translation = await prisma.translations.findFirst({
         where: {
           lang_key: key,
           lang: language.code,
         },
         orderBy: {
-          createdAt: 'desc',
+          created_at: 'desc',
         },
       });
 
       if (!translation) {
-        await prisma.translation.create({
+        await prisma.translations.create({
           data: {
             lang: language.code,
             lang_key: key,
-            lang_value: value,
+            lang_value: values,
           },
         });
       } else {
-        await prisma.translation.update({
+        await prisma.translations.update({
           where: { id: translation.id },
           data: {
-            lang_value: value,
+            lang_value: values,
           },
         });
       }
@@ -233,77 +271,91 @@ export const keyValueStore = async (req: NextApiRequest, res: NextApiResponse) =
     // Invalidate cache (implement cache invalidation as needed)
     // Example: await invalidateCache(`translations-${language.code}`);
 
-    res.status(200).json({ message: `Translations updated for ${language.name}` });
+    // res.status(200).json({ message: `Translations updated for ${language.name}` });
+    return { success: true, message: `Translations updated for ${language.name}` };
   } catch (error) {
-    console.error(error);
-    res.status(500).json({ message: 'Internal Server Error' });
+    // console.error(error);
+    // res.status(500).json({ message: 'Internal Server Error' });
+    console.error("Internal Server Error:", error);
+    return { success: false, error };
   }
 };
 
 
-export const updateStatus = async (req: NextApiRequest, res: NextApiResponse) => {
-  const { id, status } = req.body;
+// export const updateStatus = async () => {
+export async function updateStatus(data: createOrUpdateData) {
+  // const { id, status } = req.body;
+
+  const id = data.id;
+  const status = data.status;
 
   if (typeof id === 'undefined' || typeof status === 'undefined') {
-    return res.status(400).json({ message: 'Invalid input' });
+    // return res.status(400).json({ message: 'Invalid input' });
+    return { success: false, message: 'Invalid input' };
   }
 
   try {
-    const language = await prisma.language.findUnique({
+    const language = await prisma.languages.findUnique({
       where: { id: Number(id) },
     });
 
     if (!language) {
-      return res.status(404).json({ message: 'Language not found' });
+      // return res.status(404).json({ message: 'Language not found' });
+      return { success: false, message: 'Language not found' };
     }
 
     const defaultLanguageCode = process.env.DEFAULT_LANGUAGE || 'en';
 
-    if (language.code === defaultLanguageCode && status === 0) {
-      return res.status(400).json({ message: 'Default language cannot be inactive' });
+    if (language.code === defaultLanguageCode && status === false) {
+      // return res.status(400).json({ message: 'Default language cannot be inactive' });
+      return { success: false, message: 'Default language cannot be inactive' };
     }
 
-    const updatedLanguage = await prisma.language.update({
+    const updatedLanguage = await prisma.languages.update({
       where: { id: Number(id) },
       data: { status },
     });
 
-    return res.status(200).json({ message: 'Status updated successfully', language: updatedLanguage });
+    // return res.status(200).json({ message: 'Status updated successfully', language: updatedLanguage });
+    return { success: true, message: 'Status updated successfully', language: updatedLanguage };
   } catch (error) {
-    console.error(error);
-    return res.status(500).json({ message: 'Internal Server Error' });
+    console.error("Internal Server Error:", error);
+    return { success: false, error };
   }
 };
 
 
 //   export default async function updateRtlStatus(req: NextApiRequest, res: NextApiResponse) {
-export const updateRtlStatus = async (req: NextApiRequest, res: NextApiResponse) => {
-  if (req.method !== 'POST') {
-    return res.status(405).json({ message: 'Method not allowed' })
-  }
+export const updateRtlStatus = async (data: createOrUpdateData) => {
+  // export async function updateRtlStatus(data: createOrUpdateData) {
 
-  const { id, status } = req.body
+  // const { id, status } = req.body
+  const id = data.id;
+  const status = data.status;
 
   if (typeof id === 'undefined' || typeof status === 'undefined') {
-    return res.status(400).json({ message: 'Invalid input' })
+    // return res.status(400).json({ message: 'Invalid input' })
+    return { success: false, message: 'Invalid input' };
   }
 
   try {
-    const language = await prisma.language.findUnique({
+    const language = await prisma.languages.findUnique({
       where: { id: Number(id) },
     })
 
     if (!language) {
-      return res.status(404).json({ message: 'Language not found' })
+      // return res.status(404).json({ message: 'Language not found' })
+      return { success: false, message: 'Language not found' };
     }
 
     const defaultLanguageCode = process.env.DEFAULT_LANGUAGE || 'en'
 
     if (language.code === defaultLanguageCode && status === false) {
-      return res.status(400).json({ message: 'Default language cannot be inactive' })
+      // return res.status(400).json({ message: 'Default language cannot be inactive' })
+      return { success: false, message: 'Default language cannot be inactive' };
     }
 
-    const updatedLanguage = await prisma.language.update({
+    const updatedLanguage = await prisma.languages.update({
       where: { id: Number(id) },
       data: { rtl: Boolean(status) },
     })
@@ -315,16 +367,18 @@ export const updateRtlStatus = async (req: NextApiRequest, res: NextApiResponse)
   }
 };
 
-export const destroyLanguage = async (req: NextApiRequest, res: NextApiResponse) => {
-  const { id } = req.query;
+export const destroyLanguage = async (data: createOrUpdateData) => {
+  // const { id } = req.query;
+  const id = data.id;
 
   try {
-    const language = await prisma.language.findUnique({
+    const language = await prisma.languages.findUnique({
       where: { id: Number(id) }
     });
 
     if (!language) {
-      return res.status(404).json({ error: 'Language not found' });
+      // return res.status(404).json({ error: 'Language not found' });
+      return { success: false, message: 'Language not found' };
     }
 
     const defaultLanguage = process.env.DEFAULT_LANGUAGE || 'en';
@@ -341,7 +395,7 @@ export const destroyLanguage = async (req: NextApiRequest, res: NextApiResponse)
       req.session.locale = defaultLanguage;
     }
 
-    await prisma.language.delete({
+    await prisma.languages.delete({
       where: { id: Number(id) }
     });
 
@@ -359,7 +413,7 @@ export const config = {
   },
 };
 
-export const importEnglishFile = async (req: NextApiRequest, res: NextApiResponse) => {
+export const importEnglishFile = async (data: createOrUpdateData) => {
   const form = new formidable.IncomingForm();
 
   form.parse(req, async (err, fields, files) => {
@@ -382,7 +436,7 @@ export const importEnglishFile = async (req: NextApiRequest, res: NextApiRespons
       const translations = JSON.parse(contents);
 
       for (const [key, value] of Object.entries(translations)) {
-        await prisma.appTranslation.upsert({
+        await prisma.translations.upsert({
           where: {
             lang_lang_key: { lang: 'en', lang_key: key },
           },
@@ -398,12 +452,14 @@ export const importEnglishFile = async (req: NextApiRequest, res: NextApiRespons
   });
 };
 
-export const showAppTranslationView = async (req: NextApiRequest, res: NextApiResponse) => {
-  const { id } = req.query;
-  const { search } = req.query;
+export const showAppTranslationView = async (data: createOrUpdateData) => {
+  // const { id } = data.id;
+  // const { search } = req.query;
+  const id = data.id;
+  const search = data.search;
 
   try {
-    const language = await prisma.language.findUnique({
+    const language = await prisma.languages.findUnique({
       where: { id: Number(id) },
     });
 
@@ -411,7 +467,7 @@ export const showAppTranslationView = async (req: NextApiRequest, res: NextApiRe
       return res.status(404).json({ error: 'Language not found' });
     }
 
-    let langKeys = prisma.appTranslation.findMany({
+    let langKeys = prisma.translations.findMany({
       where: { lang: 'en', lang_key: { contains: search as string || '' } },
       take: 50,
     });
@@ -424,11 +480,13 @@ export const showAppTranslationView = async (req: NextApiRequest, res: NextApiRe
   }
 };
 
-export const storeAppTranslation = async (req: NextApiRequest, res: NextApiResponse) => {
-  const { id, values } = req.body;
+export const storeAppTranslation = async (data: createOrUpdateData) => {
+  // const { id, values } = req.body;
+  const id = data.id;
+  const values = data.values;
 
   try {
-    const language = await prisma.language.findUnique({
+    const language = await prisma.languages.findUnique({
       where: { id: Number(id) },
     });
 
@@ -437,7 +495,7 @@ export const storeAppTranslation = async (req: NextApiRequest, res: NextApiRespo
     }
 
     const promises = Object.entries(values).map(([key, value]) =>
-      prisma.appTranslation.upsert({
+      prisma.translations.upsert({
         where: {
           lang_lang_key: { lang: language.app_lang_code, lang_key: key },
         },
@@ -455,11 +513,12 @@ export const storeAppTranslation = async (req: NextApiRequest, res: NextApiRespo
 };
 
 
-export const exportARBFile = async (req: NextApiRequest, res: NextApiResponse) => {
-  const { id } = req.query;
+export const exportARBFile = async (data: createOrUpdateData) => {
+  // const { id } = req.query;
+  const id = data.id;
 
   try {
-    const language = await prisma.language.findUnique({
+    const language = await prisma.languages.findUnique({
       where: { id: Number(id) },
     });
 
@@ -467,7 +526,7 @@ export const exportARBFile = async (req: NextApiRequest, res: NextApiResponse) =
       return res.status(404).json({ error: 'Language not found' });
     }
 
-    const translations = await prisma.appTranslation.findMany({
+    const translations = await prisma.translations.findMany({
       where: { lang: language.app_lang_code },
       select: {
         lang_key: true,

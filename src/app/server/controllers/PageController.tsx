@@ -15,7 +15,8 @@ type createOrUpdateData = {
   created_at?: string;
 };
 
-export async function storePage(req: NextApiRequest, res: NextApiResponse) {
+export async function createOrUpdatePage(data: createOrUpdateData) {
+// export async function storePage(req: NextApiRequest, res: NextApiResponse) {
   try {
     const { title, slug, content, meta_title, meta_description, keywords, meta_image } = req.body;
 
@@ -37,10 +38,10 @@ export async function storePage(req: NextApiRequest, res: NextApiResponse) {
         slug: slug,
         type: 'custom_page',
         content: content,
-        metaTitle: meta_title,
-        metaDescription: meta_description,
+        meta_title: meta_title,
+        meta_description: meta_description,
         keywords: keywords,
-        metaImage: meta_image,
+        meta_image: meta_image,
       },
       include: {
         translations: true, // Include related translations
@@ -52,7 +53,7 @@ export async function storePage(req: NextApiRequest, res: NextApiResponse) {
     let pageTranslation = await prisma.page_translations.findFirst({
       where: {
         lang: defaultLanguage,
-        pageId: page.id,
+        page_id: page.id,
       },
     });
 
@@ -90,7 +91,7 @@ export async function storePage(req: NextApiRequest, res: NextApiResponse) {
 }
 
 
-export async function updatePage(req: NextApiRequest, res: NextApiResponse) {
+export async function updatePage(data: createOrUpdateData) {
   try {
     const { id } = req.query;
     const { title, slug, content, meta_title, meta_description, keywords, meta_image, lang } = req.body;
@@ -184,7 +185,7 @@ export async function updatePage(req: NextApiRequest, res: NextApiResponse) {
   }
 }
 
-export async function deletePage(req: NextApiRequest, res: NextApiResponse) {
+export async function deletePage(data: createOrUpdateData) {
   try {
     const { id } = req.query;
 
@@ -205,7 +206,7 @@ export async function deletePage(req: NextApiRequest, res: NextApiResponse) {
     // Delete all translations related to the page
     await prisma.page_translations.deleteMany({
       where: {
-        pageId: parseInt(id as string),
+        page_id: parseInt(id as string),
       },
     });
 
@@ -225,7 +226,7 @@ export async function deletePage(req: NextApiRequest, res: NextApiResponse) {
 }
 
 
-export async function showCustomPage(req: NextApiRequest, res: NextApiResponse) {
+export async function showCustomPage(data: createOrUpdateData) {
   try {
     const { slug } = req.query;
 
@@ -248,7 +249,7 @@ export async function showCustomPage(req: NextApiRequest, res: NextApiResponse) 
   }
 }
 
-export async function showMobileCustomPage(req: NextApiRequest, res: NextApiResponse) {
+export async function showMobileCustomPage(data: createOrUpdateData) {
   try {
     const { slug } = req.query;
 

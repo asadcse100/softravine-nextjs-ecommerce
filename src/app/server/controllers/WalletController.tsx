@@ -71,7 +71,7 @@ export const customerWallet = async () => {
 }
 
 // export default async function recharge(req: NextApiRequest, res: NextApiResponse) {
-export const recharge = async (req: NextApiRequest, res: NextApiResponse) => {
+export const recharge = async () => {
   try {
     const { amount, payment_option } = req.body;
 
@@ -98,7 +98,7 @@ export const recharge = async (req: NextApiRequest, res: NextApiResponse) => {
   }
 }
 
-export async function walletPaymentDone(req: NextApiRequest, res: NextApiResponse) {
+export async function walletPaymentDone() {
   const session = await getSession({ req });
   if (!session) {
     return res.status(401).json({ error: 'Unauthorized' });
@@ -107,7 +107,7 @@ export async function walletPaymentDone(req: NextApiRequest, res: NextApiRespons
   const { amount, paymentMethod, paymentDetails } = req.body;
 
   try {
-    const user = await prisma.user.findUnique({
+    const user = await prisma.users.findUnique({
       where: { email: session.user.email }
     });
 
@@ -115,7 +115,7 @@ export async function walletPaymentDone(req: NextApiRequest, res: NextApiRespons
       return res.status(404).json({ error: 'User not found' });
     }
 
-    const updatedUser = await prisma.user.update({
+    const updatedUser = await prisma.users.update({
       where: { id: user.id },
       data: { balance: user.balance + amount }
     });
@@ -141,7 +141,7 @@ export async function walletPaymentDone(req: NextApiRequest, res: NextApiRespons
 }
 
 
-export async function offlineRecharge(req: NextApiRequest, res: NextApiResponse) {
+export async function offlineRecharge() {
   const session = await getSession({ req });
   if (!session) {
     return res.status(401).json({ error: 'Unauthorized' });
@@ -150,15 +150,15 @@ export async function offlineRecharge(req: NextApiRequest, res: NextApiResponse)
   const { amount, paymentOption, trxId, photo } = req.body;
 
   try {
-    const user = await prisma.user.findUnique({
-      where: { email: session.user.email }
+    const user = await prisma.users.findUnique({
+      where: { email: session.users.email }
     });
 
     if (!user) {
       return res.status(404).json({ error: 'User not found' });
     }
 
-    const wallet = await prisma.wallet.create({
+    const wallet = await prisma.wallets.create({
       data: {
         userId: user.id,
         amount,
@@ -176,9 +176,9 @@ export async function offlineRecharge(req: NextApiRequest, res: NextApiResponse)
   }
 }
 
-export async function getOfflineRechargeRequests(req: NextApiRequest, res: NextApiResponse) {
+export async function getOfflineRechargeRequests() {
   try {
-    const wallets = await prisma.wallet.findMany({
+    const wallets = await prisma.wallets.findMany({
       where: { offlinePayment: true },
       include: { user: true } // Include related user data if needed
     });
@@ -190,11 +190,11 @@ export async function getOfflineRechargeRequests(req: NextApiRequest, res: NextA
 }
 
 
-export async function updateApproved(req: NextApiRequest, res: NextApiResponse) {
+export async function updateApproved() {
   const { id, status } = req.body;
 
   try {
-    const wallet = await prisma.wallet.findUnique({
+    const wallet = await prisma.wallets.findUnique({
       where: { id: Number(id) },
       include: { user: true },
     });
@@ -206,18 +206,18 @@ export async function updateApproved(req: NextApiRequest, res: NextApiResponse) 
     const user = wallet.user;
 
     if (status === 1) {
-      await prisma.user.update({
+      await prisma.users.update({
         where: { id: user.id },
         data: { balance: user.balance + wallet.amount },
       });
     } else {
-      await prisma.user.update({
+      await prisma.users.update({
         where: { id: user.id },
         data: { balance: user.balance - wallet.amount },
       });
     }
 
-    const updatedWallet = await prisma.wallet.update({
+    const updatedWallet = await prisma.wallets.update({
       where: { id: Number(id) },
       data: { approval: status },
     });
