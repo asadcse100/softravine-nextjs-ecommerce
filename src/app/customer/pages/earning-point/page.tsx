@@ -1,7 +1,7 @@
-import Breadcrumb from "@/app/seller/components/Breadcrumbs/Breadcrumb";
+import Breadcrumb from "@/app/customer/components/Breadcrumbs/Breadcrumb";
 import { Products, columns } from "./columns"
 import { DataTable } from "./data-table"
-import CardDataStats from "@/app/seller/components/CardDataStats";
+import CardDataStats from "@/app/customer/components/CardDataStats";
 
 // async function getData(): Promise<Products[]> {
 //   // Fetch data from your API here.

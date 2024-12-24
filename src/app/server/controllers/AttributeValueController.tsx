@@ -35,3 +35,24 @@ export async function createOrUpdateAttributeValue(data: createOrUpdateData) {
     return { success: false, error };
   }
 }
+
+export const deleteAttributeValue = async (id: number) => {
+  try {
+    // Check if the record exists
+    const existingAttributeValues = await prisma.attribute_values.findUnique({
+      where: { id },
+    });
+
+    if (!existingAttributeValues) {
+      return { success: false, error: "Record does not exist." };
+    }
+
+    const deletedAttributeValues = await prisma.attribute_values.delete({
+      where: { id },
+    });
+    return { success: true, data: deletedAttributeValues };
+  } catch (error) {
+    console.error("Error deleting AttributeValues:", error);
+    return { success: false, error };
+  }
+};

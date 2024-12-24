@@ -45,7 +45,7 @@ export const getFollowedSellers = async () => {
 }
 
 export const followSellerController = {
-  async store(req: NextApiRequest, res: NextApiResponse) {
+  async store() {
     try {
       // Assuming user is attached to the request
       const userId = req.users.id;
@@ -63,10 +63,10 @@ export const followSellerController = {
       });
 
       if (!followedSeller) {
-        await prisma.follow_seller.create({
+        await prisma.follow_sellers.create({
           data: {
-            userId,
-            shopId,
+            user_id,
+            shop_id,
           },
         });
       }
@@ -87,7 +87,7 @@ export const followSellerController = {
         return res.status(401).json({ message: 'Unauthorized' });
       }
 
-      const followedSeller = await prisma.follow_seller.findFirst({
+      const followedSeller = await prisma.follow_sellers.findFirst({
         where: {
           userId,
           shopId,
@@ -95,7 +95,7 @@ export const followSellerController = {
       });
 
       if (followedSeller) {
-        await prisma.followSeller.deleteMany({
+        await prisma.follow_sellers.deleteMany({
           where: {
             userId,
             shopId,

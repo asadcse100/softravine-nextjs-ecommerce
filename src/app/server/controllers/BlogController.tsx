@@ -101,11 +101,32 @@ export async function changeBlogPostStatus(id: number, status: string) {
   });
 }
 
-export async function deleteBlogPost(id: number) {
-  return prisma.blogs.delete({
-    where: { id },
-  });
-}
+// export async function deleteBlogPost(id: number) {
+//   return prisma.blogs.delete({
+//     where: { id },
+//   });
+// }
+
+export const deleteBlogPost = async (id: number) => {
+  try {
+    // Check if the record exists
+    const existingblogs = await prisma.blogs.findUnique({
+      where: { id },
+    });
+
+    if (!existingblogs) {
+      return { success: false, error: "Record does not exist." };
+    }
+
+    const deletedblog = await prisma.blogs.delete({
+      where: { id },
+    });
+    return { success: true, data: deletedblog };
+  } catch (error) {
+    console.error("Error deleting blog:", error);
+    return { success: false, error };
+  }
+};
 
 export const getAllBlogs = async () => {
   try {

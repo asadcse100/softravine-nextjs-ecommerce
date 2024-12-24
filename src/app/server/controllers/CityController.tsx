@@ -61,12 +61,12 @@ export const getCities = async () => {
 //   }
 // }
 
-export async function createOrUpdateBrand(data: createOrUpdateData) {
+export async function createOrUpdateCity(data: createOrUpdateData) {
   try {
     // Use the provided `created_at` or fallback to the current date
     const created_at = data.created_at ? new Date(data.created_at) : new Date();
     // Perform the upsert operation
-    const newCategory = await prisma.cities.upsert({
+    const newCity = await prisma.cities.upsert({
       where: { id: data.id || 0 }, // Replace `0` with a non-zero ID if necessary
       update: {
         name: data.name,
@@ -84,9 +84,30 @@ export async function createOrUpdateBrand(data: createOrUpdateData) {
       },
     });
 
-    return { success: true, data: newCategory };
+    return { success: true, data: newCity };
   } catch (error) {
-    console.error("Error creating or updating blog category:", error);
+    console.error("Error creating or updating blog City:", error);
     return { success: false, message: "An unexpected error occurred" };
   }
 }
+
+export const deleteCity = async (id: number) => {
+  try {
+    // Check if the record exists
+    const existingCitys = await prisma.categories.findUnique({
+      where: { id },
+    });
+
+    if (!existingCitys) {
+      return { success: false, error: "Record does not exist." };
+    }
+
+    const deletedCitys = await prisma.categories.delete({
+      where: { id },
+    });
+    return { success: true, data: deletedCitys };
+  } catch (error) {
+    console.error("Error deleting Citys:", error);
+    return { success: false, error };
+  }
+};

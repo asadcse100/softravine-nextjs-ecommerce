@@ -85,7 +85,7 @@ type createOrUpdateData = {
 
   try {
     const bids = await prisma.auction_product_bids.findMany({
-      where: { userId: userId },
+      where: { user_id: userId },
       orderBy: { id: 'desc' },
       distinct: ['id'],
       include: {

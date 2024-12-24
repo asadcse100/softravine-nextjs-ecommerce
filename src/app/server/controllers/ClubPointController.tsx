@@ -75,3 +75,24 @@ export async function createOrUpdateUserPoint(data: createOrUpdateData) {
     return { success: false, error };
   }
 }
+
+export const deleteUserPoint = async (id: number) => {
+  try {
+    // Check if the record exists
+    const existingUserPoints = await prisma.categories.findUnique({
+      where: { id },
+    });
+
+    if (!existingUserPoints) {
+      return { success: false, error: "Record does not exist." };
+    }
+
+    const deletedUserPoints = await prisma.categories.delete({
+      where: { id },
+    });
+    return { success: true, data: deletedUserPoints };
+  } catch (error) {
+    console.error("Error deleting UserPoints:", error);
+    return { success: false, error };
+  }
+};

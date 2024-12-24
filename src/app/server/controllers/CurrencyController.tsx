@@ -169,3 +169,24 @@ export async function createOrUpdateCurrency(data: createOrUpdateData) {
       res.status(500).json({ error: 'Failed to update currency status' });
     }
   };
+  
+  export const deleteCurrency = async (id: number) => {
+    try {
+      // Check if the record exists
+      const existingCurrencys = await prisma.currencies.findUnique({
+        where: { id },
+      });
+  
+      if (!existingCurrencys) {
+        return { success: false, error: "Record does not exist." };
+      }
+  
+      const deletedCurrencys = await prisma.currencies.delete({
+        where: { id },
+      });
+      return { success: true, data: deletedCurrencys };
+    } catch (error) {
+      console.error("Error deleting Currency:", error);
+      return { success: false, error };
+    }
+  };

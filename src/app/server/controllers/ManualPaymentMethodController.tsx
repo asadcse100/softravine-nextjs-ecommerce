@@ -102,18 +102,39 @@ export const storeManualPaymentMethod = async (data: createOrUpdateData) => {
     }
   };
 
-  export const deleteManualPaymentMethod = async (data: createOrUpdateData) => {
-    const { id } = req.query;
+  // export const deleteManualPaymentMethod = async (data: createOrUpdateData) => {
+  //   const { id } = req.query;
   
+  //   try {
+  //     const deletedManualPaymentMethod = await prisma.manual_payment_methods.delete({
+  //       where: { id: Number(id) },
+  //     });
+  
+  //     res.status(200).json({ message: 'Method has been deleted successfully', deletedManualPaymentMethod });
+  //   } catch (error) {
+  //     console.error(error);
+  //     res.status(500).json({ error: 'Something went wrong' });
+  //   }
+  // };
+  
+  export const deleteManualPaymentMethod = async (id: number) => {
     try {
-      const deletedManualPaymentMethod = await prisma.manual_payment_methods.delete({
-        where: { id: Number(id) },
+      // Check if the record exists
+      const existingManualPaymentMethods = await prisma.manual_payment_methods.findUnique({
+        where: { id },
       });
   
-      res.status(200).json({ message: 'Method has been deleted successfully', deletedManualPaymentMethod });
+      if (!existingManualPaymentMethods) {
+        return { success: false, error: "Record does not exist." };
+      }
+  
+      const deletedManualPaymentMethods = await prisma.manual_payment_methods.delete({
+        where: { id },
+      });
+      return { success: true, data: deletedManualPaymentMethods };
     } catch (error) {
-      console.error(error);
-      res.status(500).json({ error: 'Something went wrong' });
+      console.error("Error deleting ManualPaymentMethods:", error);
+      return { success: false, error };
     }
   };
 

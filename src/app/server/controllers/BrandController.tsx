@@ -107,27 +107,27 @@ export async function createOrUpdateBrand(data: createOrUpdateData) {
   }
 }
 
-export async function updateBrand(id: number, name: string, metaTitle: string, metaDescription: string, slug: string | null, logo: string | null, lang: string) {
-  const brand = await prisma.brands.update({
-    where: { id },
-    data: {
-      name,
-      meta_title: metaTitle,
-      meta_description: metaDescription,
-      slug: slug || `${name.replace(/\s+/g, '-').replace(/[^A-Za-z0-9\-]/g, '')}-${Math.random().toString(36).substring(7)}`,
-      logo,
-      translations: {
-        upsert: {
-          where: { lang_brand_id: { lang, brand_id: id } },
-          update: { name },
-          create: { lang, name },
-        },
-      },
-    },
-  });
+// export async function updateBrand(id: number, name: string, metaTitle: string, metaDescription: string, slug: string | null, logo: string | null, lang: string) {
+//   const brand = await prisma.brands.update({
+//     where: { id },
+//     data: {
+//       name,
+//       meta_title: metaTitle,
+//       meta_description: metaDescription,
+//       slug: slug || `${name.replace(/\s+/g, '-').replace(/[^A-Za-z0-9\-]/g, '')}-${Math.random().toString(36).substring(7)}`,
+//       logo,
+//       translations: {
+//         upsert: {
+//           where: { lang_brand_id: { lang, brand_id: id } },
+//           update: { name },
+//           create: { lang, name },
+//         },
+//       },
+//     },
+//   });
 
-  return brand;
-}
+//   return brand;
+// }
 
 export async function deleteBrand(id: number) {
   // Delete products associated with the brand
@@ -139,3 +139,24 @@ export async function deleteBrand(id: number) {
   // Delete the brand
   await prisma.brands.delete({ where: { id } });
 }
+
+// export const deleteBrand = async (id: number) => {
+//   try {
+//     // Check if the record exists
+//     const existingblogs = await prisma.blogs.findUnique({
+//       where: { id },
+//     });
+
+//     if (!existingblogs) {
+//       return { success: false, error: "Record does not exist." };
+//     }
+
+//     const deletedblog = await prisma.blogs.delete({
+//       where: { id },
+//     });
+//     return { success: true, data: deletedblog };
+//   } catch (error) {
+//     console.error("Error deleting blog:", error);
+//     return { success: false, error };
+//   }
+// };

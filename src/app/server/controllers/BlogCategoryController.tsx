@@ -7,6 +7,22 @@ type createOrUpdateData = {
   created_at?: string;
 };
 
+export const getBlogCategoryById = async (data: createOrUpdateData) => {
+  // const id = data.id;
+  try {
+    const blogCategories = await prisma.blog_categories.findFirst({
+      where: { id: data.id },
+      orderBy: {
+        created_at: "desc", // Replace 'created_at' with your column name
+      },
+    });
+    return { success: true, data: blogCategories };
+  } catch (error) {
+    console.error("Error fetching blog category:", error);
+    return { success: false, error };
+  }
+};
+
 export const getBlogCategories = async () => {
   try {
     const blogCategories = await prisma.blog_categories.findMany({
@@ -78,6 +94,15 @@ export const updateBlogCategory = async (id: number, category_name: string) => {
 
 export const deleteBlogCategory = async (id: number) => {
   try {
+    // Check if the record exists
+    const existingCategory = await prisma.blog_categories.findUnique({
+      where: { id },
+    });
+
+    if (!existingCategory) {
+      return { success: false, error: "Record does not exist." };
+    }
+
     const deletedCategory = await prisma.blog_categories.delete({
       where: { id },
     });

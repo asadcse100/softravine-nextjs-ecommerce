@@ -86,7 +86,7 @@ const DropdownMessage = () => {
         ref={dropdown}
         onFocus={() => setDropdownOpen(true)}
         onBlur={() => setDropdownOpen(false)}
-        className={`absolute -right-16 mt-2.5 flex h-90 w-75 flex-col rounded-sm border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark sm:right-0 sm:w-80 ${
+        className={`p-5 absolute -right-16 mt-2.5 flex h-90 w-75 flex-col rounded-sm border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark sm:right-0 sm:w-80 ${
           dropdownOpen === true ? "block" : "hidden"
         }`}
       >
@@ -98,7 +98,7 @@ const DropdownMessage = () => {
           <li>
             <Link
               className="flex gap-4.5 border-t border-stroke px-4.5 py-3 hover:bg-gray-2 dark:border-strokedark dark:hover:bg-meta-4"
-              href="/admin"
+              href="/messages"
             >
               <div className="h-12.5 w-12.5 rounded-full">
                 <Image
@@ -125,7 +125,7 @@ const DropdownMessage = () => {
           <li>
             <Link
               className="flex gap-4.5 border-t border-stroke px-4.5 py-3 hover:bg-gray-2 dark:border-strokedark dark:hover:bg-meta-4"
-              href="/admin"
+              href="/messages"
             >
               <div className="h-12.5 w-12.5 rounded-full">
                 <Image
@@ -152,7 +152,7 @@ const DropdownMessage = () => {
           <li>
             <Link
               className="flex gap-4.5 border-t border-stroke px-4.5 py-3 hover:bg-gray-2 dark:border-strokedark dark:hover:bg-meta-4"
-              href="/admin"
+              href="/messages"
             >
               <div className="h-12.5 w-12.5 rounded-full">
                 <Image
@@ -179,7 +179,7 @@ const DropdownMessage = () => {
           <li>
             <Link
               className="flex gap-4.5 border-t border-stroke px-4.5 py-3 hover:bg-gray-2 dark:border-strokedark dark:hover:bg-meta-4"
-              href="/admin"
+              href="/messages"
             >
               <div className="h-12.5 w-12.5 rounded-full">
                 <Image
@@ -206,7 +206,7 @@ const DropdownMessage = () => {
           <li>
             <Link
               className="flex gap-4.5 border-t border-stroke px-4.5 py-3 hover:bg-gray-2 dark:border-strokedark dark:hover:bg-meta-4"
-              href="/admin"
+              href="/messages"
             >
               <div className="h-12.5 w-12.5 rounded-full">
                 <Image

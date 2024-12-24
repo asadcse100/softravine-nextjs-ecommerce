@@ -115,19 +115,40 @@ export async function createOrUpdateState(data: createOrUpdateData) {
 //   }
 // };
 
-export const deleteState = async (data: createOrUpdateData) => {
-  const { id } = req.query;
-
+export const deleteState = async (id: number) => {
   try {
-    await prisma.states.delete({
-      where: { id: Number(id) },
+    // Check if the record exists
+    const existingStates = await prisma.states.findUnique({
+      where: { id },
     });
 
-    res.status(200).json({ message: 'State has been deleted successfully' });
+    if (!existingStates) {
+      return { success: false, error: "Record does not exist." };
+    }
+
+    const deletedStates = await prisma.states.delete({
+      where: { id },
+    });
+    return { success: true, data: deletedStates };
   } catch (error) {
-    res.status(500).json({ error: 'Something went wrong' });
+    console.error("Error deleting States:", error);
+    return { success: false, error };
   }
 };
+
+// export const deleteState = async (data: createOrUpdateData) => {
+//   const { id } = req.query;
+
+//   try {
+//     await prisma.states.delete({
+//       where: { id: Number(id) },
+//     });
+
+//     res.status(200).json({ message: 'State has been deleted successfully' });
+//   } catch (error) {
+//     res.status(500).json({ error: 'Something went wrong' });
+//   }
+// };
 
 export const updateStateStatus = async (data: createOrUpdateData) => {
   const { id, status } = req.body;

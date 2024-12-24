@@ -146,17 +146,39 @@ export async function createOrUpdateCountry(data: createOrUpdateData) {
 //   }
 // };
 
-export const destroy = async (req: NextApiRequest, res: NextApiResponse) => {
-  try {
-    const { id } = req.query;
+// export const destroy = async (req: NextApiRequest, res: NextApiResponse) => {
+//   try {
+//     const { id } = req.query;
 
-    await prisma.coupons.delete({
-      where: { id: Number(id) },
+//     await prisma.coupons.delete({
+//       where: { id: Number(id) },
+//     });
+
+//     res.status(200).json({ success: 'Coupon has been deleted successfully' });
+//   } catch (error) {
+//     res.status(500).json({ error: 'Failed to delete coupon' });
+//   }
+// };
+
+
+export const deleteCoupon = async (id: number) => {
+  try {
+    // Check if the record exists
+    const existingCoupons = await prisma.coupons.findUnique({
+      where: { id },
     });
 
-    res.status(200).json({ success: 'Coupon has been deleted successfully' });
+    if (!existingCoupons) {
+      return { success: false, error: "Record does not exist." };
+    }
+
+    const deletedCoupons = await prisma.coupons.delete({
+      where: { id },
+    });
+    return { success: true, data: deletedCoupons };
   } catch (error) {
-    res.status(500).json({ error: 'Failed to delete coupon' });
+    console.error("Error deleting Coupon:", error);
+    return { success: false, error };
   }
 };
 

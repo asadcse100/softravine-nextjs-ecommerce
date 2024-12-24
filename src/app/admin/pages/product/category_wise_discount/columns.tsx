@@ -19,6 +19,32 @@ import { z } from "zod";
 import Input from "@/shared/Input/Input";
 import Link from "next/link";
 
+import { showErrorToast, showSuccessToast } from "@/app/admin/components/Toast";
+
+const handleDeleteWithConfirmation = async (id: number) => {
+  if (window.confirm("Are you sure you want to delete this category wise discount?")) {
+    await handleDelete(id);
+  }
+};
+
+const handleDelete = async (id: number) => {
+  const apiUrl = process.env.NEXT_PUBLIC_API_URL || "";
+  // setIsLoading(true);
+  try {
+    const response = await fetch(`${apiUrl}/server/api/routes/admin/blogs/blogCategories/${id}`, {
+      method: 'DELETE',
+    });
+
+    if (response.ok) {
+      showSuccessToast("Category wise discount deleted successfully");
+    } else {
+      const errorData = await response.json();
+      showErrorToast(errorData.error || "Error deleting category wise discount");
+    }
+  } catch (error) {
+    showErrorToast("Something went wrong");
+  } 
+};
 
 const formSchema = z.object({
   product_name: z.string().min(10, {
@@ -27,7 +53,7 @@ const formSchema = z.object({
 });
 
 export type Products = {
-  id: string;
+  id: number;
   icon: string;
   name: string;
   parent_category: string;

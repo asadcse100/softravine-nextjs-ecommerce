@@ -1,108 +1,85 @@
+import { BRAND } from "@/app/admin/types/brand";
+import { CUSTOMER } from "@/app/admin/types/customer";
 import Image from "next/image";
-import { Product } from "@/app/admin/types/product";
 
-const productData: Product[] = [
+const brandData: CUSTOMER[] = [
   {
-    image: "/images/product/product-01.png",
-    name: "Apple Watch Series 7",
-    category: "Electronics",
-    price: 296,
-    sold: 22,
-    profit: 45,
+    name: "Google",
+    visitors: 3.5,
   },
   {
-    image: "/images/product/product-02.png",
-    name: "Macbook Pro M1",
-    category: "Electronics",
-    price: 546,
-    sold: 12,
-    profit: 125,
+    name: "Twitter",
+    visitors: 2.2,
   },
   {
-    image: "/images/product/product-03.png",
-    name: "Dell Inspiron 15",
-    category: "Electronics",
-    price: 443,
-    sold: 64,
-    profit: 247,
+    name: "Github",
+    visitors: 2.1,
   },
   {
-    image: "/images/product/product-04.png",
-    name: "HP Probook 450",
-    category: "Electronics",
-    price: 499,
-    sold: 72,
-    profit: 103,
+    name: "Vimeo",
+    visitors: 1.5,
+  },
+  {
+    name: "Facebook",
+    visitors: 3.5,
   },
 ];
 
-const TableTwo = () => {
+const TableOne = () => {
   return (
-    <div className="rounded-sm border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark">
-      <div className="px-4 py-6 md:px-6 xl:px-7.5">
-        <h4 className="text-xl font-semibold text-black dark:text-white">
-          Top Products
-        </h4>
-      </div>
+    <div className="rounded-sm border border-stroke bg-slate-300 px-5 pb-2.5 pt-6 shadow-default dark:border-strokedark dark:bg-boxdark sm:px-7.5 xl:pb-1">
+      <h4 className="mb-6 text-xl font-semibold text-black dark:text-slate-300">
+        Recent Customer(s)
+      </h4>
 
-      <div className="grid grid-cols-6 border-t border-stroke px-4 py-4.5 dark:border-strokedark sm:grid-cols-8 md:px-6 2xl:px-7.5">
-        <div className="col-span-3 flex items-center">
-          <p className="font-medium">Product Name</p>
+      <div className="flex flex-col dark:text-slate-400">
+        <div className="grid grid-cols-3 rounded-sm bg-gray-2 dark:bg-meta-4 sm:grid-cols-5">
+          <div className="p-2.5 xl:p-5">
+            <h5 className="text-sm font-medium uppercase xsm:text-base">
+              Name
+            </h5>
+          </div>
+          <div className="p-2.5 text-center xl:p-5">
+            <h5 className="text-sm font-medium uppercase xsm:text-base">
+              Joined
+            </h5>
+          </div>
+          <div className="hidden p-2.5 text-center sm:block xl:p-5">
+            <h5 className="text-sm font-medium uppercase xsm:text-base">
+              Action
+            </h5>
+          </div>
         </div>
-        <div className="col-span-2 hidden items-center sm:flex">
-          <p className="font-medium">Category</p>
-        </div>
-        <div className="col-span-1 flex items-center">
-          <p className="font-medium">Price</p>
-        </div>
-        <div className="col-span-1 flex items-center">
-          <p className="font-medium">Sold</p>
-        </div>
-        <div className="col-span-1 flex items-center">
-          <p className="font-medium">Profit</p>
-        </div>
-      </div>
 
-      {productData.map((product, key) => (
-        <div
-          className="grid grid-cols-6 border-t border-stroke px-4 py-4.5 dark:border-strokedark sm:grid-cols-8 md:px-6 2xl:px-7.5"
-          key={key}
-        >
-          <div className="col-span-3 flex items-center">
-            <div className="flex flex-col gap-4 sm:flex-row sm:items-center">
-              <div className="h-12.5 w-15 rounded-md">
-                <Image
-                  src={product.image}
-                  width={60}
-                  height={50}
-                  alt="Product"
-                />
-              </div>
-              <p className="text-sm text-black dark:text-white">
-                {product.name}
+        {brandData.map((brand, key) => (
+          <div
+            className={`grid grid-cols-3 sm:grid-cols-5 ${key === brandData.length - 1
+              ? ""
+              : "border-b border-stroke dark:border-strokedark"
+              }`}
+            key={key}
+          >
+            <div className="flex items-center gap-3 p-2.5 xl:p-5">
+              <p className="hidden text-black dark:text-slate-300 sm:block">
+                {brand.name}
               </p>
             </div>
+            <div className="flex items-center justify-center p-2.5 xl:p-5">
+              <p className="text-black dark:text-slate-300">{brand.visitors}K</p>
+            </div>
+
+            <div className="hidden items-center justify-center p-2.5 sm:flex xl:p-5">
+              <p className="text-black dark:text-slate-300">{brand.sales}</p>
+            </div>
+
+            <div className="hidden items-center justify-center p-2.5 sm:flex xl:p-5">
+              <button className="text-meta-5">Details</button>
+            </div>
           </div>
-          <div className="col-span-2 hidden items-center sm:flex">
-            <p className="text-sm text-black dark:text-white">
-              {product.category}
-            </p>
-          </div>
-          <div className="col-span-1 flex items-center">
-            <p className="text-sm text-black dark:text-white">
-              ${product.price}
-            </p>
-          </div>
-          <div className="col-span-1 flex items-center">
-            <p className="text-sm text-black dark:text-white">{product.sold}</p>
-          </div>
-          <div className="col-span-1 flex items-center">
-            <p className="text-sm text-meta-3">${product.profit}</p>
-          </div>
-        </div>
-      ))}
+        ))}
+      </div>
     </div>
   );
 };
 
-export default TableTwo;
+export default TableOne;

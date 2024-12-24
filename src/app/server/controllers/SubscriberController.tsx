@@ -53,16 +53,37 @@ export const subscribeUser = async () => {
   }
 };
 
-export const deleteSubscriber = async () => {
-  const { id } = req.query;
+// export const deleteSubscriber = async () => {
+//   const { id } = req.query;
 
+//   try {
+//     await prisma.subscribers.delete({
+//       where: { id: Number(id) },
+//     });
+
+//     res.status(200).json({ message: 'Subscriber has been deleted successfully' });
+//   } catch (error) {
+//     res.status(500).json({ error: 'Something went wrong' });
+//   }
+// };
+
+export const deleteSubscriber = async (id: number) => {
   try {
-    await prisma.subscribers.delete({
-      where: { id: Number(id) },
+    // Check if the record exists
+    const existingSubscribers = await prisma.subscribers.findUnique({
+      where: { id },
     });
 
-    res.status(200).json({ message: 'Subscriber has been deleted successfully' });
+    if (!existingSubscribers) {
+      return { success: false, error: "Record does not exist." };
+    }
+
+    const deletedSubscribers = await prisma.subscribers.delete({
+      where: { id },
+    });
+    return { success: true, data: deletedSubscribers };
   } catch (error) {
-    res.status(500).json({ error: 'Something went wrong' });
+    console.error("Error deleting Subscribers:", error);
+    return { success: false, error };
   }
 };

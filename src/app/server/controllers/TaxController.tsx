@@ -81,22 +81,43 @@ export async function createOrUpdateTax(data: createOrUpdateData) {
 // }
 
 // export default async function destroy(req: NextApiRequest, res: NextApiResponse) {
-export const destroy = async () => {
-    try {
-        const { id } = req.query;
+// export const destroy = async () => {
+//     try {
+//         const { id } = req.query;
 
-        const deletedTax = await prisma.taxes.delete({
-            where: {
-                id: parseInt(id as string),
-            },
-        });
+//         const deletedTax = await prisma.taxes.delete({
+//             where: {
+//                 id: parseInt(id as string),
+//             },
+//         });
 
-        res.status(200).json(deletedTax);
-    } catch (error) {
-        console.error(error);
-        res.status(500).json({ error: 'Internal Server Error' });
+//         res.status(200).json(deletedTax);
+//     } catch (error) {
+//         console.error(error);
+//         res.status(500).json({ error: 'Internal Server Error' });
+//     }
+// }
+
+export const deleteTax = async (id: number) => {
+  try {
+    // Check if the record exists
+    const existingTaxs = await prisma.taxes.findUnique({
+      where: { id },
+    });
+
+    if (!existingTaxs) {
+      return { success: false, error: "Record does not exist." };
     }
-}
+
+    const deletedTaxs = await prisma.taxes.delete({
+      where: { id },
+    });
+    return { success: true, data: deletedTaxs };
+  } catch (error) {
+    console.error("Error deleting Taxs:", error);
+    return { success: false, error };
+  }
+};
 
 // export default async function changeTaxStatus(req: NextApiRequest, res: NextApiResponse) {
 export const changeTaxStatus = async () => {

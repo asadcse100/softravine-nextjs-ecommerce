@@ -1,5 +1,5 @@
 import ProductCard from "@/app/(frontend)/components/ProductCard";
-import Breadcrumb from "@/app/seller/components/Breadcrumbs/Breadcrumb";
+import Breadcrumb from "@/app/customer/components/Breadcrumbs/Breadcrumb";
 import { PRODUCTS } from "@/data/data";
 import ButtonSecondary from "@/shared/Button/ButtonSecondary";
 import { useForm, SubmitHandler } from "react-hook-form";

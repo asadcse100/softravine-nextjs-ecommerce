@@ -57,3 +57,24 @@ export async function createOrUpdateAirTicket(data: createOrUpdateData) {
     return { success: false, error };
   }
 }
+
+export const deleteAirTicket = async (id: number) => {
+  try {
+    // Check if the record exists
+    const existingAirTickets = await prisma.air_tickets.findUnique({
+      where: { id },
+    });
+
+    if (!existingAirTickets) {
+      return { success: false, error: "Record does not exist." };
+    }
+
+    const deletedAirTickets = await prisma.air_tickets.delete({
+      where: { id },
+    });
+    return { success: true, data: deletedAirTickets };
+  } catch (error) {
+    console.error("Error deleting AirTickets:", error);
+    return { success: false, error };
+  }
+};

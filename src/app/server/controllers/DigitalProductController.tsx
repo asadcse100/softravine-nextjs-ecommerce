@@ -309,99 +309,121 @@ export const getDigitalProducts = async (search: string | undefined) => {
    }
  }
 
-  export const updateProduct = async (id: number, request: ProductRequest) => {
-    const { name, unit_price, category_ids, tax_id, tax, tax_type, unit, description, lang } = request;
+  // export const updateProduct = async (id: number, request: ProductRequest) => {
+  //   const { name, unit_price, category_ids, tax_id, tax, tax_type, unit, description, lang } = request;
   
-    // Find product
-    const product = await prisma.products.findUnique({
-      where: { id },
-      include: {
-        product_stocks: true,
-        product_taxes: true,
-      },
-    });
+  //   // Find product
+  //   const product = await prisma.products.findUnique({
+  //     where: { id },
+  //     include: {
+  //       product_stocks: true,
+  //       product_taxes: true,
+  //     },
+  //   });
   
-    if (!product) {
-      throw new Error('Product not found');
-    }
+  //   if (!product) {
+  //     throw new Error('Product not found');
+  //   }
   
-    // Update Product
-    const updatedProduct = await prisma.products.update({
-      where: { id },
-      data: {
-        name,
-      },
-    });
+  //   // Update Product
+  //   const updatedProduct = await prisma.products.update({
+  //     where: { id },
+  //     data: {
+  //       name,
+  //     },
+  //   });
   
-    // Delete existing stocks
-    await prisma.product_stocks.deleteMany({
-      where: { product_id: id },
-    });
+  //   // Delete existing stocks
+  //   await prisma.product_stocks.deleteMany({
+  //     where: { product_id: id },
+  //   });
   
-    // Attach categories
-    await prisma.products.update({
-      where: { id },
-      data: {
-        categories: {
-          set: category_ids.map(id => ({ id })),
-        },
-      },
-    });
+  //   // Attach categories
+  //   await prisma.products.update({
+  //     where: { id },
+  //     data: {
+  //       categories: {
+  //         set: category_ids.map(id => ({ id })),
+  //       },
+  //     },
+  //   });
   
-    // Store Product Stock
-    await prisma.product_stocks.create({
-      data: {
-        unit_prices: unit_price,
-        currentStock: 0,
-        productId: id,
-      },
-    });
+  //   // Store Product Stock
+  //   await prisma.product_stocks.create({
+  //     data: {
+  //       unit_prices: unit_price,
+  //       currentStock: 0,
+  //       productId: id,
+  //     },
+  //   });
   
-    // Delete existing tax records
-    await prisma.product_taxs.deleteMany({
-      where: { productId: id },
-    });
+  //   // Delete existing tax records
+  //   await prisma.product_taxs.deleteMany({
+  //     where: { productId: id },
+  //   });
   
-    // Store VAT & Tax
-    if (tax_id) {
-      await prisma.product_taxs.create({
-        data: {
-          taxId: tax_id,
-          tax: tax!,
-          taxType: tax_type!,
-          productId: id,
-        },
+  //   // Store VAT & Tax
+  //   if (tax_id) {
+  //     await prisma.product_taxs.create({
+  //       data: {
+  //         taxId: tax_id,
+  //         tax: tax!,
+  //         taxType: tax_type!,
+  //         productId: id,
+  //       },
+  //     });
+  //   }
+  
+  //   // Update or Create Product Translation
+  //   await prisma.product_translations.upsert({
+  //     where: {
+  //       product_id_langs: {
+  //         productId: id,
+  //         lang,
+  //       },
+  //     },
+  //     update: {
+  //       name,
+  //       description,
+  //     },
+  //     create: {
+  //       lang,
+  //       name,
+  //       unit,
+  //       description,
+  //       product_id: id,
+  //     },
+  //   });
+  
+  //   return updatedProduct;
+  // };
+
+
+// export const deleteProduct = async (id: number) => {
+//   // Delete the product
+//   await prisma.products.delete({
+//     where: { id },
+//   });
+// };
+
+  
+  export const deleteProduct = async (id: number) => {
+    try {
+      // Check if the record exists
+      const existingProducts = await prisma.products.findUnique({
+        where: { id },
       });
+  
+      if (!existingProducts) {
+        return { success: false, error: "Record does not exist." };
+      }
+  
+      const deletedProducts = await prisma.products.delete({
+        where: { id },
+      });
+      return { success: true, data: deletedProducts };
+    } catch (error) {
+      console.error("Error deleting Product:", error);
+      return { success: false, error };
     }
-  
-    // Update or Create Product Translation
-    await prisma.product_translations.upsert({
-      where: {
-        product_id_langs: {
-          productId: id,
-          lang,
-        },
-      },
-      update: {
-        name,
-        description,
-      },
-      create: {
-        lang,
-        name,
-        unit,
-        description,
-        product_id: id,
-      },
-    });
-  
-    return updatedProduct;
   };
-
-
-export const deleteProduct = async (id: number) => {
-  // Delete the product
-  await prisma.products.delete({
-    where: { id },
-  });
-};

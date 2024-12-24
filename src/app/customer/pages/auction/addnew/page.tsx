@@ -6,7 +6,7 @@ import { showErrorToast, showSuccessToast } from "@/app/admin/components/Toast";
 import { useState, useEffect } from 'react';
 import { z } from "zod";
 
-import { Button } from "@/app/seller/components/ui/button";
+import { Button } from "@/app/customer/components/ui/button";
 import {
   Form,
   FormControl,
@@ -15,7 +15,7 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-} from "@/app/seller/components/ui/form";
+} from "@/app/customer/components/ui/form";
 import Input from "@/shared/Input/Input";
 
 const formSchema = z.object({

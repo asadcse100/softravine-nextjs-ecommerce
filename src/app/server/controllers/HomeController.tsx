@@ -115,7 +115,6 @@ export const loadTodaysDealSection = async (data: createOrUpdateData) => {
     }
   };
 
-
   export const handleProfile = async (data: createOrUpdateData) => {
     try {
       const session = await getSession({ req });
@@ -208,7 +207,7 @@ export const loadTodaysDealSection = async (data: createOrUpdateData) => {
     try {
       const { slug } = req.query;
   
-      const flashDeal = await prisma.flash_deal.findUnique({
+      const flashDeal = await prisma.flash_deals.findUnique({
         where: { slug: String(slug) },
       });
   

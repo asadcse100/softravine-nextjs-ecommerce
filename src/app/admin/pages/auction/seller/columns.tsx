@@ -16,10 +16,36 @@ import {
 } from "@/app/admin/components/ui/dropdown-menu";
 import Link from "next/link";
 
+import { showErrorToast, showSuccessToast } from "@/app/admin/components/Toast";
+
+const handleDeleteWithConfirmation = async (id: number) => {
+  if (window.confirm("Are you sure you want to delete this Seller auction product?")) {
+    await handleDelete(id);
+  }
+};
+
+const handleDelete = async (id: number) => {
+  const apiUrl = process.env.NEXT_PUBLIC_API_URL || "";
+  // setIsLoading(true);
+  try {
+    const response = await fetch(`${apiUrl}/server/api/routes/admin/blogs/blogCategories/${id}`, {
+      method: 'DELETE',
+    });
+
+    if (response.ok) {
+      showSuccessToast("Seller auction product deleted successfully");
+    } else {
+      const errorData = await response.json();
+      showErrorToast(errorData.error || "Error deleting Seller auction product");
+    }
+  } catch (error) {
+    showErrorToast("Something went wrong");
+  } 
+};
 // This type is used to define the shape of our data.
 // You can use a Zod schema here if you want.
 export type Products = {
-  id: string;
+  id: number;
   name: string;
   added_by: string;
   bid_stating_amount: number;
@@ -68,7 +94,7 @@ export const columns: ColumnDef<Products>[] = [
           <DropdownMenuContent className="dark:bg-slate-700 dark:text-slate-200 bg-slate-100" align="start">
             <DropdownMenuItem><Link href="/">View</Link></DropdownMenuItem>
             <DropdownMenuItem><Link href="/">View All Bids</Link></DropdownMenuItem>
-            <DropdownMenuItem><Link href="/">Delete</Link></DropdownMenuItem>
+            <DropdownMenuItem className="dark:hover:bg-slate-500 hover:bg-slate-300" onClick={() => handleDeleteWithConfirmation(payment.id)}>Delete</DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>
       );

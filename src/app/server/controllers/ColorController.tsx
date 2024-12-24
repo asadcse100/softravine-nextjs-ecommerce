@@ -64,21 +64,42 @@ export async function createOrUpdateColor(data: createOrUpdateData) {
 }
 
 
-export async function updateAttribute(id: number, name: string, lang: string = 'en') {
-  const attribute = await prisma.attributes.update({
-    where: { id },
-    data: {
-      name,
-      translations: {
-        upsert: {
-          where: { lang_attributeId: { lang, attributeId: id } },
-          update: { name },
-          create: { lang, name, attribute: { connect: { id } } },
-        },
-      },
-    },
-    include: { translations: true },
-  });
+// export async function updateAttribute(id: number, name: string, lang: string = 'en') {
+//   const attribute = await prisma.attributes.update({
+//     where: { id },
+//     data: {
+//       name,
+//       translations: {
+//         upsert: {
+//           where: { lang_attributeId: { lang, attributeId: id } },
+//           update: { name },
+//           create: { lang, name, attribute: { connect: { id } } },
+//         },
+//       },
+//     },
+//     include: { translations: true },
+//   });
 
-  return attribute;
-}
+//   return attribute;
+// }
+
+export const deleteColor = async (id: number) => {
+  try {
+    // Check if the record exists
+    const existingColors = await prisma.colors.findUnique({
+      where: { id },
+    });
+
+    if (!existingColors) {
+      return { success: false, error: "Record does not exist." };
+    }
+
+    const deletedColors = await prisma.colors.delete({
+      where: { id },
+    });
+    return { success: true, data: deletedColors };
+  } catch (error) {
+    console.error("Error deleting Color:", error);
+    return { success: false, error };
+  }
+};

@@ -105,3 +105,24 @@ export async function createOrUpdateBrand(data: createOrUpdateData) {
     return { success: false, message: "An unexpected error occurred" };
   }
 }
+
+export const deleteCategory = async (id: number) => {
+  try {
+    // Check if the record exists
+    const existingCategorys = await prisma.categories.findUnique({
+      where: { id },
+    });
+
+    if (!existingCategorys) {
+      return { success: false, error: "Record does not exist." };
+    }
+
+    const deletedCategorys = await prisma.categories.delete({
+      where: { id },
+    });
+    return { success: true, data: deletedCategorys };
+  } catch (error) {
+    console.error("Error deleting Categorys:", error);
+    return { success: false, error };
+  }
+};

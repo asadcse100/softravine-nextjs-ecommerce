@@ -111,3 +111,24 @@ export async function createOrUpdateCountry(data: createOrUpdateData) {
     return { success: false, error };
   }
 };
+
+export const deleteCountry = async (id: number) => {
+  try {
+    // Check if the record exists
+    const existingCountrys = await prisma.countries.findUnique({
+      where: { id },
+    });
+
+    if (!existingCountrys) {
+      return { success: false, error: "Record does not exist." };
+    }
+
+    const deletedCountrys = await prisma.countries.delete({
+      where: { id },
+    });
+    return { success: true, data: deletedCountrys };
+  } catch (error) {
+    console.error("Error deleting Country:", error);
+    return { success: false, error };
+  }
+};

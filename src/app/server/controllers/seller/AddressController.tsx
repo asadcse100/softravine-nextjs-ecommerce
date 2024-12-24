@@ -1,4 +1,3 @@
-import { NextApiRequest, NextApiResponse } from 'next';
 import { Address }  from '@/app/server/models/Address'; // Make sure to import your Address model
 import { City } from '@/app/server/models/City'; // Import your City model
 import { State } from '@/app/server/models/State'; // Import your State model

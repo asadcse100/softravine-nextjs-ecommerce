@@ -10,39 +10,39 @@ type createOrUpdateData = {
 
 export async function payToSeller(data: createOrUpdateData) {
 
-        if (data.payment_method === 'cash' || data.payment_method === 'bank_payment') {
-            await sellerPaymentDone(data, null);
-            return res.status(200).json({ success: true, message: 'Seller payment done' });
-        } else {
-            try {
-                const shop = await prisma.shops.findUnique({
-                    where: { id: parseInt(data.shop_id) },
-                });
+    if (data.payment_method === 'cash' || data.payment_method === 'bank_payment') {
+        await sellerPaymentDone(data, null);
+        return res.status(200).json({ success: true, message: 'Seller payment done' });
+    } else {
+        try {
+            const shop = await prisma.shops.findUnique({
+                where: { id: parseInt(data.shop_id) },
+            });
 
-                if (!shop) {
-                    return res.status(404).json({ success: false, message: 'Shop not found' });
-                }
-
-                const updatedShop = await prisma.shops.update({
-                    where: { id: parseInt(data.shop_id) },
-                    data: { admin_to_pay: shop.admin_to_pay + parseFloat(data.amount) },
-                });
-
-                await prisma.payments.create({
-                    data: {
-                        seller_id: updatedShop.user_id,
-                        amount: parseFloat(data.amount),
-                        payment_method: 'Seller paid to admin',
-                        txnCode: data.txn_code ?? null,
-                        paymentDetails: null,
-                    },
-                });
-
-                return res.status(200).json({ success: true, message: 'Payment completed' });
-            } catch (error) {
-                return res.status(500).json({ success: false, message: error.message });
+            if (!shop) {
+                return res.status(404).json({ success: false, message: 'Shop not found' });
             }
+
+            const updatedShop = await prisma.shops.update({
+                where: { id: parseInt(data.shop_id) },
+                data: { admin_to_pay: shop.admin_to_pay + parseFloat(data.amount) },
+            });
+
+            await prisma.payments.create({
+                data: {
+                    seller_id: updatedShop.user_id,
+                    amount: parseFloat(data.amount),
+                    payment_method: 'Seller paid to admin',
+                    txnCode: data.txn_code ?? null,
+                    paymentDetails: null,
+                },
+            });
+
+            return res.status(200).json({ success: true, message: 'Payment completed' });
+        } catch (error) {
+            return res.status(500).json({ success: false, message: error.message });
         }
+    }
 
 }
 

@@ -91,28 +91,49 @@ export async function createOrUpdateTax(data: createOrUpdateData) {
     }
 };
 
-export async function remove() {
-    const { id } = req.body;
+// export async function remove() {
+//     const { id } = req.body;
 
-    try {
-        const wishlist = await prisma.wishlists.findUnique({
-            where: {
-                id: Number(id)
-            }
-        });
+//     try {
+//         const wishlist = await prisma.wishlists.findUnique({
+//             where: {
+//                 id: Number(id)
+//             }
+//         });
 
-        if (wishlist) {
-            await prisma.wishlists.delete({
-                where: {
-                    id: Number(id)
-                }
-            });
-            res.status(200).json({ message: 'Wishlist item removed successfully' });
-        } else {
-            res.status(404).json({ error: 'Wishlist item not found' });
-        }
-    } catch (error) {
-        console.error('Error removing wishlist item:', error);
-        res.status(500).json({ error: 'Internal server error' });
+//         if (wishlist) {
+//             await prisma.wishlists.delete({
+//                 where: {
+//                     id: Number(id)
+//                 }
+//             });
+//             res.status(200).json({ message: 'Wishlist item removed successfully' });
+//         } else {
+//             res.status(404).json({ error: 'Wishlist item not found' });
+//         }
+//     } catch (error) {
+//         console.error('Error removing wishlist item:', error);
+//         res.status(500).json({ error: 'Internal server error' });
+//     }
+// }
+
+export const deleteWishlist = async (id: number) => {
+  try {
+    // Check if the record exists
+    const existingWishlist = await prisma.wishlists.findUnique({
+      where: { id },
+    });
+
+    if (!existingWishlist) {
+      return { success: false, error: "Record does not exist." };
     }
-}
+
+    const deletedWishlist = await prisma.wishlists.delete({
+      where: { id },
+    });
+    return { success: true, data: deletedWishlist };
+  } catch (error) {
+    console.error("Error deleting Wishlist:", error);
+    return { success: false, error };
+  }
+};

@@ -18,12 +18,12 @@ type createOrUpdateData = {
 // }
 
 export const getAllCarriers = async () => {
-  try{
-      const carrier = await prisma.carriers.findMany();
-      return { success: true, data: carrier };
-  }catch(error){
-      console.error("Error fetching carrier:", error);
-      return { success: false, error };
+  try {
+    const carrier = await prisma.carriers.findMany();
+    return { success: true, data: carrier };
+  } catch (error) {
+    console.error("Error fetching carrier:", error);
+    return { success: false, error };
   }
 }
 
@@ -128,23 +128,50 @@ export async function updateCarrier(id: number, carrierData: any) {
   return updatedCarrier;
 }
 
-export async function deleteCarrier(id: number) {
-  // Find the existing carrier
+// export async function deleteCarrier(id: number) {
+//   // Find the existing carrier
+//   const existingCarrier = await prisma.carriers.findUnique({ where: { id } });
+
+//   if (!existingCarrier) {
+//     throw new Error('Carrier not found');
+//   }
+
+//   // Delete carrier ranges and prices
+//   await prisma.carrier_ranges.deleteMany({ where: { carrier_id: id } });
+//   await prisma.carrier_range_prices.deleteMany({ where: { carrier_id: id } });
+
+//   // Delete the carrier
+//   await prisma.carriers.delete({ where: { id } });
+
+//   return;
+// }
+
+export const deleteCarrier = async (id: number) => {
   const existingCarrier = await prisma.carriers.findUnique({ where: { id } });
+  try {
+    // Check if the record exists
+    const existingCarrier = await prisma.carriers.findUnique({
+      where: { id },
+    });
 
-  if (!existingCarrier) {
-    throw new Error('Carrier not found');
+    if (!existingCarrier) {
+      return { success: false, error: "Record does not exist." };
+    }
+
+    // const deletedblog = await prisma.blogs.delete({
+    //   where: { id },
+    // });
+    await prisma.carrier_ranges.deleteMany({ where: { carrier_id: id } });
+    await prisma.carrier_range_prices.deleteMany({ where: { carrier_id: id } });
+    // Delete the carrier
+    const carriers = await prisma.carriers.delete({ where: { id } });
+
+    return { success: true, data: carriers };
+  } catch (error) {
+    console.error("Error deleting carriers:", error);
+    return { success: false, error };
   }
-
-  // Delete carrier ranges and prices
-  await prisma.carrier_ranges.deleteMany({ where: { carrier_id: id } });
-  await prisma.carrier_range_prices.deleteMany({ where: { carrier_id: id } });
-
-  // Delete the carrier
-  await prisma.carriers.delete({ where: { id } });
-
-  return;
-}
+};
 
 export async function updateCarrierStatus(id: number, status: boolean) {
   // Find the existing carrier

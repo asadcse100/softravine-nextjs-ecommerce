@@ -1,7 +1,6 @@
 "use client";
 
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { showErrorToast, showSuccessToast} from "@/app/admin/components/Toast";
 import { useForm, SubmitHandler } from "react-hook-form";
@@ -13,7 +12,7 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-} from "@/app/seller/components/ui/form";
+} from "@/app/customer/components/ui/form";
 import React from "react";
 import ButtonPrimary from "@/shared/Button/ButtonPrimary";
 import Input from "@/shared/Input/Input";

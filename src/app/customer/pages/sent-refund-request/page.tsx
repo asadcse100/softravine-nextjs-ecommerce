@@ -1,4 +1,4 @@
-import Breadcrumb from "@/app/seller/components/Breadcrumbs/Breadcrumb"
+import Breadcrumb from "@/app/customer/components/Breadcrumbs/Breadcrumb"
 import { Products, columns } from "./columns"
 import { DataTable } from "./data-table"
 

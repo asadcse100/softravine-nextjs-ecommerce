@@ -90,7 +90,6 @@ export async function createOrUpdatePage(data: createOrUpdateData) {
   }
 }
 
-
 export async function updatePage(data: createOrUpdateData) {
   try {
     const { id } = req.query;
