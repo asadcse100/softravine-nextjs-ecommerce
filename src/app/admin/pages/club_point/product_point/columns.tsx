@@ -84,7 +84,7 @@ export const columns: ColumnDef<Products>[] = [
   {
     id: "actions",
     cell: ({ row }) => {
-      const payment = row.original;
+      const id = row.original.id;
 
       return (
         <DropdownMenu>
@@ -95,7 +95,7 @@ export const columns: ColumnDef<Products>[] = [
             </Button>
           </DropdownMenuTrigger>
           <DropdownMenuContent className="dark:bg-slate-700 dark:text-slate-200 bg-slate-100" align="start">
-            <DropdownMenuItem className="dark:hover:bg-slate-500 hover:bg-slate-300"><Link href="/">Edit</Link></DropdownMenuItem>
+            <DropdownMenuItem className="dark:hover:bg-slate-500 hover:bg-slate-300"><Link href={`/admin/pages/club_point/product_point/addnew?id=${id}`}>Edit</Link></DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>
       );

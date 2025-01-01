@@ -8,12 +8,30 @@ type createOrUpdateData = {
   created_at?: string;
 };
 
+export const getClubPointById = async (id: number) => {
+  try {
+    // Check if the record exists
+    const existingCategory = await prisma.attributes.findUnique({
+      where: { id },
+    });
+
+    if (!existingCategory) {
+      return { success: false, error: "Record does not exist." };
+    }
+
+    return { success: true, data: existingCategory };
+  } catch (error) {
+    // console.error("Error category:", error);
+    return { success: false, error };
+  }
+};
+
 export const getClubPoint = async () => {
   try {
-    const cities = await prisma.cities.findMany();
-    return { success: true, data: cities };
+    const users = await prisma.users.findMany();
+    return { success: true, data: users };
   } catch (error) {
-    console.error("Error fetching cities:", error);
+    // console.error("Error fetching users:", error);
     return { success: false, error };
   }
 }
@@ -23,7 +41,7 @@ export const getUserPoint = async () => {
     const cities = await prisma.cities.findMany();
     return { success: true, data: cities };
   } catch (error) {
-    console.error("Error fetching cities:", error);
+    // console.error("Error fetching cities:", error);
     return { success: false, error };
   }
 }
@@ -47,7 +65,7 @@ export async function createOrUpdateClubPoint(data: createOrUpdateData) {
 
     return { success: true, data: newPost };
   } catch (error) {
-    console.error("Error creating blog post:", error);
+    // console.error("Error creating blog post:", error);
     return { success: false, error };
   }
 }
@@ -71,7 +89,7 @@ export async function createOrUpdateUserPoint(data: createOrUpdateData) {
 
     return { success: true, data: newPost };
   } catch (error) {
-    console.error("Error creating blog post:", error);
+    // console.error("Error creating blog post:", error);
     return { success: false, error };
   }
 }
@@ -92,7 +110,28 @@ export const deleteUserPoint = async (id: number) => {
     });
     return { success: true, data: deletedUserPoints };
   } catch (error) {
-    console.error("Error deleting UserPoints:", error);
+    // console.error("Error deleting UserPoints:", error);
+    return { success: false, error };
+  }
+};
+
+export const deleteClubPoint = async (id: number) => {
+  try {
+    // Check if the record exists
+    const existingUserPoints = await prisma.categories.findUnique({
+      where: { id },
+    });
+
+    if (!existingUserPoints) {
+      return { success: false, error: "Record does not exist." };
+    }
+
+    const deletedUserPoints = await prisma.categories.delete({
+      where: { id },
+    });
+    return { success: true, data: deletedUserPoints };
+  } catch (error) {
+    // console.error("Error deleting UserPoints:", error);
     return { success: false, error };
   }
 };

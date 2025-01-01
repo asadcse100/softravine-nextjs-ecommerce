@@ -1,11 +1,15 @@
 import React from "react";
 import ButtonPrimary from "@/shared/Button/ButtonPrimary";
+import { useState, useEffect } from "react";
+import { useRouter, useSearchParams } from "next/navigation";
 
 const AccountBilling = () => {
   return (
     <div className="space-y-10 sm:space-y-12 bg-white dark:bg-slate-700 p-5 rounded-xl">
       {/* HEADING */}
-      <h2 className="text-2xl sm:text-3xl font-semibold">Payments & payouts</h2>
+      <h2 className="text-2xl sm:text-3xl font-semibold">
+        {id ? "Edit Payments & payouts" : "Add Payments & payouts"}
+      </h2>
       <div className="max-w-2xl prose prose-slate dark:prose-invert">
         <span className="">
           {`When you receive a payment for a order, we call that payment to you a

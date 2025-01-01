@@ -40,6 +40,42 @@ interface OrderFilters {
   userId: number;
 }
 
+export const getReOrderById = async (id: number) => {
+  try {
+    // Check if the record exists
+    const existingCategory = await prisma.orders.findUnique({
+      where: { id },
+    });
+
+    if (!existingCategory) {
+      return { success: false, error: "Record does not exist." };
+    }
+
+    return { success: true, data: existingCategory };
+  } catch (error) {
+    console.error("Error category:", error);
+    return { success: false, error };
+  }
+};
+
+export const getOrderById = async (id: number) => {
+  try {
+    // Check if the record exists
+    const existingCategory = await prisma.orders.findUnique({
+      where: { id },
+    });
+
+    if (!existingCategory) {
+      return { success: false, error: "Record does not exist." };
+    }
+
+    return { success: true, data: existingCategory };
+  } catch (error) {
+    console.error("Error category:", error);
+    return { success: false, error };
+  }
+};
+
 export async function getAllOrders(filters: OrderFilters, page: number, perPage: number) {
   let adminUserId: number | null = null;
 
@@ -98,7 +134,8 @@ export async function getAllOrders(filters: OrderFilters, page: number, perPage:
 
 
 export async function showOrder(data: createOrUpdateData) {
-  const { id } = req.query;
+  // const { id } = req.query;
+  const id = data.id;
 
   try {
     const order = await prisma.orders.findUnique({
@@ -108,7 +145,8 @@ export async function showOrder(data: createOrUpdateData) {
     });
 
     if (!order) {
-      return res.status(404).json({ error: 'Order not found' });
+      return { success: false };
+      // return res.status(404).json({ error: 'Order not found' });
     }
 
     const orderShippingAddress = JSON.parse(order.shippingAddress);
@@ -130,16 +168,18 @@ export async function showOrder(data: createOrUpdateData) {
       },
     });
 
-    return res.status(200).json({ order, deliveryBoys });
+    return { success: true, data: deliveryBoys };
+    // return res.status(200).json({ order, deliveryBoys });
   } catch (error) {
-    console.error(error);
-    return res.status(500).json({ error: 'Internal server error' });
+    return { success: false, error };
+    // console.error(error);
+    // return res.status(500).json({ error: 'Internal server error' });
   }
 }
 
-export async function storeOrder(data: createOrUpdateData) {
-  const userId = req.body.userId; // Assuming you're sending the user ID with the request body
-
+export async function createOrUpdateOrder(data: createOrUpdateData) {
+  // const userId = req.body.userId; // Assuming you're sending the user ID with the request body
+  const userId = data.user_id;
   try {
     // Fetch carts for the user
     const carts = await prisma.carts.findMany({
@@ -149,7 +189,7 @@ export async function storeOrder(data: createOrUpdateData) {
     });
 
     if (carts.length === 0) {
-      return res.status(400).json({ error: 'Your cart is empty' });
+      // return res.status(400).json({ error: 'Your cart is empty' });
     }
 
     // Fetch address details from the first cart item
@@ -160,7 +200,8 @@ export async function storeOrder(data: createOrUpdateData) {
     });
 
     if (!address) {
-      return res.status(400).json({ error: 'Address not found' });
+      // return res.status(400).json({ error: 'Address not found' });
+      return { success: false };
     }
 
     // Process shipping address
@@ -205,17 +246,19 @@ export async function storeOrder(data: createOrUpdateData) {
     // Send notifications
     // ...
 
-    return res.status(200).json({ success: true, combinedOrder });
+    // return res.status(200).json({ success: true, combinedOrder });
+    return { success: true, data: combinedOrder };
   } catch (error) {
-    console.error(error);
-    return res.status(500).json({ error: 'Internal server error' });
+    return { success: false, error };
+    // console.error(error);
+    // return res.status(500).json({ error: 'Internal server error' });
   }
 }
 
 
 export async function deleteOrder(data: createOrUpdateData) {
-  const orderId = req.query.id as string; // Assuming you're getting the order ID from the query parameters
-
+  // const orderId = req.query.id as string; // Assuming you're getting the order ID from the query parameters
+  const orderId = data.id;
   try {
     // Find the order
     const order = await prisma.orders.findUnique({
@@ -228,7 +271,8 @@ export async function deleteOrder(data: createOrUpdateData) {
     });
 
     if (!order) {
-      return res.status(404).json({ error: 'Order not found' });
+      // return res.status(404).json({ error: 'Order not found' });
+      return { success: false };
     }
 
     // Iterate over order details and update product stock
@@ -265,32 +309,36 @@ export async function deleteOrder(data: createOrUpdateData) {
     }
 
     // Delete the order
-    await prisma.orders.delete({
+    const deleteOrder = await prisma.orders.delete({
       where: {
         id: parseInt(orderId),
       },
     });
 
-    return res.status(200).json({ success: true, message: 'Order deleted successfully' });
+    return { success: true, data: deleteOrder };
+    // return res.status(200).json({ success: true, message: 'Order deleted successfully' });
   } catch (error) {
-    console.error(error);
-    return res.status(500).json({ error: 'Internal server error' });
+    return { success: false, error };
+    // console.error(error);
+    // return res.status(500).json({ error: 'Internal server error' });
   }
 }
 
 export async function bulkDeleteOrders(data: createOrUpdateData) {
-  const orderIds = req.body.ids as number[]; // Assuming you're sending the order IDs in the request body
-
+  // const orderIds = req.body.ids as number[]; // Assuming you're sending the order IDs in the request body
+  const orderIds = data.id;
   try {
     // Iterate over each order ID and delete the order
     for (const orderId of orderIds) {
-      await deleteOrderById(orderId); // Call the deleteOrder function for each order ID
+      const result = await deleteOrderById(orderId); // Call the deleteOrder function for each order ID
     }
 
-    return res.status(200).json({ success: true, message: 'Bulk orders deleted successfully' });
+    return { success: true, data: result };
+    // return res.status(200).json({ success: true, message: 'Bulk orders deleted successfully' });
   } catch (error) {
-    console.error(error);
-    return res.status(500).json({ error: 'Internal server error' });
+    return { success: false, error };
+    // console.error(error);
+    // return res.status(500).json({ error: 'Internal server error' });
   }
 }
 
@@ -315,7 +363,8 @@ export async function getOrderDetails(data: createOrUpdateData) {
     });
 
     if (!order) {
-      return res.status(404).json({ error: 'Order not found' });
+      // return res.status(404).json({ error: 'Order not found' });
+      return { success: false };
     }
 
     // Update the order (if needed)
@@ -323,8 +372,9 @@ export async function getOrderDetails(data: createOrUpdateData) {
 
     return res.status(200).json({ order });
   } catch (error) {
-    console.error(error);
-    return res.status(500).json({ error: 'Internal server error' });
+    return { success: false, error };
+    // console.error(error);
+    // return res.status(500).json({ error: 'Internal server error' });
   }
 }
 

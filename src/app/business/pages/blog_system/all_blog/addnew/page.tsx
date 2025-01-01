@@ -2,6 +2,7 @@
 
 import * as React from "react";
 import { useState, useEffect } from "react";
+import { useRouter, useSearchParams } from "next/navigation";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { z } from "zod";
@@ -46,9 +47,31 @@ const formSchema = z.object({
   meta_description: z.string(),
 });
 
-export default function AddNew() {
+export default function AddOrEdit() {
+  const router = useRouter();
+  const searchParams = useSearchParams();
+  const id = searchParams.get('id');
+
   const [isMounted, setIsMounted] = useState(false);
-  // const router = useRouter();
+
+  const [isLoading, setIsLoading] = useState(false);
+
+  // Fetch data if editing an existing ticket
+  useEffect(() => {
+    if (id) {
+      const fetchTicket = async () => {
+        try {
+          const apiUrl = process.env.NEXT_PUBLIC_API_URL || "";
+          const response = await fetch(`${apiUrl}/server/api/routes/business/blog_system/all_blog/${id}`);
+          const data = await response.json();
+          form.reset(data); // Populate form with existing data
+        } catch (error) {
+          showErrorToast("Failed to fetch blog category data.");
+        }
+      };
+      fetchTicket();
+    }
+  }, [id, form]);
 
   const editor = useEditor({
     extensions: [StarterKit, Image],
@@ -57,24 +80,24 @@ export default function AddNew() {
 
   const [categories, setCategories] = useState<{ id: string; name: string }[]>([]);
 
-  useEffect(() => {
-    const fetchCategories = async () => {
-      const apiUrl = process.env.NEXT_PUBLIC_API_URL || "";
-      try {
-        const response = await fetch(`${apiUrl}/server/api/routes/admin/blogs/select/categories`);
-        const data = await response.json();
+  // useEffect(() => {
+  //   const fetchCategories = async () => {
+  //     const apiUrl = process.env.NEXT_PUBLIC_API_URL || "";
+  //     try {
+  //       const response = await fetch(`${apiUrl}/server/api/routes/admin/blogs/select/categories`);
+  //       const data = await response.json();
 
-        if (Array.isArray(data)) {
-          setCategories(data);
-        } else {
-          console.error("Unexpected data format:", data);
-        }
-      } catch (error) {
-        console.error("Error fetching categories:", error);
-      }
-    };
-    fetchCategories();
-  }, []);
+  //       if (Array.isArray(data)) {
+  //         setCategories(data);
+  //       } else {
+  //         console.error("Unexpected data format:", data);
+  //       }
+  //     } catch (error) {
+  //       console.error("Error fetching categories:", error);
+  //     }
+  //   };
+  //   fetchCategories();
+  // }, []);
 
 
   const form = useForm<z.infer<typeof formSchema>>({
@@ -95,7 +118,7 @@ export default function AddNew() {
   //   const apiUrl = process.env.NEXT_PUBLIC_API_URL || "";
 
   //   try {
-  //     const response = await fetch(`${apiUrl}/server/api/routes/admin/blogs/blogCategories`, {
+  //     const response = await fetch(`${apiUrl}/server/api/routes/business/blog_system/all_blog`, {
   //       method: "POST",
   //       headers: {
   //         "Content-Type": "application/json",
@@ -115,7 +138,6 @@ export default function AddNew() {
   //   }
   // };
 
-  const [isLoading, setIsLoading] = useState(false);
 
   const onSubmit: SubmitHandler<z.infer<typeof formSchema>> = async (values) => {
     const apiUrl = process.env.NEXT_PUBLIC_API_URL || "";
@@ -128,8 +150,13 @@ export default function AddNew() {
     setIsLoading(true);
 
     try {
-      const response = await fetch(`${apiUrl}/server/api/routes/admin/blogs/blogCategories`, {
-        method: "POST",
+      const method = id ? "PUT" : "POST";
+      const url = id
+        ? `${apiUrl}/server/api/routes/business/blog_system/all_blog/${id}`
+        : `${apiUrl}/server/api/routes/business/blog_system/all_blog`;
+
+      const response = await fetch(url, {
+        method,
         headers: {
           "Content-Type": "application/json",
         },
@@ -169,7 +196,9 @@ export default function AddNew() {
           <div className="grid gap-6 md:grid-cols-2">
             {/* Blog Information Section */}
             <div>
-              <h3 className="font-medium text-black dark:text-white">Blog Information</h3>
+              <h3 className="font-medium text-black dark:text-white">
+                {id ? "Edit Blog Information" : "Add Blog Information"}
+              </h3>
               <div className="space-y-4 mt-4">
                 {/* Title */}
                 <FormField

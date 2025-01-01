@@ -1,7 +1,13 @@
 import React from "react";
 import ButtonPrimary from "@/shared/Button/ButtonPrimary";
+import { useState, useEffect } from "react";
+import { useRouter, useSearchParams } from "next/navigation";
 
-const AccountBilling = () => {
+export default function AddOrEdit() {
+  const router = useRouter();
+  const searchParams = useSearchParams();
+  const id = searchParams.get('id');
+
   return (
     <div className="space-y-10 sm:space-y-12 bg-white dark:bg-gray-700 p-5 rounded-xl">
       {/* HEADING */}
@@ -26,4 +32,3 @@ const AccountBilling = () => {
   );
 };
 
-export default AccountBilling;

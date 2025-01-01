@@ -8,13 +8,34 @@ type createOrUpdateData = {
   value: string;
 };
 
-
-export const downloadInvoice = async (data: createOrUpdateData) => {
+export const getInvoiceById = async (id: number) => {
   try {
-    const { id } = req.query;
-    const order = await prisma.findById(id); // Replace with your actual method to find an order by ID
+    // Check if the record exists
+    const existingCategory = await prisma.attributes.findUnique({
+      where: { id },
+    });
+
+    if (!existingCategory) {
+      return { success: false, error: "Record does not exist." };
+    }
+
+    return { success: true, data: existingCategory };
+  } catch (error) {
+    // console.error("Error category:", error);
+    return { success: false, error };
+  }
+};
+
+export const downloadInvoice = async (id: number) => {
+  try {
+    // const id = data.id;
+    // const order = await prisma.orders.findUnique(id); // Replace with your actual method to find an order by ID
+    const order = await prisma.orders.findUnique({
+      where: { id },
+    });
     if (!order) {
-      return res.status(404).json({ message: 'Order not found' });
+      // return res.status(404).json({ message: 'Order not found' });
+      return { success: false };
     }
 
     const doc = new PDF();
@@ -30,7 +51,8 @@ export const downloadInvoice = async (data: createOrUpdateData) => {
     doc.end();
 
   } catch (error) {
-    console.error('Error:', error);
-    res.status(500).json({ message: 'Internal Server Error' });
+    // console.error('Error:', error);
+    // res.status(500).json({ message: 'Internal Server Error' });
+    return { success: false, error };
   }
 };

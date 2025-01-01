@@ -31,17 +31,35 @@ export const selectCategories = async () => {
     return { success: true, data: categories };
 
   } catch (error) {
-    console.error("Error fetching categorys:", error);
+    // console.error("Error fetching categorys:", error);
     return { success: false, error };
   }
 }
+
+export const getCategoryById = async (id: number) => {
+  try {
+    // Check if the record exists
+    const existingCategory = await prisma.categories.findUnique({
+      where: { id },
+    });
+
+    if (!existingCategory) {
+      return { success: false, error: "Record does not exist." };
+    }
+
+    return { success: true, data: existingCategory };
+  } catch (error) {
+    // console.error("Error category:", error);
+    return { success: false, error };
+  }
+};
 
 export const getCategories = async () => {
   try {
     const categories = await prisma.categories.findMany();
     return { success: true, data: categories };
   } catch (error) {
-    console.error("Error fetching categories:", error);
+    // console.error("Error fetching categories:", error);
     return { success: false, error };
   }
 }
@@ -54,8 +72,21 @@ function generateSlug(input: string): string {
     .replace(/(^-|-$)/g, "");
 }
 
-export async function createOrUpdateBrand(data: createOrUpdateData) {
+export async function createOrUpdateCategory(data: createOrUpdateData) {
   try {
+
+        // Calculate category level based on parent_id
+        let level = 0;
+        if (data.parent_id) {
+          const parentCategory = await prisma.categories.findUnique({
+            where: { id: data.parent_id },
+          });
+          level = parentCategory ? parentCategory.level + 1 : 0;
+        }
+    
+        // Set default order_level if not provided
+        const orderLevel = data.order_level || 0;
+        
     // Generate a slug
     const slug = generateSlug(data.name);
     // Use the provided `created_at` or fallback to the current date
@@ -101,8 +132,9 @@ export async function createOrUpdateBrand(data: createOrUpdateData) {
 
     return { success: true, data: newCategory };
   } catch (error) {
-    console.error("Error creating or updating blog category:", error);
-    return { success: false, message: "An unexpected error occurred" };
+    return { success: false, error };
+    // console.error("Error creating or updating blog category:", error);
+    // return { success: false, message: "An unexpected error occurred" };
   }
 }
 
@@ -122,7 +154,7 @@ export const deleteCategory = async (id: number) => {
     });
     return { success: true, data: deletedCategorys };
   } catch (error) {
-    console.error("Error deleting Categorys:", error);
+    // console.error("Error deleting Categorys:", error);
     return { success: false, error };
   }
 };

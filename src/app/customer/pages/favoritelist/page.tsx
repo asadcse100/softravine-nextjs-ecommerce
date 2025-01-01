@@ -1,3 +1,4 @@
+"use client";
 import ProductCard from "@/app/(frontend)/components/ProductCard";
 import Breadcrumb from "@/app/customer/components/Breadcrumbs/Breadcrumb";
 import { PRODUCTS } from "@/data/data";
@@ -5,7 +6,8 @@ import ButtonSecondary from "@/shared/Button/ButtonSecondary";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { z } from "zod";
 import { showErrorToast, showSuccessToast} from "@/app/admin/components/Toast";
-import { useState, useEffect } from 'react';
+import { useState, useEffect } from "react";
+import { useRouter, useSearchParams } from "next/navigation";
 
 const formSchema = z.object({
   code: z.string().min(10, {
@@ -28,9 +30,29 @@ const formSchema = z.object({
   }),
 });
 
-const AccountSavelists = () => {
+export default function AddOrEdit() {
+  const router = useRouter();
+  const searchParams = useSearchParams();
+  const id = searchParams.get('id');
 
   const [isLoading, setIsLoading] = useState(false);
+
+  // Fetch data if editing an existing ticket
+  useEffect(() => {
+    if (id) {
+      const fetchTicket = async () => {
+        try {
+          const apiUrl = process.env.NEXT_PUBLIC_API_URL || "";
+          const response = await fetch(`${apiUrl}/server/api/routes/customer/favoritelist/${id}`);
+          const data = await response.json();
+          form.reset(data); // Populate form with existing data
+        } catch (error) {
+          showErrorToast("Failed to fetch blog category data.");
+        }
+      };
+      fetchTicket();
+    }
+  }, [id, form]);
 
   const onSubmit: SubmitHandler<z.infer<typeof formSchema>> = async (values) => {
     const apiUrl = process.env.NEXT_PUBLIC_API_URL || "";
@@ -43,8 +65,13 @@ const AccountSavelists = () => {
     setIsLoading(true);
   
     try {
-      const response = await fetch(`${apiUrl}/server/api/routes/admin/blogs/blogCategories`, {
-        method: "POST",
+      const method = id ? "PUT" : "POST";
+      const url = id
+        ? `${apiUrl}/server/api/routes/customer/favoritelist/${id}`
+        : `${apiUrl}/server/api/routes/customer/favoritelist`;
+
+      const response = await fetch(url, {
+        method,
         headers: {
           "Content-Type": "application/json",
         },
@@ -87,4 +114,3 @@ const AccountSavelists = () => {
   return renderSection1();
 };
 
-export default AccountSavelists;

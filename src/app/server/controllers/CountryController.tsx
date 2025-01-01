@@ -21,11 +21,28 @@ export const selectCountries = async () => {
     return { success: true, data: countries };
 
   } catch (error) {
-    console.error("Error fetching customer:", error);
+    // console.error("Error fetching customer:", error);
     return { success: false, error };
   }
 }
 
+export const getCountryId = async (id: number) => {
+  try {
+    // Check if the record exists
+    const existingCategory = await prisma.countries.findUnique({
+      where: { id },
+    });
+
+    if (!existingCategory) {
+      return { success: false, error: "Record does not exist." };
+    }
+
+    return { success: true, data: existingCategory };
+  } catch (error) {
+    // console.error("Error category:", error);
+    return { success: false, error };
+  }
+};
 // export const index = async (req: NextApiRequest, res: NextApiResponse) => {
 //   export const index = async () => {
 //   const { sort_country } = req.query;
@@ -58,7 +75,7 @@ export const getCountries = async () => {
     const countryQueries = await prisma.countries.findMany();
     return { success: true, data: countryQueries };
   } catch (error) {
-    console.error("Error fetching country Queries:", error);
+    // console.error("Error fetching country Queries:", error);
     return { success: false, error };
   }
 }
@@ -107,7 +124,7 @@ export async function createOrUpdateCountry(data: createOrUpdateData) {
 
     return { success: true, data: newPost };
   } catch (error) {
-    console.error("Error creating blog post:", error);
+    // console.error("Error creating blog post:", error);
     return { success: false, error };
   }
 };
@@ -128,7 +145,7 @@ export const deleteCountry = async (id: number) => {
     });
     return { success: true, data: deletedCountrys };
   } catch (error) {
-    console.error("Error deleting Country:", error);
+    // console.error("Error deleting Country:", error);
     return { success: false, error };
   }
 };

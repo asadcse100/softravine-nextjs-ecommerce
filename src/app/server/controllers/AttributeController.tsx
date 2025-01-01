@@ -14,10 +14,28 @@ export const getAttributes = async () => {
     const attributes = await prisma.attributes.findMany();
     return { success: true, data: attributes };
   } catch (error) {
-    console.error("Error fetching attributes:", error);
+    // console.error("Error fetching attributes:", error);
     return { success: false, error };
   }
 }
+
+export const getAttributeById = async (id: number) => {
+  try {
+    // Check if the record exists
+    const existingCategory = await prisma.attributes.findUnique({
+      where: { id },
+    });
+
+    if (!existingCategory) {
+      return { success: false, error: "Record does not exist." };
+    }
+
+    return { success: true, data: existingCategory };
+  } catch (error) {
+    // console.error("Error category:", error);
+    return { success: false, error };
+  }
+};
 
 export async function createOrUpdateAttribute(data: createOrUpdateData) {
   try {
@@ -39,7 +57,7 @@ export async function createOrUpdateAttribute(data: createOrUpdateData) {
 
     return { success: true, data: newPost };
   } catch (error) {
-    console.error("Error creating blog post:", error);
+    // console.error("Error creating blog post:", error);
     return { success: false, error };
   }
 }
@@ -60,7 +78,7 @@ export const deleteAttribute = async (id: number) => {
     });
     return { success: true, data: deletedattributes };
   } catch (error) {
-    console.error("Error deleting attributes:", error);
+    // console.error("Error deleting attributes:", error);
     return { success: false, error };
   }
 };

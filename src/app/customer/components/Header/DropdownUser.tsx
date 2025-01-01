@@ -85,7 +85,7 @@ const DropdownUser = () => {
         <ul className="flex flex-col gap-4 border-b border-stroke px-2 py-7.5 dark:border-strokedark">
           <li>
             <Link
-              href="/seller/pages/account"
+              href="/customer/pages/account"
               className="flex items-center gap-3.5 text-sm font-medium duration-300 ease-in-out hover:text-primary lg:text-base"
             >
               <svg
@@ -110,7 +110,7 @@ const DropdownUser = () => {
           </li>
           <li>
             <Link
-              href="/seller/pages/earning-balance"
+              href="/customer/pages/earning-balance"
               className="flex items-center gap-3.5 text-sm font-medium duration-300 ease-in-out hover:text-primary lg:text-base"
             >
               <svg
@@ -135,7 +135,7 @@ const DropdownUser = () => {
           </li>
           <li>
             <Link
-              href="/seller/pages/account"
+              href="/customer/pages/account"
               className="flex items-center gap-3.5 text-sm font-medium duration-300 ease-in-out hover:text-primary lg:text-base"
             >
               <svg
@@ -160,7 +160,7 @@ const DropdownUser = () => {
           </li>
           <li>
             <Link
-              href="/seller/pages/account"
+              href="/customer/pages/account"
               className="flex items-center gap-3.5 text-sm font-medium duration-300 ease-in-out hover:text-primary lg:text-base"
             >
               <svg

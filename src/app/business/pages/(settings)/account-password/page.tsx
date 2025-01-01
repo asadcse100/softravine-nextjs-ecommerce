@@ -2,13 +2,15 @@ import Label from "@/app/business/components/Label/Label";
 import React from "react";
 import ButtonPrimary from "@/shared/Button/ButtonPrimary";
 import Input from "@/shared/Input/Input";
+import { useState, useEffect } from "react";
+import { useRouter, useSearchParams } from "next/navigation";
 
 const AccountPass = () => {
   return (
     <div className="space-y-10 sm:space-y-12 bg-white dark:bg-slate-700 p-5 rounded-xl">
       {/* HEADING */}
       <h2 className="text-2xl sm:text-3xl font-semibold">
-        Update your password
+        {id ? "Edit Update your password" : "Add Update your password"}
       </h2>
       <div className=" max-w-xl space-y-6">
         <div>

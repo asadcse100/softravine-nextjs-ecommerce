@@ -1,4 +1,3 @@
-// controllers/CityController.ts
 import { PrismaClient } from '@prisma/client'
 const prisma = new PrismaClient()
 
@@ -9,6 +8,23 @@ type createOrUpdateData = {
   status: number;
   name: string;
   created_at?: string;
+};
+
+export const getCityById = async (id: number) => {
+  try {
+    // Check if the record exists
+    const existingCategory = await prisma.cities.findUnique({
+      where: { id },
+    });
+
+    if (!existingCategory) {
+      return { success: false, error: "Record does not exist." };
+    }
+
+    return { success: true, data: existingCategory };
+  } catch (error) {
+    return { success: false, error };
+  }
 };
 
 // export const getCities = async (req: NextApiRequest, res: NextApiResponse) => {
@@ -46,7 +62,6 @@ export const getCities = async () => {
     const cities = await prisma.cities.findMany();
     return { success: true, data: cities };
   } catch (error) {
-    console.error("Error fetching cities:", error);
     return { success: false, error };
   }
 }
@@ -86,8 +101,8 @@ export async function createOrUpdateCity(data: createOrUpdateData) {
 
     return { success: true, data: newCity };
   } catch (error) {
-    console.error("Error creating or updating blog City:", error);
-    return { success: false, message: "An unexpected error occurred" };
+    // return { success: false, message: "An unexpected error occurred" };
+    return { success: false, error };
   }
 }
 
@@ -107,7 +122,6 @@ export const deleteCity = async (id: number) => {
     });
     return { success: true, data: deletedCitys };
   } catch (error) {
-    console.error("Error deleting Citys:", error);
     return { success: false, error };
   }
 };

@@ -15,7 +15,7 @@ export const getAllBlogs = async () => {
         const blogs = await prisma.auction_product_bids.findMany();
         return { success: true, data: blogs };
     } catch (error) {
-        console.error("Error fetching blogs:", error);
+        // console.error("Error fetching blogs:", error);
         return { success: false, error };
     }
 }
@@ -41,7 +41,7 @@ export async function createOrUpdateBid(data: createOrUpdateData) {
 
         return { success: true, data: newPost };
     } catch (error) {
-        console.error("Error creating blog post:", error);
+        // console.error("Error creating blog post:", error);
         return { success: false, error };
     }
 }

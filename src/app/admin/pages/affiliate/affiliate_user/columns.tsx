@@ -5,6 +5,15 @@ import { ArrowUpDown, MoreHorizontal } from "lucide-react";
 import { Button } from "@/app/admin/components/ui/button";
 import { Checkbox } from "@/app/admin/components/ui/checkbox";
 import { Switch } from "@/app/admin/components/ui/switch";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/app/admin/components/ui/dialog"
 
 import {
   DropdownMenu,

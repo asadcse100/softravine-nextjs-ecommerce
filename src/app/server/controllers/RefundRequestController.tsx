@@ -18,6 +18,28 @@ type createOrUpdateData = {
     created_at?: string;
 };
 
+export const getRefundRequestById = async (id: number) => {
+    try {
+        // Check if the record exists
+        const existingCategory = await prisma.refund_requests.findUnique({
+            where: { id },
+        });
+
+        if (!existingCategory) {
+            return { success: false, error: "Record does not exist." };
+        }
+
+        return { success: true, data: existingCategory };
+    } catch (error) {
+        console.error("Error category:", error);
+        return { success: false, error };
+    }
+};
+
+export const createOrUpdateRefundRequest = async (id: number) => {
+    //
+};
+
 export const getRefundRequest = async () => {
     try {
         const refund_requests = await prisma.refund_requests.findMany();
@@ -103,9 +125,10 @@ export const getRejectedRefund = async () => {
     }
 }
 
-export const requestStore = async () => {
+export const requestStore = async (data: createOrUpdateData) => {
     try {
-        const { id } = req.query;
+        // const { id } = req.query;
+        const id = data.id
         const orderDetail = await prisma.order_details.findFirst({
             where: { id: Number(id) },
             include: { orders: true }
@@ -122,7 +145,7 @@ export const requestStore = async () => {
                 order_detail_id: orderDetail.id,
                 seller_id: orderDetail.seller_id,
                 seller_approvals: false,
-                reason: req.body.reason,
+                reason: data.reason,
                 admin_approvals: false,
                 admin_seens: false,
                 refund_amount: orderDetail.price + orderDetail.tax,
@@ -134,46 +157,50 @@ export const requestStore = async () => {
             // return res.status(200).json({ success: true, message: 'Refund request sent successfully' });
             return { success: true, data: refund };
         } else {
-            return res.status(500).json({ success: false, message: 'Something went wrong' });
+            return { success: false };
+            // return res.status(500).json({ success: false, message: 'Something went wrong' });
         }
     } catch (error) {
-        console.error(error);
-        return res.status(500).json({ success: false, message: 'Internal server error' });
+        return { success: false, error };
+        // console.error(error);
+        // return res.status(500).json({ success: false, message: 'Internal server error' });
     }
 };
 
-export const vendorIndex = async () => {
+export const vendorIndex = async (data: createOrUpdateData) => {
     try {
         const refunds = await prisma.refund_requests.findMany({
-            where: { seller_id: Number(req.query.seller_id) },
+            where: { seller_id: Number(data.seller_id) },
             orderBy: { created_at: 'desc' }
         });
-
-        return res.status(200).json({ refunds });
+        return { success: true, data: refunds };
+        // return res.status(200).json({ refunds });
     } catch (error) {
-        console.error(error);
-        return res.status(500).json({ message: 'Internal server error' });
+        return { success: false, error };
+        // console.error(error);
+        // return res.status(500).json({ message: 'Internal server error' });
     }
 };
 
-export const customerIndex = async () => {
+export const customerIndex = async (data: createOrUpdateData) => {
     try {
         const refunds = await prisma.refund_requests.findMany({
-            where: { user_id: Number(req.query.user_id) },
-            orderBy: { createdAt: 'desc' }
+            where: { user_id: Number(data.user_id) },
+            orderBy: { created_at: 'desc' }
         });
-
-        return res.status(200).json({ refunds });
+        return { success: true, data: refunds };
+        // return res.status(200).json({ refunds });
     } catch (error) {
-        console.error(error);
-        return res.status(500).json({ message: 'Internal server error' });
+        return { success: false, error };
+        // console.error(error);
+        // return res.status(500).json({ message: 'Internal server error' });
     }
 };
 
 
 export const refundTimeUpdate = async (data: createOrUpdateData) => {
     try {
-        const { type, value } = req.body;
+        // const { type, value } = req.body;
 
         let businessSetting = await prisma.business_settings.findUnique({ where: { type } });
         if (businessSetting) {
@@ -198,8 +225,9 @@ export const refundTimeUpdate = async (data: createOrUpdateData) => {
 
         return res.status(200).json({ message: 'Refund request sending time has been updated successfully' });
     } catch (error) {
-        console.error(error);
-        return res.status(500).json({ message: 'Internal server error' });
+        return { success: false, error };
+        // console.error(error);
+        // return res.status(500).json({ message: 'Internal server error' });
     }
 };
 
@@ -227,12 +255,13 @@ export const refundStickerUpdate = async (data: createOrUpdateData) => {
         // You can also omit this line if you're not using any caching mechanism
         // Or if cache clearing is handled differently in your application
         // If you're using Next.js's built-in caching, this line should work fine
-        await prisma.$queryRaw`SELECT pg_notify('cache_clear', '');`;
-
-        return res.status(200).json({ message: 'Refund sticker has been updated successfully' });
+        const cacheclear = await prisma.$queryRaw`SELECT pg_notify('cache_clear', '');`;
+        return { success: true, data: cacheclear };
+        // return res.status(200).json({ message: 'Refund sticker has been updated successfully' });
     } catch (error) {
-        console.error(error);
-        return res.status(500).json({ message: 'Internal server error' });
+        return { success: false, error };
+        // console.error(error);
+        // return res.status(500).json({ message: 'Internal server error' });
     }
 };
 
@@ -242,10 +271,12 @@ export const adminIndex = async (_data: createOrUpdateData) => {
             where: { refund_status: 0 },
             orderBy: { created_at: 'desc' },
         });
-        return res.status(200).json(refunds);
+        return { success: true, data: refunds };
+        // return res.status(200).json(refunds);
     } catch (error) {
-        console.error(error);
-        return res.status(500).json({ message: 'Internal server error' });
+        return { success: false, error };
+        // console.error(error);
+        // return res.status(500).json({ message: 'Internal server error' });
     }
 };
 
@@ -255,10 +286,12 @@ export const paidIndex = async (_data: createOrUpdateData) => {
             where: { refund_status: 1 },
             orderBy: { created_at: 'desc' },
         });
-        return res.status(200).json(refunds);
+        return { success: true, data: refunds };
+        // return res.status(200).json(refunds);
     } catch (error) {
-        console.error(error);
-        return res.status(500).json({ message: 'Internal server error' });
+        return { success: false, error };
+        // console.error(error);
+        // return res.status(500).json({ message: 'Internal server error' });
     }
 };
 
@@ -269,10 +302,12 @@ export const rejectedIndex = async (_data: createOrUpdateData) => {
             where: { refund_status: 2 },
             orderBy: { created_at: 'desc' },
         });
-        return res.status(200).json(refunds);
+        return { success: true, data: refunds };
+        // return res.status(200).json(refunds);
     } catch (error) {
-        console.error(error);
-        return res.status(500).json({ message: 'Internal server error' });
+        return { success: false, error };
+        // console.error(error);
+        // return res.status(500).json({ message: 'Internal server error' });
     }
 };
 
@@ -287,10 +322,12 @@ export const requestApprovalVendor = async (data: createOrUpdateData) => {
                 admin_approval: req.userType === 'admin' || req.userType === 'staff' ? 1 : undefined,
             },
         });
-        return res.status(200).json(refund);
+        return { success: true, data: refund };
+        // return res.status(200).json(refund);
     } catch (error) {
-        console.error(error);
-        return res.status(500).json({ message: 'Internal server error' });
+        return { success: false, error };
+        // console.error(error);
+        // return res.status(500).json({ message: 'Internal server error' });
     }
 };
 
@@ -330,10 +367,12 @@ export const refundPay = async (data: createOrUpdateData) => {
                 data: { balance: { increment: refund.refund_amount } },
             });
         }
-        return res.status(200).json({ message: 'Refund processed successfully' });
+        return { success: true, data: refund };
+        // return res.status(200).json({ message: 'Refund processed successfully' });
     } catch (error) {
-        console.error(error);
-        return res.status(500).json({ message: 'Internal server error' });
+        return { success: false, error };
+        // console.error(error);
+        // return res.status(500).json({ message: 'Internal server error' });
     }
 };
 
@@ -351,12 +390,15 @@ export const rejectRefundRequest = async (data: createOrUpdateData) => {
             },
         });
         if (refund) {
-            return res.status(200).json({ message: 'Refund request rejected successfully' });
+            return { success: true, data: refund };
+            // return res.status(200).json({ message: 'Refund request rejected successfully' });
         } else {
-            return res.status(400).json({ message: 'Failed to reject refund request' });
+            return { success: false };
+            // return res.status(400).json({ message: 'Failed to reject refund request' });
         }
     } catch (error) {
-        console.error(error);
-        return res.status(500).json({ message: 'Internal server error' });
+        return { success: false, error };
+        // console.error(error);
+        // return res.status(500).json({ message: 'Internal server error' });
     }
 };

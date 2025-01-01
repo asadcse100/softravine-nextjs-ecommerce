@@ -13,23 +13,41 @@ type createOrUpdateData = {
   meta_img?: any;
   meta_description?: string;
   meta_keywords?: string;
-  status: number;
+  status: string;
   created_at: string;
 };
 
 export const selectCategories = async () => {
-  try{
-      const blog_categories = await prisma.blog_categories.findMany({
-        select: {
-          category_name: true,
-        },
+  try {
+    const blog_categories = await prisma.blog_categories.findMany({
+      select: {
+        category_name: true,
+      },
     });
     return { success: true, data: blog_categories };
 
-  }catch(error){
-      return { success: false, error };
+  } catch (error) {
+    return { success: false, error };
   }
 }
+
+export const getBlogById = async (id: number) => {
+  try {
+    // Check if the record exists
+    const existingCategory = await prisma.blog_categories.findUnique({
+      where: { id },
+    });
+
+    if (!existingCategory) {
+      return { success: false, error: "Record does not exist." };
+    }
+
+    return { success: true, data: existingCategory };
+  } catch (error) {
+    // console.error("Error category:", error);
+    return { success: false, error };
+  }
+};
 
 export async function getBlogs(search: string | null = null) {
   const where = search
@@ -89,8 +107,9 @@ export async function createOrUpdateBlogPost(data: createOrUpdateData) {
 
     return { success: true, data: newCategory };
   } catch (error) {
-    console.error("Error creating or updating blog category:", error);
-    return { success: false, message: "An unexpected error occurred" };
+    return { success: false, error };
+    // console.error("Error creating or updating blog category:", error);
+    // return { success: false, message: "An unexpected error occurred" };
   }
 }
 
@@ -123,7 +142,7 @@ export const deleteBlogPost = async (id: number) => {
     });
     return { success: true, data: deletedblog };
   } catch (error) {
-    console.error("Error deleting blog:", error);
+    // console.error("Error deleting blog:", error);
     return { success: false, error };
   }
 };
@@ -131,10 +150,10 @@ export const deleteBlogPost = async (id: number) => {
 export const getAllBlogs = async () => {
   try {
     const blogs = await prisma.blogs.findMany();
-    
+
     return { success: true, data: blogs };
   } catch (error) {
-    console.error("Error fetching blogs:", error);
+    // console.error("Error fetching blogs:", error);
     return { success: false, error };
   }
 }
@@ -148,7 +167,7 @@ export async function getBlogDetails(slug: string) {
 
 export async function getRecentBlogs() {
   return prisma.blogs.findMany({
-    where: { status: true },
+    where: { status: 1 },
     orderBy: { created_at: 'desc' },
     take: 9,
   });

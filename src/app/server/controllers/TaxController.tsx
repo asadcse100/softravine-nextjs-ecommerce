@@ -17,6 +17,24 @@ export const getTaxes = async () => {
     }
 }
 
+export const getTaxById = async (id: number) => {
+  try {
+    // Check if the record exists
+    const existingCategory = await prisma.taxes.findUnique({
+      where: { id },
+    });
+
+    if (!existingCategory) {
+      return { success: false, error: "Record does not exist." };
+    }
+
+    return { success: true, data: existingCategory };
+  } catch (error) {
+    // console.error("Error category:", error);
+    return { success: false, error };
+  }
+};
+
 // export const store = async (req: NextApiRequest, res: NextApiResponse) => {
 //     try {
 //         const { name } = req.body;
@@ -53,7 +71,7 @@ export async function createOrUpdateTax(data: createOrUpdateData) {
 
     return { success: true, data: newPost };
   } catch (error) {
-    console.error("Error creating blog post:", error);
+    // console.error("Error creating blog post:", error);
     return { success: false, error };
   }
 };
@@ -114,39 +132,40 @@ export const deleteTax = async (id: number) => {
     });
     return { success: true, data: deletedTaxs };
   } catch (error) {
-    console.error("Error deleting Taxs:", error);
+    // console.error("Error deleting Taxs:", error);
     return { success: false, error };
   }
 };
 
 // export default async function changeTaxStatus(req: NextApiRequest, res: NextApiResponse) {
-export const changeTaxStatus = async () => {
+// export const changeTaxStatus = async () => {
+  export const changeTaxStatus = async (id: number) => {
     try {
-        const { id } = req.body;
+        // const { id } = req.body;
 
         const tax = await prisma.taxes.findUnique({
             where: {
-                id: parseInt(id as string),
+                id: id,
             },
         });
 
         if (!tax) {
-            res.status(404).json({ error: 'Tax not found' });
-            return;
+            return { success: false, error: "Tax not found" };
         }
 
         const updatedTax = await prisma.taxes.update({
             where: {
-                id: parseInt(id as string),
+                id: id,
             },
             data: {
                 tax_status: tax.tax_status === 1 ? 0 : 1,
             },
         });
-
-        res.status(200).json(updatedTax.tax_status);
+        return { success: true, data: updatedTax.tax_status };
+        // res.status(200).json(updatedTax.tax_status);
     } catch (error) {
-        console.error(error);
-        res.status(500).json({ error: 'Internal Server Error' });
+      return { success: false, error };
+        // console.error(error);
+        // res.status(500).json({ error: 'Internal Server Error' });
     }
 }

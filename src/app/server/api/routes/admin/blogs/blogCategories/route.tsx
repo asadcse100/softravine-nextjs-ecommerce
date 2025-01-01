@@ -18,7 +18,7 @@ export async function POST(req: Request) {
   
   try {
     const body = await req.json();
-    const result = await createOrUpdateBlogCategory(body);
+    const result = await createOrUpdateBlogCategory(null, body);
 
     if (result.success) {
       return NextResponse.json(

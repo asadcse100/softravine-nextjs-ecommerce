@@ -1,5 +1,5 @@
 import Image from "next/image";
-import { SIDENAV_ITEMS } from "@/app/seller/SIDEBAR_CONSTANTS";
+import { SIDENAV_ITEMS } from "@/app/business/SIDEBAR_CONSTANTS";
 import { SideBarMenuItem } from "./sidebar-menu-item";
 import classNames from "classnames";
 import { useSideBarToggle } from "@/hooks/use-sidebar-toggle";

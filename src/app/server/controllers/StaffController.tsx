@@ -29,7 +29,6 @@ type createOrUpdateData = {
 //   }
 // }
 
-
 type staffData = {
   name: string;
   email: string;
@@ -51,6 +50,24 @@ export const roles = async () => {
     return { success: false, error };
   }
 }
+
+export const getStaffById = async (id: number) => {
+  try {
+    // Check if the record exists
+    const existingCategory = await prisma.users.findUnique({
+      where: { id },
+    });
+
+    if (!existingCategory) {
+      return { success: false, error: "Record does not exist." };
+    }
+
+    return { success: true, data: existingCategory };
+  } catch (error) {
+    console.error("Error category:", error);
+    return { success: false, error };
+  }
+};
 
 export const getStaffs = async () => {
   try {
@@ -205,7 +222,7 @@ async function syncRoles(userId: number, roleName: string) {
 
 // export const deleteStaff = async (req: NextApiRequest, res: NextApiResponse) => {
 export async function deleteStaff(data: staffData) {
-  const { id } = req.query;
+  // const { id } = req.query;
 
   try {
     const staff = await prisma.staff.findUnique({
@@ -214,7 +231,8 @@ export async function deleteStaff(data: staffData) {
     });
 
     if (!staff) {
-      return res.status(404).json({ error: 'Staff not found' });
+      // return res.status(404).json({ error: 'Staff not found' });
+      return { success: false, error: "Record does not exist." };
     }
 
     await prisma.users.delete({
@@ -224,9 +242,10 @@ export async function deleteStaff(data: staffData) {
     await prisma.staff.delete({
       where: { id: Number(id) },
     });
-
-    res.status(200).json({ message: 'Staff has been deleted successfully' });
+    return { success: true };
+    // res.status(200).json({ message: 'Staff has been deleted successfully' });
   } catch (error) {
-    res.status(500).json({ error: 'Something went wrong' });
+    return { success: false, error };
+    // res.status(500).json({ error: 'Something went wrong' });
   }
 };

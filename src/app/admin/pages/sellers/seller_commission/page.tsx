@@ -17,7 +17,8 @@ import {
 import Input from "@/shared/Input/Input";
 import { Switch } from "@/app/admin/components/ui/switch";
 import { showErrorToast, showSuccessToast } from "@/app/admin/components/Toast";
-import { useState, useEffect } from 'react';
+import { useState, useEffect } from "react";
+import { useRouter, useSearchParams } from "next/navigation";
 
 const formSchema = z.object({
   vendor_commission: z.string().min(1, {
@@ -28,9 +29,11 @@ const formSchema = z.object({
   }),
 });
 
-export default function Addnew() {
-  // ...
-  // 1. Define your form.
+export default function AddOrEdit() {
+  const router = useRouter();
+  const searchParams = useSearchParams();
+  const id = searchParams.get('id');
+
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -39,12 +42,24 @@ export default function Addnew() {
     },
   });
 
-  // 2. Define a submit handler.
-  // function onSubmit(values: z.infer<typeof formSchema>) {
-  //   console.log(values);
-  // }
-
   const [isLoading, setIsLoading] = useState(false);
+
+  // Fetch data if editing an existing ticket
+  useEffect(() => {
+    if (id) {
+      const fetchTicket = async () => {
+        try {
+          const apiUrl = process.env.NEXT_PUBLIC_API_URL || "";
+          const response = await fetch(`${apiUrl}/server/api/routes/admin/sellers/seller_commission/${id}`);
+          const data = await response.json();
+          form.reset(data); // Populate form with existing data
+        } catch (error) {
+          showErrorToast("Failed to fetch blog category data.");
+        }
+      };
+      fetchTicket();
+    }
+  }, [id, form]);
 
   const onSubmit: SubmitHandler<z.infer<typeof formSchema>> = async (values) => {
     const apiUrl = process.env.NEXT_PUBLIC_API_URL || "";
@@ -57,14 +72,19 @@ export default function Addnew() {
     setIsLoading(true);
 
     try {
-      const response = await fetch(`${apiUrl}/server/api/routes/admin/sellers/seller_commission`, {
-        method: "POST",
+      const method = id ? "PUT" : "POST";
+      const url = id
+        ? `${apiUrl}/server/api/routes/admin/sellers/seller_commission/${id}`
+        : `${apiUrl}/server/api/routes/admin/sellers/seller_commission`;
+
+      const response = await fetch(url, {
+        method,
         headers: {
           "Content-Type": "application/json",
         },
         body: JSON.stringify(values),
       });
-
+      
       if (!response.ok) {
         throw new Error("Failed to add seller commission configuration. Please try again.");
       }
@@ -95,7 +115,7 @@ export default function Addnew() {
                 <div className="px-6 rounded-sm border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark">
                   <div className="border-b border-stroke px-6.5 py-4 dark:border-strokedark">
                     <h3 className="font-medium text-black dark:text-white">
-                      Seller Commission Activation
+                      {id ? "Edit Seller Commission Activation" : "Add Seller Commission Activation"}
                     </h3>
                   </div>
                   <div className="py-6">

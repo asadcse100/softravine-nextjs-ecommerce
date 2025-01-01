@@ -30,14 +30,14 @@ export interface SectionProfessionalProps {
 //       img: MR,
 //       imgDark: MR,
 //       title: "Local Outlet",
-//       link: "/seller/pages/localoutlet",
+//       link: "/business/pages/localoutlet",
 //     },
 //     {
 //       id: 2,
 //       img: DO,
 //       imgDark: DO,
 //       title: "eCommerce Vendor ship",
-//       link: "/seller/pages/ecommerce-vendor",
+//       link: "/business/pages/ecommerce-vendor",
 //     },
 //     {
 //       id: 3,
@@ -83,7 +83,7 @@ const SectionProfessional: FC<SectionProfessionalProps> = ({
             </Link>
           ))} */}
 
-          <Link key={1} href={'/seller/pages/localoutlet'}>
+          <Link key={1} href={'/business/pages/localoutlet'}>
             <NcImage
               containerClassName="max-w-[300px] mx-auto"
               className="rounded-sm"
@@ -93,7 +93,7 @@ const SectionProfessional: FC<SectionProfessionalProps> = ({
             />
           </Link>
 
-          <Link key={2} href={'/seller/pages/ecommerce-vendor'}>
+          <Link key={2} href={'/business/pages/ecommerce-vendor'}>
             <NcImage
               containerClassName="max-w-[300px] mx-auto"
               className="rounded-sm"
@@ -102,7 +102,7 @@ const SectionProfessional: FC<SectionProfessionalProps> = ({
               alt="HIW"
             />
           </Link>
-          <Link key={3} href={'/seller/pages/drive-pack-agent'}>
+          <Link key={3} href={'/business/pages/drive-pack-agent'}>
           <NcImage
             containerClassName="max-w-[300px] mx-auto"
             className="rounded-sm"
@@ -111,7 +111,7 @@ const SectionProfessional: FC<SectionProfessionalProps> = ({
             alt="HIW"
           />
           </Link>
-          <Link key={4} href={'/seller/pages/doctor'}>
+          <Link key={4} href={'/business/pages/doctor'}>
           <NcImage
             containerClassName="max-w-[300px] mx-auto"
             className="rounded-sm"
@@ -120,7 +120,7 @@ const SectionProfessional: FC<SectionProfessionalProps> = ({
             alt="HIW"
           />
           </Link>
-          <Link key={5} href={'/seller/pages/tuition-agency'}>
+          <Link key={5} href={'/business/pages/tuition-agency'}>
           <NcImage
             containerClassName="max-w-[300px] mx-auto"
             className="rounded-sm"

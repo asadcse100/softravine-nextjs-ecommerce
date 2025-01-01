@@ -15,8 +15,26 @@ type createOrUpdateData = {
   created_at?: string;
 };
 
+export const getPageById = async (id: number) => {
+  try {
+    // Check if the record exists
+    const existingCategory = await prisma.pages.findUnique({
+      where: { id },
+    });
+
+    if (!existingCategory) {
+      return { success: false, error: "Record does not exist." };
+    }
+
+    return { success: true, data: existingCategory };
+  } catch (error) {
+    console.error("Error category:", error);
+    return { success: false, error };
+  }
+};
+
 export async function createOrUpdatePage(data: createOrUpdateData) {
-// export async function storePage(req: NextApiRequest, res: NextApiResponse) {
+  // export async function storePage(req: NextApiRequest, res: NextApiResponse) {
   try {
     const { title, slug, content, meta_title, meta_description, keywords, meta_image } = req.body;
 
@@ -28,7 +46,8 @@ export async function createOrUpdatePage(data: createOrUpdateData) {
     });
 
     if (existingPage) {
-      return res.status(400).json({ error: 'Slug has been used already' });
+      return { success: false };
+      // return res.status(400).json({ error: 'Slug has been used already' });
     }
 
     // Create a new page
@@ -82,23 +101,25 @@ export async function createOrUpdatePage(data: createOrUpdateData) {
       });
     }
 
+    return { success: true, data: page };
     // Return success response
-    return res.status(201).json({ success: true, message: 'New page has been created successfully', page: page });
+    // return res.status(201).json({ success: true, message: 'New page has been created successfully', page: page });
   } catch (error) {
-    console.error(error);
-    return res.status(500).json({ error: 'Internal server error' });
+    return { success: false, error };
+    // console.error(error);
+    // return res.status(500).json({ error: 'Internal server error' });
   }
 }
 
 export async function updatePage(data: createOrUpdateData) {
   try {
-    const { id } = req.query;
-    const { title, slug, content, meta_title, meta_description, keywords, meta_image, lang } = req.body;
+    // const { id } = req.query;
+    // const { title, slug, content, meta_title, meta_description, keywords, meta_image, lang } = req.body;
 
     // Find the page by ID
     const page = await prisma.pages.findUnique({
       where: {
-        id: parseInt(id as string),
+        id: data.id,
       },
       include: {
         translations: true, // Include related translations
@@ -106,7 +127,8 @@ export async function updatePage(data: createOrUpdateData) {
     });
 
     if (!page) {
-      return res.status(404).json({ error: 'Page not found' });
+      // return res.status(404).json({ error: 'Page not found' });
+      return { success: false };
     }
 
     // Check if the new slug is unique
@@ -186,7 +208,8 @@ export async function updatePage(data: createOrUpdateData) {
 
 export async function deletePage(data: createOrUpdateData) {
   try {
-    const { id } = req.query;
+    // const { id } = req.query;
+    const id = data.id;
 
     // Find the page by ID
     const page = await prisma.pages.findUnique({
@@ -199,7 +222,8 @@ export async function deletePage(data: createOrUpdateData) {
     });
 
     if (!page) {
-      return res.status(404).json({ error: 'Page not found' });
+      // return res.status(404).json({ error: 'Page not found' });
+      return { success: false };
     }
 
     // Delete all translations related to the page
@@ -210,24 +234,27 @@ export async function deletePage(data: createOrUpdateData) {
     });
 
     // Delete the page
-    await prisma.pages.delete({
+    const deletePage = await prisma.pages.delete({
       where: {
         id: parseInt(id as string),
       },
     });
 
+    return { success: true, data: deletePage };
     // Return success response
-    return res.status(200).json({ success: true, message: 'Page has been deleted successfully' });
+    // return res.status(200).json({ success: true, message: 'Page has been deleted successfully' });
   } catch (error) {
-    console.error(error);
-    return res.status(500).json({ error: 'Internal server error' });
+    return { success: false, error };
+    // console.error(error);
+    // return res.status(500).json({ error: 'Internal server error' });
   }
 }
 
 
 export async function showCustomPage(data: createOrUpdateData) {
   try {
-    const { slug } = req.query;
+    // const { slug } = req.query;
+    const slug = data.slug;
 
     // Find the page by slug
     const page = await prisma.pages.findUnique({
@@ -237,36 +264,39 @@ export async function showCustomPage(data: createOrUpdateData) {
     });
 
     if (!page) {
-      return res.status(404).json({ error: 'Page not found' });
+      // return res.status(404).json({ error: 'Page not found' });
+      return { success: false };
     }
 
+    return { success: true, data: page };
     // Return the custom page view with the page data
-    return res.status(200).json({ page: page });
+    // return res.status(200).json({ page: page });
   } catch (error) {
-    console.error(error);
-    return res.status(500).json({ error: 'Internal server error' });
+    return { success: false, error };
+    // console.error(error);
+    // return res.status(500).json({ error: 'Internal server error' });
   }
 }
 
-export async function showMobileCustomPage(data: createOrUpdateData) {
-  try {
-    const { slug } = req.query;
+// export async function showMobileCustomPage(data: createOrUpdateData) {
+//   try {
+//     const { slug } = req.query;
 
-    // Find the page by slug
-    const page = await prisma.pages.findUnique({
-      where: {
-        slug: slug as string,
-      },
-    });
+//     // Find the page by slug
+//     const page = await prisma.pages.findUnique({
+//       where: {
+//         slug: slug as string,
+//       },
+//     });
 
-    if (!page) {
-      return res.status(404).json({ error: 'Page not found' });
-    }
+//     if (!page) {
+//       return res.status(404).json({ error: 'Page not found' });
+//     }
 
-    // Return the mobile custom page view with the page data
-    return res.status(200).json({ page: page });
-  } catch (error) {
-    console.error(error);
-    return res.status(500).json({ error: 'Internal server error' });
-  }
-}
+//     // Return the mobile custom page view with the page data
+//     return res.status(200).json({ page: page });
+//   } catch (error) {
+//     console.error(error);
+//     return res.status(500).json({ error: 'Internal server error' });
+//   }
+// }

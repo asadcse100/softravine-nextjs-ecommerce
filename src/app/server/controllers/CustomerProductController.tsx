@@ -75,6 +75,23 @@ type createOrUpdateData = {
 //   }
 // }
 
+export const getCustomerProductById = async (id: number) => {
+  try {
+    // Check if the record exists
+    const existingCategory = await prisma.products.findUnique({
+      where: { id },
+    });
+
+    if (!existingCategory) {
+      return { success: false, error: "Record does not exist." };
+    }
+
+    return { success: true, data: existingCategory };
+  } catch (error) {
+    // console.error("Error category:", error);
+    return { success: false, error };
+  }
+};
 
 export const getCustomerProducts = async () => {
   try {
@@ -87,7 +104,7 @@ export const getCustomerProducts = async () => {
     }));
     return { success: true, data: serializedProducts };
   } catch (error) {
-    console.error("Error fetching products:", error);
+    // console.error("Error fetching products:", error);
     return { success: false, error };
   }
 }
@@ -258,7 +275,7 @@ export async function createOrUpdateCustomerProduct(data: createOrUpdateData) {
 
     return { success: true, data: newPost };
   } catch (error) {
-    console.error("Error creating Customer Package:", error);
+    // console.error("Error creating Customer Package:", error);
     return { success: false, error };
   }
 };
@@ -355,13 +372,16 @@ export const updateStatus = async (data: createOrUpdateData) => {
     });
 
     if (product) {
-      return res.status(200).json({ status: 1 });
+      return { success: true, data: product };
+      // return res.status(200).json({ status: 1 });
     } else {
-      return res.status(404).json({ status: 0 });
+      // return res.status(404).json({ status: 0 });
+      return { success: false };
     }
   } catch (error) {
-    console.error('Error updating product status:', error);
-    return res.status(500).json({ status: 0 });
+    // console.error('Error updating product status:', error);
+    // return res.status(500).json({ status: 0 });
+    return { success: false };
   }
 };
 
@@ -376,19 +396,21 @@ export const destroy = async (data: createOrUpdateData) => {
     });
 
     if (!product) {
-      return res.status(404).json({ message: 'Product not found' });
+      return { success: false, error: "Product not found!" };
+      // return res.status(404).json({ message: 'Product not found' });
     }
 
     await prisma.customer_product_translations.deleteMany({
       where: { customer_product_id: Number(id) },
     });
 
-    await prisma.customer_products.delete({ where: { id: Number(id) } });
-
-    return res.status(200).json({ message: 'Product has been deleted successfully' });
+    const deleteCustomerProduct = await prisma.customer_products.delete({ where: { id: Number(id) } });
+    return { success: true, data: deleteCustomerProduct };
+    // return res.status(200).json({ message: 'Product has been deleted successfully' });
   } catch (error) {
-    console.error('Error deleting product:', error);
-    return res.status(500).json({ message: 'Internal server error' });
+    // console.error('Error deleting product:', error);
+    return { success: false, error };
+    // return res.status(500).json({ message: 'Internal server error' });
   }
 };
 
@@ -405,13 +427,16 @@ export const updatePublished = async (data: createOrUpdateData) => {
     });
 
     if (product) {
-      return res.status(200).json({ status: 1 });
+      return { success: true, data: product };
+      // return res.status(200).json({ status: 1 });
     } else {
-      return res.status(404).json({ status: 0 });
+      return { success: false };
+      // return res.status(404).json({ status: 0 });
     }
   } catch (error) {
-    console.error('Error updating product published status:', error);
-    return res.status(500).json({ status: 0 });
+    return { success: false, error };
+    // console.error('Error updating product published status:', error);
+    // return res.status(500).json({ status: 0 });
   }
 };
 
@@ -428,10 +453,12 @@ export const customerProduct = async (data: createOrUpdateData) => {
       return res.redirect('/');
     }
 
-    return res.render('frontend.customer_product_details', { customerProduct });
+    return { success: true, data: customerProduct };
+    // return res.render('frontend.customer_product_details', { customerProduct });
   } catch (error) {
-    console.error('Error fetching customer product:', error);
-    return res.status(500).send('Internal Server Error');
+    return { success: false, error };
+    // console.error('Error fetching customer product:', error);
+    // return res.status(500).send('Internal Server Error');
   }
 };
 
@@ -509,11 +536,12 @@ export const search = async (data: createOrUpdateData) => {
 
     // Paginate the results
     const customerProducts = await query.take(12).skip(0);
-
-    return res.render('frontend.customer_product_listing', { customerProducts, category_id: categoryId?.id, brand_id: brandId?.id, sort_by, condition });
+    return { success: true, data: customerProducts, category_id: categoryId?.id, brand_id: brandId?.id, sort_by, condition };
+    // return res.render('frontend.customer_product_listing', { customerProducts, category_id: categoryId?.id, brand_id: brandId?.id, sort_by, condition });
   } catch (error) {
-    console.error('Error searching customer products:', error);
-    return res.status(500).send('Internal Server Error');
+    return { success: false, error };
+    // console.error('Error searching customer products:', error);
+    // return res.status(500).send('Internal Server Error');
   }
 }
 

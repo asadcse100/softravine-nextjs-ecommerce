@@ -9,6 +9,8 @@ import NcImage from "@/shared/NcImage/NcImage";
 import MR from "@/images/MR.png";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { showErrorToast, showSuccessToast} from "@/app/admin/components/Toast";
+import { useState, useEffect } from "react";
+import { useRouter, useSearchParams } from "next/navigation";
 
 const formSchema = z.object({
   code: z.string().min(10, {
@@ -81,12 +83,36 @@ const pages: {
 const CommonLayout: FC<CommonLayoutProps> = ({ children }) => {
   const pathname = usePathname();
 
+  const [isLoading, setIsLoading] = useState(false);
+
+  // Fetch data if editing an existing ticket
+  useEffect(() => {
+    if (id) {
+      const fetchTicket = async () => {
+        try {
+          const apiUrl = process.env.NEXT_PUBLIC_API_URL || "";
+          const response = await fetch(`${apiUrl}/server/api/routes/customer/ecommerce-vendor/${id}`);
+          const data = await response.json();
+          form.reset(data); // Populate form with existing data
+        } catch (error) {
+          showErrorToast("Failed to fetch blog category data.");
+        }
+      };
+      fetchTicket();
+    }
+  }, [id, form]);
+  
   const onSubmit: SubmitHandler<z.infer<typeof formSchema>> = async (values) => {
     const apiUrl = process.env.NEXT_PUBLIC_API_URL || "";
 
     try {
-      const response = await fetch(`${apiUrl}/server/api/routes/admin/blogs/blogCategories`, {
-        method: "POST",
+      const method = id ? "PUT" : "POST";
+      const url = id
+        ? `${apiUrl}/server/api/routes/customer/ecommerce-vendor/${id}`
+        : `${apiUrl}/server/api/routes/customer/ecommerce-vendor`;
+
+      const response = await fetch(url, {
+        method,
         headers: {
           "Content-Type": "application/json",
         },
@@ -112,7 +138,9 @@ const CommonLayout: FC<CommonLayoutProps> = ({ children }) => {
       <div className="mt-5 sm:mt-5">
         <div className="max-w-4xl mx-auto">
           <div className="max-w-2xl">
-            <h2 className="text-3xl xl:text-4xl font-semibold">Live TV Channel</h2>
+            <h2 className="text-3xl xl:text-4xl font-semibold">
+            {id ? "Edit Live TV Channel" : "Add Live TV Channel"}
+            </h2>
           </div>
         </div>
       </div>

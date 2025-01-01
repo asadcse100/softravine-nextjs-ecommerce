@@ -1,4 +1,4 @@
-
+'use client';
 import { SIDENAV_ITEMS } from '@/app/admin/menu_contants';
 import classNames from 'classnames';
 import React, { useEffect, useState } from 'react'

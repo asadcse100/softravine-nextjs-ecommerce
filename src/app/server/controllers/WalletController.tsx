@@ -15,6 +15,24 @@ type createOrUpdateData = {
   created_at?: string;
 };
 
+export const getWalletById = async (id: number) => {
+  try {
+    // Check if the record exists
+    const existingCategory = await prisma.wallets.findUnique({
+      where: { id },
+    });
+
+    if (!existingCategory) {
+      return { success: false, error: "Record does not exist." };
+    }
+
+    return { success: true, data: existingCategory };
+  } catch (error) {
+    // console.error("Error category:", error);
+    return { success: false, error };
+  }
+};
+
 // export default async function index(req: NextApiRequest, res: NextApiResponse) {
 // export const index = async (req: NextApiRequest, res: NextApiResponse) => {
 //     try {
@@ -50,7 +68,7 @@ export const index = async () => {
     }));
     return { success: true, data: serializedWallet };
   } catch (error) {
-    console.error("Error fetching wallet:", error);
+    // console.error("Error fetching wallet:", error);
     return { success: false, error };
   }
 }
@@ -65,15 +83,16 @@ export const customerWallet = async () => {
     }));
     return { success: true, data: serializedWallet };
   } catch (error) {
-    console.error("Error fetching wallet:", error);
+    // console.error("Error fetching wallet:", error);
     return { success: false, error };
   }
 }
 
 // export default async function recharge(req: NextApiRequest, res: NextApiResponse) {
-export const recharge = async () => {
+// export const recharge = async () => {
+  export const recharge = async (id: number) => {
   try {
-    const { amount, payment_option } = req.body;
+    // const { amount, payment_option } = req.body;
 
     // Store recharge data in session for payment processing
     req.session.payment_type = 'wallet_payment';
@@ -92,9 +111,11 @@ export const recharge = async () => {
     } else {
       throw new Error('Payment controller not found');
     }
+    // return { success: true, data: PaymentController };
   } catch (error) {
-    console.error(error);
-    res.status(500).json({ error: 'Internal Server Error' });
+    return { success: false, error };
+    // console.error(error);
+    // res.status(500).json({ error: 'Internal Server Error' });
   }
 }
 
@@ -133,10 +154,11 @@ export async function walletPaymentDone() {
     // This might not be directly applicable in Next.js; instead, manage the session as needed
     // Example: req.session.paymentData = null;
     // Example: req.session.paymentType = null;
-
-    return res.status(200).json({ message: 'Recharge completed', user: updatedUser, wallet });
+    return { success: true, data: wallet, updatedUser };
+    // return res.status(200).json({ message: 'Recharge completed', user: updatedUser, wallet });
   } catch (error) {
-    return res.status(500).json({ error: 'Internal server error' });
+    return { success: false, error };
+    // return res.status(500).json({ error: 'Internal server error' });
   }
 }
 
@@ -144,7 +166,8 @@ export async function walletPaymentDone() {
 export async function offlineRecharge() {
   const session = await getSession({ req });
   if (!session) {
-    return res.status(401).json({ error: 'Unauthorized' });
+    // return res.status(401).json({ error: 'Unauthorized' });
+    return { success: false, error: "Unauthorized" };
   }
 
   const { amount, paymentOption, trxId, photo } = req.body;
@@ -155,7 +178,8 @@ export async function offlineRecharge() {
     });
 
     if (!user) {
-      return res.status(404).json({ error: 'User not found' });
+      // return res.status(404).json({ error: 'User not found' });
+      return { success: false, error: "Record does not exist." };
     }
 
     const wallet = await prisma.wallets.create({
@@ -169,10 +193,11 @@ export async function offlineRecharge() {
         receipt: photo
       }
     });
-
-    return res.status(200).json({ message: 'Offline Recharge has been done. Please wait for response.', wallet });
+    return { success: true, data: wallet };
+    // return res.status(200).json({ message: 'Offline Recharge has been done. Please wait for response.', wallet });
   } catch (error) {
-    return res.status(500).json({ error: 'Internal server error' });
+    // return res.status(500).json({ error: 'Internal server error' });
+    return { success: false, error };
   }
 }
 
@@ -182,28 +207,32 @@ export async function getOfflineRechargeRequests() {
       where: { offlinePayment: true },
       include: { user: true } // Include related user data if needed
     });
-
-    return res.status(200).json(wallets);
+    return { success: true, data: wallets };
+    // return res.status(200).json(wallets);
   } catch (error) {
-    return res.status(500).json({ error: 'Internal server error' });
+    // return res.status(500).json({ error: 'Internal server error' });
+    return { success: false, error };
   }
 }
 
 
-export async function updateApproved() {
-  const { id, status } = req.body;
+// export async function updateApproved() {
+
+export const updateApproved = async (id: number) => {
+  // const { id, status } = req.body;
 
   try {
     const wallet = await prisma.wallets.findUnique({
       where: { id: Number(id) },
-      include: { user: true },
+      include: { users: true },
     });
 
     if (!wallet) {
-      return res.status(404).json({ error: 'Wallet not found' });
+      // return res.status(404).json({ error: 'Wallet not found' });
+      return { success: false, error: "Record does not exist." };
     }
 
-    const user = wallet.user;
+    const user = wallet.users;
 
     if (status === 1) {
       await prisma.users.update({
@@ -223,11 +252,13 @@ export async function updateApproved() {
     });
 
     if (updatedWallet) {
-      return res.status(200).json({ success: true });
+      return { success: true, data: updatedWallet };
+      // return res.status(200).json({ success: true });
     }
-
-    return res.status(500).json({ success: false });
+    return { success: false };
+    // return res.status(500).json({ success: false });
   } catch (error) {
-    return res.status(500).json({ error: 'Internal server error' });
+    // return res.status(500).json({ error: 'Internal server error' });
+    return { success: false, error };
   }
 }

@@ -20,6 +20,24 @@ function decrypt(text: string): string {
   return decrypted;
 }
 
+export const getPaymentById = async (id: number) => {
+  try {
+    // Check if the record exists
+    const existingCategory = await prisma.payments.findUnique({
+      where: { id },
+    });
+
+    if (!existingCategory) {
+      return { success: false, error: "Record does not exist." };
+    }
+
+    return { success: true, data: existingCategory };
+  } catch (error) {
+    console.error("Error category:", error);
+    return { success: false, error };
+  }
+};
+
 // export async function getPaymentHistories(req: NextApiRequest, res: NextApiResponse) {
 //     try {
 //       const { page = 1, pageSize = 15 } = req.query;
@@ -53,7 +71,8 @@ export const getPaymentHistories = async () => {
 
 export async function showUserPayments(data: createOrUpdateData) {
   try {
-    const { id } = req.query;
+    // const { id } = req.query;
+    const id = data.id;
     const decryptedId = decrypt(id as string);
 
     // Find the user by decrypted ID
@@ -62,7 +81,8 @@ export async function showUserPayments(data: createOrUpdateData) {
     });
 
     if (!user) {
-      return res.status(404).json({ error: 'User not found' });
+      // return res.status(404).json({ error: 'User not found' });
+      return { success: false };
     }
 
     // Get the payment history for the user
@@ -72,12 +92,16 @@ export async function showUserPayments(data: createOrUpdateData) {
     });
 
     if (payments.length > 0) {
-      return res.status(200).json({ payments, user });
+      // return res.status(200).json({ payments, user });
+      return { success: true, data: payments, user };
+
     } else {
-      return res.status(200).json({ message: 'No payment history available for this seller' });
+      return { success: false, error: "No payment history available for this seller" };
+      // return res.status(200).json({ message: 'No payment history available for this seller' });
     }
   } catch (error) {
-    console.error(error);
-    return res.status(500).json({ error: 'Internal server error' });
+    return { success: false, error };
+    // console.error(error);
+    // return res.status(500).json({ error: 'Internal server error' });
   }
 }

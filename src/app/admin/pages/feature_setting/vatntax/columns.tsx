@@ -56,7 +56,7 @@ export const columns: ColumnDef<Products>[] = [
     header: "Action",
     id: "actions",
     cell: ({ row }) => {
-      const payment = row.original;
+      const id = row.original.id;
 
       return (
         <DropdownMenu>

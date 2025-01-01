@@ -1,4 +1,3 @@
-import { NextApiRequest, NextApiResponse } from 'next';
 import { PrismaClient } from '@prisma/client';
 
 const prisma = new PrismaClient();
@@ -38,6 +37,24 @@ type createOrUpdateData = {
 //   }
 // };
 
+export const getCouponById = async (id: number) => {
+  try {
+    // Check if the record exists
+    const existingCategory = await prisma.coupons.findUnique({
+      where: { id },
+    });
+
+    if (!existingCategory) {
+      return { success: false, error: "Record does not exist." };
+    }
+
+    return { success: true, data: existingCategory };
+  } catch (error) {
+    // console.error("Error category:", error);
+    return { success: false, error };
+  }
+};
+
 export const index = async () => {
   try {
     const coupons = await prisma.coupons.findMany();
@@ -48,7 +65,7 @@ export const index = async () => {
     }));
     return { success: true, data: serializedCoupons };
   } catch (error) {
-    console.error("Error fetching admin:", error);
+    // console.error("Error fetching admin:", error);
     return { success: false, error };
   }
 }
@@ -83,7 +100,7 @@ export const index = async () => {
 //   }
 // };
 
-export async function createOrUpdateCountry(data: createOrUpdateData) {
+export async function createOrUpdateCoupon(data: createOrUpdateData) {
   try {
 
     const created_at = data.created_at ? new Date(data.created_at) : new Date();
@@ -118,7 +135,7 @@ export async function createOrUpdateCountry(data: createOrUpdateData) {
 
     return { success: true, data: newPost };
   } catch (error) {
-    console.error("Error creating blog post:", error);
+    // console.error("Error creating blog post:", error);
     return { success: false, error };
   }
 };
@@ -177,12 +194,12 @@ export const deleteCoupon = async (id: number) => {
     });
     return { success: true, data: deletedCoupons };
   } catch (error) {
-    console.error("Error deleting Coupon:", error);
+    // console.error("Error deleting Coupon:", error);
     return { success: false, error };
   }
 };
 
-export const getCouponForm = async (req: NextApiRequest, res: NextApiResponse) => {
+export const getCouponForm = async () => {
   try {
     const { coupon_type } = req.body;
 
@@ -193,25 +210,30 @@ export const getCouponForm = async (req: NextApiRequest, res: NextApiResponse) =
       });
 
       if (!admin) {
-        return res.status(404).json({ error: 'Admin user not found' });
+        return { success: false, error };
+        // return res.status(404).json({ error: 'Admin user not found' });
       }
 
       const products = await prisma.products.findMany({
         where: { user_id: admin.id },
       });
 
-      res.status(200).json({ products });
+      return { success: true, data: products };
+      // res.status(200).json({ products });
     } else if (coupon_type === 'cart_base') {
-      res.status(200).json({ form: 'cart_base_coupon_form' });
+      return { success: true, form: 'cart_base_coupon_form' };
+      // res.status(200).json({ form: 'cart_base_coupon_form' });
     } else {
-      res.status(400).json({ error: 'Invalid coupon type' });
+      return { success: false };
+      // res.status(400).json({ error: 'Invalid coupon type' });
     }
   } catch (error) {
-    res.status(500).json({ error: 'Failed to get coupon form' });
+    return { success: false, error: "Failed to get coupon form" };
+    // res.status(500).json({ error: 'Failed to get coupon form' });
   }
 };
 
-export const getCouponFormEdit = async (req: NextApiRequest, res: NextApiResponse) => {
+export const getCouponFormEdit = async () => {
   try {
     const { coupon_type, id } = req.body;
 
@@ -222,7 +244,8 @@ export const getCouponFormEdit = async (req: NextApiRequest, res: NextApiRespons
       });
 
       if (!admin) {
-        return res.status(404).json({ error: 'Admin user not found' });
+        // return res.status(404).json({ error: 'Admin user not found' });
+        return { success: false, error: "Record does not exist." };
       }
 
       const coupon = await prisma.coupons.findUnique({
@@ -230,14 +253,16 @@ export const getCouponFormEdit = async (req: NextApiRequest, res: NextApiRespons
       });
 
       if (!coupon) {
-        return res.status(404).json({ error: 'Coupon not found' });
+        return { success: false, error: "Record does not exist." };
+        // return res.status(404).json({ error: 'Coupon not found' });
       }
 
       const products = await prisma.products.findMany({
         where: { user_id: admin.id },
       });
 
-      res.status(200).json({ coupon, products });
+      return { success: true, data: coupon, products };
+      // res.status(200).json({ coupon, products });
     } else if (coupon_type === 'cart_base') {
       // Retrieve coupon from the database
       const coupon = await prisma.coupons.findUnique({
@@ -245,14 +270,17 @@ export const getCouponFormEdit = async (req: NextApiRequest, res: NextApiRespons
       });
 
       if (!coupon) {
-        return res.status(404).json({ error: 'Coupon not found' });
+        return { success: false, error: "Record does not exist." };
+        // return res.status(404).json({ error: 'Coupon not found' });
       }
-
-      res.status(200).json({ coupon });
+      return { success: true, data: coupon };
+      // res.status(200).json({ coupon });
     } else {
-      res.status(400).json({ error: 'Invalid coupon type' });
+      return { success: false, error: "Invalid coupon type." };
+      // res.status(400).json({ error: 'Invalid coupon type' });
     }
   } catch (error) {
-    res.status(500).json({ error: 'Failed to get coupon form for editing' });
+    return { success: false, error: "error 500." };
+    // res.status(500).json({ error: 'Failed to get coupon form for editing' });
   }
 };

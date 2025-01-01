@@ -32,8 +32,6 @@ export default function AddOrEdit() {
   const searchParams = useSearchParams();
   const id = searchParams.get('id');
 
-  console.log("Extracted ID:", id);
-
   // Initialize form handling
   const form = useForm<FormData>({
     resolver: zodResolver(formSchema),
@@ -72,14 +70,6 @@ export default function AddOrEdit() {
     setIsLoading(true);
 
     try {
-      // const response = await fetch(`${apiUrl}/server/api/routes/admin/blogs/blogCategories`, {
-      //   method: "POST",
-      //   headers: {
-      //     "Content-Type": "application/json",
-      //   },
-      //   body: JSON.stringify(values),
-      // });
-
       const method = id ? "PUT" : "POST";
       const url = id
         ? `${apiUrl}/server/api/routes/admin/blogs/blogCategories/${id}`
@@ -127,31 +117,6 @@ export default function AddOrEdit() {
                     </h3>
                   </div>
                   <div className="py-6">
-                    {/* <div className="flex flex-col gap-5.5 p-6.5">
-                      <FormField
-                        control={form.control}
-                        name="category_name"
-                        render={({ field: fieldProps }) => (
-                          <FormItem>
-                            <div className="grid grid-cols-1 md:grid-cols-12">
-                              <div className="col-span-3 mt-2">
-                                <FormLabel>Category Name</FormLabel>
-                              </div>
-                              <div className="col-span-8">
-                                <FormControl>
-                                  <Input
-                                    className={inputClass}
-                                    placeholder="Category Name"
-                                    {...fieldProps}
-                                  />
-                                </FormControl>
-                              </div>
-                            </div>
-                            <FormMessage />
-                          </FormItem>
-                        )}
-                      />
-                    </div> */}
                     {[
                       { name: "category_name", label: "Category Name" },
                     ].map((field) => (

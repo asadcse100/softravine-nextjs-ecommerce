@@ -1,5 +1,5 @@
+import { NextResponse } from "next/server";
 import { PrismaClient } from '@prisma/client';
-import { NextApiRequest, NextApiResponse } from 'next';
 import { getSession } from 'next-auth/react';
 
 const prisma = new PrismaClient();
@@ -77,8 +77,10 @@ type createOrUpdateData = {
   const session = await getSession({ req });
   if (!session) {
     // return res.status(401).json({ error: 'Unauthorized' });
-    console.error("Unauthorized", error);
-    return { success: false, error };
+    return { success: false, error: "Unauthorized" };
+
+    // console.error("Unauthorized", error);
+    // return { success: false, error };
   }
 
   const userId = session.users.id;
@@ -105,7 +107,9 @@ type createOrUpdateData = {
 export const placeBid = async (data: createOrUpdateData) => {
   const session = await getSession({ req });
   if (!session) {
-    return res.status(401).json({ error: 'Unauthorized' });
+    // return res.status(401).json({ error: 'Unauthorized' });
+    return { success: false, error: "Unauthorized" };
+    // return { success: false, error: "Record does not exist." };
   }
 
   const user_id = session.users.id;
@@ -137,20 +141,21 @@ export const placeBid = async (data: createOrUpdateData) => {
         }
       });
     }
-
-    res.status(200).json({ message: 'Bid Placed Successfully', bid });
+    return { success: false, error: "Unauthorized" };
+    // res.status(200).json({ message: 'Bid Placed Successfully', bid });
   } catch (error) {
-    res.status(500).json({ error: 'Something went wrong!' });
+    return { success: false, error: "Something went wrong!" };
+    // res.status(500).json({ error: 'Something went wrong!' });
   }
 };
 
 
-export const showProductWithBids = async (data: createOrUpdateData) => {
-  const { id } = req.query;
+export const showProductWithBids = async (id: number) => {
+  // const { id } = req.query;
 
   try {
     const product = await prisma.products.findUnique({
-      where: { id: parseInt(id as string) },
+      where: { id: id },
       include: {
         auction_product_bids: {
           orderBy: {
@@ -161,11 +166,15 @@ export const showProductWithBids = async (data: createOrUpdateData) => {
     });
 
     if (!product) {
-      return res.status(404).json({ error: 'Product not found' });
+      return { success: false, error: "Product not found!" };
+      // return res.status(404).json({ error: 'Product not found' });
     }
-
-    res.status(200).json({ product, bids: product.auction_product_bids });
+    return { success: false };
+    // return { success: false, error: "Product not found!" };
+    // return NextResponse.json({ product, bids: product.auction_product_bids }, { status: 200 });
+    // res.status(200).json({ product, bids: product.auction_product_bids });
   } catch (error) {
-    res.status(500).json({ error: 'Internal server error' });
+    return NextResponse.json({ error: 'Internal Server Error' }, { status: 500 });
+    // res.status(500).json({ error: 'Internal server error' });
   }
 };

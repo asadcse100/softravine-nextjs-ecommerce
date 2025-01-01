@@ -75,6 +75,23 @@ const pricings: PricingItem[] = [
 
 const [isLoading, setIsLoading] = useState(false);
 
+// Fetch data if editing an existing ticket
+useEffect(() => {
+  if (id) {
+    const fetchTicket = async () => {
+      try {
+        const apiUrl = process.env.NEXT_PUBLIC_API_URL || "";
+        const response = await fetch(`${apiUrl}/server/api/routes/customer/package/${id}`);
+        const data = await response.json();
+        form.reset(data); // Populate form with existing data
+      } catch (error) {
+        showErrorToast("Failed to fetch blog category data.");
+      }
+    };
+    fetchTicket();
+  }
+}, [id, form]);
+
 const onSubmit: SubmitHandler<z.infer<typeof formSchema>> = async (values) => {
   const apiUrl = process.env.NEXT_PUBLIC_API_URL || "";
   
@@ -86,8 +103,13 @@ const onSubmit: SubmitHandler<z.infer<typeof formSchema>> = async (values) => {
   setIsLoading(true);
 
   try {
-    const response = await fetch(`${apiUrl}/server/api/routes/admin/blogs/blogCategories`, {
-      method: "POST",
+    const method = id ? "PUT" : "POST";
+    const url = id
+      ? `${apiUrl}/server/api/routes/customer/package/${id}`
+      : `${apiUrl}/server/api/routes/customer/package`;
+
+    const response = await fetch(url, {
+      method,
       headers: {
         "Content-Type": "application/json",
       },
@@ -121,7 +143,7 @@ const PageSubcription = ({}) => {
       >
         {pricing.isPopular && (
           <span className="bg-primary-500 text-white px-3 py-1 tracking-widest text-xs absolute right-3 top-3 rounded-full z-10">
-            POPULAR
+            {id ? "Edit POPULAR" : "Add POPULAR"}
           </span>
         )}
         <div className="mb-8">

@@ -15,14 +15,6 @@ export async function PUT(req: Request, { params }: { params: { id: number } }) 
 
     try {
         const { categoryName } = await req.json();
-
-        if (!categoryName || typeof categoryName !== 'string' || categoryName.length > 255) {
-            return NextResponse.json(
-                { error: 'Category name is required and must be less than 255 characters.' },
-                { status: 400 }
-            );
-        }
-
         const category = await updateBlogCategory(Number(id), categoryName);
         return NextResponse.json({ category }, { status: 200 });
     } catch (error) {

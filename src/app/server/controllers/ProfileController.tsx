@@ -35,7 +35,7 @@ const prisma = new PrismaClient();
 //     }
 // };
 
-export const updateUser = async () => {
+export const updateUser = async (data: createOrUpdateData) => {
     try {
         const user = await prisma.users.findMany();
         return { success: true, data: user };

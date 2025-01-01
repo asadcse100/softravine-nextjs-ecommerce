@@ -3,7 +3,8 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { z } from "zod";
-
+import { useState, useEffect } from "react";
+import { useRouter, useSearchParams } from "next/navigation";
 import {
   Form,
   FormControl,
@@ -54,19 +55,36 @@ const AccountPass = () => {
     },
   });
 
-  // 2. Define a submit handler.
-  // function onSubmit(values: z.infer<typeof formSchema>) {
-  //   // Do something with the form values.
-  //   // ✅ This will be type-safe and validated.
-  //   console.log(values);
-  // }
+  const [isLoading, setIsLoading] = useState(false);
+
+  // Fetch data if editing an existing ticket
+  useEffect(() => {
+    if (id) {
+      const fetchTicket = async () => {
+        try {
+          const apiUrl = process.env.NEXT_PUBLIC_API_URL || "";
+          const response = await fetch(`${apiUrl}/server/api/routes/admin/business/drive-pack-agent/${id}`);
+          const data = await response.json();
+          form.reset(data); // Populate form with existing data
+        } catch (error) {
+          showErrorToast("Failed to fetch blog category data.");
+        }
+      };
+      fetchTicket();
+    }
+  }, [id, form]);
 
   const onSubmit: SubmitHandler<z.infer<typeof formSchema>> = async (values) => {
     const apiUrl = process.env.NEXT_PUBLIC_API_URL || "";
 
     try {
-      const response = await fetch(`${apiUrl}/server/api/routes/admin/blogs/blogCategories`, {
-        method: "POST",
+      const method = id ? "PUT" : "POST";
+      const url = id
+        ? `${apiUrl}/server/api/routes/admin/business/drive-pack-agent/${id}`
+        : `${apiUrl}/server/api/routes/admin/business/drive-pack-agent`;
+
+      const response = await fetch(url, {
+        method,
         headers: {
           "Content-Type": "application/json",
         },
@@ -93,7 +111,7 @@ const AccountPass = () => {
         <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
 
           <h2 className="text-2xl sm:text-3xl font-semibold dark:text-slate-100">
-            Recharge Pack Business Application
+            {id ? "Edit Recharge Pack Business Application" : "Add Recharge Pack Business Application"}
           </h2>
           <div className=" max-w-xl space-y-6">
             <div>

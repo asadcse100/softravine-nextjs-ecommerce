@@ -43,6 +43,24 @@ export const index = async () => {
   }
 }
 
+export const getRoleById = async (id: number) => {
+  try {
+    // Check if the record exists
+    const existingCategory = await prisma.roles.findUnique({
+      where: { id },
+    });
+
+    if (!existingCategory) {
+      return { success: false, error: "Record does not exist." };
+    }
+
+    return { success: true, data: existingCategory };
+  } catch (error) {
+    console.error("Error category:", error);
+    return { success: false, error };
+  }
+};
+
 export async function createOrUpdateRole(data: createOrUpdateData) {
   const { name, permissions } = data;
 
@@ -65,7 +83,7 @@ export async function createOrUpdateRole(data: createOrUpdateData) {
     }
 
     // Create or update role translation
-    await prisma.role_translations.upsert({
+   const roleData =  await prisma.role_translations.upsert({
       where: {
         role_id_lang: {
           roleId: role.id,
@@ -81,11 +99,12 @@ export async function createOrUpdateRole(data: createOrUpdateData) {
         name,
       },
     });
-
-    res.status(201).json({ message: 'New Role has been added successfully' });
+    return { success: true, data: roleData };
+    // res.status(201).json({ message: 'New Role has been added successfully' });
   } catch (error) {
-    console.error('Error:', error);
-    res.status(500).json({ error: 'Internal server error' });
+    return { success: false, error };
+    // console.error('Error:', error);
+    // res.status(500).json({ error: 'Internal server error' });
   }
 }
 
@@ -155,8 +174,10 @@ export async function createOrUpdateRole(data: createOrUpdateData) {
 //   }
 // }
 
-export async function destroy() {
-  const { id } = req.query;
+// export async function deleteRole() {
+  export const deleteRole = async (id: number) => {
+  // const { id } = req.query;
+  // const id = data;
 
   try {
     // Delete role translations
@@ -174,22 +195,23 @@ export async function destroy() {
     });
 
     // Delete role
-    await prisma.roles.delete({
+   const deleteRole =  await prisma.roles.delete({
       where: {
         id: Number(id),
       },
     });
-
-    res.status(200).json({ message: 'Role has been deleted successfully' });
+    return { success: true, data: deleteRole };
+    // res.status(200).json({ message: 'Role has been deleted successfully' });
   } catch (error) {
-    console.error('Error:', error);
-    res.status(500).json({ error: 'Internal server error' });
+    return { success: false, error };
+    // console.error('Error:', error);
+    // res.status(500).json({ error: 'Internal server error' });
   }
 }
 
 
-export async function addPermission() {
-  const { name, parent } = req.body;
+export async function addPermission(id: number) {
+  // const { name, parent } = req.body;
 
   try {
     // Create a new permission
@@ -200,10 +222,12 @@ export async function addPermission() {
       },
     });
 
-    res.status(201).json({ message: 'Permission has been added successfully', permission });
+    return { success: true, data: permission };
+    // res.status(201).json({ message: 'Permission has been added successfully', permission });
   } catch (error) {
-    console.error('Error:', error);
-    res.status(500).json({ error: 'Internal server error' });
+    return { success: false, error };
+    // console.error('Error:', error);
+    // res.status(500).json({ error: 'Internal server error' });
   }
 }
 

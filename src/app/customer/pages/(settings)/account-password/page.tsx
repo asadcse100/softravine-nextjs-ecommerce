@@ -2,6 +2,8 @@ import Label from "@/app/customer/components/Label/Label";
 import React from "react";
 import ButtonPrimary from "@/shared/Button/ButtonPrimary";
 import Input from "@/shared/Input/Input";
+import { useState, useEffect } from "react";
+import { useRouter, useSearchParams } from "next/navigation";
 
 const AccountPass = () => {
   return (

@@ -39,6 +39,24 @@ type createOrUpdateData = {
 //   }
 // }
 
+export const getReviewById = async (id: number) => {
+  try {
+    // Check if the record exists
+    const existingCategory = await prisma.reviews.findUnique({
+      where: { id },
+    });
+
+    if (!existingCategory) {
+      return { success: false, error: "Record does not exist." };
+    }
+
+    return { success: true, data: existingCategory };
+  } catch (error) {
+    // console.error("Error category:", error);
+    return { success: false, error };
+  }
+};
+
 export const getReviews = async () => {
   try {
     const reviews = await prisma.reviews.findMany();
@@ -50,7 +68,7 @@ export const getReviews = async () => {
     }));
     return { success: true, data: serializedReviews };
   } catch (error) {
-    console.error("Error fetching reviews:", error);
+    // console.error("Error fetching reviews:", error);
     return { success: false, error };
   }
 }
@@ -164,8 +182,9 @@ export async function createOrUpdateBrand(data: createOrUpdateData) {
 
     return { success: true, data: newCategory };
   } catch (error) {
-    console.error("Error creating or updating blog category:", error);
-    return { success: false, message: "An unexpected error occurred" };
+    return { success: false, error };
+    // console.error("Error creating or updating blog category:", error);
+    // return { success: false, message: "An unexpected error occurred" };
   }
 }
 

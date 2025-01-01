@@ -7,7 +7,8 @@ import React from "react";
 import { FC } from "react";
 import NcImage from "@/shared/NcImage/NcImage";
 import MR from "@/images/MR.png";
-
+import { useState, useEffect } from "react";
+import { useRouter, useSearchParams } from "next/navigation";
 export interface CommonLayoutProps {
   children?: React.ReactNode;
 }
@@ -64,7 +65,9 @@ const CommonLayout: FC<CommonLayoutProps> = ({ children }) => {
       <div className="mt-5 sm:mt-5">
         <div className="max-w-4xl mx-auto">
           <div className="max-w-2xl">
-            <h2 className="text-3xl xl:text-4xl font-semibold">Live TV Channel</h2>
+            <h2 className="text-3xl xl:text-4xl font-semibold">
+            {id ? "Edit Live TV Channel" : "Add Live TV Channel"}
+            </h2>
           </div>
         </div>
       </div>

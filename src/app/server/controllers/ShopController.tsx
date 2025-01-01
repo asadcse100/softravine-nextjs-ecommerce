@@ -119,6 +119,24 @@ type createOrUpdateData = {
 //   }
 // };
 
+export const getShopById = async (id: number) => {
+  try {
+    // Check if the record exists
+    const existingCategory = await prisma.attributes.findUnique({
+      where: { id },
+    });
+
+    if (!existingCategory) {
+      return { success: false, error: "Record does not exist." };
+    }
+
+    return { success: true, data: existingCategory };
+  } catch (error) {
+    console.error("Error category:", error);
+    return { success: false, error };
+  }
+};
+
 // Utility function to generate slugs
 function generateSlug(input: string): string {
   return input
@@ -127,7 +145,7 @@ function generateSlug(input: string): string {
     .replace(/(^-|-$)/g, "");
 }
 
-export async function createOrUpdateSeller(data: createOrUpdateData) {
+export async function createOrUpdateShop(data: createOrUpdateData) {
   try {
     // Generate a slug
     const slug = generateSlug(data.name);
@@ -153,7 +171,7 @@ export async function createOrUpdateSeller(data: createOrUpdateData) {
 
     return { success: true, data: newPost };
   } catch (error) {
-    console.error("Error creating blog post:", error);
+    // console.error("Error creating blog post:", error);
     return { success: false, error };
   }
 };

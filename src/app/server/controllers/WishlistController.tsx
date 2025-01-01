@@ -24,13 +24,32 @@ type createOrUpdateData = {
 //     res.status(200).json(wishlists);
 // };
 
+export const getWishlistById = async (id: number) => {
+  try {
+    // Check if the record exists
+    const existingCategory = await prisma.wishlists.findUnique({
+      where: { id },
+    });
+
+    if (!existingCategory) {
+      return { success: false, error: "Record does not exist." };
+    }
+
+    return { success: true, data: existingCategory };
+  } catch (error) {
+    // console.error("Error category:", error);
+    return { success: false, error };
+  }
+};
+
 export const wishlists = async () => {
     try {
         const wishlist = await prisma.wishlists.findMany();
         return { success: true, data: wishlist };
     } catch (error) {
-        console.error("Error fetching wishlist:", error);
-        return { success: false, error };
+      return { success: false, error };
+        // console.error("Error fetching wishlist:", error);
+        // return { success: false, error };
     }
 }
 
@@ -86,8 +105,9 @@ export async function createOrUpdateTax(data: createOrUpdateData) {
 
         return { success: true, data: newPost };
     } catch (error) {
-        console.error("Error creating blog post:", error);
-        return { success: false, error };
+      return { success: false, error };
+        // console.error("Error creating blog post:", error);
+        // return { success: false, error };
     }
 };
 
@@ -133,7 +153,8 @@ export const deleteWishlist = async (id: number) => {
     });
     return { success: true, data: deletedWishlist };
   } catch (error) {
-    console.error("Error deleting Wishlist:", error);
     return { success: false, error };
+    // console.error("Error deleting Wishlist:", error);
+    // return { success: false, error };
   }
 };

@@ -66,7 +66,7 @@ type createOrUpdateData = {
   external_link: string;
   external_link_btn: string;
   wholesale_product: number;
-  tax_id?: number[];
+  tax_id?: number;
   tax?: number;
   created_at: string;
   auctionDateRange: [string, string];
@@ -85,6 +85,60 @@ export const selectProducts = async () => {
     return { success: false, error };
   }
 }
+
+export const getSellerProductById = async (id: number) => {
+  try {
+    // Check if the record exists
+    const existingCategory = await prisma.products.findUnique({
+      where: { id },
+    });
+
+    if (!existingCategory) {
+      return { success: false, error: "Record does not exist." };
+    }
+
+    return { success: true, data: existingCategory };
+  } catch (error) {
+    console.error("Error category:", error);
+    return { success: false, error };
+  }
+};
+
+export const getProductById = async (id: number) => {
+  try {
+    // Check if the record exists
+    const existingCategory = await prisma.attributes.findUnique({
+      where: { id },
+    });
+
+    if (!existingCategory) {
+      return { success: false, error: "Record does not exist." };
+    }
+
+    return { success: true, data: existingCategory };
+  } catch (error) {
+    console.error("Error category:", error);
+    return { success: false, error };
+  }
+};
+
+export const getInhouseProductById = async (id: number) => {
+  try {
+    // Check if the record exists
+    const existingCategory = await prisma.attributes.findUnique({
+      where: { id },
+    });
+
+    if (!existingCategory) {
+      return { success: false, error: "Record does not exist." };
+    }
+
+    return { success: true, data: existingCategory };
+  } catch (error) {
+    console.error("Error category:", error);
+    return { success: false, error };
+  }
+};
 
 export const getSellerProducts = async () => {
   try {
@@ -110,7 +164,7 @@ function generateSlug(input: string): string {
     .replace(/(^-|-$)/g, "");
 }
 
-export async function createOrUpdateProduct(data: createOrUpdateData) {
+export async function createOrUpdateInhouseProduct(data: createOrUpdateData) {
   try {
     // Generate a slug
     const slug = generateSlug(data.name);
@@ -251,8 +305,8 @@ export async function createOrUpdateProduct(data: createOrUpdateData) {
 
     return { success: true, data: newCategory };
   } catch (error) {
-    console.error("Error creating or updating blog category:", error);
-    return { success: false, error: error.message || "An unexpected error occurred" };
+    // console.error("Error creating or updating blog category:", error);
+    return { success: false, error: "An unexpected error occurred" };
   }
 }
 
@@ -419,6 +473,98 @@ export async function createOrUpdateProduct(data: createOrUpdateData) {
 // };
 
 export const deleteProduct = async (data: createOrUpdateData) => {
+  // const { id } = req.query;
+  const id = data.id;
+
+  try {
+    const product = await prisma.products.findUnique({
+      where: { id: Number(id) },
+      include: {
+        product_translations: true,
+        bids: true,
+      },
+    });
+
+    if (!product) {
+      // return res.status(404).json({ message: 'Product not found' });
+      return { success: false };
+    }
+
+    // Delete product translations
+    await prisma.product_translations.deleteMany({
+      where: { product_id: product.id },
+    });
+
+    // Delete bids
+    await prisma.bid.deleteMany({
+      where: { productId: product.id },
+    });
+
+    // Delete the product
+    await prisma.products.delete({
+      where: { id: product.id },
+    });
+
+    // Delete related items in the cart
+    await prisma.carts.deleteMany({
+      where: { product_id: product.id },
+    });
+
+    return res.status(200).json({ message: 'Product has been deleted successfully' });
+  } catch (error) {
+    return res.status(500).json({ message: 'Something went wrong', error: error.message });
+  } finally {
+    await prisma.$disconnect();
+  }
+};
+
+export const deleteInhouseProduct = async (data: createOrUpdateData) => {
+  // const { id } = req.query;
+  const id = data.id;
+
+  try {
+    const product = await prisma.products.findUnique({
+      where: { id: Number(id) },
+      include: {
+        product_translations: true,
+        bids: true,
+      },
+    });
+
+    if (!product) {
+      // return res.status(404).json({ message: 'Product not found' });
+      return { success: false, error };
+    }
+
+    // Delete product translations
+    await prisma.product_translations.deleteMany({
+      where: { product_id: product.id },
+    });
+
+    // Delete bids
+    await prisma.bid.deleteMany({
+      where: { productId: product.id },
+    });
+
+    // Delete the product
+    await prisma.products.delete({
+      where: { id: product.id },
+    });
+
+    // Delete related items in the cart
+    await prisma.carts.deleteMany({
+      where: { product_id: product.id },
+    });
+
+    return res.status(200).json({ message: 'Product has been deleted successfully' });
+  } catch (error) {
+    return res.status(500).json({ message: 'Something went wrong', error: error.message });
+  } finally {
+    await prisma.$disconnect();
+  }
+};
+
+export const deleteSellerProduct = async (data: createOrUpdateData) => {
   const { id } = req.query;
 
   try {
@@ -614,7 +760,7 @@ export const getDigitalProducts = async () => {
     }));
     return { success: true, data: serializedProducts };
   } catch (error) {
-    console.error("Error fetching products:", error);
+    // console.error("Error fetching products:", error);
     return { success: false, error };
   }
 }
@@ -630,7 +776,7 @@ export const getSellerPhysicalProducts = async () => {
     }));
     return { success: true, data: serializedProducts };
   } catch (error) {
-    console.error("Error fetching products:", error);
+    // console.error("Error fetching products:", error);
     return { success: false, error };
   }
 }
@@ -646,7 +792,7 @@ export const getSellerDigitalProducts = async () => {
     }));
     return { success: true, data: serializedProducts };
   } catch (error) {
-    console.error("Error fetching products:", error);
+    // console.error("Error fetching products:", error);
     return { success: false, error };
   }
 }
@@ -697,7 +843,8 @@ export const getSellerDigitalProducts = async () => {
 // };
 
 export const getAuctionProductDetails = async (data: createOrUpdateData) => {
-  const { slug } = req.query;
+  // const { slug } = req.query;
+  const slug = data.slug;
 
   try {
     const detailedProduct = await prisma.products.findUnique({
@@ -705,12 +852,15 @@ export const getAuctionProductDetails = async (data: createOrUpdateData) => {
     });
 
     if (detailedProduct) {
-      return res.status(200).json(detailedProduct);
+      // return res.status(200).json(detailedProduct);
+      return { success: true, data: detailedProduct };
     } else {
-      return res.status(404).json({ message: 'Product not found' });
+      return { success: false };
+      // return res.status(404).json({ message: 'Product not found' });
     }
   } catch (error) {
-    return res.status(500).json({ message: 'Something went wrong', error: error.message });
+    return { success: false, error };
+    // return res.status(500).json({ message: 'Something went wrong', error: error.message });
   } finally {
     await prisma.$disconnect();
   }
@@ -720,7 +870,8 @@ export const getUserPurchaseHistory = async (data: createOrUpdateData) => {
   const session = await getSession({ req });
 
   if (!session) {
-    return res.status(401).json({ message: 'Unauthorized' });
+    // return res.status(401).json({ message: 'Unauthorized' });
+    return { success: false };
   }
 
   const userId = session.user.id;
@@ -746,9 +897,11 @@ export const getUserPurchaseHistory = async (data: createOrUpdateData) => {
       },
     });
 
-    return res.status(200).json(orders);
+    return { success: true, data: orders };
+    // return res.status(200).json(orders);
   } catch (error) {
-    return res.status(500).json({ message: 'Something went wrong' });
+    return { success: false, error };
+    // return res.status(500).json({ message: 'Something went wrong' });
   } finally {
     await prisma.$disconnect();
   }
@@ -801,7 +954,8 @@ export const getAuctionProductOrders = async () => {
 
 
 export const getAuctionOrderDetails = async (data: createOrUpdateData) => {
-  const { id } = req.query;
+  // const { id } = req.query;
+  const id = data.id;
 
   try {
     const decryptedId = parseInt(id as string); // Replace with your decryption logic if needed
@@ -817,24 +971,27 @@ export const getAuctionOrderDetails = async (data: createOrUpdateData) => {
     });
 
     if (!order) {
-      return res.status(404).json({ error: 'Order not found' });
+      // return res.status(404).json({ error: 'Order not found' });
+      return { success: false };
     }
 
     const orderShippingAddress = order.shipping_address;
-    const deliveryBoys = await prisma.user.findMany({
+    const deliveryBoys = await prisma.users.findMany({
       where: {
         city: orderShippingAddress.city,
         userType: 'delivery_boy'
       }
     });
 
-    await prisma.order.update({
+    await prisma.orders.update({
       where: { id: decryptedId },
       data: { viewed: true }
     });
 
-    res.status(200).json({ order, deliveryBoys });
+    return { success: true, data: order, deliveryBoys };
+    // res.status(200).json({ order, deliveryBoys });
   } catch (error) {
-    res.status(500).json({ error: 'Internal server error' });
+    return { success: false, error };
+    // res.status(500).json({ error: 'Internal server error' });
   }
 };

@@ -99,8 +99,8 @@ export const columns: ColumnDef<Category>[] = [
     header: "Action",
     id: "actions",
     cell: ({ row }) => {
-      const blog_category = row.original;
-      const id = blog_category.id;
+      const id = row.original.id;
+      
       return (
         <DropdownMenu>
           <DropdownMenuTrigger asChild>

@@ -1,19 +1,20 @@
 "use client";
 
-import Label from "@/app/seller/components/Label/Label";
+import Label from "@/app/admin/components/Label/Label";
 import React, { FC } from "react";
 import ButtonPrimary from "@/shared/Button/ButtonPrimary";
 import Input from "@/shared/Input/Input";
 import Textarea from "@/shared/Textarea/Textarea";
 import { avatarImgs } from "@/contains/fakeData";
 import Image from "next/image";
-import { useRouter } from "next/navigation";
+import { useState, useEffect } from "react";
+import { useRouter, useSearchParams } from "next/navigation";
 
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { z } from "zod";
 
-import { Button } from "@/app/seller/components/ui/button";
+import { Button } from "@/app/admin/components/ui/button";
 import {
   Form,
   FormControl,
@@ -22,7 +23,7 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-} from "@/app/seller/components/ui/form";
+} from "@/app/admin/components/ui/form";
 import {
   Select,
   SelectContent,
@@ -30,7 +31,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/app/admin/components/ui/select";
-import Breadcrumb from "@/app/seller/components/Breadcrumbs/Breadcrumb";
+import Breadcrumb from "@/app/admin/components/Breadcrumbs/Breadcrumb";
 import { showErrorToast, showSuccessToast } from "@/app/admin/components/Toast";
 
 const formSchema = z.object({
@@ -54,9 +55,10 @@ const formSchema = z.object({
   }),
 });
 
-export default function AccountPage() {
-  // const AccountPage = () => {
+export default function AddOrEdit() {
   const router = useRouter();
+  const searchParams = useSearchParams();
+  const id = searchParams.get('id');
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -70,8 +72,25 @@ export default function AccountPage() {
     },
   });
 
-  // 2. Define a submit handler.
-  // function onSubmit(values: z.infer<typeof formSchema>) {
+  const [isLoading, setIsLoading] = useState(false);
+
+  // Fetch data if editing an existing ticket
+  useEffect(() => {
+    if (id) {
+      const fetchTicket = async () => {
+        try {
+          const apiUrl = process.env.NEXT_PUBLIC_API_URL || "";
+          const response = await fetch(`${apiUrl}/server/api/routes/admin/account/${id}`);
+          const data = await response.json();
+          form.reset(data); // Populate form with existing data
+        } catch (error) {
+          showErrorToast("Failed to fetch blog category data.");
+        }
+      };
+      fetchTicket();
+    }
+  }, [id, form]);
+
   const onSubmit: SubmitHandler<FormData> = async (values) => {
     const apiUrl = process.env.NEXT_PUBLIC_API_URL;
 
@@ -80,9 +99,16 @@ export default function AccountPage() {
       return;
     }
 
+    setIsLoading(true);
+
     try {
-      const response = await fetch(`${apiUrl}/server/api/routes/admin/blogs/blogCategories`, {
-        method: "POST",
+      const method = id ? "PUT" : "POST";
+      const url = id
+        ? `${apiUrl}/server/api/routes/admin/account/${id}`
+        : `${apiUrl}/server/api/routes/admin/account`;
+
+      const response = await fetch(url, {
+        method,
         headers: {
           "Content-Type": "application/json",
         },
@@ -112,9 +138,12 @@ export default function AccountPage() {
         <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
           <div className="space-y-5 sm:space-y-5 bg-white dark:bg-boxdark p-5 rounded-md">
             {/* HEADING */}
-            <h2 className="text-2xl sm:text-3xl font-semibold dark:text-slate-300">
+            {/* <h2 className="text-2xl sm:text-3xl font-semibold dark:text-slate-300">
               Account infomation
-            </h2>
+            </h2> */}
+            <h3 className="font-medium text-black dark:text-white">
+              {id ? "Edit Account infomation" : "Add Account infomation"}
+            </h3>
             <div className="flex flex-col md:flex-row">
               <div className="flex-shrink-0 flex items-start">
                 {/* AVATAR */}
@@ -153,7 +182,33 @@ export default function AccountPage() {
               </div>
 
               <div className="flex-grow mt-10 md:mt-0 md:pl-16 max-w-3xl space-y-3">
-                <FormField
+                {[
+                  { name: "code", label: "Category Name" },
+                ].map((field) => (
+                  <div key={field.name} className="mt-3 flex flex-col gap-5.5 p-6.5">
+                    <FormField
+                      control={form.control}
+                      name={field.name}
+                      render={({ field: fieldProps }) => (
+                        <FormItem>
+                          <div className="grid grid-cols-1 md:grid-cols-12">
+                            <div className="col-span-3 mt-2">
+                              <FormLabel>{field.label}</FormLabel>
+                            </div>
+                            <div className="col-span-8">
+                              <FormControl>
+                                <Input className={inputClass} placeholder={field.label} {...fieldProps} />
+                              </FormControl>
+                            </div>
+                          </div>
+                          <FormMessage />
+                        </FormItem>
+                      )}
+                    />
+                  </div>
+                ))}
+
+                {/* <FormField
                   control={form.control}
                   name="code"
                   render={({ field }) => (
@@ -175,7 +230,7 @@ export default function AccountPage() {
                       <FormMessage />
                     </FormItem>
                   )}
-                />
+                /> */}
 
                 {/* ---- */}
 
@@ -231,6 +286,32 @@ export default function AccountPage() {
                     />
                   </div>
                 </div> */}
+
+                {[
+                  { name: "code", label: "Category Name" },
+                ].map((field) => (
+                  <div key={field.name} className="mt-3 flex flex-col gap-5.5 p-6.5">
+                    <FormField
+                      control={form.control}
+                      name={field.name}
+                      render={({ field: fieldProps }) => (
+                        <FormItem>
+                          <div className="grid grid-cols-1 md:grid-cols-12">
+                            <div className="col-span-3 mt-2">
+                              <FormLabel>{field.label}</FormLabel>
+                            </div>
+                            <div className="col-span-8">
+                              <FormControl>
+                                <Input className={inputClass} placeholder={field.label} {...fieldProps} />
+                              </FormControl>
+                            </div>
+                          </div>
+                          <FormMessage />
+                        </FormItem>
+                      )}
+                    />
+                  </div>
+                ))}
 
                 <FormField
                   control={form.control}

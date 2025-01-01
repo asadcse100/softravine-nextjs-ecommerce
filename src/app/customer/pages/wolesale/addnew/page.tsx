@@ -3,8 +3,9 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { z } from "zod";
-
-import { Button } from "@/app/seller/components/ui/button";
+import { useState, useEffect } from "react";
+import { useRouter, useSearchParams } from "next/navigation";
+import { Button } from "@/app/customer/components/ui/button";
 import {
   Form,
   FormControl,
@@ -13,9 +14,10 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-} from "@/app/seller/components/ui/form";
+} from "@/app/customer/components/ui/form";
 import Input from "@/shared/Input/Input";
-import { Switch } from "@/app/seller/components/ui/switch";
+import { Switch } from "@/app/customer/components/ui/switch";
+import { showErrorToast, showSuccessToast } from "@/app/admin/components/Toast";
 
 const formSchema = z.object({
   name: z.string().min(10, {
@@ -128,9 +130,11 @@ const formSchema = z.object({
   }),
 });
 
-export default function Addnew() {
-  // ...
-  // 1. Define your form.
+export default function AddOrEdit() {
+  const router = useRouter();
+  const searchParams = useSearchParams();
+  const id = searchParams.get('id');
+
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -172,6 +176,25 @@ export default function Addnew() {
     },
   });
 
+    const [isLoading, setIsLoading] = useState(false);
+  
+    // Fetch data if editing an existing ticket
+    useEffect(() => {
+      if (id) {
+        const fetchTicket = async () => {
+          try {
+            const apiUrl = process.env.NEXT_PUBLIC_API_URL || "";
+            const response = await fetch(`${apiUrl}/server/api/routes/customer/wholedale/${id}`);
+            const data = await response.json();
+            form.reset(data); // Populate form with existing data
+          } catch (error) {
+            showErrorToast("Failed to fetch blog category data.");
+          }
+        };
+        fetchTicket();
+      }
+    }, [id, form]);
+
   // 2. Define a submit handler.
   function onSubmit(values: z.infer<typeof formSchema>) {
     // Do something with the form values.
@@ -192,7 +215,7 @@ export default function Addnew() {
                 <div className="px-6 rounded-sm border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark">
                   <div className="border-b border-stroke px-6.5 py-4 dark:border-strokedark">
                     <h3 className="font-medium text-black dark:text-white">
-                      Product Information
+                      {id ? "Edit Product Information" : "Add Product Information"}
                     </h3>
                   </div>
                   <div className="py-6">

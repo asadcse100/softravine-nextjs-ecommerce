@@ -1,35 +1,37 @@
 import { NextResponse } from "next/server";
-import { deleteAttribute } from '@/app/server/controllers/AttributeController';
-import type { NextRequest } from 'next/server';
+import { createOrUpdateAttribute, deleteAttribute, getAttributeById } from '@/app/server/controllers/AttributeController';
 
-// export async function PUT(req: NextRequest) {
-//   const { searchParams } = new URL(req.url);
-//   const id = searchParams.get('id');
+export async function GET(req: Request, { params }: { params: { id: number } }) {
+    const id = params.id;
 
-// export async function PUT(req: Request, { params }: { params: { id: number } }) {
-//     const id = params.id;
+    if (!id || isNaN(Number(id))) {
+        return NextResponse.json({ error: 'Invalid or missing ID.' }, { status: 400 });
+    }
+    try {
+        const result = await getAttributeById(Number(id));
+        const blogcategories = result.data;
+        return NextResponse.json(blogcategories);
+    } catch (error) {
+        console.error(error);
+        return NextResponse.json({ error: 'Internal Server Error' }, { status: 500 });
+    }
+}
 
-//     if (!id || isNaN(Number(id))) {
-//         return NextResponse.json({ error: 'Invalid or missing ID.' }, { status: 400 });
-//     }
+export async function PUT(req: Request, { params }: { params: { id: number } }) {
+    const id = params.id;
 
-//     try {
-//         const { categoryName } = await req.json();
-
-//         if (!categoryName || typeof categoryName !== 'string' || categoryName.length > 255) {
-//             return NextResponse.json(
-//                 { error: 'Category name is required and must be less than 255 characters.' },
-//                 { status: 400 }
-//             );
-//         }
-
-//         const category = await updateBlogCategory(Number(id), categoryName);
-//         return NextResponse.json({ category }, { status: 200 });
-//     } catch (error) {
-//         console.error(error);
-//         return NextResponse.json({ error: 'Internal Server Error' }, { status: 500 });
-//     }
-// }
+    if (!id || isNaN(Number(id))) {
+        return NextResponse.json({ error: 'Invalid or missing ID.' }, { status: 400 });
+    }
+    try {
+        const body = await req.json();
+        const category = await createOrUpdateAttribute(Number(id), body);
+        return NextResponse.json({ category }, { status: 200 });
+    } catch (error) {
+        console.error(error);
+        return NextResponse.json({ error: 'Internal Server Error' }, { status: 500 });
+    }
+}
 
 export async function DELETE(req: Request, { params }: { params: { id: number } }) {
     const id = params.id;

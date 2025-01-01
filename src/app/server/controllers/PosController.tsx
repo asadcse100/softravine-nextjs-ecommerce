@@ -31,8 +31,9 @@ export const index = async (data: createOrUpdateData) => {
             }
         }
     } catch (error) {
-        console.error(error);
-        res.status(500).json({ error: 'Something went wrong' });
+        return { success: false, error };
+        // console.error(error);
+        // res.status(500).json({ error: 'Something went wrong' });
     }
 };
 

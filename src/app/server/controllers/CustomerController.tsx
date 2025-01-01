@@ -45,10 +45,28 @@ export const selectCustomers = async () => {
     return { success: true, data: customers };
 
   }catch(error){
-      console.error("Error fetching customer:", error);
+      // console.error("Error fetching customer:", error);
       return { success: false, error };
   }
 }
+
+export const getCustomerById = async (id: number) => {
+  try {
+    // Check if the record exists
+    const existingCategory = await prisma.users.findUnique({
+      where: { id },
+    });
+
+    if (!existingCategory) {
+      return { success: false, error: "Record does not exist." };
+    }
+
+    return { success: true, data: existingCategory };
+  } catch (error) {
+    // console.error("Error category:", error);
+    return { success: false, error };
+  }
+};
 
 // export const getCustomerList = async (req: NextApiRequest, res: NextApiResponse) => {
 //   try {
@@ -98,7 +116,7 @@ export const getCustomerList = async () => {
     }));
     return { success: true, data: serializedCustomers };
   } catch (error) {
-    console.error("Error fetching customers:", error);
+    // console.error("Error fetching customers:", error);
     return { success: false, error };
   }
 }
@@ -157,7 +175,7 @@ export const getCustomerList = async () => {
 //   }
 // };
 
-export async function createOrUpdateCurrency(data: createOrUpdateData) {
+export async function createOrUpdateCustomer(data: createOrUpdateData) {
   try {
 
     const created_at = data.created_at ? new Date(data.created_at) : new Date();
@@ -228,34 +246,55 @@ export async function createOrUpdateCurrency(data: createOrUpdateData) {
 
     return { success: true, data: newPost };
   } catch (error) {
-    console.error("Error creating Customer:", error);
+    // console.error("Error creating Customer:", error);
     return { success: false, error };
   }
 };
 
-export const deleteCustomer = async (data: createOrUpdateData) => {
+// export const deleteCustomer = async (data: createOrUpdateData) => {
+//   try {
+//     // const { id } = req.query;
+//     const id = data.id;
+
+//     // Delete associated customer products
+//     await prisma.customer_products.deleteMany({
+//       where: {
+//         customer_id: Number(id),
+//       },
+//     });
+
+//     // Delete the customer
+//     await prisma.users.delete({
+//       where: {
+//         id: Number(id),
+//       },
+//     });
+
+//     res.status(200).json({ success: 'Customer has been deleted successfully' });
+//   } catch (error) {
+//     console.error(error);
+//     res.status(500).json({ error: 'Failed to delete customer' });
+//   }
+// };
+
+export const deleteCustomer = async (id: number) => {
   try {
-    // const { id } = req.query;
-    const id = data.id;
-
-    // Delete associated customer products
-    await prisma.customer_products.deleteMany({
-      where: {
-        customer_id: Number(id),
-      },
+    // Check if the record exists
+    const existingattributes = await prisma.attributes.findUnique({
+      where: { id },
     });
 
-    // Delete the customer
-    await prisma.users.delete({
-      where: {
-        id: Number(id),
-      },
-    });
+    if (!existingattributes) {
+      return { success: false, error: "Record does not exist." };
+    }
 
-    res.status(200).json({ success: 'Customer has been deleted successfully' });
+    const deletedattributes = await prisma.attributes.delete({
+      where: { id },
+    });
+    return { success: true, data: deletedattributes };
   } catch (error) {
-    console.error(error);
-    res.status(500).json({ error: 'Failed to delete customer' });
+    // console.error("Error deleting attributes:", error);
+    return { success: false, error };
   }
 };
 
@@ -273,17 +312,17 @@ export const bulkDeleteCustomers = async (data: createOrUpdateData) => {
       });
 
       // Delete the customer
-      await prisma.users.delete({
+      const result = await prisma.users.delete({
         where: {
           id: Number(id),
         },
       });
     }
-
-    res.status(200).json({ success: 'Customers have been deleted successfully' });
+    return { success: true };
+    // res.status(200).json({ success: 'Customers have been deleted successfully' });
   } catch (error) {
     console.error(error);
-    res.status(500).json({ error: 'Failed to delete customers' });
+    // res.status(500).json({ error: 'Failed to delete customers' });
   }
 };
 
@@ -300,16 +339,19 @@ export const loginUserById = async (data: createOrUpdateData) => {
     });
 
     if (!user) {
-      return res.status(404).json({ error: 'User not found' });
+      // return res.status(404).json({ error: 'User not found' });
+      return { success: false, error: "Record does not exist." };
     }
 
     // Log in the user
     req.sessions.user = user;
-
-    res.status(200).json({ success: 'User logged in successfully' });
+    
+    return { success: true, data: user };
+    // res.status(200).json({ success: 'User logged in successfully' });
   } catch (error) {
-    console.error(error);
-    res.status(500).json({ error: 'Failed to log in user' });
+    return { success: false, error };
+    // console.error(error);
+    // res.status(500).json({ error: 'Failed to log in user' });
   }
 };
 
@@ -340,10 +382,12 @@ export const toggleUserBanStatus = async (data: createOrUpdateData) => {
       },
     });
 
-    const successMessage = user.banned ? 'Customer Banned Successfully' : 'Customer Unbanned Successfully';
-    res.status(200).json({ success: successMessage });
+    return { success: true, data: user };
+
+    // const successMessage = user.banned ? 'Customer Banned Successfully' : 'Customer Unbanned Successfully';
+    // res.status(200).json({ success: successMessage });
   } catch (error) {
     console.error(error);
-    res.status(500).json({ error: 'Failed to toggle user ban status' });
+    // res.status(500).json({ error: 'Failed to toggle user ban status' });
   }
 };

@@ -32,12 +32,30 @@ type createOrUpdateData = {
 //   }
 // };
 
+export const getStateById = async (id: number) => {
+  try {
+    // Check if the record exists
+    const existingCategory = await prisma.states.findUnique({
+      where: { id },
+    });
+
+    if (!existingCategory) {
+      return { success: false, error: "Record does not exist." };
+    }
+
+    return { success: true, data: existingCategory };
+  } catch (error) {
+    // console.error("Error category:", error);
+    return { success: false, error };
+  }
+};
+
 export const getStates = async () => {
   try {
     const state = await prisma.states.findMany();
     return { success: true, data: state };
   } catch (error) {
-    console.error("Error fetching state:", error);
+    // console.error("Error fetching state:", error);
     return { success: false, error };
   }
 }
@@ -83,7 +101,7 @@ export async function createOrUpdateState(data: createOrUpdateData) {
 
     return { success: true, data: newPost };
   } catch (error) {
-    console.error("Error creating blog post:", error);
+    // console.error("Error creating blog post:", error);
     return { success: false, error };
   }
 };
@@ -131,7 +149,7 @@ export const deleteState = async (id: number) => {
     });
     return { success: true, data: deletedStates };
   } catch (error) {
-    console.error("Error deleting States:", error);
+    // console.error("Error deleting States:", error);
     return { success: false, error };
   }
 };
@@ -168,9 +186,10 @@ export const updateStateStatus = async (data: createOrUpdateData) => {
         });
       }
     }
-
-    res.status(200).json({ message: 'State status updated successfully' });
+    return { success: true, data: state };
+    // res.status(200).json({ message: 'State status updated successfully' });
   } catch (error) {
-    res.status(500).json({ error: 'Something went wrong' });
+    return { success: false, error };
+    // res.status(500).json({ error: 'Something went wrong' });
   }
 };

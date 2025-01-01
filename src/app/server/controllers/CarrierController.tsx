@@ -13,16 +13,30 @@ type createOrUpdateData = {
   created_at?: string;
 };
 
-// export async function getAllCarriers() {
-//   return prisma.carrier.findMany();
-// }
+export const getCarrierById = async (id: number) => {
+  try {
+    // Check if the record exists
+    const existingCategory = await prisma.carriers.findUnique({
+      where: { id },
+    });
+
+    if (!existingCategory) {
+      return { success: false, error: "Record does not exist." };
+    }
+
+    return { success: true, data: existingCategory };
+  } catch (error) {
+    // console.error("Error category:", error);
+    return { success: false, error };
+  }
+};
 
 export const getAllCarriers = async () => {
   try {
     const carrier = await prisma.carriers.findMany();
     return { success: true, data: carrier };
   } catch (error) {
-    console.error("Error fetching carrier:", error);
+    // console.error("Error fetching carrier:", error);
     return { success: false, error };
   }
 }
@@ -168,7 +182,7 @@ export const deleteCarrier = async (id: number) => {
 
     return { success: true, data: carriers };
   } catch (error) {
-    console.error("Error deleting carriers:", error);
+    // console.error("Error deleting carriers:", error);
     return { success: false, error };
   }
 };

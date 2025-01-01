@@ -40,7 +40,7 @@ const handleDelete = async (id: number) => {
     }
   } catch (error) {
     showErrorToast("Something went wrong");
-  } 
+  }
 };
 
 // This type is used to define the shape of our data.
@@ -89,7 +89,7 @@ export const columns: ColumnDef<Products>[] = [
     header: "Action",
     id: "actions",
     cell: ({ row }) => {
-      const payment = row.original;
+      const id = row.original.id;
 
       return (
         <DropdownMenu>
@@ -101,9 +101,9 @@ export const columns: ColumnDef<Products>[] = [
           </DropdownMenuTrigger>
           <DropdownMenuContent className="dark:bg-slate-700 dark:text-slate-200 bg-slate-100" align="start">
             <DropdownMenuItem className="dark:hover:bg-slate-500 hover:bg-slate-300"><Link href="/">View</Link></DropdownMenuItem>
-            <DropdownMenuItem className="dark:hover:bg-slate-500 hover:bg-slate-300"><Link href="/">Edit</Link></DropdownMenuItem>
+            <DropdownMenuItem className="dark:hover:bg-slate-500 hover:bg-slate-300"><Link href={`/admin/pages/product/addnew?id=${id}`}>Edit</Link></DropdownMenuItem>
             <DropdownMenuItem className="dark:hover:bg-slate-500 hover:bg-slate-300"><Link href="/">Copy</Link></DropdownMenuItem>
-            <DropdownMenuItem className="dark:hover:bg-slate-500 hover:bg-slate-300" onClick={() => handleDeleteWithConfirmation(payment.id)}>Delete</DropdownMenuItem>
+            <DropdownMenuItem className="dark:hover:bg-slate-500 hover:bg-slate-300" onClick={() => handleDeleteWithConfirmation(id)}>Delete</DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>
       );
@@ -113,7 +113,7 @@ export const columns: ColumnDef<Products>[] = [
     accessorKey: "name",
     header: () => <div className="text-right">Product Name</div>,
     cell: ({ row }) => {
-      const name:string = row.getValue("name");
+      const name: string = row.getValue("name");
       return <div className="text-right font-medium">{truncateString(name, 8)}</div>;
     },
   },

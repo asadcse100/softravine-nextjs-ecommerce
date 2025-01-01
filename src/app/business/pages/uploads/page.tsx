@@ -4,7 +4,7 @@ import ButtonPrimary from "@/shared/Button/ButtonPrimary";
 import Breadcrumb from "@/app/business/components/Breadcrumbs/Breadcrumb"
 import { z } from "zod";
 import { useForm, SubmitHandler } from "react-hook-form";
-import { showErrorToast, showSuccessToast} from "@/app/admin/components/Toast";
+import { showErrorToast, showSuccessToast } from "@/app/admin/components/Toast";
 
 const formSchema = z.object({
   name: z.string().min(4, {
@@ -21,17 +21,22 @@ const AccountBilling = () => {
 
   const onSubmit: SubmitHandler<z.infer<typeof formSchema>> = async (values) => {
     const apiUrl = process.env.NEXT_PUBLIC_API_URL || "";
-    
+
     if (!apiUrl) {
       showErrorToast("API URL is not configured.");
       return;
     }
-  
+
     setIsLoading(true);
 
     try {
-      const response = await fetch(`${apiUrl}/server/api/routes/admin/blogs/blogCategories`, {
-        method: "POST",
+      const method = id ? "PUT" : "POST";
+      const url = id
+        ? `${apiUrl}/server/api/routes/business/uploads/${id}`
+        : `${apiUrl}/server/api/routes/business/uploads`;
+
+      const response = await fetch(url, {
+        method,
         headers: {
           "Content-Type": "application/json",
         },
@@ -51,11 +56,13 @@ const AccountBilling = () => {
       showErrorToast("Error adding Upload File: " + (error instanceof Error ? error.message : "Unknown error"));
     }
   };
-  
+
   return (
     <div className="space-y-10 sm:space-y-12 bg-white dark:bg-gray-700 p-5 rounded-xl">
       {/* HEADING */}
-      <h2 className="text-2xl sm:text-3xl font-semibold">Payments & payouts</h2>
+      <h2 className="text-2xl sm:text-3xl font-semibold">
+        {id ? "Edit Payments & payouts" : "Add Payments & payouts"}
+      </h2>
       <div className="max-w-2xl prose prose-slate dark:prose-invert">
         <span className="">
           {`When you receive a payment for a order, we call that payment to you a

@@ -1,11 +1,13 @@
 "use client";
-import { useState, useEffect } from 'react';
+
+import { useState, useEffect } from "react";
+import { useRouter, useSearchParams } from "next/navigation";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { z } from "zod";
 import { showErrorToast, showSuccessToast } from "@/app/admin/components/Toast";
 
-import Label from "@/app/seller/components/Label/Label";
+import Label from "@/app/admin/components/Label/Label";
 import React, { FC } from "react";
 import ButtonPrimary from "@/shared/Button/ButtonPrimary";
 import Input from "@/shared/Input/Input";
@@ -46,9 +48,11 @@ const formSchema = z.object({
   }),
 });
 
-export default function Addnew() {
-  // ...
-  // 1. Define your form.
+export default function AddOrEdit() {
+  const router = useRouter();
+  const searchParams = useSearchParams();
+  const id = searchParams.get('id');
+
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -58,18 +62,37 @@ export default function Addnew() {
       content: "",
     },
   });
+  
+  const [isLoading, setIsLoading] = useState(false);
 
-  // 2. Define a submit handler.
-  // function onSubmit(values: z.infer<typeof formSchema>) {
-  //   console.log(values);
-  // }
+  // Fetch data if editing an existing ticket
+  useEffect(() => {
+    if (id) {
+      const fetchTicket = async () => {
+        try {
+          const apiUrl = process.env.NEXT_PUBLIC_API_URL || "";
+          const response = await fetch(`${apiUrl}/server/api/routes/admin/address/${id}`);
+          const data = await response.json();
+          form.reset(data); // Populate form with existing data
+        } catch (error) {
+          showErrorToast("Failed to fetch blog category data.");
+        }
+      };
+      fetchTicket();
+    }
+  }, [id, form]);
 
   const onSubmit: SubmitHandler<z.infer<typeof formSchema>> = async (values) => {
     const apiUrl = process.env.NEXT_PUBLIC_API_URL || "";
 
     try {
-      const response = await fetch(`${apiUrl}/server/api/routes/admin/blogs/blogCategories`, {
-        method: "POST",
+      const method = id ? "PUT" : "POST";
+      const url = id
+        ? `${apiUrl}/server/api/routes/admin/address/${id}`
+        : `${apiUrl}/server/api/routes/admin/address`;
+
+      const response = await fetch(url, {
+        method,
         headers: {
           "Content-Type": "application/json",
         },
@@ -123,9 +146,9 @@ export default function Addnew() {
 
           <div className="space-y-5 sm:space-y-5 bg-white dark:bg-boxdark p-5 rounded-xl">
             {/* HEADING */}
-            <h2 className="text-2xl sm:text-3xl font-semibold dark:text-slate-300">
-              Full Address
-            </h2>
+            <h3 className="font-medium text-black dark:text-white">
+              {id ? "Edit Full Address" : "Add Full Address"}
+            </h3>
             <div className="flex flex-col md:flex-row">
               <div className="flex-grow mt-10 md:mt-0 md:pl-16 max-w-3xl space-y-3">
                 <div className="flex flex-col gap-5.5 p-6.5 dark:text-slate-500">
@@ -279,6 +302,51 @@ export default function Addnew() {
                     )}
                   />
                 </div>
+
+                
+                <FormField
+                  control={form.control}
+                  name="code"
+                  render={({ field }) => (
+                    <FormItem>
+                      <div className="grid grid-cols-1 md:grid-cols-12">
+                        <div className="col-span-3 mt-3">
+                          <FormLabel>Full Addess</FormLabel>
+                        </div>
+                        <div className="col-span-8">
+                          <Textarea
+                            className={inputClass}
+                            placeholder="New york, USA"
+                          />
+                          {/* <Input className={inputClass} placeholder="Nominee Full Addess" /> */}
+                        </div>
+                      </div>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+
+                <FormField
+                  control={form.control}
+                  name="code"
+                  render={({ field }) => (
+                    <FormItem>
+                      <div className="grid grid-cols-1 md:grid-cols-12">
+                        <div className="col-span-3 mt-3">
+                          <FormLabel>About you</FormLabel>
+                        </div>
+                        <div className="col-span-8">
+                          <Textarea
+                            className={inputClass}
+                            placeholder="New york, USA"
+                          />
+                          {/* <Input className={inputClass} placeholder="Nominee Full Addess" /> */}
+                        </div>
+                      </div>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
 
                 <div className="pt-2">
                   <ButtonPrimary>Save</ButtonPrimary>

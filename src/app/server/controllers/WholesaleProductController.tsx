@@ -33,6 +33,42 @@ type createOrUpdateData = {
 //   }
 // }
 
+export const getSellerWholesaleProductById = async (id: number) => {
+  try {
+    // Check if the record exists
+    const existingCategory = await prisma.products.findUnique({
+      where: { id },
+    });
+
+    if (!existingCategory) {
+      return { success: false, error: "Record does not exist." };
+    }
+
+    return { success: true, data: existingCategory };
+  } catch (error) {
+    // console.error("Error category:", error);
+    return { success: false, error };
+  }
+};
+
+export const getWholesaleProductById = async (id: number) => {
+  try {
+    // Check if the record exists
+    const existingCategory = await prisma.products.findUnique({
+      where: { id },
+    });
+
+    if (!existingCategory) {
+      return { success: false, error: "Record does not exist." };
+    }
+
+    return { success: true, data: existingCategory };
+  } catch (error) {
+    // console.error("Error category:", error);
+    return { success: false, error };
+  }
+};
+
 export const getAllWholesaleProducts = async () => {
   try {
     const products = await prisma.products.findMany();
@@ -44,7 +80,7 @@ export const getAllWholesaleProducts = async () => {
     }));
     return { success: true, data: serializedWholesaleProducts };
   } catch (error) {
-    console.error("Error fetching product:", error);
+    // console.error("Error fetching product:", error);
     return { success: false, error };
   }
 }
@@ -60,7 +96,7 @@ export const getInHouseWholesaleProducts = async () => {
     }));
     return { success: true, data: serializedWholesaleProducts };
   } catch (error) {
-    console.error("Error fetching product:", error);
+    // console.error("Error fetching product:", error);
     return { success: false, error };
   }
 }
@@ -101,7 +137,7 @@ export const getSellerWholesaleProducts = async () => {
     }));
     return { success: true, data: serializedWholesaleProducts };
   } catch (error) {
-    console.error("Error fetching product:", error);
+    // console.error("Error fetching product:", error);
     return { success: false, error };
   }
 }
@@ -132,52 +168,55 @@ export const getSellerWholesaleProducts = async () => {
 //   }
 // }
 
-export async function getForSellerWholesaleProducts() {
+// export async function getForSellerWholesaleProducts() {
+export const getForSellerWholesaleProducts = async (data: createOrUpdateData) => {
   const session = await getSession({ req });
 
   if (!session) {
-    return res.status(401).json({ message: 'Unauthorized' });
+    // return res.status(401).json({ message: 'Unauthorized' });
+    return { success: false, error: "Unauthorized." };
   }
 
-  const { type, search } = req.query;
-  const userId = session.user.id;
+  // const { type, search } = req.query;
+  // const userId = session.user.id;
 
   try {
     let orderBy: any = { createdAt: 'desc' };
-    if (type) {
+    if (data.type) {
       const [col_name, query] = (type as string).split(',');
       orderBy = { [col_name]: query };
     }
 
-    const products = await prisma.product.findMany({
+    const products = await prisma.products.findMany({
       where: {
         wholesaleProduct: true,
-        userId,
+        user_id,
         ...(search && { name: { contains: search as string, mode: 'insensitive' } }),
       },
       orderBy,
     });
-
-    return res.status(200).json(products);
+    return { success: true, data: products };
+    // return res.status(200).json(products);
   } catch (error) {
-    return res.status(500).json({ error: 'Internal server error' });
+    // return res.status(500).json({ error: 'Internal server error' });
+    return { success: false, error };
   }
 }
 
 
 export async function getCategories() {
   try {
-    const categories = await prisma.category.findMany({
+    const categories = await prisma.categories.findMany({
       where: {
-        parentId: 0,
+        parent_id: 0,
         digital: false,
       },
       include: {
         childrenCategories: true,
       },
     });
-
-    return res.status(200).json(categories);
+    return { success: true, data: categories };
+    // return res.status(200).json(categories);
   } catch (error) {
     return res.status(500).json({ error: 'Internal server error' });
   }
@@ -188,13 +227,14 @@ export async function getCategoriesForSeller() {
   const session = await getSession({ req });
 
   if (!session) {
-    return res.status(401).json({ message: 'Unauthorized' });
+    // return res.status(401).json({ message: 'Unauthorized' });
+    return { success: false, error: "Unauthorized." };
   }
 
   const userId = session.user.id;
 
   try {
-    const categories = await prisma.category.findMany({
+    const categories = await prisma.categories.findMany({
       where: {
         parentId: 0,
         digital: false,
@@ -210,9 +250,11 @@ export async function getCategoriesForSeller() {
     });
 
     const uploadLimitReached = seller?.sellerPackage?.productUploadLimit <= seller?.user?.products?.length;
-
-    return res.status(200).json({ categories, uploadLimitReached });
+    
+    return { success: true, data: categories, uploadLimitReached };
+    // return res.status(200).json({ categories, uploadLimitReached });
   } catch (error) {
-    return res.status(500).json({ error: 'Internal server error' });
+    return { success: false, error };
+    // return res.status(500).json({ error: 'Internal server error' });
   }
 }

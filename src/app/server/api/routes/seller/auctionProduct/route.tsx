@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server";
-import { createAuctionProduct, getSellerAllAuctionProducts } from '@/app/server/controllers/seller/SellerAuctionProductController';
+import { createAuctionProduct, getSellerAllAuctionProducts } from '@/app/server/controllers/business/SellerAuctionProductController';
 
 export async function GET() {
   const result = await getSellerAllAuctionProducts();

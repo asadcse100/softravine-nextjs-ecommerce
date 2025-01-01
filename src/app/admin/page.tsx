@@ -1,5 +1,5 @@
 import React from "react";
-import Sidebar from "@/app/seller/components/Sidebar";
+// import Sidebar from "@/app/admin/components/Sidebar";
 import ButtonSecondary from "@/shared/Button/ButtonSecondary";
 import Dashboard from "@/app/admin/components/Dashboard/page";
 

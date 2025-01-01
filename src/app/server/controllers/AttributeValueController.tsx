@@ -31,7 +31,7 @@ export async function createOrUpdateAttributeValue(data: createOrUpdateData) {
 
     return { success: true, data: newPost };
   } catch (error) {
-    console.error("Error creating blog post:", error);
+    // console.error("Error creating blog post:", error);
     return { success: false, error };
   }
 }
@@ -52,7 +52,7 @@ export const deleteAttributeValue = async (id: number) => {
     });
     return { success: true, data: deletedAttributeValues };
   } catch (error) {
-    console.error("Error deleting AttributeValues:", error);
+    // console.error("Error deleting AttributeValues:", error);
     return { success: false, error };
   }
 };

@@ -34,59 +34,79 @@ type createOrUpdateData = {
 //   }
 // };
 
+export const getCustomerPackagePaymentById = async (id: number) => {
+  try {
+    // Check if the record exists
+    const existingCategory = await prisma.customer_package_payments.findUnique({
+      where: { id },
+    });
+
+    if (!existingCategory) {
+      return { success: false, error: "Record does not exist." };
+    }
+
+    return { success: true, data: existingCategory };
+  } catch (error) {
+    // console.error("Error category:", error);
+    return { success: false, error };
+  }
+};
+
 export const getOfflinePaymentRequests = async () => {
-  try{
-      const packagePaymentRequests = await prisma.customer_package_payments.findMany();
-      return { success: true, data: packagePaymentRequests };
-  }catch(error){
-      console.error("Error fetching packagePaymentRequests:", error);
-      return { success: false, error };
+  try {
+    const packagePaymentRequests = await prisma.customer_package_payments.findMany();
+    return { success: true, data: packagePaymentRequests };
+  } catch (error) {
+    // console.error("Error fetching packagePaymentRequests:", error);
+    return { success: false, error };
   }
 }
 
 export const approveOfflinePayment = async (req: NextApiRequest, res: NextApiResponse) => {
-    try {
-      const { id, status } = req.body;
-  
-      // Retrieve the package payment and its details
-      const packagePayment = await prisma.customer_package_payments.findUnique({
+  try {
+    const { id, status } = req.body;
+
+    // Retrieve the package payment and its details
+    const packagePayment = await prisma.customer_package_payments.findUnique({
+      where: {
+        id: parseInt(id),
+      },
+      include: {
+        customer_packages: true,
+        users: true,
+      },
+    });
+
+    // Update approval status of the package payment
+    const updatedPackagePayment = await prisma.customer_package_payments.update({
+      where: {
+        id: package_payments.id,
+      },
+      data: {
+        approval: status,
+      },
+    });
+
+    // Update user's package and remaining uploads if payment is approved
+    if (status === 1) {
+      await prisma.users.update({
         where: {
-          id: parseInt(id),
-        },
-        include: {
-          customer_packages: true,
-          users: true,
-        },
-      });
-  
-      // Update approval status of the package payment
-      const updatedPackagePayment = await prisma.customer_package_payments.update({
-        where: {
-          id: package_payments.id,
+          id: package_payments.user.id,
         },
         data: {
-          approval: status,
+          return { success: true, data: deletedaffiliate_users };
+          // customer_package_id: package_payments.customer_package_id,
+          remaining_uploads: {
+            increment: package_payments.customer_package.product_upload,
+          },
         },
       });
-  
-      // Update user's package and remaining uploads if payment is approved
-      if (status === 1) {
-        await prisma.users.update({
-          where: {
-            id: package_payments.user.id,
-          },
-          data: {
-            customer_package_id: package_payments.customer_package_id,
-            remaining_uploads: {
-              increment: package_payments.customer_package.product_upload,
-            },
-          },
-        });
-      }
-  
-      res.status(200).json({ success: 'Offline payment request updated successfully' });
-    } catch (error) {
-      console.error(error);
-      res.status(500).json({ error: 'Failed to update offline payment request' });
     }
-  };
+    return { success: true, data: updatedPackagePayment, };
+    // res.status(200).json({ success: 'Offline payment request updated successfully' });
+  } catch (error) {
+    return { success: false, error };
+    // console.error(error);
+    // res.status(500).json({ error: 'Failed to update offline payment request' });
+  }
+};

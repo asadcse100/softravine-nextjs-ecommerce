@@ -16,10 +16,28 @@ export const getColors = async () => {
     const colors = await prisma.colors.findMany();
     return { success: true, data: colors };
   } catch (error) {
-    console.error("Error fetching colors:", error);
+    // console.error("Error fetching colors:", error);
     return { success: false, error };
   }
 }
+
+export const getColorById = async (id: number) => {
+  try {
+    // Check if the record exists
+    const existingCategory = await prisma.colors.findUnique({
+      where: { id },
+    });
+
+    if (!existingCategory) {
+      return { success: false, error: "Record does not exist." };
+    }
+
+    return { success: true, data: existingCategory };
+  } catch (error) {
+    // console.error("Error category:", error);
+    return { success: false, error };
+  }
+};
 
 // export async function createOrUpdateColor(data: createOrUpdateData) {
 //   const attribute = await prisma.attributes.create({
@@ -58,8 +76,9 @@ export async function createOrUpdateColor(data: createOrUpdateData) {
 
     return { success: true, data: newCategory };
   } catch (error) {
-    console.error("Error creating or updating colors:", error);
-    return { success: false, message: "An unexpected error occurred" };
+    return { success: false, error };
+    // console.error("Error creating or updating colors:", error);
+    // return { success: false, message: "An unexpected error occurred" };
   }
 }
 
@@ -99,7 +118,6 @@ export const deleteColor = async (id: number) => {
     });
     return { success: true, data: deletedColors };
   } catch (error) {
-    console.error("Error deleting Color:", error);
     return { success: false, error };
   }
 };

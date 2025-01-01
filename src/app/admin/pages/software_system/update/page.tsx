@@ -16,16 +16,20 @@ import {
 } from "@/app/admin/components/ui/form";
 import Input from "@/shared/Input/Input";
 import { showErrorToast, showSuccessToast } from "@/app/admin/components/Toast";
-import { useState, useEffect } from 'react';
+import { useState, useEffect } from "react";
+import { useRouter, useSearchParams } from "next/navigation";
+
 const formSchema = z.object({
   update_zip: z.string().min(10, {
     message: "update_zip must be at least 10 characters.",
   }),
 });
 
-export default function Addnew() {
-  // ...
-  // 1. Define your form.
+export default function AddOrEdit() {
+  const router = useRouter();
+  const searchParams = useSearchParams();
+  const id = searchParams.get('id');
+
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -33,14 +37,24 @@ export default function Addnew() {
     },
   });
 
-  // 2. Define a submit handler.
-  // function onSubmit(values: z.infer<typeof formSchema>) {
-  //   // Do something with the form values.
-  //   // ✅ This will be type-safe and validated.
-  //   console.log(values);
-  // }
-
   const [isLoading, setIsLoading] = useState(false);
+
+  // Fetch data if editing an existing ticket
+  useEffect(() => {
+    if (id) {
+      const fetchTicket = async () => {
+        try {
+          const apiUrl = process.env.NEXT_PUBLIC_API_URL || "";
+          const response = await fetch(`${apiUrl}/server/api/routes/admin/blogs/blogCategories/${id}`);
+          const data = await response.json();
+          form.reset(data); // Populate form with existing data
+        } catch (error) {
+          showErrorToast("Failed to fetch blog category data.");
+        }
+      };
+      fetchTicket();
+    }
+  }, [id, form]);
 
   const onSubmit: SubmitHandler<z.infer<typeof formSchema>> = async (values) => {
     const apiUrl = process.env.NEXT_PUBLIC_API_URL || "";
@@ -90,7 +104,7 @@ export default function Addnew() {
                 <div className="px-6 rounded-sm border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark">
                   <div className="border-b border-stroke px-6.5 py-4 dark:border-strokedark">
                     <h3 className="font-medium text-black dark:text-white">
-                      Update your system
+                      {id ? "Edit Update your system" : "Add Update your system"}
                     </h3>
                   </div>
                   <div className="py-6">

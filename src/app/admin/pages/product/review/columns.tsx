@@ -81,7 +81,7 @@ export const columns: ColumnDef<Products>[] = [
     header: "Action",
     id: "actions",
     cell: ({ row }) => {
-      const payment = row.original;
+      const id = row.original.id;
 
       return (
         <DropdownMenu>
@@ -94,7 +94,7 @@ export const columns: ColumnDef<Products>[] = [
           <DropdownMenuContent className="dark:bg-slate-700 dark:text-slate-200 bg-slate-100" align="start">
             <DropdownMenuLabel>Actions</DropdownMenuLabel>
             <DropdownMenuItem
-              onClick={() => navigator.clipboard.writeText(payment.id)}
+              onClick={() => navigator.clipboard.writeText(id)}
             >
               Copy payment ID
             </DropdownMenuItem>

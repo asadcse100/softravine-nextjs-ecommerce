@@ -12,7 +12,8 @@ export const addToCompare = async (data: createOrUpdateData) => {
   const { productId, userId } = req.body;
 
   if (!productId || !userId) {
-    return res.status(400).json({ error: 'Product ID and User ID are required' });
+    // return res.status(400).json({ error: 'Product ID and User ID are required' });
+    return { success: false };
   }
 
   // Fetch the compare list from the database
@@ -42,16 +43,19 @@ export const addToCompare = async (data: createOrUpdateData) => {
     orderBy: { createdAt: 'asc' }
   });
 
-  res.status(200).json(updatedCompareList);
+  // res.status(200).json(updatedCompareList);
+  return { success: true, data: updatedCompareList };
 };
 
 
 export const getCategories = async (data: createOrUpdateData) => {
   try {
     const categories = await prisma.categories.findMany();
-    res.status(200).json(categories);
+    // res.status(200).json(categories);
+    return { success: true, data: categories };
   } catch (error) {
-    res.status(500).json({ error: 'Failed to fetch categories' });
+    // res.status(500).json({ error: 'Failed to fetch categories' });
+    return { success: false, error };
   }
 };
 
@@ -71,7 +75,7 @@ export const deleteCompare = async (id: number) => {
     });
     return { success: true, data: deletedCompares };
   } catch (error) {
-    console.error("Error deleting Compare:", error);
+    // console.error("Error deleting Compare:", error);
     return { success: false, error };
   }
 };

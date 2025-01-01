@@ -34,8 +34,7 @@ const formSchema = z.object({
 });
 
 export default function AddOrEdit() {
-  // const router = useRouter();
-  // const { ticketId } = router.query; // Get ticketId for editing
+
   const router = useRouter();
   const searchParams = useSearchParams();
   const ticketId = searchParams.get('id');

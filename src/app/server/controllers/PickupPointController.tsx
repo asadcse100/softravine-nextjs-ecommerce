@@ -47,6 +47,24 @@ type createOrUpdateData = {
 //   }
 // }
 
+export const getPickupPointById = async (id: number) => {
+  try {
+    // Check if the record exists
+    const existingCategory = await prisma.attributes.findUnique({
+      where: { id },
+    });
+
+    if (!existingCategory) {
+      return { success: false, error: "Record does not exist." };
+    }
+
+    return { success: true, data: existingCategory };
+  } catch (error) {
+    console.error("Error category:", error);
+    return { success: false, error };
+  }
+};
+
 export const getPickupPoints = async () => {
     try {
         const pickupPoints = await prisma.pickup_points.findMany();
@@ -118,52 +136,53 @@ export async function createOrUpdatePickupPoint(data: createOrUpdateData) {
 
     return { success: true, data: newCategory };
   } catch (error) {
-    console.error("Error creating or updating colors:", error);
-    return { success: false, error: error.message || "An unexpected error occurred" };
+    return { success: false, error };
+    // console.error("Error creating or updating colors:", error);
+    // return { success: false, error: error.message || "An unexpected error occurred" };
   }
 }
 
-export const updatePickupPoint = async (data: createOrUpdateData) => {
-    const { id } = req.query;
-    const { name, address, phone, pickUpStatus, staffId, lang } = req.body;
+// export const updatePickupPoint = async (data: createOrUpdateData) => {
+//     const { id } = req.query;
+//     const { name, address, phone, pickUpStatus, staffId, lang } = req.body;
 
-    try {
-        const defaultLang = process.env.DEFAULT_LANGUAGE || 'en';
+//     try {
+//         const defaultLang = process.env.DEFAULT_LANGUAGE || 'en';
 
-        const pickupPoint = await prisma.pickup_points.update({
-            where: { id: Number(id) },
-            data: {
-                ...(lang === defaultLang && { name, address }),
-                phone,
-                pickUpStatus,
-                staffId,
-            },
-        });
+//         const pickupPoint = await prisma.pickup_points.update({
+//             where: { id: Number(id) },
+//             data: {
+//                 ...(lang === defaultLang && { name, address }),
+//                 phone,
+//                 pickUpStatus,
+//                 staffId,
+//             },
+//         });
 
-        await prisma.pickup_point_translations.upsert({
-            where: {
-                pickupPointId_lang: {
-                    pickupPointId: pickupPoint.id,
-                    lang,
-                },
-            },
-            update: { name, address },
-            create: {
-                pickupPointId: pickupPoint.id,
-                lang,
-                name,
-                address,
-            },
-        });
+//         await prisma.pickup_point_translations.upsert({
+//             where: {
+//                 pickupPointId_lang: {
+//                     pickupPointId: pickupPoint.id,
+//                     lang,
+//                 },
+//             },
+//             update: { name, address },
+//             create: {
+//                 pickupPointId: pickupPoint.id,
+//                 lang,
+//                 name,
+//                 address,
+//             },
+//         });
 
-        res.status(200).json({ message: 'Pickup Point has been updated successfully', pickupPoint });
-    } catch (error) {
-        res.status(500).json({ error: 'Something went wrong', details: error.message });
-    }
-};
+//         res.status(200).json({ message: 'Pickup Point has been updated successfully', pickupPoint });
+//     } catch (error) {
+//         res.status(500).json({ error: 'Something went wrong', details: error.message });
+//     }
+// };
 
-export const deletePickupPoint = async (data: createOrUpdateData) => {
-    const { id } = req.query;
+export const deletePickupPoint = async (id: number) => {
+    // const { id } = req.query;
 
     try {
         // Delete translations first
@@ -172,12 +191,13 @@ export const deletePickupPoint = async (data: createOrUpdateData) => {
         });
 
         // Delete the pickup point
-        await prisma.pickup_points.delete({
+        const deletePickupPoint = await prisma.pickup_points.delete({
             where: { id: Number(id) },
         });
-
-        res.status(200).json({ message: 'Pickup Point has been deleted successfully' });
+        return { success: true, data: deletePickupPoint };
+        // res.status(200).json({ message: 'Pickup Point has been deleted successfully' });
     } catch (error) {
-        res.status(500).json({ error: 'Something went wrong', details: error.message });
+        // res.status(500).json({ error: 'Something went wrong', details: error.message });
+        return { success: false, error };
     }
 };

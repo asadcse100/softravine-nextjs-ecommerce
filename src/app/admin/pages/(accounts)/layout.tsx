@@ -34,10 +34,6 @@ const pages: {
     name: "Nominee",
     link: "/admin/pages/nominee",
   },
-  {
-    name: "Additional info",
-    link: "/admin/pages/additional-info",
-  },
 ];
 
 const CommonLayout: FC<CommonLayoutProps> = ({ children }) => {

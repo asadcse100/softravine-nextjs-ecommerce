@@ -80,43 +80,65 @@ export async function createOrUpdateAddress(data: createOrUpdateData) {
 
     return { success: true, data: address };
   } catch (error) {
-    console.error("Error creating or updating blog category:", error);
-    return { success: false, message: "An unexpected error occurred" };
+    return { success: false, error };
+    // console.error("Error creating or updating blog category:", error);
+    // return { success: false, message: "An unexpected error occurred" };
   }
 }
 
-export const handleUpdateAddress = async (req: NextRequest) => {
+// export const handleUpdateAddress = async (req: NextRequest) => {
+//   try {
+//     const body = await req.json();
+//     const addressId = body.id;
+//     const addressData: Partial<AddressData> = {
+//       address: body.address,
+//       country_id: body.country_id,
+//       state_id: body.state_id,
+//       city_id: body.city_id,
+//       longitude: body.longitude,
+//       latitude: body.latitude,
+//       postal_code: body.postal_code,
+//       phone: body.phone,
+//     };
+
+//     const address = await updateAddress(addressId, addressData);
+//     return NextResponse.json({ message: 'Address info updated successfully', address }, { status: 200 });
+//   } catch (error) {
+//     console.error(error);
+//     return NextResponse.json({ message: 'Internal server error' }, { status: 500 });
+//   }
+// };
+
+// export const handleDeleteAddress = async (req: NextRequest) => {
+//   try {
+//     const body = await req.json();
+//     const addressId = body.id;
+//     const address = await deleteAddress(addressId);
+
+//     return NextResponse.json({ message: 'Address info deleted successfully', address }, { status: 200 });
+//   } catch (error) {
+//     console.error(error);
+//     return NextResponse.json({ message: 'Internal server error' }, { status: 500 });
+//   }
+// };
+
+export const deleteAffiliateUser = async (id: number) => {
   try {
-    const body = await req.json();
-    const addressId = body.id;
-    const addressData: Partial<AddressData> = {
-      address: body.address,
-      country_id: body.country_id,
-      state_id: body.state_id,
-      city_id: body.city_id,
-      longitude: body.longitude,
-      latitude: body.latitude,
-      postal_code: body.postal_code,
-      phone: body.phone,
-    };
+    // Check if the record exists
+    const existingaddresses = await prisma.addresses.findUnique({
+      where: { id },
+    });
 
-    const address = await updateAddress(addressId, addressData);
-    return NextResponse.json({ message: 'Address info updated successfully', address }, { status: 200 });
+    if (!existingaddresses) {
+      return { success: false, error: "Record does not exist." };
+    }
+
+    const deletedaddresses = await prisma.addresses.delete({
+      where: { id },
+    });
+    return { success: true, data: deletedaddresses };
   } catch (error) {
-    console.error(error);
-    return NextResponse.json({ message: 'Internal server error' }, { status: 500 });
-  }
-};
-
-export const handleDeleteAddress = async (req: NextRequest) => {
-  try {
-    const body = await req.json();
-    const addressId = body.id;
-    const address = await deleteAddress(addressId);
-
-    return NextResponse.json({ message: 'Address info deleted successfully', address }, { status: 200 });
-  } catch (error) {
-    console.error(error);
-    return NextResponse.json({ message: 'Internal server error' }, { status: 500 });
+    // console.error("Error deleting addresses:", error);
+    return { success: false, error };
   }
 };

@@ -3,9 +3,9 @@ import classNames from "classnames";
 import { useSideBarToggle } from "@/hooks/use-sidebar-toggle";
 import  ThemeSwitcher from "./theme-switcher";
 import Link from "next/link";
-import DropdownMessage from "@/app/seller/components/Header/DropdownMessage";
-import DropdownNotification from "@/app/seller/components/Header/DropdownNotification";
-import DropdownUser from "@/app/seller/components/Header//DropdownUser";
+import DropdownMessage from "@/app/customer/components/Header/DropdownMessage";
+import DropdownNotification from "@/app/customer/components/Header/DropdownNotification";
+import DropdownUser from "@/app/customer/components/Header//DropdownUser";
 import Image from "next/image";
 
 export default function Header() {

@@ -22,10 +22,28 @@ export const getDeliveryBoys = async () => {
     }));
     return { success: true, data: delivery_boys };
   } catch (error) {
-    console.error("Error fetching delivery boys:", error);
+    // console.error("Error fetching delivery boys:", error);
     return { success: false, error };
   }
 }
+
+export const getDeliveryBoyById = async (id: number) => {
+  try {
+    // Check if the record exists
+    const existingCategory = await prisma.delivery_boys.findUnique({
+      where: { id },
+    });
+
+    if (!existingCategory) {
+      return { success: false, error: "Record does not exist." };
+    }
+
+    return { success: true, data: existingCategory };
+  } catch (error) {
+    // console.error("Error category:", error);
+    return { success: false, error };
+  }
+};
 
 // export const createOrUpdateDeliveryBoy = async () => {
 //   try {
@@ -69,7 +87,7 @@ export async function createOrUpdateDeliveryBoy(data: createOrUpdateData) {
 
     return { success: true, data: newPost };
   } catch (error) {
-    console.error("Error creating Customer Package:", error);
+    // console.error("Error creating Customer Package:", error);
     return { success: false, error };
   }
 };
@@ -99,7 +117,7 @@ export const getDeliveryBoysCollectedHistory = async () => {
     }));
     return { success: true, data: serializedDeliveryBoyCollections };
   } catch (error) {
-    console.error("Error fetching delivery boys:", error);
+    // console.error("Error fetching delivery boys:", error);
     return { success: false, error };
   }
 }

@@ -22,6 +22,24 @@ type createOrUpdateData = {
 //     }
 // };
 
+export const getPurchaseHistoryById = async (id: number) => {
+  try {
+    // Check if the record exists
+    const existingCategory = await prisma.orders.findUnique({
+      where: { id },
+    });
+
+    if (!existingCategory) {
+      return { success: false, error: "Record does not exist." };
+    }
+
+    return { success: true, data: existingCategory };
+  } catch (error) {
+    console.error("Error category:", error);
+    return { success: false, error };
+  }
+};
+
 export const getPurchaseHistories = async () => {
     try {
         const purchaseHistories = await prisma.orders.findMany();
@@ -41,42 +59,41 @@ export const getPurchaseHistories = async () => {
 
 export const getDigitalPurchaseHistory = async (userId: number, page: number) => {
     try {
-        const orders = await prisma.order.findMany({
+        const orders = await prisma.orders.findMany({
             orderBy: { code: 'desc' },
             select: {
                 id: true,
-                orderDetails: {
+                order_details: {
                     where: { payment_status: 'paid' },
                     select: { id: true },
                     include: {
-                        product: { select: { digital: true } }
+                        products: { select: { digital: true } }
                     }
                 }
             },
             where: {
                 user_id: userId,
-                orderDetails: {
+                order_details: {
                     some: {
-                        product: { digital: true }
+                        products: { digital: 1 }
                     }
                 }
             },
-            take: 15,
-            skip: (page - 1) * 15
         });
 
         return orders;
     } catch (error) {
-        console.error(error);
-        throw new Error('Error fetching digital purchase history');
+        return { success: false, error };
+        // console.error(error);
+        // throw new Error('Error fetching digital purchase history');
     }
 };
 
 export const getOrderDetails = async (orderId: number) => {
     try {
-        const order = await prisma.order.findUnique({
+        const order = await prisma.orders.findUnique({
             where: { id: orderId },
-            include: { orderDetails: true }
+            include: { order_details: true }
         });
 
         if (!order) {
@@ -84,48 +101,52 @@ export const getOrderDetails = async (orderId: number) => {
         }
 
         // Mark delivery and payment status as viewed
-        await prisma.order.update({
+        await prisma.orders.update({
             where: { id: orderId },
             data: { delivery_viewed: true, payment_status_viewed: true }
         });
-
-        return order;
+        return { success: true, data: order };
+        // return order;
     } catch (error) {
-        console.error(error);
-        throw new Error('Error fetching order details');
+        return { success: false, error };
+        // console.error(error);
+        // throw new Error('Error fetching order details');
     }
 };
 
 export const downloadProduct = async (data: createOrUpdateData) => {
     try {
-        const productId = Number(req.query.id);
-        const userId = Number(req.headers.userid); // Assuming you're passing user ID in headers
+        const productId = Number(data.id);
+        const userId = Number(data.headers.userid); // Assuming you're passing user ID in headers
 
         // Check if the user has purchased the product
-        const orders = await prisma.order.findMany({
+        const orders = await prisma.orders.findMany({
             where: { user_id: userId },
-            include: { orderDetails: { where: { product_id: productId, payment_status: 'paid' } } }
+            include: { order_details: { where: { product_id: productId, payment_status: 'paid' } } }
         });
 
         if (orders.length === 0) {
-            return res.status(403).json({ success: false, message: 'You cannot download this product.' });
+            return { success: false };
+            // return res.status(403).json({ success: false, message: 'You cannot download this product.' });
         }
 
         // Fetch the product upload details
-        const product = await prisma.product.findUnique({
+        const product = await prisma.products.findUnique({
             where: { id: productId },
             select: { file_name: true }
         });
 
         if (!product) {
-            return res.status(404).json({ success: false, message: 'Product not found' });
+            return { success: false };
+            // return res.status(404).json({ success: false, message: 'Product not found' });
         }
 
         // Retrieve the upload details from database
-        const upload = await prisma.upload.findUnique({ where: { id: product.file_name } });
+        const upload = await prisma.uploads.findUnique({ where: { id: product.file_name } });
 
         if (!upload) {
-            return res.status(404).json({ success: false, message: 'File not found' });
+            return { success: false };
+            // return res.status(404).json({ success: false, message: 'File not found' });
         }
 
         // Download the file
@@ -149,17 +170,18 @@ export const downloadProduct = async (data: createOrUpdateData) => {
             res.sendFile(filePath);
         }
     } catch (error) {
-        console.error(error);
-        return res.status(500).json({ success: false, message: 'Internal server error' });
+        return { success: false, error };
+        // console.error(error);
+        // return res.status(500).json({ success: false, message: 'Internal server error' });
     }
 };
 
 
 export const cancelOrder = async (orderId: number, userId: number) => {
     try {
-        const order = await prisma.order.findFirst({
+        const order = await prisma.orders.findFirst({
             where: { id: orderId, user_id: userId, delivery_status: 'pending', payment_status: 'unpaid' },
-            include: { orderDetails: true }
+            include: { order_details: true }
         });
 
         if (!order) {
@@ -167,15 +189,15 @@ export const cancelOrder = async (orderId: number, userId: number) => {
         }
 
         // Update delivery status of the order and its details
-        await prisma.order.update({
+        await prisma.orders.update({
             where: { id: orderId },
             data: { delivery_status: 'cancelled' },
-            include: { orderDetails: true }
+            include: { order_details: true }
         });
 
         // Update delivery status of order details and restock products
-        for (const orderDetail of order.orderDetails) {
-            await prisma.orderDetail.update({
+        for (const orderDetail of order.order_details) {
+            await prisma.order_details.update({
                 where: { id: orderDetail.id },
                 data: { delivery_status: 'cancelled' }
             });
@@ -195,9 +217,9 @@ const productRestock = async (orderDetail) => {
 
 export const reOrder = async (orderId: number, userId: number) => {
     try {
-        const order = await prisma.order.findFirst({
+        const order = await prisma.orders.findFirst({
             where: { id: orderId, user_id: userId },
-            include: { orderDetails: { include: { product: true } } }
+            include: { order_details: { include: { products: true } } }
         });
 
         if (!order) {
@@ -208,8 +230,8 @@ export const reOrder = async (orderId: number, userId: number) => {
         const successMsgs = [];
         const failedMsgs = [];
 
-        for (const orderDetail of order.orderDetails) {
-            const product = orderDetail.product;
+        for (const orderDetail of order.order_details) {
+            const product = orderDetail.products;
 
             // Check if product is available and conditions are met for reordering
             if (!product || !product.published || !product.approved || (product.wholesale_product && !addonIsActivated("wholesale"))) {
@@ -229,7 +251,7 @@ export const reOrder = async (orderId: number, userId: number) => {
             }
 
             // Fetch product stock
-            const productStock = await prisma.productStock.findFirst({
+            const productStock = await prisma.product_stocks.findFirst({
                 where: { product_id: product.id, variant: orderDetail.variation }
             });
 

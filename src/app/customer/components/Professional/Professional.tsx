@@ -30,7 +30,7 @@ export interface SectionProfessionalProps {
 //       img: MR,
 //       imgDark: MR,
 //       title: "Local Outlet",
-//       link: "/seller/pages/localoutlet",
+//       link: "/customer/pages/localoutlet",
 //     },
 //     {
 //       id: 2,
@@ -83,7 +83,7 @@ const SectionProfessional: FC<SectionProfessionalProps> = ({
             </Link>
           ))} */}
 
-          <Link key={1} href={'/seller/pages/localoutlet'}>
+          <Link key={1} href={'/customer/pages/localoutlet'}>
             <NcImage
               containerClassName="max-w-[300px] mx-auto"
               className="rounded-sm"
@@ -93,7 +93,7 @@ const SectionProfessional: FC<SectionProfessionalProps> = ({
             />
           </Link>
 
-          <Link key={2} href={'/seller/pages/ecommerce-vendor'}>
+          <Link key={2} href={'/customer/pages/ecommerce-vendor'}>
             <NcImage
               containerClassName="max-w-[300px] mx-auto"
               className="rounded-sm"
@@ -102,7 +102,7 @@ const SectionProfessional: FC<SectionProfessionalProps> = ({
               alt="HIW"
             />
           </Link>
-          <Link key={3} href={'/seller/pages/drive-pack-agent'}>
+          <Link key={3} href={'/customer/pages/drive-pack-agent'}>
           <NcImage
             containerClassName="max-w-[300px] mx-auto"
             className="rounded-sm"
@@ -111,7 +111,7 @@ const SectionProfessional: FC<SectionProfessionalProps> = ({
             alt="HIW"
           />
           </Link>
-          <Link key={4} href={'/seller/pages/doctor'}>
+          <Link key={4} href={'/customer/pages/doctor'}>
           <NcImage
             containerClassName="max-w-[300px] mx-auto"
             className="rounded-sm"
@@ -120,7 +120,7 @@ const SectionProfessional: FC<SectionProfessionalProps> = ({
             alt="HIW"
           />
           </Link>
-          <Link key={5} href={'/seller/pages/tuition-agency'}>
+          <Link key={5} href={'/customer/pages/tuition-agency'}>
           <NcImage
             containerClassName="max-w-[300px] mx-auto"
             className="rounded-sm"

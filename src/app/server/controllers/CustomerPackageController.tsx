@@ -24,12 +24,30 @@ type createOrUpdateData = {
 //   }
 // };
 
+export const getCustomerPackageById = async (id: number) => {
+  try {
+    // Check if the record exists
+    const existingCategory = await prisma.customer_packages.findUnique({
+      where: { id },
+    });
+
+    if (!existingCategory) {
+      return { success: false, error: "Record does not exist." };
+    }
+
+    return { success: true, data: existingCategory };
+  } catch (error) {
+    // console.error("Error category:", error);
+    return { success: false, error };
+  }
+};
+
 export const getAllCustomerPackages = async () => {
   try {
     const customerPackages = await prisma.customer_packages.findMany();
     return { success: true, data: customerPackages };
   } catch (error) {
-    console.error("Error fetching customerPackages:", error);
+    // console.error("Error fetching customerPackages:", error);
     return { success: false, error };
   }
 }
@@ -86,7 +104,7 @@ export async function createOrUpdateCurrency(data: createOrUpdateData) {
 
     return { success: true, data: newPost };
   } catch (error) {
-    console.error("Error creating Customer Package:", error);
+    // console.error("Error creating Customer Package:", error);
     return { success: false, error };
   }
 };
@@ -166,16 +184,16 @@ export const deleteCustomerPackage = async (data: createOrUpdateData) => {
     });
 
     // Delete customer package
-    await prisma.customer_packages.delete({
+    const result = await prisma.customer_packages.delete({
       where: {
         id: Number(id),
       },
     });
-
-    res.status(200).json({ success: 'Package has been deleted successfully' });
+    return { success: true, data: result };
+    // res.status(200).json({ success: 'Package has been deleted successfully' });
   } catch (error) {
     console.error(error);
-    res.status(500).json({ error: 'Failed to delete package' });
+    // res.status(500).json({ error: 'Failed to delete package' });
   }
 };
 
@@ -209,7 +227,8 @@ export const purchasePackage = async (data: createOrUpdateData) => {
       if (users.customer_package_id !== customerPackage.id) {
         return purchasePaymentDone(req, res, null);
       } else {
-        return res.status(400).json({ error: 'You cannot purchase this package anymore' });
+        // console.error(error);
+        // return res.status(400).json({ error: 'You cannot purchase this package anymore' });
       }
     }
 
@@ -218,11 +237,13 @@ export const purchasePackage = async (data: createOrUpdateData) => {
     if (paymentController && typeof paymentController.pay === 'function') {
       return paymentController.pay(req, res);
     } else {
-      return res.status(400).json({ error: 'Payment method not supported' });
+      return { success: false, error };
+      // return res.status(400).json({ error: 'Payment method not supported' });
     }
   } catch (error) {
-    console.error(error);
-    res.status(500).json({ error: 'Failed to initiate purchase process' });
+    return { success: false, error };
+    // console.error(error);
+    // res.status(500).json({ error: 'Failed to initiate purchase process' });
   }
 };
 
@@ -236,7 +257,7 @@ export const purchasePaymentDone = async (data: createOrUpdateData) => {
     });
 
     // Update user's customer package and remaining uploads
-    await prisma.users.update({
+    const paymentUpdate = await prisma.users.update({
       where: {
         id: user.id,
       },
@@ -247,11 +268,12 @@ export const purchasePaymentDone = async (data: createOrUpdateData) => {
         },
       },
     });
-
-    res.status(200).json({ success: 'Package purchasing successful' });
+    return { success: true, data: paymentUpdate };
+    // res.status(200).json({ success: 'Package purchasing successful' });
   } catch (error) {
-    console.error(error);
-    res.status(500).json({ error: 'Failed to complete purchase' });
+    return { success: false, error };
+    // console.error(error);
+    // res.status(500).json({ error: 'Failed to complete purchase' });
   }
 };
 
@@ -260,7 +282,7 @@ export const purchasePackageOffline = async (data: createOrUpdateData) => {
     const { package_id, payment_option, trx_id, photo } = req.body;
 
     // Create a new customer package payment entry
-    await prisma.customer_package_payments.create({
+    const customer_package_payments = await prisma.customer_package_payments.create({
       data: {
         users: {
           connect: {
@@ -279,10 +301,11 @@ export const purchasePackageOffline = async (data: createOrUpdateData) => {
         reciept: photo || '',
       },
     });
-
-    res.status(200).json({ success: 'Offline payment has been done. Please wait for response.' });
+    return { success: true, data: customer_package_payments };
+    // res.status(200).json({ success: 'Offline payment has been done. Please wait for response.' });
   } catch (error) {
-    console.error(error);
-    res.status(500).json({ error: 'Failed to initiate offline payment' });
+    return { success: false, error };
+    // console.error(error);
+    // res.status(500).json({ error: 'Failed to initiate offline payment' });
   }
 };

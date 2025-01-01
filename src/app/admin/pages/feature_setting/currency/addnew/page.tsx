@@ -16,9 +16,7 @@ import {
 import Input from "@/shared/Input/Input";
 import { showErrorToast, showSuccessToast } from "@/app/admin/components/Toast";
 import { useState, useEffect } from "react";
-// import { useRouter } from "next/router";
-import { useRouter } from "next/navigation";
-
+import { useRouter, useSearchParams } from "next/navigation";
 
 const formSchema = z.object({
   title: z.string().min(1, { message: "Title is required." }),
@@ -36,9 +34,10 @@ const categories = [
   { value: "home_appliances", label: "Home Appliances" },
 ];
 
-export default function AddOrEditCurrency() {
+export default function AddOrEdit() {
   const router = useRouter();
-  const { productId } = router.query;
+  const searchParams = useSearchParams();
+  const id = searchParams.get('id');
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -51,6 +50,23 @@ export default function AddOrEditCurrency() {
   });
 
   const [isLoading, setIsLoading] = useState(false);
+
+  // Fetch data if editing an existing ticket
+  useEffect(() => {
+    if (id) {
+      const fetchTicket = async () => {
+        try {
+          const apiUrl = process.env.NEXT_PUBLIC_API_URL || "";
+          const response = await fetch(`${apiUrl}/server/api/routes/admin/feature_setting/currency/${id}`);
+          const data = await response.json();
+          form.reset(data); // Populate form with existing data
+        } catch (error) {
+          showErrorToast("Failed to fetch blog category data.");
+        }
+      };
+      fetchTicket();
+    }
+  }, [id, form]);
 
   // Watch category and update title dynamically
   const selectedCategory = form.watch("category");
@@ -90,9 +106,9 @@ export default function AddOrEditCurrency() {
     setIsLoading(true);
 
     try {
-      const method = productId ? "PUT" : "POST";
-      const url = productId
-        ? `${apiUrl}/server/api/routes/admin/feature_setting/currency/${productId}`
+      const method = id ? "PUT" : "POST";
+      const url = id
+        ? `${apiUrl}/server/api/routes/admin/feature_setting/currency/${id}`
         : `${apiUrl}/server/api/routes/admin/feature_setting/currency`;
 
       const response = await fetch(url, {

@@ -39,10 +39,28 @@ export const getFollowedSellers = async () => {
       const followedSellers = await prisma.follow_sellers.findMany();
       return { success: true, data: followedSellers };
   }catch(error){
-      console.error("Error fetching followedSellers:", error);
+      // console.error("Error fetching followedSellers:", error);
       return { success: false, error };
   }
 }
+
+export const getFollowSellerById = async (id: number) => {
+  try {
+    // Check if the record exists
+    const existingCategory = await prisma.follow_sellers.findUnique({
+      where: { id },
+    });
+
+    if (!existingCategory) {
+      return { success: false, error: "Record does not exist." };
+    }
+
+    return { success: true, data: existingCategory };
+  } catch (error) {
+    // console.error("Error category:", error);
+    return { success: false, error };
+  }
+};
 
 export const followSellerController = {
   async store() {
@@ -70,11 +88,12 @@ export const followSellerController = {
           },
         });
       }
-
-      res.status(200).json({ message: 'Seller is followed Successfully' });
+      return { success: true, data: followedSeller };
+      // res.status(200).json({ message: 'Seller is followed Successfully' });
     } catch (error) {
-      console.error('Error:', error);
-      res.status(500).json({ message: 'Internal Server Error' });
+      return { success: false, error };
+      // console.error('Error:', error);
+      // res.status(500).json({ message: 'Internal Server Error' });
     }
   },
 
@@ -84,7 +103,8 @@ export const followSellerController = {
       const { id: shopId } = req.body;
 
       if (!userId) {
-        return res.status(401).json({ message: 'Unauthorized' });
+        return { success: false, error };
+        // return res.status(401).json({ message: 'Unauthorized' });
       }
 
       const followedSeller = await prisma.follow_sellers.findFirst({
@@ -101,13 +121,17 @@ export const followSellerController = {
             shopId,
           },
         });
-        res.status(200).json({ message: 'Seller is unfollowed Successfully' });
+
+        return { success: true, data: followedSeller };
+        // res.status(200).json({ message: 'Seller is unfollowed Successfully' });
       } else {
-        res.status(404).json({ message: 'Followed seller not found' });
+        // res.status(404).json({ message: 'Followed seller not found' });
+        return { success: false, error };
       }
     } catch (error) {
-      console.error('Error:', error);
-      res.status(500).json({ message: 'Internal Server Error' });
+      // console.error('Error:', error);
+      // res.status(500).json({ message: 'Internal Server Error' });
+      return { success: false, error };
     }
   },
 };

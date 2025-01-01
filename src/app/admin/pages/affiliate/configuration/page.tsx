@@ -48,8 +48,29 @@ const formSchema = z.object({
   validation_time: z.string(),
 });
 
-export default function Addnew() {
+export default function AddOrEdit() {
   const router = useRouter();
+  const searchParams = useSearchParams();
+  const id = searchParams.get('id');
+
+  const [isLoading, setIsLoading] = useState(false);
+
+  // Fetch data if editing an existing ticket
+  useEffect(() => {
+    if (id) {
+      const fetchTicket = async () => {
+        try {
+          const apiUrl = process.env.NEXT_PUBLIC_API_URL || "";
+          const response = await fetch(`${apiUrl}/server/api/routes/admin/affiliate/configuration/${id}`);
+          const data = await response.json();
+          form.reset(data); // Populate form with existing data
+        } catch (error) {
+          showErrorToast("Failed to fetch blog category data.");
+        }
+      };
+      fetchTicket();
+    }
+  }, [id, form]);
 
   const [leadershipFields, setLeadershipFields] = useState([
     {
@@ -123,7 +144,6 @@ export default function Addnew() {
     },
   });
 
-  const [isLoading, setIsLoading] = useState(false);
   // function onSubmit(values: z.infer<typeof formSchema>) {
   const onSubmit: SubmitHandler<FormData> = async (values) => {
     const apiUrl = process.env.NEXT_PUBLIC_API_URL;
@@ -140,8 +160,21 @@ export default function Addnew() {
     }
 
     try {
-      const response = await fetch(`${apiUrl}/server/api/routes/admin/affiliate/configuration`, {
-        method: "POST",
+      // const response = await fetch(`${apiUrl}/server/api/routes/admin/affiliate/configuration`, {
+      //   method: "POST",
+      //   headers: {
+      //     "Content-Type": "application/json",
+      //   },
+      //   body: JSON.stringify(values),
+      // });
+
+      const method = id ? "PUT" : "POST";
+      const url = id
+        ? `${apiUrl}/server/api/routes/admin/affiliate/configuration/${id}`
+        : `${apiUrl}/server/api/routes/admin/affiliate/configuration`;
+
+      const response = await fetch(url, {
+        method,
         headers: {
           "Content-Type": "application/json",
         },
@@ -178,7 +211,7 @@ export default function Addnew() {
                 <div className="px-6 rounded-sm border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark">
                   <div className="border-b border-stroke px-6.5 py-4 dark:border-strokedark">
                     <h3 className="font-medium text-black dark:text-white">
-                      Affiliate withdrow request
+                      {id ? "Edit Affiliate withdrow request" : "Add Affiliate withdrow request"}
                     </h3>
                   </div>
                   <div className="py-6">

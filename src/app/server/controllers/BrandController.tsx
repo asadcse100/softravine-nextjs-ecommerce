@@ -23,10 +23,28 @@ export const selectBrands = async () => {
     return { success: true, data: brands };
 
   } catch (error) {
-    console.error("Error fetching brands:", error);
+    // console.error("Error fetching brands:", error);
     return { success: false, error };
   }
 }
+
+export const getBrandById = async (id: number) => {
+  try {
+    // Check if the record exists
+    const existingCategory = await prisma.brands.findUnique({
+      where: { id },
+    });
+
+    if (!existingCategory) {
+      return { success: false, error: "Record does not exist." };
+    }
+
+    return { success: true, data: existingCategory };
+  } catch (error) {
+    // console.error("Error category:", error);
+    return { success: false, error };
+  }
+};
 
 export const getAllBrands = async (search: string | null) => {
   const where = search ? { name: { contains: search, mode: 'insensitive' } } : {};
@@ -38,7 +56,7 @@ export const getAllBrands = async (search: string | null) => {
     });
     return { success: true, data: brands };
   } catch (error) {
-    console.error("Error fetching brands:", error);
+    // console.error("Error fetching brands:", error);
     return { success: false, error };
   }
 }
@@ -102,8 +120,8 @@ export async function createOrUpdateBrand(data: createOrUpdateData) {
 
     return { success: true, data: newCategory };
   } catch (error) {
-    console.error("Error creating or updating blog category:", error);
-    return { success: false, message: "An unexpected error occurred" };
+    // return { success: false, message: "An unexpected error occurred" };
+    return { success: false, error };
   }
 }
 

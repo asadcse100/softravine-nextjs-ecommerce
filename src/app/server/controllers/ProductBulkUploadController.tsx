@@ -18,7 +18,8 @@ const prisma = new PrismaClient();
 export const index = async (data: createOrUpdateData) => {
     const session = await getSession({ req });
     if (!session || !session.user) {
-        return res.status(401).json({ success: 0, message: 'Unauthorized' });
+        // return res.status(401).json({ success: 0, message: 'Unauthorized' });
+        return { success: false };
     }
 
     const user = await prisma.users.findUnique({

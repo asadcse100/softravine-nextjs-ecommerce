@@ -1,9 +1,9 @@
 import Link from "next/link"
-import { Products, columns } from "./columns"
+import { Blogs, columns } from "./columns"
 import { DataTable } from "./data-table"
 import Breadcrumb from "@/app/admin/components/Breadcrumbs/Breadcrumb"
 import { Button } from "@/app/admin/components/ui/button"
-// async function getData(): Promise<Products[]> {
+// async function getData(): Promise<Blogs[]> {
 //   // Fetch data from your API here.
 //   return [
 //     {
@@ -16,7 +16,7 @@ import { Button } from "@/app/admin/components/ui/button"
 //   ]
 // }
 
-async function getData(): Promise<Products[]> {
+async function getData(): Promise<Blogs[]> {
   const apiUrl = process.env.NEXT_PUBLIC_API_URL || '';
   try {
     const response = await fetch(`${apiUrl}/server/api/routes/admin/blogs`);
@@ -25,7 +25,7 @@ async function getData(): Promise<Products[]> {
       throw new Error('Failed to fetch');
     }
 
-    const result: Products[] = await response.json(); // Assuming the API returns an array of Products
+    const result: Blogs[] = await response.json(); // Assuming the API returns an array of Blogs
     return result; // Return the fetched data
   } catch (err: any) {
     console.error('Error fetching data:', err);

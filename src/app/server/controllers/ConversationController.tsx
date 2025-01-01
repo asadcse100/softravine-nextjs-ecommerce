@@ -14,6 +14,24 @@ type createOrUpdateData = {
   created_at?: string;
 };
 
+export const getConversationById = async (id: number) => {
+  try {
+    // Check if the record exists
+    const existingCategory = await prisma.ticket_replies.findUnique({
+      where: { id },
+    });
+
+    if (!existingCategory) {
+      return { success: false, error: "Record does not exist." };
+    }
+
+    return { success: true, data: existingCategory };
+  } catch (error) {
+    // console.error("Error category:", error);
+    return { success: false, error };
+  }
+};
+
 export const ticketReplies = async () => {
   try {
     const ticketReplies = await prisma.ticket_replies.findMany();
@@ -31,7 +49,8 @@ export const ticketReplies = async () => {
 export const store = async (data: createOrUpdateData) => {
   const session = await getSession({ req });
   if (!session) {
-    return res.status(401).json({ error: 'Unauthorized' });
+    return { success: false, error: "Unauthorized." };
+    // return res.status(401).json({ error: 'Unauthorized' });
   }
 
   const userId = session.user.id;
@@ -44,7 +63,8 @@ export const store = async (data: createOrUpdateData) => {
     });
 
     if (!product) {
-      return res.status(404).json({ error: 'Product not found' });
+      // return res.status(404).json({ error: 'Product not found' });
+      return { success: false, error: "Product not found." };
     }
 
     const userType = product.users.user_type;
@@ -65,11 +85,13 @@ export const store = async (data: createOrUpdateData) => {
       },
     });
 
-    await sendMessageToSeller(conversation, message, userType);
-
-    res.status(200).json({ success: 'Message has been sent to seller' });
+   const result = await sendMessageToSeller(conversation, message, userType);
+   return { success: true, data: result };
+    // res.status(200).json({ success: 'Message has been sent to seller' });
   } catch (error) {
-    res.status(500).json({ error: 'Failed to send message' });
+    // return { success: false, error: "Failed to send message" };
+    return { success: false, error };
+    // res.status(500).json({ error: 'Failed to send message' });
   }
 };
 
@@ -105,14 +127,16 @@ const sendMessageToSeller = async (conversation: Conversation, message: Message,
     try {
       await sendEmail(emailData);
     } catch (error) {
-      console.error('Failed to send email:', error);
+      // console.error('Failed to send email:', error);
+      return { success: false, error };
     }
   };
 
   export const destroy = async (data: createOrUpdateData) => {
     const session = await getSession({ req });
     if (!session) {
-      return res.status(401).json({ error: 'Unauthorized' });
+      return { success: false, error: "Unauthorized." };
+      // return res.status(401).json({ error: 'Unauthorized' });
     }
   
     // const { id } = req.query;
@@ -132,11 +156,14 @@ const sendMessageToSeller = async (conversation: Conversation, message: Message,
       });
   
       if (deletedConversation) {
-        res.status(200).json({ success: 'Conversation has been deleted successfully' });
+        return { success: true, data: deletedConversation };
+        // res.status(200).json({ success: 'Conversation has been deleted successfully' });
       } else {
-        res.status(404).json({ error: 'Conversation not found' });
+        return { success: false, error: "Unauthorized." };
+        // res.status(404).json({ error: 'Conversation not found' });
       }
     } catch (error) {
-      res.status(500).json({ error: 'Failed to delete conversation' });
+      return { success: false, error: "Unauthorized." };
+      // res.status(500).json({ error: 'Failed to delete conversation' });
     }
   };

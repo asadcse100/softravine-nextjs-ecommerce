@@ -32,6 +32,24 @@ export const selectCode = async () => {
   }
 }
 
+export const getLanguageByid = async (id: number) => {
+  try {
+    // Check if the record exists
+    const existingCategory = await prisma.languages.findUnique({
+      where: { id },
+    });
+
+    if (!existingCategory) {
+      return { success: false, error: "Record does not exist." };
+    }
+
+    return { success: true, data: existingCategory };
+  } catch (error) {
+    console.error("Error category:", error);
+    return { success: false, error };
+  }
+};
+
 // export const changeLanguage = async (req: NextApiRequest, res: NextApiResponse) => {
 //   try {
 //     const { locale } = req.body;
@@ -359,11 +377,11 @@ export const updateRtlStatus = async (data: createOrUpdateData) => {
       where: { id: Number(id) },
       data: { rtl: Boolean(status) },
     })
-
-    return res.status(200).json({ message: 'RTL status updated successfully', language: updatedLanguage })
+    return { success: true, data: updatedLanguage };
+    // return res.status(200).json({ message: 'RTL status updated successfully', language: updatedLanguage })
   } catch (error) {
-    console.error(error)
-    return res.status(500).json({ message: 'Internal Server Error' })
+    return { success: false, error };
+    // return res.status(500).json({ message: 'Internal Server Error' })
   }
 };
 
@@ -383,11 +401,13 @@ export const destroyLanguage = async (data: createOrUpdateData) => {
 
     const defaultLanguage = process.env.DEFAULT_LANGUAGE || 'en';
     if (defaultLanguage === language.code) {
-      return res.status(400).json({ error: 'Default language cannot be deleted' });
+      // return res.status(400).json({ error: 'Default language cannot be deleted' });
+      return { success: false, error: "Default language cannot be deleted" };
     }
 
     if (language.code === 'en') {
-      return res.status(400).json({ error: 'English language cannot be deleted' });
+      // return res.status(400).json({ error: 'English language cannot be deleted' });
+      return { success: false, error: "English language cannot be deleted" };
     }
 
     // If the language to be deleted is the current locale, switch to the default language
@@ -395,14 +415,15 @@ export const destroyLanguage = async (data: createOrUpdateData) => {
       req.session.locale = defaultLanguage;
     }
 
-    await prisma.languages.delete({
+    const delectLanguage = await prisma.languages.delete({
       where: { id: Number(id) }
     });
-
-    res.status(200).json({ message: 'Language has been deleted successfully' });
+    return { success: true, data: delectLanguage };
+    // res.status(200).json({ message: 'Language has been deleted successfully' });
 
   } catch (error) {
-    res.status(500).json({ error: 'Internal server error' });
+    // res.status(500).json({ error: 'Internal server error' });
+    return { success: false, error };
   }
 };
 
@@ -444,10 +465,11 @@ export const importEnglishFile = async (data: createOrUpdateData) => {
           create: { lang: 'en', lang_key: key, lang_value: value as string },
         });
       }
-
+      return { success: false, error };
       res.status(200).json({ message: 'Translation keys have been imported successfully. Go to App Translation for more..' });
     } catch (error) {
-      res.status(500).json({ error: 'Internal server error' });
+      return { success: false, error };
+      // res.status(500).json({ error: 'Internal server error' });
     }
   });
 };
@@ -464,7 +486,8 @@ export const showAppTranslationView = async (data: createOrUpdateData) => {
     });
 
     if (!language) {
-      return res.status(404).json({ error: 'Language not found' });
+      // return res.status(404).json({ error: 'Language not found' });
+      return { success: false, error: "Language not found." };
     }
 
     let langKeys = prisma.translations.findMany({
@@ -473,10 +496,11 @@ export const showAppTranslationView = async (data: createOrUpdateData) => {
     });
 
     const [langKeysResult] = await Promise.all([langKeys]);
-
-    res.status(200).json({ language, langKeys: langKeysResult, sortSearch: search || null });
+    return { success: false, error: "Record does not exist." };
+    // res.status(200).json({ language, langKeys: langKeysResult, sortSearch: search || null });
   } catch (error) {
-    res.status(500).json({ error: 'Internal server error' });
+    // res.status(500).json({ error: 'Internal server error' });
+    return { success: false, error: "Internal server error." };
   }
 };
 

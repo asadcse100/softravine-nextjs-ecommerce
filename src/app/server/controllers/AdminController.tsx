@@ -87,7 +87,7 @@ async function getCachedGraphData(rootCategories: Category[]) {
         num_of_sale_data += sale + ',';
       }
 
-      const newCachedData = await prisma.cache.create({
+      const newCachedData = await prisma.caches.create({
         data: {
           id: 'cached_graph_data',
           data: { num_of_sale_data, qty_data }
@@ -97,8 +97,9 @@ async function getCachedGraphData(rootCategories: Category[]) {
       return newCachedData.data;
     }
   } catch (error) {
-    console.error("Error getting cached graph data:", error);
-    throw new Error('Error getting cached graph data');
+    return { success: false, error };
+    // console.error("Error getting cached graph data:", error);
+    // throw new Error('Error getting cached graph data');
   }
 }
 

@@ -26,7 +26,7 @@ export const getManualPaymentMethods = async () => {
       const manualPaymentMethods = await prisma.manual_payment_methods.findMany();
       return { success: true, data: manualPaymentMethods };
   }catch(error){
-      console.error("Error fetching manualPaymentMethods:", error);
+      // console.error("Error fetching manualPaymentMethods:", error);
       return { success: false, error };
   }
 }
@@ -57,17 +57,19 @@ export const storeManualPaymentMethod = async (data: createOrUpdateData) => {
           bank_info: bankInfo,
         },
       });
-  
-      res.status(201).json({ message: 'Method has been inserted successfully', manualPaymentMethod });
+      return { success: true, data: manualPaymentMethod };
+      // res.status(201).json({ message: 'Method has been inserted successfully', manualPaymentMethod });
     } catch (error) {
       console.error(error);
-      res.status(500).json({ error: 'Internal server error' });
+      // res.status(500).json({ error: 'Internal server error' });
+      return { success: false, error };
     }
   };
 
 
   export const updateManualPaymentMethod = async (data: createOrUpdateData) => {
-    const { id } = req.query;
+    // const { id } = req.query;
+    const id = data.id;
     const { type, photo, heading, description, bank_name, account_name, account_number, routing_number } = req.body;
   
     try {
@@ -94,11 +96,12 @@ export const storeManualPaymentMethod = async (data: createOrUpdateData) => {
           bank_info: bankInfo,
         },
       });
-  
-      res.status(200).json({ message: 'Method has been updated successfully', manualPaymentMethod });
+      return { success: true, data: manualPaymentMethod };
+      // res.status(200).json({ message: 'Method has been updated successfully', manualPaymentMethod });
     } catch (error) {
-      console.error(error);
-      res.status(500).json({ error: 'Internal server error' });
+      return { success: false, error };
+      // console.error(error);
+      // res.status(500).json({ error: 'Internal server error' });
     }
   };
 
@@ -142,16 +145,18 @@ export const storeManualPaymentMethod = async (data: createOrUpdateData) => {
     const { order_id, name, amount, trx_id, photo, payment_option } = req.body;
   
     if (!name || !amount || !trx_id) {
-      res.status(400).json({ error: 'Please fill all the fields' });
-      return;
+      return { success: false, error };
+      // res.status(400).json({ error: 'Please fill all the fields' });
+      // return;
     }
   
     try {
       const order = await prisma.orders.findUnique({ where: { id: Number(order_id) } });
   
       if (!order) {
-        res.status(404).json({ error: 'Order not found' });
-        return;
+        return { success: false, error };
+        // res.status(404).json({ error: 'Order not found' });
+        // return;
       }
   
       const manualPaymentData = {
@@ -170,10 +175,11 @@ export const storeManualPaymentMethod = async (data: createOrUpdateData) => {
           manual_payments: true,
         },
       });
-  
-      res.status(200).json({ message: 'Your payment data has been submitted successfully', updatedOrder });
+      return { success: true, data: updatedOrder };
+      // res.status(200).json({ message: 'Your payment data has been submitted successfully', updatedOrder });
     } catch (error) {
-      console.error(error);
-      res.status(500).json({ error: 'Internal server error' });
+      return { success: false, error };
+      // console.error(error);
+      // res.status(500).json({ error: 'Internal server error' });
     }
   };

@@ -1,6 +1,5 @@
 import { PrismaClient } from '@prisma/client';
 import { NextResponse } from "next/server";
-import { getProductById, updateProduct } from '../models/AuctionProduct';
 import { slugify } from '@/app/server/utils/slugify';  // Utility function for generating slugs
 import { Product } from '@/app/server/types/product';
 import { parseISO, differenceInDays } from 'date-fns';
@@ -86,10 +85,28 @@ export const getAllAuctionProducts = async () => {
     }));
     return { success: true, data: serializedProducts };
   } catch (error) {
-    console.error("Error fetching products:", error);
+    // console.error("Error fetching products:", error);
     return { success: false, error };
   }
 }
+
+export const getAuctionProductById = async (id: number) => {
+  try {
+    // Check if the record exists
+    const existingCategory = await prisma.products.findUnique({
+      where: { id },
+    });
+
+    if (!existingCategory) {
+      return { success: false, error: "Record does not exist." };
+    }
+
+    return { success: true, data: existingCategory };
+  } catch (error) {
+    // console.error("Error category:", error);
+    return { success: false, error };
+  }
+};
 
 export async function createOrUpdateAuctionProduct(data: createOrUpdateData) {
   try {
@@ -146,7 +163,7 @@ export async function createOrUpdateAuctionProduct(data: createOrUpdateData) {
     //   },
     // });
 
-    const newPost = await prisma.products.upsert({
+   const product = await prisma.products.upsert({
       where: { id: data.id ?? 0 }, // Fallback to 0 if `data.id` is null
       update: {
         name: data.name,
@@ -226,8 +243,8 @@ export async function createOrUpdateAuctionProduct(data: createOrUpdateData) {
 
     return { success: true, data: product };
   } catch (error) {
-    console.error('Error creating auction product:', error);
-    return { success: false, error: error.message };
+    // console.error('Error creating auction product:', error);
+    return { success: false, error };
   }
 }
 
@@ -318,7 +335,8 @@ export const deleteProduct = async (data: createOrUpdateData) => {
     });
 
     if (!product) {
-      return res.status(404).json({ message: 'Product not found' });
+      // return res.status(404).json({ message: 'Product not found' });
+      return NextResponse.json({ error: 'Product not found' }, { status: 400 });
     }
 
     // Delete product translations
@@ -341,9 +359,11 @@ export const deleteProduct = async (data: createOrUpdateData) => {
       where: { product_id: product.id },
     });
 
-    return res.status(200).json({ message: 'Product has been deleted successfully' });
+    // return res.status(200).json({ message: 'Product has been deleted successfully' });
+    return NextResponse.json({ message: 'Product has been deleted successfully' }, { status: 200 });
   } catch (error) {
-    return res.status(500).json({ message: 'Something went wrong', error: error.message });
+    // return res.status(500).json({ message: 'Something went wrong', error: error.message });
+    return NextResponse.json({ error: 'Something went wrong' }, { status: 500 });
   } finally {
     await prisma.$disconnect();
   }
@@ -368,18 +388,20 @@ export const updatePublished = async (data: createOrUpdateData) => {
     });
 
     if (!product) {
-      return res.status(404).json({ message: 'Product not found' });
+      return NextResponse.json({ error: 'Product not found!' }, { status: 404 });
+      // return res.status(404).json({ message: 'Product not found' });
     }
 
     product.published = status;
 
     if (
-      product.addedBy === 'seller' &&
-      (await prisma.addon.findUnique({ where: { uniqueIdentifier: 'seller_subscription' } }))?.activated
+      product.added_by === 'seller' &&
+      (await prisma.addons.findUnique({ where: { uniqueIdentifier: 'seller_subscription' } }))?.activated
     ) {
       const seller = product.users.sellers;
       if (seller?.invalidAt && differenceInDays(new Date(), parseISO(seller.invalidAt)) <= 0) {
-        return res.status(403).json({ message: 'Seller subscription invalid' });
+        // return res.status(403).json({ message: 'Seller subscription invalid' });
+        return NextResponse.json({ error: 'Seller subscription invalid!' }, { status: 403 });
       }
     }
 
@@ -387,10 +409,11 @@ export const updatePublished = async (data: createOrUpdateData) => {
       where: { id: product.id },
       data: { published: status },
     });
-
-    return res.status(200).json({ message: 'Product status updated successfully' });
+    return NextResponse.json({ message: 'Product status updated successfully!' }, { status: 200}); 
+    // return res.status(200).json({ message: 'Product status updated successfully' });
   } catch (error) {
-    return res.status(500).json({ message: 'Something went wrong', error: error.message });
+    // return res.status(500).json({ message: 'Something went wrong', error: error.message });
+    return NextResponse.json({ error: 'Something went wrong' }, { status: 500 });
   } finally {
     await prisma.$disconnect();
   }
@@ -521,12 +544,15 @@ export const getAuctionProductDetails = async (data: createOrUpdateData) => {
     });
 
     if (detailedProduct) {
-      return res.status(200).json(detailedProduct);
+      return { success: true, data: detailedProduct };
+      // return res.status(200).json(detailedProduct);
     } else {
-      return res.status(404).json({ message: 'Product not found' });
+      return { success: false, error: "Record does not exist." };
+      // return res.status(404).json({ message: 'Product not found' });
     }
   } catch (error) {
-    return res.status(500).json({ message: 'Something went wrong', error: error.message });
+    return { success: false, error: "Record does not exist." };
+    // return res.status(500).json({ message: 'Something went wrong', error: error.message });
   } finally {
     await prisma.$disconnect();
   }
@@ -536,7 +562,8 @@ export const getUserPurchaseHistory = async (data: createOrUpdateData) => {
   const session = await getSession({ req });
 
   if (!session) {
-    return res.status(401).json({ message: 'Unauthorized' });
+    // return res.status(401).json({ message: 'Unauthorized' });
+    return { success: false, error: "Record does not exist." };
   }
 
   const userId = session.users.id;
@@ -561,10 +588,11 @@ export const getUserPurchaseHistory = async (data: createOrUpdateData) => {
         // Add other fields as needed
       },
     });
-
-    return res.status(200).json(orders);
+    return { success: true, data: orders };
+    // return res.status(200).json(orders);
   } catch (error) {
-    return res.status(500).json({ message: 'Something went wrong', error: error.message });
+    return { success: false, error: "Something went wrong" };
+    // return res.status(500).json({ message: 'Something went wrong', error: error.message });
   } finally {
     await prisma.$disconnect();
   }
@@ -647,18 +675,18 @@ export const getAuctionProductOrders = async () => {
     });
     return { success: true, data: orders };
   } catch (error) {
-    console.error("Error fetching orders:", error);
+    // console.error("Error fetching orders:", error);
     return { success: false, error };
   }
 };
 
 
-export const getAuctionOrderDetails = async (data: createOrUpdateData) => {
+export const getAuctionOrderDetails = async (id: number) => {
   // const { id } = req.query;
-  const id = data.id;
+  // const id = data.id;
 
   try {
-    const decryptedId = parseInt(id as string); // Replace with your decryption logic if needed
+    const decryptedId = id; // Replace with your decryption logic if needed
     const order = await prisma.orders.findUnique({
       where: { id: decryptedId },
       include: {
@@ -671,7 +699,8 @@ export const getAuctionOrderDetails = async (data: createOrUpdateData) => {
     });
 
     if (!order) {
-      return res.status(404).json({ error: 'Order not found' });
+      // return res.status(404).json({ error: 'Order not found' });
+      return { success: false };
     }
 
     const orderShippingAddress = order.shipping_address;
@@ -686,9 +715,31 @@ export const getAuctionOrderDetails = async (data: createOrUpdateData) => {
       where: { id: decryptedId },
       data: { viewed: true }
     });
-
-    res.status(200).json({ order, deliveryBoys });
+    return { success: true, data: order, deliveryBoys };
+    // res.status(200).json({ order, deliveryBoys });
   } catch (error) {
-    res.status(500).json({ error: 'Internal server error' });
+    // res.status(500).json({ error: 'Internal server error' });
+    return { success: false, error };
+  }
+};
+
+export const deleteAuctionProduct = async (id: number) => {
+  try {
+    // Check if the record exists
+    const existingAuctionproducts = await prisma.products.findUnique({
+      where: { id },
+    });
+
+    if (!existingAuctionproducts) {
+      return { success: false, error: "Record does not exist." };
+    }
+
+    const deletedAuctionproducts = await prisma.products.delete({
+      where: { id },
+    });
+    return { success: true, data: deletedAuctionproducts };
+  } catch (error) {
+    // console.error("Error deleting products:", error);
+    return { success: false, error };
   }
 };

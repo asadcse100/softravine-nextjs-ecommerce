@@ -19,18 +19,37 @@ type createOrUpdateData = {
 //   }
 // };
 
+export const getSubscriberById = async (id: number) => {
+  try {
+    // Check if the record exists
+    const existingCategory = await prisma.subscribers.findUnique({
+      where: { id },
+    });
+
+    if (!existingCategory) {
+      return { success: false, error: "Record does not exist." };
+    }
+
+    return { success: true, data: existingCategory };
+  } catch (error) {
+    // console.error("Error category:", error);
+    return { success: false, error };
+  }
+};
+
 export const getSubscribers = async () => {
   try {
     const subscribers = await prisma.subscribers.findMany();
     return { success: true, data: subscribers };
   } catch (error) {
-    console.error("Error fetching subscribers:", error);
+    // console.error("Error fetching subscribers:", error);
     return { success: false, error };
   }
 }
 
-export const subscribeUser = async () => {
-  const { email } = req.body;
+export const subscribeUser = async (id: number) => {
+// export const subscribeUser = async () => {
+  // const { email } = req.body;
 
   try {
     const existingSubscriber = await prisma.subscribers.findFirst({
@@ -43,13 +62,15 @@ export const subscribeUser = async () => {
           email,
         },
       });
-
-      res.status(200).json({ message: 'You have subscribed successfully' });
+      return { success: true };
+      // res.status(200).json({ message: 'You have subscribed successfully' });
     } else {
-      res.status(200).json({ message: 'You are already a subscriber' });
+      // res.status(200).json({ message: 'You are already a subscriber' });
+      return { success: false };
     }
   } catch (error) {
-    res.status(500).json({ error: 'Something went wrong' });
+    // res.status(500).json({ error: 'Something went wrong' });
+    return { success: false, error };
   }
 };
 

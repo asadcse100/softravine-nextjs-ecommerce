@@ -6,7 +6,8 @@ import ButtonSecondary from "@/shared/Button/ButtonSecondary";
 import Breadcrumb from "@/app/business/components/Breadcrumbs/Breadcrumb"
 import { useForm, SubmitHandler } from "react-hook-form";
 import { showErrorToast, showSuccessToast} from "@/app/admin/components/Toast";
-import { useState, useEffect } from 'react';
+import { useState, useEffect } from "react";
+import { useRouter, useSearchParams } from "next/navigation";
 export interface PricingItem {
   isPopular: boolean;
   name: string;
@@ -16,7 +17,6 @@ export interface PricingItem {
   features: string[];
 }
 
-
 const formSchema = z.object({
   product_name: z.string().min(10, {
     message: "Product Name must be at least 10 characters.",
@@ -25,7 +25,6 @@ const formSchema = z.object({
     message: "Brand must be at least 3 characters.",
   }),
 });
-
 
 const pricings: PricingItem[] = [
   {
@@ -66,6 +65,23 @@ const pricings: PricingItem[] = [
 
 const [isLoading, setIsLoading] = useState(false);
 
+// Fetch data if editing an existing ticket
+useEffect(() => {
+  if (id) {
+    const fetchTicket = async () => {
+      try {
+        const apiUrl = process.env.NEXT_PUBLIC_API_URL || "";
+        const response = await fetch(`${apiUrl}/server/api/routes/business/package/${id}`);
+        const data = await response.json();
+        form.reset(data); // Populate form with existing data
+      } catch (error) {
+        showErrorToast("Failed to fetch blog category data.");
+      }
+    };
+    fetchTicket();
+  }
+}, [id, form]);
+
 const onSubmit: SubmitHandler<z.infer<typeof formSchema>> = async (values) => {
   const apiUrl = process.env.NEXT_PUBLIC_API_URL || "";
   
@@ -77,8 +93,13 @@ const onSubmit: SubmitHandler<z.infer<typeof formSchema>> = async (values) => {
   setIsLoading(true);
 
   try {
-    const response = await fetch(`${apiUrl}/server/api/routes/admin/blogs/blogCategories`, {
-      method: "POST",
+    const method = id ? "PUT" : "POST";
+    const url = id
+      ? `${apiUrl}/server/api/routes/business/package/${id}`
+      : `${apiUrl}/server/api/routes/business/package`;
+
+    const response = await fetch(url, {
+      method,
       headers: {
         "Content-Type": "application/json",
       },

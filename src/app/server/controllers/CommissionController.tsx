@@ -10,9 +10,10 @@ type createOrUpdateData = {
 
 export async function payToSeller(data: createOrUpdateData) {
 
-    if (data.payment_method === 'cash' || data.payment_method === 'bank_payment') {
+    if (data.payment_methods === 'cash' || data.payment_methods === 'bank_payment') {
         await sellerPaymentDone(data, null);
-        return res.status(200).json({ success: true, message: 'Seller payment done' });
+        // return res.status(200).json({ success: true, message: 'Seller payment done' });
+        return { success: true };
     } else {
         try {
             const shop = await prisma.shops.findUnique({
@@ -20,7 +21,8 @@ export async function payToSeller(data: createOrUpdateData) {
             });
 
             if (!shop) {
-                return res.status(404).json({ success: false, message: 'Shop not found' });
+                return { success: false, error: "Record does not exist." };
+                // return res.status(404).json({ success: false, message: 'Shop not found' });
             }
 
             const updatedShop = await prisma.shops.update({
@@ -37,10 +39,11 @@ export async function payToSeller(data: createOrUpdateData) {
                     paymentDetails: null,
                 },
             });
-
-            return res.status(200).json({ success: true, message: 'Payment completed' });
+            return { success: true, message: 'Payment completed'};
+            // return res.status(200).json({ success: true, message: 'Payment completed' });
         } catch (error) {
-            return res.status(500).json({ success: false, message: error.message });
+            return { success: false};
+            // return res.status(500).json({ success: false, message: error.message });
         }
     }
 
@@ -72,7 +75,7 @@ async function sellerPaymentDone(payment_data: any, payment_details: any) {
         });
 
         if (payment_data.payment_withdraw === 'withdraw_request') {
-            await prisma.sellerWithdrawRequest.update({
+            await prisma.seller_withdraw_requests.update({
                 where: { id: parseInt(payment_data.withdraw_request_id) },
                 data: {
                     status: '1',

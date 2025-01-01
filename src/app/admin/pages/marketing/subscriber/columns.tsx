@@ -61,7 +61,8 @@ export const columns: ColumnDef<Products>[] = [
   {
     accessorKey: "option",
     cell: ({ row }) => {
-      const payment = row.original;
+      const id = row.original.id;
+      
       return (
         <DropdownMenu>
           <DropdownMenuTrigger asChild>

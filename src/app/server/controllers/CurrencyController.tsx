@@ -13,6 +13,24 @@ type createOrUpdateData = {
   created_at?: string;
 };
 
+export const getCurrencyById = async (id: number) => {
+  try {
+    // Check if the record exists
+    const existingCategory = await prisma.currencies.findUnique({
+      where: { id },
+    });
+
+    if (!existingCategory) {
+      return { success: false, error: "Record does not exist." };
+    }
+
+    return { success: true, data: existingCategory };
+  } catch (error) {
+    // console.error("Error category:", error);
+    return { success: false, error };
+  }
+};
+
 // export const getCurrencyList = async (req: NextApiRequest, res: NextApiResponse) => {
 //   try {
 //     const { search } = req.query;
@@ -48,7 +66,7 @@ export const getCurrencyList = async () => {
       const currencies = await prisma.currencies.findMany();
       return { success: true, data: currencies };
   }catch(error){
-      console.error("Error fetching currencies:", error);
+      // console.error("Error fetching currencies:", error);
       return { success: false, error };
   }
 }
@@ -106,7 +124,7 @@ export async function createOrUpdateCurrency(data: createOrUpdateData) {
 
     return { success: true, data: newPost };
   } catch (error) {
-    console.error("Error creating blog post:", error);
+    // console.error("Error creating blog post:", error);
     return { success: false, error };
   }
 };
@@ -146,11 +164,13 @@ export async function createOrUpdateCurrency(data: createOrUpdateData) {
       });
   
       if (!currency) {
-        return res.status(404).json({ error: 'Currency not found' });
+        return { success: false, error: "Currency not found." };
+        // return res.status(404).json({ error: 'Currency not found' });
       }
   
       if (status === 0 && getSetting('system_default_currency') === currency.id) {
-        return res.status(400).json({ error: 'Cannot deactivate system default currency' });
+        return { success: false, error: "Cannot deactivate system default currency." };
+        // return res.status(400).json({ error: 'Cannot deactivate system default currency' });
       }
   
       const updatedCurrency = await prisma.currencies.update({
@@ -161,12 +181,17 @@ export async function createOrUpdateCurrency(data: createOrUpdateData) {
       });
   
       if (updatedCurrency) {
-        res.status(200).json({ success: 'Currency status updated successfully' });
+        return { success: true, data: updatedCurrency };
+        // res.status(200).json({ success: 'Currency status updated successfully' });
       } else {
-        res.status(400).json({ error: 'Failed to update currency status' });
+        // return { success: false, error: "Currency not found." };
+        return { success: false, error };
+        // res.status(400).json({ error: 'Failed to update currency status' });
       }
     } catch (error) {
-      res.status(500).json({ error: 'Failed to update currency status' });
+      // return { success: false, error: "Failed to update currency status." };
+      return { success: false, error };
+      // res.status(500).json({ error: 'Failed to update currency status' });
     }
   };
   
@@ -186,7 +211,7 @@ export async function createOrUpdateCurrency(data: createOrUpdateData) {
       });
       return { success: true, data: deletedCurrencys };
     } catch (error) {
-      console.error("Error deleting Currency:", error);
+      // console.error("Error deleting Currency:", error);
       return { success: false, error };
     }
   };

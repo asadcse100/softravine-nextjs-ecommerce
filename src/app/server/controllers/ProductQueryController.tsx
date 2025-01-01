@@ -27,6 +27,24 @@ export const getProductQueries = async () => {
     }
 };
 
+export const getProductQueryById = async (id: number) => {
+    try {
+        // Check if the record exists
+        const existingCategory = await prisma.products.findUnique({
+            where: { id },
+        });
+
+        if (!existingCategory) {
+            return { success: false, error: "Record does not exist." };
+        }
+
+        return { success: true, data: existingCategory };
+    } catch (error) {
+        console.error("Error category:", error);
+        return { success: false, error };
+    }
+};
+
 // export const createProductQuery = async (data: createOrUpdateData) => {
 //     try {
 //         const { question, productId } = req.body;
@@ -60,7 +78,7 @@ export async function createOrUpdateProductQuery(data: createOrUpdateData) {
         // Use the provided `created_at` or fallback to the current date
         const created_at = data.created_at ? new Date(data.created_at) : new Date();
         // Perform the upsert operation
-        const newCategory = await prisma.product.upsert({
+        const newCategory = await prisma.products.upsert({
             where: { id: data.id || 0, slug: slug }, // Replace `0` with a non-zero ID if necessary
             update: {
                 customer_id: data.customer_id,
@@ -82,24 +100,28 @@ export async function createOrUpdateProductQuery(data: createOrUpdateData) {
 
         return { success: true, data: newCategory };
     } catch (error) {
-        console.error("Error creating or updating blog category:", error);
-        return { success: false, error: error.message || "An unexpected error occurred" };
+        return { success: false, error };
+        // console.error("Error creating or updating blog category:", error);
+        // return { success: false, error: error.message || "An unexpected error occurred" };
     }
 }
 
 export const replyToQuery = async (data: createOrUpdateData) => {
     try {
-        const { reply } = req.body;
-        const queryId = Number(req.query.id);
+        // const { reply } = req.body;
+        const reply = data.reply;
+        const queryId = Number(data.id);
 
         const query = await prisma.product_queries.update({
             where: { id: queryId },
             data: { reply: reply }
         });
 
-        return res.status(200).json({ success: true, query });
+        // return res.status(200).json({ success: true, query });
+        return { success: true, data: query };
     } catch (error) {
-        console.error(error);
-        return res.status(500).json({ success: false, message: 'Internal server error' });
+        return { success: false, error };
+        // console.error(error);
+        // return res.status(500).json({ success: false, message: 'Internal server error' });
     }
 };

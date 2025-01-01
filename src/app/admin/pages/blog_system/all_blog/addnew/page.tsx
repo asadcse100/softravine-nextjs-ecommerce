@@ -2,6 +2,7 @@
 
 import * as React from "react";
 import { useState, useEffect } from "react";
+import { useRouter, useSearchParams } from "next/navigation";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { z } from "zod";
@@ -47,8 +48,45 @@ const formSchema = z.object({
 });
 
 export default function AddNew() {
-  const [isMounted, setIsMounted] = useState(false);
+  const router = useRouter();
+  const searchParams = useSearchParams();
+  const id = searchParams.get('id');
+
+  // const [isMounted, setIsMounted] = useState(false);
   // const router = useRouter();
+
+  const [isLoading, setIsLoading, isMounted, setIsMounted] = useState(false);
+
+  const form = useForm<z.infer<typeof formSchema>>({
+    resolver: zodResolver(formSchema),
+    defaultValues: {
+      title: "",
+      category_id: "",
+      slug: "",
+      short_description: "",
+      description: "",
+      meta_title: "",
+      meta_img: "",
+      meta_description: "",
+    },
+  });
+  
+  // Fetch data if editing an existing ticket
+  useEffect(() => {
+    if (id) {
+      const fetchTicket = async () => {
+        try {
+          const apiUrl = process.env.NEXT_PUBLIC_API_URL || "";
+          const response = await fetch(`${apiUrl}/server/api/routes/admin/blogs/${id}`);
+          const data = await response.json();
+          form.reset(data); // Populate form with existing data
+        } catch (error) {
+          showErrorToast("Failed to fetch blog category data.");
+        }
+      };
+      fetchTicket();
+    }
+  }, [id, form]);
 
   const editor = useEditor({
     extensions: [StarterKit, Image],
@@ -77,21 +115,7 @@ export default function AddNew() {
   }, []);
 
 
-  const form = useForm<z.infer<typeof formSchema>>({
-    resolver: zodResolver(formSchema),
-    defaultValues: {
-      title: "",
-      category_id: "",
-      slug: "",
-      short_description: "",
-      description: "",
-      meta_title: "",
-      meta_img: "",
-      meta_description: "",
-    },
-  });
 
-  const [isLoading, setIsLoading] = useState(false);
 
   const onSubmit: SubmitHandler<z.infer<typeof formSchema>> = async (values) => {
     const apiUrl = process.env.NEXT_PUBLIC_API_URL || "";
@@ -104,8 +128,20 @@ export default function AddNew() {
     setIsLoading(true);
 
     try {
-      const response = await fetch(`${apiUrl}/server/api/routes/admin/blogs/blogCategories`, {
-        method: "POST",
+      // const response = await fetch(`${apiUrl}/server/api/routes/admin/blogs/blogCategories`, {
+      //   method: "POST",
+      //   headers: {
+      //     "Content-Type": "application/json",
+      //   },
+      //   body: JSON.stringify(values),
+      // });
+      const method = id ? "PUT" : "POST";
+      const url = id
+        ? `${apiUrl}/server/api/routes/admin/blogs/${id}`
+        : `${apiUrl}/server/api/routes/admin/blogs`;
+
+      const response = await fetch(url, {
+        method,
         headers: {
           "Content-Type": "application/json",
         },

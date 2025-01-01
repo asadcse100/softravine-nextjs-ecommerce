@@ -12,7 +12,7 @@ type createOrUpdateData = {
   amount: number;
   order_id: number;
   order_detail_id: number;
-  status: boolean;
+  status: number;
   affiliate_type: string;
   payment_method: string;
   payment_details: string;
@@ -40,6 +40,82 @@ export const getAffiliateUsers = async () => {
   }
 }
 
+export const AffiliateLogById = async (id: number) => {
+  try {
+    // Check if the record exists
+    const existingCategory = await prisma.affiliate_logs.findUnique({
+      where: { id },
+    });
+
+    if (!existingCategory) {
+      return { success: false, error: "Record does not exist." };
+    }
+
+    return { success: true, data: existingCategory };
+  } catch (error) {
+    // console.error("Error category:", error);
+    return { success: false, error };
+  }
+};
+
+export const getAffiliateUserById = async (id: number) => {
+  try {
+    // Check if the record exists
+    const existingCategory = await prisma.affiliate_users.findUnique({
+      where: { id },
+    });
+
+    if (!existingCategory) {
+      return { success: false, error: "Record does not exist." };
+    }
+    return { success: true, data: existingCategory };
+  } catch (error) {
+    return { success: false, error };
+  }
+};
+
+export const AffiliateConfigurationById = async (id: number) => {
+  try {
+    // Check if the record exists
+    const existingCategory = await prisma.affiliate_options.findUnique({
+      where: { id },
+    });
+
+    if (!existingCategory) {
+      return { success: false, error: "Record does not exist." };
+    }
+
+    return { success: true, data: existingCategory };
+  } catch (error) {
+    // console.error("Error category:", error);
+    return { success: false, error };
+  }
+};
+
+export async function createOrUpdateAffiliateUser(data: createOrUpdateData) {
+  const created_at = data.created_at ? new Date(data.created_at) : new Date();
+  try {
+    const newPost = await prisma.affiliate_configs.upsert({
+      where: { id: data.id ?? 0 }, // Fallback to 0 if `data.id` is null
+      update: {
+        type: data.type,
+        value: data.value,
+        created_at: created_at,
+      },
+      create: {
+        id: data.id ?? undefined, // Ensure `id` is included only if provided
+        type: data.type,
+        value: data.value,
+        created_at: created_at,
+      }
+    });
+
+    return { success: true, data: newPost };
+  } catch (error) {
+    return { success: false, error };
+  }
+}
+
 export async function createOrUpdateAffiliateConfiguration(data: createOrUpdateData) {
   const created_at = data.created_at ? new Date(data.created_at) : new Date();
   try {
@@ -60,7 +136,7 @@ export async function createOrUpdateAffiliateConfiguration(data: createOrUpdateD
 
     return { success: true, data: newPost };
   } catch (error) {
-    console.error("Error creating blog post:", error);
+    // console.error("Error creating blog post:", error);
     return { success: false, error };
   }
 }
@@ -94,7 +170,7 @@ export async function createOrUpdateAffiliateLog(data: createOrUpdateData) {
 
     return { success: true, data: newPost };
   } catch (error) {
-    console.error("Error creating blog post:", error);
+    // console.error("Error creating blog post:", error);
     return { success: false, error };
   }
 }
@@ -141,7 +217,7 @@ export const getWithdrawRequestUsers = async () => {
     }));
     return { success: true, data: serializedWithdrawRequest };
   } catch (error) {
-    console.error("Error fetching getWithdrawRequestUsers:", error);
+    // console.error("Error fetching getWithdrawRequestUsers:", error);
     return { success: false, error };
   }
 }
@@ -229,19 +305,19 @@ export const getWithdrawRequestUsers = async () => {
 //   return NextResponse.json({ message: "This has been updated successfully" });
 // };
 
-export const configStore = async (req: NextRequest) => {
-  const { type } = await req.json();
+export const configStore = async (data: createOrUpdateData) => {
+  // const { type } = await data.json();
 
-  if (type === 'validation_time') {
-    let affiliateConfig = await prisma.affiliate_configs.findFirst({ where: { type } });
+  if (data.type === 'validation_time') {
+    let affiliateConfig = await prisma.affiliate_configs.findFirst({ where: { data.type } });
     if (!affiliateConfig) {
-      affiliateConfig = await prisma.affiliate_configs.create({ data: { type, value: {} } });
+      affiliateConfig = await prisma.affiliate_configs.create({ data: { data.type, data.value: {} } });
     }
 
-    affiliateConfig.value = req.body[type];
-    await prisma.affiliate_configs.update({ where: { id: affiliateConfig.id }, data: affiliateConfig });
-
-    return NextResponse.json({ message: "Validation time updated successfully" });
+    affiliateConfig.value = data.type;
+    const result = await prisma.affiliate_configs.update({ where: { id: affiliateConfig.id }, data: affiliateConfig });
+    return { success: true, data: result };
+    // return NextResponse.json({ message: "Validation time updated successfully" });
   } else {
     const form: any[] = [];
     const selectTypes = ['select', 'multi_select', 'radio'];
@@ -249,12 +325,12 @@ export const configStore = async (req: NextRequest) => {
 
     for (let i = 0; i < req.body.type.length; i++) {
       const item: any = {
-        type: req.body.type[i],
-        label: req.body.label[i],
+        type: data.body.type[i],
+        label: data.body.label[i],
       };
 
-      if (selectTypes.includes(req.body.type[i])) {
-        item.options = JSON.stringify(req.body[`options_${req.body.option[j]}`]);
+      if (selectTypes.includes(data.body.type[i])) {
+        item.options = JSON.stringify(data.body[`options_${data.body.option[j]}`]);
         j++;
       }
 
@@ -267,23 +343,24 @@ export const configStore = async (req: NextRequest) => {
     }
 
     affiliateConfig.value = JSON.stringify(form);
-    await prisma.affiliate_configs.update({ where: { id: affiliateConfig.id }, data: affiliateConfig });
-
-    return NextResponse.json({ message: "Verification form updated successfully" });
+    const result = await prisma.affiliate_configs.update({ where: { id: affiliateConfig.id }, data: affiliateConfig });
+    return { success: true, data: result };
+    // return NextResponse.json({ message: "Verification form updated successfully" });
   }
 };
 
-export const storeAffiliateUser = async (req: NextRequest) => {
+export const storeAffiliateUser = async (data: createOrUpdateData) => {
   const session = await getSession({ req });
 
   if (!session) {
     const existingUser = await prisma.users.findUnique({ where: { email: req.body.email } });
     if (existingUser) {
-      return NextResponse.json({ error: 'Email already exists!' }, { status: 400 });
+      return { success: false };
     }
 
     if (req.body.password !== req.body.password_confirmation) {
-      return NextResponse.json({ error: 'Password did not match.' }, { status: 400 });
+      return { success: false };
+      // return NextResponse.json({ error: 'Password did not match.' }, { status: 400 });
     }
 
     const hashedPassword = await bcrypt.hash(req.body.password, 10);
@@ -337,10 +414,31 @@ export const storeAffiliateUser = async (req: NextRequest) => {
     return item;
   });
 
-  await prisma.affiliate_users.update({
-    where: { userId },
+  const result = await prisma.affiliate_users.update({
+    where: { id },
     data: { informations: JSON.stringify(data) },
   });
+  return { success: true, data: result };
+  // return NextResponse.json({ message: 'Your verification request has been submitted successfully!' }, { status: 200 });
+};
 
-  return NextResponse.json({ message: 'Your verification request has been submitted successfully!' }, { status: 200 });
+export const deleteAffiliateUser = async (id: number) => {
+  try {
+    // Check if the record exists
+    const existingaffiliate_users = await prisma.affiliate_users.findUnique({
+      where: { id },
+    });
+
+    if (!existingaffiliate_users) {
+      return { success: false, error: "Record does not exist." };
+    }
+
+    const deletedaffiliate_users = await prisma.affiliate_users.delete({
+      where: { id },
+    });
+    return { success: true, data: deletedaffiliate_users };
+  } catch (error) {
+    // console.error("Error deleting affiliate users:", error);
+    return { success: false, error };
+  }
 };

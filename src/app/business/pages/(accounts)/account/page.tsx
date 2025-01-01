@@ -7,7 +7,8 @@ import Input from "@/shared/Input/Input";
 import Textarea from "@/shared/Textarea/Textarea";
 import { avatarImgs } from "@/contains/fakeData";
 import Image from "next/image";
-import { useRouter } from "next/navigation";
+import { useState, useEffect } from "react";
+import { useRouter, useSearchParams } from "next/navigation";
 
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm, SubmitHandler } from "react-hook-form";
@@ -69,9 +70,26 @@ export default function AccountPage() {
       max_discount: "",
     },
   });
+  
+  const [isLoading, setIsLoading] = useState(false);
 
-  // 2. Define a submit handler.
-  // function onSubmit(values: z.infer<typeof formSchema>) {
+  // Fetch data if editing an existing ticket
+  useEffect(() => {
+    if (id) {
+      const fetchTicket = async () => {
+        try {
+          const apiUrl = process.env.NEXT_PUBLIC_API_URL || "";
+          const response = await fetch(`${apiUrl}/server/api/routes/business/account/${id}`);
+          const data = await response.json();
+          form.reset(data); // Populate form with existing data
+        } catch (error) {
+          showErrorToast("Failed to fetch blog category data.");
+        }
+      };
+      fetchTicket();
+    }
+  }, [id, form]);
+
   const onSubmit: SubmitHandler<FormData> = async (values) => {
     const apiUrl = process.env.NEXT_PUBLIC_API_URL;
 
@@ -81,8 +99,13 @@ export default function AccountPage() {
     }
 
     try {
-      const response = await fetch(`${apiUrl}/server/api/routes/admin/blogs/blogCategories`, {
-        method: "POST",
+      const method = id ? "PUT" : "POST";
+      const url = id
+        ? `${apiUrl}/server/api/routes/admin/business/account/${id}`
+        : `${apiUrl}/server/api/routes/admin/business/account`;
+
+      const response = await fetch(url, {
+        method,
         headers: {
           "Content-Type": "application/json",
         },
@@ -113,7 +136,7 @@ export default function AccountPage() {
           <div className="space-y-5 sm:space-y-5 bg-white dark:bg-boxdark p-5 rounded-md">
             {/* HEADING */}
             <h2 className="text-2xl sm:text-3xl font-semibold dark:text-slate-300">
-              Account infomation
+              {id ? "Edit Account infomation" : "Add Account infomation"}
             </h2>
             <div className="flex flex-col md:flex-row">
               <div className="flex-shrink-0 flex items-start">

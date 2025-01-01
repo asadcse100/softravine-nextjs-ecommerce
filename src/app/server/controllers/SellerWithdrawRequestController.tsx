@@ -24,6 +24,24 @@ type createOrUpdateData = {
 //     }
 // };
 
+export const getSellerWithdrawRequestById = async (id: number) => {
+  try {
+    // Check if the record exists
+    const existingCategory = await prisma.seller_withdraw_requests.findUnique({
+      where: { id },
+    });
+
+    if (!existingCategory) {
+      return { success: false, error: "Record does not exist." };
+    }
+
+    return { success: true, data: existingCategory };
+  } catch (error) {
+    console.error("Error category:", error);
+    return { success: false, error };
+  }
+};
+
 export const getSellerWithdrawRequests = async () => {
   try {
     const sellerWithdrawRequests = await prisma.seller_withdraw_requests.findMany();
@@ -55,10 +73,11 @@ export const storeWithdrawRequest = async () => {
         viewed: false
       }
     });
-
-    res.status(200).json({ message: 'Request has been sent successfully', data: withdrawRequest });
+    return { success: true, data: withdrawRequest };
+    // res.status(200).json({ message: 'Request has been sent successfully', data: withdrawRequest });
   } catch (error) {
-    res.status(500).json({ error: 'Something went wrong' });
+    return { success: false, error };
+    // res.status(500).json({ error: 'Something went wrong' });
   }
 };
 

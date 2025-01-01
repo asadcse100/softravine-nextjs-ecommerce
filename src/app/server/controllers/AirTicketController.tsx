@@ -19,7 +19,7 @@ export const getAirTickets = async () => {
     const air_tickets = await prisma.air_tickets.findMany();
     return { success: true, data: air_tickets };
   } catch (error) {
-    console.error("Error fetching air tickets:", error);
+    // console.error("Error fetching air tickets:", error);
     return { success: false, error };
   }
 }
@@ -53,7 +53,7 @@ export async function createOrUpdateAirTicket(data: createOrUpdateData) {
 
     return { success: true, data: newPost };
   } catch (error) {
-    console.error("Error creating blog post:", error);
+    // console.error("Error creating blog post:", error);
     return { success: false, error };
   }
 }
@@ -74,7 +74,7 @@ export const deleteAirTicket = async (id: number) => {
     });
     return { success: true, data: deletedAirTickets };
   } catch (error) {
-    console.error("Error deleting AirTickets:", error);
+    // console.error("Error deleting AirTickets:", error);
     return { success: false, error };
   }
 };

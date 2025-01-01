@@ -18,17 +18,35 @@ export const selectCountries = async () => {
         });
         return { success: true, data: countries };
     } catch (error) {
-        console.error("Error fetching product:", error);
+        // console.error("Error fetching product:", error);
         return { success: false, error };
     }
 }
+
+export const getZoneById = async (id: number) => {
+  try {
+    // Check if the record exists
+    const existingCategory = await prisma.zones.findUnique({
+      where: { id },
+    });
+
+    if (!existingCategory) {
+      return { success: false, error: "Record does not exist." };
+    }
+
+    return { success: true, data: existingCategory };
+  } catch (error) {
+    console.error("Error category:", error);
+    return { success: false, error };
+  }
+};
 
 export const getZones = async () => {
     try {
         const getZones = await prisma.zones.findMany();
         return { success: true, data: getZones };
     } catch (error) {
-        console.error("Error fetching getZones:", error);
+        // console.error("Error fetching getZones:", error);
         return { success: false, error };
     }
 }
@@ -77,7 +95,7 @@ export async function createOrUpdateZone(data: createOrUpdateData) {
 
     return { success: true, data: newPost };
   } catch (error) {
-    console.error("Error creating blog post:", error);
+    // console.error("Error creating blog post:", error);
     return { success: false, error };
   }
 };
@@ -108,9 +126,10 @@ export async function createOrUpdateZone(data: createOrUpdateData) {
 // }
 
 // async destroy(req: NextApiRequest, res: NextApiResponse) {
-export async function destroy() {
+// export async function deleteZone() {
+  export const deleteZone = async (id: number) => {
     try {
-        const { id } = req.query;
+        // const { id } = req.query;
 
         // Disconnect countries associated with the zone
         await prisma.countries.updateMany({
@@ -119,12 +138,13 @@ export async function destroy() {
         });
 
         // Delete the zone
-        await prisma.zones.delete({ where: { id: Number(id) } });
-
-        res.status(204).end();
+       const deleteZone = await prisma.zones.delete({ where: { id: Number(id) } });
+        return { success: true, data: deleteZone };
+        // res.status(204).end();
     } catch (error) {
-        console.error(error);
-        res.status(500).json({ message: 'Internal Server Error' });
+      return { success: false, error };
+        // console.error(error);
+        // res.status(500).json({ message: 'Internal Server Error' });
     }
 }
 

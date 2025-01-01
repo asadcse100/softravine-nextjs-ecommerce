@@ -4,6 +4,7 @@ const prisma = new PrismaClient();
 type createOrUpdateData = {
   id: number | null;
   type: string;
+  category_id: number;
   value: string;
 };
 
@@ -45,7 +46,8 @@ export const getStockReport = async () => {
 export async function getInHouseSaleReport(data: createOrUpdateData) {
   try {
     let sort_by = null;
-    const { category_id } = req.query;
+    // const { category_id } = req.query;
+    const category_id = data.category_id;
     let products;
 
     if (category_id) {
@@ -60,11 +62,12 @@ export async function getInHouseSaleReport(data: createOrUpdateData) {
         orderBy: { num_of_sale: 'desc' },
       });
     }
-
-    res.status(200).json({ products, sort_by });
+    return { success: true, data: products };
+    // res.status(200).json({ products, sort_by });
   } catch (error) {
-    console.error('Error:', error);
-    res.status(500).json({ error: 'Internal server error' });
+    return { success: false, error };
+    // console.error('Error:', error);
+    // res.status(500).json({ error: 'Internal server error' });
   }
 }
 
@@ -88,11 +91,12 @@ export async function getSellerSaleReport(data: createOrUpdateData) {
     } else {
       sellers = await prisma.shops.findMany(query);
     }
-
-    res.status(200).json({ sellers, sort_by });
+    return { success: true, data: sellers };
+    // res.status(200).json({ sellers, sort_by });
   } catch (error) {
-    console.error('Error:', error);
-    res.status(500).json({ error: 'Internal server error' });
+    return { success: false, error };
+    // console.error('Error:', error);
+    // res.status(500).json({ error: 'Internal server error' });
   }
 }
 
@@ -116,11 +120,12 @@ export async function getWishReport(data: createOrUpdateData) {
     } else {
       products = await prisma.products.findMany(query);
     }
-
-    res.status(200).json({ products, sort_by });
+    return { success: true, data: products, sort_by};
+    // res.status(200).json({ products, sort_by });
   } catch (error) {
-    console.error('Error:', error);
-    res.status(500).json({ error: 'Internal server error' });
+    return { success: false, error };
+    // console.error('Error:', error);
+    // res.status(500).json({ error: 'Internal server error' });
   }
 }
 
@@ -129,11 +134,12 @@ export async function getUserSearchReport(data: createOrUpdateData) {
     const searches = await prisma.searches.findMany({
       orderBy: { count: 'desc' },
     });
-
-    res.status(200).json({ searches });
+    return { success: true, data: searches };
+    // res.status(200).json({ searches });
   } catch (error) {
-    console.error('Error:', error);
-    res.status(500).json({ error: 'Internal server error' });
+    return { success: false, error };
+    // console.error('Error:', error);
+    // res.status(500).json({ error: 'Internal server error' });
   }
 }
 
@@ -160,11 +166,12 @@ export async function getCommissionHistory(data: createOrUpdateData) {
     if (sellerId) {
       commissionHistory = commissionHistory.filter((ch) => ch.seller_id === sellerId);
     }
-
-    res.status(200).json({ commissionHistory, sellerId, dateRange });
+    return { success: true, data: commissionHistory, sellerId, dateRange };
+    // res.status(200).json({ commissionHistory, sellerId, dateRange });
   } catch (error) {
-    console.error('Error:', error);
-    res.status(500).json({ error: 'Internal server error' });
+    return { success: false, error };
+    // console.error('Error:', error);
+    // res.status(500).json({ error: 'Internal server error' });
   }
 }
 
@@ -196,10 +203,11 @@ export async function getWalletTransactionHistory(data: createOrUpdateData) {
     if (userId) {
       walletHistory = walletHistory.filter((wh) => wh.user_id === userId);
     }
-
-    res.status(200).json({ walletHistory, usersWithWallet, userId, dateRange });
+    return { success: true, data: walletHistory, usersWithWallet, userId, dateRange };
+    // res.status(200).json({ walletHistory, usersWithWallet, userId, dateRange });
   } catch (error) {
-    console.error('Error:', error);
-    res.status(500).json({ error: 'Internal server error' });
+    return { success: false, error };
+    // console.error('Error:', error);
+    // res.status(500).json({ error: 'Internal server error' });
   }
 }

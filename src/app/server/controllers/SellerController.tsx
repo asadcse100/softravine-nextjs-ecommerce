@@ -51,6 +51,24 @@ type createOrUpdateData = {
 //   }
 // }
 
+export const getSellerById = async (id: number) => {
+  try {
+    // Check if the record exists
+    const existingCategory = await prisma.shops.findUnique({
+      where: { id },
+    });
+
+    if (!existingCategory) {
+      return { success: false, error: "Record does not exist." };
+    }
+
+    return { success: true, data: existingCategory };
+  } catch (error) {
+    // console.error("Error category:", error);
+    return { success: false, error };
+  }
+};
+
 export const getSellers = async () => {
   try {
     const shops = await prisma.shops.findMany();
@@ -61,7 +79,7 @@ export const getSellers = async () => {
     }));
     return { success: true, data: serializedShops };
   } catch (error) {
-    console.error("Error fetching shop:", error);
+    // console.error("Error fetching shop:", error);
     return { success: false, error };
   }
 }
@@ -159,7 +177,7 @@ export async function createOrUpdateSeller(data: createOrUpdateData) {
 
       return { success: true, data: newPost };
     } catch (error) {
-      console.error("Error creating blog post:", error);
+      // console.error("Error creating blog post:", error);
       return { success: false, error };
     }
   }
@@ -203,8 +221,9 @@ export async function createOrUpdateSeller(data: createOrUpdateData) {
 // }
 
 
-export async function deleteSeller() {
-    const { id } = req.query;
+// export async function deleteSeller() {
+  export const deleteSeller = async (id: number) => {
+    // const { id } = req.query;
 
     try {
       if (Array.isArray(id)) {
@@ -218,11 +237,12 @@ export async function deleteSeller() {
         // Single delete
         await deleteShopAndUser(Number(id));
       }
-
-      res.status(200).json({ message: 'Sellers deleted successfully' });
+      return { success: true };
+      // res.status(200).json({ message: 'Sellers deleted successfully' });
     } catch (error) {
-      console.error('Error:', error);
-      res.status(500).json({ error: 'Internal server error' });
+      return { success: false, error };
+      // console.error('Error:', error);
+      // res.status(500).json({ error: 'Internal server error' });
     }
   }
 

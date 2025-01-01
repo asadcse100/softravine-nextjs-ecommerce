@@ -4,7 +4,8 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { z } from "zod";
 import { showErrorToast, showSuccessToast} from "@/app/admin/components/Toast";
-
+import { useState, useEffect } from "react";
+import { useRouter, useSearchParams } from "next/navigation";
 import Label from "@/app/customer/components/Label/Label";
 import React, { FC } from "react";
 import ButtonPrimary from "@/shared/Button/ButtonPrimary";
@@ -46,7 +47,10 @@ const formSchema = z.object({
   }),
 });
 
-const AccountKCYPage = () => {
+export default function AddOrEdit() {
+  const router = useRouter();
+  const searchParams = useSearchParams();
+  const id = searchParams.get('id');
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -58,17 +62,36 @@ const AccountKCYPage = () => {
     },
   });
 
-  // 2. Define a submit handler.
-  // function onSubmit(values: z.infer<typeof formSchema>) {
-  //   console.log(values);
-  // }
+  const [isLoading, setIsLoading] = useState(false);
+
+  // Fetch data if editing an existing ticket
+  useEffect(() => {
+    if (id) {
+      const fetchTicket = async () => {
+        try {
+          const apiUrl = process.env.NEXT_PUBLIC_API_URL || "";
+          const response = await fetch(`${apiUrl}/server/api/routes/customer/kcy/${id}`);
+          const data = await response.json();
+          form.reset(data); // Populate form with existing data
+        } catch (error) {
+          showErrorToast("Failed to fetch blog category data.");
+        }
+      };
+      fetchTicket();
+    }
+  }, [id, form]);
 
   const onSubmit: SubmitHandler<z.infer<typeof formSchema>> = async (values) => {
     const apiUrl = process.env.NEXT_PUBLIC_API_URL || "";
 
     try {
-      const response = await fetch(`${apiUrl}/server/api/routes/admin/blogs/blogCategories`, {
-        method: "POST",
+      const method = id ? "PUT" : "POST";
+      const url = id
+        ? `${apiUrl}/server/api/routes/customer/kcy/${id}`
+        : `${apiUrl}/server/api/routes/customer/kcy`;
+
+      const response = await fetch(url, {
+        method,
         headers: {
           "Content-Type": "application/json",
         },
@@ -98,7 +121,7 @@ const AccountKCYPage = () => {
           <div className="space-y-5 sm:space-y-5 bg-white dark:bg-boxdark p-5 rounded-xl">
             {/* HEADING */}
             <h2 className="text-2xl sm:text-3xl font-semibold dark:text-slate-300">
-              KCY
+              {id ? "Edit KCY" : "Add KCY"}
             </h2>
             <div className="flex flex-col md:flex-row">
 
@@ -152,4 +175,3 @@ const AccountKCYPage = () => {
   );
 };
 
-export default AccountKCYPage;

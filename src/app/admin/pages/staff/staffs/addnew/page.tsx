@@ -3,8 +3,8 @@ import * as React from "react"
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { z } from "zod";
-import { useRouter } from "next/navigation";
-import { useEffect, useState } from "react"
+import { useState, useEffect } from "react";
+import { useRouter, useSearchParams } from "next/navigation";
 import Breadcrumb from "@/app/admin/components/Breadcrumbs/Breadcrumb"
 import { Button } from "@/app/admin/components/ui/button";
 import {
@@ -44,9 +44,10 @@ const formSchema = z.object({
   }),
 });
 
-
-export default function Addnew() {
+export default function AddOrEdit() {
   const router = useRouter();
+  const searchParams = useSearchParams();
+  const id = searchParams.get('id');
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -59,18 +60,24 @@ export default function Addnew() {
     },
   });
 
-  // function onSubmit(data: z.infer<typeof formSchema>) {
-  // const onSubmit: SubmitHandler<FormData> = async (data) => {
-  // toast({
-  //   title: "You submitted the following values:",
-  //   description: (
-  //     <pre className="mt-2 w-[340px] rounded-md bg-slate-950 p-4">
-  //       <code className="text-white">{JSON.stringify(data, null, 2)}</code>
-  //     </pre>
-  //   ),
-  // });
-
   const [isLoading, setIsLoading] = useState(false);
+
+  // Fetch data if editing an existing ticket
+  useEffect(() => {
+    if (id) {
+      const fetchTicket = async () => {
+        try {
+          const apiUrl = process.env.NEXT_PUBLIC_API_URL || "";
+          const response = await fetch(`${apiUrl}/server/api/routes/admin/staff/staffs/${id}`);
+          const data = await response.json();
+          form.reset(data); // Populate form with existing data
+        } catch (error) {
+          showErrorToast("Failed to fetch blog category data.");
+        }
+      };
+      fetchTicket();
+    }
+  }, [id, form]);
 
   const onSubmit: SubmitHandler<z.infer<typeof formSchema>> = async (values) => {
     const apiUrl = process.env.NEXT_PUBLIC_API_URL || "";
@@ -83,14 +90,19 @@ export default function Addnew() {
     setIsLoading(true);
 
     try {
-      const response = await fetch(`${apiUrl}/server/api/routes/admin/staff/staffs`, {
-        method: "POST",
+      const method = id ? "PUT" : "POST";
+      const url = id
+        ? `${apiUrl}/server/api/routes/admin/staff/staffs/${id}`
+        : `${apiUrl}/server/api/routes/admin/staff/staffs`;
+
+      const response = await fetch(url, {
+        method,
         headers: {
           "Content-Type": "application/json",
         },
         body: JSON.stringify(values),
       });
-
+      
       if (!response.ok) {
         throw new Error("Failed to add saff. Please try again.");
       }
@@ -135,7 +147,7 @@ export default function Addnew() {
 //   }
 // }
 
-const [roles, setRoles] = useState<{ id: string; name: string }[]>([]) // Adjust the type according to your data structure
+const [roles, setRoles] = useState<{ id: number; name: string }[]>([]) // Adjust the type according to your data structure
 
 // Fetch data from an API
 useEffect(() => {
@@ -171,7 +183,7 @@ return (
               <div className="px-6 rounded-sm border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark">
                 <div className="border-b border-stroke px-6.5 py-4 dark:border-strokedark">
                   <h3 className="font-medium text-black dark:text-white">
-                    Staff Information
+                    {id ? "Edit Staff Information" : "Add Staff Information"}
                   </h3>
                 </div>
                 <div className="py-6">

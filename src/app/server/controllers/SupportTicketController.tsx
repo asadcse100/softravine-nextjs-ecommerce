@@ -26,6 +26,24 @@ type createOrUpdateData = {
 //   }
 // };
 
+export const getSupportTicketById = async (id: number) => {
+  try {
+    // Check if the record exists
+    const existingCategory = await prisma.tickets.findUnique({
+      where: { id },
+    });
+
+    if (!existingCategory) {
+      return { success: false, error: "Record does not exist." };
+    }
+
+    return { success: true, data: existingCategory };
+  } catch (error) {
+    // console.error("Error category:", error);
+    return { success: false, error };
+  }
+};
+
 export const customerTickets = async () => {
   try {
     const tickets = await prisma.tickets.findMany();
@@ -74,21 +92,23 @@ export const getAdminTickets = async () => {
         orderBy: { createdAt: 'desc' },
       });
     }
-
-    res.status(200).json({ tickets, search });
+    return { success: true, data: tickets,  search};
+    // res.status(200).json({ tickets, search });
   } catch (error) {
-    res.status(500).json({ error: 'Something went wrong' });
+    return { success: false, error };
+    // res.status(500).json({ error: 'Something went wrong' });
   }
 };
 
-export const createTicket = async () => {
-  const { subject, details, attachments, userId } = reqs.body;
+export async function createTicket(data: createOrUpdateData) {
+// export const createTicket = async () => {
+  // const { subject, details, attachments, userId } = reqs.body;
 
   try {
     const ticket = await prisma.tickets.create({
       data: {
-        code: new Date().getTime() + userId,
-        users: { connect: { id: userId } },
+        code: new Date().getTime() + data.user_id,
+        users: { connect: { id: data.user_id } },
         subject,
         details,
         files: attachments,
@@ -97,19 +117,20 @@ export const createTicket = async () => {
 
     // Call function to send support email to admin
     // this.send_support_mail_to_admin(ticket);
-
-    res.status(201).json({ message: 'Ticket has been sent successfully', ticket });
+    return { success: true, data: ticket };
+    // res.status(201).json({ message: 'Ticket has been sent successfully', ticket });
   } catch (error) {
-    res.status(500).json({ error: 'Something went wrong' });
+    return { success: false, error };
+    // res.status(500).json({ error: 'Something went wrong' });
   }
 };
 
-
-export const createTicketReply = async () => {
-  const { ticketId, reply, attachments, status, userId } = req.body;
+export const createTicketReply = async (data: createOrUpdateData) => {
+// export const createTicketReply = async () => {
+  // const { ticketId, reply, attachments, status, userId } = req.body;
 
   try {
-    const ticketReply = await prisma.ticket_reply.create({
+    const ticketReply = await prisma.ticket_replies.create({
       data: {
         ticket: { connect: { id: ticketId } },
         user: { connect: { id: userId } },
@@ -125,10 +146,11 @@ export const createTicketReply = async () => {
 
     // Call function to send support reply email to user
     // this.send_support_reply_email_to_user(ticketReply.ticket, ticketReply);
-
-    res.status(201).json({ message: 'Reply has been sent successfully', ticketReply });
+    return { success: true, data: ticketReply };
+    // res.status(201).json({ message: 'Reply has been sent successfully', ticketReply });
   } catch (error) {
-    res.status(500).json({ error: 'Something went wrong' });
+    // res.status(500).json({ error: 'Something went wrong' });
+    return { success: false, error };
   }
 };
 
@@ -186,8 +208,9 @@ export const sendSupportReplyEmailToUser = async () => {
 
   try {
     await transporter.sendMail(mailOptions);
-    console.log('Support reply email sent successfully');
+    // console.log('Support reply email sent successfully');
   } catch (error) {
-    console.error('Error sending support reply email:', error);
+    // console.error('Error sending support reply email:', error);
+    return { success: false, error };
   }
 };
