@@ -96,7 +96,7 @@ export default function AddOrEdit() {
         },
         body: JSON.stringify(values),
       });
-      
+
       if (!response.ok) {
         throw new Error("Failed to add bulk sms. Please try again.");
       }
@@ -154,7 +154,53 @@ export default function AddOrEdit() {
                   </div>
                   <div className="py-6">
                     <div className="flex flex-col gap-5.5 p-6.5">
-                      <FormField
+                      {[
+                        { name: "user_phones", label: "Mobile Users" },
+                      ].map((field) => (
+                        <div
+                          key={field.name}
+                          className="mt-3 flex flex-col gap-5.5 p-6.5"
+                        >
+                          <FormField
+                            control={form.control}
+                            name={field.name}
+                            render={({ field: fieldProps }) => (
+                              <FormItem>
+                                <div className="grid grid-cols-1 md:grid-cols-12">
+                                  <div className="col-span-3 mt-2">
+                                    <FormLabel>{field.label}</FormLabel>
+                                  </div>
+                                  <div className="col-span-8">
+                                    <FormControl>
+                                      <Select
+                                        onValueChange={field.onChange}
+                                        defaultValue={field.value}
+                                      >
+                                        <FormControl>
+                                          <SelectTrigger>
+                                            <SelectValue placeholder="Select User" />
+                                          </SelectTrigger>
+                                        </FormControl>
+                                        <SelectContent>
+                                          {users.map((user) => (
+                                            <SelectItem key={user.id} value={user.phone}>
+                                              {user.phone}
+                                            </SelectItem>
+                                          ))}
+                                        </SelectContent>
+                                      </Select>
+                                    </FormControl>
+                                  </div>
+                                </div>
+                                <FormMessage />
+                              </FormItem>
+                            )}
+                          />
+                        </div>
+                      ))}
+
+
+                      {/* <FormField
                         control={form.control}
                         name="user_phones[]"
                         render={({ field }) => (
@@ -188,10 +234,39 @@ export default function AddOrEdit() {
                             <FormMessage />
                           </FormItem>
                         )}
-                      />
+                      /> */}
                     </div>
                     <div className="mt-3 flex flex-col gap-5.5 p-6.5">
-                      <FormField
+                      {[
+                        { name: "content", label: "SMS Content" },
+                      ].map((field) => (
+                        <div
+                          key={field.name}
+                          className="mt-3 flex flex-col gap-5.5 p-6.5"
+                        >
+                          <FormField
+                            control={form.control}
+                            name={field.name}
+                            render={({ field: fieldProps }) => (
+                              <FormItem>
+                                <div className="grid grid-cols-1 md:grid-cols-12">
+                                  <div className="col-span-3 mt-2">
+                                    <FormLabel>{field.label}</FormLabel>
+                                  </div>
+                                  <div className="col-span-8">
+                                    <FormControl>
+                                    <Textarea></Textarea>
+                                    </FormControl>
+                                  </div>
+                                </div>
+                                <FormMessage />
+                              </FormItem>
+                            )}
+                          />
+                        </div>
+                      ))}
+
+                      {/* <FormField
                         control={form.control}
                         name="content"
                         render={({ field }) => (
@@ -209,10 +284,42 @@ export default function AddOrEdit() {
                             <FormMessage />
                           </FormItem>
                         )}
-                      />
+                      /> */}
                     </div>
                     <div className="mt-3 flex flex-col gap-5.5 p-6.5">
-                      <FormField
+                    {[
+                        { name: "template_id", label: "Template ID" },
+                      ].map((field) => (
+                        <div
+                          key={field.name}
+                          className="mt-3 flex flex-col gap-5.5 p-6.5"
+                        >
+                          <FormField
+                            control={form.control}
+                            name={field.name}
+                            render={({ field: fieldProps }) => (
+                              <FormItem>
+                                <div className="grid grid-cols-1 md:grid-cols-12">
+                                  <div className="col-span-3 mt-2">
+                                    <FormLabel>{field.label}</FormLabel>
+                                  </div>
+                                  <div className="col-span-8">
+                                    <FormControl>
+                                      <Input
+                                        className={inputClass}
+                                        placeholder={field.label}
+                                        {...fieldProps}
+                                      />
+                                    </FormControl>
+                                  </div>
+                                </div>
+                                <FormMessage />
+                              </FormItem>
+                            )}
+                          />
+                        </div>
+                      ))}
+                      {/* <FormField
                         control={form.control}
                         name="template_id"
                         render={({ field }) => (
@@ -234,18 +341,11 @@ export default function AddOrEdit() {
                             <FormMessage />
                           </FormItem>
                         )}
-                      />
+                      /> */}
 
                     </div>
                     <p className="dark:text-slate-400 py-4">**N.B : Template ID is Required Only for Fast2SMS DLT Manual **</p>
                     <div className="grid mt-3 justify-items-end">
-                      {/* <Button
-                        className="dark:text-slate-200"
-                        variant="outline"
-                        type="submit"
-                      >
-                        Save
-                      </Button> */}
                       <Button
                         className="dark:text-slate-200"
                         variant="outline"

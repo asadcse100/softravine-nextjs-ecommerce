@@ -16,7 +16,7 @@ import {
 } from "@/app/admin/components/ui/form";
 import Input from "@/shared/Input/Input";
 import { Switch } from "@/app/admin/components/ui/switch";
-import { showErrorToast, showSuccessToast} from "@/app/admin/components/Toast";
+import { showErrorToast, showSuccessToast } from "@/app/admin/components/Toast";
 import { useState, useEffect } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 
@@ -71,12 +71,12 @@ export default function AddOrEdit() {
 
   const onSubmit: SubmitHandler<z.infer<typeof formSchema>> = async (values) => {
     const apiUrl = process.env.NEXT_PUBLIC_API_URL || "";
-    
+
     if (!apiUrl) {
       showErrorToast("API URL is not configured.");
       return;
     }
-  
+
     setIsLoading(true);
 
     try {
@@ -92,7 +92,7 @@ export default function AddOrEdit() {
         },
         body: JSON.stringify(values),
       });
-      
+
       if (!response.ok) {
         throw new Error("Failed to add google analytics. Please try again.");
       }
@@ -144,29 +144,39 @@ export default function AddOrEdit() {
                       />
                     </div>
                     <div className="mt-3 flex flex-col gap-5.5 p-6.5">
-                      <FormField
-                        control={form.control}
-                        name="FACEBOOK_PIXEL_ID"
-                        render={({ field }) => (
-                          <FormItem>
-                            <div className="grid grid-cols-1 md:grid-cols-12">
-                              <div className="col-span-3 mt-2">
-                                <FormLabel>Facebook Pixel ID</FormLabel>
-                              </div>
-                              <div className="col-span-8">
-                                <FormControl>
-                                  <Input
-                                    className={inputClass}
-                                    placeholder="Facebook Pixel ID"
-                                    {...field}
-                                  />
-                                </FormControl>
-                              </div>
-                            </div>
-                            <FormMessage />
-                          </FormItem>
-                        )}
-                      />
+                      {[
+                        { name: "FACEBOOK_PIXEL_ID", label: "Facebook Pixel ID" },
+                      ].map((field) => (
+                        <div
+                          key={field.name}
+                          className="mt-3 flex flex-col gap-5.5 p-6.5"
+                        >
+                          <FormField
+                            control={form.control}
+                            name={field.name}
+                            render={({ field: fieldProps }) => (
+                              <FormItem>
+                                <div className="grid grid-cols-1 md:grid-cols-12">
+                                  <div className="col-span-4 mt-2">
+                                    <FormLabel>{field.label}</FormLabel>
+                                  </div>
+                                  <div className="col-span-8">
+                                    <FormControl>
+                                      <Input
+                                        className={inputClass}
+                                        placeholder={field.label}
+                                        {...fieldProps}
+                                      />
+                                    </FormControl>
+                                  </div>
+                                </div>
+                                <FormMessage />
+                              </FormItem>
+                            )}
+                          />
+                        </div>
+                      ))}
+
                     </div>
                     <div className="grid mt-3 justify-items-end">
                       <Button
@@ -206,29 +216,39 @@ export default function AddOrEdit() {
                       />
                     </div>
                     <div className="mt-3 flex flex-col gap-5.5 p-6.5">
-                      <FormField
-                        control={form.control}
-                        name="TRACKING_ID"
-                        render={({ field }) => (
-                          <FormItem>
-                            <div className="grid grid-cols-1 md:grid-cols-12">
-                              <div className="col-span-3 mt-2">
-                                <FormLabel>Tracking ID</FormLabel>
-                              </div>
-                              <div className="col-span-8">
-                                <FormControl>
-                                  <Input
-                                    className={inputClass}
-                                    placeholder="Tracking ID"
-                                    {...field}
-                                  />
-                                </FormControl>
-                              </div>
-                            </div>
-                            <FormMessage />
-                          </FormItem>
-                        )}
-                      />
+                      {[
+                        { name: "TRACKING_ID", label: "Tracking ID" },
+                      ].map((field) => (
+                        <div
+                          key={field.name}
+                          className="mt-3 flex flex-col gap-5.5 p-6.5"
+                        >
+                          <FormField
+                            control={form.control}
+                            name={field.name}
+                            render={({ field: fieldProps }) => (
+                              <FormItem>
+                                <div className="grid grid-cols-1 md:grid-cols-12">
+                                  <div className="col-span-4 mt-2">
+                                    <FormLabel>{field.label}</FormLabel>
+                                  </div>
+                                  <div className="col-span-8">
+                                    <FormControl>
+                                      <Input
+                                        className={inputClass}
+                                        placeholder={field.label}
+                                        {...fieldProps}
+                                      />
+                                    </FormControl>
+                                  </div>
+                                </div>
+                                <FormMessage />
+                              </FormItem>
+                            )}
+                          />
+                        </div>
+                      ))}
+
                     </div>
                     <div className="grid mt-3 justify-items-end">
                       <Button

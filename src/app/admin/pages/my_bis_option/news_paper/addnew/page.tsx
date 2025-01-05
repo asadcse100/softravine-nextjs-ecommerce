@@ -17,7 +17,9 @@ import {
 import Input from "@/shared/Input/Input";
 import Textarea from "@/shared/Textarea/Textarea";
 import { showErrorToast, showSuccessToast } from "@/app/admin/components/Toast";
-import { useState, useEffect } from 'react';
+import { useState, useEffect } from "react";
+import { useRouter, useSearchParams } from "next/navigation";
+import { Switch } from "@/app/admin/components/ui/switch";
 
 const formSchema = z.object({
   title: z.string().min(4, {
@@ -30,13 +32,6 @@ const formSchema = z.object({
     message: "Pop Up Image required!",
   })
 });
-
-// export type Products = {
-//   id: string;
-//   logo: string;
-//   name: string;
-//   status: string;
-// };
 
 export default function AddOrEdit() {
   const router = useRouter();
@@ -82,13 +77,6 @@ export default function AddOrEdit() {
     setIsLoading(true);
 
     try {
-      // const response = await fetch(`${apiUrl}/server/api/routes/admin/my_bis_option/news_paper`, {
-      //   method: "POST",
-      //   headers: {
-      //     "Content-Type": "application/json",
-      //   },
-      //   body: JSON.stringify(values),
-      // });
       const method = id ? "PUT" : "POST";
       const url = id
         ? `${apiUrl}/server/api/routes/admin/my_bis_option/news_paper/${id}`
@@ -133,7 +121,52 @@ export default function AddOrEdit() {
                   </div>
                   <div className="py-6">
                     <div className="flex flex-col gap-5.5 p-6.5">
-                      <FormField
+                    {[
+                        { name: "name", label: "Name" },
+                        { name: "newspaper_logo", label: "Newspaper Logo" },
+                        { name: "status", label: "Status" },
+                      ].map((field) => (
+                        <div
+                          key={field.name}
+                          className="mt-3 flex flex-col gap-5.5 p-6.5"
+                        >
+                          <FormField
+                            control={form.control}
+                            name={field.name}
+                            render={({ field: fieldProps }) => (
+                              <FormItem>
+                                <div className="grid grid-cols-1 md:grid-cols-12">
+                                  <div className="col-span-4 mt-1">
+                                    <FormLabel>{field.label}</FormLabel>
+                                  </div>
+                                  <div className="col-span-8">
+                                    <FormControl>
+                                      {field.name === "name" ? (
+                                        <Input
+                                        className={inputClass}
+                                        placeholder={field.label}
+                                        {...fieldProps}
+                                      />
+                                      ) : field.name === "newspaper_logo" ? (
+                                        <Input type="file"
+                                          className={inputClass}
+                                          placeholder={field.label}
+                                          {...fieldProps}
+                                        />
+                                      ) : field.name === "status" ? (
+                                        <Switch />
+                                      ) : null}
+                                    </FormControl>
+                                  </div>
+                                </div>
+                                <FormMessage />
+                              </FormItem>
+                            )}
+                          />
+                        </div>
+                      ))}
+
+                      {/* <FormField
                         control={form.control}
                         name="name"
                         render={({ field }) => (
@@ -155,10 +188,10 @@ export default function AddOrEdit() {
                             <FormMessage />
                           </FormItem>
                         )}
-                      />
+                      /> */}
                     </div>
 
-                    <div className="mt-3 flex flex-col gap-5.5 p-6.5">
+                    {/* <div className="mt-3 flex flex-col gap-5.5 p-6.5">
                       <FormField
                         control={form.control}
                         name="newspaper_logo"
@@ -182,9 +215,9 @@ export default function AddOrEdit() {
                           </FormItem>
                         )}
                       />
-                    </div>
+                    </div> */}
 
-                    <div className="mt-3 flex flex-col gap-5.5 p-6.5">
+                    {/* <div className="mt-3 flex flex-col gap-5.5 p-6.5">
                       <FormField
                         control={form.control}
                         name="status"
@@ -208,16 +241,9 @@ export default function AddOrEdit() {
                           </FormItem>
                         )}
                       />
-                    </div>
+                    </div> */}
 
                     <div className="grid mt-4 justify-items-end">
-                      {/* <Button
-                        className="dark:text-slate-200"
-                        variant="outline"
-                        type="submit"
-                      >
-                        Save
-                      </Button> */}
                       <Button
                         className="dark:text-slate-200"
                         variant="outline"

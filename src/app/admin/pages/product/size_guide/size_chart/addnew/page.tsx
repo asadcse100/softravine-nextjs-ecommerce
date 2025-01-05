@@ -116,7 +116,7 @@ export default function AddOrEdit() {
         },
         body: JSON.stringify(values),
       });
-      
+
       if (!response.ok) {
         throw new Error("Failed to add size chart. Please try again.");
       }
@@ -171,7 +171,72 @@ export default function AddOrEdit() {
                   </div>
                   <div className="py-6">
                     <div className="flex flex-col gap-5.5 p-6.5">
-                      <FormField
+                      {[
+                        { name: "name", label: "Chart Name" },
+                        { name: "category_id", label: "Category" },
+                        { name: "photos", label: "Image" },
+                        { name: "description", label: "Description" },
+                      ].map((field) => (
+                        <div
+                          key={field.name}
+                          className="mt-3 flex flex-col gap-5.5 p-6.5"
+                        >
+                          <FormField
+                            control={form.control}
+                            name={field.name}
+                            render={({ field: fieldProps }) => (
+                              <FormItem>
+                                <div className="grid grid-cols-1 md:grid-cols-12">
+                                  <div className="col-span-3 mt-1">
+                                    <FormLabel>{field.label}</FormLabel>
+                                  </div>
+                                  <div className="col-span-8">
+                                    <FormControl>
+                                      {field.name === "name" ? (
+                                        <Input
+                                          className={inputClass}
+                                          placeholder={field.label}
+                                          {...fieldProps}
+                                        />
+                                      ) : field.name === "category_id" ? (
+                                        <Select
+                                          onValueChange={field.onChange}
+                                          defaultValue={field.value}
+                                        >
+                                          <FormControl>
+                                            <SelectTrigger>
+                                              <SelectValue placeholder="Select Category" />
+                                            </SelectTrigger>
+                                          </FormControl>
+                                          <SelectContent>
+                                            {categories.map((category) => (
+                                              <SelectItem key={category.id} value={category.name}>
+                                                {category.name}
+                                              </SelectItem>
+                                            ))}
+                                          </SelectContent>
+                                        </Select>
+                                      ) : field.name === "photos" ? (
+                                        <Input type="file"
+                                          className={inputClass}
+                                          placeholder={field.label}
+                                          {...fieldProps}
+                                        />
+                                      ) : field.name === "description" ? (
+                                        <Textarea></Textarea>
+                                      ) : null}
+
+                                    </FormControl>
+                                  </div>
+                                </div>
+                                <FormMessage />
+                              </FormItem>
+                            )}
+                          />
+                        </div>
+                      ))}
+
+                      {/* <FormField
                         control={form.control}
                         name="name"
                         render={({ field }) => (
@@ -193,9 +258,9 @@ export default function AddOrEdit() {
                             <FormMessage />
                           </FormItem>
                         )}
-                      />
+                      /> */}
                     </div>
-                    <div className="mt-3 flex flex-col gap-5.5 p-6.5">
+                    {/* <div className="mt-3 flex flex-col gap-5.5 p-6.5">
                       <FormField
                         control={form.control}
                         name="category_id"
@@ -232,8 +297,8 @@ export default function AddOrEdit() {
                           </FormItem>
                         )}
                       />
-                    </div>
-                    <div className="mt-3 flex flex-col gap-5.5 p-6.5">
+                    </div> */}
+                    {/* <div className="mt-3 flex flex-col gap-5.5 p-6.5">
                       <FormField
                         control={form.control}
                         name="photos"
@@ -257,8 +322,8 @@ export default function AddOrEdit() {
                           </FormItem>
                         )}
                       />
-                    </div>
-                    <div className="mt-3 flex flex-col gap-5.5 p-6.5">
+                    </div> */}
+                    {/* <div className="mt-3 flex flex-col gap-5.5 p-6.5">
                       <FormField
                         control={form.control}
                         name="description"
@@ -278,7 +343,7 @@ export default function AddOrEdit() {
                           </FormItem>
                         )}
                       />
-                    </div>
+                    </div> */}
                   </div>
                 </div>
               </div>
@@ -291,7 +356,141 @@ export default function AddOrEdit() {
                   </div>
                   <div className="py-6">
                     <div className="flex flex-col gap-5.5 p-6.5">
-                      <FormField
+                      {[
+                        { name: "fit_type", label: "Fit Type" },
+                        { name: "stretch_type", label: "Stretch Type" },
+                        { name: "measurement_points[]", label: "Measurement Points" },
+                        { name: "size_options[]", label: "Size Options" },
+                      ].map((field) => (
+                        <div
+                          key={field.name}
+                          className="mt-3 flex flex-col gap-5.5 p-6.5"
+                        >
+                          <FormField
+                            control={form.control}
+                            name={field.name}
+                            render={({ field: fieldProps }) => (
+                              <FormItem>
+                                <div className="grid grid-cols-1 md:grid-cols-12">
+                                  <div className="col-span-4 mt-1">
+                                    <FormLabel>{field.label}</FormLabel>
+                                  </div>
+                                  <div className="col-span-8">
+                                    <FormControl>
+                                      {field.name === "fit_type" ? (
+                                        <Select
+                                          onValueChange={field.onChange}
+                                          defaultValue={field.value}
+                                        >
+                                          <FormControl>
+                                            <SelectTrigger>
+                                              <SelectValue placeholder="Select Fit Type" />
+                                            </SelectTrigger>
+                                          </FormControl>
+                                          <SelectContent>
+                                            <SelectItem value="Apple">Slim Fit</SelectItem>
+                                            <SelectItem value="m2@example.com">Pran</SelectItem>
+                                            <SelectItem value="m22@example.com">Squre</SelectItem>
+                                            <SelectItem value="m3@example.com">ACI</SelectItem>
+                                            <SelectItem value="m4@example.com">SoftRavine</SelectItem>
+                                            <SelectItem value="m5@example.com">Samsung</SelectItem>
+                                            <SelectItem value="m6@example.com">LG</SelectItem>
+                                            <SelectItem value="m7@example.com">Logitech</SelectItem>
+                                            <SelectItem value="m8@example.com">A4tech</SelectItem>
+                                            <SelectItem value="m9@example.com">HP</SelectItem>
+                                          </SelectContent>
+                                        </Select>
+                                      ) : field.name === "stretch_type" ? (
+                                        <Select
+                                          onValueChange={field.onChange}
+                                          defaultValue={field.value}
+                                        >
+                                          <FormControl>
+                                            <SelectTrigger>
+                                              <SelectValue placeholder="Select Stretch Type" />
+                                            </SelectTrigger>
+                                          </FormControl>
+                                          <SelectContent>
+                                            <SelectItem value="Apple">Slim Fit</SelectItem>
+                                            <SelectItem value="m2@example.com">Pran</SelectItem>
+                                            <SelectItem value="m22@example.com">Squre</SelectItem>
+                                            <SelectItem value="m3@example.com">ACI</SelectItem>
+                                            <SelectItem value="m4@example.com">SoftRavine</SelectItem>
+                                            <SelectItem value="m5@example.com">Samsung</SelectItem>
+                                            <SelectItem value="m6@example.com">LG</SelectItem>
+                                            <SelectItem value="m7@example.com">Logitech</SelectItem>
+                                            <SelectItem value="m8@example.com">A4tech</SelectItem>
+                                            <SelectItem value="m9@example.com">HP</SelectItem>
+                                          </SelectContent>
+                                        </Select>
+                                      ) : field.name === "measurement_points[]" ? (
+                                        <Select
+                                          onValueChange={field.onChange}
+                                          defaultValue={field.value}
+                                        >
+                                          <FormControl>
+                                            <SelectTrigger>
+                                              <SelectValue placeholder="Select Stretch Type" />
+                                            </SelectTrigger>
+                                          </FormControl>
+                                          <SelectContent>
+                                            <SelectItem value="Apple">Slim Fit</SelectItem>
+                                            <SelectItem value="m2@example.com">Pran</SelectItem>
+                                            <SelectItem value="m22@example.com">Squre</SelectItem>
+                                            <SelectItem value="m3@example.com">ACI</SelectItem>
+                                            <SelectItem value="m4@example.com">SoftRavine</SelectItem>
+                                            <SelectItem value="m5@example.com">Samsung</SelectItem>
+                                            <SelectItem value="m6@example.com">LG</SelectItem>
+                                            <SelectItem value="m7@example.com">Logitech</SelectItem>
+                                            <SelectItem value="m8@example.com">A4tech</SelectItem>
+                                            <SelectItem value="m9@example.com">HP</SelectItem>
+                                          </SelectContent>
+                                        </Select>
+                                      ) : field.name === "size_options[]" ? (
+                                        <Select
+                                          onValueChange={field.onChange}
+                                          defaultValue={field.value}
+                                        >
+                                          <FormControl>
+                                            <SelectTrigger>
+                                              <SelectValue placeholder="Select Stretch Type" />
+                                            </SelectTrigger>
+                                          </FormControl>
+                                          <SelectContent>
+                                            <SelectItem value="Apple">Slim Fit</SelectItem>
+                                            <SelectItem value="m2@example.com">Pran</SelectItem>
+                                            <SelectItem value="m22@example.com">Squre</SelectItem>
+                                            <SelectItem value="m3@example.com">ACI</SelectItem>
+                                            <SelectItem value="m4@example.com">SoftRavine</SelectItem>
+                                            <SelectItem value="m5@example.com">Samsung</SelectItem>
+                                            <SelectItem value="m6@example.com">LG</SelectItem>
+                                            <SelectItem value="m7@example.com">Logitech</SelectItem>
+                                            <SelectItem value="m8@example.com">A4tech</SelectItem>
+                                            <SelectItem value="m9@example.com">HP</SelectItem>
+                                          </SelectContent>
+                                        </Select>
+                                      ) : field.name === "photos" ? (
+                                        <Input type="file"
+                                          className={inputClass}
+                                          placeholder={field.label}
+                                          {...fieldProps}
+                                        />
+                                      ) : field.name === "description" ? (
+                                        <Textarea></Textarea>
+                                      ) : null}
+
+                                    </FormControl>
+                                  </div>
+                                </div>
+                                <FormMessage />
+                              </FormItem>
+                            )}
+                          />
+                        </div>
+                      ))}
+
+
+                      {/* <FormField
                         control={form.control}
                         name="fit_type"
                         render={({ field }) => (
@@ -330,9 +529,9 @@ export default function AddOrEdit() {
                             <FormMessage />
                           </FormItem>
                         )}
-                      />
+                      /> */}
                     </div>
-                    <div className="mt-3 flex flex-col gap-5.5 p-6.5">
+                    {/* <div className="mt-3 flex flex-col gap-5.5 p-6.5">
                       <FormField
                         control={form.control}
                         name="stretch_type"
@@ -373,8 +572,8 @@ export default function AddOrEdit() {
                           </FormItem>
                         )}
                       />
-                    </div>
-                    <div className="mt-3 flex flex-col gap-5.5 p-6.5">
+                    </div> */}
+                    {/* <div className="mt-3 flex flex-col gap-5.5 p-6.5">
                       <FormField
                         control={form.control}
                         name="measurement_points[]"
@@ -415,8 +614,8 @@ export default function AddOrEdit() {
                           </FormItem>
                         )}
                       />
-                    </div>
-                    <div className="mt-3 flex flex-col gap-5.5 p-6.5">
+                    </div> */}
+                    {/* <div className="mt-3 flex flex-col gap-5.5 p-6.5">
                       <FormField
                         control={form.control}
                         name="size_options[]"
@@ -457,7 +656,7 @@ export default function AddOrEdit() {
                           </FormItem>
                         )}
                       />
-                    </div>
+                    </div> */}
                     <div className="mt-3 flex flex-col gap-5.5 p-6.5">
                       <FormField
                         control={form.control}
@@ -493,13 +692,6 @@ export default function AddOrEdit() {
             </div>
           </div>
           <div className="grid justify-items-end">
-            {/* <Button
-              className="dark:text-slate-200"
-              variant="outline"
-              type="submit"
-            >
-              Save
-            </Button> */}
             <Button
               className="dark:text-slate-200"
               variant="outline"

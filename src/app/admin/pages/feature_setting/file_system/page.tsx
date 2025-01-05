@@ -17,7 +17,7 @@ import {
 import Input from "@/shared/Input/Input";
 import Select from "@/shared/Select/Select";
 import { Switch } from "@/app/admin/components/ui/switch";
-import { showErrorToast, showSuccessToast} from "@/app/admin/components/Toast";
+import { showErrorToast, showSuccessToast } from "@/app/admin/components/Toast";
 import { useState, useEffect } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 
@@ -104,15 +104,15 @@ export default function AddOrEdit() {
 
   const onSubmit: SubmitHandler<z.infer<typeof formSchema>> = async (values) => {
     const apiUrl = process.env.NEXT_PUBLIC_API_URL || "";
-    
+
     if (!apiUrl) {
       showErrorToast("API URL is not configured.");
       return;
     }
-  
+
     setIsLoading(true);
 
-    try {      
+    try {
       const method = id ? "PUT" : "POST";
       const url = id
         ? `${apiUrl}/server/api/routes/admin/feature_setting/file_system/${id}`
@@ -160,130 +160,44 @@ export default function AddOrEdit() {
                   </div>
                   <div className="py-6">
                     <div className="flex flex-col gap-5.5 p-6.5">
-                      <FormField
-                        control={form.control}
-                        name="AWS_ACCESS_KEY_ID"
-                        render={({ field }) => (
-                          <FormItem>
-                            <div className="grid grid-cols-1 md:grid-cols-12">
-                              <div className="col-span-4 mt-2">
-                                <FormLabel>AWS ACCESS KEY ID</FormLabel>
-                              </div>
-                              <div className="col-span-8">
-                                <FormControl>
-                                  <Input
-                                    className={inputClass}
-                                    placeholder="AWS_ACCESS_KEY_ID"
-                                    {...field}
-                                  />
-                                </FormControl>
-                              </div>
-                            </div>
-                            <FormMessage />
-                          </FormItem>
-                        )}
-                      />
+                      {[
+                        { name: "AWS_ACCESS_KEY_ID", label: "AWS ACCESS KEY ID" },
+                        { name: "AWS_SECRET_ACCESS_KEY", label: "AWS SECRET ACCESS KEY" },
+                        { name: "AWS_DEFAULT_REGION", label: "AWS DEFAULT REGION" },
+                        { name: "AWS_BUCKET", label: "AWS BUCKET" },
+                        { name: "AWS_URL", label: "AWS URL", url: "https://bucket-name.s3.region.amazonaws.com" },
+                      ].map((field) => (
+                        <div
+                          key={field.name}
+                          className="mt-3 flex flex-col gap-5.5 p-6.5"
+                        >
+                          <FormField
+                            control={form.control}
+                            name={field.name}
+                            render={({ field: fieldProps }) => (
+                              <FormItem>
+                                <div className="grid grid-cols-1 md:grid-cols-12">
+                                  <div className="col-span-4 mt-2">
+                                    <FormLabel>{field.label}</FormLabel>
+                                  </div>
+                                  <div className="col-span-8">
+                                    <FormControl>
+                                      <Input
+                                        className={inputClass}
+                                        placeholder={field.label}
+                                        {...fieldProps}
+                                      />
+                                    </FormControl>
+                                  </div>
+                                </div>
+                                <FormMessage />
+                              </FormItem>
+                            )}
+                          />
+                        </div>
+                      ))}
                     </div>
-                    <div className="mt-3 flex flex-col gap-5.5 p-6.5">
-                      <FormField
-                        control={form.control}
-                        name="AWS_SECRET_ACCESS_KEY"
-                        render={({ field }) => (
-                          <FormItem>
-                            <div className="grid grid-cols-1 md:grid-cols-12">
-                              <div className="col-span-4 mt-2">
-                                <FormLabel>AWS SECRET ACCESS KEY</FormLabel>
-                              </div>
-                              <div className="col-span-8">
-                                <FormControl>
-                                  <Input
-                                    className={inputClass}
-                                    placeholder="AWS_SECRET_ACCESS_KEY"
-                                    {...field}
-                                  />
-                                </FormControl>
-                              </div>
-                            </div>
-                            <FormMessage />
-                          </FormItem>
-                        )}
-                      />
-                    </div>
-                    <div className="mt-3 flex flex-col gap-5.5 p-6.5">
-                      <FormField
-                        control={form.control}
-                        name="AWS_DEFAULT_REGION"
-                        render={({ field }) => (
-                          <FormItem>
-                            <div className="grid grid-cols-1 md:grid-cols-12">
-                              <div className="col-span-4 mt-2">
-                                <FormLabel>AWS DEFAULT REGION</FormLabel>
-                              </div>
-                              <div className="col-span-8">
-                                <FormControl>
-                                  <Input
-                                    className={inputClass}
-                                    placeholder="AWS_DEFAULT_REGION"
-                                    {...field}
-                                  />
-                                </FormControl>
-                              </div>
-                            </div>
-                            <FormMessage />
-                          </FormItem>
-                        )}
-                      />
-                    </div>
-                    <div className="mt-3 flex flex-col gap-5.5 p-6.5">
-                      <FormField
-                        control={form.control}
-                        name="AWS_BUCKET"
-                        render={({ field }) => (
-                          <FormItem>
-                            <div className="grid grid-cols-1 md:grid-cols-12">
-                              <div className="col-span-4 mt-2">
-                                <FormLabel>AWS BUCKET</FormLabel>
-                              </div>
-                              <div className="col-span-8">
-                                <FormControl>
-                                  <Input
-                                    className={inputClass}
-                                    placeholder="AWS_BUCKET"
-                                    {...field}
-                                  />
-                                </FormControl>
-                              </div>
-                            </div>
-                            <FormMessage />
-                          </FormItem>
-                        )}
-                      />
-                    </div>
-                    <div className="mt-3 flex flex-col gap-5.5 p-6.5">
-                      <FormField
-                        control={form.control}
-                        name="AWS_URL"
-                        render={({ field }) => (
-                          <FormItem>
-                            <div className="grid grid-cols-1 md:grid-cols-12">
-                              <div className="col-span-4 mt-2">
-                                <FormLabel>AWS URL</FormLabel>
-                              </div>
-                              <div className="col-span-8">
-                                <FormControl>
-                                  <Input
-                                    className={inputClass}
-                                    placeholder="https://bucket-name.s3.region.amazonaws.com"
-                                    {...field}
-                                  />
-                                </FormControl>
-                              </div>
-                            </div>
-                            <FormMessage />
-                          </FormItem>
-                        )}
-                      />
-                    </div>
+
                     <div className="grid mt-3 justify-items-end">
                       <Button
                         className="dark:text-slate-300"
@@ -307,154 +221,44 @@ export default function AddOrEdit() {
                     </div>
                     <div className="py-6">
                       <div className="flex flex-col gap-5.5 p-6.5">
-                        <FormField
-                          control={form.control}
-                          name="BACKBLAZE_ACCESS_KEY_ID"
-                          render={({ field }) => (
-                            <FormItem>
-                              <div className="grid grid-cols-1 md:grid-cols-12">
-                                <div className="col-span-4 mt-2">
-                                  <FormLabel>BACKBLAZE ACCESS KEY ID</FormLabel>
-                                </div>
-                                <div className="col-span-8">
-                                  <FormControl>
-                                    <Input
-                                      className={inputClass}
-                                      placeholder="BACKBLAZE_ACCESS_KEY_ID"
-                                      {...field}
-                                    />
-                                  </FormControl>
-                                </div>
-                              </div>
-                              <FormMessage />
-                            </FormItem>
-                          )}
-                        />
-                      </div>
-                      <div className="mt-3 flex flex-col gap-5.5 p-6.5">
-                        <FormField
-                          control={form.control}
-                          name="BACKBLAZE_SECRET_ACCESS_KEY"
-                          render={({ field }) => (
-                            <FormItem>
-                              <div className="grid grid-cols-1 md:grid-cols-12">
-                                <div className="col-span-4 mt-2">
-                                  <FormLabel>BACKBLAZE SECRET ACCESS KEY</FormLabel>
-                                </div>
-                                <div className="col-span-8">
-                                  <FormControl>
-                                    <Input
-                                      className={inputClass}
-                                      placeholder="BACKBLAZE_SECRET_ACCESS_KEY"
-                                      {...field}
-                                    />
-                                  </FormControl>
-                                </div>
-                              </div>
-                              <FormMessage />
-                            </FormItem>
-                          )}
-                        />
-                      </div>
-                      <div className="mt-3 flex flex-col gap-5.5 p-6.5">
-                        <FormField
-                          control={form.control}
-                          name="BACKBLAZE_DEFAULT_REGION"
-                          render={({ field }) => (
-                            <FormItem>
-                              <div className="grid grid-cols-1 md:grid-cols-12">
-                                <div className="col-span-4 mt-2">
-                                  <FormLabel>BACKBLAZE SECRET ACCESS KEY</FormLabel>
-                                </div>
-                                <div className="col-span-8">
-                                  <FormControl>
-                                    <Input
-                                      className={inputClass}
-                                      placeholder="BACKBLAZE_SECRET_ACCESS_KEY"
-                                      {...field}
-                                    />
-                                  </FormControl>
-                                </div>
-                              </div>
-                              <FormMessage />
-                            </FormItem>
-                          )}
-                        />
-                      </div>
-                      <div className="mt-3 flex flex-col gap-5.5 p-6.5">
-                        <FormField
-                          control={form.control}
-                          name="BACKBLAZE_BUCKET"
-                          render={({ field }) => (
-                            <FormItem>
-                              <div className="grid grid-cols-1 md:grid-cols-12">
-                                <div className="col-span-4 mt-2">
-                                  <FormLabel>BACKBLAZE BUCKET</FormLabel>
-                                </div>
-                                <div className="col-span-8">
-                                  <FormControl>
-                                    <Input
-                                      className={inputClass}
-                                      placeholder="BACKBLAZE BUCKET"
-                                      {...field}
-                                    />
-                                  </FormControl>
-                                </div>
-                              </div>
-                              <FormMessage />
-                            </FormItem>
-                          )}
-                        />
-                      </div>
-                      <div className="mt-3 flex flex-col gap-5.5 p-6.5">
-                        <FormField
-                          control={form.control}
-                          name="BACKBLAZE_ENDPOINT"
-                          render={({ field }) => (
-                            <FormItem>
-                              <div className="grid grid-cols-1 md:grid-cols-12">
-                                <div className="col-span-4 mt-2">
-                                  <FormLabel>BACKBLAZE ENDPOINT</FormLabel>
-                                </div>
-                                <div className="col-span-8">
-                                  <FormControl>
-                                    <Input
-                                      className={inputClass}
-                                      placeholder="BACKBLAZE ENDPOINT"
-                                      {...field}
-                                    />
-                                  </FormControl>
-                                </div>
-                              </div>
-                              <FormMessage />
-                            </FormItem>
-                          )}
-                        />
-                      </div>
-                      <div className="mt-3 flex flex-col gap-5.5 p-6.5">
-                        <FormField
-                          control={form.control}
-                          name="BACKBLAZE_URL"
-                          render={({ field }) => (
-                            <FormItem>
-                              <div className="grid grid-cols-1 md:grid-cols-12">
-                                <div className="col-span-4 mt-2">
-                                  <FormLabel>BACKBLAZE URL</FormLabel>
-                                </div>
-                                <div className="col-span-8">
-                                  <FormControl>
-                                    <Input
-                                      className={inputClass}
-                                      placeholder="BACKBLAZE URL"
-                                      {...field}
-                                    />
-                                  </FormControl>
-                                </div>
-                              </div>
-                              <FormMessage />
-                            </FormItem>
-                          )}
-                        />
+                        {[
+                          { name: "BACKBLAZE_ACCESS_KEY_ID", label: "BACKBLAZE ACCESS KEY ID" },
+                          { name: "BACKBLAZE_SECRET_ACCESS_KEY", label: "BACKBLAZE SECRET ACCESS KEY" },
+                          { name: "BACKBLAZE_DEFAULT_REGION", label: "BACKBLAZE SECRET ACCESS KEY" },
+                          { name: "BACKBLAZE_BUCKET", label: "BACKBLAZE BUCKET" },
+                          { name: "BACKBLAZE_ENDPOINT", label: "BACKBLAZE ENDPOINT" },
+                          { name: "BACKBLAZE_URL", label: "BACKBLAZE URL" },
+                        ].map((field) => (
+                          <div
+                            key={field.name}
+                            className="mt-3 flex flex-col gap-5.5 p-6.5"
+                          >
+                            <FormField
+                              control={form.control}
+                              name={field.name}
+                              render={({ field: fieldProps }) => (
+                                <FormItem>
+                                  <div className="grid grid-cols-1 md:grid-cols-12">
+                                    <div className="col-span-4 mt-2">
+                                      <FormLabel>{field.label}</FormLabel>
+                                    </div>
+                                    <div className="col-span-8">
+                                      <FormControl>
+                                        <Input
+                                          className={inputClass}
+                                          placeholder={field.label}
+                                          {...fieldProps}
+                                        />
+                                      </FormControl>
+                                    </div>
+                                  </div>
+                                  <FormMessage />
+                                </FormItem>
+                              )}
+                            />
+                          </div>
+                        ))}
+
                       </div>
                       <div className="grid mt-3 justify-items-end">
                         <Button

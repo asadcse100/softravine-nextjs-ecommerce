@@ -19,7 +19,7 @@ import Textarea from "@/shared/Textarea/Textarea";
 import { showErrorToast, showSuccessToast } from "@/app/admin/components/Toast";
 import { useState, useEffect } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
-
+import { Switch } from "@/app/admin/components/ui/switch";
 import {
   Select,
   SelectContent,
@@ -100,7 +100,7 @@ export default function AddOrEdit() {
         },
         body: JSON.stringify(values),
       });
-      
+
       if (!response.ok) {
         throw new Error("Failed to add manual apayment. Please try again.");
       }
@@ -133,6 +133,68 @@ export default function AddOrEdit() {
                   </div>
                   <div className="py-6">
                     <div className="flex flex-col gap-5.5 p-6.5">
+                      {[
+                        { name: "type", label: "Type" },
+                        { name: "name", label: "Name" },
+                        { name: "image", label: "Checkout Thumbnail" },
+                        { name: "description", label: "Payment Instruction" },
+                      ].map((field) => (
+                        <div
+                          key={field.name}
+                          className="mt-3 flex flex-col gap-5.5 p-6.5"
+                        >
+                          <FormField
+                            control={form.control}
+                            name={field.name}
+                            render={({ field: fieldProps }) => (
+                              <FormItem>
+                                <div className="grid grid-cols-1 md:grid-cols-12">
+                                  <div className="col-span-4 mt-1">
+                                    <FormLabel>{field.label}</FormLabel>
+                                  </div>
+                                  <div className="col-span-8">
+                                    <FormControl>
+                                      {field.name === "type" ? (
+                                        <Select
+                                          onValueChange={field.onChange}
+                                          defaultValue={field.value}
+                                        >
+                                          <FormControl>
+                                            <SelectTrigger>
+                                              <SelectValue placeholder="Select Type" />
+                                            </SelectTrigger>
+                                          </FormControl>
+                                          <SelectContent>
+                                            <SelectItem value="Custom_Payment">Custom Payment</SelectItem>
+                                            <SelectItem value="m2@example.com">Bank Payment</SelectItem>
+                                            <SelectItem value="m22@example.com">Check Payment</SelectItem>
+                                          </SelectContent>
+                                        </Select>
+                                      ) : field.name === "name" ? (
+                                        <Input
+                                          className={inputClass}
+                                          placeholder={field.label}
+                                          {...fieldProps}
+                                        />
+                                      ) : field.name === "image" ? (
+                                        <Input
+                                          className={inputClass}
+                                          placeholder={field.label}
+                                          {...fieldProps}
+                                        />
+                                      ) : field.name === "description" ? (
+                                        <Textarea></Textarea>
+                                      ) : null}
+                                    </FormControl>
+                                  </div>
+                                </div>
+                                <FormMessage />
+                              </FormItem>
+                            )}
+                          />
+                        </div>
+                      ))}
+                      {/* 
                       <FormField
                         control={form.control}
                         name="type"
@@ -165,9 +227,9 @@ export default function AddOrEdit() {
                             <FormMessage />
                           </FormItem>
                         )}
-                      />
+                      /> */}
                     </div>
-                    <div className="mt-3 flex flex-col gap-5.5 p-6.5">
+                    {/* <div className="mt-3 flex flex-col gap-5.5 p-6.5">
                       <FormField
                         control={form.control}
                         name="heading"
@@ -191,8 +253,8 @@ export default function AddOrEdit() {
                           </FormItem>
                         )}
                       />
-                    </div>
-                    <div className="mt-3 flex flex-col gap-5.5 p-6.5">
+                    </div> */}
+                    {/* <div className="mt-3 flex flex-col gap-5.5 p-6.5">
                       <FormField
                         control={form.control}
                         name="photo"
@@ -216,8 +278,8 @@ export default function AddOrEdit() {
                           </FormItem>
                         )}
                       />
-                    </div>
-                    <div className="mt-3 flex flex-col gap-5.5 p-6.5">
+                    </div> */}
+                    {/* <div className="mt-3 flex flex-col gap-5.5 p-6.5">
                       <FormField
                         control={form.control}
                         name="description"
@@ -237,15 +299,8 @@ export default function AddOrEdit() {
                           </FormItem>
                         )}
                       />
-                    </div>
+                    </div> */}
                     <div className="grid mt-4 justify-items-end">
-                      {/* <Button
-                        className="dark:text-slate-200"
-                        variant="outline"
-                        type="submit"
-                      >
-                        Save
-                      </Button> */}
                       <Button
                         className="dark:text-slate-200"
                         variant="outline"

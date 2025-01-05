@@ -13,6 +13,14 @@ import {
   FormLabel,
   FormMessage,
 } from "@/app/admin/components/ui/form";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/app/admin/components/ui/select";
+
 import Input from "@/shared/Input/Input";
 import { showErrorToast, showSuccessToast } from "@/app/admin/components/Toast";
 import { useState, useEffect } from "react";
@@ -79,22 +87,6 @@ export default function AddOrEdit() {
     }
   }, [selectedCategory, form]);
 
-  useEffect(() => {
-    if (productId) {
-      const fetchProduct = async () => {
-        try {
-          const apiUrl = process.env.NEXT_PUBLIC_API_URL || "";
-          const response = await fetch(`${apiUrl}/server/api/routes/admin/feature_setting/currency/${productId}`);
-          const data = await response.json();
-          form.reset(data);
-        } catch (error) {
-          showErrorToast("Failed to fetch product data.");
-        }
-      };
-      fetchProduct();
-    }
-  }, [productId]);
-
   const onSubmit: SubmitHandler<z.infer<typeof formSchema>> = async (values) => {
     const apiUrl = process.env.NEXT_PUBLIC_API_URL || "";
 
@@ -129,7 +121,7 @@ export default function AddOrEdit() {
     } catch (error) {
       showErrorToast(
         "Error saving product: " +
-          (error instanceof Error ? error.message : "Unknown error")
+        (error instanceof Error ? error.message : "Unknown error")
       );
     } finally {
       setIsLoading(false);
@@ -150,7 +142,7 @@ export default function AddOrEdit() {
                 <div className="px-6 rounded-sm border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark">
                   <div className="border-b border-stroke px-6.5 py-4 dark:border-strokedark">
                     <h3 className="font-medium text-black dark:text-white">
-                      {productId ? "Edit Product" : "Add Product"}
+                      {id ? "Edit Product" : "Add Product"}
                     </h3>
                   </div>
                   <div className="py-6">
@@ -189,7 +181,52 @@ export default function AddOrEdit() {
                       </div>
                     ))}
                     <div className="mt-3 flex flex-col gap-5.5 p-6.5">
-                      <FormField
+                      {[
+                        { name: "category", label: "category" },
+                      ].map((field) => (
+                        <div
+                          key={field.name}
+                          className="mt-3 flex flex-col gap-5.5 p-6.5"
+                        >
+                          <FormField
+                            control={form.control}
+                            name={field.name}
+                            render={({ field: fieldProps }) => (
+                              <FormItem>
+                                <div className="grid grid-cols-1 md:grid-cols-12">
+                                  <div className="col-span-3 mt-2">
+                                    <FormLabel>{field.label}</FormLabel>
+                                  </div>
+                                  <div className="col-span-8">
+                                    <FormControl>
+                                      <Select
+                                        onValueChange={field.onChange}
+                                        defaultValue={field.value}
+                                      >
+                                        <FormControl>
+                                          <SelectTrigger>
+                                            <SelectValue placeholder="Main Category" />
+                                          </SelectTrigger>
+                                        </FormControl>
+                                        <SelectContent>
+                                          {categories.map((category) => (
+                                            <SelectItem key={category.value} value={category.value}>
+                                              {category.label}
+                                            </SelectItem>
+                                          ))}
+                                        </SelectContent>
+                                      </Select>
+                                    </FormControl>
+                                  </div>
+                                </div>
+                                <FormMessage />
+                              </FormItem>
+                            )}
+                          />
+                        </div>
+                      ))}
+
+                      {/* <FormField
                         control={form.control}
                         name="category"
                         render={({ field }) => (
@@ -219,7 +256,7 @@ export default function AddOrEdit() {
                             <FormMessage />
                           </FormItem>
                         )}
-                      />
+                      /> */}
                     </div>
                     <div className="grid mt-4 justify-items-end">
                       <Button

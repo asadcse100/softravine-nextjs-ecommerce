@@ -99,7 +99,7 @@ export default function AddOrEdit() {
         },
         body: JSON.stringify(values),
       });
-      
+
       if (!response.ok) {
         throw new Error("Failed to add flash deal. Please try again.");
       }
@@ -154,7 +154,76 @@ export default function AddOrEdit() {
                   </div>
                   <div className="py-6">
                     <div className="flex flex-col gap-5.5 p-6.5">
-                      <FormField
+                      {[
+                        { name: "title", label: "Title" },
+                        { name: "banner", label: "Banner" },
+                        { name: "date_range", label: "Date" },
+                        { name: "products", label: "Products" },
+                      ].map((field) => (
+                        <div
+                          key={field.name}
+                          className="mt-3 flex flex-col gap-5.5 p-6.5"
+                        >
+                          <FormField
+                            control={form.control}
+                            name={field.name}
+                            render={({ field: fieldProps }) => (
+                              <FormItem>
+                                <div className="grid grid-cols-1 md:grid-cols-12">
+                                  <div className="col-span-3 mt-2">
+                                    <FormLabel>{field.label}</FormLabel>
+                                  </div>
+                                  <div className="col-span-8">
+                                    <FormControl>
+                                      {field.name === "title" ? (
+                                        <Input
+                                          className={inputClass}
+                                          placeholder={field.label}
+                                          {...fieldProps}
+                                        />
+                                      ) : field.name === "banner" ? (
+                                        <Input type="file"
+                                          className={inputClass}
+                                          placeholder={field.label}
+                                          {...fieldProps}
+                                        />
+                                      ) : field.name === "date_range" ? (
+                                        <Input type="date"
+                                          className={inputClass}
+                                          placeholder={field.label}
+                                          {...fieldProps}
+                                        />
+                                      ) : field.name === "products" ? (
+                                        <Select
+                                          onValueChange={field.onChange}
+                                          defaultValue={field.value}
+                                        >
+                                          <FormControl>
+                                            <SelectTrigger>
+                                              <SelectValue placeholder="Select Products" />
+                                            </SelectTrigger>
+                                          </FormControl>
+                                          <SelectContent>
+                                            {products.map((product) => (
+                                              <SelectItem key={product.id} value={product.name}>
+                                                {product.name}
+                                              </SelectItem>
+                                            ))}
+                                          </SelectContent>
+                                        </Select>
+                                      ) : null}
+                                    </FormControl>
+                                  </div>
+                                </div>
+                                <FormMessage />
+                              </FormItem>
+                            )}
+                          />
+                        </div>
+                      ))}
+
+
+                      {/* <FormField
                         control={form.control}
                         name="title"
                         render={({ field }) => (
@@ -176,9 +245,9 @@ export default function AddOrEdit() {
                             <FormMessage />
                           </FormItem>
                         )}
-                      />
+                      /> */}
                     </div>
-                    <div className="mt-3 flex flex-col gap-5.5 p-6.5">
+                    {/* <div className="mt-3 flex flex-col gap-5.5 p-6.5">
                       <FormField
                         control={form.control}
                         name="banner"
@@ -202,8 +271,8 @@ export default function AddOrEdit() {
                           </FormItem>
                         )}
                       />
-                    </div>
-                    <div className="mt-3 flex flex-col gap-5.5 p-6.5">
+                    </div> */}
+                    {/* <div className="mt-3 flex flex-col gap-5.5 p-6.5">
                       <FormField
                         control={form.control}
                         name="date_range"
@@ -227,8 +296,8 @@ export default function AddOrEdit() {
                           </FormItem>
                         )}
                       />
-                    </div>
-                    <div className="mt-3 flex flex-col gap-5.5 p-6.5">
+                    </div> */}
+                    {/* <div className="mt-3 flex flex-col gap-5.5 p-6.5">
                       <FormField
                         control={form.control}
                         name="products[]"
@@ -264,15 +333,8 @@ export default function AddOrEdit() {
                           </FormItem>
                         )}
                       />
-                    </div>
+                    </div> */}
                     <div className="grid mt-4 justify-items-end">
-                      {/* <Button
-                        className="dark:text-slate-200"
-                        variant="outline"
-                        type="submit"
-                      >
-                        Save
-                      </Button> */}
                       <Button
                         className="dark:text-slate-200"
                         variant="outline"

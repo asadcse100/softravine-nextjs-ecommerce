@@ -126,43 +126,62 @@ export default function AddOrEdit() {
                   </div>
                   <div className="py-6">
                     <div className="flex flex-col gap-5.5 p-6.5">
-                      <FormField
-                        control={form.control}
-                        name="name"
-                        render={({ field }) => (
-                          <FormItem>
-                            <div className="grid grid-cols-1 md:grid-cols-12">
-                              <div className="col-span-3 mt-3">
-                                <FormLabel>Name</FormLabel>
-                              </div>
-                              <div className="col-span-8">
-                                <FormControl>
-                                  <Input
-                                    className={inputClass}
-                                    placeholder="Name"
-                                    {...field}
-                                  />
-                                </FormControl>
-                              </div>
-                            </div>
-                            <FormMessage />
-                          </FormItem>
-                        )}
-                      />
+                    {[
+                        { name: "name", label: "Name" },
+                        { name: "cost", label: "Cost" },
+                      ].map((field) => (
+                        <div
+                          key={field.name}
+                          className="mt-3 flex flex-col gap-5.5 p-6.5"
+                        >
+                          <FormField
+                            control={form.control}
+                            name={field.name}
+                            render={({ field: fieldProps }) => (
+                              <FormItem>
+                                <div className="grid grid-cols-1 md:grid-cols-12">
+                                  <div className="col-span-3 mt-2">
+                                    <FormLabel>{field.label}</FormLabel>
+                                  </div>
+                                  <div className="col-span-8">
+                                    <FormControl>
+                                      <Input
+                                        className={inputClass}
+                                        placeholder={field.label}
+                                        {...fieldProps}
+                                      />
+                                    </FormControl>
+                                  </div>
+                                </div>
+                                <FormMessage />
+                              </FormItem>
+                            )}
+                          />
+                        </div>
+                      ))}
+
                     </div>
-                    <div className="mt-3 flex flex-col gap-5.5 p-6.5">
-                      <FormField
-                        control={form.control}
-                        name="state_id"
-                        render={({ field }) => (
-                          <FormItem>
-                            <div className="grid grid-cols-1 md:grid-cols-12">
-                              <div className="col-span-3 mt-3">
-                                <FormLabel>State</FormLabel>
-                              </div>
-                              <div className="col-span-8">
-                                <FormControl>
-                                  <Select
+
+                    <div className="flex flex-col gap-5.5 p-6.5">
+                    {[
+                        { name: "state_id", label: "State" },
+                      ].map((field) => (
+                        <div
+                          key={field.name}
+                          className="mt-3 flex flex-col gap-5.5 p-6.5"
+                        >
+                          <FormField
+                            control={form.control}
+                            name={field.name}
+                            render={({ field: fieldProps }) => (
+                              <FormItem>
+                                <div className="grid grid-cols-1 md:grid-cols-12">
+                                  <div className="col-span-3 mt-2">
+                                    <FormLabel>{field.label}</FormLabel>
+                                  </div>
+                                  <div className="col-span-8">
+                                    <FormControl>
+                                    <Select
                                     onValueChange={field.onChange}
                                     defaultValue={field.value}
                                   >
@@ -184,47 +203,19 @@ export default function AddOrEdit() {
                                       <SelectItem value="m9@example.com">HP</SelectItem>
                                     </SelectContent>
                                   </Select>
-                                </FormControl>
-                              </div>
-                            </div>
-                            <FormMessage />
-                          </FormItem>
-                        )}
-                      />
+                                    </FormControl>
+                                  </div>
+                                </div>
+                                <FormMessage />
+                              </FormItem>
+                            )}
+                          />
+                        </div>
+                      ))}
+
                     </div>
-                    <div className="mt-3 flex flex-col gap-5.5 p-6.5">
-                      <FormField
-                        control={form.control}
-                        name="cost"
-                        render={({ field }) => (
-                          <FormItem>
-                            <div className="grid grid-cols-1 md:grid-cols-12">
-                              <div className="col-span-3 mt-3">
-                                <FormLabel>Cost</FormLabel>
-                              </div>
-                              <div className="col-span-8">
-                                <FormControl>
-                                  <Input
-                                    className={inputClass}
-                                    placeholder="Cost"
-                                    {...field}
-                                  />
-                                </FormControl>
-                              </div>
-                            </div>
-                            <FormMessage />
-                          </FormItem>
-                        )}
-                      />
-                    </div>
+           
                     <div className="grid mt-3 justify-items-end">
-                      {/* <Button
-                        className="dark:text-slate-200"
-                        variant="outline"
-                        type="submit"
-                      >
-                        Save
-                      </Button> */}
                       <Button
                         className="dark:text-slate-200"
                         variant="outline"

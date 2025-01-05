@@ -80,7 +80,7 @@ export default function AddOrEdit() {
         },
         body: JSON.stringify(values),
       });
-      
+
       if (!response.ok) {
         throw new Error("Failed to add facebook comment setting. Please try again.");
       }
@@ -114,7 +114,7 @@ export default function AddOrEdit() {
                     </h3>
                   </div>
                   <div className="py-6">
-                    <div className="flex flex-col gap-5.5 p-6.5">
+                    {/* <div className="flex flex-col gap-5.5 p-6.5">
                       <FormField
                         control={form.control}
                         name="facebook_comment"
@@ -130,9 +130,48 @@ export default function AddOrEdit() {
                           </FormItem>
                         )}
                       />
-                    </div>
+                    </div> */}
                     <div className="mt-3 flex flex-col gap-5.5 p-6.5">
-                      <FormField
+
+                      {[
+                        { name: "facebook_comment", label: "Facebook Comment" },
+                        { name: "FACEBOOK_APP_ID", label: "Facebook App ID" },
+                      ].map((field) => (
+                        <div
+                          key={field.name}
+                          className="mt-3 flex flex-col gap-5.5 p-6.5"
+                        >
+                          <FormField
+                            control={form.control}
+                            name={field.name}
+                            render={({ field: fieldProps }) => (
+                              <FormItem>
+                                <div className="grid grid-cols-1 md:grid-cols-12">
+                                  <div className="col-span-3 mt-2">
+                                    <FormLabel>{field.label}</FormLabel>
+                                  </div>
+                                  <div className="col-span-8">
+                                    <FormControl>
+                                      {field.name === "facebook_comment" ? (
+                                        <Switch />
+                                      ) : field.name === "FACEBOOK_APP_ID" ? (
+                                        <Input type="text"
+                                          className={inputClass}
+                                          placeholder={field.label}
+                                          {...fieldProps}
+                                        />
+                                      ) : null}
+                                    </FormControl>
+                                  </div>
+                                </div>
+                                <FormMessage />
+                              </FormItem>
+                            )}
+                          />
+                        </div>
+                      ))}
+
+                      {/* <FormField
                         control={form.control}
                         name="FACEBOOK_APP_ID"
                         render={({ field }) => (
@@ -154,16 +193,9 @@ export default function AddOrEdit() {
                             <FormMessage />
                           </FormItem>
                         )}
-                      />
+                      /> */}
                     </div>
                     <div className="grid mt-3 justify-items-end">
-                      {/* <Button
-                        className="dark:text-slate-200"
-                        variant="outline"
-                        type="submit"
-                      >
-                        Save
-                      </Button> */}
                       <Button
                         className="dark:text-slate-200"
                         variant="outline"

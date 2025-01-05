@@ -123,50 +123,44 @@ export default function AddOrEdit() {
                 </div>
                 <div className="py-6">
                   <div className="flex flex-col gap-5.5 p-6.5">
-                    <FormField
-                      control={form.control}
-                      name="footer_title"
-                      render={({ field }) => (
-                        <FormItem>
-                          <div className="grid grid-cols-1 md:grid-cols-12">
-                            <div className="col-span-3 mt-2">
-                              <FormLabel>Title (Translatable)</FormLabel>
-                            </div>
-                            <div className="col-span-8">
-                              <FormControl>
-                                <Input
-                                  className={inputClass}
-                                  placeholder="Title (Translatable)"
-                                  {...field}
-                                />
-                              </FormControl>
-                            </div>
-                          </div>
-                          <FormMessage />
-                        </FormItem>
-                      )}
-                    />
-                  </div>
-                  <div className="mt-3 flex flex-col gap-5.5 p-6.5">
-                    <FormField
-                      control={form.control}
-                      name="footer_description"
-                      render={({ field }) => (
-                        <FormItem>
-                          <div className="grid grid-cols-1 md:grid-cols-12">
-                            <div className="col-span-3 mt-2">
-                              <FormLabel>Footer description (Translatable)</FormLabel>
-                            </div>
-                            <div className="col-span-8">
-                              <FormControl>
-                                <Textarea></Textarea>
-                              </FormControl>
-                            </div>
-                          </div>
-                          <FormMessage />
-                        </FormItem>
-                      )}
-                    />
+                    {[
+                      { name: "footer_title", label: "Title (Translatable)" },
+                      { name: "footer_description", label: "Footer description (Translatable)" },
+                    ].map((field) => (
+                      <div
+                        key={field.name}
+                        className="mt-3 flex flex-col gap-5.5 p-6.5"
+                      >
+                        <FormField
+                          control={form.control}
+                          name={field.name}
+                          render={({ field: fieldProps }) => (
+                            <FormItem>
+                              <div className="grid grid-cols-1 md:grid-cols-12">
+                                <div className="col-span-3 mt-1">
+                                  <FormLabel>{field.label}</FormLabel>
+                                </div>
+                                <div className="col-span-8">
+                                  <FormControl>
+                                    {field.name === "footer_title" ? (
+                                      <Input
+                                        className={inputClass}
+                                        placeholder={field.label}
+                                        {...fieldProps}
+                                      />
+                                    ) : field.name === "footer_description" ? (
+                                      <Textarea></Textarea>
+                                    ) : null}
+
+                                  </FormControl>
+                                </div>
+                              </div>
+                              <FormMessage />
+                            </FormItem>
+                          )}
+                        />
+                      </div>
+                    ))}
                   </div>
                   <div className="grid mt-3 justify-items-end">
                     <Button
@@ -192,100 +186,59 @@ export default function AddOrEdit() {
                     </div>
                     <div className="py-6">
                       <div className="flex flex-col gap-5.5 p-6.5">
-                        <FormField
-                          control={form.control}
-                          name="footer_logo"
-                          render={({ field }) => (
-                            <FormItem>
-                              <div className="grid grid-cols-1 md:grid-cols-12">
-                                <div className="col-span-3 mt-2">
-                                  <FormLabel>Footer Logo</FormLabel>
-                                </div>
-                                <div className="col-span-8">
-                                  <FormControl>
-                                    <Input type="file"
-                                      className={inputClass}
-                                      placeholder="Footer Logo"
-                                      {...field}
-                                    />
-                                  </FormControl>
-                                </div>
-                              </div>
-                              <FormMessage />
-                            </FormItem>
-                          )}
-                        />
-                      </div>
-                      <div className="mt-3 flex flex-col gap-5.5 p-6.5">
-                        <FormField
-                          control={form.control}
-                          name="about_us_description"
-                          render={({ field }) => (
-                            <FormItem>
-                              <div className="grid grid-cols-1 md:grid-cols-12">
-                                <div className="col-span-3 mt-2">
-                                  <FormLabel>About description (Translatable)</FormLabel>
-                                </div>
-                                <div className="col-span-8">
-                                  <FormControl>
-                                    <Textarea></Textarea>
-                                  </FormControl>
-                                </div>
-                              </div>
-                              <FormMessage />
-                            </FormItem>
-                          )}
-                        />
-                      </div>
-                      <div className="mt-3 flex flex-col gap-5.5 p-6.5">
-                        <FormField
-                          control={form.control}
-                          name="play_store_link"
-                          render={({ field }) => (
-                            <FormItem>
-                              <div className="grid grid-cols-1 md:grid-cols-12">
-                                <div className="col-span-3 mt-2">
-                                  <FormLabel>Play Store Link</FormLabel>
-                                </div>
-                                <div className="col-span-8">
-                                  <FormControl>
-                                    <Input
-                                      className={inputClass}
-                                      placeholder="Play Store Link"
-                                      {...field}
-                                    />
-                                  </FormControl>
-                                </div>
-                              </div>
-                              <FormMessage />
-                            </FormItem>
-                          )}
-                        />
-                      </div>
-                      <div className="mt-3 flex flex-col gap-5.5 p-6.5">
-                        <FormField
-                          control={form.control}
-                          name="app_store_link"
-                          render={({ field }) => (
-                            <FormItem>
-                              <div className="grid grid-cols-1 md:grid-cols-12">
-                                <div className="col-span-3 mt-2">
-                                  <FormLabel>App Store Link</FormLabel>
-                                </div>
-                                <div className="col-span-8">
-                                  <FormControl>
-                                    <Input
-                                      className={inputClass}
-                                      placeholder="App Store Link"
-                                      {...field}
-                                    />
-                                  </FormControl>
-                                </div>
-                              </div>
-                              <FormMessage />
-                            </FormItem>
-                          )}
-                        />
+                        {[
+                          { name: "footer_logo", label: "Footer Logo" },
+                          { name: "about_us_description", label: "About description (Translatable)" },
+                          { name: "play_store_link", label: "Play Store Link" },
+                          { name: "app_store_link", label: "App Store Link" },
+                        ].map((field) => (
+                          <div
+                            key={field.name}
+                            className="mt-3 flex flex-col gap-5.5 p-6.5"
+                          >
+                            <FormField
+                              control={form.control}
+                              name={field.name}
+                              render={({ field: fieldProps }) => (
+                                <FormItem>
+                                  <div className="grid grid-cols-1 md:grid-cols-12">
+                                    <div className="col-span-3 mt-1">
+                                      <FormLabel>{field.label}</FormLabel>
+                                    </div>
+                                    <div className="col-span-8">
+                                      <FormControl>
+                                        {field.name === "footer_logo" ? (
+                                          <Input type="file"
+                                            className={inputClass}
+                                            placeholder={field.label}
+                                            {...fieldProps}
+                                          />
+                                        ) : field.name === "about_us_description" ? (
+                                          <Textarea></Textarea>
+                                        ) : field.name === "play_store_link" ? (
+                                          <Input
+                                            className={inputClass}
+                                            placeholder={field.label}
+                                            {...fieldProps}
+                                          />
+                                        ) : field.name === "app_store_link" ? (
+                                          <Input
+                                            className={inputClass}
+                                            placeholder={field.label}
+                                            {...fieldProps}
+                                          />
+                                        ) : null}
+
+                                      </FormControl>
+                                    </div>
+                                  </div>
+                                  <FormMessage />
+                                </FormItem>
+                              )}
+                            />
+                          </div>
+                        ))}
+
                       </div>
                       <div className="grid mt-3 justify-items-end">
                         <Button
@@ -311,80 +264,54 @@ export default function AddOrEdit() {
                     </div>
                     <div className="py-6">
                       <div className="flex flex-col gap-5.5 p-6.5">
-                        <FormField
-                          control={form.control}
-                          name="contact_address"
-                          render={({ field }) => (
-                            <FormItem>
-                              <div className="grid grid-cols-1 md:grid-cols-12">
-                                <div className="col-span-3 mt-2">
-                                  <FormLabel>Contact address (Translatable)</FormLabel>
-                                </div>
-                                <div className="col-span-8">
-                                  <FormControl>
-                                    <Input
-                                      className={inputClass}
-                                      placeholder="Contact address (Translatable)"
-                                      {...field}
-                                    />
-                                  </FormControl>
-                                </div>
-                              </div>
-                              <FormMessage />
-                            </FormItem>
-                          )}
-                        />
+                        {[
+                          { name: "contact_address", label: "Contact address (Translatable)" },
+                          { name: "contact_phone", label: "Contact Phone" },
+                          { name: "contact_email", label: "Contact Email" },
+                        ].map((field) => (
+                          <div
+                            key={field.name}
+                            className="mt-3 flex flex-col gap-5.5 p-6.5"
+                          >
+                            <FormField
+                              control={form.control}
+                              name={field.name}
+                              render={({ field: fieldProps }) => (
+                                <FormItem>
+                                  <div className="grid grid-cols-1 md:grid-cols-12">
+                                    <div className="col-span-3 mt-1">
+                                      <FormLabel>{field.label}</FormLabel>
+                                    </div>
+                                    <div className="col-span-8">
+                                      <FormControl>
+                                        {field.name === "contact_address" ? (
+                                          <Textarea></Textarea>
+                                        ) : field.name === "contact_phone" ? (
+                                          <Input
+                                            className={inputClass}
+                                            placeholder={field.label}
+                                            {...fieldProps}
+                                          />
+                                        ) : field.name === "contact_email" ? (
+                                          <Input
+                                            className={inputClass}
+                                            placeholder={field.label}
+                                            {...fieldProps}
+                                          />
+                                        ) : null}
+
+                                      </FormControl>
+                                    </div>
+                                  </div>
+                                  <FormMessage />
+                                </FormItem>
+                              )}
+                            />
+                          </div>
+                        ))}
+
                       </div>
-                      <div className="mt-3 flex flex-col gap-5.5 p-6.5">
-                        <FormField
-                          control={form.control}
-                          name="contact_email"
-                          render={({ field }) => (
-                            <FormItem>
-                              <div className="grid grid-cols-1 md:grid-cols-12">
-                                <div className="col-span-3 mt-2">
-                                  <FormLabel>Contact phone</FormLabel>
-                                </div>
-                                <div className="col-span-8">
-                                  <FormControl>
-                                    <Input
-                                      className={inputClass}
-                                      placeholder="Contact phone"
-                                      {...field}
-                                    />
-                                  </FormControl>
-                                </div>
-                              </div>
-                              <FormMessage />
-                            </FormItem>
-                          )}
-                        />
-                      </div>
-                      <div className="mt-3 flex flex-col gap-5.5 p-6.5">
-                        <FormField
-                          control={form.control}
-                          name="widget_one"
-                          render={({ field }) => (
-                            <FormItem>
-                              <div className="grid grid-cols-1 md:grid-cols-12">
-                                <div className="col-span-3 mt-2">
-                                  <FormLabel>Contact email</FormLabel>
-                                </div>
-                                <div className="col-span-8">
-                                  <FormControl>
-                                    <Input
-                                      className={inputClass}
-                                      placeholder="Contact email"
-                                      {...field}
-                                    />
-                                  </FormControl>
-                                </div>
-                              </div>
-                              <FormMessage />
-                            </FormItem>
-                          )}
-                        />
-                      </div>
+
                       <div className="grid mt-3 justify-items-end">
                         <Button
                           className="dark:text-slate-200"
@@ -409,29 +336,39 @@ export default function AddOrEdit() {
                     </div>
                     <div className="py-6">
                       <div className="flex flex-col gap-5.5 p-6.5">
-                        <FormField
-                          control={form.control}
-                          name="frontend_copyright_text"
-                          render={({ field }) => (
-                            <FormItem>
-                              <div className="grid grid-cols-1 md:grid-cols-12">
-                                <div className="col-span-3 mt-2">
-                                  <FormLabel>Copyright Text (Translatable)</FormLabel>
-                                </div>
-                                <div className="col-span-8">
-                                  <FormControl>
-                                    <Input
-                                      className={inputClass}
-                                      placeholder="Copyright Text (Translatable)"
-                                      {...field}
-                                    />
-                                  </FormControl>
-                                </div>
-                              </div>
-                              <FormMessage />
-                            </FormItem>
-                          )}
-                        />
+                        {[
+                          { name: "frontend_copyright_text", label: "Copyright Text (Translatable)" },
+                        ].map((field) => (
+                          <div
+                            key={field.name}
+                            className="mt-3 flex flex-col gap-5.5 p-6.5"
+                          >
+                            <FormField
+                              control={form.control}
+                              name={field.name}
+                              render={({ field: fieldProps }) => (
+                                <FormItem>
+                                  <div className="grid grid-cols-1 md:grid-cols-12">
+                                    <div className="col-span-3 mt-1">
+                                      <FormLabel>{field.label}</FormLabel>
+                                    </div>
+                                    <div className="col-span-8">
+                                      <FormControl>
+                                        <Input
+                                          className={inputClass}
+                                          placeholder={field.label}
+                                          {...fieldProps}
+                                        />
+                                      </FormControl>
+                                    </div>
+                                  </div>
+                                  <FormMessage />
+                                </FormItem>
+                              )}
+                            />
+                          </div>
+                        ))}
+
                       </div>
                       <div className="grid mt-3 justify-items-end">
                         <Button
@@ -457,96 +394,75 @@ export default function AddOrEdit() {
                     </div>
                     <div className="py-6">
                       <div className="flex flex-col gap-5.5 p-6.5">
-                        <FormField
-                          control={form.control}
-                          name="show_social_links"
-                          render={({ field }) => (
-                            <FormItem>
-                              <div className="flex items-center space-x-12">
-                                <FormLabel className="mt-2">
-                                  Show Social Links?
-                                </FormLabel>
-                                <Switch />
-                              </div>
+                        {[
+                          { name: "show_social_links", label: "Show Social Links?" },
+                          { name: "facebook_link", label: "Facebook Link", place: "https://facebook.com/user_name" },
+                          { name: "twitter_link", label: "Twitter Link", place: "https://twitter.com/user_name" },
+                          { name: "instagram_link", label: "Instagram Link", place: "https://instagram.com/user_name" },
+                          { name: "youtube_link", label: "Youtube Link", place: "https://youtube.com/user_name" },
+                          { name: "linkedin_link", label: "Linkedin Link", place: "https://linkedin.com/user_name" },
+                        ].map((field) => (
+                          <div
+                            key={field.name}
+                            className="mt-3 flex flex-col gap-5.5 p-6.5"
+                          >
+                            <FormField
+                              control={form.control}
+                              name={field.name}
+                              render={({ field: fieldProps }) => (
+                                <FormItem>
+                                  <div className="grid grid-cols-1 md:grid-cols-12">
+                                    <div className="col-span-3 mt-1">
+                                      <FormLabel>{field.label}</FormLabel>
+                                    </div>
+                                    <div className="col-span-8">
+                                      <FormControl>
+                                        {field.name === "show_social_links" ? (
+                                          <Switch />
+                                        ) : field.name === "facebook_link" ? (
+                                          <Input
+                                            className={inputClass}
+                                            placeholder={field.place}
+                                            {...fieldProps}
+                                          />
+                                        ) : field.name === "twitter_link" ? (
+                                          <Input
+                                            className={inputClass}
+                                            placeholder={field.place}
+                                            {...fieldProps}
+                                          />
+                                        ) : field.name === "instagram_link" ? (
+                                          <Input
+                                            className={inputClass}
+                                            placeholder={field.place}
+                                            {...fieldProps}
+                                          />
+                                        ) : field.name === "youtube_link" ? (
+                                          <Input
+                                            className={inputClass}
+                                            placeholder={field.place}
+                                            {...fieldProps}
+                                          />
+                                        ) : field.name === "linkedin_link" ? (
+                                          <Input
+                                            className={inputClass}
+                                            placeholder={field.place}
+                                            {...fieldProps}
+                                          />
+                                        ) : null}
 
-                              <FormMessage />
-                            </FormItem>
-                          )}
-                        />
+                                      </FormControl>
+                                    </div>
+                                  </div>
+                                  <FormMessage />
+                                </FormItem>
+                              )}
+                            />
+                          </div>
+                        ))}
+
                       </div>
-                      <div className="mt-3 flex flex-col gap-5.5 p-6.5">
-                        <h3 className="font-medium text-black dark:text-white">
-                          Social Links
-                        </h3>
-                        <FormField
-                          control={form.control}
-                          name="facebook_link"
-                          render={({ field }) => (
-                            <FormItem>
-                              {/* <FormLabel>Social Links</FormLabel> */}
-                              <FormControl>
-                                <Input
-                                  className={inputClass}
-                                  placeholder="https://facebook.com/"
-                                  {...field}
-                                />
-                              </FormControl>
-                              <FormMessage />
-                            </FormItem>
-                          )}
-                        />
-                        <FormField
-                          control={form.control}
-                          name="twitter_link"
-                          render={({ field }) => (
-                            <FormItem>
-                              {/* <FormLabel>Social Links</FormLabel> */}
-                              <FormControl>
-                                <Input
-                                  className={inputClass}
-                                  placeholder="https://www.instagram.com/"
-                                  {...field}
-                                />
-                              </FormControl>
-                              <FormMessage />
-                            </FormItem>
-                          )}
-                        />
-                        <FormField
-                          control={form.control}
-                          name="instagram_link"
-                          render={({ field }) => (
-                            <FormItem>
-                              {/* <FormLabel>Social Links</FormLabel> */}
-                              <FormControl>
-                                <Input
-                                  className={inputClass}
-                                  placeholder="https://youtube.com/"
-                                  {...field}
-                                />
-                              </FormControl>
-                              <FormMessage />
-                            </FormItem>
-                          )}
-                        />
-                        <FormField
-                          control={form.control}
-                          name="youtube_link"
-                          render={({ field }) => (
-                            <FormItem>
-                              {/* <FormLabel>Social Links</FormLabel> */}
-                              <FormControl>
-                                <Input
-                                  className={inputClass}
-                                  placeholder="https://linkedin.com/"
-                                  {...field}
-                                />
-                              </FormControl>
-                              <FormMessage />
-                            </FormItem>
-                          )}
-                        />
-                      </div>
+
                       <div className="grid mt-3 justify-items-end">
                         <Button
                           className="dark:text-slate-200"
@@ -571,56 +487,42 @@ export default function AddOrEdit() {
                     </div>
                     <div className="py-6">
                       <div className="flex flex-col gap-5.5 p-6.5">
-                        <FormField
-                          control={form.control}
-                          name="seller_app_link"
-                          render={({ field }) => (
-                            <FormItem>
-                              <div className="grid grid-cols-1 md:grid-cols-12">
-                                <div className="col-span-3 mt-2">
-                                  <FormLabel>Seller App Link</FormLabel>
-                                </div>
-                                <div className="col-span-8">
-                                  <FormControl>
-                                    <Input
-                                      className={inputClass}
-                                      placeholder="Seller App Link"
-                                      {...field}
-                                    />
-                                  </FormControl>
-                                </div>
-                              </div>
-                              <FormMessage />
-                            </FormItem>
-                          )}
-                        />
+                        {[
+                          { name: "seller_app_link", label: "Seller App Link" },
+                          { name: "delivery_boy_app_link", label: "Delivery Boy App Link", }
+                        ].map((field) => (
+                          <div
+                            key={field.name}
+                            className="mt-3 flex flex-col gap-5.5 p-6.5"
+                          >
+                            <FormField
+                              control={form.control}
+                              name={field.name}
+                              render={({ field: fieldProps }) => (
+                                <FormItem>
+                                  <div className="grid grid-cols-1 md:grid-cols-12">
+                                    <div className="col-span-3 mt-1">
+                                      <FormLabel>{field.label}</FormLabel>
+                                    </div>
+                                    <div className="col-span-8">
+                                      <FormControl>
+                                        <Input
+                                          className={inputClass}
+                                          placeholder={field.label}
+                                          {...fieldProps}
+                                        />
+                                      </FormControl>
+                                    </div>
+                                  </div>
+                                  <FormMessage />
+                                </FormItem>
+                              )}
+                            />
+                          </div>
+                        ))}
+
                       </div>
 
-                      <div className="mt-3 flex flex-col gap-5.5 p-6.5">
-                        <FormField
-                          control={form.control}
-                          name="delivery_boy_app_link"
-                          render={({ field }) => (
-                            <FormItem>
-                              <div className="grid grid-cols-1 md:grid-cols-12">
-                                <div className="col-span-3 mt-2">
-                                  <FormLabel>Delivery Boy App Link</FormLabel>
-                                </div>
-                                <div className="col-span-8">
-                                  <FormControl>
-                                    <Input
-                                      className={inputClass}
-                                      placeholder="Delivery Boy App Link"
-                                      {...field}
-                                    />
-                                  </FormControl>
-                                </div>
-                              </div>
-                              <FormMessage />
-                            </FormItem>
-                          )}
-                        />
-                      </div>
                       <div className="grid mt-3 justify-items-end">
                         <Button
                           className="dark:text-slate-200"
@@ -645,38 +547,40 @@ export default function AddOrEdit() {
                     </div>
                     <div className="py-6">
                       <div className="flex flex-col gap-5.5 p-6.5">
-                        <FormField
-                          control={form.control}
-                          name="payment_method_images"
-                          render={({ field }) => (
-                            <FormItem>
-                              <div className="grid grid-cols-1 md:grid-cols-12">
-                                <div className="col-span-3 mt-2">
-                                  <FormLabel>Payment Methods</FormLabel>
-                                </div>
-                                <div className="col-span-8">
-                                  <FormControl>
-                                    <Input
-                                      className={inputClass}
-                                      placeholder="Payment Methods"
-                                      {...field}
-                                    />
-                                  </FormControl>
-                                </div>
-                              </div>
-                              <FormMessage />
-                            </FormItem>
-                          )}
-                        />
+                        {[
+                          { name: "payment_method_images", label: "Payment Methods" },
+                        ].map((field) => (
+                          <div
+                            key={field.name}
+                            className="mt-3 flex flex-col gap-5.5 p-6.5"
+                          >
+                            <FormField
+                              control={form.control}
+                              name={field.name}
+                              render={({ field: fieldProps }) => (
+                                <FormItem>
+                                  <div className="grid grid-cols-1 md:grid-cols-12">
+                                    <div className="col-span-3 mt-1">
+                                      <FormLabel>{field.label}</FormLabel>
+                                    </div>
+                                    <div className="col-span-8">
+                                      <FormControl>
+                                        <Input
+                                          className={inputClass}
+                                          placeholder={field.label}
+                                          {...fieldProps}
+                                        />
+                                      </FormControl>
+                                    </div>
+                                  </div>
+                                  <FormMessage />
+                                </FormItem>
+                              )}
+                            />
+                          </div>
+                        ))}
                       </div>
                       <div className="grid mt-3 justify-items-end">
-                        {/* <Button
-                          className="dark:text-slate-200"
-                          variant="outline"
-                          type="submit"
-                        >
-                          Update
-                        </Button> */}
                         <Button
                           className="dark:text-slate-200"
                           variant="outline"

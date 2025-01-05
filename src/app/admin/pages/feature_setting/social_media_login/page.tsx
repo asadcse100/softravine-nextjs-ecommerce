@@ -111,7 +111,7 @@ export default function AddOrEdit() {
         },
         body: JSON.stringify(values),
       });
-      
+
       if (!response.ok) {
         throw new Error("Failed to add cocial media login. Please try again.");
       }
@@ -146,54 +146,40 @@ export default function AddOrEdit() {
                   </div>
                   <div className="py-6">
                     <div className="flex flex-col gap-5.5 p-6.5">
-                      <FormField
-                        control={form.control}
-                        name="GOOGLE_CLIENT_ID"
-                        render={({ field }) => (
-                          <FormItem>
-                            <div className="grid grid-cols-1 md:grid-cols-12">
-                              <div className="col-span-3 mt-2">
-                                <FormLabel>Client ID</FormLabel>
-                              </div>
-                              <div className="col-span-8">
-                                <FormControl>
-                                  <Input
-                                    className={inputClass}
-                                    placeholder="Client ID"
-                                    {...field}
-                                  />
-                                </FormControl>
-                              </div>
-                            </div>
-                            <FormMessage />
-                          </FormItem>
-                        )}
-                      />
-                    </div>
-                    <div className="mt-3 flex flex-col gap-5.5 p-6.5">
-                      <FormField
-                        control={form.control}
-                        name="GOOGLE_CLIENT_SECRET"
-                        render={({ field }) => (
-                          <FormItem>
-                            <div className="grid grid-cols-1 md:grid-cols-12">
-                              <div className="col-span-3 mt-2">
-                                <FormLabel>Client Secret</FormLabel>
-                              </div>
-                              <div className="col-span-8">
-                                <FormControl>
-                                  <Input
-                                    className={inputClass}
-                                    placeholder="Client Secret"
-                                    {...field}
-                                  />
-                                </FormControl>
-                              </div>
-                            </div>
-                            <FormMessage />
-                          </FormItem>
-                        )}
-                      />
+                      {[
+                        { name: "GOOGLE_CLIENT_ID", label: "Client ID" },
+                        { name: "GOOGLE_CLIENT_SECRET", label: "Client Secret" },
+                      ].map((field) => (
+                        <div
+                          key={field.name}
+                          className="mt-3 flex flex-col gap-5.5 p-6.5"
+                        >
+                          <FormField
+                            control={form.control}
+                            name={field.name}
+                            render={({ field: fieldProps }) => (
+                              <FormItem>
+                                <div className="grid grid-cols-1 md:grid-cols-12">
+                                  <div className="col-span-3 mt-2">
+                                    <FormLabel>{field.label}</FormLabel>
+                                  </div>
+                                  <div className="col-span-8">
+                                    <FormControl>
+                                      <Input
+                                        className={inputClass}
+                                        placeholder={field.label}
+                                        {...fieldProps}
+                                      />
+                                    </FormControl>
+                                  </div>
+                                </div>
+                                <FormMessage />
+                              </FormItem>
+                            )}
+                          />
+                        </div>
+                      ))}
+
                     </div>
                     <div className="grid mt-4 justify-items-end">
                       <Button
@@ -216,54 +202,39 @@ export default function AddOrEdit() {
                   </div>
                   <div className="py-6">
                     <div className="flex flex-col gap-5.5 p-6.5">
-                      <FormField
-                        control={form.control}
-                        name="FACEBOOK_CLIENT_ID"
-                        render={({ field }) => (
-                          <FormItem>
-                            <div className="grid grid-cols-1 md:grid-cols-12">
-                              <div className="col-span-3 mt-2">
-                                <FormLabel>App ID</FormLabel>
-                              </div>
-                              <div className="col-span-8">
-                                <FormControl>
-                                  <Input
-                                    className={inputClass}
-                                    placeholder="App ID"
-                                    {...field}
-                                  />
-                                </FormControl>
-                              </div>
-                            </div>
-                            <FormMessage />
-                          </FormItem>
-                        )}
-                      />
-                    </div>
-                    <div className="mt-3 flex flex-col gap-5.5 p-6.5">
-                      <FormField
-                        control={form.control}
-                        name="FACEBOOK_CLIENT_SECRET"
-                        render={({ field }) => (
-                          <FormItem>
-                            <div className="grid grid-cols-1 md:grid-cols-12">
-                              <div className="col-span-3 mt-2">
-                                <FormLabel>App Secret</FormLabel>
-                              </div>
-                              <div className="col-span-8">
-                                <FormControl>
-                                  <Input
-                                    className={inputClass}
-                                    placeholder="App Secret"
-                                    {...field}
-                                  />
-                                </FormControl>
-                              </div>
-                            </div>
-                            <FormMessage />
-                          </FormItem>
-                        )}
-                      />
+                    {[
+                        { name: "FACEBOOK_CLIENT_ID", label: "App ID" },
+                        { name: "FACEBOOK_CLIENT_SECRET", label: "App Secret" },
+                      ].map((field) => (
+                        <div
+                          key={field.name}
+                          className="mt-3 flex flex-col gap-5.5 p-6.5"
+                        >
+                          <FormField
+                            control={form.control}
+                            name={field.name}
+                            render={({ field: fieldProps }) => (
+                              <FormItem>
+                                <div className="grid grid-cols-1 md:grid-cols-12">
+                                  <div className="col-span-3 mt-2">
+                                    <FormLabel>{field.label}</FormLabel>
+                                  </div>
+                                  <div className="col-span-8">
+                                    <FormControl>
+                                      <Input
+                                        className={inputClass}
+                                        placeholder={field.label}
+                                        {...fieldProps}
+                                      />
+                                    </FormControl>
+                                  </div>
+                                </div>
+                                <FormMessage />
+                              </FormItem>
+                            )}
+                          />
+                        </div>
+                      ))}
                     </div>
                     <div className="grid mt-4 justify-items-end">
                       <Button
@@ -286,55 +257,41 @@ export default function AddOrEdit() {
                   </div>
                   <div className="py-6">
                     <div className="flex flex-col gap-5.5 p-6.5">
-                      <FormField
-                        control={form.control}
-                        name="TWITTER_CLIENT_ID"
-                        render={({ field }) => (
-                          <FormItem>
-                            <div className="grid grid-cols-1 md:grid-cols-12">
-                              <div className="col-span-3 mt-2">
-                                <FormLabel>Client ID</FormLabel>
-                              </div>
-                              <div className="col-span-8">
-                                <FormControl>
-                                  <Input
-                                    className={inputClass}
-                                    placeholder="Client ID"
-                                    {...field}
-                                  />
-                                </FormControl>
-                              </div>
-                            </div>
-                            <FormMessage />
-                          </FormItem>
-                        )}
-                      />
+                    {[
+                        { name: "TWITTER_CLIENT_ID", label: "Client ID" },
+                        { name: "TWITTER_CLIENT_SECRET", label: "Client Secret" },
+                      ].map((field) => (
+                        <div
+                          key={field.name}
+                          className="mt-3 flex flex-col gap-5.5 p-6.5"
+                        >
+                          <FormField
+                            control={form.control}
+                            name={field.name}
+                            render={({ field: fieldProps }) => (
+                              <FormItem>
+                                <div className="grid grid-cols-1 md:grid-cols-12">
+                                  <div className="col-span-3 mt-2">
+                                    <FormLabel>{field.label}</FormLabel>
+                                  </div>
+                                  <div className="col-span-8">
+                                    <FormControl>
+                                      <Input
+                                        className={inputClass}
+                                        placeholder={field.label}
+                                        {...fieldProps}
+                                      />
+                                    </FormControl>
+                                  </div>
+                                </div>
+                                <FormMessage />
+                              </FormItem>
+                            )}
+                          />
+                        </div>
+                      ))}
                     </div>
-                    <div className="mt-3 flex flex-col gap-5.5 p-6.5">
-                      <FormField
-                        control={form.control}
-                        name="TWITTER_CLIENT_SECRET"
-                        render={({ field }) => (
-                          <FormItem>
-                            <div className="grid grid-cols-1 md:grid-cols-12">
-                              <div className="col-span-3 mt-2">
-                                <FormLabel>Client Secret</FormLabel>
-                              </div>
-                              <div className="col-span-8">
-                                <FormControl>
-                                  <Input
-                                    className={inputClass}
-                                    placeholder="Client Secret"
-                                    {...field}
-                                  />
-                                </FormControl>
-                              </div>
-                            </div>
-                            <FormMessage />
-                          </FormItem>
-                        )}
-                      />
-                    </div>
+
                     <div className="grid mt-4 justify-items-end">
                       <Button
                         className="dark:text-slate-200"
@@ -356,88 +313,42 @@ export default function AddOrEdit() {
                   </div>
                   <div className="py-6">
                     <div className="flex flex-col gap-5.5 p-6.5">
-                      <FormField
-                        control={form.control}
-                        name="SIGN_IN_WITH_APPLE_REDIRECT"
-                        render={({ field }) => (
-                          <FormItem>
-                            <div className="grid grid-cols-1 md:grid-cols-12">
-                              <div className="col-span-3 mt-2">
-                                <FormLabel>Callback URL</FormLabel>
-                              </div>
-                              <div className="col-span-8">
-                                <FormControl>
-                                  <Input
-                                    className={inputClass}
-                                    placeholder="Callback URL"
-                                    {...field}
-                                  />
-                                </FormControl>
-                              </div>
-                            </div>
-                            <FormMessage />
-                          </FormItem>
-                        )}
-                      />
-                    </div>
-                    <div className="mt-3 flex flex-col gap-5.5 p-6.5">
-                      <FormField
-                        control={form.control}
-                        name="SIGN_IN_WITH_APPLE_CLIENT_ID"
-                        render={({ field }) => (
-                          <FormItem>
-                            <div className="grid grid-cols-1 md:grid-cols-12">
-                              <div className="col-span-3 mt-2">
-                                <FormLabel>Client ID</FormLabel>
-                              </div>
-                              <div className="col-span-8">
-                                <FormControl>
-                                  <Input
-                                    className={inputClass}
-                                    placeholder="Client ID"
-                                    {...field}
-                                  />
-                                </FormControl>
-                              </div>
-                            </div>
-                            <FormMessage />
-                          </FormItem>
-                        )}
-                      />
-                    </div>
-                    <div className="mt-3 flex flex-col gap-5.5 p-6.5">
-                      <FormField
-                        control={form.control}
-                        name="SIGN_IN_WITH_APPLE_CLIENT_SECRET"
-                        render={({ field }) => (
-                          <FormItem>
-                            <div className="grid grid-cols-1 md:grid-cols-12">
-                              <div className="col-span-3 mt-2">
-                                <FormLabel>Client Secret</FormLabel>
-                              </div>
-                              <div className="col-span-8">
-                                <FormControl>
-                                  <Input
-                                    className={inputClass}
-                                    placeholder="Client Secret"
-                                    {...field}
-                                  />
-                                </FormControl>
-                              </div>
-                            </div>
-                            <FormMessage />
-                          </FormItem>
-                        )}
-                      />
+                    {[
+                        { name: "SIGN_IN_WITH_APPLE_REDIRECT", label: "Callback URL" },
+                        { name: "SIGN_IN_WITH_APPLE_CLIENT_ID", label: "Client ID" },
+                        { name: "SIGN_IN_WITH_APPLE_CLIENT_SECRET", label: "Client Secret" },
+                      ].map((field) => (
+                        <div
+                          key={field.name}
+                          className="mt-3 flex flex-col gap-5.5 p-6.5"
+                        >
+                          <FormField
+                            control={form.control}
+                            name={field.name}
+                            render={({ field: fieldProps }) => (
+                              <FormItem>
+                                <div className="grid grid-cols-1 md:grid-cols-12">
+                                  <div className="col-span-3 mt-2">
+                                    <FormLabel>{field.label}</FormLabel>
+                                  </div>
+                                  <div className="col-span-8">
+                                    <FormControl>
+                                      <Input
+                                        className={inputClass}
+                                        placeholder={field.label}
+                                        {...fieldProps}
+                                      />
+                                    </FormControl>
+                                  </div>
+                                </div>
+                                <FormMessage />
+                              </FormItem>
+                            )}
+                          />
+                        </div>
+                      ))}
                     </div>
                     <div className="grid mt-4 justify-items-end">
-                      {/* <Button
-                        className="dark:text-slate-200"
-                        variant="outline"
-                        type="submit"
-                      >
-                        Save
-                      </Button> */}
                       <Button
                         className="dark:text-slate-200"
                         variant="outline"

@@ -134,29 +134,39 @@ export default function AddOrEdit() {
                       />
                     </div>
                     <div className="mt-3 flex flex-col gap-5.5 p-6.5">
-                      <FormField
-                        control={form.control}
-                        name="MAP_API_KEY"
-                        render={({ field }) => (
-                          <FormItem>
-                            <div className="grid grid-cols-1 md:grid-cols-12">
-                              <div className="col-span-3 mt-2">
-                                <FormLabel>Map API KEY</FormLabel>
-                              </div>
-                              <div className="col-span-8">
-                                <FormControl>
-                                  <Input
-                                    className={inputClass}
-                                    placeholder="Map API KEY"
-                                    {...field}
-                                  />
-                                </FormControl>
-                              </div>
-                            </div>
-                            <FormMessage />
-                          </FormItem>
-                        )}
-                      />
+                    {[
+                        { name: "MAP_API_KEY", label: "Map API KEY" },
+                      ].map((field) => (
+                        <div
+                          key={field.name}
+                          className="mt-3 flex flex-col gap-5.5 p-6.5"
+                        >
+                          <FormField
+                            control={form.control}
+                            name={field.name}
+                            render={({ field: fieldProps }) => (
+                              <FormItem>
+                                <div className="grid grid-cols-1 md:grid-cols-12">
+                                  <div className="col-span-4 mt-2">
+                                    <FormLabel>{field.label}</FormLabel>
+                                  </div>
+                                  <div className="col-span-8">
+                                    <FormControl>
+                                      <Input
+                                        className={inputClass}
+                                        placeholder={field.label}
+                                        {...fieldProps}
+                                      />
+                                    </FormControl>
+                                  </div>
+                                </div>
+                                <FormMessage />
+                              </FormItem>
+                            )}
+                          />
+                        </div>
+                      ))}
+                      
                     </div>
                     <div className="grid mt-3 justify-items-end">
                       {/* <Button

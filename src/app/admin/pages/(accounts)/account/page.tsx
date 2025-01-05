@@ -1,6 +1,6 @@
 "use client";
 
-import Label from "@/app/admin/components/Label/Label";
+import Label from "@/app/business/components/Label/Label";
 import React, { FC } from "react";
 import ButtonPrimary from "@/shared/Button/ButtonPrimary";
 import Input from "@/shared/Input/Input";
@@ -14,7 +14,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { z } from "zod";
 
-import { Button } from "@/app/admin/components/ui/button";
+import { Button } from "@/app/business/components/ui/button";
 import {
   Form,
   FormControl,
@@ -23,42 +23,41 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-} from "@/app/admin/components/ui/form";
+} from "@/app/business/components/ui/form";
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "@/app/admin/components/ui/select";
-import Breadcrumb from "@/app/admin/components/Breadcrumbs/Breadcrumb";
+} from "@/app/business/components/ui/select";
+import Breadcrumb from "@/app/business/components/Breadcrumbs/Breadcrumb";
 import { showErrorToast, showSuccessToast } from "@/app/admin/components/Toast";
 
 const formSchema = z.object({
-  code: z.string().min(10, {
-    message: "code must be at least 10 characters.",
+  code: z.string().min(1, {
+    message: "code must be at least 1 characters.",
   }),
-  product_ids: z.string().min(10, {
-    message: "product_ids must be at least 10 characters.",
+  product_ids: z.string().min(1, {
+    message: "product_ids must be at least 1 characters.",
   }),
-  date_range: z.string().min(10, {
-    message: "date_range must be at least 10 characters.",
+  date_range: z.string().min(1, {
+    message: "date_range must be at least 1 characters.",
   }),
-  discount: z.string().min(10, {
-    message: "discount must be at least 10 characters.",
+  discount: z.string().min(1, {
+    message: "discount must be at least 1 characters.",
   }),
-  min_buy: z.string().min(10, {
-    message: "discount must be at least 10 characters.",
+  min_buy: z.string().min(1, {
+    message: "discount must be at least 1 characters.",
   }),
-  max_discount: z.string().min(10, {
-    message: "max_discount must be at least 10 characters.",
+  max_discount: z.string().min(1, {
+    message: "max_discount must be at least 1 characters.",
   }),
 });
 
-export default function AddOrEdit() {
+export default function AccountPage() {
+  // const AccountPage = () => {
   const router = useRouter();
-  const searchParams = useSearchParams();
-  const id = searchParams.get('id');
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -75,21 +74,21 @@ export default function AddOrEdit() {
   const [isLoading, setIsLoading] = useState(false);
 
   // Fetch data if editing an existing ticket
-  useEffect(() => {
-    if (id) {
-      const fetchTicket = async () => {
-        try {
-          const apiUrl = process.env.NEXT_PUBLIC_API_URL || "";
-          const response = await fetch(`${apiUrl}/server/api/routes/admin/account/${id}`);
-          const data = await response.json();
-          form.reset(data); // Populate form with existing data
-        } catch (error) {
-          showErrorToast("Failed to fetch blog category data.");
-        }
-      };
-      fetchTicket();
-    }
-  }, [id, form]);
+  // useEffect(() => {
+  //   if (id) {
+  //     const fetchTicket = async () => {
+  //       try {
+  //         const apiUrl = process.env.NEXT_PUBLIC_API_URL || "";
+  //         const response = await fetch(`${apiUrl}/server/api/routes/business/account/${id}`);
+  //         const data = await response.json();
+  //         form.reset(data); // Populate form with existing data
+  //       } catch (error) {
+  //         showErrorToast("Failed to fetch blog category data.");
+  //       }
+  //     };
+  //     fetchTicket();
+  //   }
+  // }, [id, form]);
 
   const onSubmit: SubmitHandler<FormData> = async (values) => {
     const apiUrl = process.env.NEXT_PUBLIC_API_URL;
@@ -99,13 +98,11 @@ export default function AddOrEdit() {
       return;
     }
 
-    setIsLoading(true);
-
     try {
       const method = id ? "PUT" : "POST";
       const url = id
-        ? `${apiUrl}/server/api/routes/admin/account/${id}`
-        : `${apiUrl}/server/api/routes/admin/account`;
+        ? `${apiUrl}/server/api/routes/admin/business/account/${id}`
+        : `${apiUrl}/server/api/routes/admin/business/account`;
 
       const response = await fetch(url, {
         method,
@@ -138,12 +135,9 @@ export default function AddOrEdit() {
         <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
           <div className="space-y-5 sm:space-y-5 bg-white dark:bg-boxdark p-5 rounded-md">
             {/* HEADING */}
-            {/* <h2 className="text-2xl sm:text-3xl font-semibold dark:text-slate-300">
-              Account infomation
-            </h2> */}
-            <h3 className="font-medium text-black dark:text-white">
-              {id ? "Edit Account infomation" : "Add Account infomation"}
-            </h3>
+            <h2 className="text-2xl sm:text-3xl font-semibold dark:text-slate-300">
+              {/* {id ? "Edit Account infomation" : "Add Account infomation"} */}
+            </h2>
             <div className="flex flex-col md:flex-row">
               <div className="flex-shrink-0 flex items-start">
                 {/* AVATAR */}
@@ -183,21 +177,48 @@ export default function AddOrEdit() {
 
               <div className="flex-grow mt-10 md:mt-0 md:pl-16 max-w-3xl space-y-3">
                 {[
-                  { name: "code", label: "Category Name" },
+                  { name: "full_name", label: "Full Name" },
+                  { name: "email", label: "Email" },
+                  { name: "phone", label: "Phone number" },
+                  { name: "about_you", label: "About You" },
                 ].map((field) => (
-                  <div key={field.name} className="mt-3 flex flex-col gap-5.5 p-6.5">
+                  <div
+                    key={field.name}
+                    className="mt-3 flex flex-col gap-5.5 p-6.5"
+                  >
                     <FormField
                       control={form.control}
                       name={field.name}
                       render={({ field: fieldProps }) => (
                         <FormItem>
                           <div className="grid grid-cols-1 md:grid-cols-12">
-                            <div className="col-span-3 mt-2">
+                            <div className="col-span-3 mt-1">
                               <FormLabel>{field.label}</FormLabel>
                             </div>
                             <div className="col-span-8">
                               <FormControl>
-                                <Input className={inputClass} placeholder={field.label} {...fieldProps} />
+                                {field.name === "full_name" ? (
+                                  <Input type="text"
+                                    className={inputClass}
+                                    placeholder={field.label}
+                                    {...fieldProps}
+                                  />
+                                ) : field.name === "email" ? (
+                                  <Input type="email"
+                                    className={inputClass}
+                                    placeholder={field.label}
+                                    {...fieldProps}
+                                  />
+                                ) : field.name === "phone" ? (
+                                  <Input type="phone"
+                                  className={inputClass}
+                                  placeholder={field.label}
+                                  {...fieldProps}
+                                  />
+                                ) : field.name === "about_you" ? (
+                                  <Textarea/>
+                                ) : null}
+
                               </FormControl>
                             </div>
                           </div>
@@ -250,7 +271,7 @@ export default function AddOrEdit() {
                   </div>
                 </div>
                  */}
-                <FormField
+                {/* <FormField
                   control={form.control}
                   name="code"
                   render={({ field }) => (
@@ -272,7 +293,7 @@ export default function AddOrEdit() {
                       <FormMessage />
                     </FormItem>
                   )}
-                />
+                /> */}
 
                 {/* <div>
                   <Label className="dark:text-slate-400">Full Addess</Label>
@@ -287,33 +308,7 @@ export default function AddOrEdit() {
                   </div>
                 </div> */}
 
-                {[
-                  { name: "code", label: "Category Name" },
-                ].map((field) => (
-                  <div key={field.name} className="mt-3 flex flex-col gap-5.5 p-6.5">
-                    <FormField
-                      control={form.control}
-                      name={field.name}
-                      render={({ field: fieldProps }) => (
-                        <FormItem>
-                          <div className="grid grid-cols-1 md:grid-cols-12">
-                            <div className="col-span-3 mt-2">
-                              <FormLabel>{field.label}</FormLabel>
-                            </div>
-                            <div className="col-span-8">
-                              <FormControl>
-                                <Input className={inputClass} placeholder={field.label} {...fieldProps} />
-                              </FormControl>
-                            </div>
-                          </div>
-                          <FormMessage />
-                        </FormItem>
-                      )}
-                    />
-                  </div>
-                ))}
-
-                <FormField
+                {/* <FormField
                   control={form.control}
                   name="code"
                   render={({ field }) => (
@@ -335,7 +330,7 @@ export default function AddOrEdit() {
                       <FormMessage />
                     </FormItem>
                   )}
-                />
+                /> */}
 
                 {/* ---- */}
                 {/* <div>
@@ -347,7 +342,7 @@ export default function AddOrEdit() {
                     <Input className="!rounded-l-none" placeholder="003 888 232" />
                   </div>
                 </div> */}
-                <FormField
+                {/* <FormField
                   control={form.control}
                   name="code"
                   render={({ field }) => (
@@ -369,14 +364,14 @@ export default function AddOrEdit() {
                       <FormMessage />
                     </FormItem>
                   )}
-                />
+                /> */}
                 {/* ---- */}
                 {/* <div>
                   <Label className="dark:text-slate-400">About you</Label>
                   <Textarea className="mt-1.5" placeholder="..." />
                 </div> */}
 
-                <FormField
+                {/* <FormField
                   control={form.control}
                   name="code"
                   render={({ field }) => (
@@ -398,7 +393,7 @@ export default function AddOrEdit() {
                       <FormMessage />
                     </FormItem>
                   )}
-                />
+                /> */}
 
                 <div className="pt-2">
                   <ButtonPrimary>Update account</ButtonPrimary>

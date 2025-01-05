@@ -29,77 +29,77 @@ import Textarea from "@/shared/Textarea/Textarea";
 import { Switch } from "@/app/admin/components/ui/switch";
 
 const formSchema = z.object({
-  site_name: z.string().min(10, {
-    message: "site_name must be at least 10 characters.",
+  site_name: z.string().min(1, {
+    message: "site_name must be at least 1 characters.",
   }),
-  website_name: z.string().min(10, {
-    message: "website_name must be at least 10 characters.",
+  website_name: z.string().min(1, {
+    message: "website_name must be at least 1 characters.",
   }),
-  site_motto: z.string().min(10, {
-    message: "site_motto must be at least 10 characters.",
+  site_motto: z.string().min(1, {
+    message: "site_motto must be at least 1 characters.",
   }),
-  site_icon: z.string().min(10, {
-    message: "site_icon must be at least 10 characters.",
+  site_icon: z.string().min(1, {
+    message: "site_icon must be at least 1 characters.",
   }),
-  system_logo_white: z.string().min(10, {
-    message: "system_logo_white must be at least 10 characters.",
+  system_logo_white: z.string().min(1, {
+    message: "system_logo_white must be at least 1 characters.",
   }),
-  system_logo_black: z.string().min(10, {
-    message: "system_logo_black must be at least 10 characters.",
+  system_logo_black: z.string().min(1, {
+    message: "system_logo_black must be at least 1 characters.",
   }),
-  timezone: z.string().min(10, {
-    message: "timezone must be at least 10 characters.",
+  timezone: z.string().min(1, {
+    message: "timezone must be at least 1 characters.",
   }),
-  base_color: z.string().min(10, {
-    message: "base_color must be at least 10 characters.",
+  base_color: z.string().min(1, {
+    message: "base_color must be at least 1 characters.",
   }),
-  base_hov_color: z.string().min(10, {
-    message: "base_hov_color must be at least 10 characters.",
+  base_hov_color: z.string().min(1, {
+    message: "base_hov_color must be at least 1 characters.",
   }),
-  secondary_base_color: z.string().min(10, {
-    message: "secondary_base_color must be at least 10 characters.",
+  secondary_base_color: z.string().min(1, {
+    message: "secondary_base_color must be at least 1 characters.",
   }),
-  secondary_base_hov_color: z.string().min(10, {
+  secondary_base_hov_color: z.string().min(1, {
     message: "secondary_base_hov_color must be at least 10 characters.",
   }),
-  flash_deal_banner: z.string().min(10, {
-    message: "flash_deal_banner must be at least 10 characters.",
+  flash_deal_banner: z.string().min(1, {
+    message: "flash_deal_banner must be at least 1 characters.",
   }),
-  flash_deal_banner_small: z.string().min(10, {
-    message: "flash_deal_banner_small must be at least 10 characters.",
+  flash_deal_banner_small: z.string().min(1, {
+    message: "flash_deal_banner_small must be at least 1 characters.",
   }),
-  meta_title: z.string().min(10, {
-    message: "meta_title must be at least 10 characters.",
+  meta_title: z.string().min(1, {
+    message: "meta_title must be at least 1 characters.",
   }),
-  meta_description: z.string().min(10, {
-    message: "meta_description must be at least 10 characters.",
+  meta_description: z.string().min(1, {
+    message: "meta_description must be at least 1 characters.",
   }),
-  meta_keywords: z.string().min(10, {
-    message: "meta_keywords must be at least 10 characters.",
+  meta_keywords: z.string().min(1, {
+    message: "meta_keywords must be at least 1 characters.",
   }),
-  meta_image: z.string().min(10, {
-    message: "meta_image must be at least 10 characters.",
+  meta_image: z.string().min(1, {
+    message: "meta_image must be at least 1 characters.",
   }),
-  cookies_agreement_text: z.string().min(10, {
-    message: "cookies_agreement_text must be at least 10 characters.",
+  cookies_agreement_text: z.string().min(1, {
+    message: "cookies_agreement_text must be at least 1 characters.",
   }),
-  show_cookies_agreement: z.string().min(10, {
-    message: "show_cookies_agreement must be at least 10 characters.",
+  show_cookies_agreement: z.string().min(1, {
+    message: "show_cookies_agreement must be at least 1 characters.",
   }),
-  show_website_popup: z.string().min(10, {
-    message: "show_website_popup must be at least 10 characters.",
+  show_website_popup: z.string().min(1, {
+    message: "show_website_popup must be at least 1 characters.",
   }),
-  website_popup_content: z.string().min(10, {
-    message: "website_popup_content must be at least 10 characters.",
+  website_popup_content: z.string().min(1, {
+    message: "website_popup_content must be at least 1 characters.",
   }),
-  show_subscribe_form: z.string().min(10, {
-    message: "show_subscribe_form must be at least 10 characters.",
+  show_subscribe_form: z.string().min(1, {
+    message: "show_subscribe_form must be at least 1 characters.",
   }),
-  header_script: z.string().min(10, {
-    message: "header_script must be at least 10 characters.",
+  header_script: z.string().min(1, {
+    message: "header_script must be at least 1 characters.",
   }),
-  footer_script: z.string().min(10, {
-    message: "footer_script must be at least 10 characters.",
+  footer_script: z.string().min(1, {
+    message: "footer_script must be at least 1 characters.",
   }),
 });
 
@@ -215,193 +215,99 @@ export default function AddOrEdit() {
                   </div>
                   <div className="py-6">
                     <div className="flex flex-col gap-5.5 p-6.5">
-                      <FormField
-                        control={form.control}
-                        name="site_name"
-                        render={({ field }) => (
-                          <FormItem>
-                            <div className="grid grid-cols-1 md:grid-cols-12">
-                              <div className="col-span-3 mt-2">
-                                <FormLabel>System Name</FormLabel>
-                              </div>
-                              <div className="col-span-8">
-                                <FormControl>
-                                  <Input
-                                    className={inputClass}
-                                    placeholder="System Name"
-                                    {...field}
-                                  />
-                                </FormControl>
-                              </div>
-                            </div>
-                            <FormMessage />
-                          </FormItem>
-                        )}
-                      />
-                    </div>
-                    <div className="mt-3 flex flex-col gap-5.5 p-6.5">
-                      <FormField
-                        control={form.control}
-                        name="website_name"
-                        render={({ field }) => (
-                          <FormItem>
-                            <div className="grid grid-cols-1 md:grid-cols-12">
-                              <div className="col-span-3 mt-2">
-                                <FormLabel>Frontend Website Name</FormLabel>
-                              </div>
-                              <div className="col-span-8">
-                                <FormControl>
-                                  <Input
-                                    className={inputClass}
-                                    placeholder="Frontend Website Name"
-                                    {...field}
-                                  />
-                                </FormControl>
-                              </div>
-                            </div>
-                            <FormMessage />
-                          </FormItem>
-                        )}
-                      />
-                    </div>
-                    <div className="mt-3 flex flex-col gap-5.5 p-6.5">
-                      <FormField
-                        control={form.control}
-                        name="site_motto"
-                        render={({ field }) => (
-                          <FormItem>
-                            <div className="grid grid-cols-1 md:grid-cols-12">
-                              <div className="col-span-3 mt-2">
-                                <FormLabel>Site Motto</FormLabel>
-                              </div>
-                              <div className="col-span-8">
-                                <FormControl>
-                                  <Input
-                                    className={inputClass}
-                                    placeholder="Site Motto"
-                                    {...field}
-                                  />
-                                </FormControl>
-                              </div>
-                            </div>
-                            <FormMessage />
-                          </FormItem>
-                        )}
-                      />
-                    </div>
-                    <div className="mt-3 flex flex-col gap-5.5 p-6.5">
-                      <FormField
-                        control={form.control}
-                        name="site_icon"
-                        render={({ field }) => (
-                          <FormItem>
-                            <div className="grid grid-cols-1 md:grid-cols-12">
-                              <div className="col-span-3 mt-2">
-                                <FormLabel>Site Icon</FormLabel>
-                              </div>
-                              <div className="col-span-8">
-                                <FormControl>
-                                  <Input type="file"
-                                    className={inputClass}
-                                    placeholder="Site Icon"
-                                    {...field}
-                                  />
-                                </FormControl>
-                              </div>
-                            </div>
-                            <FormMessage />
-                          </FormItem>
-                        )}
-                      />
-                    </div>
-                    <div className="mt-3 flex flex-col gap-5.5 p-6.5">
-                      <FormField
-                        control={form.control}
-                        name="system_logo_white"
-                        render={({ field }) => (
-                          <FormItem>
-                            <div className="grid grid-cols-1 md:grid-cols-12">
-                              <div className="col-span-3 mt-2">
-                                <FormLabel>System Logo - White</FormLabel>
-                              </div>
-                              <div className="col-span-8">
-                                <FormControl>
-                                  <Input
-                                    className={inputClass}
-                                    placeholder="System Logo - White"
-                                    {...field}
-                                  />
-                                </FormControl>
-                              </div>
-                            </div>
-                            <FormMessage />
-                          </FormItem>
-                        )}
-                      />
-                    </div>
-                    <div className="mt-3 flex flex-col gap-5.5 p-6.5">
-                      <FormField
-                        control={form.control}
-                        name="system_logo_black"
-                        render={({ field }) => (
-                          <FormItem>
-                            <div className="grid grid-cols-1 md:grid-cols-12">
-                              <div className="col-span-3 mt-2">
-                                <FormLabel>System Logo - Black</FormLabel>
-                              </div>
-                              <div className="col-span-8">
-                                <FormControl>
-                                  <Input
-                                    className={inputClass}
-                                    placeholder="System Logo - Black"
-                                    {...field}
-                                  />
-                                </FormControl>
-                              </div>
-                            </div>
-                            <FormMessage />
-                          </FormItem>
-                        )}
-                      />
-                    </div>
-                    <div className="mt-3 flex flex-col gap-5.5 p-6.5">
-                      <FormField
-                        control={form.control}
-                        name="timezone"
-                        render={({ field }) => (
-                          <FormItem>
-                            <div className="grid grid-cols-1 md:grid-cols-12">
-                              <div className="col-span-3 mt-2">
-                                <FormLabel>System Timezone</FormLabel>
-                              </div>
-                              <div className="col-span-8">
-                                <FormControl>
-                                  <Select
-                                    onValueChange={field.onChange}
-                                    defaultValue={field.value}
-                                  >
+                      {[
+                        { name: "site_name", label: "System Name" },
+                        { name: "website_name", label: "Frontend Website Name" },
+                        { name: "site_motto", label: "Site Motto" },
+                        { name: "site_icon", label: "Site Icon" },
+                        { name: "system_logo_white", label: "System Logo - White" },
+                        { name: "system_logo_black", label: "System Logo - Black" },
+                        { name: "timezone", label: "System Timezone" },
+                      ].map((field) => (
+                        <div
+                          key={field.name}
+                          className="mt-3 flex flex-col gap-5.5 p-6.5"
+                        >
+                          <FormField
+                            control={form.control}
+                            name={field.name}
+                            render={({ field: fieldProps }) => (
+                              <FormItem>
+                                <div className="grid grid-cols-1 md:grid-cols-12">
+                                  <div className="col-span-3 mt-1">
+                                    <FormLabel>{field.label}</FormLabel>
+                                  </div>
+                                  <div className="col-span-8">
                                     <FormControl>
-                                      <SelectTrigger>
-                                        <SelectValue placeholder="Select Timezone" />
-                                      </SelectTrigger>
+                                      {field.name === "site_name" ? (
+                                        <Input
+                                          className={inputClass}
+                                          placeholder={field.label}
+                                          {...fieldProps}
+                                        />
+                                      ) : field.name === "website_name" ? (
+                                        <Input
+                                          className={inputClass}
+                                          placeholder={field.label}
+                                          {...fieldProps}
+                                        />
+                                      ) : field.name === "site_motto" ? (
+                                        <Input
+                                          className={inputClass}
+                                          placeholder={field.label}
+                                          {...fieldProps}
+                                        />
+                                      ) : field.name === "site_icon" ? (
+                                        <Input type="file"
+                                          className={inputClass}
+                                          placeholder={field.label}
+                                          {...fieldProps}
+                                        />
+                                      ) : field.name === "system_logo_white" ? (
+                                        <Input type="file"
+                                          className={inputClass}
+                                          placeholder={field.label}
+                                          {...fieldProps}
+                                        />
+                                      ) : field.name === "system_logo_black" ? (
+                                        <Input type="file"
+                                          className={inputClass}
+                                          placeholder={field.label}
+                                          {...fieldProps}
+                                        />
+                                      ) : field.name === "timezone" ? (
+                                        <Select
+                                          onValueChange={field.onChange}
+                                          defaultValue={field.value}
+                                        >
+                                          <FormControl>
+                                            <SelectTrigger>
+                                              <SelectValue placeholder="Select Timezone" />
+                                            </SelectTrigger>
+                                          </FormControl>
+                                          <SelectContent>
+                                            <SelectItem value="Apple">Apple</SelectItem>
+                                            <SelectItem value="m2@example.com">Pran</SelectItem>
+                                            <SelectItem value="m22@example.com">Squre</SelectItem>
+                                            <SelectItem value="m3@example.com">ACI</SelectItem>
+                                            <SelectItem value="m4@example.com">SoftRavine</SelectItem>
+                                            <SelectItem value="m5@example.com">Samsung</SelectItem>
+                                          </SelectContent>
+                                        </Select>
+                                      ) : null}
+
                                     </FormControl>
-                                    <SelectContent>
-                                      <SelectItem value="Apple">Apple</SelectItem>
-                                      <SelectItem value="m2@example.com">Pran</SelectItem>
-                                      <SelectItem value="m22@example.com">Squre</SelectItem>
-                                      <SelectItem value="m3@example.com">ACI</SelectItem>
-                                      <SelectItem value="m4@example.com">SoftRavine</SelectItem>
-                                      <SelectItem value="m5@example.com">Samsung</SelectItem>
-                                    </SelectContent>
-                                  </Select>
-                                </FormControl>
-                              </div>
-                            </div>
-                            <FormMessage />
-                          </FormItem>
-                        )}
-                      />
+                                  </div>
+                                </div>
+                                <FormMessage />
+                              </FormItem>
+                            )}
+                          />
+                        </div>
+                      ))}
+
                     </div>
+
                     <div className="grid mt-3 justify-items-end">
                       <Button
                         className="dark:text-slate-200"
@@ -425,154 +331,77 @@ export default function AddOrEdit() {
                     </div>
                     <div className="py-6">
                       <div className="flex flex-col gap-5.5 p-6.5">
-                        <FormField
-                          control={form.control}
-                          name="base_color"
-                          render={({ field }) => (
-                            <FormItem>
-                              <div className="grid grid-cols-1 md:grid-cols-12">
-                                <div className="col-span-3 mt-2">
-                                  <FormLabel>Website Base Color</FormLabel>
-                                </div>
-                                <div className="col-span-8">
-                                  <FormControl>
-                                    <Input
-                                      className={inputClass}
-                                      placeholder="Website Base Color"
-                                      {...field}
-                                    />
-                                  </FormControl>
-                                </div>
-                              </div>
-                              <FormMessage />
-                            </FormItem>
-                          )}
-                        />
-                      </div>
-                      <div className="mt-3 flex flex-col gap-5.5 p-6.5">
-                        <FormField
-                          control={form.control}
-                          name="base_hov_color"
-                          render={({ field }) => (
-                            <FormItem>
-                              <div className="grid grid-cols-1 md:grid-cols-12">
-                                <div className="col-span-3 mt-2">
-                                  <FormLabel>Website Base Hover Color</FormLabel>
-                                </div>
-                                <div className="col-span-8">
-                                  <FormControl>
-                                    <Input
-                                      className={inputClass}
-                                      placeholder="Website Base Hover Color"
-                                      {...field}
-                                    />
-                                  </FormControl>
-                                </div>
-                              </div>
-                              <FormMessage />
-                            </FormItem>
-                          )}
-                        />
-                      </div>
-                      <div className="mt-3 flex flex-col gap-5.5 p-6.5">
-                        <FormField
-                          control={form.control}
-                          name="secondary_base_color"
-                          render={({ field }) => (
-                            <FormItem>
-                              <div className="grid grid-cols-1 md:grid-cols-12">
-                                <div className="col-span-3 mt-2">
-                                  <FormLabel>Website Secondary Base Color</FormLabel>
-                                </div>
-                                <div className="col-span-8">
-                                  <FormControl>
-                                    <Input
-                                      className={inputClass}
-                                      placeholder="Website Secondary Base Color"
-                                      {...field}
-                                    />
-                                  </FormControl>
-                                </div>
-                              </div>
-                              <FormMessage />
-                            </FormItem>
-                          )}
-                        />
-                      </div>
-                      <div className="mt-3 flex flex-col gap-5.5 p-6.5">
-                        <FormField
-                          control={form.control}
-                          name="secondary_base_hov_color"
-                          render={({ field }) => (
-                            <FormItem>
-                              <div className="grid grid-cols-1 md:grid-cols-12">
-                                <div className="col-span-3 mt-2">
-                                  <FormLabel>Website Secondary Base Hover Color</FormLabel>
-                                </div>
-                                <div className="col-span-8">
-                                  <FormControl>
-                                    <Input
-                                      className={inputClass}
-                                      placeholder="Website Secondary Base Hover Color"
-                                      {...field}
-                                    />
-                                  </FormControl>
-                                </div>
-                              </div>
-                              <FormMessage />
-                            </FormItem>
-                          )}
-                        />
-                      </div>
-                      <div className="mt-3 flex flex-col gap-5.5 p-6.5">
-                        <FormField
-                          control={form.control}
-                          name="flash_deal_banner"
-                          render={({ field }) => (
-                            <FormItem>
-                              <div className="grid grid-cols-1 md:grid-cols-12">
-                                <div className="col-span-3 mt-2">
-                                  <FormLabel>Flash Deal Page Banner - Large</FormLabel>
-                                </div>
-                                <div className="col-span-8">
-                                  <FormControl>
-                                    <Input type="file"
-                                      className={inputClass}
-                                      placeholder="Flash Deal Page Banner - Large"
-                                      {...field}
-                                    />
-                                  </FormControl>
-                                </div>
-                              </div>
-                              <FormMessage />
-                            </FormItem>
-                          )}
-                        />
-                      </div>
-                      <div className="mt-3 flex flex-col gap-5.5 p-6.5">
-                        <FormField
-                          control={form.control}
-                          name="flash_deal_banner_small"
-                          render={({ field }) => (
-                            <FormItem>
-                              <div className="grid grid-cols-1 md:grid-cols-12">
-                                <div className="col-span-3 mt-2">
-                                  <FormLabel>Flash Deal Page Banner - Small</FormLabel>
-                                </div>
-                                <div className="col-span-8">
-                                  <FormControl>
-                                    <Input type="file"
-                                      className={inputClass}
-                                      placeholder="Flash Deal Page Banner - Small"
-                                      {...field}
-                                    />
-                                  </FormControl>
-                                </div>
-                              </div>
-                              <FormMessage />
-                            </FormItem>
-                          )}
-                        />
+                        {[
+                          { name: "base_color", label: "Website Base Color" },
+                          { name: "base_hov_color", label: "Website Base Hover Color" },
+                          { name: "secondary_base_color", label: "Website Secondary Base Color" },
+                          { name: "secondary_base_hov_color", label: "Website Secondary Base Hover Color" },
+                          { name: "flash_deal_banner", label: "Flash Deal Page Banner - Large" },
+                          { name: "flash_deal_banner_small", label: "Flash Deal Page Banner - Large" },
+                        ].map((field) => (
+                          <div
+                            key={field.name}
+                            className="mt-3 flex flex-col gap-5.5 p-6.5"
+                          >
+                            <FormField
+                              control={form.control}
+                              name={field.name}
+                              render={({ field: fieldProps }) => (
+                                <FormItem>
+                                  <div className="grid grid-cols-1 md:grid-cols-12">
+                                    <div className="col-span-3 mt-1">
+                                      <FormLabel>{field.label}</FormLabel>
+                                    </div>
+                                    <div className="col-span-8">
+                                      <FormControl>
+                                        {field.name === "base_color" ? (
+                                          <Input
+                                            className={inputClass}
+                                            placeholder={field.label}
+                                            {...fieldProps}
+                                          />
+                                        ) : field.name === "base_hov_color" ? (
+                                          <Input
+                                            className={inputClass}
+                                            placeholder={field.label}
+                                            {...fieldProps}
+                                          />
+                                        ) : field.name === "secondary_base_color" ? (
+                                          <Input
+                                            className={inputClass}
+                                            placeholder={field.label}
+                                            {...fieldProps}
+                                          />
+                                        ) : field.name === "secondary_base_hov_color" ? (
+                                          <Input
+                                            className={inputClass}
+                                            placeholder={field.label}
+                                            {...fieldProps}
+                                          />
+                                        ) : field.name === "flash_deal_banner" ? (
+                                          <Input type="file"
+                                            className={inputClass}
+                                            placeholder={field.label}
+                                            {...fieldProps}
+                                          />
+                                        ) : field.name === "flash_deal_banner_small" ? (
+                                          <Input type="file"
+                                            className={inputClass}
+                                            placeholder={field.label}
+                                            {...fieldProps}
+                                          />
+                                        ) : null}
+
+                                      </FormControl>
+                                    </div>
+                                  </div>
+                                  <FormMessage />
+                                </FormItem>
+                              )}
+                            />
+                          </div>
+                        ))}
+
                       </div>
                       <div className="grid mt-3 justify-items-end">
                         <Button
@@ -598,105 +427,64 @@ export default function AddOrEdit() {
                     </div>
                     <div className="py-6">
                       <div className="flex flex-col gap-5.5 p-6.5">
-                        <FormField
-                          control={form.control}
-                          name="meta_title"
-                          render={({ field }) => (
-                            <FormItem>
-                              <div className="grid grid-cols-1 md:grid-cols-12">
-                                <div className="col-span-3 mt-2">
-                                  <FormLabel>Global SEO</FormLabel>
-                                </div>
-                                <div className="col-span-8">
-                                  <FormControl>
-                                    <Input
-                                      className={inputClass}
-                                      placeholder="Global SEO"
-                                      {...field}
-                                    />
-                                  </FormControl>
-                                </div>
-                              </div>
-                              <FormMessage />
-                            </FormItem>
-                          )}
-                        />
+                        {[
+                          { name: "meta_title", label: "Global SEO" },
+                          { name: "meta_description", label: "Meta Description" },
+                          { name: "meta_keywords", label: "Keywords" },
+                          { name: "meta_image", label: "Meta Image" },
+                        ].map((field) => (
+                          <div
+                            key={field.name}
+                            className="mt-3 flex flex-col gap-5.5 p-6.5"
+                          >
+                            <FormField
+                              control={form.control}
+                              name={field.name}
+                              render={({ field: fieldProps }) => (
+                                <FormItem>
+                                  <div className="grid grid-cols-1 md:grid-cols-12">
+                                    <div className="col-span-3 mt-1">
+                                      <FormLabel>{field.label}</FormLabel>
+                                    </div>
+                                    <div className="col-span-8">
+                                      <FormControl>
+                                        {field.name === "meta_title" ? (
+                                          <Input
+                                            className={inputClass}
+                                            placeholder={field.label}
+                                            {...fieldProps}
+                                          />
+                                        ) : field.name === "meta_description" ? (
+                                          <Input
+                                            className={inputClass}
+                                            placeholder={field.label}
+                                            {...fieldProps}
+                                          />
+                                        ) : field.name === "meta_keywords" ? (
+                                          <Input
+                                            className={inputClass}
+                                            placeholder={field.label}
+                                            {...fieldProps}
+                                          />
+                                        ) : field.name === "meta_image" ? (
+                                          <Input type="file"
+                                            className={inputClass}
+                                            placeholder={field.label}
+                                            {...fieldProps}
+                                          />
+                                        ) : null}
+
+                                      </FormControl>
+                                    </div>
+                                  </div>
+                                  <FormMessage />
+                                </FormItem>
+                              )}
+                            />
+                          </div>
+                        ))}
                       </div>
-                      <div className="mt-3 flex flex-col gap-5.5 p-6.5">
-                        <FormField
-                          control={form.control}
-                          name="meta_description"
-                          render={({ field }) => (
-                            <FormItem>
-                              <div className="grid grid-cols-1 md:grid-cols-12">
-                                <div className="col-span-3 mt-2">
-                                  <FormLabel>Meta Description</FormLabel>
-                                </div>
-                                <div className="col-span-8">
-                                  <FormControl>
-                                    <Input
-                                      className={inputClass}
-                                      placeholder="Meta Description"
-                                      {...field}
-                                    />
-                                  </FormControl>
-                                </div>
-                              </div>
-                              <FormMessage />
-                            </FormItem>
-                          )}
-                        />
-                      </div>
-                      <div className="mt-3 flex flex-col gap-5.5 p-6.5">
-                        <FormField
-                          control={form.control}
-                          name="meta_keywords"
-                          render={({ field }) => (
-                            <FormItem>
-                              <div className="grid grid-cols-1 md:grid-cols-12">
-                                <div className="col-span-3 mt-2">
-                                  <FormLabel>Keywords</FormLabel>
-                                </div>
-                                <div className="col-span-8">
-                                  <FormControl>
-                                    <Input
-                                      className={inputClass}
-                                      placeholder="Keywords"
-                                      {...field}
-                                    />
-                                  </FormControl>
-                                </div>
-                              </div>
-                              <FormMessage />
-                            </FormItem>
-                          )}
-                        />
-                      </div>
-                      <div className="mt-3 flex flex-col gap-5.5 p-6.5">
-                        <FormField
-                          control={form.control}
-                          name="meta_image"
-                          render={({ field }) => (
-                            <FormItem>
-                              <div className="grid grid-cols-1 md:grid-cols-12">
-                                <div className="col-span-3 mt-2">
-                                  <FormLabel>Meta Image</FormLabel>
-                                </div>
-                                <div className="col-span-8">
-                                  <FormControl>
-                                    <Input
-                                      className={inputClass}
-                                      placeholder="Meta Image"
-                                      {...field}
-                                    />
-                                  </FormControl>
-                                </div>
-                              </div>
-                              <FormMessage />
-                            </FormItem>
-                          )}
-                        />
-                      </div>
+
                       <div className="grid mt-3 justify-items-end">
                         <Button
                           className="dark:text-slate-200"
@@ -721,43 +509,42 @@ export default function AddOrEdit() {
                     </div>
                     <div className="py-6">
                       <div className="flex flex-col gap-5.5 p-6.5">
-                        <FormField
-                          control={form.control}
-                          name="cookies_agreement_text"
-                          render={({ field }) => (
-                            <FormItem>
-                              <div className="grid grid-cols-1 md:grid-cols-12">
-                                <div className="col-span-3 mt-2">
-                                  <FormLabel>Cookies Agreement Text</FormLabel>
-                                </div>
-                                <div className="col-span-8">
-                                  <FormControl>
-                                    <Textarea></Textarea>
-                                  </FormControl>
-                                </div>
-                              </div>
-                              <FormMessage />
-                            </FormItem>
-                          )}
-                        />
+                        {[
+                          { name: "cookies_agreement_text", label: "Cookies Agreement Text" },
+                          { name: "show_cookies_agreement", label: "Show Cookies Agreement?" },
+                        ].map((field) => (
+                          <div
+                            key={field.name}
+                            className="mt-3 flex flex-col gap-5.5 p-6.5"
+                          >
+                            <FormField
+                              control={form.control}
+                              name={field.name}
+                              render={({ field: fieldProps }) => (
+                                <FormItem>
+                                  <div className="grid grid-cols-1 md:grid-cols-12">
+                                    <div className="col-span-3 mt-1">
+                                      <FormLabel>{field.label}</FormLabel>
+                                    </div>
+                                    <div className="col-span-8">
+                                      <FormControl>
+                                        {field.name === "cookies_agreement_text" ? (
+                                          <Textarea></Textarea>
+                                        ) : field.name === "show_cookies_agreement" ? (
+                                          <Switch />
+                                        ) : null}
+
+                                      </FormControl>
+                                    </div>
+                                  </div>
+                                  <FormMessage />
+                                </FormItem>
+                              )}
+                            />
+                          </div>
+                        ))}
                       </div>
-                      <div className="mt-3 flex flex-col gap-5.5 p-6.5">
-                        <FormField
-                          control={form.control}
-                          name="show_cookies_agreement"
-                          render={({ field }) => (
-                            <FormItem>
-                              <div className="flex items-center space-x-12">
-                                <FormLabel className="mt-2">
-                                  Show Cookies Agreement?
-                                </FormLabel>
-                                <Switch />
-                              </div>
-                              <FormMessage />
-                            </FormItem>
-                          )}
-                        />
-                      </div>
+
                       <div className="grid mt-3 justify-items-end">
                         <Button
                           className="dark:text-slate-200"
@@ -782,60 +569,45 @@ export default function AddOrEdit() {
                     </div>
                     <div className="py-6">
                       <div className="flex flex-col gap-5.5 p-6.5">
-                        <FormField
-                          control={form.control}
-                          name="show_website_popup"
-                          render={({ field }) => (
-                            <FormItem>
-                              <div className="flex items-center space-x-12">
-                                <FormLabel className="mt-2">
-                                  Show website popup?
-                                </FormLabel>
-                                <Switch />
-                              </div>
-                              <FormMessage />
-                            </FormItem>
-                          )}
-                        />
+                        {[
+                          { name: "show_website_popup", label: "Show website popup?" },
+                          { name: "website_popup_content", label: "Popup content" },
+                          { name: "show_subscribe_form", label: "Show Subscriber form?" },
+                        ].map((field) => (
+                          <div
+                            key={field.name}
+                            className="mt-3 flex flex-col gap-5.5 p-6.5"
+                          >
+                            <FormField
+                              control={form.control}
+                              name={field.name}
+                              render={({ field: fieldProps }) => (
+                                <FormItem>
+                                  <div className="grid grid-cols-1 md:grid-cols-12">
+                                    <div className="col-span-3 mt-1">
+                                      <FormLabel>{field.label}</FormLabel>
+                                    </div>
+                                    <div className="col-span-8">
+                                      <FormControl>
+                                        {field.name === "show_website_popup" ? (
+                                          <Switch />
+                                        ) : field.name === "website_popup_content" ? (
+                                          <Textarea></Textarea>
+                                        ) : field.name === "show_subscribe_form" ? (
+                                          <Switch />
+                                        ) : null}
+
+                                      </FormControl>
+                                    </div>
+                                  </div>
+                                  <FormMessage />
+                                </FormItem>
+                              )}
+                            />
+                          </div>
+                        ))}
                       </div>
-                      <div className="mt-3 flex flex-col gap-5.5 p-6.5">
-                        <FormField
-                          control={form.control}
-                          name="website_popup_content"
-                          render={({ field }) => (
-                            <FormItem>
-                              <div className="grid grid-cols-1 md:grid-cols-12">
-                                <div className="col-span-3 mt-2">
-                                  <FormLabel>Popup content</FormLabel>
-                                </div>
-                                <div className="col-span-8">
-                                  <FormControl>
-                                    <Textarea></Textarea>
-                                  </FormControl>
-                                </div>
-                              </div>
-                              <FormMessage />
-                            </FormItem>
-                          )}
-                        />
-                      </div>
-                      <div className="mt-3 flex flex-col gap-5.5 p-6.5">
-                        <FormField
-                          control={form.control}
-                          name="show_subscribe_form"
-                          render={({ field }) => (
-                            <FormItem>
-                              <div className="flex items-center space-x-12">
-                                <FormLabel className="mt-2">
-                                  Show Subscriber form?
-                                </FormLabel>
-                                <Switch />
-                              </div>
-                              <FormMessage />
-                            </FormItem>
-                          )}
-                        />
-                      </div>
+
                       <div className="grid mt-3 justify-items-end">
                         <Button
                           className="dark:text-slate-200"
@@ -860,60 +632,47 @@ export default function AddOrEdit() {
                     </div>
                     <div className="py-6">
                       <div className="flex flex-col gap-5.5 p-6.5">
-                        <FormField
-                          control={form.control}
-                          name="header_script"
-                          render={({ field }) => (
-                            <FormItem>
-                              <div className="grid grid-cols-1 md:grid-cols-12">
-                                <div className="col-span-3 mt-2">
-                                  <FormLabel>Header custom script</FormLabel>
-                                </div>
-                                <div className="col-span-8">
-                                  <FormControl>
-                                    <Input
-                                      className={inputClass}
-                                      placeholder="Header custom script"
-                                      {...field}
-                                    />
-                                  </FormControl>
-                                </div>
-                              </div>
-                              <FormMessage />
-                            </FormItem>
-                          )}
-                        />
+                        {[
+                          { name: "header_script", label: "Header custom script" },
+                          { name: "footer_script", label: "Footer custom script" },
+                        ].map((field) => (
+                          <div
+                            key={field.name}
+                            className="mt-3 flex flex-col gap-5.5 p-6.5"
+                          >
+                            <FormField
+                              control={form.control}
+                              name={field.name}
+                              render={({ field: fieldProps }) => (
+                                <FormItem>
+                                  <div className="grid grid-cols-1 md:grid-cols-12">
+                                    <div className="col-span-3 mt-1">
+                                      <FormLabel>{field.label}</FormLabel>
+                                    </div>
+                                    <div className="col-span-8">
+                                      <FormControl>
+                                        {field.name === "header_script" ? (
+                                          <Input
+                                            className={inputClass}
+                                            placeholder={field.label}
+                                            {...fieldProps}
+                                          />
+                                        ) : field.name === "footer_script" ? (
+                                          <Textarea></Textarea>
+                                        ) : null}
+
+                                      </FormControl>
+                                    </div>
+                                  </div>
+                                  <FormMessage />
+                                </FormItem>
+                              )}
+                            />
+                          </div>
+                        ))}
                       </div>
 
-                      <div className="mt-3 flex flex-col gap-5.5 p-6.5">
-                        <FormField
-                          control={form.control}
-                          name="footer_script"
-                          render={({ field }) => (
-                            <FormItem>
-                              <div className="grid grid-cols-1 md:grid-cols-12">
-                                <div className="col-span-3 mt-2">
-                                  <FormLabel>Footer custom script</FormLabel>
-                                </div>
-                                <div className="col-span-8">
-                                  <FormControl>
-                                    <Textarea></Textarea>
-                                  </FormControl>
-                                </div>
-                              </div>
-                              <FormMessage />
-                            </FormItem>
-                          )}
-                        />
-                      </div>
                       <div className="grid mt-3 justify-items-end">
-                        {/* <Button
-                          className="dark:text-slate-200"
-                          variant="outline"
-                          type="submit"
-                        >
-                          Update
-                        </Button> */}
                         <Button
                           className="dark:text-slate-200"
                           variant="outline"

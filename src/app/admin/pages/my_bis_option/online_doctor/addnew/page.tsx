@@ -3,7 +3,7 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { showErrorToast, showSuccessToast } from "@/app/admin/components/Toast";
-
+import { Switch } from "@/app/admin/components/ui/switch";
 import { z } from "zod";
 import Breadcrumb from "@/app/admin/components/Breadcrumbs/Breadcrumb"
 import { Button } from "@/app/admin/components/ui/button";
@@ -75,13 +75,6 @@ export default function AddOrEdit() {
     setIsLoading(true);
 
     try {
-      // const response = await fetch(`${apiUrl}/server/api/routes/admin/my_bis_option/online_doctor`, {
-      //   method: "POST",
-      //   headers: {
-      //     "Content-Type": "application/json",
-      //   },
-      //   body: JSON.stringify(values),
-      // });
       const method = id ? "PUT" : "POST";
       const url = id
         ? `${apiUrl}/server/api/routes/admin/my_bis_option/online_docto/${id}`
@@ -126,7 +119,60 @@ export default function AddOrEdit() {
                   </div>
                   <div className="py-6">
                     <div className="flex flex-col gap-5.5 p-6.5">
-                      <FormField
+                    {[
+                        { name: "name", label: "Name" },
+                        { name: "image", label: "Doctor Photo" },
+                        { name: "designation", label: "Designation" },
+                        { name: "phone", label: "Phone" },
+                        { name: "status", label: "Status" },
+                      ].map((field) => (
+                        <div
+                          key={field.name}
+                          className="mt-3 flex flex-col gap-5.5 p-6.5"
+                        >
+                          <FormField
+                            control={form.control}
+                            name={field.name}
+                            render={({ field: fieldProps }) => (
+                              <FormItem>
+                                <div className="grid grid-cols-1 md:grid-cols-12">
+                                  <div className="col-span-4 mt-1">
+                                    <FormLabel>{field.label}</FormLabel>
+                                  </div>
+                                  <div className="col-span-8">
+                                    <FormControl>
+                                      {field.name === "name" ? (
+                                        <Input
+                                        className={inputClass}
+                                        placeholder={field.label}
+                                        {...fieldProps}
+                                      />
+                                      ) : field.name === "image" ? (
+                                        <Input type="file"
+                                          className={inputClass}
+                                          placeholder={field.label}
+                                          {...fieldProps}
+                                        />
+                                      ) : field.name === "phone" ? (
+                                        <Input type="file"
+                                          className={inputClass}
+                                          placeholder={field.label}
+                                          {...fieldProps}
+                                        />
+                                      ) : field.name === "status" ? (
+                                        <Switch />
+                                      ) : null}
+                                    </FormControl>
+                                  </div>
+                                </div>
+                                <FormMessage />
+                              </FormItem>
+                            )}
+                          />
+                        </div>
+                      ))}
+
+                      {/* <FormField
                         control={form.control}
                         name="name"
                         render={({ field }) => (
@@ -148,9 +194,9 @@ export default function AddOrEdit() {
                             <FormMessage />
                           </FormItem>
                         )}
-                      />
+                      /> */}
                     </div>
-                    <div className="mt-3 flex flex-col gap-5.5 p-6.5">
+                    {/* <div className="mt-3 flex flex-col gap-5.5 p-6.5">
                       <FormField
                         control={form.control}
                         name="image"
@@ -174,8 +220,8 @@ export default function AddOrEdit() {
                           </FormItem>
                         )}
                       />
-                    </div>
-                    <div className="mt-3 flex flex-col gap-5.5 p-6.5">
+                    </div> */}
+                    {/* <div className="mt-3 flex flex-col gap-5.5 p-6.5">
                       <FormField
                         control={form.control}
                         name="designation"
@@ -199,8 +245,8 @@ export default function AddOrEdit() {
                           </FormItem>
                         )}
                       />
-                    </div>
-                    <div className="mt-3 flex flex-col gap-5.5 p-6.5">
+                    </div> */}
+                    {/* <div className="mt-3 flex flex-col gap-5.5 p-6.5">
                       <FormField
                         control={form.control}
                         name="phone"
@@ -224,8 +270,8 @@ export default function AddOrEdit() {
                           </FormItem>
                         )}
                       />
-                    </div>
-                    <div className="mt-3 flex flex-col gap-5.5 p-6.5">
+                    </div> */}
+                    {/* <div className="mt-3 flex flex-col gap-5.5 p-6.5">
                       <FormField
                         control={form.control}
                         name="status"
@@ -249,15 +295,8 @@ export default function AddOrEdit() {
                           </FormItem>
                         )}
                       />
-                    </div>
+                    </div> */}
                     <div className="grid mt-4 justify-items-end">
-                      {/* <Button
-                        className="dark:text-slate-200"
-                        variant="outline"
-                        type="submit"
-                      >
-                        Save
-                      </Button> */}
                       <Button
                         className="dark:text-slate-200"
                         variant="outline"

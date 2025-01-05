@@ -86,7 +86,7 @@ export default function AddOrEdit() {
         },
         body: JSON.stringify(values),
       });
-      
+
       if (!response.ok) {
         throw new Error("Failed to add coupon. Please try again.");
       }
@@ -121,7 +121,57 @@ export default function AddOrEdit() {
                   </div>
                   <div className="py-6">
                     <div className="flex flex-col gap-5.5 p-6.5">
-                      <FormField
+                      {[
+                        { name: "type", label: "Coupon Type" },
+                      ].map((field) => (
+                        <div
+                          key={field.name}
+                          className="mt-3 flex flex-col gap-5.5 p-6.5"
+                        >
+                          <FormField
+                            control={form.control}
+                            name={field.name}
+                            render={({ field: fieldProps }) => (
+                              <FormItem>
+                                <div className="grid grid-cols-1 md:grid-cols-12">
+                                  <div className="col-span-3 mt-2">
+                                    <FormLabel>{field.label}</FormLabel>
+                                  </div>
+                                  <div className="col-span-8">
+                                    <FormControl>
+                                      <Select
+                                        onValueChange={field.onChange}
+                                        defaultValue={field.value}
+                                      >
+                                        <FormControl>
+                                          <SelectTrigger>
+                                            <SelectValue placeholder="Select Coupon Type" />
+                                          </SelectTrigger>
+                                        </FormControl>
+                                        <SelectContent>
+                                          <SelectItem value="Apple">Apple</SelectItem>
+                                          <SelectItem value="m2@example.com">Pran</SelectItem>
+                                          <SelectItem value="m22@example.com">Squre</SelectItem>
+                                          <SelectItem value="m3@example.com">ACI</SelectItem>
+                                          <SelectItem value="m4@example.com">SoftRavine</SelectItem>
+                                          <SelectItem value="m5@example.com">Samsung</SelectItem>
+                                          <SelectItem value="m6@example.com">LG</SelectItem>
+                                          <SelectItem value="m7@example.com">Logitech</SelectItem>
+                                          <SelectItem value="m8@example.com">A4tech</SelectItem>
+                                          <SelectItem value="m9@example.com">HP</SelectItem>
+                                        </SelectContent>
+                                      </Select>
+                                    </FormControl>
+                                  </div>
+                                </div>
+                                <FormMessage />
+                              </FormItem>
+                            )}
+                          />
+                        </div>
+                      ))}
+
+                      {/* <FormField
                         control={form.control}
                         name="type"
                         render={({ field }) => (
@@ -156,32 +206,25 @@ export default function AddOrEdit() {
                                   </Select>
                                 </FormControl>
                               </div>
-                              <div className="col-span-2 px-2">
-                                {/* <Button
-                                  className="dark:text-slate-200"
-                                  variant="outline"
-                                  type="submit"
-                                >
-                                  Save
-                                </Button> */}
-                                <Button
-                                  className="dark:text-slate-200"
-                                  variant="outline"
-                                  type="submit"
-                                  disabled={isLoading}
-                                >
-                                  {isLoading ? "Submitting..." : "Submit"}
-                                </Button>
-                              </div>
+
                             </div>
                             <FormMessage />
                           </FormItem>
                         )}
-                      />
+                      /> */}
 
                     </div>
 
-
+                    <div className="grid mt-3 justify-items-end">
+                      <Button
+                        className="dark:text-slate-200"
+                        variant="outline"
+                        type="submit"
+                        disabled={isLoading}
+                      >
+                        {isLoading ? "Submitting..." : "Submit"}
+                      </Button>
+                    </div>
                   </div>
                 </div>
               </div>

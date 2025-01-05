@@ -98,7 +98,7 @@ export const columns: ColumnDef<Blogs>[] = [
             </Button>
           </DropdownMenuTrigger>
           <DropdownMenuContent className="dark:bg-slate-700 dark:text-slate-200 bg-slate-100" align="start">
-            <DropdownMenuItem className="dark:hover:bg-slate-500 hover:bg-slate-300"><Link href="/">Edit</Link></DropdownMenuItem>
+            <DropdownMenuItem className="dark:hover:bg-slate-500 hover:bg-slate-300"><Link href={`/admin/pages/blog_system/all_blog/addnew?id=${id}`}>Edit</Link></DropdownMenuItem>
             <DropdownMenuItem className="dark:hover:bg-slate-500 hover:bg-slate-300" onClick={() => handleDeleteWithConfirmation(id)}>Delete</DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>

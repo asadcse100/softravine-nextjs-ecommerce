@@ -174,274 +174,131 @@ export default function AddOrEdit() {
                   </div>
                   <div className="py-6">
                     <div className="flex flex-col gap-5.5 p-6.5">
-                      <FormField
-                        control={form.control}
-                        name="name"
-                        render={({ field }) => (
-                          <FormItem>
-                            <div className="grid grid-cols-1 md:grid-cols-12">
-                              <div className="col-span-3 mt-2">
-                                <FormLabel>Name</FormLabel>
-                              </div>
-                              <div className="col-span-8">
-                                <FormControl>
-                                  <Input
-                                    className={inputClass}
-                                    placeholder="Delivery Boy Name"
-                                    {...field}
-                                  />
-                                </FormControl>
-                              </div>
-                            </div>
-                            <FormMessage />
-                          </FormItem>
-                        )}
-                      />
-                    </div>
-                    <div className="mt-3 flex flex-col gap-5.5 p-6.5">
-                      <FormField
-                        control={form.control}
-                        name="email"
-                        render={({ field }) => (
-                          <FormItem>
-                            <div className="grid grid-cols-1 md:grid-cols-12">
-                              <div className="col-span-3 mt-2">
-                                <FormLabel>Email</FormLabel>
-                              </div>
-                              <div className="col-span-8">
-                                <FormControl>
-                                  <Input
-                                    className={inputClass}
-                                    placeholder="Delivery Boy Email"
-                                    {...field}
-                                  />
-                                </FormControl>
-                              </div>
-                            </div>
-                            <FormMessage />
-                          </FormItem>
-                        )}
-                      />
-                    </div>
-                    <div className="mt-3 flex flex-col gap-5.5 p-6.5">
-                      <FormField
-                        control={form.control}
-                        name="phone"
-                        render={({ field }) => (
-                          <FormItem>
-                            <div className="grid grid-cols-1 md:grid-cols-12">
-                              <div className="col-span-3 mt-2">
-                                <FormLabel>Phone</FormLabel>
-                              </div>
-                              <div className="col-span-8">
-                                <FormControl>
-                                  <Input
-                                    className={inputClass}
-                                    placeholder="Delivery Boy Phone"
-                                    {...field}
-                                  />
-                                </FormControl>
-                              </div>
-                            </div>
-                            <FormMessage />
-                          </FormItem>
-                        )}
-                      />
-                    </div>
-                    <div className="mt-3 flex flex-col gap-5.5 p-6.5">
-                      <FormField
-                        control={form.control}
-                        name="password"
-                        render={({ field }) => (
-                          <FormItem>
-                            <div className="grid grid-cols-1 md:grid-cols-12">
-                              <div className="col-span-3 mt-2">
-                                <FormLabel>Password</FormLabel>
-                              </div>
-                              <div className="col-span-8">
-                                <FormControl>
-                                  <Input
-                                    className={inputClass}
-                                    placeholder="Password"
-                                    {...field}
-                                  />
-                                </FormControl>
-                              </div>
-                            </div>
-                            <FormMessage />
-                          </FormItem>
-                        )}
-                      />
-                    </div>
-                    <div className="mt-3 flex flex-col gap-5.5 p-6.5">
-                      <FormField
-                        control={form.control}
-                        name="country_id"
-                        render={({ field }) => (
-                          <FormItem>
-                            <div className="grid grid-cols-1 md:grid-cols-12">
-                              <div className="col-span-3 mt-2">
-                                <FormLabel>Country</FormLabel>
-                              </div>
-                              <div className="col-span-8">
-                                <FormControl>
-                                  <Select
-                                    onValueChange={field.onChange}
-                                    defaultValue={field.value}
-                                  >
+
+                      {[
+                        { name: "name", label: "Name" },
+                        { name: "email", label: "Email" },
+                        { name: "phone", label: "Phone" },
+                        { name: "password", label: "Password", password: "******" },
+                        { name: "country_id", label: "Country" },
+                        { name: "state_id", label: "State" },
+                        { name: "city_id", label: "City" },
+                        { name: "avatar_original", label: "Image" },
+                        { name: "address", label: "Address" },
+                      ].map((field) => (
+                        <div key={field.name} className="mt-3 flex flex-col gap-5.5 p-6.5">
+                          <FormField
+                            control={form.control}
+                            name={field.name}
+                            render={({ field: fieldProps }) => (
+                              <FormItem>
+                                <div className="grid grid-cols-1 md:grid-cols-12">
+                                  <div className="col-span-3 mt-2">
+                                    <FormLabel>{field.label}</FormLabel>
+                                  </div>
+                                  <div className="col-span-8">
+                                    {/* <FormControl> */}
                                     <FormControl>
-                                      <SelectTrigger>
-                                        <SelectValue placeholder="Select Country" />
-                                      </SelectTrigger>
+                                      {field.name === "name" ? (
+                                        <Input
+                                          className={inputClass}
+                                          placeholder={field.label}
+                                          {...fieldProps}
+                                        />
+                                      ) : field.name === "email" ? (
+                                        <Input
+                                          className={inputClass}
+                                          placeholder={field.label}
+                                          {...fieldProps}
+                                        />
+                                      ) : field.name === "phone" ? (
+                                        <Input
+                                          className={inputClass}
+                                          placeholder={field.label}
+                                          {...fieldProps}
+                                        />
+                                      ) : field.name === "password" ? (
+                                        <Input
+                                          className={inputClass}
+                                          placeholder={field.password}
+                                          {...fieldProps}
+                                        />
+                                      ) : field.name === "country_id" ? (
+                                        <Select
+                                          onValueChange={field.onChange}
+                                          defaultValue={field.value}
+                                        >
+                                          <FormControl>
+                                            <SelectTrigger>
+                                              <SelectValue placeholder="Select Country" />
+                                            </SelectTrigger>
+                                          </FormControl>
+                                          <SelectContent>
+                                            {countries.map((country) => (
+                                              <SelectItem key={country.id} value={country.name}>
+                                                {country.name}
+                                              </SelectItem>
+                                            ))}
+                                          </SelectContent>
+                                        </Select>
+                                      ) : field.name === "state_id" ? (
+                                        <Select
+                                          onValueChange={field.onChange}
+                                          defaultValue={field.value}
+                                        >
+                                          <FormControl>
+                                            <SelectTrigger>
+                                              <SelectValue placeholder="Select State" />
+                                            </SelectTrigger>
+                                          </FormControl>
+                                          <SelectContent>
+                                            <SelectItem value="Apple">Apple</SelectItem>
+                                            <SelectItem value="m2@example.com">Pran</SelectItem>
+                                            <SelectItem value="m22@example.com">Squre</SelectItem>
+                                            <SelectItem value="m3@example.com">ACI</SelectItem>
+                                            <SelectItem value="m4@example.com">SoftRavine</SelectItem>
+                                          </SelectContent>
+                                        </Select>
+                                      ) : field.name === "city_id" ? (
+                                        <Select
+                                          onValueChange={field.onChange}
+                                          defaultValue={field.value}
+                                        >
+                                          <FormControl>
+                                            <SelectTrigger>
+                                              <SelectValue placeholder="Select State" />
+                                            </SelectTrigger>
+                                          </FormControl>
+                                          <SelectContent>
+                                            <SelectItem value="Apple">Apple</SelectItem>
+                                            <SelectItem value="m2@example.com">Pran</SelectItem>
+                                            <SelectItem value="m22@example.com">Squre</SelectItem>
+                                            <SelectItem value="m3@example.com">ACI</SelectItem>
+                                            <SelectItem value="m4@example.com">SoftRavine</SelectItem>
+                                          </SelectContent>
+                                        </Select>
+                                      ) : field.name === "avatar_original" ? (
+                                        <Input type="file"
+                                          className={inputClass}
+                                          placeholder="Image"
+                                          {...field}
+                                        />
+                                      ) : field.name === "address" ? (
+                                        <Textarea></Textarea>
+                                      ) : null}
                                     </FormControl>
-                                    <SelectContent>
-                                      {countries.map((country) => (
-                                        <SelectItem key={country.id} value={country.name}>
-                                          {country.name}
-                                        </SelectItem>
-                                      ))}
-                                    </SelectContent>
-                                  </Select>
-                                </FormControl>
-                              </div>
-                            </div>
-                            <FormMessage />
-                          </FormItem>
-                        )}
-                      />
+                                  </div>
+                                </div>
+                                <FormMessage />
+                              </FormItem>
+                            )}
+                          />
+                        </div>
+                      ))}
+
                     </div>
-                    <div className="mt-3 flex flex-col gap-5.5 p-6.5">
-                      <FormField
-                        control={form.control}
-                        name="state_id"
-                        render={({ field }) => (
-                          <FormItem>
-                            <div className="grid grid-cols-1 md:grid-cols-12">
-                              <div className="col-span-3 mt-2">
-                                <FormLabel>State</FormLabel>
-                              </div>
-                              <div className="col-span-8">
-                                <FormControl>
-                                  <Select
-                                    onValueChange={field.onChange}
-                                    defaultValue={field.value}
-                                  >
-                                    <FormControl>
-                                      <SelectTrigger>
-                                        <SelectValue placeholder="Select State" />
-                                      </SelectTrigger>
-                                    </FormControl>
-                                    <SelectContent>
-                                      <SelectItem value="Apple">Apple</SelectItem>
-                                      <SelectItem value="m2@example.com">Pran</SelectItem>
-                                      <SelectItem value="m22@example.com">Squre</SelectItem>
-                                      <SelectItem value="m3@example.com">ACI</SelectItem>
-                                      <SelectItem value="m4@example.com">SoftRavine</SelectItem>
-                                      <SelectItem value="m5@example.com">Samsung</SelectItem>
-                                      <SelectItem value="m6@example.com">LG</SelectItem>
-                                      <SelectItem value="m7@example.com">Logitech</SelectItem>
-                                      <SelectItem value="m8@example.com">A4tech</SelectItem>
-                                      <SelectItem value="m9@example.com">HP</SelectItem>
-                                    </SelectContent>
-                                  </Select>
-                                </FormControl>
-                              </div>
-                            </div>
-                            <FormMessage />
-                          </FormItem>
-                        )}
-                      />
-                    </div>
-                    <div className="mt-3 flex flex-col gap-5.5 p-6.5">
-                      <FormField
-                        control={form.control}
-                        name="city_id"
-                        render={({ field }) => (
-                          <FormItem>
-                            <div className="grid grid-cols-1 md:grid-cols-12">
-                              <div className="col-span-3 mt-2">
-                                <FormLabel>City</FormLabel>
-                              </div>
-                              <div className="col-span-8">
-                                <FormControl>
-                                  <Select
-                                    onValueChange={field.onChange}
-                                    defaultValue={field.value}
-                                  >
-                                    <FormControl>
-                                      <SelectTrigger>
-                                        <SelectValue placeholder="Select City" />
-                                      </SelectTrigger>
-                                    </FormControl>
-                                    <SelectContent>
-                                      <SelectItem value="Apple">Apple</SelectItem>
-                                      <SelectItem value="m2@example.com">Pran</SelectItem>
-                                      <SelectItem value="m22@example.com">Squre</SelectItem>
-                                      <SelectItem value="m3@example.com">ACI</SelectItem>
-                                      <SelectItem value="m4@example.com">SoftRavine</SelectItem>
-                                      <SelectItem value="m5@example.com">Samsung</SelectItem>
-                                      <SelectItem value="m6@example.com">LG</SelectItem>
-                                      <SelectItem value="m7@example.com">Logitech</SelectItem>
-                                      <SelectItem value="m8@example.com">A4tech</SelectItem>
-                                      <SelectItem value="m9@example.com">HP</SelectItem>
-                                    </SelectContent>
-                                  </Select>
-                                </FormControl>
-                              </div>
-                            </div>
-                            <FormMessage />
-                          </FormItem>
-                        )}
-                      />
-                    </div>
-                    <div className="mt-3 flex flex-col gap-5.5 p-6.5">
-                      <FormField
-                        control={form.control}
-                        name="avatar_original"
-                        render={({ field }) => (
-                          <FormItem>
-                            <div className="grid grid-cols-1 md:grid-cols-12">
-                              <div className="col-span-3 mt-2">
-                                <FormLabel>Image</FormLabel>
-                              </div>
-                              <div className="col-span-8">
-                                <FormControl>
-                                  <Input type="file"
-                                    className={inputClass}
-                                    placeholder="Image"
-                                    {...field}
-                                  />
-                                </FormControl>
-                              </div>
-                            </div>
-                            <FormMessage />
-                          </FormItem>
-                        )}
-                      />
-                    </div>
-                    <div className="mt-3 flex flex-col gap-5.5 p-6.5">
-                      <FormField
-                        control={form.control}
-                        name="address"
-                        render={({ field }) => (
-                          <FormItem>
-                            <FormLabel>Address</FormLabel>
-                            <FormControl>
-                              <Textarea></Textarea>
-                            </FormControl>
-                            <FormMessage />
-                          </FormItem>
-                        )}
-                      />
-                    </div>
+
                     <div className="grid mt-4 justify-items-end">
-                      {/* <Button
-                        className="dark:text-slate-200"
-                        variant="outline"
-                        type="submit"
-                      >
-                        Save
-                      </Button> */}
                       <Button
                         className="dark:text-slate-200"
                         variant="outline"

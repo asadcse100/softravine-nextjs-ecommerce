@@ -3,16 +3,6 @@ import { Products, columns } from "./columns"
 import { DataTable } from "./data-table"
 import Breadcrumb from "@/app/admin/components/Breadcrumbs/Breadcrumb"
 import { Button } from "@/app/admin/components/ui/button"
-// async function getData(): Promise<Products[]> {
-//   // Fetch data from your API here.
-//   return [
-//     {
-//       id: "728ed52f",
-//       name: "abount us",
-//       url: "#",
-//     },
-//   ]
-// }
 
 async function getData(): Promise<Products[]> {
   const apiUrl = process.env.NEXT_PUBLIC_API_URL || '';

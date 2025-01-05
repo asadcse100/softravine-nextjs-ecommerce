@@ -34,17 +34,17 @@ import {
 } from "@/app/admin/components/ui/select";
 
 const formSchema = z.object({
-  user_emails: z.string().min(10, {
-    message: "Product Name must be at least 10 characters.",
+  user_emails: z.string().min(1, {
+    message: "Product Name must be at least 1 characters.",
   }),
-  subscriber_emails: z.string().min(10, {
-    message: "Product Name must be at least 10 characters.",
+  subscriber_emails: z.string().min(1, {
+    message: "Product Name must be at least 1 characters.",
   }),
-  subject: z.string().min(10, {
-    message: "Product Name must be at least 10 characters.",
+  subject: z.string().min(1, {
+    message: "Product Name must be at least 1 characters.",
   }),
-  content: z.string().min(10, {
-    message: "Product Name must be at least 10 characters.",
+  content: z.string().min(1, {
+    message: "Product Name must be at least 1 characters.",
   }),
 });
 
@@ -62,7 +62,7 @@ export default function AddOrEdit() {
       content: "",
     },
   });
-  
+
   const [isLoading, setIsLoading] = useState(false);
 
   // Fetch data if editing an existing ticket
@@ -152,7 +152,112 @@ export default function AddOrEdit() {
             <div className="flex flex-col md:flex-row">
               <div className="flex-grow mt-10 md:mt-0 md:pl-16 max-w-3xl space-y-3">
                 <div className="flex flex-col gap-5.5 p-6.5 dark:text-slate-500">
-                  <FormField
+                  {[
+                    { name: "country_id", label: "Country" },
+                    { name: "devision", label: "Division" },
+                    { name: "zila", label: "Zila" },
+                    { name: "up_zila", label: "UpZila" },
+                    { name: "full_address", label: "Full Addess" },
+                  ].map((field) => (
+                    <div
+                      key={field.name}
+                      className="mt-3 flex flex-col gap-5.5 p-6.5"
+                    >
+                      <FormField
+                        control={form.control}
+                        name={field.name}
+                        render={({ field: fieldProps }) => (
+                          <FormItem>
+                            <div className="grid grid-cols-1 md:grid-cols-12">
+                              <div className="col-span-3 mt-1">
+                                <FormLabel>{field.label}</FormLabel>
+                              </div>
+                              <div className="col-span-8">
+                                <FormControl>
+                                  {field.name === "country_id" ? (
+                                    <Select
+                                      onValueChange={field.onChange}
+                                      defaultValue={field.value}
+                                    >
+                                      <FormControl>
+                                        <SelectTrigger>
+                                          <SelectValue placeholder="Select Country" />
+                                        </SelectTrigger>
+                                      </FormControl>
+                                      <SelectContent>
+                                        {countries.map((country) => (
+                                          <SelectItem key={country.id} value={country.name}>
+                                            {country.name}
+                                          </SelectItem>
+                                        ))}
+                                      </SelectContent>
+                                    </Select>
+                                  ) : field.name === "devision" ? (
+                                    <Select
+                                      onValueChange={field.onChange}
+                                      defaultValue={field.value}
+                                    >
+                                      <FormControl className={selectClass}>
+                                        <SelectTrigger>
+                                          <SelectValue placeholder="Select Division" />
+                                        </SelectTrigger>
+                                      </FormControl>
+                                      <SelectContent>
+                                        <SelectItem value="Apple">Apple</SelectItem>
+                                        <SelectItem value="m2@example.com">Pran</SelectItem>
+                                        <SelectItem value="m22@example.com">Squre</SelectItem>
+                                        <SelectItem value="m3@example.com">ACI</SelectItem>
+                                      </SelectContent>
+                                    </Select>
+                                  ) : field.name === "zila" ? (
+                                    <Select
+                                      onValueChange={field.onChange}
+                                      defaultValue={field.value}
+                                    >
+                                      <FormControl className={selectClass}>
+                                        <SelectTrigger>
+                                          <SelectValue placeholder="Select Zila" />
+                                        </SelectTrigger>
+                                      </FormControl>
+                                      <SelectContent>
+                                        <SelectItem value="Apple">Apple</SelectItem>
+                                        <SelectItem value="m2@example.com">Pran</SelectItem>
+                                        <SelectItem value="m22@example.com">Squre</SelectItem>
+                                        <SelectItem value="m3@example.com">ACI</SelectItem>
+                                      </SelectContent>
+                                    </Select>
+                                  ) : field.name === "up_zila" ? (
+                                    <Select
+                                      onValueChange={field.onChange}
+                                      defaultValue={field.value}
+                                    >
+                                      <SelectTrigger>
+                                        <SelectValue placeholder="Select UpZila" />
+                                      </SelectTrigger>
+                                      <SelectContent>
+                                        <SelectItem value="Apple">Male</SelectItem>
+                                        <SelectItem value="m2@example.com">Female</SelectItem>
+                                        <SelectItem value="m22@example.com">Other</SelectItem>
+                                      </SelectContent>
+                                    </Select>
+                                  ) : field.name === "full_address" ? (
+                                    <Textarea
+                                      className={inputClass}
+                                      placeholder="New york, USA"
+                                    />
+                                  ) : null}
+
+                                </FormControl>
+                              </div>
+                            </div>
+                            <FormMessage />
+                          </FormItem>
+                        )}
+                      />
+                    </div>
+                  ))}
+
+                  {/* <FormField
                     control={form.control}
                     name="country_id"
                     render={({ field }) => (
@@ -186,10 +291,10 @@ export default function AddOrEdit() {
                         <FormMessage />
                       </FormItem>
                     )}
-                  />
+                  /> */}
                 </div>
 
-                <div className="flex flex-col gap-5.5 p-6.5 dark:text-slate-500">
+                {/* <div className="flex flex-col gap-5.5 p-6.5 dark:text-slate-500">
 
                   <FormField
                     control={form.control}
@@ -225,9 +330,9 @@ export default function AddOrEdit() {
                       </FormItem>
                     )}
                   />
-                </div>
+                </div> */}
 
-                <div className="flex flex-col gap-5.5 p-6.5 dark:text-slate-500">
+                {/* <div className="flex flex-col gap-5.5 p-6.5 dark:text-slate-500">
 
                   <FormField
                     control={form.control}
@@ -263,9 +368,9 @@ export default function AddOrEdit() {
                       </FormItem>
                     )}
                   />
-                </div>
+                </div> */}
 
-                <div className="flex flex-col gap-5.5 p-6.5 dark:text-slate-500">
+                {/* <div className="flex flex-col gap-5.5 p-6.5 dark:text-slate-500">
 
                   <FormField
                     control={form.control}
@@ -301,32 +406,11 @@ export default function AddOrEdit() {
                       </FormItem>
                     )}
                   />
-                </div>
+                </div> */}
 
-                
-                <FormField
-                  control={form.control}
-                  name="code"
-                  render={({ field }) => (
-                    <FormItem>
-                      <div className="grid grid-cols-1 md:grid-cols-12">
-                        <div className="col-span-3 mt-3">
-                          <FormLabel>Full Addess</FormLabel>
-                        </div>
-                        <div className="col-span-8">
-                          <Textarea
-                            className={inputClass}
-                            placeholder="New york, USA"
-                          />
-                          {/* <Input className={inputClass} placeholder="Nominee Full Addess" /> */}
-                        </div>
-                      </div>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
 
-                <FormField
+
+                {/* <FormField
                   control={form.control}
                   name="code"
                   render={({ field }) => (
@@ -340,13 +424,13 @@ export default function AddOrEdit() {
                             className={inputClass}
                             placeholder="New york, USA"
                           />
-                          {/* <Input className={inputClass} placeholder="Nominee Full Addess" /> */}
+                          
                         </div>
                       </div>
                       <FormMessage />
                     </FormItem>
                   )}
-                />
+                /> */}
 
                 <div className="pt-2">
                   <ButtonPrimary>Save</ButtonPrimary>

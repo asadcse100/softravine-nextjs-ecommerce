@@ -70,7 +70,7 @@ export default function AddNew() {
       meta_description: "",
     },
   });
-  
+
   // Fetch data if editing an existing ticket
   useEffect(() => {
     if (id) {
@@ -115,8 +115,6 @@ export default function AddNew() {
   }, []);
 
 
-
-
   const onSubmit: SubmitHandler<z.infer<typeof formSchema>> = async (values) => {
     const apiUrl = process.env.NEXT_PUBLIC_API_URL || "";
 
@@ -128,13 +126,6 @@ export default function AddNew() {
     setIsLoading(true);
 
     try {
-      // const response = await fetch(`${apiUrl}/server/api/routes/admin/blogs/blogCategories`, {
-      //   method: "POST",
-      //   headers: {
-      //     "Content-Type": "application/json",
-      //   },
-      //   body: JSON.stringify(values),
-      // });
       const method = id ? "PUT" : "POST";
       const url = id
         ? `${apiUrl}/server/api/routes/admin/blogs/${id}`
@@ -175,161 +166,136 @@ export default function AddNew() {
   const inputClass = "bg-zinc-50 border border-slate-300 text-slate-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-slate-900 dark:border-slate-700 dark:placeholder-slate-700 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500";
 
   return (
-    <div className="min-h-screen mx-auto max-w-screen-2xl p-4 md:p-6 bg-slate-100 dark:bg-slate-900">
+    <div className="min-h-screen mx-auto max-w-screen-2xl mt-2 p-4 py-4 md:p-6 2xl:p-10 bg-slate-100 dark:bg-slate-900">
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
-          <div className="grid gap-6 md:grid-cols-2">
+          <div className="grid gap-4 md:grid-cols-2 ">
             {/* Blog Information Section */}
-            <div>
-              <h3 className="font-medium text-black dark:text-white">Blog Information</h3>
+            <div className="px-6 py-6 rounded-sm border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark">
+              <h3 className="font-medium text-black dark:text-white">
+                {id ? "Edit Blog Information" : "Add Blog Information"}
+              </h3>
               <div className="space-y-4 mt-4">
-                {/* Title */}
-                <FormField
-                  control={form.control}
-                  name="title"
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel>Title</FormLabel>
-                      <FormControl>
-                        <Input className={inputClass} placeholder="Title" {...field} />
-                      </FormControl>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
 
-                {/* Category */}
-                <FormField
-                  control={form.control}
-                  name="category_id"
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel>Category</FormLabel>
-                      <FormControl>
-                        <Select onValueChange={field.onChange}>
-                          <SelectTrigger>
-                            <SelectValue placeholder="Select Category" />
-                          </SelectTrigger>
-                          <SelectContent>
-                            {categories.map((category) => (
-                              <SelectItem key={category.id} value={category.id}>
-                                {category.name}
-                              </SelectItem>
-                            ))}
-                          </SelectContent>
-                        </Select>
-                      </FormControl>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
+                {[
+                  { name: "title", label: "Title" },
+                  { name: "category_id", label: "Select Category" },
+                  { name: "banner", label: "Banner" },
+                  { name: "short_description", label: "Short Description" },
+                  { name: "description", label: "Description" },
+                ].map((field) => (
+                  <div key={field.name} className="mt-3 flex flex-col gap-5.5 p-6.5">
+                    <FormField
+                      control={form.control}
+                      name={field.name}
+                      render={({ field: fieldProps }) => (
+                        <FormItem>
+                          <div className="grid grid-cols-1 md:grid-cols-12">
+                            <div className="col-span-3 mt-3">
+                              <FormLabel>{field.label}</FormLabel>
+                            </div>
+                            <div className="col-span-8">
+                              <FormControl>
+                                {field.name === "title" ? (
+                                  <Input
+                                    className={inputClass}
+                                    placeholder={field.label}
+                                    {...fieldProps}
+                                  />
+                                ) : field.name === "category_id" ? (
+                                  <Select onValueChange={field.onChange}>
+                                    <SelectTrigger>
+                                      <SelectValue placeholder="Select Category" />
+                                    </SelectTrigger>
+                                    <SelectContent>
+                                      {categories.map((category) => (
+                                        <SelectItem key={category.id} value={category.id}>
+                                          {category.name}
+                                        </SelectItem>
+                                      ))}
+                                    </SelectContent>
+                                  </Select>
+                                ) : field.name === "banner" ? (
+                                  <Input type="file" onChange={handleBannerChange} className={inputClass} placeholder={field.label} {...fieldProps} />
+                                ) : field.name === "short_description" ? (
+                                  <Textarea className={inputClass} {...field} />
+                                ) : field.name === "description" ? (
+                                  <EditorContent
+                                    editor={editor}
+                                    className="border p-4 rounded bg-white dark:bg-gray-800"
+                                    onChange={handleEditorContentChange}
+                                  />
+                                ) : null}
+                              </FormControl>
+                            </div>
+                          </div>
+                          <FormMessage />
+                        </FormItem>
+                      )}
+                    />
+                  </div>
+                ))}
 
-                {/* Banner */}
-                <FormField
-                  control={form.control}
-                  name="banner"
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel>Banner</FormLabel>
-                      <FormControl>
-                        <Input
-                          type="file"
-                          className={inputClass}
-                          onChange={handleBannerChange}
-                        />
-                      </FormControl>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
-
-                {/* Short Description */}
-                <FormField
-                  control={form.control}
-                  name="short_description"
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel>Short Description</FormLabel>
-                      <FormControl>
-                        <Textarea className={inputClass} {...field} />
-                      </FormControl>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
-
-                {/* Description */}
-                <FormItem>
-                  <FormLabel>Description</FormLabel>
-                  <EditorContent
-                    editor={editor}
-                    className="border p-4 rounded bg-white dark:bg-gray-800"
-                    onChange={handleEditorContentChange}
-                  />
-                </FormItem>
               </div>
             </div>
 
             {/* SEO Section */}
-            <div>
+            <div className="px-6 py-6 rounded-sm border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark">
               <h3 className="font-medium text-black dark:text-white">SEO Section</h3>
               <div className="space-y-4 mt-4">
-                {/* Meta Title */}
-                <FormField
-                  control={form.control}
-                  name="meta_title"
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel>Meta Title</FormLabel>
-                      <FormControl>
-                        <Input className={inputClass} {...field} />
-                      </FormControl>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
-
-                {/* Meta Image */}
-                <FormField
-                  control={form.control}
-                  name="meta_img"
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel>Meta Image</FormLabel>
-                      <FormControl>
-                        <Input className={inputClass} {...field} />
-                      </FormControl>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
-
-                {/* Meta Description */}
-                <FormField
-                  control={form.control}
-                  name="meta_description"
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel>Meta Description</FormLabel>
-                      <FormControl>
-                        <Textarea className={inputClass} {...field} />
-                      </FormControl>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
+                {[
+                  { name: "meta_title", label: "Meta Title" },
+                  { name: "meta_img", label: "Meta Image" },
+                  { name: "meta_description", label: "Meta Description" },
+                ].map((field) => (
+                  <div key={field.name} className="mt-3 flex flex-col gap-5.5 p-6.5">
+                    <FormField
+                      control={form.control}
+                      name={field.name}
+                      render={({ field: fieldProps }) => (
+                        <FormItem>
+                          <div className="grid grid-cols-1 md:grid-cols-12">
+                            <div className="col-span-3 mt-2">
+                              <FormLabel>{field.label}</FormLabel>
+                            </div>
+                            <div className="col-span-8">
+                              {/* <FormControl> */}
+                              <FormControl>
+                                {field.name === "meta_title" ? (
+                                  <Input
+                                    className={inputClass}
+                                    placeholder={field.label}
+                                    {...fieldProps}
+                                  />
+                                ) : field.name === "meta_img" ? (
+                                  <Input
+                                    type="file"
+                                    onChange={handleBannerChange}
+                                    className={inputClass}
+                                    placeholder={field.label}
+                                    {...fieldProps}
+                                  />
+                                ) : field.name === "meta_description" ? (
+                                  <Textarea
+                                    className={inputClass}
+                                    placeholder={field.label}
+                                    {...fieldProps}
+                                  />
+                                ) : null}
+                              </FormControl>
+                            </div>
+                          </div>
+                          <FormMessage />
+                        </FormItem>
+                      )}
+                    />
+                  </div>
+                ))}
               </div>
             </div>
           </div>
 
           <div className="flex justify-end gap-4">
-            {/* <Button variant="outline" type="submit">
-              Save as Draft
-            </Button>
-            <Button variant="solid" onClick={handleEditorContentChange} type="submit">
-              Publish
-            </Button> */}
-
             <Button
               className="dark:text-slate-200"
               variant="outline"

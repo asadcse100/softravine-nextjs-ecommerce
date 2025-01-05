@@ -5,7 +5,7 @@ import { useRouter, useSearchParams } from "next/navigation";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { z } from "zod";
-import { showErrorToast, showSuccessToast} from "@/app/admin/components/Toast";
+import { showErrorToast, showSuccessToast } from "@/app/admin/components/Toast";
 
 import Label from "@/app/admin/components/Label/Label";
 import React, { FC } from "react";
@@ -29,17 +29,17 @@ import {
 } from "@/app/admin/components/ui/select";
 
 const formSchema = z.object({
-  user_emails: z.string().min(10, {
-    message: "Product Name must be at least 10 characters.",
+  user_emails: z.string().min(1, {
+    message: "Product Name must be at least 1 characters.",
   }),
-  subscriber_emails: z.string().min(10, {
-    message: "Product Name must be at least 10 characters.",
+  subscriber_emails: z.string().min(1, {
+    message: "Product Name must be at least 1 characters.",
   }),
-  subject: z.string().min(10, {
-    message: "Product Name must be at least 10 characters.",
+  subject: z.string().min(1, {
+    message: "Product Name must be at least 1 characters.",
   }),
-  content: z.string().min(10, {
-    message: "Product Name must be at least 10 characters.",
+  content: z.string().min(1, {
+    message: "Product Name must be at least 1 characters.",
   }),
 });
 
@@ -123,8 +123,72 @@ export default function AddOrEdit() {
             <div className="flex flex-col md:flex-row">
 
               <div className="flex-grow mt-10 md:mt-0 md:pl-16 max-w-3xl space-y-3">
+                {[
+                  { name: "father_name", label: "Father Name" },
+                  { name: "mother_name", label: "Mother Name" },
+                  { name: "date_of_birth", label: "Date of birth" },
+                  { name: "gender", label: "Gender" },
+                ].map((field) => (
+                  <div
+                    key={field.name}
+                    className="mt-3 flex flex-col gap-5.5 p-6.5"
+                  >
+                    <FormField
+                      control={form.control}
+                      name={field.name}
+                      render={({ field: fieldProps }) => (
+                        <FormItem>
+                          <div className="grid grid-cols-1 md:grid-cols-12">
+                            <div className="col-span-3 mt-1">
+                              <FormLabel>{field.label}</FormLabel>
+                            </div>
+                            <div className="col-span-8">
+                              <FormControl>
+                                {field.name === "father_name" ? (
+                                  <Input type="text"
+                                    className={inputClass}
+                                    placeholder={field.label}
+                                    {...fieldProps}
+                                  />
+                                ) : field.name === "mother_name" ? (
+                                  <Input type="text"
+                                    className={inputClass}
+                                    placeholder={field.label}
+                                    {...fieldProps}
+                                  />
+                                ) : field.name === "date_of_birth" ? (
+                                  <Input type="date"
+                                    className={inputClass}
+                                    placeholder={field.label}
+                                    {...fieldProps}
+                                  />
+                                ) : field.name === "gender" ? (
+                                  <Select
+                                    onValueChange={field.onChange}
+                                    defaultValue={field.value}
+                                  >
+                                    <SelectTrigger>
+                                      <SelectValue placeholder="Select Gender" />
+                                    </SelectTrigger>
+                                    <SelectContent>
+                                      <SelectItem value="Apple">Male</SelectItem>
+                                      <SelectItem value="m2@example.com">Female</SelectItem>
+                                      <SelectItem value="m22@example.com">Other</SelectItem>
+                                    </SelectContent>
+                                  </Select>
+                                ) : null}
 
-                <FormField
+                              </FormControl>
+                            </div>
+                          </div>
+                          <FormMessage />
+                        </FormItem>
+                      )}
+                    />
+                  </div>
+                ))}
+
+                {/* <FormField
                   control={form.control}
                   name="code"
                   render={({ field }) => (
@@ -146,9 +210,9 @@ export default function AddOrEdit() {
                       <FormMessage />
                     </FormItem>
                   )}
-                />
+                /> */}
 
-                <FormField
+                {/* <FormField
                   control={form.control}
                   name="code"
                   render={({ field }) => (
@@ -170,9 +234,9 @@ export default function AddOrEdit() {
                       <FormMessage />
                     </FormItem>
                   )}
-                />
+                /> */}
 
-                <FormField
+                {/* <FormField
                   control={form.control}
                   name="code"
                   render={({ field }) => (
@@ -195,9 +259,9 @@ export default function AddOrEdit() {
                       <FormMessage />
                     </FormItem>
                   )}
-                />
+                /> */}
 
-                <FormField
+                {/* <FormField
                   control={form.control}
                   name="code"
                   render={({ field }) => (
@@ -227,7 +291,7 @@ export default function AddOrEdit() {
                       <FormMessage />
                     </FormItem>
                   )}
-                />
+                /> */}
 
                 {/* </div> */}
 

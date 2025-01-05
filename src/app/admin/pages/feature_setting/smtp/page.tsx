@@ -27,32 +27,32 @@ import {
 } from "@/app/admin/components/ui/select";
 
 const formSchema = z.object({
-  MAIL_DRIVER: z.string().min(10, {
-    message: "Product Name must be at least 10 characters.",
+  MAIL_DRIVER: z.string().min(1, {
+    message: "Product Name must be at least 1 characters.",
   }),
-  MAIL_HOST: z.string().min(10, {
-    message: "Product Name must be at least 10 characters.",
+  MAIL_HOST: z.string().min(1, {
+    message: "Product Name must be at least 1 characters.",
   }),
-  MAIL_PORT: z.string().min(10, {
-    message: "Product Name must be at least 10 characters.",
+  MAIL_PORT: z.string().min(1, {
+    message: "Product Name must be at least 1 characters.",
   }),
-  MAIL_USERNAME: z.string().min(10, {
-    message: "Product Name must be at least 10 characters.",
+  MAIL_USERNAME: z.string().min(1, {
+    message: "Product Name must be at least 1 characters.",
   }),
-  MAIL_PASSWORD: z.string().min(10, {
-    message: "Product Name must be at least 10 characters.",
+  MAIL_PASSWORD: z.string().min(1, {
+    message: "Product Name must be at least 1 characters.",
   }),
-  MAIL_ENCRYPTION: z.string().min(10, {
-    message: "Product Name must be at least 10 characters.",
+  MAIL_ENCRYPTION: z.string().min(1, {
+    message: "Product Name must be at least 1 characters.",
   }),
-  MAIL_FROM_ADDRESS: z.string().min(10, {
-    message: "Product Name must be at least 10 characters.",
+  MAIL_FROM_ADDRESS: z.string().min(1, {
+    message: "Product Name must be at least 1 characters.",
   }),
-  MAIL_FROM_NAME: z.string().min(10, {
-    message: "Product Name must be at least 10 characters.",
+  MAIL_FROM_NAME: z.string().min(1, {
+    message: "Product Name must be at least 1 characters.",
   }),
-  email: z.string().min(10, {
-    message: "Product Name must be at least 10 characters.",
+  email: z.string().min(1, {
+    message: "Product Name must be at least 1 characters.",
   }),
 });
 
@@ -118,7 +118,7 @@ export default function AddOrEdit() {
         },
         body: JSON.stringify(values),
       });
-      
+
       if (!response.ok) {
         throw new Error("Failed to add site map. Please try again.");
       }
@@ -126,7 +126,6 @@ export default function AddOrEdit() {
       const result = await response.json();
 
       showSuccessToast(result.message || "site map added successfully!");
-      // router.push("/admin/pages/blog_system/site map");
       window.location.href = `${apiUrl}/admin/pages/blog_system/site map`;
     } catch (error) {
       showErrorToast("Error adding site map: " + (error instanceof Error ? error.message : "Unknown error"));
@@ -153,215 +152,95 @@ export default function AddOrEdit() {
                   </div>
                   <div className="py-6">
                     <div className="flex flex-col gap-5.5 p-6.5">
-                      <FormField
-                        control={form.control}
-                        name="MAIL_DRIVER"
-                        render={({ field }) => (
-                          <FormItem>
-                            <div className="grid grid-cols-1 md:grid-cols-12">
-                              <div className="col-span-3 mt-2">
-                                <FormLabel>Type</FormLabel>
-                              </div>
-                              <div className="col-span-8">
-                                <FormControl>
-                                  <Select
-                                    onValueChange={field.onChange}
-                                    defaultValue={field.value}
-                                  >
+
+                      {[
+                        { name: "MAIL_DRIVER", label: "Type" },
+                      ].map((field) => (
+                        <div
+                          key={field.name}
+                          className="mt-3 flex flex-col gap-5.5 p-6.5"
+                        >
+                          <FormField
+                            control={form.control}
+                            name={field.name}
+                            render={({ field: fieldProps }) => (
+                              <FormItem>
+                                <div className="grid grid-cols-1 md:grid-cols-12">
+                                  <div className="col-span-3 mt-2">
+                                    <FormLabel>{field.label}</FormLabel>
+                                  </div>
+                                  <div className="col-span-8">
                                     <FormControl>
-                                      <SelectTrigger>
-                                        <SelectValue placeholder="Select Type" />
-                                      </SelectTrigger>
+                                      <Select
+                                        onValueChange={field.onChange}
+                                        defaultValue={field.value}
+                                      >
+                                        <FormControl>
+                                          <SelectTrigger>
+                                            <SelectValue placeholder="Select Type" />
+                                          </SelectTrigger>
+                                        </FormControl>
+                                        <SelectContent>
+                                          <SelectItem value="Apple">SMTP</SelectItem>
+                                          <SelectItem value="m2@example.com">Send Mail</SelectItem>
+                                          <SelectItem value="m22@example.com">Mail Gun</SelectItem>
+                                        </SelectContent>
+                                      </Select>
                                     </FormControl>
-                                    <SelectContent>
-                                      <SelectItem value="Apple">SMTP</SelectItem>
-                                      <SelectItem value="m2@example.com">Send Mail</SelectItem>
-                                      <SelectItem value="m22@example.com">Mail Gun</SelectItem>
-                                    </SelectContent>
-                                  </Select>
-                                </FormControl>
-                              </div>
-                            </div>
-                            <FormMessage />
-                          </FormItem>
-                        )}
-                      />
+                                  </div>
+                                </div>
+                                <FormMessage />
+                              </FormItem>
+                            )}
+                          />
+                        </div>
+                      ))}
+
                     </div>
                     <div className="mt-3 flex flex-col gap-5.5 p-6.5">
-                      <FormField
-                        control={form.control}
-                        name="MAIL_HOST"
-                        render={({ field }) => (
-                          <FormItem>
-                            <div className="grid grid-cols-1 md:grid-cols-12">
-                              <div className="col-span-3 mt-2">
-                                <FormLabel>Mail Host</FormLabel>
-                              </div>
-                              <div className="col-span-8">
-                                <FormControl>
-                                  <Input
-                                    className={inputClass}
-                                    placeholder="Mail Host"
-                                    {...field}
-                                  />
-                                </FormControl>
-                              </div>
-                            </div>
-                            <FormMessage />
-                          </FormItem>
-                        )}
-                      />
+
+                      {[
+                        { name: "MAIL_HOST", label: "Mail Host" },
+                        { name: "MAIL_PORT", label: "Mail Port" },
+                        { name: "MAIL_USERNAME", label: "Mail Username" },
+                        { name: "MAIL_PASSWORD", label: "Mail Password" },
+                        { name: "MAIL_ENCRYPTION", label: "Mail Encription" },
+                        { name: "MAIL_FROM_ADDRESS", label: "Mail From Address" },
+                        { name: "MAIL_FROM_NAME", label: "Mail From Name" },
+                      ].map((field) => (
+                        <div
+                          key={field.name}
+                          className="mt-3 flex flex-col gap-5.5 p-6.5"
+                        >
+                          <FormField
+                            control={form.control}
+                            name={field.name}
+                            render={({ field: fieldProps }) => (
+                              <FormItem>
+                                <div className="grid grid-cols-1 md:grid-cols-12">
+                                  <div className="col-span-3 mt-2">
+                                    <FormLabel>{field.label}</FormLabel>
+                                  </div>
+                                  <div className="col-span-8">
+                                    <FormControl>
+                                      <Input
+                                        className={inputClass}
+                                        placeholder={field.label}
+                                        {...fieldProps}
+                                      />
+                                    </FormControl>
+                                  </div>
+                                </div>
+                                <FormMessage />
+                              </FormItem>
+                            )}
+                          />
+                        </div>
+                      ))}
+
+                      
                     </div>
-                    <div className="mt-3 flex flex-col gap-5.5 p-6.5">
-                      <FormField
-                        control={form.control}
-                        name="MAIL_PORT"
-                        render={({ field }) => (
-                          <FormItem>
-                            <div className="grid grid-cols-1 md:grid-cols-12">
-                              <div className="col-span-3 mt-2">
-                                <FormLabel>Mail Port</FormLabel>
-                              </div>
-                              <div className="col-span-8">
-                                <FormControl>
-                                  <Input
-                                    className={inputClass}
-                                    placeholder="Mail Port"
-                                    {...field}
-                                  />
-                                </FormControl>
-                              </div>
-                            </div>
-                            <FormMessage />
-                          </FormItem>
-                        )}
-                      />
-                    </div>
-                    <div className="mt-3 flex flex-col gap-5.5 p-6.5">
-                      <FormField
-                        control={form.control}
-                        name="MAIL_USERNAME"
-                        render={({ field }) => (
-                          <FormItem>
-                            <div className="grid grid-cols-1 md:grid-cols-12">
-                              <div className="col-span-3 mt-2">
-                                <FormLabel>Mail Username</FormLabel>
-                              </div>
-                              <div className="col-span-8">
-                                <FormControl>
-                                  <Input
-                                    className={inputClass}
-                                    placeholder="Mail Username"
-                                    {...field}
-                                  />
-                                </FormControl>
-                              </div>
-                            </div>
-                            <FormMessage />
-                          </FormItem>
-                        )}
-                      />
-                    </div>
-                    <div className="mt-3 flex flex-col gap-5.5 p-6.5">
-                      <FormField
-                        control={form.control}
-                        name="MAIL_PASSWORD"
-                        render={({ field }) => (
-                          <FormItem>
-                            <div className="grid grid-cols-1 md:grid-cols-12">
-                              <div className="col-span-3 mt-2">
-                                <FormLabel>Mail Password</FormLabel>
-                              </div>
-                              <div className="col-span-8">
-                                <FormControl>
-                                  <Input
-                                    className={inputClass}
-                                    placeholder="Mail Password"
-                                    {...field}
-                                  />
-                                </FormControl>
-                              </div>
-                            </div>
-                            <FormMessage />
-                          </FormItem>
-                        )}
-                      />
-                    </div>
-                    <div className="mt-3 flex flex-col gap-5.5 p-6.5">
-                      <FormField
-                        control={form.control}
-                        name="MAIL_ENCRYPTION"
-                        render={({ field }) => (
-                          <FormItem>
-                            <div className="grid grid-cols-1 md:grid-cols-12">
-                              <div className="col-span-3 mt-2">
-                                <FormLabel>Mail Encription</FormLabel>
-                              </div>
-                              <div className="col-span-8">
-                                <FormControl>
-                                  <Input
-                                    className={inputClass}
-                                    placeholder="Mail Encription"
-                                    {...field}
-                                  />
-                                </FormControl>
-                              </div>
-                            </div>
-                            <FormMessage />
-                          </FormItem>
-                        )}
-                      />
-                    </div>
-                    <div className="mt-3 flex flex-col gap-5.5 p-6.5">
-                      <FormField
-                        control={form.control}
-                        name="MAIL_FROM_ADDRESS"
-                        render={({ field }) => (
-                          <FormItem>
-                            <div className="grid grid-cols-1 md:grid-cols-12">
-                              <div className="col-span-3 mt-2">
-                                <FormLabel>Mail From Address</FormLabel>
-                              </div>
-                              <div className="col-span-8">
-                                <FormControl>
-                                  <Input
-                                    className={inputClass}
-                                    placeholder="Mail From Address"
-                                    {...field}
-                                  />
-                                </FormControl>
-                              </div>
-                            </div>
-                            <FormMessage />
-                          </FormItem>
-                        )}
-                      />
-                    </div>
-                    <div className="mt-3 flex flex-col gap-5.5 p-6.5">
-                      <FormField
-                        control={form.control}
-                        name="MAIL_FROM_NAME"
-                        render={({ field }) => (
-                          <FormItem>
-                            <div className="grid grid-cols-1 md:grid-cols-12">
-                              <div className="col-span-3 mt-2">
-                                <FormLabel>Mail From Name</FormLabel>
-                              </div>
-                              <div className="col-span-8">
-                                <FormControl>
-                                  <Input
-                                    className={inputClass}
-                                    placeholder="Mail From Name"
-                                    {...field}
-                                  />
-                                </FormControl>
-                              </div>
-                            </div>
-                            <FormMessage />
-                          </FormItem>
-                        )}
-                      />
-                    </div>
+                    
                     <div className="grid mt-4 justify-items-end">
                       <Button
                         className="dark:text-slate-200"
@@ -384,38 +263,40 @@ export default function AddOrEdit() {
                     </div>
                     <div className="py-6">
                       <div className="flex flex-col gap-5.5 p-6.5">
-                        <FormField
-                          control={form.control}
-                          name="email"
-                          render={({ field }) => (
-                            <FormItem>
-                              <div className="grid grid-cols-1 md:grid-cols-12">
-                                <div className="col-span-4 mt-2">
-                                  <FormLabel>For Test SMTP Mail</FormLabel>
+                      {[
+                        { name: "email", label: "For Test SMTP Mail" },
+                      ].map((field) => (
+                        <div
+                          key={field.name}
+                          className="mt-3 flex flex-col gap-5.5 p-6.5"
+                        >
+                          <FormField
+                            control={form.control}
+                            name={field.name}
+                            render={({ field: fieldProps }) => (
+                              <FormItem>
+                                <div className="grid grid-cols-1 md:grid-cols-12">
+                                  <div className="col-span-3 mt-2">
+                                    <FormLabel>{field.label}</FormLabel>
+                                  </div>
+                                  <div className="col-span-8">
+                                    <FormControl>
+                                      <Input
+                                        className={inputClass}
+                                        placeholder={field.label}
+                                        {...fieldProps}
+                                      />
+                                    </FormControl>
+                                  </div>
                                 </div>
-                                <div className="col-span-8">
-                                  <FormControl>
-                                    <Input
-                                      className={inputClass}
-                                      placeholder="For Test SMTP Mail"
-                                      {...field}
-                                    />
-                                  </FormControl>
-                                </div>
-                              </div>
-                              <FormMessage />
-                            </FormItem>
-                          )}
-                        />
+                                <FormMessage />
+                              </FormItem>
+                            )}
+                          />
+                        </div>
+                      ))}
                       </div>
                       <div className="grid mt-4 justify-items-end">
-                        {/* <Button
-                          className="dark:text-slate-200"
-                          variant="outline"
-                          type="submit"
-                        >
-                          Send
-                        </Button> */}
                         <Button
                           className="dark:text-slate-200"
                           variant="outline"

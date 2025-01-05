@@ -32,6 +32,7 @@ import { showErrorToast, showSuccessToast } from "@/app/admin/components/Toast";
 import Input from "@/shared/Input/Input";
 import { Switch } from "@/app/admin/components/ui/switch";
 import Breadcrumb from "@/app/admin/components/Breadcrumbs/Breadcrumb"
+import Textarea from "@/shared/Textarea/Textarea";
 
 const languages = [
   { label: "English", value: "en" },
@@ -279,7 +280,41 @@ export default function AddOrEdit() {
                     </div>
                     <div className="py-6">
                       <div className="flex flex-col gap-5.5 p-6.5">
-                        <FormField
+                        {[
+                          { name: "product_name", label: "Name" },
+                          { name: "barcode", label: "Barcode" },
+                        ].map((field) => (
+                          <div
+                            key={field.name}
+                            className="mt-3 flex flex-col gap-5.5 p-6.5"
+                          >
+                            <FormField
+                              control={form.control}
+                              name={field.name}
+                              render={({ field: fieldProps }) => (
+                                <FormItem>
+                                  <div className="grid grid-cols-1 md:grid-cols-12">
+                                    <div className="col-span-3 mt-1">
+                                      <FormLabel>{field.label}</FormLabel>
+                                    </div>
+                                    <div className="col-span-8">
+                                      <FormControl>
+                                        <Input
+                                          className={inputClass}
+                                          placeholder={field.label}
+                                          {...fieldProps}
+                                        />
+                                      </FormControl>
+                                    </div>
+                                  </div>
+                                  <FormMessage />
+                                </FormItem>
+                              )}
+                            />
+                          </div>
+                        ))}
+
+                        {/* <FormField
                           control={form.control}
                           name="product_name"
                           render={({ field }) => (
@@ -301,10 +336,10 @@ export default function AddOrEdit() {
                               <FormMessage />
                             </FormItem>
                           )}
-                        />
+                        /> */}
                       </div>
 
-                      <div className="mt-3 flex flex-col gap-5.5 p-6.5">
+                      {/* <div className="mt-3 flex flex-col gap-5.5 p-6.5">
                         <FormField
                           control={form.control}
                           name="barcode"
@@ -328,7 +363,7 @@ export default function AddOrEdit() {
                             </FormItem>
                           )}
                         />
-                      </div>
+                      </div> */}
                     </div>
                   </div>
                 </div>
@@ -341,7 +376,41 @@ export default function AddOrEdit() {
                     </div>
                     <div className="py-6">
                       <div className="flex flex-col gap-5.5 p-6.5">
-                        <FormField
+                        {[
+                          { name: "gallery_images", label: "Gallery Images" },
+                          { name: "thumbnail_image", label: "Thumbnail Image" },
+                        ].map((field) => (
+                          <div
+                            key={field.name}
+                            className="mt-3 flex flex-col gap-5.5 p-6.5"
+                          >
+                            <FormField
+                              control={form.control}
+                              name={field.name}
+                              render={({ field: fieldProps }) => (
+                                <FormItem>
+                                  <div className="grid grid-cols-1 md:grid-cols-12">
+                                    <div className="col-span-3 mt-1">
+                                      <FormLabel>{field.label}</FormLabel>
+                                    </div>
+                                    <div className="col-span-8">
+                                      <FormControl>
+                                        <Input type="file"
+                                          className={inputClass}
+                                          placeholder={field.label}
+                                          {...fieldProps}
+                                        />
+                                      </FormControl>
+                                    </div>
+                                  </div>
+                                  <FormMessage />
+                                </FormItem>
+                              )}
+                            />
+                          </div>
+                        ))}
+
+                        {/* <FormField
                           control={form.control}
                           name="gallery_images"
                           render={({ field }) => (
@@ -363,9 +432,9 @@ export default function AddOrEdit() {
                               <FormMessage />
                             </FormItem>
                           )}
-                        />
+                        /> */}
                       </div>
-                      <div className="mt-3 flex flex-col gap-5.5 p-6.5">
+                      {/* <div className="mt-3 flex flex-col gap-5.5 p-6.5">
                         <FormField
                           control={form.control}
                           name="thumbnail_image"
@@ -389,7 +458,7 @@ export default function AddOrEdit() {
                             </FormItem>
                           )}
                         />
-                      </div>
+                      </div> */}
                     </div>
                   </div>
                 </div>
@@ -403,6 +472,87 @@ export default function AddOrEdit() {
                     </div>
                     <div className="py-6">
                       <div className="flex flex-col gap-5.5 p-6.5">
+                        {[
+                          { name: "unit", label: "Unit" },
+                          { name: "weight", label: "Weight" },
+                          { name: "minimum_purchase_qty", label: "Minimum Purchase Qty" },
+                        ].map((field) => (
+                          <div
+                            key={field.name}
+                            className="mt-3 flex flex-col gap-5.5 p-6.5"
+                          >
+                            <FormField
+                              control={form.control}
+                              name={field.name}
+                              render={({ field: fieldProps }) => (
+                                <FormItem>
+                                  <div className="grid grid-cols-1 md:grid-cols-12">
+                                    <div className="col-span-3 mt-1">
+                                      <FormLabel>{field.label}</FormLabel>
+                                    </div>
+                                    <div className="col-span-8">
+                                      <FormControl>
+                                        <Input
+                                          className={inputClass}
+                                          placeholder={field.label}
+                                          {...fieldProps}
+                                        />
+                                      </FormControl>
+                                    </div>
+                                  </div>
+                                  <FormMessage />
+                                </FormItem>
+                              )}
+                            />
+                          </div>
+                        ))}
+
+                        {[
+                          { name: "brand", label: "Brand" },
+                        ].map((field) => (
+                          <div
+                            key={field.name}
+                            className="mt-3 flex flex-col gap-5.5 p-6.5"
+                          >
+                            <FormField
+                              control={form.control}
+                              name={field.name}
+                              render={({ field: fieldProps }) => (
+                                <FormItem>
+                                  <div className="grid grid-cols-1 md:grid-cols-12">
+                                    <div className="col-span-3 mt-1">
+                                      <FormLabel>{field.label}</FormLabel>
+                                    </div>
+                                    <div className="col-span-8">
+                                      <FormControl>
+                                        <Select
+                                          onValueChange={field.onChange}
+                                          defaultValue={field.value}
+                                        >
+                                          <FormControl>
+                                            <SelectTrigger>
+                                              <SelectValue placeholder="Select Brand" />
+                                            </SelectTrigger>
+                                          </FormControl>
+                                          <SelectContent>
+                                            {brands.map((brand) => (
+                                              <SelectItem key={brand.id} value={brand.name}>
+                                                {brand.name}
+                                              </SelectItem>
+                                            ))}
+                                          </SelectContent>
+                                        </Select>
+                                      </FormControl>
+                                    </div>
+                                  </div>
+                                  <FormMessage />
+                                </FormItem>
+                              )}
+                            />
+                          </div>
+                        ))}
+
+                        {/* 
                         <FormField
                           control={form.control}
                           name="brand"
@@ -437,10 +587,10 @@ export default function AddOrEdit() {
                               <FormMessage />
                             </FormItem>
                           )}
-                        />
+                        /> */}
 
                       </div>
-                      <div className="mt-3 flex flex-col gap-5.5 p-6.5">
+                      {/* <div className="mt-3 flex flex-col gap-5.5 p-6.5">
                         <FormField
                           control={form.control}
                           name="unit"
@@ -464,8 +614,8 @@ export default function AddOrEdit() {
                             </FormItem>
                           )}
                         />
-                      </div>
-                      <div className="mt-3 flex flex-col gap-5.5 p-6.5">
+                      </div> */}
+                      {/* <div className="mt-3 flex flex-col gap-5.5 p-6.5">
                         <FormField
                           control={form.control}
                           name="weight"
@@ -489,8 +639,8 @@ export default function AddOrEdit() {
                             </FormItem>
                           )}
                         />
-                      </div>
-                      <div className="mt-3 flex flex-col gap-5.5 p-6.5">
+                      </div> */}
+                      {/* <div className="mt-3 flex flex-col gap-5.5 p-6.5">
                         <FormField
                           control={form.control}
                           name="minimum_purchase_qty"
@@ -514,9 +664,42 @@ export default function AddOrEdit() {
                             </FormItem>
                           )}
                         />
-                      </div>
+                      </div> */}
                       <div className="mt-3 flex flex-col gap-5.5 p-6.5">
-                        <FormField
+                        {[
+                          { name: "tag[]", label: "Tags" },
+                        ].map((field) => (
+                          <div
+                            key={field.name}
+                            className="mt-3 flex flex-col gap-5.5 p-6.5"
+                          >
+                            <FormField
+                              control={form.control}
+                              name={field.name}
+                              render={({ field: fieldProps }) => (
+                                <FormItem>
+                                  <div className="grid grid-cols-1 md:grid-cols-12">
+                                    <div className="col-span-3 mt-1">
+                                      <FormLabel>{field.label}</FormLabel>
+                                    </div>
+                                    <div className="col-span-8">
+                                      <FormControl>
+                                        <Input
+                                          className={inputClass}
+                                          placeholder={field.label}
+                                          {...fieldProps}
+                                        />
+                                      </FormControl>
+                                    </div>
+                                  </div>
+                                  <FormMessage />
+                                </FormItem>
+                              )}
+                            />
+                          </div>
+                        ))}
+
+                        {/* <FormField
                           control={form.control}
                           name="tag"
                           render={({ field }) => (
@@ -538,7 +721,7 @@ export default function AddOrEdit() {
                               <FormMessage />
                             </FormItem>
                           )}
-                        />
+                        /> */}
                       </div>
                     </div>
                   </div>
@@ -553,7 +736,41 @@ export default function AddOrEdit() {
                     </div>
                     <div className="py-6">
                       <div className="flex flex-col gap-5.5 p-6.5">
-                        <FormField
+                        {[
+                          { name: "video_provider", label: "Video Provider" },
+                          { name: "video_link", label: "Video Link" },
+                        ].map((field) => (
+                          <div
+                            key={field.name}
+                            className="mt-3 flex flex-col gap-5.5 p-6.5"
+                          >
+                            <FormField
+                              control={form.control}
+                              name={field.name}
+                              render={({ field: fieldProps }) => (
+                                <FormItem>
+                                  <div className="grid grid-cols-1 md:grid-cols-12">
+                                    <div className="col-span-3 mt-1">
+                                      <FormLabel>{field.label}</FormLabel>
+                                    </div>
+                                    <div className="col-span-8">
+                                      <FormControl>
+                                        <Input
+                                          className={inputClass}
+                                          placeholder={field.label}
+                                          {...fieldProps}
+                                        />
+                                      </FormControl>
+                                    </div>
+                                  </div>
+                                  <FormMessage />
+                                </FormItem>
+                              )}
+                            />
+                          </div>
+                        ))}
+
+                        {/* <FormField
                           control={form.control}
                           name="video_provider"
                           render={({ field }) => (
@@ -575,9 +792,9 @@ export default function AddOrEdit() {
                               <FormMessage />
                             </FormItem>
                           )}
-                        />
+                        /> */}
                       </div>
-                      <div className="mt-3 flex flex-col gap-5.5 p-6.5">
+                      {/* <div className="mt-3 flex flex-col gap-5.5 p-6.5">
                         <FormField
                           control={form.control}
                           name="video_link"
@@ -601,7 +818,7 @@ export default function AddOrEdit() {
                             </FormItem>
                           )}
                         />
-                      </div>
+                      </div> */}
                     </div>
                   </div>
                 </div>
@@ -615,7 +832,41 @@ export default function AddOrEdit() {
                     </div>
                     <div className="py-6">
                       <div className="flex flex-col gap-5.5 p-6.5">
-                        <FormField
+                        {[
+                          { name: "color", label: "Color" },
+                          { name: "attribute", label: "Attributes" },
+                        ].map((field) => (
+                          <div
+                            key={field.name}
+                            className="mt-3 flex flex-col gap-5.5 p-6.5"
+                          >
+                            <FormField
+                              control={form.control}
+                              name={field.name}
+                              render={({ field: fieldProps }) => (
+                                <FormItem>
+                                  <div className="grid grid-cols-1 md:grid-cols-12">
+                                    <div className="col-span-3 mt-1">
+                                      <FormLabel>{field.label}</FormLabel>
+                                    </div>
+                                    <div className="col-span-8">
+                                      <FormControl>
+                                        <Input
+                                          className={inputClass}
+                                          placeholder={field.label}
+                                          {...fieldProps}
+                                        />
+                                      </FormControl>
+                                    </div>
+                                  </div>
+                                  <FormMessage />
+                                </FormItem>
+                              )}
+                            />
+                          </div>
+                        ))}
+
+                        {/* <FormField
                           control={form.control}
                           name="color"
                           render={({ field }) => (
@@ -637,9 +888,9 @@ export default function AddOrEdit() {
                               <FormMessage />
                             </FormItem>
                           )}
-                        />
+                        /> */}
                       </div>
-                      <div className="mt-3 flex flex-col gap-5.5 p-6.5">
+                      {/* <div className="mt-3 flex flex-col gap-5.5 p-6.5">
                         <FormField
                           control={form.control}
                           name="attribute"
@@ -663,7 +914,7 @@ export default function AddOrEdit() {
                             </FormItem>
                           )}
                         />
-                      </div>
+                      </div> */}
                     </div>
                   </div>
                 </div>
@@ -677,7 +928,108 @@ export default function AddOrEdit() {
                     </div>
                     <div className="py-6">
                       <div className="flex flex-col gap-5.5 p-6.5">
-                        <FormField
+                        {[
+                          { name: "unit_price", label: "Regular Unit Price" },
+                          { name: "discount_date_range", label: "Discount Date Range" },
+                        ].map((field) => (
+                          <div
+                            key={field.name}
+                            className="mt-3 flex flex-col gap-5.5 p-6.5"
+                          >
+                            <FormField
+                              control={form.control}
+                              name={field.name}
+                              render={({ field: fieldProps }) => (
+                                <FormItem>
+                                  <div className="grid grid-cols-1 md:grid-cols-12">
+                                    <div className="col-span-3 mt-1">
+                                      <FormLabel>{field.label}</FormLabel>
+                                    </div>
+                                    <div className="col-span-8">
+                                      <FormControl>
+                                        <Input
+                                          className={inputClass}
+                                          placeholder={field.label}
+                                          {...fieldProps}
+                                        />
+                                      </FormControl>
+                                    </div>
+                                  </div>
+                                  <FormMessage />
+                                </FormItem>
+                              )}
+                            />
+                          </div>
+                        ))}
+
+                        {[
+                          { name: "discount", label: "Discount" },
+                        ].map((field) => (
+                          <div
+                            key={field.name}
+                            className="mt-3 flex flex-col gap-5.5 p-6.5"
+                          >
+                            <FormField
+                              control={form.control}
+                              name={field.name}
+                              render={({ field: fieldProps }) => (
+                                <FormItem>
+                                  <div className="grid grid-cols-1 md:grid-cols-12">
+                                    <div className="col-span-3 mt-1">
+                                      <FormLabel>{field.label}</FormLabel>
+                                    </div>
+                                    <div className="col-span-8">
+                                      <FormControl>
+                                        <div className="relative mt-2">
+                                          <div className="absolute top-2 right-0 flex items-center pr-3">
+                                            <button
+                                              className="h-full text-sm flex justify-center items-center bg-transparent text-slate-700 focus:outline-none"
+                                              onClick={toggleDropdown}
+                                              ref={dropdownButtonRef}
+                                              type="button"
+                                            >
+                                              {selectedOption}
+                                            </button>
+                                            {isDropdownOpen && (
+                                              <div
+                                                id="dropdownMenu2"
+                                                className="min-w-[150px] absolute left-0 mt-10 w-full bg-white dark:bg-slate-700 border border-slate-200 rounded-md shadow-lg z-10"
+                                                ref={dropdownMenuRef}
+                                              >
+                                                <ul id="dropdownOptions2">
+                                                  <li
+                                                    className="px-4 py-2 text-slate-800 hover:bg-slate-500 text-sm cursor-pointer"
+                                                    onClick={() => handleOptionClick('Flat')}
+                                                  >
+                                                    Flat
+                                                  </li>
+                                                  <li
+                                                    className="px-4 py-2 text-slate-800 hover:bg-slate-500 text-sm cursor-pointer"
+                                                    onClick={() => handleOptionClick('Percent')}
+                                                  >
+                                                    Percent
+                                                  </li>
+                                                </ul>
+                                              </div>
+                                            )}
+                                          </div>
+                                          <Input
+                                            className={inputClass}
+                                            placeholder="Discount"
+                                            {...field}
+                                          />
+                                        </div>
+                                      </FormControl>
+                                    </div>
+                                  </div>
+                                  <FormMessage />
+                                </FormItem>
+                              )}
+                            />
+                          </div>
+                        ))}
+
+                        {/* <FormField
                           control={form.control}
                           name="unit_price"
                           render={({ field }) => (
@@ -699,9 +1051,9 @@ export default function AddOrEdit() {
                               <FormMessage />
                             </FormItem>
                           )}
-                        />
+                        /> */}
                       </div>
-                      <div className="mt-3 flex flex-col gap-5.5 p-6.5">
+                      {/* <div className="mt-3 flex flex-col gap-5.5 p-6.5">
                         <FormField
                           control={form.control}
                           name="discount_date_range"
@@ -725,8 +1077,8 @@ export default function AddOrEdit() {
                             </FormItem>
                           )}
                         />
-                      </div>
-                      <div className="mt-3 flex flex-col gap-5.5 p-6.5">
+                      </div> */}
+                      {/* <div className="mt-3 flex flex-col gap-5.5 p-6.5">
                         <FormField
                           control={form.control}
                           name="discount"
@@ -783,7 +1135,7 @@ export default function AddOrEdit() {
                             </FormItem>
                           )}
                         />
-                      </div>
+                      </div> */}
 
                     </div>
                   </div>
@@ -798,7 +1150,108 @@ export default function AddOrEdit() {
                     </div>
                     <div className="py-6">
                       <div className="flex flex-col gap-5.5 p-6.5">
-                        <FormField
+                        {[
+                          { name: "reseller_unit_price", label: "Reseller Unit Price" },
+                          { name: "reseller_discount_date_range", label: "Discount Date Range" },
+                        ].map((field) => (
+                          <div
+                            key={field.name}
+                            className="mt-3 flex flex-col gap-5.5 p-6.5"
+                          >
+                            <FormField
+                              control={form.control}
+                              name={field.name}
+                              render={({ field: fieldProps }) => (
+                                <FormItem>
+                                  <div className="grid grid-cols-1 md:grid-cols-12">
+                                    <div className="col-span-3 mt-1">
+                                      <FormLabel>{field.label}</FormLabel>
+                                    </div>
+                                    <div className="col-span-8">
+                                      <FormControl>
+                                        <Input
+                                          className={inputClass}
+                                          placeholder={field.label}
+                                          {...fieldProps}
+                                        />
+                                      </FormControl>
+                                    </div>
+                                  </div>
+                                  <FormMessage />
+                                </FormItem>
+                              )}
+                            />
+                          </div>
+                        ))}
+
+                        {[
+                          { name: "discount", label: "Discount" },
+                        ].map((field) => (
+                          <div
+                            key={field.name}
+                            className="mt-3 flex flex-col gap-5.5 p-6.5"
+                          >
+                            <FormField
+                              control={form.control}
+                              name={field.name}
+                              render={({ field: fieldProps }) => (
+                                <FormItem>
+                                  <div className="grid grid-cols-1 md:grid-cols-12">
+                                    <div className="col-span-3 mt-1">
+                                      <FormLabel>{field.label}</FormLabel>
+                                    </div>
+                                    <div className="col-span-8">
+                                      <FormControl>
+                                        <div className="relative mt-2">
+                                          <div className="absolute top-2 right-0 flex items-center pr-3">
+                                            <button
+                                              className="h-full text-sm flex justify-center items-center bg-transparent text-slate-700 focus:outline-none"
+                                              onClick={toggleDropdown}
+                                              ref={dropdownButtonRef}
+                                              type="button"
+                                            >
+                                              {selectedOption}
+                                            </button>
+                                            {isDropdownOpen && (
+                                              <div
+                                                id="dropdownMenu2"
+                                                className="min-w-[150px] absolute left-0 mt-10 w-full bg-white dark:bg-slate-700 border border-slate-200 rounded-md shadow-lg z-10"
+                                                ref={dropdownMenuRef}
+                                              >
+                                                <ul id="dropdownOptions2">
+                                                  <li
+                                                    className="px-4 py-2 text-slate-800 hover:bg-slate-500 text-sm cursor-pointer"
+                                                    onClick={() => handleOptionClick('Flat')}
+                                                  >
+                                                    Flat
+                                                  </li>
+                                                  <li
+                                                    className="px-4 py-2 text-slate-800 hover:bg-slate-500 text-sm cursor-pointer"
+                                                    onClick={() => handleOptionClick('Percent')}
+                                                  >
+                                                    Percent
+                                                  </li>
+                                                </ul>
+                                              </div>
+                                            )}
+                                          </div>
+                                          <Input
+                                            className={inputClass}
+                                            placeholder="Discount"
+                                            {...field}
+                                          />
+                                        </div>
+                                      </FormControl>
+                                    </div>
+                                  </div>
+                                  <FormMessage />
+                                </FormItem>
+                              )}
+                            />
+                          </div>
+                        ))}
+
+                        {/* <FormField
                           control={form.control}
                           name="reseller_unit_price"
                           render={({ field }) => (
@@ -820,9 +1273,9 @@ export default function AddOrEdit() {
                               <FormMessage />
                             </FormItem>
                           )}
-                        />
+                        /> */}
                       </div>
-
+                      {/* 
                       <div className="mt-3 flex flex-col gap-5.5 p-6.5">
                         <FormField
                           control={form.control}
@@ -847,8 +1300,8 @@ export default function AddOrEdit() {
                             </FormItem>
                           )}
                         />
-                      </div>
-                      <div className="mt-3 flex flex-col gap-5.5 p-6.5">
+                      </div> */}
+                      {/* <div className="mt-3 flex flex-col gap-5.5 p-6.5">
                         <FormField
                           control={form.control}
                           name="reseller_discount"
@@ -909,7 +1362,7 @@ export default function AddOrEdit() {
                             </FormItem>
                           )}
                         />
-                      </div>
+                      </div> */}
                     </div>
                   </div>
                 </div>
@@ -923,7 +1376,43 @@ export default function AddOrEdit() {
                     </div>
                     <div className="py-6">
                       <div className="flex flex-col gap-5.5 p-6.5">
-                        <FormField
+                        {[
+                          { name: "quantity", label: "Quantity" },
+                          { name: "sku", label: "SKU" },
+                          { name: "external_link", label: "External Link" },
+                          { name: "external_link_button", label: "External Link Button" },
+                        ].map((field) => (
+                          <div
+                            key={field.name}
+                            className="mt-3 flex flex-col gap-5.5 p-6.5"
+                          >
+                            <FormField
+                              control={form.control}
+                              name={field.name}
+                              render={({ field: fieldProps }) => (
+                                <FormItem>
+                                  <div className="grid grid-cols-1 md:grid-cols-12">
+                                    <div className="col-span-3 mt-1">
+                                      <FormLabel>{field.label}</FormLabel>
+                                    </div>
+                                    <div className="col-span-8">
+                                      <FormControl>
+                                        <Input
+                                          className={inputClass}
+                                          placeholder={field.label}
+                                          {...fieldProps}
+                                        />
+                                      </FormControl>
+                                    </div>
+                                  </div>
+                                  <FormMessage />
+                                </FormItem>
+                              )}
+                            />
+                          </div>
+                        ))}
+
+                        {/* <FormField
                           control={form.control}
                           name="quantity"
                           render={({ field }) => (
@@ -945,9 +1434,9 @@ export default function AddOrEdit() {
                               <FormMessage />
                             </FormItem>
                           )}
-                        />
+                        /> */}
                       </div>
-                      <div className="mt-3 flex flex-col gap-5.5 p-6.5">
+                      {/* <div className="mt-3 flex flex-col gap-5.5 p-6.5">
                         <FormField
                           control={form.control}
                           name="sku"
@@ -971,8 +1460,8 @@ export default function AddOrEdit() {
                             </FormItem>
                           )}
                         />
-                      </div>
-                      <div className="mt-3 flex flex-col gap-5.5 p-6.5">
+                      </div> */}
+                      {/* <div className="mt-3 flex flex-col gap-5.5 p-6.5">
                         <FormField
                           control={form.control}
                           name="external_link"
@@ -996,8 +1485,8 @@ export default function AddOrEdit() {
                             </FormItem>
                           )}
                         />
-                      </div>
-                      <div className="mt-3 flex flex-col gap-5.5 p-6.5">
+                      </div> */}
+                      {/* <div className="mt-3 flex flex-col gap-5.5 p-6.5">
                         <FormField
                           control={form.control}
                           name="external_link_button"
@@ -1022,7 +1511,7 @@ export default function AddOrEdit() {
                             </FormItem>
                           )}
                         />
-                      </div>
+                      </div> */}
                     </div>
                   </div>
                 </div>
@@ -1036,7 +1525,36 @@ export default function AddOrEdit() {
                     </div>
                     <div className="py-6">
                       <div className="flex flex-col gap-5.5 p-6.5">
-                        <FormField
+                        {[
+                          { name: "product_description", label: "Description" },
+                        ].map((field) => (
+                          <div
+                            key={field.name}
+                            className="mt-3 flex flex-col gap-5.5 p-6.5"
+                          >
+                            <FormField
+                              control={form.control}
+                              name={field.name}
+                              render={({ field: fieldProps }) => (
+                                <FormItem>
+                                  <div className="grid grid-cols-1 md:grid-cols-12">
+                                    <div className="col-span-3 mt-1">
+                                      <FormLabel>{field.label}</FormLabel>
+                                    </div>
+                                    <div className="col-span-8">
+                                      <FormControl>
+                                        <textarea />
+                                      </FormControl>
+                                    </div>
+                                  </div>
+                                  <FormMessage />
+                                </FormItem>
+                              )}
+                            />
+                          </div>
+                        ))}
+
+                        {/* <FormField
                           control={form.control}
                           name="product_description"
                           render={({ field }) => (
@@ -1058,7 +1576,7 @@ export default function AddOrEdit() {
                               <FormMessage />
                             </FormItem>
                           )}
-                        />
+                        /> */}
                       </div>
                     </div>
                   </div>
@@ -1073,7 +1591,40 @@ export default function AddOrEdit() {
                     </div>
                     <div className="py-6">
                       <div className="flex flex-col gap-5.5 p-6.5">
-                        <FormField
+                        {[
+                          { name: "pdf_specification", label: "PDF Specification" },
+                        ].map((field) => (
+                          <div
+                            key={field.name}
+                            className="mt-3 flex flex-col gap-5.5 p-6.5"
+                          >
+                            <FormField
+                              control={form.control}
+                              name={field.name}
+                              render={({ field: fieldProps }) => (
+                                <FormItem>
+                                  <div className="grid grid-cols-1 md:grid-cols-12">
+                                    <div className="col-span-3 mt-1">
+                                      <FormLabel>{field.label}</FormLabel>
+                                    </div>
+                                    <div className="col-span-8">
+                                      <FormControl>
+                                        <Input type="file"
+                                          className={inputClass}
+                                          placeholder={field.label}
+                                          {...fieldProps}
+                                        />
+                                      </FormControl>
+                                    </div>
+                                  </div>
+                                  <FormMessage />
+                                </FormItem>
+                              )}
+                            />
+                          </div>
+                        ))}
+
+                        {/* <FormField
                           control={form.control}
                           name="pdf_specification"
                           render={({ field }) => (
@@ -1095,7 +1646,7 @@ export default function AddOrEdit() {
                               <FormMessage />
                             </FormItem>
                           )}
-                        />
+                        /> */}
                       </div>
                     </div>
                   </div>
@@ -1110,7 +1661,52 @@ export default function AddOrEdit() {
                     </div>
                     <div className="py-6">
                       <div className="flex flex-col gap-5.5 p-6.5">
-                        <FormField
+                        {[
+                          { name: "meta_title", label: "Meta Title" },
+                          { name: "meta_description", label: "Meta Description" },
+                          { name: "meta_image", label: "Meta Imgae" },
+                        ].map((field) => (
+                          <div
+                            key={field.name}
+                            className="mt-3 flex flex-col gap-5.5 p-6.5"
+                          >
+                            <FormField
+                              control={form.control}
+                              name={field.name}
+                              render={({ field: fieldProps }) => (
+                                <FormItem>
+                                  <div className="grid grid-cols-1 md:grid-cols-12">
+                                    <div className="col-span-3 mt-1">
+                                      <FormLabel>{field.label}</FormLabel>
+                                    </div>
+                                    <div className="col-span-8">
+                                      <FormControl>
+                                        {field.name === "meta_title" ? (
+                                          <Input
+                                            className={inputClass}
+                                            placeholder={field.label}
+                                            {...fieldProps}
+                                          />
+                                        ) : field.name === "meta_description" ? (
+                                          <Textarea/>
+                                        ) : field.name === "meta_image" ? (
+                                          <Input type="file"
+                                            className={inputClass}
+                                            placeholder={field.label}
+                                            {...fieldProps}
+                                          />
+                                        ) : null }
+                                      </FormControl>
+                                    </div>
+                                  </div>
+                                  <FormMessage />
+                                </FormItem>
+                              )}
+                            />
+                          </div>
+                        ))}
+
+                        {/* <FormField
                           control={form.control}
                           name="meta_title"
                           render={({ field }) => (
@@ -1133,9 +1729,9 @@ export default function AddOrEdit() {
                               <FormMessage />
                             </FormItem>
                           )}
-                        />
+                        /> */}
                       </div>
-                      <div className="mt-3 flex flex-col gap-5.5 p-6.5">
+                      {/* <div className="mt-3 flex flex-col gap-5.5 p-6.5">
                         <FormField
                           control={form.control}
                           name="meta_description"
@@ -1160,8 +1756,8 @@ export default function AddOrEdit() {
                             </FormItem>
                           )}
                         />
-                      </div>
-                      <div className="mt-3 flex flex-col gap-5.5 p-6.5">
+                      </div> */}
+                      {/* <div className="mt-3 flex flex-col gap-5.5 p-6.5">
                         <FormField
                           control={form.control}
                           name="meta_image"
@@ -1185,7 +1781,7 @@ export default function AddOrEdit() {
                             </FormItem>
                           )}
                         />
-                      </div>
+                      </div> */}
                     </div>
                   </div>
                 </div>
@@ -1203,7 +1799,78 @@ export default function AddOrEdit() {
                     </div>
                     <div className="py-6">
                       <div className="flex flex-col gap-5.5 p-6.5">
-                        <FormField
+                      {[
+                          { name: "main_category", label: "Main Category" },
+                          { name: "sub_category", label: "Sub Category" },
+                        ].map((field) => (
+                          <div
+                            key={field.name}
+                            className="mt-3 flex flex-col gap-5.5 p-6.5"
+                          >
+                            <FormField
+                              control={form.control}
+                              name={field.name}
+                              render={({ field: fieldProps }) => (
+                                <FormItem>
+                                  <div className="grid grid-cols-1 md:grid-cols-12">
+                                    <div className="col-span-3 mt-1">
+                                      <FormLabel>{field.label}</FormLabel>
+                                    </div>
+                                    <div className="col-span-8">
+                                      <FormControl>
+                                        {field.name === "main_category" ? (
+                                          <Select
+                                          onValueChange={field.onChange}
+                                          defaultValue={field.value}
+                                        >
+                                          <FormControl>
+                                            <SelectTrigger>
+                                              <SelectValue placeholder="Select Category" />
+                                            </SelectTrigger>
+                                          </FormControl>
+                                          <SelectContent>
+                                            {categories.map((category) => (
+                                              <SelectItem key={category.id} value={category.name}>
+                                                {category.name}
+                                              </SelectItem>
+                                            ))}
+                                          </SelectContent>
+                                        </Select>
+                                        ) : field.name === "sub_category" ? (
+                                          <Select
+                                    onValueChange={field.onChange}
+                                    defaultValue={field.value}
+                                  >
+                                    <FormControl>
+                                      <SelectTrigger>
+                                        <SelectValue placeholder="Select Sub Category" />
+                                      </SelectTrigger>
+                                    </FormControl>
+                                    <SelectContent>
+                                      <SelectItem value="Apple">Apple</SelectItem>
+                                      <SelectItem value="m2@example.com">Pran</SelectItem>
+                                      <SelectItem value="m22@example.com">Squre</SelectItem>
+                                      <SelectItem value="m3@example.com">ACI</SelectItem>
+                                      <SelectItem value="m4@example.com">SoftRavine</SelectItem>
+                                      <SelectItem value="m5@example.com">Samsung</SelectItem>
+                                      <SelectItem value="m6@example.com">LG</SelectItem>
+                                      <SelectItem value="m7@example.com">Logitech</SelectItem>
+                                      <SelectItem value="m8@example.com">A4tech</SelectItem>
+                                      <SelectItem value="m9@example.com">HP</SelectItem>
+                                    </SelectContent>
+                                  </Select>
+                                        ) : null }
+                                      </FormControl>
+                                    </div>
+                                  </div>
+                                  <FormMessage />
+                                </FormItem>
+                              )}
+                            />
+                          </div>
+                        ))}
+
+                        {/* <FormField
                           control={form.control}
                           name="main_category"
                           render={({ field }) => (
@@ -1236,12 +1903,12 @@ export default function AddOrEdit() {
                               <FormMessage />
                             </FormItem>
                           )}
-                        />
+                        /> */}
                       </div>
-                      <div className="mt-3 flex flex-col gap-5.5 p-6.5">
+                      {/* <div className="mt-3 flex flex-col gap-5.5 p-6.5">
                         <FormField
                           control={form.control}
-                          name="sub_category"
+                          name=""
                           render={({ field }) => (
                             <FormItem>
                               <div className="grid grid-cols-1 md:grid-cols-12">
@@ -1278,7 +1945,7 @@ export default function AddOrEdit() {
                             </FormItem>
                           )}
                         />
-                      </div>
+                      </div> */}
                     </div>
                   </div>
                 </div>
@@ -1292,7 +1959,38 @@ export default function AddOrEdit() {
                     </div>
                     <div className="py-6">
                       <div className="flex flex-col gap-5.5 p-6.5">
-                        <FormField
+                      {[
+                          { name: "free_shippling", label: "Free Shipping" },
+                          { name: "flat_rate", label: "Flat Rate" },
+                          { name: "qty_multi", label: "Is Product Quantity Multiply" },
+                        ].map((field) => (
+                          <div
+                            key={field.name}
+                            className="mt-3 flex flex-col gap-5.5 p-6.5"
+                          >
+                            <FormField
+                              control={form.control}
+                              name={field.name}
+                              render={({ field: fieldProps }) => (
+                                <FormItem>
+                                  <div className="grid grid-cols-1 md:grid-cols-12">
+                                    <div className="col-span-6 mt-1">
+                                      <FormLabel>{field.label}</FormLabel>
+                                    </div>
+                                    <div className="col-span-6">
+                                      <FormControl>
+                                      <Switch />
+                                      </FormControl>
+                                    </div>
+                                  </div>
+                                  <FormMessage />
+                                </FormItem>
+                              )}
+                            />
+                          </div>
+                        ))}
+
+                        {/* <FormField
                           control={form.control}
                           name="free_shippling"
                           render={({ field }) => (
@@ -1310,9 +2008,9 @@ export default function AddOrEdit() {
                               <FormMessage />
                             </FormItem>
                           )}
-                        />
+                        /> */}
                       </div>
-                      <div className="mt-3 flex flex-col gap-5.5 p-6.5">
+                      {/* <div className="mt-3 flex flex-col gap-5.5 p-6.5">
                         <FormField
                           control={form.control}
                           name="flat_rate"
@@ -1332,8 +2030,8 @@ export default function AddOrEdit() {
                             </FormItem>
                           )}
                         />
-                      </div>
-                      <div className="mt-3 flex flex-col gap-5.5 p-6.5">
+                      </div> */}
+                      {/* <div className="mt-3 flex flex-col gap-5.5 p-6.5">
                         <FormField
                           control={form.control}
                           name="qty_multi"
@@ -1353,7 +2051,7 @@ export default function AddOrEdit() {
                             </FormItem>
                           )}
                         />
-                      </div>
+                      </div> */}
                     </div>
                   </div>
                 </div>
@@ -1367,7 +2065,38 @@ export default function AddOrEdit() {
                     </div>
                     <div className="py-6">
                       <div className="flex flex-col gap-5.5 p-6.5">
-                        <FormField
+                      {[
+                          { name: "show_stock_quantity", label: "Show Stock quantity" },
+                          { name: "show_stock_with_tax", label: "Show Stock With Text Only" },
+                          { name: "hide_stock", label: "Hide Stock" },
+                        ].map((field) => (
+                          <div
+                            key={field.name}
+                            className="mt-3 flex flex-col gap-5.5 p-6.5"
+                          >
+                            <FormField
+                              control={form.control}
+                              name={field.name}
+                              render={({ field: fieldProps }) => (
+                                <FormItem>
+                                  <div className="grid grid-cols-1 md:grid-cols-12">
+                                    <div className="col-span-6 mt-1">
+                                      <FormLabel>{field.label}</FormLabel>
+                                    </div>
+                                    <div className="col-span-6">
+                                      <FormControl>
+                                      <Switch />
+                                      </FormControl>
+                                    </div>
+                                  </div>
+                                  <FormMessage />
+                                </FormItem>
+                              )}
+                            />
+                          </div>
+                        ))}
+
+                        {/* <FormField
                           control={form.control}
                           name="show_stock_quantity"
                           render={({ field }) => (
@@ -1385,9 +2114,9 @@ export default function AddOrEdit() {
                               <FormMessage />
                             </FormItem>
                           )}
-                        />
+                        /> */}
                       </div>
-                      <div className="mt-3 flex flex-col gap-5.5 p-6.5">
+                      {/* <div className="mt-3 flex flex-col gap-5.5 p-6.5">
                         <FormField
                           control={form.control}
                           name="show_stock_with_tax"
@@ -1407,8 +2136,8 @@ export default function AddOrEdit() {
                             </FormItem>
                           )}
                         />
-                      </div>
-                      <div className="mt-3 flex flex-col gap-5.5 p-6.5">
+                      </div> */}
+                      {/* <div className="mt-3 flex flex-col gap-5.5 p-6.5">
                         <FormField
                           control={form.control}
                           name="hide_stock"
@@ -1428,7 +2157,7 @@ export default function AddOrEdit() {
                             </FormItem>
                           )}
                         />
-                      </div>
+                      </div> */}
                     </div>
                   </div>
                 </div>
@@ -1442,7 +2171,35 @@ export default function AddOrEdit() {
                     </div>
                     <div className="py-6">
                       <div className="flex flex-col gap-5.5 p-6.5">
-                        <FormField
+                      {[
+                          { name: "case_on_delivery", label: "Status" },
+                        ].map((field) => (
+                          <div
+                            key={field.name}
+                            className="mt-3 flex flex-col gap-5.5 p-6.5"
+                          >
+                            <FormField
+                              control={form.control}
+                              name={field.name}
+                              render={({ field: fieldProps }) => (
+                                <FormItem>
+                                  <div className="grid grid-cols-1 md:grid-cols-12">
+                                    <div className="col-span-6 mt-1">
+                                      <FormLabel>{field.label}</FormLabel>
+                                    </div>
+                                    <div className="col-span-6">
+                                      <FormControl>
+                                      <Switch />
+                                      </FormControl>
+                                    </div>
+                                  </div>
+                                  <FormMessage />
+                                </FormItem>
+                              )}
+                            />
+                          </div>
+                        ))}
+                        {/* <FormField
                           control={form.control}
                           name="case_on_delivery"
                           render={({ field }) => (
@@ -1460,7 +2217,7 @@ export default function AddOrEdit() {
                               <FormMessage />
                             </FormItem>
                           )}
-                        />
+                        /> */}
                       </div>
                     </div>
                   </div>
@@ -1475,7 +2232,40 @@ export default function AddOrEdit() {
                     </div>
                     <div className="py-6">
                       <div className="flex flex-col gap-5.5 p-6.5">
-                        <FormField
+                      {[
+                          { name: "shipping_day", label: "Shipping Days" },
+                        ].map((field) => (
+                          <div
+                            key={field.name}
+                            className="mt-3 flex flex-col gap-5.5 p-6.5"
+                          >
+                            <FormField
+                              control={form.control}
+                              name={field.name}
+                              render={({ field: fieldProps }) => (
+                                <FormItem>
+                                  <div className="grid grid-cols-1 md:grid-cols-12">
+                                    <div className="col-span-4 mt-1">
+                                      <FormLabel>{field.label}</FormLabel>
+                                    </div>
+                                    <div className="col-span-8">
+                                      <FormControl>
+                                        <Input
+                                          className={inputClass}
+                                          placeholder={field.label}
+                                          {...fieldProps}
+                                        />
+                                      </FormControl>
+                                    </div>
+                                  </div>
+                                  <FormMessage />
+                                </FormItem>
+                              )}
+                            />
+                          </div>
+                        ))}
+
+                        {/* <FormField
                           control={form.control}
                           name="shipping_day"
                           render={({ field }) => (
@@ -1497,7 +2287,7 @@ export default function AddOrEdit() {
                               <FormMessage />
                             </FormItem>
                           )}
-                        />
+                        /> */}
                       </div>
                     </div>
                   </div>
@@ -1512,6 +2302,39 @@ export default function AddOrEdit() {
                     </div>
                     <div className="py-6">
                       <div className="flex flex-col gap-5.5 p-6.5">
+                      {[
+                          { name: "vat_tax", label: "TAX" },
+                        ].map((field) => (
+                          <div
+                            key={field.name}
+                            className="mt-3 flex flex-col gap-5.5 p-6.5"
+                          >
+                            <FormField
+                              control={form.control}
+                              name={field.name}
+                              render={({ field: fieldProps }) => (
+                                <FormItem>
+                                  <div className="grid grid-cols-1 md:grid-cols-12">
+                                    <div className="col-span-4 mt-1">
+                                      <FormLabel>{field.label}</FormLabel>
+                                    </div>
+                                    <div className="col-span-8">
+                                      <FormControl>
+                                        <Input
+                                          className={inputClass}
+                                          placeholder={field.label}
+                                          {...fieldProps}
+                                        />
+                                      </FormControl>
+                                    </div>
+                                  </div>
+                                  <FormMessage />
+                                </FormItem>
+                              )}
+                            />
+                          </div>
+                        ))}
+{/* 
                         <FormField
                           control={form.control}
                           name="vat_tax"
@@ -1534,7 +2357,7 @@ export default function AddOrEdit() {
                               <FormMessage />
                             </FormItem>
                           )}
-                        />
+                        /> */}
                       </div>
                     </div>
                   </div>
@@ -1544,13 +2367,6 @@ export default function AddOrEdit() {
             </div>
           </div>
           <div className="grid justify-items-end">
-            {/* <Button
-              className="dark:text-slate-200"
-              variant="outline"
-              type="submit"
-            >
-              Submit Product
-            </Button> */}
             <Button
               className="dark:text-slate-200"
               variant="outline"

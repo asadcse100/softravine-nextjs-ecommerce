@@ -76,14 +76,6 @@ export default function AddOrEdit() {
     setIsLoading(true);
 
     try {
-      // const response = await fetch(`${apiUrl}/server/api/routes/admin/club_point/product_point`, {
-      //   method: 'POST',
-      //   headers: {
-      //     'Content-Type': 'application/json',
-      //   },
-      //   body: JSON.stringify(values),
-      // });
-
       const method = id ? "PUT" : "POST";
       const url = id
         ? `${apiUrl}/server/api/routes/admin/product_point/${id}`
@@ -135,80 +127,56 @@ export default function AddOrEdit() {
                     </p>
                     <div className="py-6">
                       <div className="flex flex-col gap-5.5 p-6.5">
-                        <FormField
-                          control={form.control}
-                          name="point"
-                          render={({ field }) => (
-                            <FormItem>
-                              <div className="grid grid-cols-1 md:grid-cols-12">
-                                <div className="col-span-4 mt-2">
-                                  <FormLabel>Set Point for multiple products</FormLabel>
-                                </div>
-                                <div className="col-span-8">
-                                  <FormControl>
-                                    <Input
-                                      className={inputClass}
-                                      placeholder="120"
-                                      {...field}
-                                    />
-                                  </FormControl>
-                                </div>
-                              </div>
-                              <FormMessage />
-                            </FormItem>
-                          )}
-                        />
+
+                        {[
+                          { name: "point", label: "Set Point for multiple products" },
+                          { name: "min_price", label: "Min Price" },
+                          { name: "max_price", label: "Max Price" },
+                        ].map((field) => (
+                          <div key={field.name} className="mt-3 flex flex-col gap-5.5 p-6.5">
+                            <FormField
+                              control={form.control}
+                              name={field.name}
+                              render={({ field: fieldProps }) => (
+                                <FormItem>
+                                  <div className="grid grid-cols-1 md:grid-cols-12">
+                                    <div className="col-span-3 mt-2">
+                                      <FormLabel>{field.label}</FormLabel>
+                                    </div>
+                                    <div className="col-span-8">
+                                      {/* <FormControl> */}
+                                      <FormControl>
+                                        {field.name === "point" ? (
+                                          <Input
+                                            className={inputClass}
+                                            placeholder={field.label}
+                                            {...fieldProps}
+                                          />
+                                        ) : field.name === "min_price" ? (
+                                          <Input
+                                            className={inputClass}
+                                            placeholder={field.label}
+                                            {...fieldProps}
+                                          />
+                                        ) : field.name === "max_price" ? (
+                                          <Input
+                                            className={inputClass}
+                                            placeholder={field.label}
+                                            {...fieldProps}
+                                          />
+                                        ) : null}
+                                      </FormControl>
+                                    </div>
+                                  </div>
+                                  <FormMessage />
+                                </FormItem>
+                              )}
+                            />
+                          </div>
+                        ))}
+
                       </div>
-                      <div className="mt-3 flex flex-col gap-5.5 p-6.5">
-                        <FormField
-                          control={form.control}
-                          name="min_price"
-                          render={({ field }) => (
-                            <FormItem>
-                              <div className="grid grid-cols-1 md:grid-cols-12">
-                                <div className="col-span-4 mt-2">
-                                  <FormLabel>Min Price</FormLabel>
-                                </div>
-                                <div className="col-span-8">
-                                  <FormControl>
-                                    <Input
-                                      className={inputClass}
-                                      placeholder="5"
-                                      {...field}
-                                    />
-                                  </FormControl>
-                                </div>
-                              </div>
-                              <FormMessage />
-                            </FormItem>
-                          )}
-                        />
-                      </div>
-                      <div className="mt-3 flex flex-col gap-5.5 p-6.5">
-                        <FormField
-                          control={form.control}
-                          name="max_price"
-                          render={({ field }) => (
-                            <FormItem>
-                              <div className="grid grid-cols-1 md:grid-cols-12">
-                                <div className="col-span-4 mt-2">
-                                  <FormLabel>Max Price</FormLabel>
-                                </div>
-                                <div className="col-span-8">
-                                  <FormControl>
-                                    <Input
-                                      className={inputClass}
-                                      placeholder="25000"
-                                      {...field}
-                                    />
-                                  </FormControl>
-                                </div>
-                              </div>
-                              <FormMessage />
-                            </FormItem>
-                          )}
-                        />
-                      </div>
+
                       <div className="grid mt-4 justify-items-end">
                         <Button
                           className="dark:text-slate-200"
@@ -232,38 +200,41 @@ export default function AddOrEdit() {
                     </div>
                     <div className="py-6">
                       <div className="flex flex-col gap-5.5 p-6.5">
-                        <FormField
-                          control={form.control}
-                          name="all_product_point"
-                          render={({ field }) => (
-                            <FormItem>
-                              <div className="grid grid-cols-1 md:grid-cols-12">
-                                <div className="col-span-4 mt-2">
-                                  <FormLabel>Set Point For $1.000</FormLabel>
-                                </div>
-                                <div className="col-span-8">
-                                  <FormControl>
-                                    <Input
-                                      className={inputClass}
-                                      placeholder="1"
-                                      {...field}
-                                    />
-                                  </FormControl>
-                                </div>
-                              </div>
-                              <FormMessage />
-                            </FormItem>
-                          )}
-                        />
+                        {[
+                          { name: "name", label: "Set Point For $1.000" },
+                        ].map((field) => (
+                          <div key={field.name} className="mt-3 flex flex-col gap-5.5 p-6.5">
+                            <FormField
+                              control={form.control}
+                              name={field.name}
+                              render={({ field: fieldProps }) => (
+                                <FormItem>
+                                  <div className="grid grid-cols-1 md:grid-cols-12">
+                                    <div className="col-span-3 mt-2">
+                                      <FormLabel>{field.label}</FormLabel>
+                                    </div>
+                                    <div className="col-span-8">
+                                      {/* <FormControl> */}
+                                      <FormControl>
+                                        {field.name === "all_product_point" ? (
+                                          <Input
+                                            className={inputClass}
+                                            placeholder={field.label}
+                                            {...fieldProps}
+                                          />
+                                        ) : null}
+                                      </FormControl>
+                                    </div>
+                                  </div>
+                                  <FormMessage />
+                                </FormItem>
+                              )}
+                            />
+                          </div>
+                        ))}
+
                       </div>
                       <div className="grid mt-4 justify-items-end">
-                        {/* <Button
-                          className="dark:text-slate-200"
-                          variant="outline"
-                          type="submit"
-                        >
-                          Save
-                        </Button> */}
                         <Button
                           className="dark:text-slate-200"
                           variant="outline"

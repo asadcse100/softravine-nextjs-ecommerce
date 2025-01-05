@@ -3,8 +3,8 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm, Controller, SubmitHandler } from "react-hook-form";
 import { z } from "zod";
-import { useState } from 'react';
-import { useRouter } from "next/navigation";
+import { useState, useEffect } from 'react';
+import { useRouter, useSearchParams } from "next/navigation";
 import { Button } from "@/app/admin/components/ui/button";
 import {
   Form,
@@ -54,6 +54,13 @@ export default function AddOrEdit() {
   const id = searchParams.get('id');
 
   const [isLoading, setIsLoading] = useState(false);
+
+  const form = useForm<z.infer<typeof formSchema>>({
+    resolver: zodResolver(formSchema),
+    defaultValues: {
+      amount: "",
+    },
+  });
 
   // Fetch data if editing an existing ticket
   useEffect(() => {
@@ -137,13 +144,6 @@ export default function AddOrEdit() {
     console.log("Referral Form Values:", values);
   };
 
-  const form = useForm<z.infer<typeof formSchema>>({
-    resolver: zodResolver(formSchema),
-    defaultValues: {
-      amount: "",
-    },
-  });
-
   // function onSubmit(values: z.infer<typeof formSchema>) {
   const onSubmit: SubmitHandler<FormData> = async (values) => {
     const apiUrl = process.env.NEXT_PUBLIC_API_URL;
@@ -216,14 +216,49 @@ export default function AddOrEdit() {
                   </div>
                   <div className="py-6">
                     <div className="flex flex-col gap-5.5 p-6.5">
-                      <FormField
+                      {[
+                        { name: "minimum_withdraw", label: "Minimum Withdraw" },
+                      ].map((field) => (
+                        <div
+                          key={field.name}
+                          className="mt-3 flex flex-col gap-5.5 p-6.5"
+                        >
+                          <FormField
+                            control={form.control}
+                            name={field.name}
+                            render={({ field: fieldProps }) => (
+                              <FormItem>
+                                <div className="grid grid-cols-1 md:grid-cols-12">
+                                  <div className="col-span-3 mt-1">
+                                    <FormLabel>{field.label}</FormLabel>
+                                  </div>
+                                  <div className="col-span-8">
+                                    <FormControl>
+                                      {field.name === "minimum_withdraw" ? (
+                                        <Input type="text"
+                                          className={inputClass}
+                                          placeholder={field.label}
+                                          {...fieldProps}
+                                        />
+                                      ) : null}
+
+                                    </FormControl>
+                                  </div>
+                                </div>
+                                <FormMessage />
+                              </FormItem>
+                            )}
+                          />
+                        </div>
+                      ))}
+                      {/* <FormField
                         control={form.control}
                         name="amount"
                         render={({ field }) => (
                           <FormItem>
                             <div className="grid grid-cols-1 md:grid-cols-12">
                               <div className="col-span-3 mt-2">
-                                <FormLabel>Minimum Withdrow</FormLabel>
+                                <FormLabel>Minimum Withdraw</FormLabel>
                               </div>
                               <div className="col-span-8">
                                 <FormControl>
@@ -238,7 +273,7 @@ export default function AddOrEdit() {
                             <FormMessage />
                           </FormItem>
                         )}
-                      />
+                      /> */}
                     </div>
                     <div className="grid mt-3 justify-items-end">
                       <Button
@@ -261,7 +296,43 @@ export default function AddOrEdit() {
                   </div>
                   <div className="py-6">
                     <div className="flex flex-col gap-5.5 p-6.5">
-                      <FormField
+                      {[
+                        { name: "validation_time", label: "Validation Time" },
+                      ].map((field) => (
+                        <div
+                          key={field.name}
+                          className="mt-3 flex flex-col gap-5.5 p-6.5"
+                        >
+                          <FormField
+                            control={form.control}
+                            name={field.name}
+                            render={({ field: fieldProps }) => (
+                              <FormItem>
+                                <div className="grid grid-cols-1 md:grid-cols-12">
+                                  <div className="col-span-3 mt-1">
+                                    <FormLabel>{field.label}</FormLabel>
+                                  </div>
+                                  <div className="col-span-8">
+                                    <FormControl>
+                                      {field.name === "validation_time" ? (
+                                        <Input type="text"
+                                          className={inputClass}
+                                          placeholder={field.label}
+                                          {...fieldProps}
+                                        />
+                                      ) : null}
+
+                                    </FormControl>
+                                  </div>
+                                </div>
+                                <FormMessage />
+                              </FormItem>
+                            )}
+                          />
+                        </div>
+                      ))}
+
+                      {/* <FormField
                         control={form.control}
                         name="validation_time"
                         render={({ field }) => (
@@ -283,7 +354,7 @@ export default function AddOrEdit() {
                             <FormMessage />
                           </FormItem>
                         )}
-                      />
+                      /> */}
                     </div>
                     <div className="grid mt-3 justify-items-end">
                       <Button
@@ -307,7 +378,39 @@ export default function AddOrEdit() {
                   </div>
                   <div className="py-6">
                     <div className="flex flex-col gap-5.5 p-6.5">
+
                       {referralFields.map((field, index) => (
+                        <div key={index} className="mt-3 flex flex-col gap-5.5 p-6.5">
+                          <FormField
+                            control={form.control}
+                            name={`amount-${index}`}
+                            render={({ field: fieldProps }) => (
+                              <FormItem>
+                                <div className="grid grid-cols-1 md:grid-cols-12">
+                                  <div className="col-span-3 mt-2">
+                                    <FormLabel>{field.label || `Channel ${index + 1}`}</FormLabel>
+                                  </div>
+                                  <div className="col-span-8">
+                                    <FormControl>
+                                      <Input
+                                        className={inputClass}
+                                        placeholder="%"
+                                        value={fieldProps.value}
+                                        onChange={(event) => handleInputChange(index, event)}
+                                        {...fieldProps}
+                                      />
+                                    </FormControl>
+                                  </div>
+                                </div>
+                                <FormMessage />
+                              </FormItem>
+                            )}
+                          />
+                        </div>
+                      ))}
+
+
+                      {/* {referralFields.map((field, index) => (
                         <FormField
                           key={index}
                           control={form.control}
@@ -334,7 +437,7 @@ export default function AddOrEdit() {
                             </FormItem>
                           )}
                         />
-                      ))}
+                      ))} */}
 
                       <Button
                         className="mt-4 p-2 dark:text-slate-200"
@@ -369,9 +472,49 @@ export default function AddOrEdit() {
                   </div>
                   <form onSubmit={onSubmitLeadership(onSubmit)}>
                     <div className="py-6">
+
                       {leadershipFields.map((field, index) => (
                         <div key={index} className="flex flex-col gap-5.5 p-6.5 border border-slate-500 p-2 mt-2">
-                          <Controller
+
+                          {[
+                            { name: "leadership_name", label: "Leadership Name", place: "10" },
+                            { name: "direct_account_required", label: "Direct account is required", place: "0" },
+                            { name: "team_account_required", label: "Team account is required", place: "10" },
+                            { name: "total_account_included_team", label: "Total accounts including teams", place: "10" },
+                            { name: "leadership_award", label: "Leadership Awards", place: "70%" },
+                            { name: "monthly_reword_fund", label: "Monthly Rewards fund", place: "15%" },
+                            { name: "mobile_recharged", label: "Mobile should be recharged", place: "200" },
+                            { name: "drivepack_recharged", label: "Driverpack Should be recharged", place: "500" },
+                            { name: "reseller_shop_ordered", label: "Reseller shop should be ordered", place: "100" },
+                          ].map((fieldData) => (
+                            <div key={fieldData.name} className="mt-3 flex flex-col gap-5.5">
+                              <Controller
+                                control={leadershipForm.control}
+                                name={`leaderships.${index}.${fieldData.name}`}
+                                render={({ field: fieldProps }) => (
+                                  <FormItem>
+                                    <div className="grid grid-cols-1 md:grid-cols-12">
+                                      <div className="col-span-4 mt-1">
+                                        <FormLabel>{fieldData.label}</FormLabel>
+                                      </div>
+                                      <div className="col-span-8">
+                                        <FormControl>
+                                          <Input
+                                            className={inputClass}
+                                            placeholder={fieldData.place}
+                                            {...fieldProps}
+                                          />
+                                        </FormControl>
+                                      </div>
+                                    </div>
+                                    <FormMessage />
+                                  </FormItem>
+                                )}
+                              />
+                            </div>
+                          ))}
+
+                          {/* <Controller
                             control={leadershipForm.control}
                             name={`leaderships.${index}.leadership_name`}
                             render={({ field }) => (
@@ -393,9 +536,12 @@ export default function AddOrEdit() {
                                 <FormMessage />
                               </FormItem>
                             )}
-                          />
+                          /> */}
 
-                          <Controller
+
+
+
+                          {/* <Controller
                             control={leadershipForm.control}
                             name={`leaderships.${index}.direct_account_required`}
                             render={({ field }) => (
@@ -417,9 +563,9 @@ export default function AddOrEdit() {
                                 <FormMessage />
                               </FormItem>
                             )}
-                          />
+                          /> */}
 
-                          <Controller
+                          {/* <Controller
                             control={leadershipForm.control}
                             name={`leaderships.${index}.team_account_required`}
                             render={({ field }) => (
@@ -441,9 +587,9 @@ export default function AddOrEdit() {
                                 <FormMessage />
                               </FormItem>
                             )}
-                          />
+                          /> */}
 
-                          <Controller
+                          {/* <Controller
                             control={leadershipForm.control}
                             name={`leaderships.${index}.total_account_included_team`}
                             render={({ field }) => (
@@ -465,9 +611,9 @@ export default function AddOrEdit() {
                                 <FormMessage />
                               </FormItem>
                             )}
-                          />
+                          /> */}
 
-                          <Controller
+                          {/* <Controller
                             control={leadershipForm.control}
                             name={`leaderships.${index}.leadership_award`}
                             render={({ field }) => (
@@ -489,8 +635,8 @@ export default function AddOrEdit() {
                                 <FormMessage />
                               </FormItem>
                             )}
-                          />
-
+                          /> */}
+{/* 
                           <Controller
                             control={leadershipForm.control}
                             name={`leaderships.${index}.monthly_reword_fund`}
@@ -513,9 +659,9 @@ export default function AddOrEdit() {
                                 <FormMessage />
                               </FormItem>
                             )}
-                          />
+                          /> */}
 
-                          <Controller
+                          {/* <Controller
                             control={leadershipForm.control}
                             name={`leaderships.${index}.mobile_recharged`}
                             render={({ field }) => (
@@ -537,9 +683,9 @@ export default function AddOrEdit() {
                                 <FormMessage />
                               </FormItem>
                             )}
-                          />
+                          /> */}
 
-                          <Controller
+                          {/* <Controller
                             control={leadershipForm.control}
                             name={`leaderships.${index}.drivepack_recharged`}
                             render={({ field }) => (
@@ -561,9 +707,9 @@ export default function AddOrEdit() {
                                 <FormMessage />
                               </FormItem>
                             )}
-                          />
+                          /> */}
 
-                          <Controller
+                          {/* <Controller
                             control={leadershipForm.control}
                             name={`leaderships.${index}.reseller_shop_ordered`}
                             render={({ field }) => (
@@ -585,7 +731,7 @@ export default function AddOrEdit() {
                                 <FormMessage />
                               </FormItem>
                             )}
-                          />
+                          /> */}
                         </div>
                       ))}
 
@@ -608,9 +754,6 @@ export default function AddOrEdit() {
                           {isLoading ? "Submitting..." : "Submit"}
                         </Button>
 
-                        <button type="submit" disabled={isLoading}>
-                          {isLoading ? "Submitting..." : "Submit"}
-                        </button>
                       </div>
                     </div>
                   </form>

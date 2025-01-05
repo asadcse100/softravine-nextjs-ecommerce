@@ -75,7 +75,7 @@ export default function AddOrEdit() {
     }
   }, [id, form]);
 
-  const onSubmit: SubmitHandler<z.infer<typeof formSchema1>> = async (values) => {
+  const onSubmit1: SubmitHandler<z.infer<typeof formSchema1>> = async (values) => {
     const apiUrl = process.env.NEXT_PUBLIC_API_URL || "";
 
     if (!apiUrl) {
@@ -86,13 +86,6 @@ export default function AddOrEdit() {
     setIsLoading(true);
 
     try {
-      // const response = await fetch(`${apiUrl}/server/api/routes/admin/deiliveryboy/configuration`, {
-      //   method: "POST",
-      //   headers: {
-      //     "Content-Type": "application/json",
-      //   },
-      //   body: JSON.stringify(values),
-      // });
       const method = id ? "PUT" : "POST";
       const url = id
         ? `${apiUrl}/server/api/routes/admin/deiliveryboy/configuration/${id}`
@@ -146,18 +139,6 @@ export default function AddOrEdit() {
     }
   };
 
-  // 2. Define a submit handler.
-  // function onSubmit1(values: z.infer<typeof formSchema1>) {
-  //   // Do something with the form values.
-  //   // ✅ This will be type-safe and validated.
-  //   console.log(values);
-  // }
-  // 2. Define a submit handler.
-  // function onSubmit2(values: z.infer<typeof formSchema2>) {
-  //   // Do something with the form values.
-  //   // ✅ This will be type-safe and validated.
-  //   console.log(values);
-  // }
 
   const inputClass = "bg-zinc-50 border border-slate-300 text-slate-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-slate-900 dark:border-slate-700 dark:placeholder-slate-700 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500";
 
@@ -285,7 +266,37 @@ export default function AddOrEdit() {
                   </div>
                   <div className="py-6">
                     <div className="flex flex-col gap-5.5 p-6.5">
-                      <FormField
+                    {[
+                        { name: "delivery_boy_mail_notification", label: "Send Mail" },
+                        { name: "delivery_boy_otp_notification", label: "Send OTP" },
+                      ].map((field) => (
+                        <div
+                          key={field.name}
+                          className="mt-3 flex flex-col gap-5.5 p-6.5"
+                        >
+                          <FormField
+                            control={form.control}
+                            name={field.name}
+                            render={({ field: fieldProps }) => (
+                              <FormItem>
+                                <div className="grid grid-cols-1 md:grid-cols-12">
+                                  <div className="col-span-3 mt-1">
+                                    <FormLabel>{field.label}</FormLabel>
+                                  </div>
+                                  <div className="col-span-8">
+                                    <FormControl>
+                                    <Switch />
+                                    </FormControl>
+                                  </div>
+                                </div>
+                                <FormMessage />
+                              </FormItem>
+                            )}
+                          />
+                        </div>
+                      ))}
+
+                      {/* <FormField
                         control={form.control}
                         name="delivery_boy_mail_notification"
                         render={({ field }) => (
@@ -297,9 +308,9 @@ export default function AddOrEdit() {
                             <FormMessage />
                           </FormItem>
                         )}
-                      />
+                      /> */}
                     </div>
-                    <div className="mt-3 flex flex-col gap-5.5 p-6.5">
+                    {/* <div className="mt-3 flex flex-col gap-5.5 p-6.5">
                       <FormField
                         control={form.control}
                         name="delivery_boy_otp_notification"
@@ -313,15 +324,8 @@ export default function AddOrEdit() {
                           </FormItem>
                         )}
                       />
-                    </div>
+                    </div> */}
                     <div className="grid mt-4 justify-items-end">
-                      {/* <Button
-                        className="dark:text-slate-200"
-                        variant="outline"
-                        type="submit"
-                      >
-                        Update
-                      </Button> */}
                       <Button
                         className="dark:text-slate-200"
                         variant="outline"

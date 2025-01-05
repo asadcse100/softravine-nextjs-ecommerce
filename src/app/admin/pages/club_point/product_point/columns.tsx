@@ -53,6 +53,27 @@ export type Products = {
 
 export const columns: ColumnDef<Products>[] = [
   {
+    id: "actions",
+    header: "Action",
+    cell: ({ row }) => {
+      const id = row.original.id;
+
+      return (
+        <DropdownMenu>
+          <DropdownMenuTrigger asChild>
+            <Button variant="ghost" className="h-8 w-8 p-0">
+              <span className="sr-only">Open menu</span>
+              <MoreHorizontal className="h-6 w-6" />
+            </Button>
+          </DropdownMenuTrigger>
+          <DropdownMenuContent className="dark:bg-slate-700 dark:text-slate-200 bg-slate-100" align="start">
+            <DropdownMenuItem className="dark:hover:bg-slate-500 hover:bg-slate-300"><Link href={`/admin/pages/club_point/product_point/addnew?id=${id}`}>Edit</Link></DropdownMenuItem>
+          </DropdownMenuContent>
+        </DropdownMenu>
+      );
+    },
+  },
+  {
     accessorKey: "image",
     header: "Image",
   },
@@ -80,25 +101,5 @@ export const columns: ColumnDef<Products>[] = [
   {
     accessorKey: "point",
     header: "Point",
-  },
-  {
-    id: "actions",
-    cell: ({ row }) => {
-      const id = row.original.id;
-
-      return (
-        <DropdownMenu>
-          <DropdownMenuTrigger asChild>
-            <Button variant="ghost" className="h-8 w-8 p-0">
-              <span className="sr-only">Open menu</span>
-              <MoreHorizontal className="h-6 w-6" />
-            </Button>
-          </DropdownMenuTrigger>
-          <DropdownMenuContent className="dark:bg-slate-700 dark:text-slate-200 bg-slate-100" align="start">
-            <DropdownMenuItem className="dark:hover:bg-slate-500 hover:bg-slate-300"><Link href={`/admin/pages/club_point/product_point/addnew?id=${id}`}>Edit</Link></DropdownMenuItem>
-          </DropdownMenuContent>
-        </DropdownMenu>
-      );
-    },
   },
 ];

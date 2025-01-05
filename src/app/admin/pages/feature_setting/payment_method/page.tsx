@@ -22,68 +22,68 @@ import { useState, useEffect } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 
 const formSchema = z.object({
-  PAYPAL_CLIENT_ID: z.string().min(10, {
-    message: "Product Name must be at least 10 characters.",
+  PAYPAL_CLIENT_ID: z.string().min(1, {
+    message: "Product Name must be at least 1 characters.",
   }),
-  PAYPAL_CLIENT_SECRET: z.string().min(10, {
-    message: "Product Name must be at least 10 characters.",
+  PAYPAL_CLIENT_SECRET: z.string().min(1, {
+    message: "Product Name must be at least 1 characters.",
   }),
-  paypal_sandbox: z.string().min(10, {
-    message: "Product Name must be at least 10 characters.",
+  paypal_sandbox: z.string().min(1, {
+    message: "Product Name must be at least 1 characters.",
   }),
-  STRIPE_KEY: z.string().min(10, {
-    message: "Product Name must be at least 10 characters.",
+  STRIPE_KEY: z.string().min(1, {
+    message: "Product Name must be at least 1 characters.",
   }),
-  STRIPE_SECRET: z.string().min(10, {
-    message: "Product Name must be at least 10 characters.",
+  STRIPE_SECRET: z.string().min(1, {
+    message: "Product Name must be at least 1 characters.",
   }),
-  BKASH_CHECKOUT_APP_KEY: z.string().min(10, {
-    message: "Product Name must be at least 10 characters.",
+  BKASH_CHECKOUT_APP_KEY: z.string().min(1, {
+    message: "Product Name must be at least 1 characters.",
   }),
-  BKASH_CHECKOUT_APP_SECRET: z.string().min(10, {
-    message: "Product Name must be at least 10 characters.",
+  BKASH_CHECKOUT_APP_SECRET: z.string().min(1, {
+    message: "Product Name must be at least 1 characters.",
   }),
-  BKASH_CHECKOUT_USER_NAME: z.string().min(10, {
-    message: "Product Name must be at least 10 characters.",
+  BKASH_CHECKOUT_USER_NAME: z.string().min(1, {
+    message: "Product Name must be at least 1 characters.",
   }),
-  BKASH_CHECKOUT_PASSWORD: z.string().min(10, {
-    message: "Product Name must be at least 10 characters.",
+  BKASH_CHECKOUT_PASSWORD: z.string().min(1, {
+    message: "Product Name must be at least 1 characters.",
   }),
-  bkash_sandbox: z.string().min(10, {
-    message: "Product Name must be at least 10 characters.",
+  bkash_sandbox: z.string().min(1, {
+    message: "Product Name must be at least 1 characters.",
   }),
-  NAGAD_MODE: z.string().min(10, {
-    message: "Product Name must be at least 10 characters.",
+  NAGAD_MODE: z.string().min(1, {
+    message: "Product Name must be at least 1 characters.",
   }),
-  NAGAD_MERCHANT_ID: z.string().min(10, {
-    message: "Product Name must be at least 10 characters.",
+  NAGAD_MERCHANT_ID: z.string().min(1, {
+    message: "Product Name must be at least 1 characters.",
   }),
-  NAGAD_MERCHANT_NUMBER: z.string().min(10, {
-    message: "Product Name must be at least 10 characters.",
+  NAGAD_MERCHANT_NUMBER: z.string().min(1, {
+    message: "Product Name must be at least 1 characters.",
   }),
-  NAGAD_PG_PUBLIC_KEY: z.string().min(10, {
-    message: "Product Name must be at least 10 characters.",
+  NAGAD_PG_PUBLIC_KEY: z.string().min(1, {
+    message: "Product Name must be at least 1 characters.",
   }),
-  NAGAD_MERCHANT_PRIVATE_KEY: z.string().min(10, {
-    message: "Product Name must be at least 10 characters.",
+  NAGAD_MERCHANT_PRIVATE_KEY: z.string().min(1, {
+    message: "Product Name must be at least 1 characters.",
   }),
-  SSLCZ_STORE_ID: z.string().min(10, {
-    message: "Product Name must be at least 10 characters.",
+  SSLCZ_STORE_ID: z.string().min(1, {
+    message: "Product Name must be at least 1 characters.",
   }),
-  SSLCZ_STORE_PASSWD: z.string().min(10, {
-    message: "Product Name must be at least 10 characters.",
+  SSLCZ_STORE_PASSWD: z.string().min(1, {
+    message: "Product Name must be at least 1 characters.",
   }),
-  sslcommerz_sandbox: z.string().min(10, {
-    message: "Product Name must be at least 10 characters.",
+  sslcommerz_sandbox: z.string().min(1, {
+    message: "Product Name must be at least 1 characters.",
   }),
-  AAMARPAY_STORE_ID: z.string().min(10, {
-    message: "Product Name must be at least 10 characters.",
+  AAMARPAY_STORE_ID: z.string().min(1, {
+    message: "Product Name must be at least 1 characters.",
   }),
-  AAMARPAY_SIGNATURE_KEY: z.string().min(10, {
-    message: "Product Name must be at least 10 characters.",
+  AAMARPAY_SIGNATURE_KEY: z.string().min(1, {
+    message: "Product Name must be at least 1 characters.",
   }),
-  aamarpay_sandbox: z.string().min(10, {
-    message: "Product Name must be at least 10 characters.",
+  aamarpay_sandbox: z.string().min(1, {
+    message: "Product Name must be at least 1 characters.",
   }),
 });
 
@@ -161,7 +161,7 @@ export default function AddOrEdit() {
         },
         body: JSON.stringify(values),
       });
-      
+
       if (!response.ok) {
         throw new Error("Failed to add payment method. Please try again.");
       }
@@ -196,31 +196,43 @@ export default function AddOrEdit() {
                   </div>
                   <div className="py-6">
                     <div className="flex flex-col gap-5.5 p-6.5">
-                      <FormField
-                        control={form.control}
-                        name="PAYPAL_CLIENT_ID"
-                        render={({ field }) => (
-                          <FormItem>
-                            <div className="grid grid-cols-1 md:grid-cols-12">
-                              <div className="col-span-3 mt-2">
-                                <FormLabel>Paypal Client Id</FormLabel>
-                              </div>
-                              <div className="col-span-8">
-                                <FormControl>
-                                  <Input
-                                    className={inputClass}
-                                    placeholder="Paypal Client Id"
-                                    {...field}
-                                  />
-                                </FormControl>
-                              </div>
-                            </div>
-                            <FormMessage />
-                          </FormItem>
-                        )}
-                      />
+                      {[
+                        { name: "PAYPAL_CLIENT_ID", label: "Paypal Client Id" },
+                        { name: "PAYPAL_CLIENT_SECRET", label: "Paypal Client Secret" },
+                        { name: "paypal_sandbox", label: "Paypal Sandbox Mode" },
+                      ].map((field) => (
+                        <div
+                          key={field.name}
+                          className="mt-3 flex flex-col gap-5.5 p-6.5"
+                        >
+                          <FormField
+                            control={form.control}
+                            name={field.name}
+                            render={({ field: fieldProps }) => (
+                              <FormItem>
+                                <div className="grid grid-cols-1 md:grid-cols-12">
+                                  <div className="col-span-3 mt-2">
+                                    <FormLabel>{field.label}</FormLabel>
+                                  </div>
+                                  <div className="col-span-8">
+                                    <FormControl>
+                                      <Input
+                                        className={inputClass}
+                                        placeholder={field.label}
+                                        {...fieldProps}
+                                      />
+                                    </FormControl>
+                                  </div>
+                                </div>
+                                <FormMessage />
+                              </FormItem>
+                            )}
+                          />
+                        </div>
+                      ))}
+
                     </div>
-                    <div className="mt-3 flex flex-col gap-5.5 p-6.5">
+                    {/* <div className="mt-3 flex flex-col gap-5.5 p-6.5">
                       <FormField
                         control={form.control}
                         name="PAYPAL_CLIENT_SECRET"
@@ -244,8 +256,8 @@ export default function AddOrEdit() {
                           </FormItem>
                         )}
                       />
-                    </div>
-                    <div className="mt-3 flex flex-col gap-5.5 p-6.5">
+                    </div> */}
+                    {/* <div className="mt-3 flex flex-col gap-5.5 p-6.5">
                       <FormField
                         control={form.control}
                         name="paypal_sandbox"
@@ -265,7 +277,7 @@ export default function AddOrEdit() {
                           </FormItem>
                         )}
                       />
-                    </div>
+                    </div> */}
                     <div className="grid mt-4 justify-items-end">
                       <Button
                         className="dark:text-slate-200"
@@ -287,55 +299,43 @@ export default function AddOrEdit() {
                   </div>
                   <div className="py-6">
                     <div className="flex flex-col gap-5.5 p-6.5">
-                      <FormField
-                        control={form.control}
-                        name="STRIPE_KEY"
-                        render={({ field }) => (
-                          <FormItem>
-                            <div className="grid grid-cols-1 md:grid-cols-12">
-                              <div className="col-span-3 mt-2">
-                                <FormLabel>Stripe Key</FormLabel>
-                              </div>
-                              <div className="col-span-8">
-                                <FormControl>
-                                  <Input
-                                    className={inputClass}
-                                    placeholder="Stripe Key"
-                                    {...field}
-                                  />
-                                </FormControl>
-                              </div>
-                            </div>
-                            <FormMessage />
-                          </FormItem>
-                        )}
-                      />
+                      {[
+                        { name: "STRIPE_KEY", label: "Stripe Key" },
+                        { name: "STRIPE_SECRET", label: "Stripe Secret" },
+                      ].map((field) => (
+                        <div
+                          key={field.name}
+                          className="mt-3 flex flex-col gap-5.5 p-6.5"
+                        >
+                          <FormField
+                            control={form.control}
+                            name={field.name}
+                            render={({ field: fieldProps }) => (
+                              <FormItem>
+                                <div className="grid grid-cols-1 md:grid-cols-12">
+                                  <div className="col-span-3 mt-2">
+                                    <FormLabel>{field.label}</FormLabel>
+                                  </div>
+                                  <div className="col-span-8">
+                                    <FormControl>
+                                      <Input
+                                        className={inputClass}
+                                        placeholder={field.label}
+                                        {...fieldProps}
+                                      />
+                                    </FormControl>
+                                  </div>
+                                </div>
+                                <FormMessage />
+                              </FormItem>
+                            )}
+                          />
+                        </div>
+                      ))}
+
+
                     </div>
-                    <div className="mt-3 flex flex-col gap-5.5 p-6.5">
-                      <FormField
-                        control={form.control}
-                        name="STRIPE_SECRET"
-                        render={({ field }) => (
-                          <FormItem>
-                            <div className="grid grid-cols-1 md:grid-cols-12">
-                              <div className="col-span-3 mt-2">
-                                <FormLabel>Stripe Secret</FormLabel>
-                              </div>
-                              <div className="col-span-8">
-                                <FormControl>
-                                  <Input
-                                    className={inputClass}
-                                    placeholder="Stripe Secret"
-                                    {...field}
-                                  />
-                                </FormControl>
-                              </div>
-                            </div>
-                            <FormMessage />
-                          </FormItem>
-                        )}
-                      />
-                    </div>
+
                     <div className="grid mt-4 justify-items-end">
                       <Button
                         className="dark:text-slate-200"
@@ -357,126 +357,44 @@ export default function AddOrEdit() {
                   </div>
                   <div className="py-6">
                     <div className="flex flex-col gap-5.5 p-6.5">
-                      <FormField
-                        control={form.control}
-                        name="BKASH_CHECKOUT_APP_KEY"
-                        render={({ field }) => (
-                          <FormItem>
-                            <div className="grid grid-cols-1 md:grid-cols-12">
-                              <div className="col-span-3 mt-2">
-                                <FormLabel>BKASH CHECKOUT APP KEY</FormLabel>
-                              </div>
-                              <div className="col-span-8">
-                                <FormControl>
-                                  <Input
-                                    className={inputClass}
-                                    placeholder="BKASH CHECKOUT APP KEY"
-                                    {...field}
-                                  />
-                                </FormControl>
-                              </div>
-                            </div>
-                            <FormMessage />
-                          </FormItem>
-                        )}
-                      />
+                      {[
+                        { name: "BKASH_CHECKOUT_APP_KEY", label: "BKASH CHECKOUT APP KEY" },
+                        { name: "BKASH_CHECKOUT_APP_SECRET", label: "BKASH CHECKOUT APP SECRET" },
+                        { name: "BKASH_CHECKOUT_USER_NAME", label: "BKASH CHECKOUT USER NAME" },
+                        { name: "BKASH_CHECKOUT_PASSWORD", label: "BKASH CHECKOUT PASSWORD" },
+                        { name: "bkash_sandbox", label: "Bkash Sandbox Mode" },
+                      ].map((field) => (
+                        <div
+                          key={field.name}
+                          className="mt-3 flex flex-col gap-5.5 p-6.5"
+                        >
+                          <FormField
+                            control={form.control}
+                            name={field.name}
+                            render={({ field: fieldProps }) => (
+                              <FormItem>
+                                <div className="grid grid-cols-1 md:grid-cols-12">
+                                  <div className="col-span-3 mt-2">
+                                    <FormLabel>{field.label}</FormLabel>
+                                  </div>
+                                  <div className="col-span-8">
+                                    <FormControl>
+                                      <Input
+                                        className={inputClass}
+                                        placeholder={field.label}
+                                        {...fieldProps}
+                                      />
+                                    </FormControl>
+                                  </div>
+                                </div>
+                                <FormMessage />
+                              </FormItem>
+                            )}
+                          />
+                        </div>
+                      ))}
                     </div>
-                    <div className="mt-3 flex flex-col gap-5.5 p-6.5">
-                      <FormField
-                        control={form.control}
-                        name="BKASH_CHECKOUT_APP_SECRET"
-                        render={({ field }) => (
-                          <FormItem>
-                            <div className="grid grid-cols-1 md:grid-cols-12">
-                              <div className="col-span-3 mt-2">
-                                <FormLabel>BKASH CHECKOUT APP SECRET</FormLabel>
-                              </div>
-                              <div className="col-span-8">
-                                <FormControl>
-                                  <Input
-                                    className={inputClass}
-                                    placeholder="BKASH CHECKOUT APP SECRET"
-                                    {...field}
-                                  />
-                                </FormControl>
-                              </div>
-                            </div>
-                            <FormMessage />
-                          </FormItem>
-                        )}
-                      />
-                    </div>
-                    <div className="mt-3 flex flex-col gap-5.5 p-6.5">
-                      <FormField
-                        control={form.control}
-                        name="BKASH_CHECKOUT_USER_NAME"
-                        render={({ field }) => (
-                          <FormItem>
-                            <div className="grid grid-cols-1 md:grid-cols-12">
-                              <div className="col-span-3 mt-2">
-                                <FormLabel>BKASH CHECKOUT USER NAME</FormLabel>
-                              </div>
-                              <div className="col-span-8">
-                                <FormControl>
-                                  <Input
-                                    className={inputClass}
-                                    placeholder="BKASH CHECKOUT USER NAME"
-                                    {...field}
-                                  />
-                                </FormControl>
-                              </div>
-                            </div>
-                            <FormMessage />
-                          </FormItem>
-                        )}
-                      />
-                    </div>
-                    <div className="mt-3 flex flex-col gap-5.5 p-6.5">
-                      <FormField
-                        control={form.control}
-                        name="BKASH_CHECKOUT_PASSWORD"
-                        render={({ field }) => (
-                          <FormItem>
-                            <div className="grid grid-cols-1 md:grid-cols-12">
-                              <div className="col-span-3 mt-2">
-                                <FormLabel>BKASH CHECKOUT PASSWORD</FormLabel>
-                              </div>
-                              <div className="col-span-8">
-                                <FormControl>
-                                  <Input
-                                    className={inputClass}
-                                    placeholder="BKASH CHECKOUT PASSWORD"
-                                    {...field}
-                                  />
-                                </FormControl>
-                              </div>
-                            </div>
-                            <FormMessage />
-                          </FormItem>
-                        )}
-                      />
-                    </div>
-                    <div className="mt-3 flex flex-col gap-5.5 p-6.5">
-                      <FormField
-                        control={form.control}
-                        name="bkash_sandbox"
-                        render={({ field }) => (
-                          <FormItem>
-                            <div className="grid grid-cols-1 md:grid-cols-12">
-                              <div className="col-span-3 mt-2">
-                                <FormLabel>Bkash Sandbox Mode</FormLabel>
-                              </div>
-                              <div className="col-span-8">
-                                <FormControl>
-                                  <Switch />
-                                </FormControl>
-                              </div>
-                            </div>
-                            <FormMessage />
-                          </FormItem>
-                        )}
-                      />
-                    </div>
+
                     <div className="grid mt-4 justify-items-end">
                       <Button
                         className="dark:text-slate-200"
@@ -498,129 +416,43 @@ export default function AddOrEdit() {
                   </div>
                   <div className="py-6">
                     <div className="flex flex-col gap-5.5 p-6.5">
-                      <FormField
-                        control={form.control}
-                        name="NAGAD_MODE"
-                        render={({ field }) => (
-                          <FormItem>
-                            <div className="grid grid-cols-1 md:grid-cols-12">
-                              <div className="col-span-3 mt-2">
-                                <FormLabel>NAGAD MODE</FormLabel>
-                              </div>
-                              <div className="col-span-8">
-                                <FormControl>
-                                  <Input
-                                    className={inputClass}
-                                    placeholder="NAGAD MODE"
-                                    {...field}
-                                  />
-                                </FormControl>
-                              </div>
-                            </div>
-                            <FormMessage />
-                          </FormItem>
-                        )}
-                      />
-                    </div>
-                    <div className="mt-3 flex flex-col gap-5.5 p-6.5">
-                      <FormField
-                        control={form.control}
-                        name="NAGAD_MERCHANT_ID"
-                        render={({ field }) => (
-                          <FormItem>
-                            <div className="grid grid-cols-1 md:grid-cols-12">
-                              <div className="col-span-3 mt-2">
-                                <FormLabel>NAGAD MERCHANT ID</FormLabel>
-                              </div>
-                              <div className="col-span-8">
-                                <FormControl>
-                                  <Input
-                                    className={inputClass}
-                                    placeholder="NAGAD MERCHANT ID"
-                                    {...field}
-                                  />
-                                </FormControl>
-                              </div>
-                            </div>
-                            <FormMessage />
-                          </FormItem>
-                        )}
-                      />
-                    </div>
-                    <div className="mt-3 flex flex-col gap-5.5 p-6.5">
-                      <FormField
-                        control={form.control}
-                        name="NAGAD_MERCHANT_NUMBER"
-                        render={({ field }) => (
-                          <FormItem>
-                            <div className="grid grid-cols-1 md:grid-cols-12">
-                              <div className="col-span-3 mt-2">
-                                <FormLabel>NAGAD MERCHANT NUMBER</FormLabel>
-                              </div>
-                              <div className="col-span-8">
-                                <FormControl>
-                                  <Input
-                                    className={inputClass}
-                                    placeholder="NAGAD MERCHANT NUMBER"
-                                    {...field}
-                                  />
-                                </FormControl>
-                              </div>
-                            </div>
-                            <FormMessage />
-                          </FormItem>
-                        )}
-                      />
-                    </div>
-                    <div className="mt-3 flex flex-col gap-5.5 p-6.5">
-                      <FormField
-                        control={form.control}
-                        name="NAGAD_PG_PUBLIC_KEY"
-                        render={({ field }) => (
-                          <FormItem>
-                            <div className="grid grid-cols-1 md:grid-cols-12">
-                              <div className="col-span-3 mt-2">
-                                <FormLabel>NAGAD PG PUBLIC KEY</FormLabel>
-                              </div>
-                              <div className="col-span-8">
-                                <FormControl>
-                                  <Input
-                                    className={inputClass}
-                                    placeholder="NAGAD PG PUBLIC KEY"
-                                    {...field}
-                                  />
-                                </FormControl>
-                              </div>
-                            </div>
-                            <FormMessage />
-                          </FormItem>
-                        )}
-                      />
-                    </div>
-                    <div className="mt-3 flex flex-col gap-5.5 p-6.5">
-                      <FormField
-                        control={form.control}
-                        name="NAGAD_MERCHANT_PRIVATE_KEY"
-                        render={({ field }) => (
-                          <FormItem>
-                            <div className="grid grid-cols-1 md:grid-cols-12">
-                              <div className="col-span-3 mt-2">
-                                <FormLabel>NAGAD MERCHANT PRIVATE KEY</FormLabel>
-                              </div>
-                              <div className="col-span-8">
-                                <FormControl>
-                                  <Input
-                                    className={inputClass}
-                                    placeholder="NAGAD MERCHANT PRIVATE KEY"
-                                    {...field}
-                                  />
-                                </FormControl>
-                              </div>
-                            </div>
-                            <FormMessage />
-                          </FormItem>
-                        )}
-                      />
+                      {[
+                        { name: "NAGAD_MODE", label: "NAGAD MODE" },
+                        { name: "NAGAD_MERCHANT_ID", label: "NAGAD MERCHANT ID" },
+                        { name: "NAGAD_MERCHANT_NUMBER", label: "NAGAD MERCHANT NUMBER" },
+                        { name: "NAGAD_PG_PUBLIC_KEY", label: "NAGAD PG PUBLIC KEY" },
+                        { name: "NAGAD_MERCHANT_PRIVATE_KEY", label: "NAGAD MERCHANT PRIVATE KEY" },
+                      ].map((field) => (
+                        <div
+                          key={field.name}
+                          className="mt-3 flex flex-col gap-5.5 p-6.5"
+                        >
+                          <FormField
+                            control={form.control}
+                            name={field.name}
+                            render={({ field: fieldProps }) => (
+                              <FormItem>
+                                <div className="grid grid-cols-1 md:grid-cols-12">
+                                  <div className="col-span-3 mt-2">
+                                    <FormLabel>{field.label}</FormLabel>
+                                  </div>
+                                  <div className="col-span-8">
+                                    <FormControl>
+                                      <Input
+                                        className={inputClass}
+                                        placeholder={field.label}
+                                        {...fieldProps}
+                                      />
+                                    </FormControl>
+                                  </div>
+                                </div>
+                                <FormMessage />
+                              </FormItem>
+                            )}
+                          />
+                        </div>
+                      ))}
+
                     </div>
                     <div className="grid mt-4 justify-items-end">
                       <Button
@@ -643,71 +475,40 @@ export default function AddOrEdit() {
                   </div>
                   <div className="py-6">
                     <div className="flex flex-col gap-5.5 p-6.5">
-                      <FormField
-                        control={form.control}
-                        name="SSLCZ_STORE_ID"
-                        render={({ field }) => (
-                          <FormItem>
-                            <div className="grid grid-cols-1 md:grid-cols-12">
-                              <div className="col-span-3 mt-2">
-                                <FormLabel>Sslcz Store Id</FormLabel>
-                              </div>
-                              <div className="col-span-8">
-                                <FormControl>
-                                  <Input
-                                    className={inputClass}
-                                    placeholder="Sslcz Store Id"
-                                    {...field}
-                                  />
-                                </FormControl>
-                              </div>
-                            </div>
-                            <FormMessage />
-                          </FormItem>
-                        )}
-                      />
-                    </div>
-                    <div className="mt-3 flex flex-col gap-5.5 p-6.5">
-                      <FormField
-                        control={form.control}
-                        name="SSLCZ_STORE_PASSWD"
-                        render={({ field }) => (
-                          <FormItem>
-                            <div className="grid grid-cols-1 md:grid-cols-12">
-                              <div className="col-span-3 mt-2">
-                                <FormLabel>Sslcz store password</FormLabel>
-                              </div>
-                              <div className="col-span-8">
-                                <FormControl>
-                                  <Input
-                                    className={inputClass}
-                                    placeholder="Sslcz store password"
-                                    {...field}
-                                  />
-                                </FormControl>
-                              </div>
-                            </div>
-                            <FormMessage />
-                          </FormItem>
-                        )}
-                      />
-                    </div>
-                    <div className="mt-3 flex flex-col gap-5.5 p-6.5">
-                      <FormField
-                        control={form.control}
-                        name="sslcommerz_sandbox"
-                        render={({ field }) => (
-                          <FormItem>
-                            <div className="flex items-center space-x-12">
-                              <FormLabel className="mt-2">
-                                Sslcommerz Sandbox Mode
-                              </FormLabel>
-                              <Switch />
-                            </div>
-                            <FormMessage />
-                          </FormItem>
-                        )}
-                      />
+                      {[
+                        { name: "SSLCZ_STORE_ID", label: "Sslcz Store Id" },
+                        { name: "SSLCZ_STORE_PASSWD", label: "Sslcz store password" },
+                        { name: "sslcommerz_sandbox", label: "Sslcommerz Sandbox Mode" },
+                      ].map((field) => (
+                        <div
+                          key={field.name}
+                          className="mt-3 flex flex-col gap-5.5 p-6.5"
+                        >
+                          <FormField
+                            control={form.control}
+                            name={field.name}
+                            render={({ field: fieldProps }) => (
+                              <FormItem>
+                                <div className="grid grid-cols-1 md:grid-cols-12">
+                                  <div className="col-span-3 mt-2">
+                                    <FormLabel>{field.label}</FormLabel>
+                                  </div>
+                                  <div className="col-span-8">
+                                    <FormControl>
+                                      <Input
+                                        className={inputClass}
+                                        placeholder={field.label}
+                                        {...fieldProps}
+                                      />
+                                    </FormControl>
+                                  </div>
+                                </div>
+                                <FormMessage />
+                              </FormItem>
+                            )}
+                          />
+                        </div>
+                      ))}
                     </div>
                     <div className="grid mt-4 justify-items-end">
                       <Button
@@ -730,80 +531,43 @@ export default function AddOrEdit() {
                   </div>
                   <div className="py-6">
                     <div className="flex flex-col gap-5.5 p-6.5">
-                      <FormField
-                        control={form.control}
-                        name="AAMARPAY_STORE_ID"
-                        render={({ field }) => (
-                          <FormItem>
-                            <div className="grid grid-cols-1 md:grid-cols-12">
-                              <div className="col-span-3 mt-2">
-                                <FormLabel>Aamarpay Store Id</FormLabel>
-                              </div>
-                              <div className="col-span-8">
-                                <FormControl>
-                                  <Input
-                                    className={inputClass}
-                                    placeholder="Aamarpay Store Id"
-                                    {...field}
-                                  />
-                                </FormControl>
-                              </div>
-                            </div>
-                            <FormMessage />
-                          </FormItem>
-                        )}
-                      />
+                      {[
+                        { name: "AAMARPAY_STORE_ID", label: "Aamarpay Store Id" },
+                        { name: "AAMARPAY_SIGNATURE_KEY", label: "Aamarpay signature key" },
+                        { name: "aamarpay_sandbox", label: "Aamarpay Sandbox Mode" },
+                      ].map((field) => (
+                        <div
+                          key={field.name}
+                          className="mt-3 flex flex-col gap-5.5 p-6.5"
+                        >
+                          <FormField
+                            control={form.control}
+                            name={field.name}
+                            render={({ field: fieldProps }) => (
+                              <FormItem>
+                                <div className="grid grid-cols-1 md:grid-cols-12">
+                                  <div className="col-span-3 mt-2">
+                                    <FormLabel>{field.label}</FormLabel>
+                                  </div>
+                                  <div className="col-span-8">
+                                    <FormControl>
+                                      <Input
+                                        className={inputClass}
+                                        placeholder={field.label}
+                                        {...fieldProps}
+                                      />
+                                    </FormControl>
+                                  </div>
+                                </div>
+                                <FormMessage />
+                              </FormItem>
+                            )}
+                          />
+                        </div>
+                      ))}
                     </div>
-                    <div className="mt-3 flex flex-col gap-5.5 p-6.5">
-                      <FormField
-                        control={form.control}
-                        name="AAMARPAY_SIGNATURE_KEY"
-                        render={({ field }) => (
-                          <FormItem>
-                            <div className="grid grid-cols-1 md:grid-cols-12">
-                              <div className="col-span-3 mt-2">
-                                <FormLabel>Aamarpay signature key</FormLabel>
-                              </div>
-                              <div className="col-span-8">
-                                <FormControl>
-                                  <Input
-                                    className={inputClass}
-                                    placeholder="Aamarpay signature key"
-                                    {...field}
-                                  />
-                                </FormControl>
-                              </div>
-                            </div>
-                            <FormMessage />
-                          </FormItem>
-                        )}
-                      />
-                    </div>
-                    <div className="mt-3 flex flex-col gap-5.5 p-6.5">
-                      <FormField
-                        control={form.control}
-                        name="aamarpay_sandbox"
-                        render={({ field }) => (
-                          <FormItem>
-                            <div className="flex items-center space-x-12">
-                              <FormLabel className="mt-2">
-                                Aamarpay Sandbox Mode
-                              </FormLabel>
-                              <Switch />
-                            </div>
-                            <FormMessage />
-                          </FormItem>
-                        )}
-                      />
-                    </div>
+
                     <div className="grid mt-4 justify-items-end">
-                      {/* <Button
-                        className="dark:text-slate-200"
-                        variant="outline"
-                        type="submit"
-                      >
-                        Save
-                      </Button> */}
                       <Button
                         className="dark:text-slate-200"
                         variant="outline"

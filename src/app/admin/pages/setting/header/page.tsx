@@ -2,7 +2,7 @@
 
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm, SubmitHandler } from "react-hook-form";
-import { showErrorToast, showSuccessToast} from "@/app/admin/components/Toast";
+import { showErrorToast, showSuccessToast } from "@/app/admin/components/Toast";
 import { useState, useEffect } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { z } from "zod";
@@ -59,12 +59,12 @@ export default function AddOrEdit() {
 
   const onSubmit: SubmitHandler<z.infer<typeof formSchema>> = async (values) => {
     const apiUrl = process.env.NEXT_PUBLIC_API_URL || "";
-    
+
     if (!apiUrl) {
       showErrorToast("API URL is not configured.");
       return;
     }
-  
+
     setIsLoading(true);
 
     try {
@@ -80,7 +80,7 @@ export default function AddOrEdit() {
         },
         body: JSON.stringify(values),
       });
-      
+
       if (!response.ok) {
         throw new Error("Failed to add header setting. Please try again.");
       }
@@ -115,169 +115,74 @@ export default function AddOrEdit() {
                   </div>
                   <div className="py-6">
                     <div className="flex flex-col gap-5.5 p-6.5">
-                      <FormField
-                        control={form.control}
-                        name="header_logo"
-                        render={({ field }) => (
-                          <FormItem>
-                            <div className="grid grid-cols-1 md:grid-cols-12">
-                              <div className="col-span-3 mt-2">
-                                <FormLabel>Header Logo</FormLabel>
-                              </div>
-                              <div className="col-span-8">
-                                <FormControl>
-                                  <Input
-                                    className={inputClass}
-                                    placeholder="Header Logo"
-                                    {...field}
-                                  />
-                                </FormControl>
-                              </div>
-                            </div>
-                            <FormMessage />
-                          </FormItem>
-                        )}
-                      />
+                      {[
+                        { name: "header_logo", label: "Header Logo" },
+                        { name: "show_language_switcher", label: "Show Language Switcher?" },
+                        { name: "show_currency_switcher", label: "Show Currency Switcher?" },
+                        { name: "header_stikcy", label: "Enable stikcy header?" },
+                        { name: "topbar_banner", label: "Topbar Banner" },
+                        { name: "topbar_banner_link", label: "Topbar Banner Link" },
+                        { name: "helpline_number", label: "Help line number" },
+                      ].map((field) => (
+                        <div
+                          key={field.name}
+                          className="mt-3 flex flex-col gap-5.5 p-6.5"
+                        >
+                          <FormField
+                            control={form.control}
+                            name={field.name}
+                            render={({ field: fieldProps }) => (
+                              <FormItem>
+                                <div className="grid grid-cols-1 md:grid-cols-12">
+                                  <div className="col-span-3 mt-1">
+                                    <FormLabel>{field.label}</FormLabel>
+                                  </div>
+                                  <div className="col-span-8">
+                                    <FormControl>
+                                      {field.name === "header_logo" ? (
+                                        <Input
+                                          className={inputClass}
+                                          placeholder={field.label}
+                                          {...fieldProps}
+                                        />
+                                      ) : field.name === "show_language_switcher" ? (
+                                        <Switch />
+                                      ) : field.name === "show_currency_switcher" ? (
+                                        <Switch />
+                                      ) : field.name === "header_stikcy" ? (
+                                        <Switch />
+                                      ) : field.name === "topbar_banner" ? (
+                                        <Input type="file"
+                                          className={inputClass}
+                                          placeholder={field.label}
+                                          {...fieldProps}
+                                        />
+                                      ) : field.name === "topbar_banner_link" ? (
+                                        <Input
+                                          className={inputClass}
+                                          placeholder={field.label}
+                                          {...fieldProps}
+                                        />
+                                      ) : field.name === "helpline_number" ? (
+                                        <Input
+                                          className={inputClass}
+                                          placeholder={field.label}
+                                          {...fieldProps}
+                                        />
+                                      ) : null}
+
+                                    </FormControl>
+                                  </div>
+                                </div>
+                                <FormMessage />
+                              </FormItem>
+                            )}
+                          />
+                        </div>
+                      ))}
+
                     </div>
-                    <div className="mt-3 flex flex-col gap-5.5 p-6.5">
-                      <FormField
-                        control={form.control}
-                        name="show_language_switcher"
-                        render={({ field }) => (
-                          <FormItem>
-                            <div className="grid grid-cols-1 md:grid-cols-12">
-                              <div className="col-span-6">
-                                <FormLabel>Show Language Switcher?</FormLabel>
-                              </div>
-                              <div className="col-span-6">
-                                <FormControl>
-                                  <Switch />
-                                </FormControl>
-                              </div>
-                            </div>
-                            <FormMessage />
-                          </FormItem>
-                        )}
-                      />
-                    </div>
-                    <div className="mt-3 flex flex-col gap-5.5 p-6.5">
-                      <FormField
-                        control={form.control}
-                        name="show_currency_switcher"
-                        render={({ field }) => (
-                          <FormItem>
-                            <div className="grid grid-cols-1 md:grid-cols-12">
-                              <div className="col-span-6">
-                                <FormLabel>Show Currency Switcher?</FormLabel>
-                              </div>
-                              <div className="col-span-6">
-                                <FormControl>
-                                  <Switch />
-                                </FormControl>
-                              </div>
-                            </div>
-                            <FormMessage />
-                          </FormItem>
-                        )}
-                      />
-                    </div>
-                    <div className="mt-3 flex flex-col gap-5.5 p-6.5">
-                      <FormField
-                        control={form.control}
-                        name="header_stikcy"
-                        render={({ field }) => (
-                          <FormItem>
-                            <div className="grid grid-cols-1 md:grid-cols-12">
-                              <div className="col-span-6">
-                                <FormLabel>Enable stikcy header?</FormLabel>
-                              </div>
-                              <div className="col-span-6">
-                                <FormControl>
-                                  <Switch />
-                                </FormControl>
-                              </div>
-                            </div>
-                            <FormMessage />
-                          </FormItem>
-                        )}
-                      />
-                    </div>
-                    <hr />
-                    <div className="mt-3 flex flex-col gap-5.5 p-6.5">
-                      <FormField
-                        control={form.control}
-                        name="topbar_banner"
-                        render={({ field }) => (
-                          <FormItem>
-                            <div className="grid grid-cols-1 md:grid-cols-12">
-                              <div className="col-span-3 mt-2">
-                                <FormLabel>Topbar Banner</FormLabel>
-                              </div>
-                              <div className="col-span-8">
-                                <FormControl>
-                                  <Input type="file"
-                                    className={inputClass}
-                                    placeholder="Topbar Banner"
-                                    {...field}
-                                  />
-                                </FormControl>
-                              </div>
-                            </div>
-                            <FormMessage />
-                          </FormItem>
-                        )}
-                      />
-                    </div>
-                    <div className="mt-3 flex flex-col gap-5.5 p-6.5">
-                      <FormField
-                        control={form.control}
-                        name="topbar_banner_link"
-                        render={({ field }) => (
-                          <FormItem>
-                            <div className="grid grid-cols-1 md:grid-cols-12">
-                              <div className="col-span-3 mt-2">
-                                <FormLabel>Topbar Banner Link</FormLabel>
-                              </div>
-                              <div className="col-span-8">
-                                <FormControl>
-                                  <Input
-                                    className={inputClass}
-                                    placeholder="Topbar Banner Link"
-                                    {...field}
-                                  />
-                                </FormControl>
-                              </div>
-                            </div>
-                            <FormMessage />
-                          </FormItem>
-                        )}
-                      />
-                    </div>
-                    <div className="mt-3 flex flex-col gap-5.5 p-6.5">
-                      <FormField
-                        control={form.control}
-                        name="helpline_number"
-                        render={({ field }) => (
-                          <FormItem>
-                            <div className="grid grid-cols-1 md:grid-cols-12">
-                              <div className="col-span-3 mt-2">
-                                <FormLabel>Help line number</FormLabel>
-                              </div>
-                              <div className="col-span-8">
-                                <FormControl>
-                                  <Input
-                                    className={inputClass}
-                                    placeholder="Help line number"
-                                    {...field}
-                                  />
-                                </FormControl>
-                              </div>
-                            </div>
-                            <FormMessage />
-                          </FormItem>
-                        )}
-                      />
-                    </div>
+
 
                     <div className="grid mt-3 justify-items-end">
                       <Button
@@ -301,40 +206,53 @@ export default function AddOrEdit() {
                   </div>
                   <div className="py-6">
                     <div className="mt-3 flex flex-col gap-5.5 p-6.5">
-                      <FormField
-                        control={form.control}
-                        name="header_menu_labels[]"
-                        render={({ field }) => (
-                          <FormItem>
-                            {/* <FormLabel>Home</FormLabel> */}
-                            <FormControl>
-                              <Input
-                                className={inputClass}
-                                placeholder="Home"
-                                {...field}
-                              />
-                            </FormControl>
-                            <FormMessage />
-                          </FormItem>
-                        )}
-                      />
-                      <FormField
-                        control={form.control}
-                        name="header_menu_links[]"
-                        render={({ field }) => (
-                          <FormItem>
-                            {/* <FormLabel>Home</FormLabel> */}
-                            <FormControl>
-                              <Input
-                                className={inputClass}
-                                placeholder="https://demo.softravine.com/ecommerce/"
-                                {...field}
-                              />
-                            </FormControl>
-                            <FormMessage />
-                          </FormItem>
-                        )}
-                      />
+                      {[
+                        { name: "header_menu_labels", label: "Home Page", place: "https://demo.softravine.com/ecommerce/" },
+                      ].map((field) => (
+                        <div
+                          key={field.name}
+                          className="mt-3 flex flex-col gap-5.5 p-6.5"
+                        >
+                          <FormField
+                            control={form.control}
+                            name={field.name}
+                            render={({ field: fieldProps }) => (
+                              <FormItem>
+                                <div className="grid grid-cols-1 md:grid-cols-12">
+                                  <div className="col-span-3">
+                                    {/* <FormLabel>{field.label}</FormLabel> */}
+                                    <Input
+                                      className={inputClass}
+                                      placeholder={field.label}
+                                      {...fieldProps}
+                                    />
+                                  </div>
+                                  <div className="col-span-9">
+                                    <FormControl>
+                                      {field.name === "header_menu_labels" ? (
+                                        <Input
+                                          className={inputClass}
+                                          placeholder={field.place}
+                                          {...fieldProps}
+                                        />
+                                      ) : field.name === "helpline_number" ? (
+                                        <Input
+                                          className={inputClass}
+                                          placeholder={field.label}
+                                          {...fieldProps}
+                                        />
+                                      ) : null}
+
+                                    </FormControl>
+                                  </div>
+                                </div>
+                                <FormMessage />
+                              </FormItem>
+                            )}
+                          />
+                        </div>
+                      ))}
+
                     </div>
                     <div className="mt-3 flex flex-col gap-5.5 p-6.5">
                       <FormField
@@ -598,13 +516,13 @@ export default function AddOrEdit() {
                         Update
                       </Button> */}
                       <Button
-                          className="dark:text-slate-200"
-                          variant="outline"
-                          type="submit"
-                          disabled={isLoading}
-                        >
-                          {isLoading ? "Submitting..." : "Submit"}
-                        </Button>
+                        className="dark:text-slate-200"
+                        variant="outline"
+                        type="submit"
+                        disabled={isLoading}
+                      >
+                        {isLoading ? "Submitting..." : "Submit"}
+                      </Button>
                     </div>
                   </div>
                 </div>

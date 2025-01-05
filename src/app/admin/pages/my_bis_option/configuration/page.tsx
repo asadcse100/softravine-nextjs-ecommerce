@@ -18,7 +18,8 @@ import Input from "@/shared/Input/Input";
 import Select from "@/shared/Select/Select";
 import { Switch } from "@/app/admin/components/ui/switch";
 import { showErrorToast, showSuccessToast } from "@/app/admin/components/Toast";
-import { useState, useEffect } from 'react';
+import { useState, useEffect } from "react";
+import { useRouter, useSearchParams } from "next/navigation";
 
 const formSchema1 = z.object({
   delivery_boy_payment_type: z.string().min(10, {
@@ -74,7 +75,7 @@ export default function AddOrEdit() {
     }
   }, [id, form]);
 
-  const onSubmit: SubmitHandler<z.infer<typeof formSchema>> = async (values) => {
+  const onSubmit1: SubmitHandler<z.infer<typeof formSchema>> = async (values) => {
     const apiUrl = process.env.NEXT_PUBLIC_API_URL || "";
 
     if (!apiUrl) {
@@ -85,13 +86,6 @@ export default function AddOrEdit() {
     setIsLoading(true);
 
     try {
-      // const response = await fetch(`${apiUrl}/server/api/routes/admin/my_bis_option/configuration`, {
-      //   method: "POST",
-      //   headers: {
-      //     "Content-Type": "application/json",
-      //   },
-      //   body: JSON.stringify(values),
-      // });
       const method = id ? "PUT" : "POST";
       const url = id
         ? `${apiUrl}/server/api/routes/admin/my_bis_option/configuration/${id}`
@@ -148,7 +142,55 @@ export default function AddOrEdit() {
                   </div>
                   <div className="py-6">
                     <div className="flex flex-col gap-5.5 p-6.5">
-                      <FormField
+                    {[
+                        { name: "monthly_salary", label: "Monthly Salary" },
+                        { name: "salary_amount", label: "Salary Amount" },
+                        { name: "per_order_commission", label: "Per Order Commission" },
+                        { name: "commission_rate", label: "Commission Rate" },
+                      ].map((field) => (
+                        <div
+                          key={field.name}
+                          className="mt-3 flex flex-col gap-5.5 p-6.5"
+                        >
+                          <FormField
+                            control={form.control}
+                            name={field.name}
+                            render={({ field: fieldProps }) => (
+                              <FormItem>
+                                <div className="grid grid-cols-1 md:grid-cols-12">
+                                  <div className="col-span-4 mt-1">
+                                    <FormLabel>{field.label}</FormLabel>
+                                  </div>
+                                  <div className="col-span-8">
+                                    <FormControl>
+                                      {field.name === "monthly_salary" ? (
+                                        <Switch />
+                                      ) : field.name === "salary_amount" ? (
+                                        <Input
+                                          className={inputClass}
+                                          placeholder={field.label}
+                                          {...fieldProps}
+                                        />
+                                      ) : field.name === "per_order_commission" ? (
+                                        <Switch />
+                                      ) : field.name === "commission_rate" ? (
+                                        <Input
+                                          className={inputClass}
+                                          placeholder={field.label}
+                                          {...fieldProps}
+                                        />
+                                      ) : null}
+                                    </FormControl>
+                                  </div>
+                                </div>
+                                <FormMessage />
+                              </FormItem>
+                            )}
+                          />
+                        </div>
+                      ))}
+
+                      {/* <FormField
                         control={form.control}
                         name="delivery_boy_payment_type"
                         render={({ field }) => (
@@ -160,9 +202,9 @@ export default function AddOrEdit() {
                             <FormMessage />
                           </FormItem>
                         )}
-                      />
+                      /> */}
                     </div>
-                    <div className="mt-3 flex flex-col gap-5.5 p-6.5">
+                    {/* <div className="mt-3 flex flex-col gap-5.5 p-6.5">
                       <FormField
                         control={form.control}
                         name="delivery_boy_salary"
@@ -186,8 +228,8 @@ export default function AddOrEdit() {
                           </FormItem>
                         )}
                       />
-                    </div>
-                    <div className="mt-3 flex flex-col gap-5.5 p-6.5">
+                    </div> */}
+                    {/* <div className="mt-3 flex flex-col gap-5.5 p-6.5">
                       <FormField
                         control={form.control}
                         name="delivery_boy_payment_type"
@@ -201,8 +243,8 @@ export default function AddOrEdit() {
                           </FormItem>
                         )}
                       />
-                    </div>
-                    <div className="mt-3 flex flex-col gap-5.5 p-6.5">
+                    </div> */}
+                    {/* <div className="mt-3 flex flex-col gap-5.5 p-6.5">
                       <FormField
                         control={form.control}
                         name="delivery_boy_commission"
@@ -226,7 +268,7 @@ export default function AddOrEdit() {
                           </FormItem>
                         )}
                       />
-                    </div>
+                    </div> */}
                     <div className="grid mt-4 justify-items-end">
                       <Button
                         className="dark:text-slate-200"
@@ -252,7 +294,41 @@ export default function AddOrEdit() {
                   </div>
                   <div className="py-6">
                     <div className="flex flex-col gap-5.5 p-6.5">
-                      <FormField
+                    {[
+                        { name: "delivery_boy_mail_notification", label: "Send Mail" },
+                        { name: "delivery_boy_mail_notification", label: "Send OTP" },
+                      ].map((field) => (
+                        <div
+                          key={field.name}
+                          className="mt-3 flex flex-col gap-5.5 p-6.5"
+                        >
+                          <FormField
+                            control={form.control}
+                            name={field.name}
+                            render={({ field: fieldProps }) => (
+                              <FormItem>
+                                <div className="grid grid-cols-1 md:grid-cols-12">
+                                  <div className="col-span-4 mt-1">
+                                    <FormLabel>{field.label}</FormLabel>
+                                  </div>
+                                  <div className="col-span-8">
+                                    <FormControl>
+                                      {field.name === "delivery_boy_mail_notification" ? (
+                                        <Switch />
+                                      ) : field.name === "delivery_boy_mail_notification" ? (
+                                        <Switch />
+                                      ) : null}
+                                    </FormControl>
+                                  </div>
+                                </div>
+                                <FormMessage />
+                              </FormItem>
+                            )}
+                          />
+                        </div>
+                      ))}
+
+                      {/* <FormField
                         control={form.control}
                         name="delivery_boy_mail_notification"
                         render={({ field }) => (
@@ -264,9 +340,9 @@ export default function AddOrEdit() {
                             <FormMessage />
                           </FormItem>
                         )}
-                      />
+                      /> */}
                     </div>
-                    <div className="mt-3 flex flex-col gap-5.5 p-6.5">
+                    {/* <div className="mt-3 flex flex-col gap-5.5 p-6.5">
                       <FormField
                         control={form.control}
                         name="delivery_boy_otp_notification"
@@ -280,15 +356,8 @@ export default function AddOrEdit() {
                           </FormItem>
                         )}
                       />
-                    </div>
+                    </div> */}
                     <div className="grid mt-4 justify-items-end">
-                      {/* <Button
-                        className="dark:text-slate-200"
-                        variant="outline"
-                        type="submit"
-                      >
-                        Update
-                      </Button> */}
                       <Button
                         className="dark:text-slate-200"
                         variant="outline"

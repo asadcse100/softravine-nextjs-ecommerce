@@ -35,23 +35,23 @@ import Breadcrumb from "@/app/business/components/Breadcrumbs/Breadcrumb";
 import { showErrorToast, showSuccessToast } from "@/app/admin/components/Toast";
 
 const formSchema = z.object({
-  code: z.string().min(10, {
-    message: "code must be at least 10 characters.",
+  code: z.string().min(1, {
+    message: "code must be at least 1 characters.",
   }),
-  product_ids: z.string().min(10, {
-    message: "product_ids must be at least 10 characters.",
+  product_ids: z.string().min(1, {
+    message: "product_ids must be at least 1 characters.",
   }),
-  date_range: z.string().min(10, {
-    message: "date_range must be at least 10 characters.",
+  date_range: z.string().min(1, {
+    message: "date_range must be at least 1 characters.",
   }),
-  discount: z.string().min(10, {
-    message: "discount must be at least 10 characters.",
+  discount: z.string().min(1, {
+    message: "discount must be at least 1 characters.",
   }),
-  min_buy: z.string().min(10, {
-    message: "discount must be at least 10 characters.",
+  min_buy: z.string().min(1, {
+    message: "discount must be at least 1 characters.",
   }),
-  max_discount: z.string().min(10, {
-    message: "max_discount must be at least 10 characters.",
+  max_discount: z.string().min(1, {
+    message: "max_discount must be at least 1 characters.",
   }),
 });
 
@@ -70,7 +70,7 @@ export default function AccountPage() {
       max_discount: "",
     },
   });
-  
+
   const [isLoading, setIsLoading] = useState(false);
 
   // Fetch data if editing an existing ticket
@@ -176,7 +176,63 @@ export default function AccountPage() {
               </div>
 
               <div className="flex-grow mt-10 md:mt-0 md:pl-16 max-w-3xl space-y-3">
-                <FormField
+                {[
+                  { name: "full_name", label: "Full Name" },
+                  { name: "email", label: "Email" },
+                  { name: "phone", label: "Phone number" },
+                  { name: "full_address", label: "Full Address" },
+                  { name: "about_you", label: "About You" },
+                ].map((field) => (
+                  <div
+                    key={field.name}
+                    className="mt-3 flex flex-col gap-5.5 p-6.5"
+                  >
+                    <FormField
+                      control={form.control}
+                      name={field.name}
+                      render={({ field: fieldProps }) => (
+                        <FormItem>
+                          <div className="grid grid-cols-1 md:grid-cols-12">
+                            <div className="col-span-3 mt-1">
+                              <FormLabel>{field.label}</FormLabel>
+                            </div>
+                            <div className="col-span-8">
+                              <FormControl>
+                                {field.name === "full_name" ? (
+                                  <Input type="text"
+                                    className={inputClass}
+                                    placeholder={field.label}
+                                    {...fieldProps}
+                                  />
+                                ) : field.name === "email" ? (
+                                  <Input type="email"
+                                    className={inputClass}
+                                    placeholder={field.label}
+                                    {...fieldProps}
+                                  />
+                                ) : field.name === "phone" ? (
+                                  <Input type="phone"
+                                  className={inputClass}
+                                  placeholder={field.label}
+                                  {...fieldProps}
+                                  />
+                                ) : field.name === "full_address" ? (
+                                  <Textarea/>
+                                ) : field.name === "about_you" ? (
+                                  <Textarea/>
+                                ) : null}
+
+                              </FormControl>
+                            </div>
+                          </div>
+                          <FormMessage />
+                        </FormItem>
+                      )}
+                    />
+                  </div>
+                ))}
+
+                {/* <FormField
                   control={form.control}
                   name="code"
                   render={({ field }) => (
@@ -198,7 +254,7 @@ export default function AccountPage() {
                       <FormMessage />
                     </FormItem>
                   )}
-                />
+                /> */}
 
                 {/* ---- */}
 
@@ -218,7 +274,7 @@ export default function AccountPage() {
                   </div>
                 </div>
                  */}
-                <FormField
+                {/* <FormField
                   control={form.control}
                   name="code"
                   render={({ field }) => (
@@ -240,7 +296,7 @@ export default function AccountPage() {
                       <FormMessage />
                     </FormItem>
                   )}
-                />
+                /> */}
 
                 {/* <div>
                   <Label className="dark:text-slate-400">Full Addess</Label>
@@ -255,7 +311,7 @@ export default function AccountPage() {
                   </div>
                 </div> */}
 
-                <FormField
+                {/* <FormField
                   control={form.control}
                   name="code"
                   render={({ field }) => (
@@ -277,7 +333,7 @@ export default function AccountPage() {
                       <FormMessage />
                     </FormItem>
                   )}
-                />
+                /> */}
 
                 {/* ---- */}
                 {/* <div>
@@ -289,7 +345,7 @@ export default function AccountPage() {
                     <Input className="!rounded-l-none" placeholder="003 888 232" />
                   </div>
                 </div> */}
-                <FormField
+                {/* <FormField
                   control={form.control}
                   name="code"
                   render={({ field }) => (
@@ -311,14 +367,14 @@ export default function AccountPage() {
                       <FormMessage />
                     </FormItem>
                   )}
-                />
+                /> */}
                 {/* ---- */}
                 {/* <div>
                   <Label className="dark:text-slate-400">About you</Label>
                   <Textarea className="mt-1.5" placeholder="..." />
                 </div> */}
 
-                <FormField
+                {/* <FormField
                   control={form.control}
                   name="code"
                   render={({ field }) => (
@@ -340,7 +396,7 @@ export default function AccountPage() {
                       <FormMessage />
                     </FormItem>
                   )}
-                />
+                /> */}
 
                 <div className="pt-2">
                   <ButtonPrimary>Update account</ButtonPrimary>

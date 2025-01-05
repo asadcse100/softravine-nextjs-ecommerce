@@ -34,17 +34,17 @@ import {
 } from "@/app/admin/components/ui/select";
 
 const formSchema = z.object({
-  user_emails: z.string().min(10, {
-    message: "Product Name must be at least 10 characters.",
+  user_emails: z.string().min(1, {
+    message: "Product Name must be at least 1 characters.",
   }),
-  subscriber_emails: z.string().min(10, {
-    message: "Product Name must be at least 10 characters.",
+  subscriber_emails: z.string().min(1, {
+    message: "Product Name must be at least 1 characters.",
   }),
-  subject: z.string().min(10, {
-    message: "Product Name must be at least 10 characters.",
+  subject: z.string().min(1, {
+    message: "Product Name must be at least 1 characters.",
   }),
-  content: z.string().min(10, {
-    message: "Product Name must be at least 10 characters.",
+  content: z.string().min(1, {
+    message: "Product Name must be at least 1 characters.",
   }),
 });
 
@@ -127,8 +127,57 @@ export default function AddOrEdit() {
             <div className="flex flex-col md:flex-row">
 
               <div className="flex-grow mt-10 md:mt-0 md:pl-16 max-w-3xl space-y-6">
+                {[
+                  { name: "photo", label: "Your Photo" },
+                  { name: "nid_front_part", label: "NID front Part" },
+                  { name: "nid_back_part", label: "NID back Part" },
+                ].map((field) => (
+                  <div
+                    key={field.name}
+                    className="mt-3 flex flex-col gap-5.5 p-6.5"
+                  >
+                    <FormField
+                      control={form.control}
+                      name={field.name}
+                      render={({ field: fieldProps }) => (
+                        <FormItem>
+                          <div className="grid grid-cols-1 md:grid-cols-12">
+                            <div className="col-span-3 mt-1">
+                              <FormLabel>{field.label}</FormLabel>
+                            </div>
+                            <div className="col-span-8">
+                              <FormControl>
+                                {field.name === "photo" ? (
+                                  <Input type="file"
+                                    className={inputClass}
+                                    placeholder={field.label}
+                                    {...fieldProps}
+                                  />
+                                ) : field.name === "nid_front_part" ? (
+                                  <Input type="file"
+                                    className={inputClass}
+                                    placeholder={field.label}
+                                    {...fieldProps}
+                                  />
+                                ) : field.name === "nid_back_part" ? (
+                                  <Input type="file"
+                                    className={inputClass}
+                                    placeholder={field.label}
+                                    {...fieldProps}
+                                  />
+                                ) : null}
 
-                <FormField
+                              </FormControl>
+                            </div>
+                          </div>
+                          <FormMessage />
+                        </FormItem>
+                      )}
+                    />
+                  </div>
+                ))}
+
+                {/* <FormField
                   control={form.control}
                   name="photo"
                   render={({ field }) => (
@@ -144,9 +193,9 @@ export default function AddOrEdit() {
                       <FormMessage />
                     </FormItem>
                   )}
-                />
+                /> */}
 
-                <FormField
+                {/* <FormField
                   control={form.control}
                   name="code"
                   render={({ field }) => (
@@ -162,9 +211,9 @@ export default function AddOrEdit() {
                       <FormMessage />
                     </FormItem>
                   )}
-                />
+                /> */}
 
-                <FormField
+                {/* <FormField
                   control={form.control}
                   name="code"
                   render={({ field }) => (
@@ -180,8 +229,8 @@ export default function AddOrEdit() {
                       <FormMessage />
                     </FormItem>
                   )}
-                />
-                <p className="text-white text-center">OR</p>
+                /> */}
+                {/* <p className="text-white text-center">OR</p>
                 <FormField
                   control={form.control}
                   name="code"
@@ -198,9 +247,83 @@ export default function AddOrEdit() {
                       <FormMessage />
                     </FormItem>
                   )}
-                />
+                /> */}
                 <p className="text-white text-center">OR</p>
-                <FormField
+
+                {[
+                  { name: "driving_licence", label: "Driving Licence" },
+                ].map((field) => (
+                  <div
+                    key={field.name}
+                    className="mt-3 flex flex-col gap-5.5 p-6.5"
+                  >
+                    <FormField
+                      control={form.control}
+                      name={field.name}
+                      render={({ field: fieldProps }) => (
+                        <FormItem>
+                          <div className="grid grid-cols-1 md:grid-cols-12">
+                            <div className="col-span-3 mt-1">
+                              <FormLabel>{field.label}</FormLabel>
+                            </div>
+                            <div className="col-span-8">
+                              <FormControl>
+                                {field.name === "driving_licence" ? (
+                                  <Input type="file"
+                                    className={inputClass}
+                                    placeholder={field.label}
+                                    {...fieldProps}
+                                  />
+                                ) : null}
+
+                              </FormControl>
+                            </div>
+                          </div>
+                          <FormMessage />
+                        </FormItem>
+                      )}
+                    />
+                  </div>
+                ))}
+
+                <p className="text-white text-center">OR</p>
+
+                {[
+                  { name: "passport", label: "Passport" },
+                ].map((field) => (
+                  <div
+                    key={field.name}
+                    className="mt-3 flex flex-col gap-5.5 p-6.5"
+                  >
+                    <FormField
+                      control={form.control}
+                      name={field.name}
+                      render={({ field: fieldProps }) => (
+                        <FormItem>
+                          <div className="grid grid-cols-1 md:grid-cols-12">
+                            <div className="col-span-3 mt-1">
+                              <FormLabel>{field.label}</FormLabel>
+                            </div>
+                            <div className="col-span-8">
+                              <FormControl>
+                                {field.name === "passport" ? (
+                                  <Input type="file"
+                                    className={inputClass}
+                                    placeholder={field.label}
+                                    {...fieldProps}
+                                  />
+                                ) : null}
+
+                              </FormControl>
+                            </div>
+                          </div>
+                          <FormMessage />
+                        </FormItem>
+                      )}
+                    />
+                  </div>
+                ))}
+                {/* <FormField
                   control={form.control}
                   name="code"
                   render={({ field }) => (
@@ -216,7 +339,7 @@ export default function AddOrEdit() {
                       <FormMessage />
                     </FormItem>
                   )}
-                />
+                /> */}
 
                 <div className="pt-2">
                   <ButtonPrimary>Save</ButtonPrimary>

@@ -129,22 +129,6 @@ export default function AddOrEdit() {
 
   const [isLoading, setIsLoading] = useState(false);
 
-  // Fetch data if editing an existing ticket
-  useEffect(() => {
-    if (id) {
-      const fetchTicket = async () => {
-        try {
-          const apiUrl = process.env.NEXT_PUBLIC_API_URL || "";
-          const response = await fetch(`${apiUrl}/server/api/routes/admin/otp/cerdential/${id}`);
-          const data = await response.json();
-          form.reset(data); // Populate form with existing data
-        } catch (error) {
-          showErrorToast("Failed to fetch blog category data.");
-        }
-      };
-      fetchTicket();
-    }
-  }, [id, form]);
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -182,13 +166,23 @@ export default function AddOrEdit() {
       ZENDER_SIM: "",
     },
   });
+  // Fetch data if editing an existing ticket
+  useEffect(() => {
+    if (id) {
+      const fetchTicket = async () => {
+        try {
+          const apiUrl = process.env.NEXT_PUBLIC_API_URL || "";
+          const response = await fetch(`${apiUrl}/server/api/routes/admin/otp/cerdential/${id}`);
+          const data = await response.json();
+          form.reset(data); // Populate form with existing data
+        } catch (error) {
+          showErrorToast("Failed to fetch blog category data.");
+        }
+      };
+      fetchTicket();
+    }
+  }, [id, form]);
 
-  // 2. Define a submit handler.
-  // function onSubmit(values: z.infer<typeof formSchema>) {
-  //   // Do something with the form values.
-  //   // ✅ This will be type-safe and validated.
-  //   console.log(values);
-  // }
 
   const onSubmit: SubmitHandler<z.infer<typeof formSchema>> = async (values) => {
     const apiUrl = process.env.NEXT_PUBLIC_API_URL || "";
@@ -248,7 +242,41 @@ export default function AddOrEdit() {
                   </div>
                   <div className="py-6">
                     <div className="flex flex-col gap-5.5 p-6.5">
-                      <FormField
+                      {[
+                        { name: "NEXMO_KEY", label: "NEXMO KEY" },
+                        { name: "NEXMO_SECRET", label: "NEXMO SECRET" },
+                        { name: "NEXMO_SENDER_ID", label: "NEXMO SENDER ID" },
+                      ].map((field) => (
+                        <div
+                          key={field.name}
+                          className="mt-3 flex flex-col gap-5.5 p-6.5"
+                        >
+                          <FormField
+                            control={form.control}
+                            name={field.name}
+                            render={({ field: fieldProps }) => (
+                              <FormItem>
+                                <div className="grid grid-cols-1 md:grid-cols-12">
+                                  <div className="col-span-4 mt-1">
+                                    <FormLabel>{field.label}</FormLabel>
+                                  </div>
+                                  <div className="col-span-8">
+                                    <FormControl>
+                                      <Input
+                                        className={inputClass}
+                                        placeholder={field.label}
+                                        {...fieldProps}
+                                      />
+                                    </FormControl>
+                                  </div>
+                                </div>
+                                <FormMessage />
+                              </FormItem>
+                            )}
+                          />
+                        </div>
+                      ))}
+                      {/* <FormField
                         control={form.control}
                         name="NEXMO_KEY"
                         render={({ field }) => (
@@ -270,9 +298,9 @@ export default function AddOrEdit() {
                             <FormMessage />
                           </FormItem>
                         )}
-                      />
+                      /> */}
                     </div>
-                    <div className="mt-3 flex flex-col gap-5.5 p-6.5">
+                    {/* <div className="mt-3 flex flex-col gap-5.5 p-6.5">
                       <FormField
                         control={form.control}
                         name="NEXMO_SECRET"
@@ -296,8 +324,8 @@ export default function AddOrEdit() {
                           </FormItem>
                         )}
                       />
-                    </div>
-                    <div className="mt-3 flex flex-col gap-5.5 p-6.5">
+                    </div> */}
+                    {/* <div className="mt-3 flex flex-col gap-5.5 p-6.5">
                       <FormField
                         control={form.control}
                         name="NEXMO_SENDER_ID"
@@ -321,7 +349,7 @@ export default function AddOrEdit() {
                           </FormItem>
                         )}
                       />
-                    </div>
+                    </div> */}
                     <div className="grid mt-4 justify-items-end">
                       <Button
                         className="dark:text-slate-200"
@@ -343,7 +371,42 @@ export default function AddOrEdit() {
                   </div>
                   <div className="py-6">
                     <div className="flex flex-col gap-5.5 p-6.5">
-                      <FormField
+                      {[
+                        { name: "TWILIO_SID", label: "TWILIO SID" },
+                        { name: "TWILIO_AUTH_TOKEN", label: "TWILIO AUTH TOKEN" },
+                        { name: "VALID_TWILLO_NUMBER", label: "VALID TWILLO NUMBER" },
+                      ].map((field) => (
+                        <div
+                          key={field.name}
+                          className="mt-3 flex flex-col gap-5.5 p-6.5"
+                        >
+                          <FormField
+                            control={form.control}
+                            name={field.name}
+                            render={({ field: fieldProps }) => (
+                              <FormItem>
+                                <div className="grid grid-cols-1 md:grid-cols-12">
+                                  <div className="col-span-4 mt-1">
+                                    <FormLabel>{field.label}</FormLabel>
+                                  </div>
+                                  <div className="col-span-8">
+                                    <FormControl>
+                                      <Input
+                                        className={inputClass}
+                                        placeholder={field.label}
+                                        {...fieldProps}
+                                      />
+                                    </FormControl>
+                                  </div>
+                                </div>
+                                <FormMessage />
+                              </FormItem>
+                            )}
+                          />
+                        </div>
+                      ))}
+
+                      {/* <FormField
                         control={form.control}
                         name="TWILIO_SID"
                         render={({ field }) => (
@@ -365,9 +428,9 @@ export default function AddOrEdit() {
                             <FormMessage />
                           </FormItem>
                         )}
-                      />
+                      /> */}
                     </div>
-                    <div className="mt-3 flex flex-col gap-5.5 p-6.5">
+                    {/* <div className="mt-3 flex flex-col gap-5.5 p-6.5">
                       <FormField
                         control={form.control}
                         name="TWILIO_AUTH_TOKEN"
@@ -391,8 +454,8 @@ export default function AddOrEdit() {
                           </FormItem>
                         )}
                       />
-                    </div>
-                    <div className="mt-3 flex flex-col gap-5.5 p-6.5">
+                    </div> */}
+                    {/* <div className="mt-3 flex flex-col gap-5.5 p-6.5">
                       <FormField
                         control={form.control}
                         name="VALID_TWILLO_NUMBER"
@@ -416,8 +479,51 @@ export default function AddOrEdit() {
                           </FormItem>
                         )}
                       />
-                    </div>
-                    <div className="mt-3 flex flex-col gap-5.5 p-6.5">
+                    </div> */}
+
+                    {[
+                      { name: "TWILLO_TYPE", label: "TWILLO TYPE" },
+                    ].map((field) => (
+                      <div
+                        key={field.name}
+                        className="mt-3 flex flex-col gap-5.5 p-6.5"
+                      >
+                        <FormField
+                          control={form.control}
+                          name={field.name}
+                          render={({ field: fieldProps }) => (
+                            <FormItem>
+                              <div className="grid grid-cols-1 md:grid-cols-12">
+                                <div className="col-span-4 mt-1">
+                                  <FormLabel>{field.label}</FormLabel>
+                                </div>
+                                <div className="col-span-8">
+                                  <FormControl>
+                                    <Select
+                                      onValueChange={field.onChange}
+                                      defaultValue={field.value}
+                                    >
+                                      <FormControl>
+                                        <SelectTrigger>
+                                          <SelectValue placeholder="Select TWILIO TYPE" />
+                                        </SelectTrigger>
+                                      </FormControl>
+                                      <SelectContent>
+                                        <SelectItem value="Apple">SMS</SelectItem>
+                                        <SelectItem value="m2@example.com">WhatsApp</SelectItem>
+                                      </SelectContent>
+                                    </Select>
+                                  </FormControl>
+                                </div>
+                              </div>
+                              <FormMessage />
+                            </FormItem>
+                          )}
+                        />
+                      </div>
+                    ))}
+
+                    {/* <div className="mt-3 flex flex-col gap-5.5 p-6.5">
                       <FormField
                         control={form.control}
                         name="TWILLO_TYPE"
@@ -450,7 +556,7 @@ export default function AddOrEdit() {
                           </FormItem>
                         )}
                       />
-                    </div>
+                    </div> */}
                     <div className="grid mt-4 justify-items-end">
                       <Button
                         className="dark:text-slate-200"
@@ -472,7 +578,42 @@ export default function AddOrEdit() {
                   </div>
                   <div className="py-6">
                     <div className="flex flex-col gap-5.5 p-6.5">
-                      <FormField
+                      {[
+                        { name: "SSL_SMS_API_TOKEN", label: "SSL SMS API TOKEN" },
+                        { name: "SSL_SMS_SID", label: "SSL SMS SID" },
+                        { name: "SSL_SMS_URL", label: "SSL SMS URL" },
+                      ].map((field) => (
+                        <div
+                          key={field.name}
+                          className="mt-3 flex flex-col gap-5.5 p-6.5"
+                        >
+                          <FormField
+                            control={form.control}
+                            name={field.name}
+                            render={({ field: fieldProps }) => (
+                              <FormItem>
+                                <div className="grid grid-cols-1 md:grid-cols-12">
+                                  <div className="col-span-4 mt-1">
+                                    <FormLabel>{field.label}</FormLabel>
+                                  </div>
+                                  <div className="col-span-8">
+                                    <FormControl>
+                                      <Input
+                                        className={inputClass}
+                                        placeholder={field.label}
+                                        {...fieldProps}
+                                      />
+                                    </FormControl>
+                                  </div>
+                                </div>
+                                <FormMessage />
+                              </FormItem>
+                            )}
+                          />
+                        </div>
+                      ))}
+
+                      {/* <FormField
                         control={form.control}
                         name="SSL_SMS_API_TOKEN"
                         render={({ field }) => (
@@ -494,9 +635,9 @@ export default function AddOrEdit() {
                             <FormMessage />
                           </FormItem>
                         )}
-                      />
+                      /> */}
                     </div>
-                    <div className="mt-3 flex flex-col gap-5.5 p-6.5">
+                    {/* <div className="mt-3 flex flex-col gap-5.5 p-6.5">
                       <FormField
                         control={form.control}
                         name="SSL_SMS_SID"
@@ -520,8 +661,8 @@ export default function AddOrEdit() {
                           </FormItem>
                         )}
                       />
-                    </div>
-                    <div className="mt-3 flex flex-col gap-5.5 p-6.5">
+                    </div> */}
+                    {/* <div className="mt-3 flex flex-col gap-5.5 p-6.5">
                       <FormField
                         control={form.control}
                         name="SSL_SMS_URL"
@@ -545,7 +686,7 @@ export default function AddOrEdit() {
                           </FormItem>
                         )}
                       />
-                    </div>
+                    </div> */}
                     <div className="grid mt-4 justify-items-end">
                       <Button
                         className="dark:text-slate-200"
@@ -567,7 +708,41 @@ export default function AddOrEdit() {
                   </div>
                   <div className="py-6">
                     <div className="flex flex-col gap-5.5 p-6.5">
-                      <FormField
+                      {[
+                        { name: "AUTH_KEY", label: "AUTH KEY" },
+                        { name: "ENTITY_ID", label: "ENTITY ID" },
+                      ].map((field) => (
+                        <div
+                          key={field.name}
+                          className="mt-3 flex flex-col gap-5.5 p-6.5"
+                        >
+                          <FormField
+                            control={form.control}
+                            name={field.name}
+                            render={({ field: fieldProps }) => (
+                              <FormItem>
+                                <div className="grid grid-cols-1 md:grid-cols-12">
+                                  <div className="col-span-4 mt-1">
+                                    <FormLabel>{field.label}</FormLabel>
+                                  </div>
+                                  <div className="col-span-8">
+                                    <FormControl>
+                                      <Input
+                                        className={inputClass}
+                                        placeholder={field.label}
+                                        {...fieldProps}
+                                      />
+                                    </FormControl>
+                                  </div>
+                                </div>
+                                <FormMessage />
+                              </FormItem>
+                            )}
+                          />
+                        </div>
+                      ))}
+
+                      {/* <FormField
                         control={form.control}
                         name="AUTH_KEY"
                         render={({ field }) => (
@@ -589,9 +764,9 @@ export default function AddOrEdit() {
                             <FormMessage />
                           </FormItem>
                         )}
-                      />
+                      /> */}
                     </div>
-                    <div className="mt-3 flex flex-col gap-5.5 p-6.5">
+                    {/* <div className="mt-3 flex flex-col gap-5.5 p-6.5">
                       <FormField
                         control={form.control}
                         name="ENTITY_ID"
@@ -615,9 +790,95 @@ export default function AddOrEdit() {
                           </FormItem>
                         )}
                       />
-                    </div>
+                    </div> */}
                     <div className="mt-3 flex flex-col gap-5.5 p-6.5">
-                      <FormField
+
+                      {[
+                        { name: "ROUTE", label: "ROUTE" },
+                      ].map((field) => (
+                        <div
+                          key={field.name}
+                          className="mt-3 flex flex-col gap-5.5 p-6.5"
+                        >
+                          <FormField
+                            control={form.control}
+                            name={field.name}
+                            render={({ field: fieldProps }) => (
+                              <FormItem>
+                                <div className="grid grid-cols-1 md:grid-cols-12">
+                                  <div className="col-span-4 mt-1">
+                                    <FormLabel>{field.label}</FormLabel>
+                                  </div>
+                                  <div className="col-span-8">
+                                    <FormControl>
+                                      <Select
+                                        onValueChange={field.onChange}
+                                        defaultValue={field.value}
+                                      >
+                                        <FormControl>
+                                          <SelectTrigger>
+                                            <SelectValue placeholder="Select ROUTE" />
+                                          </SelectTrigger>
+                                        </FormControl>
+                                        <SelectContent>
+                                          <SelectItem value="Apple">Transactional Use</SelectItem>
+                                          <SelectItem value="m2@example.com">DLT Manual</SelectItem>
+                                          <SelectItem value="m3@example.com">Promotional Use</SelectItem>
+                                        </SelectContent>
+                                      </Select>
+                                    </FormControl>
+                                  </div>
+                                </div>
+                                <FormMessage />
+                              </FormItem>
+                            )}
+                          />
+                        </div>
+                      ))}
+
+                        {[
+                          { name: "LANGUAGE", label: "LANGUAGE" },
+                        ].map((field) => (
+                          <div
+                            key={field.name}
+                            className="mt-3 flex flex-col gap-5.5 p-6.5"
+                          >
+                            <FormField
+                              control={form.control}
+                              name={field.name}
+                              render={({ field: fieldProps }) => (
+                                <FormItem>
+                                  <div className="grid grid-cols-1 md:grid-cols-12">
+                                    <div className="col-span-4 mt-1">
+                                      <FormLabel>{field.label}</FormLabel>
+                                    </div>
+                                    <div className="col-span-8">
+                                      <FormControl>
+                                        <Select
+                                          onValueChange={field.onChange}
+                                          defaultValue={field.value}
+                                        >
+                                          <FormControl>
+                                            <SelectTrigger>
+                                              <SelectValue placeholder="Select Language" />
+                                            </SelectTrigger>
+                                          </FormControl>
+                                          <SelectContent>
+                                            <SelectItem value="English">English</SelectItem>
+                                            <SelectItem value="Unicode">Unicode</SelectItem>
+                                          </SelectContent>
+                                        </Select>
+                                      </FormControl>
+                                    </div>
+                                  </div>
+                                  <FormMessage />
+                                </FormItem>
+                              )}
+                            />
+                          </div>
+                        ))}
+
+                        {/* <FormField
                         control={form.control}
                         name="ROUTE"
                         render={({ field }) => (
@@ -649,578 +910,791 @@ export default function AddOrEdit() {
                             <FormMessage />
                           </FormItem>
                         )}
-                      />
-                    </div>
-                    <div className="mt-3 flex flex-col gap-5.5 p-6.5">
-                      <FormField
-                        control={form.control}
-                        name="LANGUAGE"
-                        render={({ field }) => (
-                          <FormItem>
-                            <div className="grid grid-cols-1 md:grid-cols-12">
-                              <div className="col-span-4 mt-2">
-                                <FormLabel>Language</FormLabel>
+                      /> */}
+                      </div>
+                      {/* <div className="mt-3 flex flex-col gap-5.5 p-6.5">
+                        <FormField
+                          control={form.control}
+                          name="LANGUAGE"
+                          render={({ field }) => (
+                            <FormItem>
+                              <div className="grid grid-cols-1 md:grid-cols-12">
+                                <div className="col-span-4 mt-2">
+                                  <FormLabel>Language</FormLabel>
+                                </div>
+                                <div className="col-span-8">
+                                  <FormControl>
+                                    <Select
+                                      onValueChange={field.onChange}
+                                      defaultValue={field.value}
+                                    >
+                                      <FormControl>
+                                        <SelectTrigger>
+                                          <SelectValue placeholder="Select Language" />
+                                        </SelectTrigger>
+                                      </FormControl>
+                                      <SelectContent>
+                                        <SelectItem value="English">English</SelectItem>
+                                        <SelectItem value="Unicode">Unicode</SelectItem>
+                                      </SelectContent>
+                                    </Select>
+                                  </FormControl>
+                                </div>
                               </div>
-                              <div className="col-span-8">
-                                <FormControl>
-                                  <Select
-                                    onValueChange={field.onChange}
-                                    defaultValue={field.value}
-                                  >
+                              <FormMessage />
+                            </FormItem>
+                          )}
+                        />
+                      </div> */}
+
+                      <div className="mt-3 flex flex-col gap-5.5 p-6.5">
+                      {[
+                        { name: "SENDER_ID", label: "SENDER ID" },
+                      ].map((field) => (
+                        <div
+                          key={field.name}
+                          className="mt-3 flex flex-col gap-5.5 p-6.5"
+                        >
+                          <FormField
+                            control={form.control}
+                            name={field.name}
+                            render={({ field: fieldProps }) => (
+                              <FormItem>
+                                <div className="grid grid-cols-1 md:grid-cols-12">
+                                  <div className="col-span-4 mt-1">
+                                    <FormLabel>{field.label}</FormLabel>
+                                  </div>
+                                  <div className="col-span-8">
                                     <FormControl>
-                                      <SelectTrigger>
-                                        <SelectValue placeholder="Select Language" />
-                                      </SelectTrigger>
+                                      <Input
+                                        className={inputClass}
+                                        placeholder={field.label}
+                                        {...fieldProps}
+                                      />
                                     </FormControl>
-                                    <SelectContent>
-                                      <SelectItem value="English">English</SelectItem>
-                                      <SelectItem value="Unicode">Unicode</SelectItem>
-                                    </SelectContent>
-                                  </Select>
-                                </FormControl>
+                                  </div>
+                                </div>
+                                <FormMessage />
+                              </FormItem>
+                            )}
+                          />
+                        </div>
+                      ))}
+
+                        {/* <FormField
+                          control={form.control}
+                          name="SENDER_ID"
+                          render={({ field }) => (
+                            <FormItem>
+                              <div className="grid grid-cols-1 md:grid-cols-12">
+                                <div className="col-span-4 mt-2">
+                                  <FormLabel>SENDER ID</FormLabel>
+                                </div>
+                                <div className="col-span-8">
+                                  <FormControl>
+                                    <Input
+                                      className={inputClass}
+                                      placeholder="SENDER ID"
+                                      {...field}
+                                    />
+                                  </FormControl>
+                                </div>
                               </div>
-                            </div>
-                            <FormMessage />
-                          </FormItem>
-                        )}
-                      />
-                    </div>
-                    <div className="mt-3 flex flex-col gap-5.5 p-6.5">
-                      <FormField
-                        control={form.control}
-                        name="SENDER_ID"
-                        render={({ field }) => (
-                          <FormItem>
-                            <div className="grid grid-cols-1 md:grid-cols-12">
-                              <div className="col-span-4 mt-2">
-                                <FormLabel>SENDER ID</FormLabel>
-                              </div>
-                              <div className="col-span-8">
-                                <FormControl>
-                                  <Input
-                                    className={inputClass}
-                                    placeholder="SENDER ID"
-                                    {...field}
-                                  />
-                                </FormControl>
-                              </div>
-                            </div>
-                            <FormMessage />
-                          </FormItem>
-                        )}
-                      />
-                    </div>
-                    <div className="grid mt-4 justify-items-end">
-                      <Button
-                        className="dark:text-slate-200"
-                        variant="outline"
-                        type="submit"
-                      >
-                        Save
-                      </Button>
+                              <FormMessage />
+                            </FormItem>
+                          )}
+                        /> */}
+                      </div>
+                      <div className="grid mt-4 justify-items-end">
+                        <Button
+                          className="dark:text-slate-200"
+                          variant="outline"
+                          type="submit"
+                        >
+                          Save
+                        </Button>
+                      </div>
                     </div>
                   </div>
                 </div>
-              </div>
-              <div className="flex flex-col gap-4">
-                <div className="px-6 rounded-sm border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark">
-                  <div className="border-b border-stroke px-6.5 py-4 dark:border-strokedark">
-                    <h3 className="font-medium text-black dark:text-white">
-                      MIMO Credential
-                    </h3>
-                  </div>
-                  <div className="py-6">
-                    <div className="flex flex-col gap-5.5 p-6.5">
-                      <FormField
-                        control={form.control}
-                        name="MIMO_USERNAME"
-                        render={({ field }) => (
-                          <FormItem>
-                            <div className="grid grid-cols-1 md:grid-cols-12">
-                              <div className="col-span-4 mt-2">
-                                <FormLabel>MIMO_USERNAME</FormLabel>
-                              </div>
-                              <div className="col-span-8">
-                                <FormControl>
-                                  <Input
-                                    className={inputClass}
-                                    placeholder="MIMO_USERNAME"
-                                    {...field}
-                                  />
-                                </FormControl>
-                              </div>
-                            </div>
-                            <FormMessage />
-                          </FormItem>
-                        )}
-                      />
+                <div className="flex flex-col gap-4">
+                  <div className="px-6 rounded-sm border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark">
+                    <div className="border-b border-stroke px-6.5 py-4 dark:border-strokedark">
+                      <h3 className="font-medium text-black dark:text-white">
+                        MIMO Credential
+                      </h3>
                     </div>
-                    <div className="mt-3 flex flex-col gap-5.5 p-6.5">
-                      <FormField
-                        control={form.control}
-                        name="MIMO_PASSWORD"
-                        render={({ field }) => (
-                          <FormItem>
-                            <div className="grid grid-cols-1 md:grid-cols-12">
-                              <div className="col-span-4 mt-2">
-                                <FormLabel>MIMO_PASSWORD</FormLabel>
-                              </div>
-                              <div className="col-span-8">
-                                <FormControl>
-                                  <Input
-                                    className={inputClass}
-                                    placeholder="MIMO_PASSWORD"
-                                    {...field}
-                                  />
-                                </FormControl>
-                              </div>
-                            </div>
-                            <FormMessage />
-                          </FormItem>
-                        )}
-                      />
-                    </div>
-                    <div className="mt-3 flex flex-col gap-5.5 p-6.5">
-                      <FormField
-                        control={form.control}
-                        name="MIMO_SENDER_ID"
-                        render={({ field }) => (
-                          <FormItem>
-                            <div className="grid grid-cols-1 md:grid-cols-12">
-                              <div className="col-span-4 mt-2">
-                                <FormLabel>MIMO_SENDER_ID</FormLabel>
-                              </div>
-                              <div className="col-span-8">
-                                <FormControl>
-                                  <Input
-                                    className={inputClass}
-                                    placeholder="MIMO_SENDER_ID"
-                                    {...field}
-                                  />
-                                </FormControl>
-                              </div>
-                            </div>
-                            <FormMessage />
-                          </FormItem>
-                        )}
-                      />
-                    </div>
-                    <div className="grid mt-4 justify-items-end">
-                      <Button
-                        className="dark:text-slate-200"
-                        variant="outline"
-                        type="submit"
-                      >
-                        Save
-                      </Button>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div className="flex flex-col gap-4">
-                <div className="px-6 rounded-sm border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark">
-                  <div className="border-b border-stroke px-6.5 py-4 dark:border-strokedark">
-                    <h3 className="font-medium text-black dark:text-white">
-                      MIMSMS Credential
-                    </h3>
-                  </div>
-                  <div className="py-6">
-                    <div className="flex flex-col gap-5.5 p-6.5">
-                      <FormField
-                        control={form.control}
-                        name="MIM_USER_NAME"
-                        render={({ field }) => (
-                          <FormItem>
-                            <div className="grid grid-cols-1 md:grid-cols-12">
-                              <div className="col-span-4 mt-2">
-                                <FormLabel>User Name</FormLabel>
-                              </div>
-                              <div className="col-span-8">
-                                <FormControl>
-                                  <Input
-                                    className={inputClass}
-                                    placeholder="User Name"
-                                    {...field}
-                                  />
-                                </FormControl>
-                              </div>
-                            </div>
-                            <FormMessage />
-                          </FormItem>
-                        )}
-                      />
-                    </div>
-                    <div className="mt-3 flex flex-col gap-5.5 p-6.5">
-                      <FormField
-                        control={form.control}
-                        name="MIM_API_KEY"
-                        render={({ field }) => (
-                          <FormItem>
-                            <div className="grid grid-cols-1 md:grid-cols-12">
-                              <div className="col-span-4 mt-2">
-                                <FormLabel>API KEY</FormLabel>
-                              </div>
-                              <div className="col-span-8">
-                                <FormControl>
-                                  <Input
-                                    className={inputClass}
-                                    placeholder="API KEY"
-                                    {...field}
-                                  />
-                                </FormControl>
-                              </div>
-                            </div>
-                            <FormMessage />
-                          </FormItem>
-                        )}
-                      />
-                    </div>
-                    <div className="mt-3 flex flex-col gap-5.5 p-6.5">
-                      <FormField
-                        control={form.control}
-                        name="MIM_SENDER_ID"
-                        render={({ field }) => (
-                          <FormItem>
-                            <div className="grid grid-cols-1 md:grid-cols-12">
-                              <div className="col-span-4 mt-2">
-                                <FormLabel>SENDER ID</FormLabel>
-                              </div>
-                              <div className="col-span-8">
-                                <FormControl>
-                                  <Input
-                                    className={inputClass}
-                                    placeholder="SENDER ID"
-                                    {...field}
-                                  />
-                                </FormControl>
-                              </div>
-                            </div>
-                            <FormMessage />
-                          </FormItem>
-                        )}
-                      />
-                    </div>
-                    <div className="grid mt-4 justify-items-end">
-                      <Button
-                        className="dark:text-slate-200"
-                        variant="outline"
-                        type="submit"
-                      >
-                        Save
-                      </Button>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div className="flex flex-col gap-4">
-                <div className="px-6 rounded-sm border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark">
-                  <div className="border-b border-stroke px-6.5 py-4 dark:border-strokedark">
-                    <h3 className="font-medium text-black dark:text-white">
-                      MSEGAT Credential
-                    </h3>
-                  </div>
-                  <div className="py-6">
-                    <div className="flex flex-col gap-5.5 p-6.5">
-                      <FormField
-                        control={form.control}
-                        name="MSEGAT_API_KEY"
-                        render={({ field }) => (
-                          <FormItem>
-                            <div className="grid grid-cols-1 md:grid-cols-12">
-                              <div className="col-span-4 mt-2">
-                                <FormLabel>MSEGAT_API_KEY</FormLabel>
-                              </div>
-                              <div className="col-span-8">
-                                <FormControl>
-                                  <Input
-                                    className={inputClass}
-                                    placeholder="MSEGAT_API_KEY"
-                                    {...field}
-                                  />
-                                </FormControl>
-                              </div>
-                            </div>
-                            <FormMessage />
-                          </FormItem>
-                        )}
-                      />
-                    </div>
-                    <div className="mt-3 flex flex-col gap-5.5 p-6.5">
-                      <FormField
-                        control={form.control}
-                        name="MSEGAT_USERNAME"
-                        render={({ field }) => (
-                          <FormItem>
-                            <div className="grid grid-cols-1 md:grid-cols-12">
-                              <div className="col-span-4 mt-2">
-                                <FormLabel>MSEGAT_USERNAME</FormLabel>
-                              </div>
-                              <div className="col-span-8">
-                                <FormControl>
-                                  <Input
-                                    className={inputClass}
-                                    placeholder="MSEGAT_USERNAME"
-                                    {...field}
-                                  />
-                                </FormControl>
-                              </div>
-                            </div>
-                            <FormMessage />
-                          </FormItem>
-                        )}
-                      />
-                    </div>
-                    <div className="mt-3 flex flex-col gap-5.5 p-6.5">
-                      <FormField
-                        control={form.control}
-                        name="MSEGAT_USER_SENDER"
-                        render={({ field }) => (
-                          <FormItem>
-                            <div className="grid grid-cols-1 md:grid-cols-12">
-                              <div className="col-span-4 mt-2">
-                                <FormLabel>MSEGAT_USER_SENDER</FormLabel>
-                              </div>
-                              <div className="col-span-8">
-                                <FormControl>
-                                  <Input
-                                    className={inputClass}
-                                    placeholder="MSEGAT_USER_SENDER"
-                                    {...field}
-                                  />
-                                </FormControl>
-                              </div>
-                            </div>
-                            <FormMessage />
-                          </FormItem>
-                        )}
-                      />
-                    </div>
-                    <div className="grid mt-4 justify-items-end">
-                      <Button
-                        className="dark:text-slate-200"
-                        variant="outline"
-                        type="submit"
-                      >
-                        Save
-                      </Button>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div className="flex flex-col gap-4">
-                <div className="px-6 rounded-sm border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark">
-                  <div className="border-b border-stroke px-6.5 py-4 dark:border-strokedark">
-                    <h3 className="font-medium text-black dark:text-white">
-                      Zender Credential
-                    </h3>
-                  </div>
-                  <div className="py-6">
-                    <div className="flex flex-col gap-5.5 p-6.5">
-                      <FormField
-                        control={form.control}
-                        name="ZENDER_SITEURL"
-                        render={({ field }) => (
-                          <FormItem>
-                            <div className="grid grid-cols-1 md:grid-cols-12">
-                              <div className="col-span-4 mt-2">
-                                <FormLabel>ZENDER_SITEURL</FormLabel>
-                              </div>
-                              <div className="col-span-8">
-                                <FormControl>
-                                  <Input
-                                    className={inputClass}
-                                    placeholder="ZENDER_SITEURL"
-                                    {...field}
-                                  />
-                                </FormControl>
-                              </div>
-                            </div>
-                            <FormMessage />
-                          </FormItem>
-                        )}
-                      />
-                    </div>
-                    <div className="mt-3 flex flex-col gap-5.5 p-6.5">
-                      <FormField
-                        control={form.control}
-                        name="ZENDER_APIKEY"
-                        render={({ field }) => (
-                          <FormItem>
-                            <div className="grid grid-cols-1 md:grid-cols-12">
-                              <div className="col-span-4 mt-2">
-                                <FormLabel>ZENDER_APIKEY</FormLabel>
-                              </div>
-                              <div className="col-span-8">
-                                <FormControl>
-                                  <Input
-                                    className={inputClass}
-                                    placeholder="ZENDER_APIKEY"
-                                    {...field}
-                                  />
-                                </FormControl>
-                              </div>
-                            </div>
-                            <FormMessage />
-                          </FormItem>
-                        )}
-                      />
-                    </div>
-                    <div className="mt-3 flex flex-col gap-5.5 p-6.5">
-                      <FormField
-                        control={form.control}
-                        name="ZENDER_SERVICE"
-                        render={({ field }) => (
-                          <FormItem>
-                            <div className="grid grid-cols-1 md:grid-cols-12">
-                              <div className="col-span-4 mt-2">
-                                <FormLabel>ZENDER_SERVICE</FormLabel>
-                              </div>
-                              <div className="col-span-8">
-                                <FormControl>
-                                  <Select
-                                    onValueChange={field.onChange}
-                                    defaultValue={field.value}
-                                  >
+                    <div className="py-6">
+                      <div className="flex flex-col gap-5.5 p-6.5">
+                      {[
+                        { name: "MIMO_USERNAME", label: "MIMO USERNAME" },
+                        { name: "MIMO_PASSWORD", label: "MIMO PASSWORD" },
+                        { name: "MIMO_SENDER_ID", label: "MIMO SENDER ID" },
+                      ].map((field) => (
+                        <div
+                          key={field.name}
+                          className="mt-3 flex flex-col gap-5.5 p-6.5"
+                        >
+                          <FormField
+                            control={form.control}
+                            name={field.name}
+                            render={({ field: fieldProps }) => (
+                              <FormItem>
+                                <div className="grid grid-cols-1 md:grid-cols-12">
+                                  <div className="col-span-4 mt-1">
+                                    <FormLabel>{field.label}</FormLabel>
+                                  </div>
+                                  <div className="col-span-8">
                                     <FormControl>
-                                      <SelectTrigger>
-                                        <SelectValue placeholder="Select ZENDER_SERVICE" />
-                                      </SelectTrigger>
+                                      <Input
+                                        className={inputClass}
+                                        placeholder={field.label}
+                                        {...fieldProps}
+                                      />
                                     </FormControl>
-                                    <SelectContent>
-                                      <SelectItem value="Apple">SMS</SelectItem>
-                                      <SelectItem value="m2@example.com">WhatsApp</SelectItem>
-                                    </SelectContent>
-                                  </Select>
-                                </FormControl>
+                                  </div>
+                                </div>
+                                <FormMessage />
+                              </FormItem>
+                            )}
+                          />
+                        </div>
+                      ))}
+
+
+                        {/* <FormField
+                          control={form.control}
+                          name="MIMO_USERNAME"
+                          render={({ field }) => (
+                            <FormItem>
+                              <div className="grid grid-cols-1 md:grid-cols-12">
+                                <div className="col-span-4 mt-2">
+                                  <FormLabel>MIMO_USERNAME</FormLabel>
+                                </div>
+                                <div className="col-span-8">
+                                  <FormControl>
+                                    <Input
+                                      className={inputClass}
+                                      placeholder="MIMO_USERNAME"
+                                      {...field}
+                                    />
+                                  </FormControl>
+                                </div>
                               </div>
-                            </div>
-                            <FormMessage />
-                          </FormItem>
-                        )}
-                      />
+                              <FormMessage />
+                            </FormItem>
+                          )}
+                        /> */}
+                      </div>
+                      {/* <div className="mt-3 flex flex-col gap-5.5 p-6.5">
+                        <FormField
+                          control={form.control}
+                          name="MIMO_PASSWORD"
+                          render={({ field }) => (
+                            <FormItem>
+                              <div className="grid grid-cols-1 md:grid-cols-12">
+                                <div className="col-span-4 mt-2">
+                                  <FormLabel>MIMO_PASSWORD</FormLabel>
+                                </div>
+                                <div className="col-span-8">
+                                  <FormControl>
+                                    <Input
+                                      className={inputClass}
+                                      placeholder="MIMO_PASSWORD"
+                                      {...field}
+                                    />
+                                  </FormControl>
+                                </div>
+                              </div>
+                              <FormMessage />
+                            </FormItem>
+                          )}
+                        />
+                      </div> */}
+                      {/* <div className="mt-3 flex flex-col gap-5.5 p-6.5">
+                        <FormField
+                          control={form.control}
+                          name="MIMO_SENDER_ID"
+                          render={({ field }) => (
+                            <FormItem>
+                              <div className="grid grid-cols-1 md:grid-cols-12">
+                                <div className="col-span-4 mt-2">
+                                  <FormLabel>MIMO_SENDER_ID</FormLabel>
+                                </div>
+                                <div className="col-span-8">
+                                  <FormControl>
+                                    <Input
+                                      className={inputClass}
+                                      placeholder="MIMO_SENDER_ID"
+                                      {...field}
+                                    />
+                                  </FormControl>
+                                </div>
+                              </div>
+                              <FormMessage />
+                            </FormItem>
+                          )}
+                        />
+                      </div> */}
+                      <div className="grid mt-4 justify-items-end">
+                        <Button
+                          className="dark:text-slate-200"
+                          variant="outline"
+                          type="submit"
+                        >
+                          Save
+                        </Button>
+                      </div>
                     </div>
-                    <div className="mt-3 flex flex-col gap-5.5 p-6.5">
-                      <FormField
-                        control={form.control}
-                        name="ZENDER_WHATSAPP"
-                        render={({ field }) => (
-                          <FormItem>
-                            <div className="grid grid-cols-1 md:grid-cols-12">
-                              <div className="col-span-4 mt-2">
-                                <FormLabel>ZENDER_WHATSAPP</FormLabel>
-                              </div>
-                              <div className="col-span-8">
-                                <FormControl>
-                                  <Input
-                                    className={inputClass}
-                                    placeholder="ZENDER_WHATSAPP"
-                                    {...field}
-                                  />
-                                </FormControl>
-                              </div>
-                            </div>
-                            <FormMessage />
-                          </FormItem>
-                        )}
-                      />
+                  </div>
+                </div>
+                <div className="flex flex-col gap-4">
+                  <div className="px-6 rounded-sm border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark">
+                    <div className="border-b border-stroke px-6.5 py-4 dark:border-strokedark">
+                      <h3 className="font-medium text-black dark:text-white">
+                        MIMSMS Credential
+                      </h3>
                     </div>
-                    <div className="mt-3 flex flex-col gap-5.5 p-6.5">
-                      <FormField
-                        control={form.control}
-                        name="ZENDER_DEVICE"
-                        render={({ field }) => (
-                          <FormItem>
-                            <div className="grid grid-cols-1 md:grid-cols-12">
-                              <div className="col-span-4 mt-2">
-                                <FormLabel>ZENDER_DEVICE</FormLabel>
+                    <div className="py-6">
+                      <div className="flex flex-col gap-5.5 p-6.5">
+                      {[
+                        { name: "MIM_USER_NAME", label: "MIM USER NAME" },
+                        { name: "MIM_API_KEY", label: "MIM API KEY" },
+                        { name: "MIM_SENDER_ID", label: "MIM SENDER ID" },
+                      ].map((field) => (
+                        <div
+                          key={field.name}
+                          className="mt-3 flex flex-col gap-5.5 p-6.5"
+                        >
+                          <FormField
+                            control={form.control}
+                            name={field.name}
+                            render={({ field: fieldProps }) => (
+                              <FormItem>
+                                <div className="grid grid-cols-1 md:grid-cols-12">
+                                  <div className="col-span-4 mt-1">
+                                    <FormLabel>{field.label}</FormLabel>
+                                  </div>
+                                  <div className="col-span-8">
+                                    <FormControl>
+                                      <Input
+                                        className={inputClass}
+                                        placeholder={field.label}
+                                        {...fieldProps}
+                                      />
+                                    </FormControl>
+                                  </div>
+                                </div>
+                                <FormMessage />
+                              </FormItem>
+                            )}
+                          />
+                        </div>
+                      ))}
+
+                        {/* <FormField
+                          control={form.control}
+                          name="MIM_USER_NAME"
+                          render={({ field }) => (
+                            <FormItem>
+                              <div className="grid grid-cols-1 md:grid-cols-12">
+                                <div className="col-span-4 mt-2">
+                                  <FormLabel>User Name</FormLabel>
+                                </div>
+                                <div className="col-span-8">
+                                  <FormControl>
+                                    <Input
+                                      className={inputClass}
+                                      placeholder="User Name"
+                                      {...field}
+                                    />
+                                  </FormControl>
+                                </div>
                               </div>
-                              <div className="col-span-8">
-                                <FormControl>
-                                  <Input
-                                    className={inputClass}
-                                    placeholder="ZENDER_DEVICE"
-                                    {...field}
-                                  />
-                                </FormControl>
+                              <FormMessage />
+                            </FormItem>
+                          )}
+                        /> */}
+                      </div>
+                      {/* <div className="mt-3 flex flex-col gap-5.5 p-6.5">
+                        <FormField
+                          control={form.control}
+                          name="MIM_API_KEY"
+                          render={({ field }) => (
+                            <FormItem>
+                              <div className="grid grid-cols-1 md:grid-cols-12">
+                                <div className="col-span-4 mt-2">
+                                  <FormLabel>API KEY</FormLabel>
+                                </div>
+                                <div className="col-span-8">
+                                  <FormControl>
+                                    <Input
+                                      className={inputClass}
+                                      placeholder="API KEY"
+                                      {...field}
+                                    />
+                                  </FormControl>
+                                </div>
                               </div>
-                            </div>
-                            <FormMessage />
-                          </FormItem>
-                        )}
-                      />
+                              <FormMessage />
+                            </FormItem>
+                          )}
+                        />
+                      </div> */}
+                      {/* <div className="mt-3 flex flex-col gap-5.5 p-6.5">
+                        <FormField
+                          control={form.control}
+                          name="MIM_SENDER_ID"
+                          render={({ field }) => (
+                            <FormItem>
+                              <div className="grid grid-cols-1 md:grid-cols-12">
+                                <div className="col-span-4 mt-2">
+                                  <FormLabel>SENDER ID</FormLabel>
+                                </div>
+                                <div className="col-span-8">
+                                  <FormControl>
+                                    <Input
+                                      className={inputClass}
+                                      placeholder="SENDER ID"
+                                      {...field}
+                                    />
+                                  </FormControl>
+                                </div>
+                              </div>
+                              <FormMessage />
+                            </FormItem>
+                          )}
+                        />
+                      </div> */}
+                      <div className="grid mt-4 justify-items-end">
+                        <Button
+                          className="dark:text-slate-200"
+                          variant="outline"
+                          type="submit"
+                        >
+                          Save
+                        </Button>
+                      </div>
                     </div>
-                    <div className="mt-3 flex flex-col gap-5.5 p-6.5">
-                      <FormField
-                        control={form.control}
-                        name="ZENDER_GATEWAY"
-                        render={({ field }) => (
-                          <FormItem>
-                            <div className="grid grid-cols-1 md:grid-cols-12">
-                              <div className="col-span-4 mt-2">
-                                <FormLabel>ZENDER_GATEWAY</FormLabel>
-                              </div>
-                              <div className="col-span-8">
-                                <FormControl>
-                                  <Input
-                                    className={inputClass}
-                                    placeholder="ZENDER_GATEWAY"
-                                    {...field}
-                                  />
-                                </FormControl>
-                              </div>
-                            </div>
-                            <FormMessage />
-                          </FormItem>
-                        )}
-                      />
+                  </div>
+                </div>
+                <div className="flex flex-col gap-4">
+                  <div className="px-6 rounded-sm border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark">
+                    <div className="border-b border-stroke px-6.5 py-4 dark:border-strokedark">
+                      <h3 className="font-medium text-black dark:text-white">
+                        MSEGAT Credential
+                      </h3>
                     </div>
-                    <div className="mt-3 flex flex-col gap-5.5 p-6.5">
-                      <FormField
-                        control={form.control}
-                        name="ZENDER_SIM"
-                        render={({ field }) => (
-                          <FormItem>
-                            <div className="grid grid-cols-1 md:grid-cols-12">
-                              <div className="col-span-4 mt-2">
-                                <FormLabel>ZENDER_SIM</FormLabel>
+                    <div className="py-6">
+                      <div className="flex flex-col gap-5.5 p-6.5">
+                      {[
+                        { name: "MSEGAT_API_KEY", label: "MSEGAT API KEY" },
+                        { name: "MSEGAT_USERNAME", label: "MSEGAT USERNAME" },
+                        { name: "MSEGAT_USER_SENDER", label: "MSEGAT USER SENDER" },
+                      ].map((field) => (
+                        <div
+                          key={field.name}
+                          className="mt-3 flex flex-col gap-5.5 p-6.5"
+                        >
+                          <FormField
+                            control={form.control}
+                            name={field.name}
+                            render={({ field: fieldProps }) => (
+                              <FormItem>
+                                <div className="grid grid-cols-1 md:grid-cols-12">
+                                  <div className="col-span-4 mt-1">
+                                    <FormLabel>{field.label}</FormLabel>
+                                  </div>
+                                  <div className="col-span-8">
+                                    <FormControl>
+                                      <Input
+                                        className={inputClass}
+                                        placeholder={field.label}
+                                        {...fieldProps}
+                                      />
+                                    </FormControl>
+                                  </div>
+                                </div>
+                                <FormMessage />
+                              </FormItem>
+                            )}
+                          />
+                        </div>
+                      ))}
+
+                        {/* <FormField
+                          control={form.control}
+                          name="MSEGAT_API_KEY"
+                          render={({ field }) => (
+                            <FormItem>
+                              <div className="grid grid-cols-1 md:grid-cols-12">
+                                <div className="col-span-4 mt-2">
+                                  <FormLabel>MSEGAT_API_KEY</FormLabel>
+                                </div>
+                                <div className="col-span-8">
+                                  <FormControl>
+                                    <Input
+                                      className={inputClass}
+                                      placeholder="MSEGAT_API_KEY"
+                                      {...field}
+                                    />
+                                  </FormControl>
+                                </div>
                               </div>
-                              <div className="col-span-8">
-                                <FormControl>
-                                  <Input
-                                    className={inputClass}
-                                    placeholder="ZENDER_SIM"
-                                    {...field}
-                                  />
-                                </FormControl>
+                              <FormMessage />
+                            </FormItem>
+                          )}
+                        /> */}
+                      </div>
+                      {/* <div className="mt-3 flex flex-col gap-5.5 p-6.5">
+                        <FormField
+                          control={form.control}
+                          name="MSEGAT_USERNAME"
+                          render={({ field }) => (
+                            <FormItem>
+                              <div className="grid grid-cols-1 md:grid-cols-12">
+                                <div className="col-span-4 mt-2">
+                                  <FormLabel>MSEGAT_USERNAME</FormLabel>
+                                </div>
+                                <div className="col-span-8">
+                                  <FormControl>
+                                    <Input
+                                      className={inputClass}
+                                      placeholder="MSEGAT_USERNAME"
+                                      {...field}
+                                    />
+                                  </FormControl>
+                                </div>
                               </div>
-                            </div>
-                            <FormMessage />
-                          </FormItem>
-                        )}
-                      />
+                              <FormMessage />
+                            </FormItem>
+                          )}
+                        />
+                      </div> */}
+                      {/* <div className="mt-3 flex flex-col gap-5.5 p-6.5">
+                        <FormField
+                          control={form.control}
+                          name="MSEGAT_USER_SENDER"
+                          render={({ field }) => (
+                            <FormItem>
+                              <div className="grid grid-cols-1 md:grid-cols-12">
+                                <div className="col-span-4 mt-2">
+                                  <FormLabel>MSEGAT_USER_SENDER</FormLabel>
+                                </div>
+                                <div className="col-span-8">
+                                  <FormControl>
+                                    <Input
+                                      className={inputClass}
+                                      placeholder="MSEGAT_USER_SENDER"
+                                      {...field}
+                                    />
+                                  </FormControl>
+                                </div>
+                              </div>
+                              <FormMessage />
+                            </FormItem>
+                          )}
+                        />
+                      </div> */}
+                      <div className="grid mt-4 justify-items-end">
+                        <Button
+                          className="dark:text-slate-200"
+                          variant="outline"
+                          type="submit"
+                        >
+                          Save
+                        </Button>
+                      </div>
                     </div>
-                    <div className="grid mt-4 justify-items-end">
-                      {/* <Button
-                        className="dark:text-slate-200"
-                        variant="outline"
-                        type="submit"
-                      >
-                        Save
-                      </Button> */}
-                      <Button
-                        className="dark:text-slate-200"
-                        variant="outline"
-                        type="submit"
-                        disabled={isLoading}
-                      >
-                        {isLoading ? "Submitting..." : "Submit"}
-                      </Button>
+                  </div>
+                </div>
+                <div className="flex flex-col gap-4">
+                  <div className="px-6 rounded-sm border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark">
+                    <div className="border-b border-stroke px-6.5 py-4 dark:border-strokedark">
+                      <h3 className="font-medium text-black dark:text-white">
+                        Zender Credential
+                      </h3>
+                    </div>
+                    <div className="py-6">
+                      <div className="flex flex-col gap-5.5 p-6.5">
+                      {[
+                        { name: "ZENDER_SITEURL", label: "ZENDER SITEURL" },
+                        { name: "ZENDER_APIKEY", label: "ZENDER APIKEY" },
+                        { name: "ZENDER_WHATSAPP", label: "ZENDER WHATSAPP" },
+                        { name: "ZENDER_DEVICE", label: "ZENDER DEVICE" },
+                        { name: "ZENDER_GATEWAY", label: "ZENDER GATEWAY" },
+                        { name: "ZENDER_SIM", label: "ZENDER SIM" },
+                      ].map((field) => (
+                        <div
+                          key={field.name}
+                          className="mt-3 flex flex-col gap-5.5 p-6.5"
+                        >
+                          <FormField
+                            control={form.control}
+                            name={field.name}
+                            render={({ field: fieldProps }) => (
+                              <FormItem>
+                                <div className="grid grid-cols-1 md:grid-cols-12">
+                                  <div className="col-span-4 mt-1">
+                                    <FormLabel>{field.label}</FormLabel>
+                                  </div>
+                                  <div className="col-span-8">
+                                    <FormControl>
+                                      <Input
+                                        className={inputClass}
+                                        placeholder={field.label}
+                                        {...fieldProps}
+                                      />
+                                    </FormControl>
+                                  </div>
+                                </div>
+                                <FormMessage />
+                              </FormItem>
+                            )}
+                          />
+                        </div>
+                      ))}
+
+                        {/* <FormField
+                          control={form.control}
+                          name="ZENDER_SITEURL"
+                          render={({ field }) => (
+                            <FormItem>
+                              <div className="grid grid-cols-1 md:grid-cols-12">
+                                <div className="col-span-4 mt-2">
+                                  <FormLabel>ZENDER_SITEURL</FormLabel>
+                                </div>
+                                <div className="col-span-8">
+                                  <FormControl>
+                                    <Input
+                                      className={inputClass}
+                                      placeholder="ZENDER_SITEURL"
+                                      {...field}
+                                    />
+                                  </FormControl>
+                                </div>
+                              </div>
+                              <FormMessage />
+                            </FormItem>
+                          )}
+                        /> */}
+                      </div>
+                      {/* <div className="mt-3 flex flex-col gap-5.5 p-6.5">
+                        <FormField
+                          control={form.control}
+                          name="ZENDER_APIKEY"
+                          render={({ field }) => (
+                            <FormItem>
+                              <div className="grid grid-cols-1 md:grid-cols-12">
+                                <div className="col-span-4 mt-2">
+                                  <FormLabel>ZENDER_APIKEY</FormLabel>
+                                </div>
+                                <div className="col-span-8">
+                                  <FormControl>
+                                    <Input
+                                      className={inputClass}
+                                      placeholder="ZENDER_APIKEY"
+                                      {...field}
+                                    />
+                                  </FormControl>
+                                </div>
+                              </div>
+                              <FormMessage />
+                            </FormItem>
+                          )}
+                        />
+                      </div> */}
+                      <div className="mt-3 flex flex-col gap-5.5 p-6.5">
+                      {[
+                        { name: "ZENDER_SERVICE", label: "ZENDER SERVICE" },
+                      ].map((field) => (
+                        <div
+                          key={field.name}
+                          className="mt-3 flex flex-col gap-5.5 p-6.5"
+                        >
+                          <FormField
+                            control={form.control}
+                            name={field.name}
+                            render={({ field: fieldProps }) => (
+                              <FormItem>
+                                <div className="grid grid-cols-1 md:grid-cols-12">
+                                  <div className="col-span-4 mt-1">
+                                    <FormLabel>{field.label}</FormLabel>
+                                  </div>
+                                  <div className="col-span-8">
+                                    <FormControl>
+                                    <Select
+                                      onValueChange={field.onChange}
+                                      defaultValue={field.value}
+                                    >
+                                      <FormControl>
+                                        <SelectTrigger>
+                                          <SelectValue placeholder="Select ZENDER_SERVICE" />
+                                        </SelectTrigger>
+                                      </FormControl>
+                                      <SelectContent>
+                                        <SelectItem value="Apple">SMS</SelectItem>
+                                        <SelectItem value="m2@example.com">WhatsApp</SelectItem>
+                                      </SelectContent>
+                                    </Select>
+                                    </FormControl>
+                                  </div>
+                                </div>
+                                <FormMessage />
+                              </FormItem>
+                            )}
+                          />
+                        </div>
+                      ))}
+
+                        {/* <FormField
+                          control={form.control}
+                          name="ZENDER_SERVICE"
+                          render={({ field }) => (
+                            <FormItem>
+                              <div className="grid grid-cols-1 md:grid-cols-12">
+                                <div className="col-span-4 mt-2">
+                                  <FormLabel>ZENDER_SERVICE</FormLabel>
+                                </div>
+                                <div className="col-span-8">
+                                  <FormControl>
+                                    <Select
+                                      onValueChange={field.onChange}
+                                      defaultValue={field.value}
+                                    >
+                                      <FormControl>
+                                        <SelectTrigger>
+                                          <SelectValue placeholder="Select ZENDER_SERVICE" />
+                                        </SelectTrigger>
+                                      </FormControl>
+                                      <SelectContent>
+                                        <SelectItem value="Apple">SMS</SelectItem>
+                                        <SelectItem value="m2@example.com">WhatsApp</SelectItem>
+                                      </SelectContent>
+                                    </Select>
+                                  </FormControl>
+                                </div>
+                              </div>
+                              <FormMessage />
+                            </FormItem>
+                          )}
+                        /> */}
+                      </div>
+                      {/* <div className="mt-3 flex flex-col gap-5.5 p-6.5">
+                        <FormField
+                          control={form.control}
+                          name="ZENDER_WHATSAPP"
+                          render={({ field }) => (
+                            <FormItem>
+                              <div className="grid grid-cols-1 md:grid-cols-12">
+                                <div className="col-span-4 mt-2">
+                                  <FormLabel>ZENDER_WHATSAPP</FormLabel>
+                                </div>
+                                <div className="col-span-8">
+                                  <FormControl>
+                                    <Input
+                                      className={inputClass}
+                                      placeholder="ZENDER_WHATSAPP"
+                                      {...field}
+                                    />
+                                  </FormControl>
+                                </div>
+                              </div>
+                              <FormMessage />
+                            </FormItem>
+                          )}
+                        />
+                      </div> */}
+                      {/* <div className="mt-3 flex flex-col gap-5.5 p-6.5">
+                        <FormField
+                          control={form.control}
+                          name="ZENDER_DEVICE"
+                          render={({ field }) => (
+                            <FormItem>
+                              <div className="grid grid-cols-1 md:grid-cols-12">
+                                <div className="col-span-4 mt-2">
+                                  <FormLabel>ZENDER_DEVICE</FormLabel>
+                                </div>
+                                <div className="col-span-8">
+                                  <FormControl>
+                                    <Input
+                                      className={inputClass}
+                                      placeholder="ZENDER_DEVICE"
+                                      {...field}
+                                    />
+                                  </FormControl>
+                                </div>
+                              </div>
+                              <FormMessage />
+                            </FormItem>
+                          )}
+                        />
+                      </div> */}
+                      {/* <div className="mt-3 flex flex-col gap-5.5 p-6.5">
+                        <FormField
+                          control={form.control}
+                          name="ZENDER_GATEWAY"
+                          render={({ field }) => (
+                            <FormItem>
+                              <div className="grid grid-cols-1 md:grid-cols-12">
+                                <div className="col-span-4 mt-2">
+                                  <FormLabel>ZENDER_GATEWAY</FormLabel>
+                                </div>
+                                <div className="col-span-8">
+                                  <FormControl>
+                                    <Input
+                                      className={inputClass}
+                                      placeholder="ZENDER_GATEWAY"
+                                      {...field}
+                                    />
+                                  </FormControl>
+                                </div>
+                              </div>
+                              <FormMessage />
+                            </FormItem>
+                          )}
+                        />
+                      </div> */}
+                      {/* <div className="mt-3 flex flex-col gap-5.5 p-6.5">
+                        <FormField
+                          control={form.control}
+                          name="ZENDER_SIM"
+                          render={({ field }) => (
+                            <FormItem>
+                              <div className="grid grid-cols-1 md:grid-cols-12">
+                                <div className="col-span-4 mt-2">
+                                  <FormLabel>ZENDER_SIM</FormLabel>
+                                </div>
+                                <div className="col-span-8">
+                                  <FormControl>
+                                    <Input
+                                      className={inputClass}
+                                      placeholder="ZENDER_SIM"
+                                      {...field}
+                                    />
+                                  </FormControl>
+                                </div>
+                              </div>
+                              <FormMessage />
+                            </FormItem>
+                          )}
+                        />
+                      </div> */}
+                      <div className="grid mt-4 justify-items-end">
+                        <Button
+                          className="dark:text-slate-200"
+                          variant="outline"
+                          type="submit"
+                          disabled={isLoading}
+                        >
+                          {isLoading ? "Submitting..." : "Submit"}
+                        </Button>
+                      </div>
                     </div>
                   </div>
                 </div>
               </div>
             </div>
-          </div>
         </form>
       </Form>
     </div>

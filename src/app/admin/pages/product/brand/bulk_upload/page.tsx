@@ -162,13 +162,6 @@ export default function AddOrEdit() {
                     </div>
 
                     <div className="grid mt-3 justify-items-end">
-                      {/* <Button
-                        className="dark:text-slate-200"
-                        variant="outline"
-                        type="submit"
-                      >
-                        Upload CSV
-                      </Button> */}
                       <Button
                         className="dark:text-slate-200"
                         variant="outline"

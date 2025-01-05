@@ -127,8 +127,87 @@ export default function AddOrEdit() {
             <div className="flex flex-col md:flex-row">
 
               <div className="flex-grow mt-10 md:mt-0 md:pl-16 max-w-3xl space-y-3">
+                {[
+                  { name: "nominee_full_name", label: "Nominee Full Name" },
+                  { name: "relation", label: "Relation" },
+                  { name: "nominee_phone_number", label: "Nominee Phone number" },
+                  { name: "nominee_date_birth", label: "Nominee Date of birth" },
+                  { name: "nominee_full_addess", label: "Nominee Full Addess" },
+                  { name: "gender", label: "Gender" },
+                ].map((field) => (
+                  <div
+                    key={field.name}
+                    className="mt-3 flex flex-col gap-5.5 p-6.5"
+                  >
+                    <FormField
+                      control={form.control}
+                      name={field.name}
+                      render={({ field: fieldProps }) => (
+                        <FormItem>
+                          <div className="grid grid-cols-1 md:grid-cols-12">
+                            <div className="col-span-3 mt-1">
+                              <FormLabel>{field.label}</FormLabel>
+                            </div>
+                            <div className="col-span-8">
+                              <FormControl>
+                                {field.name === "nominee_full_name" ? (
+                                  <Input type="text"
+                                    className={inputClass}
+                                    placeholder={field.label}
+                                    {...fieldProps}
+                                  />
+                                ) : field.name === "relation" ? (
+                                  <Input type="text"
+                                    className={inputClass}
+                                    placeholder={field.label}
+                                    {...fieldProps}
+                                  />
+                                ) : field.name === "nominee_phone_number" ? (
+                                  <Input type="text"
+                                    className={inputClass}
+                                    placeholder={field.label}
+                                    {...fieldProps}
+                                  />
+                                ) : field.name === "nominee_date_birth" ? (
+                                  <Input type="date"
+                                    className={inputClass}
+                                    placeholder={field.label}
+                                    {...fieldProps}
+                                  />
+                                ) : field.name === "nominee_full_addess" ? (
+                                  <Textarea
+                                    className={inputClass}
+                                    placeholder="New york, USA"
+                                  />
+                                ) : field.name === "gender" ? (
+                                  <Select
+                                    onValueChange={field.onChange}
+                                    defaultValue={field.value}
+                                  >
+                                    <FormControl>
+                                      <SelectTrigger>
+                                        <SelectValue placeholder="Select Gender" />
+                                      </SelectTrigger>
+                                    </FormControl>
+                                    <SelectContent>
+                                      <SelectItem value="Male">Male</SelectItem>
+                                      <SelectItem value="Female">Female</SelectItem>
+                                      <SelectItem value="Other">Other</SelectItem>
+                                    </SelectContent>
+                                  </Select>
+                                ) : null}
 
-                <FormField
+                              </FormControl>
+                            </div>
+                          </div>
+                          <FormMessage />
+                        </FormItem>
+                      )}
+                    />
+                  </div>
+                ))}
+
+                {/* <FormField
                   control={form.control}
                   name="code"
                   render={({ field }) => (
@@ -144,9 +223,9 @@ export default function AddOrEdit() {
                       <FormMessage />
                     </FormItem>
                   )}
-                />
+                /> */}
 
-                <FormField
+                {/* <FormField
                   control={form.control}
                   name="code"
                   render={({ field }) => (
@@ -162,9 +241,9 @@ export default function AddOrEdit() {
                       <FormMessage />
                     </FormItem>
                   )}
-                />
+                /> */}
 
-                <FormField
+                {/* <FormField
                   control={form.control}
                   name="code"
                   render={({ field }) => (
@@ -180,31 +259,10 @@ export default function AddOrEdit() {
                       <FormMessage />
                     </FormItem>
                   )}
-                />
+                /> */}
 
-                <FormField
-                  control={form.control}
-                  name="code"
-                  render={({ field }) => (
-                    <FormItem>
-                      <div className="grid grid-cols-1 md:grid-cols-12">
-                        <div className="col-span-3 mt-3">
-                          <FormLabel>Nominee Full Addess</FormLabel>
-                        </div>
-                        <div className="col-span-8">
-                          <Textarea
-                            className={inputClass}
-                            placeholder="New york, USA"
-                          />
-                          {/* <Input className={inputClass} placeholder="Nominee Full Addess" /> */}
-                        </div>
-                      </div>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
 
-                <div className="flex flex-col gap-5.5 p-6.5 dark:text-slate-500">
+                {/* <div className="flex flex-col gap-5.5 p-6.5 dark:text-slate-500">
 
                   <FormField
                     control={form.control}
@@ -239,10 +297,10 @@ export default function AddOrEdit() {
                       </FormItem>
                     )}
                   />
-                </div>
+                </div> */}
 
 
-                <FormField
+                {/* <FormField
                   control={form.control}
                   name="code"
                   render={({ field }) => (
@@ -258,7 +316,7 @@ export default function AddOrEdit() {
                       <FormMessage />
                     </FormItem>
                   )}
-                />
+                /> */}
 
                 <div className="pt-2">
                   <ButtonPrimary>Save</ButtonPrimary>

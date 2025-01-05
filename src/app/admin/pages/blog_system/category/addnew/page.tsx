@@ -25,15 +25,14 @@ const formSchema = z.object({
 });
 
 // Define TypeScript type for form data
-type FormData = z.infer<typeof formSchema>;
+// type FormData = z.infer<typeof formSchema>;
 
 export default function AddOrEdit() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const id = searchParams.get('id');
 
-  // Initialize form handling
-  const form = useForm<FormData>({
+  const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
       category_name: "",
@@ -59,7 +58,8 @@ export default function AddOrEdit() {
     }
   }, [id, form]);
 
-  const onSubmit: SubmitHandler<FormData> = async (values) => {
+  // const onSubmit: SubmitHandler<FormData> = async (values) => {
+    const onSubmit: SubmitHandler<z.infer<typeof formSchema>> = async (values) => {
     const apiUrl = process.env.NEXT_PUBLIC_API_URL || "";
 
     if (!apiUrl) {
@@ -100,8 +100,7 @@ export default function AddOrEdit() {
     }
   };
 
-  const inputClass =
-    "bg-zinc-50 border border-slate-300 text-slate-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-slate-900 dark:border-slate-700 dark:placeholder-slate-700 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500";
+  const inputClass = "bg-zinc-50 border border-slate-300 text-slate-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-slate-900 dark:border-slate-700 dark:placeholder-slate-700 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500";
 
   return (
     <div className="min-h-screen mx-auto max-w-screen-2xl mt-2 p-4 py-4 md:p-6 2xl:p-10 bg-slate-100 dark:bg-slate-900">

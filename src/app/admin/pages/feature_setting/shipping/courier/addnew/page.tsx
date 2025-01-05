@@ -119,7 +119,7 @@ export default function AddOrEdit() {
         },
         body: JSON.stringify(values),
       });
-      
+
       if (!response.ok) {
         throw new Error("Failed to add courier. Please try again.");
       }
@@ -154,141 +154,140 @@ export default function AddOrEdit() {
                   </div>
                   <div className="py-6">
                     <div className="mt-3 flex flex-col gap-5.5 p-6.5">
-                      <FormField
-                        control={form.control}
-                        name="carrier_name"
-                        render={({ field }) => (
-                          <FormItem>
-                            <div className="grid grid-cols-1 md:grid-cols-12">
-                              <div className="col-span-3 mt-3">
-                                <FormLabel>Carrier Name</FormLabel>
-                              </div>
-                              <div className="col-span-8">
-                                <FormControl>
-                                  <Input
-                                    className={inputClass}
-                                    placeholder="Carrier Name"
-                                    {...field}
-                                  />
-                                </FormControl>
-                              </div>
-                            </div>
-                            <FormMessage />
-                          </FormItem>
-                        )}
-                      />
-                    </div>
-                    <div className="mt-3 flex flex-col gap-5.5 p-6.5">
-                      <FormField
-                        control={form.control}
-                        name="transit_time"
-                        render={({ field }) => (
-                          <FormItem>
-                            <div className="grid grid-cols-1 md:grid-cols-12">
-                              <div className="col-span-3 mt-3">
-                                <FormLabel>Transit Time</FormLabel>
-                              </div>
-                              <div className="col-span-8">
-                                <FormControl>
-                                  <Input
-                                    className={inputClass}
-                                    placeholder="Transit Time"
-                                    {...field}
-                                  />
-                                </FormControl>
-                              </div>
-                            </div>
-                            <FormMessage />
-                          </FormItem>
-                        )}
-                      />
-                    </div>
-                    <div className="mt-3 flex flex-col gap-5.5 p-6.5">
-                      <FormField
-                        control={form.control}
-                        name="logo"
-                        render={({ field }) => (
-                          <FormItem>
-                            <div className="grid grid-cols-1 md:grid-cols-12">
-                              <div className="col-span-3 mt-3">
-                                <FormLabel>Logo</FormLabel>
-                              </div>
-                              <div className="col-span-8">
-                                <FormControl>
-                                  <Input
-                                    className={inputClass}
-                                    placeholder="Logo"
-                                    {...field}
-                                  />
-                                </FormControl>
-                              </div>
-                            </div>
-                            <FormMessage />
-                          </FormItem>
-                        )}
-                      />
-                    </div>
-                    <div className="mt-3 flex flex-col gap-5.5 p-6.5">
-                      <FormField
-                        control={form.control}
-                        name="shipping_type"
-                        render={({ field }) => (
-                          <FormItem>
-                            <div className="grid grid-cols-1 md:grid-cols-12">
-                              <div className="col-span-3 mt-3">
-                                <FormLabel>Free Shipping ?</FormLabel>
-                              </div>
-                              <div className="mt-3 col-span-8">
-                                <FormControl>
-                                  <Switch />
-                                </FormControl>
-                              </div>
-                            </div>
-                            <FormMessage />
-                          </FormItem>
-                        )}
-                      />
-                    </div>
-                    <div className="mt-3 flex flex-col gap-5.5 p-6.5">
-                      <FormField
-                        control={form.control}
-                        name="billing_type"
-                        render={({ field }) => (
-                          <FormItem>
-                            <div className="grid grid-cols-1 md:grid-cols-12">
-                              <div className="col-span-3 mt-3">
-                                <FormLabel>Billing Type</FormLabel>
-                              </div>
-                              <div className="col-span-8">
-                                <FormControl>
-                                  <Select
-                                    onValueChange={field.onChange}
-                                    defaultValue={field.value}
-                                  >
+                      {[
+                        { name: "carrier_name", label: "Carrier Name" },
+                        { name: "logo", label: "Logo" },
+                        { name: "shipping_type", label: "Free Shipping" },
+                        { name: "billing_type", label: "Billing Type" },
+                      ].map((field) => (
+                        <div
+                          key={field.name}
+                          className="mt-3 flex flex-col gap-5.5 p-6.5"
+                        >
+                          <FormField
+                            control={form.control}
+                            name={field.name}
+                            render={({ field: fieldProps }) => (
+                              <FormItem>
+                                <div className="grid grid-cols-1 md:grid-cols-12">
+                                  <div className="col-span-3 mt-2">
+                                    <FormLabel>{field.label}</FormLabel>
+                                  </div>
+                                  <div className="col-span-8">
                                     <FormControl>
-                                      <SelectTrigger>
-                                        <SelectValue placeholder="Select Billing Type" />
-                                      </SelectTrigger>
+                                      {field.name === "carrier_name" ? (
+                                        <Input
+                                          className={inputClass}
+                                          placeholder={field.label}
+                                          {...fieldProps}
+                                        />
+                                      ) : field.name === "logo" ? (
+                                        <Input
+                                          type="file"
+                                          className={inputClass}
+                                          placeholder={field.label}
+                                          {...fieldProps}
+                                        />
+                                      ) : field.name === "shipping_type" ? (
+                                        <Switch />
+                                      ) : field.name === "shipping_type" ? (
+                                        <Select
+                                          onValueChange={field.onChange}
+                                          defaultValue={field.value}
+                                        >
+                                          <FormControl>
+                                            <SelectTrigger>
+                                              <SelectValue placeholder="Select Billing Type" />
+                                            </SelectTrigger>
+                                          </FormControl>
+                                          <SelectContent>
+                                            <SelectItem value="Apple">According to Weight</SelectItem>
+                                            <SelectItem value="m2@example.com">According to Price</SelectItem>
+                                          </SelectContent>
+                                        </Select>
+                                      ) : null}
+
                                     </FormControl>
-                                    <SelectContent>
-                                      <SelectItem value="Apple">According to Weight</SelectItem>
-                                      <SelectItem value="m2@example.com">According to Price</SelectItem>
-                                    </SelectContent>
-                                  </Select>
-                                </FormControl>
-                              </div>
-                            </div>
-                            <FormMessage />
-                          </FormItem>
-                        )}
-                      />
+                                  </div>
+                                </div>
+                                <FormMessage />
+                              </FormItem>
+                            )}
+                          />
+                        </div>
+                      ))}
                     </div>
+
                     <hr className="mt-3" />
                     <p className="text-xl dark:text-slate-300 py-3">
                       Weight based carrier price range
                     </p>
                     <div className="mt-3 flex flex-col gap-5.5 p-6.5">
-                      <FormField
+                      {[
+                        { name: "delimiter1", label: "Will be applied when the weight is" },
+                        { name: "delimiter2", label: "Will be applied when the weight is" },
+                        { name: "zones", label: "Asia" },
+                        { name: "europe", label: "Europe" },
+                        { name: "africa", label: "Africa" },
+                      ].map((field) => (
+                        <div
+                          key={field.name}
+                          className="mt-3 flex flex-col gap-5.5 p-6.5"
+                        >
+                          <FormField
+                            control={form.control}
+                            name={field.name}
+                            render={({ field: fieldProps }) => (
+                              <FormItem>
+                                <div className="grid grid-cols-1 md:grid-cols-12">
+                                  <div className="col-span-3 mt-2">
+                                    <FormLabel>{field.label}</FormLabel>
+                                  </div>
+                                  <div className="col-span-8">
+                                    <FormControl>
+                                      {field.name === "delimiter1" ? (
+                                        <Input
+                                          className={inputClass}
+                                          placeholder="0.00"
+                                          {...field}
+                                        />
+                                      ) : field.name === "delimiter2" ? (
+                                        <Input
+                                          className={inputClass}
+                                          placeholder="0.00"
+                                          {...field}
+                                        />
+                                      ) : field.name === "zones" ? (
+                                        <Input
+                                          className={inputClass}
+                                          placeholder="Cost"
+                                          {...field}
+                                        />
+                                      ) : field.name === "europe" ? (
+                                        <Input
+                                          className={inputClass}
+                                          placeholder="Cost"
+                                          {...field}
+                                        />
+                                      ) : field.name === "africa" ? (
+                                        <Input
+                                          className={inputClass}
+                                          placeholder="Cost"
+                                          {...field}
+                                        />
+                                      ) : null}
+
+                                    </FormControl>
+                                  </div>
+                                </div>
+                                <FormMessage />
+                              </FormItem>
+                            )}
+                          />
+                        </div>
+                      ))}
+
+                      {/* <FormField
                         control={form.control}
                         name="delimiter1[]"
                         render={({ field }) => (
@@ -310,9 +309,9 @@ export default function AddOrEdit() {
                             <FormMessage />
                           </FormItem>
                         )}
-                      />
+                      /> */}
                     </div>
-                    <div className="mt-3 flex flex-col gap-5.5 p-6.5">
+                    {/* <div className="mt-3 flex flex-col gap-5.5 p-6.5">
                       <FormField
                         control={form.control}
                         name="delimiter2[]"
@@ -336,8 +335,8 @@ export default function AddOrEdit() {
                           </FormItem>
                         )}
                       />
-                    </div>
-                    <div className="mt-3 flex flex-col gap-5.5 p-6.5">
+                    </div> */}
+                    {/* <div className="mt-3 flex flex-col gap-5.5 p-6.5">
                       <FormField
                         control={form.control}
                         name="zones[]"
@@ -361,8 +360,8 @@ export default function AddOrEdit() {
                           </FormItem>
                         )}
                       />
-                    </div>
-                    <div className="mt-3 flex flex-col gap-5.5 p-6.5">
+                    </div> */}
+                    {/* <div className="mt-3 flex flex-col gap-5.5 p-6.5">
                       <FormField
                         control={form.control}
                         name="carrier_price[1][]"
@@ -386,9 +385,9 @@ export default function AddOrEdit() {
                           </FormItem>
                         )}
                       />
-                    </div>
+                    </div> */}
                     <div className="mt-3 flex flex-col gap-5.5 p-6.5">
-                      <FormField
+                      {/* <FormField
                         control={form.control}
                         name="zones[]"
                         render={({ field }) => (
@@ -410,7 +409,7 @@ export default function AddOrEdit() {
                             <FormMessage />
                           </FormItem>
                         )}
-                      />
+                      /> */}
                       <div className="mt-3">
                         <Button
                           className="dark:text-slate-200"
@@ -422,13 +421,6 @@ export default function AddOrEdit() {
                       </div>
                     </div>
                     <div className="grid mt-3 justify-items-end">
-                      {/* <Button
-                        className="dark:text-slate-200"
-                        variant="outline"
-                        type="submit"
-                      >
-                        Save
-                      </Button> */}
                       <Button
                         className="dark:text-slate-200"
                         variant="outline"

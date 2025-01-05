@@ -70,8 +70,8 @@ export default function AddOrEdit() {
     try {
       const method = id ? "PUT" : "POST";
       const url = id
-        ? `${apiUrl}/server/api/routes/admin/feature_setting/facebook/chat/${id}`
-        : `${apiUrl}/server/api/routes/admin/feature_setting/facebook/chat`;
+        ? `${apiUrl}/server/api/routes/admin/feature-setting/facebook/chat/${id}`
+        : `${apiUrl}/server/api/routes/admin/feature-setting/facebook/chat`;
 
       const response = await fetch(url, {
         method,
@@ -80,7 +80,7 @@ export default function AddOrEdit() {
         },
         body: JSON.stringify(values),
       });
-      
+
       if (!response.ok) {
         throw new Error("Failed to add facebook chat setting. Please try again.");
       }
@@ -114,56 +114,48 @@ export default function AddOrEdit() {
                     </h3>
                   </div>
                   <div className="py-6">
-                    <div className="flex flex-col gap-5.5 p-6.5">
-                      <FormField
-                        control={form.control}
-                        name="facebook_chat"
-                        render={({ field }) => (
-                          <FormItem>
-                            <div className="flex items-center space-x-12">
-                              <FormLabel className="mt-2">
-                                Facebook Chat
-                              </FormLabel>
-                              <Switch />
-                            </div>
-                            <FormMessage />
-                          </FormItem>
-                        )}
-                      />
-                    </div>
                     <div className="mt-3 flex flex-col gap-5.5 p-6.5">
-                      <FormField
-                        control={form.control}
-                        name="FACEBOOK_PAGE_ID"
-                        render={({ field }) => (
-                          <FormItem>
-                            <div className="grid grid-cols-1 md:grid-cols-12">
-                              <div className="col-span-3 mt-2">
-                                <FormLabel>Facebook Page ID</FormLabel>
-                              </div>
-                              <div className="col-span-8">
-                                <FormControl>
-                                  <Input
-                                    className={inputClass}
-                                    placeholder="Facebook Page ID"
-                                    {...field}
-                                  />
-                                </FormControl>
-                              </div>
-                            </div>
-                            <FormMessage />
-                          </FormItem>
-                        )}
-                      />
+
+                      {[
+                        { name: "facebook_chat", label: "Facebook Chat" },
+                        { name: "FACEBOOK_PAGE_ID", label: "Facebook Page ID" },
+                      ].map((field) => (
+                        <div
+                          key={field.name}
+                          className="mt-3 flex flex-col gap-5.5 p-6.5"
+                        >
+                          <FormField
+                            control={form.control}
+                            name={field.name}
+                            render={({ field: fieldProps }) => (
+                              <FormItem>
+                                <div className="grid grid-cols-1 md:grid-cols-12">
+                                  <div className="col-span-3 mt-2">
+                                    <FormLabel>{field.label}</FormLabel>
+                                  </div>
+                                  <div className="col-span-8">
+                                    <FormControl>
+                                      {field.name === "facebook_chat" ? (
+                                        <Switch />
+                                      ) : field.name === "FACEBOOK_PAGE_ID" ? (
+                                        <Input type="text"
+                                          className={inputClass}
+                                          placeholder={field.label}
+                                          {...fieldProps}
+                                        />
+                                      ) : null}
+                                    </FormControl>
+                                  </div>
+                                </div>
+                                <FormMessage />
+                              </FormItem>
+                            )}
+                          />
+                        </div>
+                      ))}
+
                     </div>
                     <div className="grid mt-3 justify-items-end">
-                      {/* <Button
-                        className="dark:text-slate-200"
-                        variant="outline"
-                        type="submit"
-                      >
-                        Save
-                      </Button> */}
                       <Button
                         className="dark:text-slate-200"
                         variant="outline"
